@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Radar — 宏觀雷達報告庫</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+.container{max-width:900px;margin:0 auto}
+header{text-align:center;padding:24px 0;border-bottom:1px solid var(--border);margin-bottom:24px}
+header h1{font-size:1.4rem;margin-bottom:4px;color:var(--accent)}
+header .sub{color:var(--muted);font-size:0.85rem}
+.nav{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:20px}
+.nav button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.9rem;transition:all .2s}
+.nav button:hover{border-color:var(--accent);color:var(--accent)}
+.nav .month-label{font-size:1.1rem;font-weight:600;min-width:160px;text-align:center}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:24px}
+.cal-header{text-align:center;font-size:0.75rem;color:var(--muted);padding:8px 0;font-weight:600}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;font-size:0.85rem;background:var(--card);border:1px solid var(--border);cursor:default;position:relative;transition:all .2s}
+.cal-day.empty{background:transparent;border-color:transparent}
+.cal-day.today{border-color:var(--accent);box-shadow:0 0 8px rgba(88,166,255,0.3)}
+.cal-day.has-report{cursor:pointer;border-color:var(--green)}
+.cal-day.has-report:hover{background:#1a2d1a;transform:scale(1.05)}
+.cal-day .day-num{font-weight:600}
+.cal-day .dots{display:flex;gap:3px;margin-top:3px}
+.cal-day .dot{width:6px;height:6px;border-radius:50%}
+.dot-am{background:var(--yellow)}
+.dot-pm{background:var(--purple)}
+.report-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none}
+.report-panel.open{display:block}
+.report-panel h3{font-size:0.95rem;margin-bottom:12px;color:var(--accent)}
+.report-links{display:flex;gap:10px;flex-wrap:wrap}
+.report-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(88,166,255,0.1);border:1px solid var(--accent);border-radius:8px;color:var(--accent);text-decoration:none;font-size:0.85rem;font-weight:500;transition:all .2s}
+.report-link:hover{background:rgba(88,166,255,0.2);transform:translateY(-1px)}
+.report-link.am{border-color:var(--yellow);color:var(--yellow);background:rgba(210,153,34,0.1)}
+.report-link.am:hover{background:rgba(210,153,34,0.2)}
+.report-link.pm{border-color:var(--purple);color:var(--purple);background:rgba(163,113,247,0.1)}
+.report-link.pm:hover{background:rgba(163,113,247,0.2)}
+.legend{display:flex;gap:16px;justify-content:center;margin-bottom:20px;font-size:0.8rem;color:var(--muted)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-item .dot{width:8px;height:8px;border-radius:50%}
+.empty-state{text-align:center;padding:40px;color:var(--muted)}
+.stats{display:flex;justify-content:center;gap:24px;margin-bottom:20px}
+.stat{text-align:center}
+.stat-num{font-size:1.4rem;font-weight:700;color:var(--accent)}
+.stat-label{font-size:0.75rem;color:var(--muted)}
+@media(max-width:600px){
+  .calendar{gap:2px}
+  .cal-day{font-size:0.75rem}
+  .nav button{padding:6px 12px;font-size:0.8rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>📡 Market Radar — 宏觀雷達報告庫</h1>
+    <p class="sub">每日早報 & 晚報 | AI Capex · 流動性 · 量化籌碼</p>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-am"></div> 早報 (AM)</div>
+    <div class="legend-item"><div class="dot dot-pm"></div> 晚報 (PM)</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="changeMonth(-1)">◀ 上月</button>
+    <div class="month-label" id="monthLabel"></div>
+    <button onclick="changeMonth(1)">下月 ▶</button>
+  </div>
+
+  <div class="calendar" id="calendar"></div>
+
+  <div class="report-panel" id="reportPanel">
+    <h3 id="reportDate"></h3>
+    <div class="report-links" id="reportLinks"></div>
+  </div>
+</div>
+
+<script>
+let reports = [];
+let currentYear, currentMonth;
+const BASE_URL = 'reports/';
+
+async function loadReports() {
+  try {
+    const res = await fetch('reports.json');
+    reports = await res.json();
+  } catch(e) {
+    reports = [];
+  }
+  // Also scan for files by pattern if reports.json is empty
+  renderCalendar();
+  renderStats();
+}
+
+function getReportsForDate(dateStr) {
+  return reports.filter(r => r.date === dateStr);
+}
+
+function renderStats() {
+  const total = reports.length;
+  const days = new Set(reports.map(r => r.date)).size;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">總報告數</div></div>
+    <div class="stat"><div class="stat-num">${days}</div><div class="stat-label">覆蓋天數</div></div>
+  `;
+}
+
+function renderCalendar() {
+  const cal = document.getElementById('calendar');
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+
+  document.getElementById('monthLabel').textContent =
+    `${currentYear} 年 ${currentMonth + 1} 月`;
+
+  const headers = ['日','一','二','三','四','五','六'];
+  let html = headers.map(h => `<div class="cal-header">${h}</div>`).join('');
+
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) {
+    html += '<div class="cal-day empty"></div>';
+  }
+
+  // Day cells
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayReports = getReportsForDate(dateStr);
+    const hasAm = dayReports.some(r => r.type === 'am');
+    const hasPm = dayReports.some(r => r.type === 'pm');
+    const hasReport = dayReports.length > 0;
+    const isToday = dateStr === todayStr;
+
+    let classes = 'cal-day';
+    if (hasReport) classes += ' has-report';
+    if (isToday) classes += ' today';
+
+    let dots = '';
+    if (hasAm || hasPm) {
+      dots = '<div class="dots">';
+      if (hasAm) dots += '<div class="dot dot-am"></div>';
+      if (hasPm) dots += '<div class="dot dot-pm"></div>';
+      dots += '</div>';
+    }
+
+    const onclick = hasReport ? `onclick="showReports('${dateStr}')"` : '';
+    html += `<div class="${classes}" ${onclick}><div class="day-num">${d}</div>${dots}</div>`;
+  }
+
+  cal.innerHTML = html;
+}
+
+function showReports(dateStr) {
+  const panel = document.getElementById('reportPanel');
+  const dayReports = getReportsForDate(dateStr);
+
+  if (dayReports.length === 0) {
+    panel.classList.remove('open');
+    return;
+  }
+
+  const [y, m, d] = dateStr.split('-');
+  const dayOfWeek = ['日','一','二','三','四','五','六'][new Date(dateStr).getDay()];
+  document.getElementById('reportDate').textContent = `${y}/${m}/${d}（週${dayOfWeek}）`;
+
+  let links = '';
+  dayReports.sort((a, b) => a.type === 'am' ? -1 : 1);
+  dayReports.forEach(r => {
+    const label = r.type === 'am' ? '☀️ 早報' : '🌙 晚報';
+    const cls = r.type === 'am' ? 'am' : 'pm';
+    links += `<a class="report-link ${cls}" href="${BASE_URL}${r.file}" target="_blank">${label}</a>`;
+  });
+
+  document.getElementById('reportLinks').innerHTML = links;
+  panel.classList.add('open');
+}
+
+function changeMonth(delta) {
+  currentMonth += delta;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  renderCalendar();
+  document.getElementById('reportPanel').classList.remove('open');
+}
+
+// Init
+const now = new Date();
+currentYear = now.getFullYear();
+currentMonth = now.getMonth();
+loadReports();
+</script>
+</body>
+</html>
