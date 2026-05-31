@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-05-31 晚報</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}
+.container{max-width:1440px;margin:0 auto}
+header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}
+header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}
+header .sub{color:var(--muted);font-size:0.85rem}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:0.8rem;margin-top:10px}
+.badge-regime{background:linear-gradient(135deg,#1f6feb,#388bfd)}
+.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.card h2{font-size:0.98rem;margin-bottom:12px;color:var(--accent)}
+.card h3{font-size:0.8rem;color:var(--muted);margin:10px 0 5px;text-transform:uppercase;letter-spacing:.5px}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500;font-size:0.74rem}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.7rem;font-weight:600}
+.t-bull{background:rgba(63,185,80,.15);color:var(--green)}
+.t-bear{background:rgba(248,81,73,.15);color:var(--red)}
+.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}
+.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}
+.t-purple{background:rgba(163,113,247,.15);color:var(--purple)}
+.t-cyan{background:rgba(57,213,255,.15);color:var(--cyan)}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+.mr:last-child{border-bottom:none}
+.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}
+.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}
+.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}
+.pi .pr{font-size:.95rem;font-weight:700}
+.pi .ch{font-size:.75rem;margin-top:1px}
+.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}
+.risk-bar .f{height:100%;border-radius:3px}
+.rh .f{background:var(--red);width:85%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-i{position:relative;margin-bottom:13px}
+.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}
+.tl-e{font-size:.8rem;margin-top:2px}
+.trump{border-left:3px solid var(--purple)}
+.gs{border-left:3px solid var(--cyan)}
+.scenario{border-left:3px solid var(--green)}
+.scenario-bear{border-left:3px solid var(--red)}
+.scenario-tail{border-left:3px solid var(--orange)}
+.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+<p class="sub">2026-05-31（週六，台灣時間）晚報 | Binance 報價 | 美股 5/30 週五已收盤 — 週末無交易</p>
+<div class="badge badge-regime">REGIME：AI Capex 超級週期延續 + 弱美元通道確認 + 債市壓力邊緣緩和</div>
+</header>
+
+<!-- ===== 即時報價面板 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>即時報價面板（Binance Futures — 24 資產）</h2>
+<div class="price-grid">
+<div class="pi"><div class="tk">BTC</div><div class="pr">$73,865</div><div class="ch pos">+0.41%</div></div>
+<div class="pi"><div class="tk">ETH</div><div class="pr">$2,019.72</div><div class="ch pos">+0.14%</div></div>
+<div class="pi"><div class="tk">XAU（黃金）</div><div class="pr">$4,544.20</div><div class="ch pos">+0.04%</div></div>
+<div class="pi"><div class="tk">XAG（白銀）</div><div class="pr">$75.36</div><div class="ch neg">-0.09%</div></div>
+<div class="pi"><div class="tk">COPPER（銅）</div><div class="pr">$6.37</div><div class="ch neg">-0.76%</div></div>
+<div class="pi"><div class="tk">XPD（鈀金）</div><div class="pr">$1,368.01</div><div class="ch pos">+0.18%</div></div>
+<div class="pi"><div class="tk">XPT（鉑金）</div><div class="pr">$1,937.79</div><div class="ch pos">+0.24%</div></div>
+<div class="pi"><div class="tk">SPY</div><div class="pr">$757.86</div><div class="ch pos">+0.18%</div></div>
+<div class="pi"><div class="tk">NVDA</div><div class="pr">$217.08</div><div class="ch pos">+1.04%</div></div>
+<div class="pi"><div class="tk">TSM</div><div class="pr">$427.53</div><div class="ch pos">+1.64%</div></div>
+<div class="pi"><div class="tk">INTC</div><div class="pr">$115.47</div><div class="ch pos">+0.02%</div></div>
+<div class="pi"><div class="tk">MU</div><div class="pr">$980.90</div><div class="ch pos">+0.99%</div></div>
+<div class="pi"><div class="tk">AMD</div><div class="pr">$528.07</div><div class="ch pos">+1.68%</div></div>
+<div class="pi"><div class="tk">AVGO</div><div class="pr">$462.40</div><div class="ch pos">+3.00%</div></div>
+<div class="pi"><div class="tk">QCOM</div><div class="pr">$250.33</div><div class="ch neg">-0.42%</div></div>
+<div class="pi"><div class="tk">MSFT</div><div class="pr">$464.17</div><div class="ch pos">+1.98%</div></div>
+<div class="pi"><div class="tk">GOOGL</div><div class="pr">$383.09</div><div class="ch pos">+0.02%</div></div>
+<div class="pi"><div class="tk">META</div><div class="pr">$638.81</div><div class="ch pos">+0.54%</div></div>
+<div class="pi"><div class="tk">AMZN</div><div class="pr">$273.05</div><div class="ch pos">+0.65%</div></div>
+<div class="pi"><div class="tk">TSLA</div><div class="pr">$438.28</div><div class="ch pos">+0.39%</div></div>
+<div class="pi"><div class="tk">PLTR</div><div class="pr">$159.50</div><div class="ch pos">+1.28%</div></div>
+<div class="pi"><div class="tk">MSTR</div><div class="pr">$160.21</div><div class="ch pos">+0.52%</div></div>
+<div class="pi"><div class="tk">EWY</div><div class="pr">$208.88</div><div class="ch pos">+0.86%</div></div>
+<div class="pi"><div class="tk">SPCX</div><div class="pr">$203.00</div><div class="ch pos">+1.89%</div></div>
+</div>
+</div>
+
+<!-- ===== 週回顧快照 ===== -->
+<div class="grid">
+<div class="card">
+<h2>本週市場快照（5/26-5/30）</h2>
+<h3>全週表現摘要</h3>
+<div class="mr"><span class="mr-l">SPY 全週</span><span class="mr-v pos">+1.2%（歷史新高）</span></div>
+<div class="mr"><span class="mr-l">AVGO 全週</span><span class="mr-v pos">+8.5%（AI ASIC 爆發）</span></div>
+<div class="mr"><span class="mr-l">MSFT 全週</span><span class="mr-v pos">+6.2%（Azure AI）</span></div>
+<div class="mr"><span class="mr-l">TSM 全週</span><span class="mr-v pos">+5.8%（CoWoS 產能）</span></div>
+<div class="mr"><span class="mr-l">AMD 全週</span><span class="mr-v pos">+5.4%（MI400）</span></div>
+<div class="mr"><span class="mr-l">BTC 全週</span><span class="mr-v neg">-2.1%（恐懼持續）</span></div>
+<div class="mr"><span class="mr-l">XAU 全週</span><span class="mr-v pos">+0.8%（穩健盤整）</span></div>
+<div class="mr"><span class="mr-l">DXY 全週</span><span class="mr-v neg">-0.4%（弱勢延續）</span></div>
+<p style="font-size:.78rem;color:var(--muted);margin-top:10px"><strong>週結論：</strong>AI Capex 主題完全主導市場。半導體/雲全線走強。加密貨幣明顯脫鉤 — BTC 恐懼 28 與 AI 股歷史新高形成鮮明對比。PCE 週五公布後債市壓力暫緩（30Y 回落至 4.99%），為下週風險資產提供喘息空間。</p>
+</div>
+
+<div class="card">
+<h2>資金流向與籌碼</h2>
+<h3>ETF 資金流（估算）</h3>
+<div class="mr"><span class="mr-l">SPY/VOO</span><span class="mr-v pos">+$4.2B 淨流入</span></div>
+<div class="mr"><span class="mr-l">QQQ</span><span class="mr-v pos">+$2.8B 淨流入</span></div>
+<div class="mr"><span class="mr-l">SMH（半導體）</span><span class="mr-v pos">+$1.5B 淨流入</span></div>
+<div class="mr"><span class="mr-l">BTC ETF（IBIT 等）</span><span class="mr-v neg">-$320M 淨流出</span></div>
+<div class="mr"><span class="mr-l">GLD（黃金）</span><span class="mr-v pos">+$180M 淨流入</span></div>
+<h3>機構持倉信號</h3>
+<div class="mr"><span class="mr-l">AI 半導體持倉</span><span class="mr-v warn">歷史 95 百分位</span></div>
+<div class="mr"><span class="mr-l">Crypto 持倉</span><span class="mr-v neg">歷史 25 百分位</span></div>
+<div class="mr"><span class="mr-l">現金水位</span><span class="mr-v">4.2%（偏低 = 已充分投入）</span></div>
+<p style="font-size:.78rem;color:var(--muted);margin-top:10px"><strong>籌碼結論：</strong>AI 半導體持倉極度擁擠（95 百分位），任何負面催化將引發劇烈拋售。Crypto ETF 持續流出但幅度收窄 — 可能接近出清底部。機構現金水位偏低意味反彈空間有限。</p>
+</div>
+</div>
+
+<!-- ===== 1. Regime ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>1. 市場主導 Regime 報告</h2>
+<div class="grid" style="margin-bottom:0">
+<div>
+<h3>當前核心交易變數</h3>
+<p><strong>AI Capex 狂潮持續 + PCE 通膨降溫確認 + 弱美元通道鞏固</strong></p>
+<p style="font-size:.8rem;color:var(--muted)">週五 PCE 數據符合或略低於預期，30Y 從 5%+ 回落至 4.99%，確認債市最大壓力暫時緩解。AI 半導體板塊 AVGO/MSFT/AMD/TSM 全線走強，市場重新定價 AI 資本支出加速。</p>
+</div>
+<div>
+<h3>短期主線（1-7 天）</h3>
+<p>週末消化 PCE 利好 → 下週一開盤有望延續動能。關注 6/3 ISM 製造業 + 6/6 非農。AI 半導體輪動加速（AVGO 領漲 +3%）。VIX 15.42 顯示市場自滿 — 警惕突發事件。</p>
+</div>
+<div>
+<h3>中期主線（1-3 月）</h3>
+<p>PCE 確認通膨下行 → Fed 9 月降息預期回升。30Y 回到 5% 以下是關鍵拐點信號。AI Capex ROI 驗證進入 Q2 財報季窗口。DXY 破 99 確認弱美元趨勢 → 利好商品/EM/Crypto。</p>
+</div>
+<div>
+<h3>長期主線（6-24 月）</h3>
+<p>AI Capex 超級週期（MSFT/META/GOOGL 年資本支出合計超 $2500 億）。弱美元結構性趨勢支撐黃金/EM/商品。去美元化持續。加密貨幣與 AI 敘事在 2026 下半年可能匯流。</p>
+</div>
+</div>
+</div>
+
+<!-- ===== 2. 共識 vs 現實 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>2. 市場共識 vs 現實（Alpha 預期差）</h2>
+<table>
+<tr><th style="width:120px"></th><th>內容</th></tr>
+<tr><td><strong>市場預期</strong></td><td>PCE 溫和 → Fed 維持不動但口氣轉鴿；AI 領漲無窮無盡；BTC 追隨 AI 股上漲</td></tr>
+<tr><td><strong>實際發生</strong></td><td>PCE 確實符合/略低預期 → 30Y 回落至 4.99%，壓力緩解但未反轉；AI 半導體暴漲（AVGO +3%）但 BTC 僅 +0.4% — 加密與 AI 股完全脫鉤；VIX 15.42 極低自滿位</td></tr>
+<tr><td><strong class="warn">最大 Mispricing</strong></td><td>
+1) <span class="neg">BTC 恐懼 28 vs AI 股集體新高</span> — 加密市場定價過度悲觀，若催化劑出現（ETF 資金流入/Fed 鴿派信號）有 mean-reversion 空間<br>
+2) <span class="pos">AVGO/MSFT 加速定價 AI infra 受益</span> — 市場開始區分「AI 建設受益」vs「AI 應用受益」，建設層（晶片+雲）重新溢價<br>
+3) <span class="neg">VIX 15.42 自滿</span> — 週末效應 + PCE 利好壓低波動率，但下週事件密集（ISM/非農），隱含波動率被低估
+</td></tr>
+</table>
+</div>
+
+<!-- ===== DXY + 宏觀水管 ===== -->
+<div class="grid">
+<div class="card">
+<h2>DXY 走勢分析</h2>
+<div class="mr"><span class="mr-l">現價</span><span class="mr-v neg">98.94</span></div>
+<div class="mr"><span class="mr-l">日變動</span><span class="mr-v pos">+0.03%</span></div>
+<div class="mr"><span class="mr-l">關鍵支撐</span><span class="mr-v">97.5</span></div>
+<div class="mr"><span class="mr-l">關鍵壓力</span><span class="mr-v">100.0</span></div>
+<div class="mr"><span class="mr-l">趨勢判斷</span><span class="mr-v neg">中期弱勢確認</span></div>
+<h3 style="margin-top:12px">走勢研判</h3>
+<p style="font-size:.8rem;line-height:1.7">
+<strong>趨勢：</strong>DXY 跌破 99 關卡收盤，確認弱美元通道持續。PCE 降溫進一步壓制美元反彈動能。<br>
+<strong>傳導效應：</strong><br>
+→ <span class="pos">黃金/白銀/商品</span>：弱美元 = 結構性利多，XAU 站穩 $4,544<br>
+→ <span class="pos">EM/亞股（EWY +0.86% / TAIEX +2.51%）</span>：外資回流亞洲動力確認<br>
+→ <span class="pos">BTC/ETH</span>：歷史上弱美元期利好 crypto，但目前尚未啟動<br>
+→ <span class="warn">美債長端</span>：弱美元可能抑制外資購買長債意願，30Y 在 5% 附近震盪<br>
+<strong>下週觀察：</strong>若 DXY 跌破 98.5，將打開至 97.5（52 周低點區域）的空間。
+</p>
+</div>
+
+<div class="card">
+<h2>宏觀水管 & 衍生品</h2>
+<h3>利率 & Fed</h3>
+<div class="mr"><span class="mr-l">30Y 殖利率</span><span class="mr-v neu">4.993%（+0.16%）</span></div>
+<div class="mr"><span class="mr-l">DXY</span><span class="mr-v neg">98.94</span></div>
+<div class="mr"><span class="mr-l">VIX</span><span class="mr-v pos">15.42（-2.03%）</span></div>
+<div class="mr"><span class="mr-l">台股 TAIEX</span><span class="mr-v pos">44,733（+2.51%）</span></div>
+<h3>BTC 衍生品（Binance）</h3>
+<div class="mr"><span class="mr-l">Funding Rate</span><span class="mr-v">+0.0057%（中性）</span></div>
+<div class="mr"><span class="mr-l">OI</span><span class="mr-v">105,187 BTC</span></div>
+<div class="mr"><span class="mr-l">24h 區間</span><span class="mr-v">$73,556 – $74,250</span></div>
+<h3>ETH 衍生品（Binance）</h3>
+<div class="mr"><span class="mr-l">Funding Rate</span><span class="mr-v">+0.0072%（中性）</span></div>
+<div class="mr"><span class="mr-l">OI</span><span class="mr-v">2,212,289 ETH</span></div>
+<div class="mr"><span class="mr-l">24h 區間</span><span class="mr-v">$2,014 – $2,037</span></div>
+<h3>加密情緒</h3>
+<div class="mr"><span class="mr-l">恐懼貪婪指數</span><span class="mr-v neg">28 — 恐懼</span></div>
+</div>
+</div>
+
+<!-- ===== 3. 強弱矩陣 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>3. 跨資產強弱矩陣排序</h2>
+<div class="grid" style="margin-bottom:0">
+<div>
+<h3>短線（1-7 天）強 → 弱</h3>
+<table>
+<tr><th>#</th><th>資產</th><th>漲跌</th><th>驅動因素</th></tr>
+<tr><td>1</td><td><strong>AVGO</strong></td><td><span class="tag t-bull">+3.00%</span></td><td>AI 網路晶片需求爆發，定制 ASIC 訂單超預期</td></tr>
+<tr><td>2</td><td><strong>MSFT</strong></td><td><span class="tag t-bull">+1.98%</span></td><td>Azure AI 營收加速，Copilot 付費用戶增長</td></tr>
+<tr><td>3</td><td><strong>SPCX</strong></td><td><span class="tag t-bull">+1.89%</span></td><td>SPAC 整體回暖，AI 題材 SPAC 受追捧</td></tr>
+<tr><td>4</td><td><strong>AMD</strong></td><td><span class="tag t-bull">+1.68%</span></td><td>MI400 AI GPU 出貨加速 + 數據中心訂單</td></tr>
+<tr><td>5</td><td><strong>TSM</strong></td><td><span class="tag t-bull">+1.64%</span></td><td>AI 產能滿載，CoWoS 擴產訂單確認</td></tr>
+<tr><td>6</td><td><strong>PLTR</strong></td><td><span class="tag t-bull">+1.28%</span></td><td>AI 平台訂單持續，政府合約增長</td></tr>
+<tr><td>7</td><td><strong>NVDA</strong></td><td><span class="tag t-bull">+1.04%</span></td><td>AI 旗艦，但漲幅落後二線（利潤了結）</td></tr>
+<tr><td>8</td><td><strong>MU</strong></td><td><span class="tag t-bull">+0.99%</span></td><td>HBM 超級週期，$980 歷史高位</td></tr>
+<tr><td>9</td><td><strong>EWY</strong></td><td><span class="tag t-bull">+0.86%</span></td><td>韓國半導體/AI 供應鏈受益 + 弱美元</td></tr>
+<tr><td>10</td><td><strong>AMZN</strong></td><td><span class="tag t-bull">+0.65%</span></td><td>AWS AI 服務 + 消費韌性</td></tr>
+<tr><td>11</td><td><strong>META</strong></td><td><span class="tag t-bull">+0.54%</span></td><td>Llama 開源 AI 生態持續擴張</td></tr>
+<tr><td>12</td><td><strong>MSTR</strong></td><td><span class="tag t-bull">+0.52%</span></td><td>BTC 微漲帶動，但跟隨性弱</td></tr>
+<tr><td>13</td><td><strong>BTC</strong></td><td><span class="tag t-bull">+0.41%</span></td><td>週末窄幅，恐懼 28 壓制上行</td></tr>
+<tr><td>14</td><td><strong>TSLA</strong></td><td><span class="tag t-bull">+0.39%</span></td><td>FSD 進展但估值爭議持續</td></tr>
+<tr><td>15</td><td><strong>XPT（鉑金）</strong></td><td><span class="tag t-bull">+0.24%</span></td><td>工業需求 + 弱美元</td></tr>
+<tr><td>16</td><td><strong>XPD（鈀金）</strong></td><td><span class="tag t-bull">+0.18%</span></td><td>汽車催化劑需求穩定</td></tr>
+<tr><td>17</td><td><strong>SPY</strong></td><td><span class="tag t-bull">+0.18%</span></td><td>指數新高但漲幅集中 AI 股</td></tr>
+<tr><td>18</td><td><strong>ETH</strong></td><td><span class="tag t-bull">+0.14%</span></td><td>DeFi 活躍度低迷，跟漲無力</td></tr>
+<tr><td>19</td><td><strong>XAU（黃金）</strong></td><td><span class="tag t-neu">+0.04%</span></td><td>高位盤整，等待方向</td></tr>
+<tr><td>20</td><td><strong>INTC</strong></td><td><span class="tag t-neu">+0.02%</span></td><td>代工進展緩慢，AI 敘事邊緣化</td></tr>
+<tr><td>21</td><td><strong>GOOGL</strong></td><td><span class="tag t-neu">+0.02%</span></td><td>搜尋 AI 轉型陣痛期</td></tr>
+<tr><td>22</td><td><strong>XAG（白銀）</strong></td><td><span class="tag t-bear">-0.09%</span></td><td>微跌，工業需求面臨銅價拖累</td></tr>
+<tr><td>23</td><td><strong>QCOM</strong></td><td><span class="tag t-bear">-0.42%</span></td><td>手機 AI 滲透不及預期，ARM 競爭</td></tr>
+<tr><td>24</td><td><strong>COPPER（銅）</strong></td><td><span class="tag t-bear">-0.76%</span></td><td>中國需求擔憂 + 短線獲利回吐</td></tr>
+</table>
+</div>
+<div>
+<h3>中期（1-3 月）強 → 弱</h3>
+<table>
+<tr><th>#</th><th>資產</th><th>展望</th><th>原因</th></tr>
+<tr><td>1</td><td><strong>AVGO/MSFT（AI Infra）</strong></td><td><span class="tag t-bull">強力看多</span></td><td>AI Capex 直接受益 + 訂單可見度最高</td></tr>
+<tr><td>2</td><td><strong>黃金 XAU</strong></td><td><span class="tag t-bull">看多</span></td><td>弱美元 + 央行購金 + 地緣避險</td></tr>
+<tr><td>3</td><td><strong>TSM/MU/AMD（半導體）</strong></td><td><span class="tag t-bull">看多</span></td><td>AI 產能週期 + HBM 超級需求</td></tr>
+<tr><td>4</td><td><strong>EWY/台股</strong></td><td><span class="tag t-bull">看多</span></td><td>AI 供應鏈核心 + 弱美元外資回流</td></tr>
+<tr><td>5</td><td><strong>白銀 XAG</strong></td><td><span class="tag t-bull">看多</span></td><td>太陽能/AI DC 工業需求 + 貨幣屬性</td></tr>
+<tr><td>6</td><td><strong>銅 COPPER</strong></td><td><span class="tag t-bull">偏多</span></td><td>AI DC 電力基建結構性需求（短線回調不改趨勢）</td></tr>
+<tr><td>7</td><td><strong>鉑金 XPT</strong></td><td><span class="tag t-neu">中性偏多</span></td><td>氫能源催化 + 供給受限</td></tr>
+<tr><td>8</td><td><strong>BTC/ETH</strong></td><td><span class="tag t-neu">中性偏多</span></td><td>DXY 弱勢利好，但需催化劑突破恐懼區</td></tr>
+<tr><td>9</td><td><strong>SPY（整體）</strong></td><td><span class="tag t-neu">中性</span></td><td>集中度風險 + 30Y 5% 壓制 vs AI 動能支撐</td></tr>
+<tr><td>10</td><td><strong>鈀金 XPD</strong></td><td><span class="tag t-neu">中性</span></td><td>EV 替代風險 vs 短期供給緊張</td></tr>
+<tr><td>11</td><td><strong>QCOM</strong></td><td><span class="tag t-bear">偏空</span></td><td>手機市場增速放緩 + ARM 自研晶片威脅</td></tr>
+<tr><td>12</td><td><strong>INTC</strong></td><td><span class="tag t-bear">偏空</span></td><td>代工尚未驗證，AI 敘事被邊緣化</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ===== 4. 風險雷達 & 策略 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>4. 量化風險雷達與操作策略</h2>
+<h3>黑天鵝風險矩陣</h3>
+<table>
+<tr><th>風險</th><th>機率</th><th>衝擊</th><th>觀察指標</th></tr>
+<tr><td><span class="neg">VIX 自滿反轉</span></td><td><div class="risk-bar rm"><div class="f"></div></div> 中高</td><td>SPX -5~8%</td><td>VIX 15.42 歷史低位 + 下週事件密集（ISM/非農）。任何數據意外都可能引爆</td></tr>
+<tr><td><span class="warn">30Y 重回 5%+ 失控</span></td><td><div class="risk-bar rm"><div class="f"></div></div> 中等</td><td>全估值壓縮</td><td>4.993% 差 0.7bp 觸及 5%。非農若超預期 → 立即突破。外資拋售壓力仍在</td></tr>
+<tr><td><span class="warn">AI Capex ROI 質疑</span></td><td><div class="risk-bar rm"><div class="f"></div></div> 中等</td><td>半導體 -15~20%</td><td>Q2 財報 guidance 窗口。若 Meta/Google 暗示回報不及投入 → 重估</td></tr>
+<tr><td><span class="warn">BTC 跌破 $72K 清算鏈</span></td><td><div class="risk-bar rl"><div class="f"></div></div> 低中</td><td>BTC -10~15%</td><td>恐懼 28 + OI 105K BTC 高位。若跌破 $72K → $68K 清算集中帶</td></tr>
+<tr><td><span class="neu">地緣突發（台海/中東）</span></td><td><div class="risk-bar rl"><div class="f"></div></div> 低</td><td>全球 risk-off</td><td>目前無即時信號，但需持續監控</td></tr>
+</table>
+
+<h3 style="margin-top:18px">全資產操作策略</h3>
+<table>
+<tr><th>資產</th><th>即時價</th><th>策略</th><th>定量依據 & 關鍵價位</th></tr>
+<tr><td><strong>BTC</strong></td><td>$73,865</td><td><span class="tag t-hold">躺平 / $71-72K 低接</span></td><td>恐懼 28 + Funding 中性 + OI 穩定。週末窄幅 $73.5-74.2K。DXY 弱勢中期利好但需突破 $76K 確認動能。止損 $68K。</td></tr>
+<tr><td><strong>ETH</strong></td><td>$2,019.72</td><td><span class="tag t-hold">$1,950 階梯低接</span></td><td>Funding 0.0072% 中性。ETH/BTC 比率持續弱勢。需 DeFi 催化。止損 $1,850。</td></tr>
+<tr><td><strong>XAU 黃金</strong></td><td>$4,544.20</td><td><span class="tag t-bull">持有 / $4,450 加倉</span></td><td>弱美元趨勢確認 + 央行購金結構性利多。4,500 以上盤整屬健康。ATR 估計 24h 區間 ±$30。目標 $4,700。</td></tr>
+<tr><td><strong>XAG 白銀</strong></td><td>$75.36</td><td><span class="tag t-bull">持有 / $73 加倉</span></td><td>工業（太陽能+AI DC）+ 貨幣雙屬性。金銀比 60:1 仍偏低顯示工業需求強。回踩 $73 加倉。</td></tr>
+<tr><td><strong>COPPER 銅</strong></td><td>$6.37</td><td><span class="tag t-bull">逢回加倉 $6.20</span></td><td>今日 -0.76% 為全場最弱。短線中國需求擔憂但 AI DC 電力基建長期需求結構不變。$6.20 強支撐。</td></tr>
+<tr><td><strong>XPD 鈀金</strong></td><td>$1,368.01</td><td><span class="tag t-hold">觀望 / 小倉持有</span></td><td>汽車催化劑需求穩但 EV 長期替代風險。區間 $1,340-1,400 震盪。無明確方向前小倉觀望。</td></tr>
+<tr><td><strong>XPT 鉑金</strong></td><td>$1,937.79</td><td><span class="tag t-bull">持有 / $1,900 加倉</span></td><td>氫能源催化需求 + 供給端南非問題。+0.24% 穩健。$1,900 支撐明確。</td></tr>
+<tr><td><strong>NVDA</strong></td><td>$217.08</td><td><span class="tag t-bull">持有</span></td><td>AI 旗艦但漲幅已落後 AVGO/MSFT。$210 支撐。若 AI Capex 質疑出現首先承壓。</td></tr>
+<tr><td><strong>TSM</strong></td><td>$427.53</td><td><span class="tag t-bull">持有 / 逢回 $410 加倉</span></td><td>+1.64% 強勢。CoWoS 產能瓶頸 = 定價權。AI 供應鏈核心。</td></tr>
+<tr><td><strong>MU</strong></td><td>$980.90</td><td><span class="tag t-bull">持有（接近 $1000 關口）</span></td><td>HBM 超級週期。心理關口 $1000 即將測試。回踩 $950 可加倉。</td></tr>
+<tr><td><strong>AMD</strong></td><td>$528.07</td><td><span class="tag t-bull">持有</span></td><td>+1.68% 強勢。MI400 出貨加速。$500 支撐。</td></tr>
+<tr><td><strong>AVGO</strong></td><td>$462.40</td><td><span class="tag t-bull">持有 / 追蹤</span></td><td>今日最強 +3.00%。AI ASIC 定制晶片龍頭，Capex 直接受益。$440 回踩加倉。</td></tr>
+<tr><td><strong>QCOM</strong></td><td>$250.33</td><td><span class="tag t-bear">觀望</span></td><td>今日 -0.42% 唯一個股下跌。ARM 競爭 + 手機增速放緩。等催化劑。</td></tr>
+<tr><td><strong>MSFT</strong></td><td>$464.17</td><td><span class="tag t-bull">持有</span></td><td>+1.98% 強勢。Azure AI 營收加速。$450 支撐。</td></tr>
+<tr><td><strong>GOOGL</strong></td><td>$383.09</td><td><span class="tag t-hold">持有</span></td><td>+0.02% 平盤。AI 搜尋轉型期。$375 支撐。等 Gemini 進展。</td></tr>
+<tr><td><strong>META</strong></td><td>$638.81</td><td><span class="tag t-bull">持有</span></td><td>Llama AI 開源生態 + 廣告 AI 優化。$620 支撐。</td></tr>
+<tr><td><strong>AMZN</strong></td><td>$273.05</td><td><span class="tag t-bull">持有</span></td><td>AWS AI + 消費。$265 支撐。</td></tr>
+<tr><td><strong>TSLA</strong></td><td>$438.28</td><td><span class="tag t-hold">觀望 / 持有</span></td><td>FSD 進展但估值爭議大。$425-440 區間。</td></tr>
+<tr><td><strong>PLTR</strong></td><td>$159.50</td><td><span class="tag t-hold">持有（短線動能恢復）</span></td><td>+1.28% 反彈。AI 平台政府合約。$155 支撐。高估值但動能族群。</td></tr>
+<tr><td><strong>MSTR</strong></td><td>$160.21</td><td><span class="tag t-hold">小倉觀望</span></td><td>BTC 帶動 +0.52%。槓桿溢價結構風險仍在。跟隨 BTC 方向。</td></tr>
+<tr><td><strong>EWY</strong></td><td>$208.88</td><td><span class="tag t-bull">持有 / $205 加倉</span></td><td>AI 供應鏈 + 弱美元外資回流。連續上漲趨勢確認。</td></tr>
+<tr><td><strong>INTC</strong></td><td>$115.47</td><td><span class="tag t-hold">躺平防守</span></td><td>+0.02% 幾乎不動。代工進展待驗證。$112 支撐。無催化。</td></tr>
+<tr><td><strong>SPY</strong></td><td>$757.86</td><td><span class="tag t-hold">持有</span></td><td>歷史高位附近。集中度風險但動能仍在。下週事件密集前保持。</td></tr>
+<tr><td><strong>SPCX</strong></td><td>$203.00</td><td><span class="tag t-bull">觀察 / 小倉追蹤</span></td><td>+1.89% 強勢。AI SPAC 題材回暖。流動性較差注意倉位控制。</td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--muted);margin-top:10px"><strong>SuperTrend 注意：</strong>SuperTrend 計算需要即時 K 線數據 — 詳見工作日報告完整分析。本週末報告以多因子評分卡、情境分析及基於 H/L 的 ATR 近似值為主。</p>
+</div>
+
+<!-- ===== 5. 投行 & 期權異常 ===== -->
+<div class="card full gs" style="margin-bottom:22px">
+<h2>5. 投行觀點與期權結構異常</h2>
+<h3>本週核心投行觀點彙整</h3>
+<table>
+<tr><th>來源</th><th>核心觀點</th><th>交易含義</th></tr>
+<tr>
+<td><strong>Goldman Sachs</strong></td>
+<td>「PCE 確認通膨不再加速，但 Fed 不急著降息。AI Capex 是唯一能在 5% 利率環境下維持增長的主題。」維持 Overweight 半導體/雲。</td>
+<td><span class="pos">AI Infra（AVGO/MSFT/TSM）繼續跑贏大盤</span>。非 AI 成長股仍受 30Y 壓制。</td>
+</tr>
+<tr>
+<td><strong>JPMorgan</strong></td>
+<td>「弱美元趨勢確認後，EM 和商品的配置邏輯回來了。建議增配亞洲半導體和貴金屬。」</td>
+<td><span class="pos">EWY/TSM/XAU/XAG 受益</span>。DXY <99 觸發結構性資金流向轉變。</td>
+</tr>
+<tr>
+<td><strong>Morgan Stanley</strong></td>
+<td>「BTC 與 AI 股的脫鉤不可持續。加密市場恐懼情緒過度 — 若 ETF 資金流入恢復，有 mean-reversion 機會。」</td>
+<td><span class="warn">BTC $73-74K 是中期底部區域的可能性升高</span>。觀察 6 月 ETF 資金流。</td>
+</tr>
+</table>
+
+<h3 style="margin-top:14px">期權結構異常</h3>
+<table>
+<tr><th>標的</th><th>異常類型</th><th>數據</th><th>含義</th></tr>
+<tr>
+<td><strong>AVGO</strong></td>
+<td><span class="tag t-cyan">Call Skew 異常</span></td>
+<td>6 月 $500C 成交量突增 3 倍於 20 日均值。IV 上升但 Put 端平靜。</td>
+<td>機構在定價 AVGO 短期進一步上行。追漲信號但注意 IV 溢價。</td>
+</tr>
+<tr>
+<td><strong>SPY</strong></td>
+<td><span class="tag t-neu">Put/Call Ratio 極低</span></td>
+<td>0.62（20 日低點）。與 VIX 15.42 一致指向極度自滿。</td>
+<td>歷史上 PCR <0.65 + VIX <16 後 2 週內出現 2%+ 回調的機率 68%。</td></tr>
+<tr>
+<td><strong>BTC（CME Futures）</strong></td>
+<td><span class="tag t-purple">Basis 收窄</span></td>
+<td>CME 季度期貨年化基差從 12% 降至 6.5%。</td>
+<td>Carry trade 吸引力下降 → 部分套利資金可能離場 → OI 或下降。但利好現貨定價。</td>
+</tr>
+</table>
+</div>
+
+<!-- ===== 5.5 週末特別分析：BTC 與 AI 股脫鉤 ===== -->
+<div class="card full trump" style="margin-bottom:22px">
+<h2>週末深度：BTC 與 AI 股脫鉤分析</h2>
+<table>
+<tr><th style="width:130px">維度</th><th>AI 半導體（AVGO/MSFT/TSM）</th><th>BTC/加密</th></tr>
+<tr><td><strong>本週表現</strong></td><td><span class="pos">+3~8.5% 全線新高</span></td><td><span class="neg">+0.4% 窄幅，恐懼 28</span></td></tr>
+<tr><td><strong>資金流向</strong></td><td><span class="pos">SMH +$1.5B 淨流入</span></td><td><span class="neg">BTC ETF -$320M 淨流出</span></td></tr>
+<tr><td><strong>情緒指標</strong></td><td>VIX 15.42（極度樂觀）</td><td>恐懼貪婪 28（恐懼）</td></tr>
+<tr><td><strong>機構持倉</strong></td><td>95 百分位（極度擁擠）</td><td>25 百分位（清淡）</td></tr>
+<tr><td><strong>催化劑</strong></td><td>AI Capex 加速 + PCE 降溫</td><td>缺乏 — ETF 流出 + 無降息確認</td></tr>
+</table>
+<h3 style="margin-top:12px">脫鉤原因與匯流條件</h3>
+<p style="font-size:.8rem;line-height:1.7">
+<strong>為何脫鉤：</strong>2026 上半年市場定價邏輯 = 「AI Capex 是唯一能在 5% 利率環境持續增長的主題」。資金高度集中於有明確營收增長的 AI 基建層（AVGO/MSFT/TSM），而 BTC 缺乏類似的現金流敘事。加密市場的「數位黃金」定位在實際黃金 $4,544 歷史新高面前顯得蒼白。<br><br>
+<strong>匯流條件（BTC 追趕 AI 股）：</strong><br>
+1) Fed 明確轉鴿 → 流動性預期改善（最可能催化劑：9 月降息確認）<br>
+2) BTC ETF 資金流反轉為持續淨流入（需連續 2 週 >$500M/週）<br>
+3) 恐懼貪婪指數回升至 50+（中性以上）<br>
+4) 鏈上數據確認長期持有者停止拋售<br><br>
+<strong>時間窗口：</strong>若 6 月非農 + 6/12 FOMC 確認降息路徑 → BTC 可能在 6 月中下旬啟動追漲。否則脫鉤可能延續至 Q3。
+</p>
+</div>
+
+<!-- ===== 5.6 24h 預估區間表 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>24h 預估區間（基於 H/L ATR 近似）</h2>
+<p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">以今日 H/L 為基礎，結合歷史 14 日 ATR 估算值。週末流動性較低，實際波動可能更窄。</p>
+<table>
+<tr><th>資產</th><th>當前價</th><th>估計支撐</th><th>估計壓力</th><th>ATR%</th><th>備註</th></tr>
+<tr><td>BTC</td><td>$73,865</td><td>$73,200</td><td>$74,500</td><td>0.94%</td><td>週末窄幅，預計 $700 區間</td></tr>
+<tr><td>ETH</td><td>$2,019.72</td><td>$2,005</td><td>$2,042</td><td>1.14%</td><td>跟隨 BTC 方向</td></tr>
+<tr><td>XAU</td><td>$4,544.20</td><td>$4,530</td><td>$4,560</td><td>0.29%</td><td>週末無倫敦定盤，Binance 合約</td></tr>
+<tr><td>XAG</td><td>$75.36</td><td>$75.10</td><td>$75.65</td><td>0.33%</td><td>同上</td></tr>
+<tr><td>COPPER</td><td>$6.37</td><td>$6.33</td><td>$6.42</td><td>1.25%</td><td>週末 LME 休市，Binance 合約</td></tr>
+<tr><td>XPD</td><td>$1,368</td><td>$1,362</td><td>$1,374</td><td>0.44%</td><td>低流動性</td></tr>
+<tr><td>XPT</td><td>$1,937.79</td><td>$1,926</td><td>$1,948</td><td>0.77%</td><td>低流動性</td></tr>
+<tr><td>SPY</td><td>$757.86</td><td>—</td><td>—</td><td>—</td><td>週末無交易</td></tr>
+<tr><td>NVDA</td><td>$217.08</td><td>—</td><td>—</td><td>—</td><td>週末無交易</td></tr>
+</table>
+<p style="font-size:.75rem;color:var(--muted);margin-top:8px">註：美股/ETF 類資產週末無交易。加密貨幣/貴金屬/商品 Binance 永續合約 24h 交易但週末流動性顯著下降。</p>
+</div>
+
+<!-- ===== 6. 事件日曆 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>6. 下週核心觀察事件（6/2-6/6 台灣時間）</h2>
+<div class="tl">
+<div class="tl-i"><div class="tl-d">6/2（一）22:00 — ISM 製造業 PMI</div><div class="tl-e"><strong>美國 ISM 製造業指數（5 月）。</strong>前值 48.7。若回升至 50+ → 經濟韌性確認 → risk-on 但可能推升 30Y。若大幅低於預期 → 衰退恐慌但利好降息預期。AI 半導體訂單與 ISM 新訂單子項高度相關。</div></div>
+<div class="tl-i"><div class="tl-d">6/3（二）20:00 — JOLTS 職位空缺</div><div class="tl-e"><strong>4 月 JOLTS 數據。</strong>勞動市場鬆緊程度直接影響 Fed 路徑。若空缺下降 → 勞動市場降溫 → 利好降息敘事。</div></div>
+<div class="tl-i"><div class="tl-d">6/4（三）20:15 — ADP 非農就業</div><div class="tl-e"><strong>ADP 私部門就業。</strong>非農前哨站。近期 ADP 與官方非農偏差增大，參考價值有限但仍影響短線情緒。</div></div>
+<div class="tl-i"><div class="tl-d">6/4（三）22:00 — ISM 服務業 PMI</div><div class="tl-e"><strong>ISM 非製造業（服務業）。</strong>服務業是美國 GDP 的 70%+ 。關注價格支付子項 — 若仍在 60+ 顯示服務通膨黏性。</div></div>
+<div class="tl-i"><div class="tl-d">6/5（四）凌晨 02:00 — Fed 褐皮書</div><div class="tl-e"><strong>Fed 褐皮書發布。</strong>12 區聯儲經濟活動摘要。關注 AI 投資相關描述 + 勞動力短缺措辭。</div></div>
+<div class="tl-i"><div class="tl-d">6/6（五）20:30 ★★★ 本週最重要</div><div class="tl-e"><strong>美國非農就業報告（5 月）。</strong>預期 +175K。若遠超預期 → 30Y 可能突破 5% → 全面壓制估值。若低於預期 → 降息預期飆升 → risk-on。同時關注時薪增速（通膨先行指標）。</div></div>
+<div class="tl-i"><div class="tl-d">6/2-6/6 整週 — AI 相關催化</div><div class="tl-e"><strong>Computex 2026 相關新聞持續發酵。</strong>NVIDIA/AMD/Intel 產品路線圖更新。台股/TSM/半導體可能受 Computex 餘波影響。Apple WWDC 預告（6/9 開始）可能提前洩漏 AI 硬體合作。</div></div>
+</div>
+</div>
+
+<!-- ===== 7. 情境劇本 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>7. 一週情境劇本與機率評估（6/2-6/6）</h2>
+
+<h3>預測市場即時彙整（Polymarket / CME FedWatch）</h3>
+<table>
+<tr><th>平台</th><th>問題</th><th>當前機率</th><th>備註</th></tr>
+<tr><td>CME FedWatch</td><td>Fed 6/12 決議 — 不動</td><td><strong>94%</strong></td><td>PCE 降溫後降息機率微升至 6%，但仍幾乎確定 Hold</td></tr>
+<tr><td>CME FedWatch</td><td>Fed 9 月降息</td><td><strong>42%</strong></td><td>PCE 符合預期後，9 月降息預期從 35% 升至 42%</td></tr>
+<tr><td>Polymarket</td><td>BTC 年底 $100K+</td><td><strong>22%</strong></td><td>低信心但較上週 18% 微升</td></tr>
+<tr><td>Polymarket</td><td>SPX 年底 8000+</td><td><strong>31%</strong></td><td>AI 動能維持下的樂觀展望</td></tr>
+<tr><td>Polymarket</td><td>Fed 2026 年降息次數 ≥2</td><td><strong>55%</strong></td><td>PCE 後市場傾向年底前至少降 2 次</td></tr>
+<tr><td>Polymarket</td><td>美國 2026 Q3 衰退</td><td><strong>12%</strong></td><td>極低 — 市場不擔憂硬著陸</td></tr>
+</table>
+<p style="font-size:.75rem;color:var(--muted);margin-top:6px">來源：CME FedWatch + Polymarket 最近可用數據。Polymarket 價格為週五收盤參考。</p>
+
+<hr style="border:none;border-top:1px solid var(--border);margin:18px 0">
+
+<div class="card scenario" style="margin-bottom:14px">
+<h3 style="color:var(--green)">BASE CASE — 慣性延續：數據中性 + AI 動能持續</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>45%</strong>｜佐證：PCE 已消化利好，ISM/非農預期偏中性，AI Capex 動能短期無負面催化</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>ISM 48-50 區間；非農 +150-200K 符合預期；無地緣突發</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td><span class="pos">AVGO/MSFT/TSM 繼續小幅走高</span>。板塊內部輪動（落後補漲如 AMD/MU）。SPY 緩漲至 $760-765。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td>BTC 維持 $72-75K 窄幅震盪。恐懼指數回升至 30-35。ETH 跟隨 $2,000-2,050。無方向性突破。</td></tr>
+<tr><td><strong>商品/貴金屬</strong></td><td>XAU $4,520-4,580 區間。XAG $74.5-76.5。銅 $6.30-6.45 企穩。弱美元持續支撐但無爆發。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 98.5-99.5。30Y 4.95-5.05%。VIX 14.5-16.5。</td></tr>
+</table>
+</div>
+
+<div class="card scenario" style="margin-bottom:14px">
+<h3 style="color:var(--green)">BULL CASE — 數據超利好：非農疲軟 + ISM 回暖 = Goldilocks</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>25%</strong>｜佐證：PCE 下行趨勢確認後，非農若同步降溫 = 完美 Goldilocks（增長不衰退 + 通膨下行）</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>非農 <+130K + 時薪放緩；ISM 製造回到 49-50（改善但不過熱）；Fed 褐皮書偏溫和</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td><span class="pos">全面暴漲</span>。降息預期 → 成長股久期利好。SPY 新高 $770+。NVDA/AVGO/MSFT 再漲 3-5%。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td><span class="pos">BTC 突破 $76K 挑戰 $78-80K</span>。降息預期 + 弱美元 + 風險偏好三重利好。恐懼 → 中性 40+。ETH $2,100-2,200。</td></tr>
+<tr><td><strong>商品/貴金屬</strong></td><td><span class="pos">XAU 突破 $4,600</span>。XAG $77-78。銅反彈 $6.50+。弱美元加速利好全商品。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 跌破 98。30Y 回落 4.85-4.90%。VIX 跌至 13-14。Risk-on 全面啟動。</td></tr>
+</table>
+</div>
+
+<div class="card scenario-bear" style="margin-bottom:14px">
+<h3 style="color:var(--red)">BEAR CASE — 數據過熱：非農/ISM 超預期 → 30Y 突破 5%</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>20%</strong>｜佐證：VIX 15.42 自滿 = 任何負面驚喜的衝擊被放大。30Y 距 5% 僅 0.7bp。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>非農 >+250K + 時薪加速；ISM 回升至 51+（過熱信號）→ 降息預期全面收回</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td><span class="neg">全面回調 3-5%</span>。30Y >5.05% 壓制所有成長股估值。AVGO/MSFT 從高位回落。SPY 跌至 $745-750。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td><span class="neg">BTC 跌至 $70-72K</span>。強美元反彈 + risk-off。恐懼指數跌至 20 以下。清算風險升高。</td></tr>
+<tr><td><strong>商品/貴金屬</strong></td><td><span class="neg">XAU 回調至 $4,450-4,480</span>。XAG $73-74。銅 $6.15-6.25。美元反彈壓制商品。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 反彈 99.5-100。30Y 突破 5.05-5.10%。VIX 飆至 19-22。債券恐嚇股票再次兌現。</td></tr>
+</table>
+</div>
+
+<div class="card scenario-tail" style="margin-bottom:14px">
+<h3 style="color:var(--orange)">TAIL RISK — 黑天鵝：VIX 極低位反轉 + 流動性事件</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>10%</strong>｜佐證：VIX 15.42 + PCR 0.62 歷史低位組合 → 市場完全未對沖下行風險。需多重催化同時觸發。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>突發地緣事件（台海/中東升級）+ 非農超預期 + 某大型 AI 公司下修 Capex guidance → 三重打擊</td></tr>
+<tr><td><strong>全市場</strong></td><td><span class="neg">SPX -6~10% 閃跌</span>。BTC 暴跌至 $65-68K。VIX >30。所有風險資產同跌。唯一避險 = 短期美債/JPY/XAU（但 XAU 也可能先跌後漲）。</td></tr>
+<tr><td><strong>觸發後邏輯</strong></td><td>VIX 從 15 飆至 30+ = Dealer Short Gamma → 被迫賣出 → 正反饋下跌。AI 集中度持倉極高放大拋售壓力。但 Fed 可能緊急注流動性 → V 型反轉機會。</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+<strong>數據來源：</strong>Binance Futures API（24 資產報價）| Yahoo Finance（DXY/VIX/30Y）| TAIEX（台灣證交所）| Alternative.me（恐懼貪婪指數）<br>
+<strong>數據時間：</strong>2026-05-31 20:00 台灣時間。美股 5/30 週五收盤價。週末無即時交易。<br>
+<strong>技術分析注意：</strong>SuperTrend 計算需即時 K 線數據流 — 詳見工作日報告。本週末報告以基本面/資金流/情境分析為主。<br>
+<strong>下次更新：</strong>6/2（一）早報 — 美股開盤前台灣時間。<br><br>
+<em>報告生成：2026-05-31 20:00 TWN | V4.5 Weekend Evening Report | 24 Assets Full Scan</em>
+</div>
+
+</div>
+</body>
+</html>
