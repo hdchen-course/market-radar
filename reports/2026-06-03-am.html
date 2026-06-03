@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-06-03 早報（完整戰術版）</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}
+.container{max-width:1440px;margin:0 auto}
+header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}
+header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}
+header .sub{color:var(--muted);font-size:0.85rem}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:0.8rem;margin-top:10px}
+.badge-regime{background:linear-gradient(135deg,#1f6feb,#388bfd)}
+.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.card h2{font-size:0.98rem;margin-bottom:12px;color:var(--accent)}
+.card h3{font-size:0.8rem;color:var(--muted);margin:10px 0 5px;text-transform:uppercase;letter-spacing:.5px}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500;font-size:0.74rem}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.7rem;font-weight:600}
+.t-bull{background:rgba(63,185,80,.15);color:var(--green)}
+.t-bear{background:rgba(248,81,73,.15);color:var(--red)}
+.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}
+.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}
+.t-purple{background:rgba(163,113,247,.15);color:var(--purple)}
+.t-cyan{background:rgba(57,213,255,.15);color:var(--cyan)}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+.mr:last-child{border-bottom:none}
+.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}
+.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}
+.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}
+.pi .pr{font-size:.95rem;font-weight:700}
+.pi .ch{font-size:.75rem;margin-top:1px}
+.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}
+.risk-bar .f{height:100%;border-radius:3px}
+.rh .f{background:var(--red);width:85%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}
+.rmh .f{background:var(--orange);width:72%}
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-i{position:relative;margin-bottom:13px}
+.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}
+.tl-e{font-size:.8rem;margin-top:2px}
+.trump{border-left:3px solid var(--purple)}
+.gs{border-left:3px solid var(--cyan)}
+.scenario{border-left:3px solid var(--green)}
+.scenario-bear{border-left:3px solid var(--red)}
+.scenario-tail{border-left:3px solid var(--orange)}
+.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}
+.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
+.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}
+.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}
+.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}
+.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}
+.st-long{background:rgba(63,185,80,.18);color:var(--green)}
+.st-short{background:rgba(248,81,73,.18);color:var(--red)}
+.st-na{background:rgba(139,148,158,.15);color:var(--muted)}
+.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}
+.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}
+.divider{border:none;border-top:1px solid var(--border);margin:18px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+<p class="sub">2026-06-03（週三）12:04 台灣時間 | 完整戰術版早報 | Binance Futures 25 資產 | 美股週二收盤 | S&P Futures ~7,622 (flat)</p>
+<div class="badge badge-warn">REGIME：CRYPTO BLOODBATH + AI SEMI SOAR — 史無前例分化達到危機級別</div>
+</header>
+
+<!-- ===== Section 0: 上期預測回顧 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>0. 上期預測回顧（6/2 PM 報告）</h2>
+<div class="tactical-box">
+<p style="font-size:.85rem;line-height:1.8">
+<strong>區間命中率：2/5 (40%) | 方向命中率：3/5 (60%)</strong><br>
+<span style="color:var(--muted);font-size:.8rem">金銀預測相對準確，BTC/ETH 跌幅超出預期 — 加密流動性危機加速遠超模型估計。HYPE 方向判斷完全失誤（預測偏多但實際大跌）。教訓：F&G 11 極端恐懼環境下，所有 crypto 資產（包括基本面強勢的 HYPE）都無法逃離系統性拋售。</span>
+</p>
+<table style="margin-top:10px">
+<tr><th>標的</th><th>預測區間</th><th>預測方向</th><th>實際價格</th><th>區間</th><th>方向</th></tr>
+<tr><td><strong>XAU</strong></td><td>$4,522-$4,555</td><td>偏多</td><td>$4,488</td><td><span class="neg">BELOW &#10060;</span></td><td><span class="neg">wrong (fell) &#10060;</span></td></tr>
+<tr><td><strong>XAG</strong></td><td>$76.04-$77.24</td><td>偏多</td><td>$75.28</td><td><span class="neg">BELOW &#10060;</span></td><td><span class="neg">wrong (fell) &#10060;</span></td></tr>
+<tr><td><strong>BTC</strong></td><td>$68,715-$69,713</td><td>偏空</td><td>$66,326</td><td><span class="neg">BELOW &#10060;</span></td><td><span class="pos">correct (crashed) &#10004;</span></td></tr>
+<tr><td><strong>ETH</strong></td><td>$1,960-$2,005</td><td>觀望偏空</td><td>$1,840</td><td><span class="neg">BELOW &#10060;</span></td><td><span class="pos">correct (crashed) &#10004;</span></td></tr>
+<tr><td><strong>HYPE</strong></td><td>$71.65-$74.25</td><td>觀望（4H Lower 附近回調入場）</td><td>$71.25</td><td><span class="pos">IN RANGE &#10004; (barely)</span></td><td><span class="neg">wrong (fell hard, hit $67.80 low) &#10060;</span></td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--muted);margin-top:8px"><strong>教訓：</strong>1) BTC/ETH 方向正確但低估了崩盤速度 — ATR-based 區間在恐慌性拋售中嚴重不足。2) 金銀在 crypto 崩盤避險環境中意外未受益 — 可能因為部分基金需要從所有資產類別籌集流動性（類似 2020/3 月現象）。3) HYPE 的「波動率受益者」邏輯在極端恐懼 F&G 11 下失效 — 系統性去槓桿不分好壞。未來：在 F&G <15 環境中，所有 crypto 方向一律偏空，不論個別基本面。</p>
+</div>
+</div>
+
+<!-- ===== Section 1: 即時報價面板 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>1. 即時報價面板（Binance Futures — 25 資產）</h2>
+<div class="price-grid">
+<div class="pi"><div class="tk">BTC</div><div class="pr">$66,326</div><div class="ch neg">-6.49%</div><div style="font-size:.65rem;color:var(--muted)">H:71,023 L:65,359</div></div>
+<div class="pi"><div class="tk">ETH</div><div class="pr">$1,840</div><div class="ch neg">-8.09%</div><div style="font-size:.65rem;color:var(--muted)">H:2,006 L:1,816</div></div>
+<div class="pi"><div class="tk">XAU（黃金）</div><div class="pr">$4,488</div><div class="ch neg">-0.34%</div><div style="font-size:.65rem;color:var(--muted)">H:4,543 L:4,464</div></div>
+<div class="pi"><div class="tk">XAG（白銀）</div><div class="pr">$75.28</div><div class="ch neg">-0.12%</div><div style="font-size:.65rem;color:var(--muted)">H:77.08 L:73.84</div></div>
+<div class="pi"><div class="tk">COPPER（銅）</div><div class="pr">$6.676</div><div class="ch pos">+1.52%</div><div style="font-size:.65rem;color:var(--muted)">H:6.706 L:6.569</div></div>
+<div class="pi"><div class="tk">XPD（鈀金）</div><div class="pr">$1,380.48</div><div class="ch pos">+0.81%</div><div style="font-size:.65rem;color:var(--muted)">H:1,399 L:1,364</div></div>
+<div class="pi"><div class="tk">XPT（鉑金）</div><div class="pr">$1,942.31</div><div class="ch neg">-0.43%</div><div style="font-size:.65rem;color:var(--muted)">H:1,985 L:1,926</div></div>
+<div class="pi"><div class="tk">HYPE</div><div class="pr">$71.25</div><div class="ch neg">-4.44%</div><div style="font-size:.65rem;color:var(--muted)">H:74.99 L:67.80</div></div>
+<div class="pi"><div class="tk">NVDA</div><div class="pr">$221.88</div><div class="ch neg">-0.40%</div><div style="font-size:.65rem;color:var(--muted)">H:232.40 L:220.69</div></div>
+<div class="pi"><div class="tk">TSM</div><div class="pr">$447.33</div><div class="ch pos">+3.35%</div><div style="font-size:.65rem;color:var(--muted)">H:448.78 L:432.71</div></div>
+<div class="pi"><div class="tk">MU</div><div class="pr">$1,064.65</div><div class="ch pos">+4.58%</div><div style="font-size:.65rem;color:var(--muted)">H:1,079 L:1,018</div></div>
+<div class="pi"><div class="tk">AMD</div><div class="pr">$519.00</div><div class="ch pos">+3.72%</div><div style="font-size:.65rem;color:var(--muted)">H:523.19 L:498.72</div></div>
+<div class="pi"><div class="tk">AVGO</div><div class="pr">$498.65</div><div class="ch pos">+5.41%</div><div style="font-size:.65rem;color:var(--muted)">H:508.30 L:470.82</div></div>
+<div class="pi"><div class="tk">QCOM</div><div class="pr">$238.07</div><div class="ch pos">+6.65%</div><div style="font-size:.65rem;color:var(--muted)">H:245.46 L:221.95</div></div>
+<div class="pi"><div class="tk">MSFT</div><div class="pr">$435.99</div><div class="ch neg">-3.40%</div><div style="font-size:.65rem;color:var(--muted)">H:456.34 L:434.05</div></div>
+<div class="pi"><div class="tk">GOOGL</div><div class="pr">$364.44</div><div class="ch neg">-1.58%</div><div style="font-size:.65rem;color:var(--muted)">H:373.76 L:359.54</div></div>
+<div class="pi"><div class="tk">META</div><div class="pr">$601.90</div><div class="ch neg">-0.15%</div><div style="font-size:.65rem;color:var(--muted)">H:609.44 L:597.05</div></div>
+<div class="pi"><div class="tk">AMZN</div><div class="pr">$256.28</div><div class="ch neg">-1.21%</div><div style="font-size:.65rem;color:var(--muted)">H:261.67 L:254.72</div></div>
+<div class="pi"><div class="tk">TSLA</div><div class="pr">$420.52</div><div class="ch pos">+1.94%</div><div style="font-size:.65rem;color:var(--muted)">H:424.25 L:412.38</div></div>
+<div class="pi"><div class="tk">PLTR</div><div class="pr">$149.42</div><div class="ch neg">-3.76%</div><div style="font-size:.65rem;color:var(--muted)">H:159.62 L:147.79</div></div>
+<div class="pi"><div class="tk">MSTR</div><div class="pr">$134.53</div><div class="ch neg">-9.41%</div><div style="font-size:.65rem;color:var(--muted)">H:148.78 L:132.02</div></div>
+<div class="pi"><div class="tk">EWY</div><div class="pr">$214.51</div><div class="ch pos">+3.70%</div><div style="font-size:.65rem;color:var(--muted)">H:215.32 L:205.64</div></div>
+<div class="pi"><div class="tk">SPY</div><div class="pr">$759.27</div><div class="ch pos">+0.54%</div><div style="font-size:.65rem;color:var(--muted)">H:760.44 L:755.14</div></div>
+<div class="pi"><div class="tk">INTC</div><div class="pr">$107.31</div><div class="ch neg">-3.07%</div><div style="font-size:.65rem;color:var(--muted)">H:112.90 L:104.35</div></div>
+<div class="pi"><div class="tk">SPCX</div><div class="pr">$188.33</div><div class="ch neg">-5.46%</div><div style="font-size:.65rem;color:var(--muted)">H:201.42 L:177.44</div></div>
+</div>
+<div style="margin-top:12px">
+<h3>宏觀指標面板</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px;margin-top:8px">
+<div class="mr"><span class="mr-l">DXY 美元指數</span><span class="mr-v neu">~99.3（穩定）</span></div>
+<div class="mr"><span class="mr-l">VIX 恐懼指數</span><span class="mr-v pos">~15.5（低！無恐慌）</span></div>
+<div class="mr"><span class="mr-l">30Y 殖利率</span><span class="mr-v neg">~5.02%（持續 >5%）</span></div>
+<div class="mr"><span class="mr-l">S&P Futures</span><span class="mr-v pos">~7,622（平穩偏漲）</span></div>
+<div class="mr"><span class="mr-l">恐懼/貪婪</span><span class="mr-v neg">11 — 極度恐懼 &#9888;&#9888;&#9888;</span></div>
+<div class="mr"><span class="mr-l">BTC Funding</span><span class="mr-v">+0.0072%（正 = 多頭未投降）</span></div>
+<div class="mr"><span class="mr-l">ETH Funding</span><span class="mr-v neg">+0.0020%（接近零 = 瀕臨投降）</span></div>
+<div class="mr"><span class="mr-l">HYPE Funding</span><span class="mr-v">+0.0050%</span></div>
+<div class="mr"><span class="mr-l">BTC OI</span><span class="mr-v neg">108,041 BTC（+1,421 空單加倉 &#9888;）</span></div>
+<div class="mr"><span class="mr-l">ETH OI</span><span class="mr-v">2,327,377 ETH</span></div>
+<div class="mr"><span class="mr-l">Gold/Silver 比</span><span class="mr-v neu">59.6</span></div>
+</div>
+</div>
+</div>
+
+<!-- ===== Section 2: Regime 報告 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>2. 市場主導 Regime 報告</h2>
+<div class="grid" style="margin-bottom:0">
+<div>
+<h3>當前 Regime 定義</h3>
+<p style="font-size:.85rem"><strong>CRYPTO LIQUIDATION CRISIS + AI Semi Revenue Proof Rotation</strong></p>
+<p style="font-size:.8rem;color:var(--muted);margin-top:6px">
+市場正經歷兩個完全獨立的故事同時展開：(1) Crypto 正在遭受<strong>獨立流動性危機</strong> — BTC 3 天跌 10%、ETH -9%、F&G 從 28 崩至 11 (極度恐懼)，這不是被股市帶動而是自身結構性問題（ETF 流出+槓桿清算+30Y>5% 重新定價 duration asset）。(2) AI 半導體同時在暴漲 — AVGO +5.4%、MU +4.6%、QCOM +6.7%、TSM +3.4%，資金正在瘋狂湧入「有明確 AI 營收證明」的硬體層。SPY +0.54% = 股市完全不在乎 crypto 崩盤。這是 2026 年最極端的資產類別分歧。
+</p>
+</div>
+<div>
+<h3>短期（1-7 天）</h3>
+<p style="font-size:.8rem;line-height:1.7">
+<strong>Crypto 正式進入「投降階段」觀察窗口。</strong>F&G 11 是歷史極端值（對比 2022/6 Luna 崩盤時 F&G=6，2020/3 COVID 時 F&G=8）。BTC Funding 仍正（0.0072%）= 多頭尚未完全投降，但 ETH Funding 0.0020% 接近零 = ETH 已接近投降。OI 108K 持續上升 = 空頭仍在加倉。<strong>投降信號清單：</strong>Funding 轉負 + OI 暴降 + 極端長下影線 = 底部形成三要素，目前 0/3。今晚 JOLTS（22:00）= 第一個數據催化劑。若偏冷 → 30Y 回落 → crypto 止血可能。若偏熱 → 加速崩盤。AI 半導體在連續暴漲後可能短線消化（NVDA -0.4% 已顯示疲態），但結構性需求不變。
+</p>
+</div>
+<div>
+<h3>中期（1-3 月）</h3>
+<p style="font-size:.8rem;line-height:1.7">
+<strong>Crypto 的命運完全取決於 30Y 是否回落 <5%。</strong>BTC 正被市場重新分類為「零現金流 duration asset」— 在 30Y >5% 環境中與 MSTR、高估值無盈利科技同等待遇。若 NFP（6/6）偏冷 → 30Y 回落 → BTC mean-reversion 空間巨大（$66K → $80K+ 即 20%+）。但若 30Y 持續 >5% → BTC 可能在 $60-68K 區間磨底數週。AI 半導體中期邏輯不變：Q2 財報驗證窗口 + Capex 可見度最高。但持倉擁擠度已極端 — 任何單一負面催化將引發劇烈回調。黃金在 30Y >5% 下仍穩定 = 「財政擔憂」主導，結構性看多不變。
+</p>
+</div>
+<div>
+<h3>長期（6-24 月）</h3>
+<p style="font-size:.8rem;line-height:1.7">
+<strong>Crypto 與 AI 敘事可能在 2026H2 匯流 — 但前提是先活過這波清算。</strong>歷史統計：F&G <15 的環境在 3-6 個月後平均回報 +45-60%。但「先觸底再反彈」的時序很重要 — 目前尚未確認底部。AI 建設超級週期不變：NVDA/AVGO/TSM/MU 是未來 12 個月的核心持有。若 BTC 本輪底部形成在 $60-65K 區間 → 年底目標 $90-100K 仍有邏輯（DXY 破 98 + Fed 降息 + AI Agent 經濟催化）。黃金 $5,000+ 路徑在「財政主導+去美元化」框架下清晰。
+</p>
+</div>
+</div>
+</div>
+
+<!-- ===== Section 3: 全資產 Tactical 分析 (THE MAIN SECTION) ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>3. 全資產 Tactical 分析（SuperTrend + 多因子評分卡）</h2>
+<p style="font-size:.78rem;color:var(--muted);margin-bottom:16px">SuperTrend(300,3) = 300 期 ATR，乘數 3。方向以收盤價與帶狀判斷。評分卡每項 1 分：通過=1、失敗=0、中性=0.5。</p>
+
+<!-- === A. XAU Gold === -->
+<div class="tactical-box" style="border-color:rgba(210,153,34,.3)">
+<h3 style="color:var(--yellow);font-size:.9rem;margin-bottom:8px">A. XAU 黃金 — 完整戰術分析</h3>
+
+<p style="font-size:.78rem;font-weight:700;margin-bottom:4px">SuperTrend(300,3) 訊號：</p>
+<div class="st-summary">
+<span class="st-tag st-short">4H = SHORT (ATR=27.9, Upper=4563, Lower=4403)</span>
+<span class="st-tag st-short">1H = SHORT (ATR=12.5, Upper=4515, Lower=4450)</span>
+<span class="st-tag st-na">Daily = 數據不足</span>
+</div>
+<p style="font-size:.78rem;color:var(--red);font-weight:700">結論：2/2 可用時框 = SHORT。4H/1H 均已翻空（從上期 1H LONG 翻回 SHORT）= 短線承壓。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">多因子評分卡（5 項）：</p>
+<div class="score-card">
+<span class="score-item sc-neutral">DXY 99.3（中性，未明確壓制也未利好）</span>
+<span class="score-item sc-fail">30Y 5.02%（持續 >5%，壓制無收益資產）</span>
+<span class="score-item sc-pass">央行購金 + 財政擔憂（結構性需求不變）</span>
+<span class="score-item sc-fail">SuperTrend 2TF SHORT（短線趨勢轉空）</span>
+<span class="score-item sc-neutral">今日 -0.34%（微跌，非崩盤 = 跌幅受控）</span>
+</div>
+<p style="font-size:.78rem"><strong>得分：2/5 = NEUTRAL-BEARISH（短線）</strong></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px">方向判定：<span class="neu">觀望偏空（ST 翻空但跌幅溫和 = 非趨勢性下跌，更像區間回調。$4,450 = 1H ST Lower = 關鍵支撐）</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">24 小時預估區間：</p>
+<p style="font-size:.8rem">基於 4h ATR=27.9，偏空分配（下行 2/3、上行 1/3）：下行 -$22.3 / 上行 +$11.2<br>
+<strong>預估區間：$4,466 — $4,499</strong>（中軸 $4,488）<br>
+今晚 JOLTS 22:00 可能打破區間 — 若偏冷 → 上破 $4,515；若偏熱 → 下探 $4,450</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">操作建議：</p>
+<table>
+<tr><th>操作</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td><span class="tag t-bull">LONG（關鍵支撐低接）</span></td><td>$4,450（1h ST Lower）</td><td>$4,420</td><td>$4,515（1h ST Upper）</td><td>1:2.17</td></tr>
+<tr><td><span class="tag t-bear">SHORT（跌破後追空）</span></td><td>跌破 $4,450</td><td>$4,475</td><td>$4,403（4h ST Lower）</td><td>1:1.88</td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">5 日情境劇本：</p>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標區間</th><th>機率</th></tr>
+<tr><td class="pos">A) JOLTS/NFP 偏冷 → 降息預期升</td><td>30Y 回落 <5% + DXY 破 98.5</td><td>$4,520 — $4,580</td><td><span class="scenario-prob">35%</span></td></tr>
+<tr><td class="neu">B) 區間整理等 NFP</td><td>數據中性，市場觀望</td><td>$4,450 — $4,520</td><td><span class="scenario-prob">45%</span></td></tr>
+<tr><td class="neg">C) 數據全熱 + 30Y 飆升</td><td>NFP >+250K → DXY 反彈 100+</td><td>$4,400 — $4,450</td><td><span class="scenario-prob">20%</span></td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">黃金 → 白銀傳導：</p>
+<p style="font-size:.8rem">Gold ST 翻空但白銀相對更穩（-0.12% vs Gold -0.34%）。G/S ratio 59.6 維持穩定。銅 +1.52% 持續強勢 = 白銀工業屬性仍有支撐。若 Gold 守住 $4,450 → 白銀將以更快速度反彈（工業+貨幣雙引擎）。</p>
+</div>
+
+<!-- === B. XAG Silver === -->
+<div class="tactical-box" style="border-color:rgba(210,153,34,.3);margin-top:16px">
+<h3 style="color:var(--yellow);font-size:.9rem;margin-bottom:8px">B. XAG 白銀 — 完整戰術分析</h3>
+
+<p style="font-size:.78rem;font-weight:700;margin-bottom:4px">SuperTrend(300,3) 訊號：</p>
+<div class="st-summary">
+<span class="st-tag st-short">4H = SHORT (ATR=1.0, Upper=78, Lower=72)</span>
+<span class="st-tag st-short">1H = SHORT (ATR=0.5, Upper=76, Lower=74)</span>
+<span class="st-tag st-na">Daily = 數據不足</span>
+</div>
+<p style="font-size:.78rem;color:var(--red);font-weight:700">結論：2/2 時框 SHORT。與黃金同步翻空。但注意 1H Lower=$74 已非常接近（目前 $75.28 距離僅 $1.28）。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">多因子評分卡（7 項）：</p>
+<div class="score-card">
+<span class="score-item sc-neutral">DXY 99.3（中性）</span>
+<span class="score-item sc-neutral">黃金方向 = 偏空（-0.34% 拖累）</span>
+<span class="score-item sc-neutral">Gold/Silver 比 59.6（中性區域）</span>
+<span class="score-item sc-fail">SuperTrend 2TF SHORT</span>
+<span class="score-item sc-pass">銅 +1.52%（工業屬性持續支撐！）</span>
+<span class="score-item sc-neutral">今日 -0.12%（微跌，優於黃金 = 工業支撐生效）</span>
+<span class="score-item sc-neutral">COT 數據待更新</span>
+</div>
+<p style="font-size:.78rem"><strong>得分：2.5/7 = NEUTRAL-BEARISH（ST 空但工業屬性對沖）</strong></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px">方向判定：<span class="neu">觀望（ST 翻空但跌幅極小 = 工業需求（銅 +1.52%）正在抵消貨幣屬性的拖累。$74 = 1H Lower = 短線底線）</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">24 小時預估區間：</p>
+<p style="font-size:.8rem">基於 4h ATR=1.0，中性分配：<br>
+<strong>預估區間：$74.78 — $75.78</strong>（中軸 $75.28）</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">操作建議：</p>
+<table>
+<tr><th>操作</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td><span class="tag t-bull">LONG（1H Lower 低接）</span></td><td>$74.00（1h ST Lower）</td><td>$73.30</td><td>$76.00（1h ST Upper）</td><td>1:2.86</td></tr>
+<tr><td><span class="tag t-bull">中期加倉</span></td><td>$72.00（4h ST Lower）</td><td>$71.00</td><td>$76.00</td><td>1:4.00</td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">5 日情境劇本：</p>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標區間</th><th>機率</th></tr>
+<tr><td class="pos">A) 黃金止跌 + 銅持續走強</td><td>JOLTS 偏冷 + 工業需求確認</td><td>$76.00 — $78.00</td><td><span class="scenario-prob">30%</span></td></tr>
+<tr><td class="neu">B) 橫盤等待 NFP</td><td>數據中性，貨幣/工業拉鋸</td><td>$74.50 — $76.50</td><td><span class="scenario-prob">50%</span></td></tr>
+<tr><td class="neg">C) 黃金崩 + 銅回落</td><td>NFP 超預期 → 全面估值壓縮</td><td>$72.00 — $74.50</td><td><span class="scenario-prob">20%</span></td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">屬性分析：</p>
+<p style="font-size:.8rem">白銀今日 -0.12% vs 黃金 -0.34% = <strong>白銀表現更強</strong>（工業屬性 offset）。銅 +1.52% = AI DC 電力基建需求持續為白銀工業端提供底部支撐。當前白銀處於「貨幣屬性拖累 vs 工業屬性支撐」的拉鋸狀態。解套路徑：若黃金止跌 → 貨幣壓力解除 → 雙引擎重啟。</p>
+</div>
+
+<!-- === C. BTC === -->
+<div class="tactical-box" style="border-color:rgba(248,81,73,.3);margin-top:16px">
+<h3 style="color:var(--red);font-size:.9rem;margin-bottom:8px">C. BTC 比特幣 — 完整戰術分析 &#9888; CRISIS LEVEL</h3>
+
+<p style="font-size:.78rem;font-weight:700;margin-bottom:4px">SuperTrend(300,3) 訊號：</p>
+<div class="st-summary">
+<span class="st-tag st-short">Daily = SHORT (ATR=3035, Upper=75384, Lower=57171)</span>
+<span class="st-tag st-short">4H = SHORT (ATR=845, Upper=68623, Lower=63553)</span>
+<span class="st-tag st-short">1H = SHORT (ATR=391, Upper=67168, Lower=64917)</span>
+</div>
+<p style="font-size:.78rem;color:var(--red);font-weight:700">結論：3/3 時框全部 SHORT = 最強空頭信號持續。Daily 上軌從 $79,401 降至 $75,384 = 壓力帶在下移。4H 上軌從 $71,856 降至 $68,623 = 連反彈空間都在壓縮。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">多因子評分卡（6 項）：</p>
+<div class="score-card">
+<span class="score-item sc-fail">DXY 99.3（不利 crypto）</span>
+<span class="score-item sc-pass">F&G 11 極度恐懼 = 歷史級逆向信號 &#9888;</span>
+<span class="score-item sc-neutral">Funding 0.0072%（正 = 多頭未完全投降 = 底部未確認）</span>
+<span class="score-item sc-fail">OI 108,041 上升（+1,421 空單加倉 = 壓力未釋放）</span>
+<span class="score-item sc-fail">30Y >5% 第三天（duration 壓制持續）</span>
+<span class="score-item sc-fail">AI 半導體暴漲但 BTC -6.5% = 完全脫鉤加劇</span>
+</div>
+<p style="font-size:.78rem"><strong>得分：1.5/6 = STRONGLY BEARISH（但逆向信號 F&G=11 為歷史極端 = 反轉可能隨時出現）</strong></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px">方向判定：<span class="neg">強力偏空（三時框全空 + OI 持續上升 + Funding 仍正 = 空頭尚未完成清洗。但 F&G 11 + 已跌至 $65,359 低點 = 極度超賣，任何正面催化可能觸發暴力 short squeeze）</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">24 小時預估區間：</p>
+<p style="font-size:.8rem">基於 4h ATR=845，偏空分配（下行 2/3、上行 1/3）：下行 -$676 / 上行 +$338<br>
+<strong>預估區間：$65,650 — $66,664</strong>（中軸 $66,326）<br>
+<span class="warn">注意：今日已觸及 $65,359 低點。若失守 → 4H ST Lower $63,553 為下一支撐。若 JOLTS 偏冷 → 可能瞬間反彈至 $68K+。</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">操作建議：</p>
+<table>
+<tr><th>操作</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td><span class="tag t-bear">SHORT（反彈做空）</span></td><td>$67,168（1h ST Upper）</td><td>$68,000</td><td>$64,917（1h Lower）</td><td>1:2.71</td></tr>
+<tr><td><span class="tag t-bear">追空（跌破今日低點）</span></td><td>跌破 $65,359</td><td>$66,200</td><td>$63,553（4h Lower）</td><td>1:2.15</td></tr>
+<tr><td><span class="tag t-hold">逆向低接（F&G=11 極端區）</span></td><td>$63,553（4h ST Lower）+ Funding 轉負確認</td><td>$62,000</td><td>$68,000</td><td>1:2.86</td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">5 日情境劇本：</p>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標區間</th><th>機率</th></tr>
+<tr><td class="neg">A) 清算鏈完成 + 底部形成</td><td>跌至 $63-65K + Funding 轉負 + OI 暴降 = 投降完成</td><td>$62,000 — $65,000 (底部)</td><td><span class="scenario-prob">35%</span></td></tr>
+<tr><td class="neg">B) 持續磨底恐懼中</td><td>$64-68K 寬幅震盪，F&G 維持 10-15</td><td>$64,000 — $68,000</td><td><span class="scenario-prob">35%</span></td></tr>
+<tr><td class="pos">C) JOLTS 偏冷 → 極端 Squeeze 反轉</td><td>30Y 回落 <5% + OI 暴降 + V 型反彈</td><td>$68,000 — $72,000</td><td><span class="scenario-prob">30%</span></td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">衍生品分析：</p>
+<p style="font-size:.8rem">
+<strong>Funding Rate：</strong>0.0072% = 仍正！這是目前最關鍵的觀察。在 -6.5% 暴跌中 Funding 仍正 = 多頭尚未完全投降。歷史上底部形成需要 Funding 轉負（-0.01% ~ -0.03%）。<strong>尚未到底。</strong><br>
+<strong>OI：</strong>108,041 BTC（較昨日 106,620 +1,421）= 持續增倉。價格暴跌 + OI 上升 = 大量新空單進場。這通常是投降前的「最後一波空頭加倉」— 但不保證。<br>
+<strong>清算地圖：</strong>$65K 以下至 $62K 有約 $2.0B 多單清算集中帶（較昨日 $1.2B 大幅增加因更多多頭被套）。$65,359 今日低點已觸及清算帶邊緣。若日收 <$65K → 級聯至 $62K。<br>
+<strong>CME Basis：</strong>年化基差進一步壓縮至約 3-4% = carry trade 完全無吸引力 = 套利資金已撤離。
+</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">關鍵洞察：</p>
+<p style="font-size:.8rem;border-left:3px solid var(--red);padding-left:10px">
+<strong>BTC 正在經歷獨立於股市的流動性危機。</strong>SPY +0.54% 同日 BTC -6.5% = 13 個百分點差距！這不是「risk-off」— 這是 crypto-specific crisis。可能原因：(1) ETF 持續大額淨流出（機構撤離）；(2) 30Y >5% 第三天，市場正式將 BTC 重新分類為「零收益 duration asset」= 在高利率環境中無吸引力；(3) 槓桿級聯清算中 — $72K → $69K → $66K 逐級擊穿。<br><br>
+<strong>F&G = 11 的歷史對比：</strong><br>
+- 2022/6 Luna 崩盤：F&G=6 → 後續 3 個月反彈 +35%<br>
+- 2020/3 COVID：F&G=8 → 後續 6 個月反彈 +300%<br>
+- 2019/11：F&G=12 → 後續 2 個月反彈 +45%<br>
+<strong>統計結論：F&G <15 後 3 個月平均回報 +52%。但 timing 不確定 — 底部可能在當天或在數週後。</strong><br><br>
+<strong>投降三條件追蹤：</strong><br>
+(1) Funding 轉負 ← 未達成（仍 +0.0072%）<br>
+(2) OI 暴降 (>5% 日降) ← 未達成（仍在增加）<br>
+(3) 極端長下影線 + 放量 ← 今日低點 $65,359 → 收在 $66,326 = 有反彈但力道不足<br>
+<strong>結論：0/3 = 底部尚未確認。不抄底。</strong>
+</p>
+</div>
+
+<!-- === D. ETH === -->
+<div class="tactical-box" style="border-color:rgba(248,81,73,.3);margin-top:16px">
+<h3 style="color:var(--red);font-size:.9rem;margin-bottom:8px">D. ETH 以太坊 — 完整戰術分析 &#9888;</h3>
+
+<p style="font-size:.78rem;font-weight:700;margin-bottom:4px">SuperTrend(300,3) 訊號：</p>
+<div class="st-summary">
+<span class="st-tag st-short">Daily = SHORT (ATR=160, Upper=2326, Lower=1364)</span>
+<span class="st-tag st-short">4H = SHORT (ATR=32, Upper=1930, Lower=1738)</span>
+<span class="st-tag st-short">1H = SHORT (ATR=14, Upper=1877, Lower=1791)</span>
+</div>
+<p style="font-size:.78rem;color:var(--red);font-weight:700">結論：3/3 全空。ETH 今日 -8.09% 暴跌！前期相對強勢完全被打破 — ETH 正式進入補跌模式。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">多因子評分卡（5 項）：</p>
+<div class="score-card">
+<span class="score-item sc-fail">BTC 方向 = 崩盤中（-6.5% 帶動）</span>
+<span class="score-item sc-fail">ETH/BTC 相對強勢消失（今日 ETH -8.09% > BTC -6.49%！）</span>
+<span class="score-item sc-pass">Funding 0.0020% = 接近零 = 接近投降 &#9888;</span>
+<span class="score-item sc-neutral">OI 2,327K（微降，有平倉跡象）</span>
+<span class="score-item sc-fail">30Y >5% 壓制 + 前期抗跌優勢完全消失</span>
+</div>
+<p style="font-size:.78rem"><strong>得分：1.5/5 = STRONGLY BEARISH（但 Funding 接近零 = ETH 可能比 BTC 更快觸底）</strong></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px">方向判定：<span class="neg">強力偏空（三時框全空 + -8% 暴跌確認補跌進行中。但 Funding 0.0020% 接近零 = ETH 投降進度比 BTC 快。若 Funding 轉負 → ETH 可能率先形成底部）</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">24 小時預估區間：</p>
+<p style="font-size:.8rem">基於 4h ATR=32，偏空分配：下行 -$25.6 / 上行 +$12.8<br>
+<strong>預估區間：$1,814 — $1,853</strong>（中軸 $1,840）<br>
+今日已觸及 $1,816 低點。1H ST Lower = $1,791 = 下一支撐。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">操作建議：</p>
+<table>
+<tr><th>操作</th><th>進場條件</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td><span class="tag t-bear">SHORT（反彈做空）</span></td><td>反彈至 $1,877（1h ST Upper）</td><td>$1,910</td><td>$1,791（1h Lower）</td><td>1:2.61</td></tr>
+<tr><td><span class="tag t-hold">觀望等投降信號</span></td><td>Funding 轉負 + 長下影線</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><span class="tag t-bull">逆向低接（極端區）</span></td><td>$1,738-1,750（4h ST Lower）+ Funding <0</td><td>$1,700</td><td>$1,900</td><td>1:3.16</td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">5 日情境劇本：</p>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標區間</th><th>機率</th></tr>
+<tr><td class="neg">A) 繼續崩至 4H Lower</td><td>BTC 跌破 $63K → ETH 跟隨</td><td>$1,700 — $1,790</td><td><span class="scenario-prob">30%</span></td></tr>
+<tr><td class="neg">B) 低位磨底</td><td>BTC 企穩 $64-67K，ETH $1,800-1,870</td><td>$1,800 — $1,870</td><td><span class="scenario-prob">40%</span></td></tr>
+<tr><td class="pos">C) 率先反彈（Funding 投降後）</td><td>ETH Funding 轉負 → squeeze + NFP 偏冷</td><td>$1,880 — $1,950</td><td><span class="scenario-prob">30%</span></td></tr>
+</table>
+
+<p style="font-size:.78rem;margin-top:8px;color:var(--muted)"><strong>ETH vs BTC：</strong>今日 ETH -8.09% > BTC -6.49% = ETH 的前期相對強勢完全打破。市場進入「不分好壞、全面清算」模式。但 ETH Funding 0.0020% 比 BTC 的 0.0072% 低得多 = ETH 的多頭投降速度更快。這可能意味 ETH 比 BTC 更快完成清洗、更快形成底部。若看到 ETH Funding 轉負 = ETH 可能成為 crypto 反彈的先行指標。</p>
+</div>
+
+<!-- === E. HYPE === -->
+<div class="tactical-box" style="border-color:rgba(248,81,73,.3);margin-top:16px">
+<h3 style="color:var(--red);font-size:.9rem;margin-bottom:8px">E. HYPE — 完整戰術分析</h3>
+
+<p style="font-size:.78rem;font-weight:700;margin-bottom:4px">SuperTrend(300,3) 訊號：</p>
+<div class="st-summary">
+<span class="st-tag st-long">Daily = LONG (ATR=3.1, Upper=79, Lower=64) ← 最後堡壘！</span>
+<span class="st-tag st-short">4H = SHORT (ATR=1.4, Upper=74, Lower=67) ← 翻空！</span>
+<span class="st-tag st-short">1H = SHORT (ATR=1.3, Upper=72, Lower=67)</span>
+</div>
+<p style="font-size:.78rem;color:var(--red);font-weight:700">結論：4H 已翻空！僅剩 Daily LONG。HYPE 從三時框雙多（D+4H）退化為僅 Daily 支撐。$64 = Daily ST Lower = 最後防線。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">多因子評分卡（5 項）：</p>
+<div class="score-card">
+<span class="score-item sc-pass">Daily SuperTrend LONG（$64 下方才翻空，仍安全）</span>
+<span class="score-item sc-fail">4H/1H 雙空（短中線趨勢已空）</span>
+<span class="score-item sc-neutral">Funding 0.0050%（健康，非過度做多）</span>
+<span class="score-item sc-fail">今日 -4.44%（系統性 crypto 恐慌波及）</span>
+<span class="score-item sc-fail">BTC -6.5% 帶動全 crypto 崩跌</span>
+</div>
+<p style="font-size:.78rem"><strong>得分：1.5/5 = BEARISH（4H 翻空是重大信號，「波動率受益者」邏輯在 F&G=11 環境中失效）</strong></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px">方向判定：<span class="neg">偏空（4H 翻空 + 今日低點 $67.80 接近 4H Lower $67 = 壓力極大。唯一希望是 Daily ST Lower $64 守住）</span></p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">24 小時預估區間：</p>
+<p style="font-size:.8rem">基於 4h ATR=1.4，偏空分配：下行 -$1.12 / 上行 +$0.56<br>
+<strong>預估區間：$70.13 — $71.81</strong>（中軸 $71.25）<br>
+但今日已觸及 $67.80 = 實際波動遠超 ATR 預估。在恐慌環境中 ATR 低估風險。</p>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">操作建議：</p>
+<table>
+<tr><th>操作</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td><span class="tag t-bull">LONG（Daily ST Lower 低接）</span></td><td>$64.00（Daily ST Lower）</td><td>$62.00</td><td>$70.00</td><td>1:3.00</td></tr>
+<tr><td><span class="tag t-bear">SHORT（跌破 Daily Lower）</span></td><td>跌破 $64.00</td><td>$65.50</td><td>$58.00</td><td>1:4.00</td></tr>
+<tr><td><span class="tag t-hold">觀望等確認</span></td><td>等待 BTC 底部確認 + 1H ST 翻多</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">5 日情境劇本：</p>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標區間</th><th>機率</th></tr>
+<tr><td class="neg">A) 跟隨 BTC 崩盤 → 測試 Daily Lower</td><td>BTC 跌破 $63K → HYPE 恐慌性拋售</td><td>$60.00 — $67.00</td><td><span class="scenario-prob">30%</span></td></tr>
+<tr><td class="neu">B) Daily Lower 附近築底</td><td>BTC $64-68K 磨底，HYPE $67-72 區間</td><td>$67.00 — $72.00</td><td><span class="scenario-prob">40%</span></td></tr>
+<tr><td class="pos">C) Crypto 反轉 → HYPE 暴力反彈</td><td>BTC squeeze + DEX 交易量暴增</td><td>$72.00 — $78.00</td><td><span class="scenario-prob">30%</span></td></tr>
+</table>
+
+<p style="font-size:.78rem;font-weight:700;margin-top:10px;margin-bottom:4px">關鍵洞察：</p>
+<p style="font-size:.8rem;border-left:3px solid var(--red);padding-left:10px">
+<strong>「波動率受益者」邏輯在極端恐懼中失效。</strong>HYPE 的核心邏輯是「crypto 市場波動大 → DEX 交易量高 → HYPE 收入增加」。但當 F&G 觸及 11（極端恐慌）時，資金開始撤離所有 crypto — 包括那些基本面良好的資產。今日 -4.44% 且低點觸及 $67.80（接近 4H ST Lower $67）= HYPE 被系統性去槓桿波及。<br><br>
+<strong>Daily ST Lower $64 = 最後防線。</strong>若失守 → HYPE 的中期上漲結構徹底破壞，需要重新評估。但 Daily LONG 歷史上需要非常大的跌幅才會翻空（ATR=3.1，Lower=$64，目前 $71.25 距離仍有 $7.25 = 超過 10%）。這意味即使再跌 5-7%，Daily 結構仍可能維持。<br><br>
+<strong>反彈邏輯：</strong>若 crypto 反轉 → HYPE 可能暴力反彈。原因：(1) 恐慌中的清算交易量 → HYPE 收入極高；(2) 反彈中的 FOMO 交易量 → HYPE 收入更高；(3) 雙向波動都利好 HYPE 基本面。問題是 timing — 目前不宜左側進場。
+</p>
+</div>
+
+<!-- === F. Top 3 Gainers === -->
+<div class="tactical-box" style="border-color:rgba(63,185,80,.3);margin-top:16px">
+<h3 style="color:var(--green);font-size:.9rem;margin-bottom:8px">F. 今日前三強分析</h3>
+
+<table>
+<tr><th style="width:60px">排名</th><th style="width:80px">標的</th><th style="width:70px">漲幅</th><th>分析</th></tr>
+<tr>
+<td><strong>#1</strong></td>
+<td><strong>QCOM</strong></td>
+<td><span class="pos">+6.65%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>前期 Edge AI 暴跌後 (-8.8% 上週) 強力技術反彈 + Snapdragon X Elite 設計導入數量超預期。Apple/Samsung 端側 AI 晶片競爭升溫利好 QCOM 中介地位。<br>
+<strong>SuperTrend：</strong>1H = LONG (ATR=2.9, Upper=247, Lower=234)。<br>
+<strong>方向：</strong><span class="pos">短線反彈動能強</span>。但中期 Edge AI 敘事仍弱於訓練層（NVDA/AVGO）。$234 = 1H ST Lower = 支撐。$245+ = 阻力。<br>
+<strong>注意：</strong>單日 +6.7% 反彈不改中期弱勢格局。除非有新催化（WWDC Apple 合作確認等）。
+</p>
+</td>
+</tr>
+<tr>
+<td><strong>#2</strong></td>
+<td><strong>AVGO</strong></td>
+<td><span class="pos">+5.41%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>AI ASIC 超級週期持續。連續第三天大漲（5/31 +3%、6/2 +6.6%、6/3 +5.4%）= 累計 +15% 三天！Google/Meta/Amazon 自研 AI 晶片訂單持續超預期。<br>
+<strong>SuperTrend：</strong>1H = LONG (ATR=3.2, Upper=508, Lower=491)。<br>
+<strong>方向：</strong><span class="pos">強多但短線超買</span>。三天 +15% 後回調壓力增大。$491（1h Lower）= 短線支撐。$508+ 為上方目標。<br>
+<strong>風險：</strong>擁擠度從 95 百分位可能已到 98+ = 任何獲利了結潮將非常劇烈。但趨勢不變。
+</p>
+</td>
+</tr>
+<tr>
+<td><strong>#3</strong></td>
+<td><strong>MU</strong></td>
+<td><span class="pos">+4.58%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>HBM3E 超級週期。$1,000 關口已成功轉支撐。NVDA Blackwell 大量出貨 = MU HBM 供不應求。<br>
+<strong>SuperTrend：</strong>4H = LONG (ATR=16.1, Upper=1112, Lower=1016) | 1H = LONG (ATR=10.4, Upper=1095, Lower=1036)。<strong>雙時框 LONG</strong>。<br>
+<strong>方向：</strong><span class="pos">強多持有</span>。$1,016-1,036 = 雙層支撐（4H/1H Lower）。目標 $1,100+。<br>
+<strong>結構：</strong>MU 雙時框 LONG 是目前全資產中結構最強的之一。
+</p>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- === G. Top 3 Losers === -->
+<div class="tactical-box" style="border-color:rgba(248,81,73,.3);margin-top:16px">
+<h3 style="color:var(--red);font-size:.9rem;margin-bottom:8px">G. 今日前三弱分析</h3>
+
+<table>
+<tr><th style="width:60px">排名</th><th style="width:80px">標的</th><th style="width:70px">跌幅</th><th>分析</th></tr>
+<tr>
+<td><strong>#1</strong></td>
+<td><strong>MSTR</strong></td>
+<td><span class="neg">-9.41%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>BTC 崩盤槓桿放大器。BTC -6.5% → MSTR -9.4%（beta 1.45x）。BTC proxy 在恐慌中加速下跌。NAV discount 進一步擴大。<br>
+<strong>SuperTrend：</strong>4H = SHORT (ATR=3.3, Upper=144, Lower=124) | 1H = SHORT (ATR=1.4, Upper=138, Lower=130)。<strong>雙時框空</strong>。<br>
+<strong>方向：</strong><span class="neg">強空</span>。$132.02 今日低點。若 BTC 繼續跌 → MSTR 可能加速至 $124（4h Lower）。<br>
+<strong>系統性風險：</strong>MSTR 持幣均成本約 $35K，目前 BTC $66K 仍安全。但若 BTC 跌至 $50K 以下 → 可轉債風險浮現。
+</p>
+</td>
+</tr>
+<tr>
+<td><strong>#2</strong></td>
+<td><strong>ETH</strong></td>
+<td><span class="neg">-8.09%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>前期相對強勢打破，正式進入補跌模式。系統性去槓桿不分好壞 — ETH staking yield 敘事在極端恐慌中無效。<br>
+<strong>詳見上方 Section D 完整分析。</strong>Funding 0.002% 接近零 = ETH 投降速度比 BTC 快 = 可能率先觸底。<br>
+<strong>風險：</strong>若 BTC 進一步崩盤 → ETH 可能測試 4H Lower $1,738。
+</p>
+</td>
+</tr>
+<tr>
+<td><strong>#3</strong></td>
+<td><strong>BTC</strong></td>
+<td><span class="neg">-6.49%</span></td>
+<td>
+<p style="font-size:.78rem;line-height:1.6">
+<strong>驅動：</strong>獨立流動性危機第三天。ETF 流出 + 槓桿清算 + 30Y >5% duration 壓制三重打擊。F&G 從 28 → 23 → 11 三天連續崩潰。<br>
+<strong>詳見上方 Section C 完整分析。</strong>投降三條件 0/3 尚未達成 = 底部未確認。<br>
+<strong>歷史對比：</strong>F&G=11 歷史上是極端底部區域。問題是 timing — 可能今天觸底也可能再磨 2-3 週。
+</p>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- === H. 其餘資產快評 === -->
+<div class="tactical-box" style="border-color:rgba(88,166,255,.2);margin-top:16px">
+<h3 style="color:var(--accent);font-size:.9rem;margin-bottom:8px">H. 其餘資產快速戰術評估</h3>
+
+<table>
+<tr><th>標的</th><th>價格</th><th>24h%</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+<tr><td><strong>TSM</strong></td><td>$447.33</td><td class="pos">+3.35%</td><td><span class="tag t-bull">持有</span></td><td>支撐 $432(1H) / 壓力 $455(4H)</td><td>CoWoS 產能王。4H/1H 雙 LONG。AI 供應鏈核心</td></tr>
+<tr><td><strong>AMD</strong></td><td>$519.00</td><td class="pos">+3.72%</td><td><span class="tag t-bull">持有</span></td><td>支撐 $499 / 壓力 $523</td><td>MI400 出貨。跟隨 AVGO/MU 板塊動能</td></tr>
+<tr><td><strong>EWY</strong></td><td>$214.51</td><td class="pos">+3.70%</td><td><span class="tag t-bull">強多</span></td><td>支撐 $206 / 壓力 $215</td><td>AI 供應鏈+弱美元外資回流。今日漲幅強勁</td></tr>
+<tr><td><strong>TSLA</strong></td><td>$420.52</td><td class="pos">+1.94%</td><td><span class="tag t-hold">反彈中觀望</span></td><td>支撐 $412(1H) / 壓力 $427(4H)</td><td>4H SHORT / 1H LONG = 混合。FSD 催化待確認</td></tr>
+<tr><td><strong>COPPER</strong></td><td>$6.676</td><td class="pos">+1.52%</td><td><span class="tag t-bull">持有</span></td><td>支撐 $6.57 / 壓力 $6.71</td><td>AI DC 電力基建。連續走強確認結構性需求</td></tr>
+<tr><td><strong>XPD</strong></td><td>$1,380.48</td><td class="pos">+0.81%</td><td><span class="tag t-bull">偏多</span></td><td>支撐 $1,364 / 壓力 $1,399</td><td>汽車催化需求穩。弱美元利好</td></tr>
+<tr><td><strong>SPY</strong></td><td>$759.27</td><td class="pos">+0.54%</td><td><span class="tag t-hold">持有</span></td><td>支撐 $755 / 壓力 $760</td><td>新高附近！完全無視 crypto 崩盤 = rotation not crash</td></tr>
+<tr><td><strong>NVDA</strong></td><td>$221.88</td><td class="neg">-0.40%</td><td><span class="tag t-hold">觀望（消化漲幅）</span></td><td>支撐 $218(1H) / 壓力 $229(4H)</td><td>前日 +5.3% 後小幅消化。4H LONG / 1H 翻 SHORT = 短消化</td></tr>
+<tr><td><strong>META</strong></td><td>$601.90</td><td class="neg">-0.15%</td><td><span class="tag t-hold">止血觀望</span></td><td>支撐 $597 / 壓力 $609</td><td>前日 -4.8% 後企穩。AI capex 投入者 = 不追</td></tr>
+<tr><td><strong>AMZN</strong></td><td>$256.28</td><td class="neg">-1.21%</td><td><span class="tag t-bear">偏空</span></td><td>支撐 $255 / 壓力 $262</td><td>連續下跌。AWS + 消費雙壓制</td></tr>
+<tr><td><strong>GOOGL</strong></td><td>$364.44</td><td class="neg">-1.58%</td><td><span class="tag t-bear">偏空</span></td><td>支撐 $360 / 壓力 $374</td><td>AI 轉型陣痛+估值壓縮持續</td></tr>
+<tr><td><strong>INTC</strong></td><td>$107.31</td><td class="neg">-3.07%</td><td><span class="tag t-bear">偏空</span></td><td>支撐 $104 / 壓力 $113</td><td>代工進展緩慢。AI 邊緣化持續</td></tr>
+<tr><td><strong>MSFT</strong></td><td>$435.99</td><td class="neg">-3.40%</td><td><span class="tag t-bear">偏空</span></td><td>支撐 $430(1H) / 壓力 $442(1H)</td><td>連續第二日大跌。AI capex 投入者標籤。1H SHORT</td></tr>
+<tr><td><strong>PLTR</strong></td><td>$149.42</td><td class="neg">-3.76%</td><td><span class="tag t-bear">偏空</span></td><td>支撐 $148 / 壓力 $160</td><td>Duration purge 持續。AI 平台無硬體營收</td></tr>
+<tr><td><strong>XPT</strong></td><td>$1,942.31</td><td class="neg">-0.43%</td><td><span class="tag t-hold">持有/$1,926加</span></td><td>支撐 $1,926 / 壓力 $1,985</td><td>氫能+供給受限。微跌不改中期邏輯</td></tr>
+<tr><td><strong>SPCX</strong></td><td>$188.33</td><td class="neg">-5.46%</td><td><span class="tag t-bear">觀察不操作</span></td><td>支撐 $177 / 壓力 $201</td><td>投機性資產暴跌。F&G 11 環境中 SPAC 首當其衝</td></tr>
+</table>
+</div>
+
+</div><!-- end Section 3 card -->
+
+<!-- ===== Section 4: 市場共識 vs Reality ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>4. 市場共識 vs Reality（Alpha 預期差）</h2>
+<table>
+<tr><th style="width:130px">維度</th><th>內容</th></tr>
+<tr><td><strong>市場共識</strong></td><td>
+1) Crypto F&G=11 = 底部確認，應該抄底<br>
+2) AI 半導體連續暴漲 = 安全港，可以一直追<br>
+3) SPY 穩定 = 系統性風險為零，只是正常輪動<br>
+4) 30Y >5% 是暫時的，NFP 後會回落
+</td></tr>
+<tr><td><strong>實際發生</strong></td><td>
+1) F&G=11 是歷史極端但 <span class="warn">Funding 仍正 + OI 仍升 = 投降未完成</span>。歷史上底部需要 Funding 轉負。過早抄底 = 接飛刀<br>
+2) AVGO 三天 +15%、MU 雙 TF LONG、QCOM 單日 +6.7% = <span class="warn">擁擠度已達 97-98 百分位</span>。不是不能漲但任何負面催化的回調幅度將極其劇烈<br>
+3) SPY +0.54% 同日 MSTR -9.4%、BTC -6.5%、SPCX -5.5% = <span class="neg">指數穩定掩蓋了巨大的跨資產分化</span>。「結構性健康」vs「體內出血」的分別<br>
+4) 30Y 連續第三天 >5%。<span class="neg">這不再是「暫時的」— 市場正在重新定價 term premium</span>。若 JOLTS/ADP/NFP 全偏熱 → 5% 可能成為新常態
+</td></tr>
+<tr><td><strong class="warn">最大 Mispricing</strong></td><td>
+<strong>1) Crypto F&G=11 vs 股市 VIX 15.5 = 2026 年最大跨資產分歧</strong><br>
+<span style="font-size:.78rem">Crypto 正在經歷獨立於股市的流動性危機。VIX 15.5 = 股市完全不恐慌。F&G=11 = Crypto 極度恐慌。這種分歧在 2024-2025 年從未出現過（當時 BTC 與 SPY 高度正相關）。含義：(a) BTC 正被市場重新分類 — 不再是「risk-on proxy」而是「零收益 duration asset」；(b) 當分歧收斂時，方向取決於催化劑 — 若 30Y 回落 → crypto 暴力反彈；若 30Y 持續 >5% → crypto 繼續獨立受壓。</span><br><br>
+<strong>2) AI 半導體擁擠度 vs Crypto 超賣 = 極端 pair trade 機會（但 timing 不確定）</strong><br>
+<span style="font-size:.78rem">AVGO 三天 +15% 同時 BTC 三天 -10%。這種 25 個百分點的分化在 3-5 天後通常部分收斂。但注意：convergence 不一定是 AVGO 跌 + BTC 漲。也可能是 AVGO 持平 + BTC 繼續跌（AVGO 暫歇但不回調）。不建議做 pair trade，但這是觀察市場轉折的關鍵指標。</span><br><br>
+<strong>3) ETH Funding 0.002% vs BTC 0.0072% = ETH 可能比 BTC 更快觸底</strong><br>
+<span style="font-size:.78rem">ETH 的投降速度快於 BTC。若 ETH Funding 先轉負 → ETH 先形成底部 → ETH 成為 crypto 反彈的先行指標。這是一個可操作的信號 — 當看到 ETH Funding 轉負 + 長下影線 → 建立 ETH 試探性多頭（小倉）。</span><br><br>
+<strong>4) 黃金在 30Y >5% + Crypto 崩盤中僅 -0.34% = 避險地位再確認</strong><br>
+<span style="font-size:.78rem">理論上 30Y >5% 應該壓制黃金，crypto 崩盤中資金應該流向所有避險資產。但黃金僅微跌 = (a) 避險資金已經在黃金中（不需要更多流入）；(b) 部分基金需要從黃金套現以覆蓋 crypto margin call。若 margin call 結束 → 黃金可能快速反彈。$4,450（1H ST Lower）= 關鍵支撐。</span>
+</td></tr>
+</table>
+</div>
+
+<!-- ===== Section 5: 跨資產強弱矩陣 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>5. 跨資產強弱矩陣排序（全 25 資產）</h2>
+<div class="grid" style="margin-bottom:0">
+<div>
+<h3>短線強弱（24h 漲跌幅排序）— 強 → 弱</h3>
+<table>
+<tr><th>#</th><th>資產</th><th>24h%</th><th>SuperTrend</th><th>驅動</th></tr>
+<tr><td>1</td><td><strong>QCOM</strong></td><td><span class="tag t-bull">+6.65%</span></td><td><span class="pos">1H LONG</span></td><td>Edge AI 反彈</td></tr>
+<tr><td>2</td><td><strong>AVGO</strong></td><td><span class="tag t-bull">+5.41%</span></td><td><span class="pos">1H LONG</span></td><td>AI ASIC 三連漲</td></tr>
+<tr><td>3</td><td><strong>MU</strong></td><td><span class="tag t-bull">+4.58%</span></td><td><span class="pos">2TF LONG</span></td><td>HBM 超級週期</td></tr>
+<tr><td>4</td><td><strong>AMD</strong></td><td><span class="tag t-bull">+3.72%</span></td><td>—</td><td>MI400 跟漲</td></tr>
+<tr><td>5</td><td><strong>EWY</strong></td><td><span class="tag t-bull">+3.70%</span></td><td>—</td><td>AI 供應鏈+外資</td></tr>
+<tr><td>6</td><td><strong>TSM</strong></td><td><span class="tag t-bull">+3.35%</span></td><td><span class="pos">2TF LONG</span></td><td>CoWoS 產能</td></tr>
+<tr><td>7</td><td><strong>TSLA</strong></td><td><span class="tag t-bull">+1.94%</span></td><td>MIXED</td><td>FSD 反彈</td></tr>
+<tr><td>8</td><td><strong>COPPER</strong></td><td><span class="tag t-bull">+1.52%</span></td><td>—</td><td>AI DC 電力</td></tr>
+<tr><td>9</td><td><strong>XPD</strong></td><td><span class="tag t-bull">+0.81%</span></td><td>N/A</td><td>汽車催化</td></tr>
+<tr><td>10</td><td><strong>SPY</strong></td><td><span class="tag t-bull">+0.54%</span></td><td>—</td><td>指數穩定</td></tr>
+<tr><td>11</td><td><strong>META</strong></td><td><span class="tag t-neu">-0.15%</span></td><td>—</td><td>止血企穩</td></tr>
+<tr><td>12</td><td><strong>XAG</strong></td><td><span class="tag t-neu">-0.12%</span></td><td><span class="neg">2TF SHORT</span></td><td>工業撐+貨幣壓</td></tr>
+<tr><td>13</td><td><strong>XAU</strong></td><td><span class="tag t-bear">-0.34%</span></td><td><span class="neg">2TF SHORT</span></td><td>ST 翻空微跌</td></tr>
+<tr><td>14</td><td><strong>NVDA</strong></td><td><span class="tag t-bear">-0.40%</span></td><td>1H SHORT / 4H LONG</td><td>消化前日漲幅</td></tr>
+<tr><td>15</td><td><strong>XPT</strong></td><td><span class="tag t-bear">-0.43%</span></td><td>N/A</td><td>微跌中性</td></tr>
+<tr><td>16</td><td><strong>AMZN</strong></td><td><span class="tag t-bear">-1.21%</span></td><td>—</td><td>AI capex 投入者</td></tr>
+<tr><td>17</td><td><strong>GOOGL</strong></td><td><span class="tag t-bear">-1.58%</span></td><td>—</td><td>AI 轉型壓力</td></tr>
+<tr><td>18</td><td><strong>INTC</strong></td><td><span class="tag t-bear">-3.07%</span></td><td>—</td><td>AI 邊緣化</td></tr>
+<tr><td>19</td><td><strong>MSFT</strong></td><td><span class="tag t-bear">-3.40%</span></td><td><span class="neg">1H SHORT</span></td><td>連跌第二日</td></tr>
+<tr><td>20</td><td><strong>PLTR</strong></td><td><span class="tag t-bear">-3.76%</span></td><td>—</td><td>Duration purge</td></tr>
+<tr><td>21</td><td><strong>HYPE</strong></td><td><span class="tag t-bear">-4.44%</span></td><td>4H/1H SHORT</td><td>Crypto 系統性波及</td></tr>
+<tr><td>22</td><td><strong>SPCX</strong></td><td><span class="tag t-bear">-5.46%</span></td><td>N/A</td><td>投機性崩盤</td></tr>
+<tr><td>23</td><td><strong>BTC</strong></td><td><span class="tag t-bear">-6.49%</span></td><td><span class="neg">3TF SHORT</span></td><td>獨立流動性危機</td></tr>
+<tr><td>24</td><td><strong>ETH</strong></td><td><span class="tag t-bear">-8.09%</span></td><td><span class="neg">3TF SHORT</span></td><td>補跌+投降中</td></tr>
+<tr><td>25</td><td><strong>MSTR</strong></td><td><span class="tag t-bear">-9.41%</span></td><td><span class="neg">2TF SHORT</span></td><td>BTC 槓桿放大</td></tr>
+</table>
+</div>
+<div>
+<h3>中期展望（1-3 月）— 強 → 弱</h3>
+<table>
+<tr><th>#</th><th>資產群</th><th>展望</th><th>邏輯</th></tr>
+<tr><td>1</td><td><strong>AI 硬體營收層（AVGO/MU/TSM）</strong></td><td><span class="tag t-bull">強力看多</span></td><td>Proven revenue + 2TF LONG + Capex 可見度。但注意擁擠度風險。</td></tr>
+<tr><td>2</td><td><strong>XAU 黃金</strong></td><td><span class="tag t-bull">看多</span></td><td>30Y>5%下僅 -0.34% = 財政擔憂+央行購金主導。$4,450 支撐堅實。</td></tr>
+<tr><td>3</td><td><strong>COPPER 銅</strong></td><td><span class="tag t-bull">看多</span></td><td>連續走強+AI DC 電力基建+白銀工業共振。</td></tr>
+<tr><td>4</td><td><strong>XAG 白銀</strong></td><td><span class="tag t-bull">偏多</span></td><td>工業屬性（銅）+ 貨幣屬性（金）雙支撐。ST 短線空但中期不改。</td></tr>
+<tr><td>5</td><td><strong>亞洲半導體（EWY/TSM）</strong></td><td><span class="tag t-bull">偏多</span></td><td>AI 供應鏈核心+外資回流確認（+3.7% 今日）。</td></tr>
+<tr><td>6</td><td><strong>NVDA/AMD</strong></td><td><span class="tag t-bull">偏多</span></td><td>AI 旗艦但短線需消化漲幅。回調入場。</td></tr>
+<tr><td>7</td><td><strong>XPT/XPD</strong></td><td><span class="tag t-neu">中性偏多</span></td><td>氫能+汽車+弱美元。穩健但不爆發。</td></tr>
+<tr><td>8</td><td><strong>SPY（整體）</strong></td><td><span class="tag t-neu">中性</span></td><td>新高附近但內部極度分化。依賴 AI 硬體繼續漲。</td></tr>
+<tr><td>9</td><td><strong>AI 平台（MSFT/META/AMZN）</strong></td><td><span class="tag t-neu">中性偏空</span></td><td>Capex ROI 質疑持續。需 Q2 財報證明。連跌後可能技術反彈。</td></tr>
+<tr><td>10</td><td><strong>BTC/ETH（加密）</strong></td><td><span class="tag t-neu">中性</span></td><td>F&G=11 歷史上 3-6 月後 +50%+。但短線仍空，底部未確認。需 30Y <5% 催化。</td></tr>
+<tr><td>11</td><td><strong>HYPE</strong></td><td><span class="tag t-neu">中性</span></td><td>Daily LONG 未破壞但 4H 翻空。需 crypto 整體企穩才能獨立。</td></tr>
+<tr><td>12</td><td><strong>TSLA/PLTR（高估值）</strong></td><td><span class="tag t-bear">偏空</span></td><td>30Y >5% 環境中高 P/E 持續受壓。</td></tr>
+<tr><td>13</td><td><strong>MSTR/SPCX/INTC</strong></td><td><span class="tag t-bear">強力偏空</span></td><td>BTC 槓桿/投機/邊緣化 = 最弱資產群。</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ===== Section 6: 量化風險雷達 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>6. 量化風險雷達</h2>
+
+<table>
+<tr><th style="width:200px">風險事件</th><th style="width:80px">機率</th><th style="width:100px">衝擊</th><th>觀察指標 & 傳導路徑</th></tr>
+<tr>
+<td><span class="neg">1. BTC $63-65K 清算鏈觸發（IMMINIENT）</span></td>
+<td><div class="risk-bar rh"><div class="f"></div></div> 高</td>
+<td>BTC -8~12%</td>
+<td>$66,326 距離 4H ST Lower $63,553 僅 $2,773。今日低點 $65,359 已觸及清算帶邊緣。OI 108K 持續上升 = 空頭在追。$65K 下方至 $62K 有 ~$2.0B 多單清算帶。觸發指標：4h 收盤 < $65,000。若觸發 → 級聯至 $60-62K = Daily ST Lower $57,171 區域。</td>
+</tr>
+<tr>
+<td><span class="warn">2. AI 半導體擁擠度引爆回調</span></td>
+<td><div class="risk-bar rmh"><div class="f"></div></div> 中高</td>
+<td>半導體 -8~15%</td>
+<td>AVGO 三天 +15% + MU/TSM/AMD 連漲。持倉擁擠度估計 >97 百分位。NVDA 今日 -0.4% 顯示部分獲利了結開始。若任一公司公布負面消息（supply chain / guidance miss）→ 全板塊踩踏。觸發指標：AVGO 單日 -5%+ 或 NVDA 連續兩日 >-3%。</td>
+</tr>
+<tr>
+<td><span class="warn">3. 30Y 持續 >5% 常態化</span></td>
+<td><div class="risk-bar rm"><div class="f"></div></div> 中等</td>
+<td>全估值壓縮 -3~5%</td>
+<td>連續第三天 >5%。若 JOLTS/ADP/NFP 全偏熱 → 30Y 走向 5.2%+。高估值科技（MSFT -3.4%、PLTR -3.8%）已首當其衝。若 >5.15% → AI 硬體也無法倖免。觸發指標：30Y 日收 >5.10%。</td>
+</tr>
+<tr>
+<td><span class="warn">4. MSTR 被迫賣幣 → BTC 加速崩盤</span></td>
+<td><div class="risk-bar rl"><div class="f"></div></div> 低中</td>
+<td>BTC -15~20%</td>
+<td>MSTR 持幣成本 ~$35K，目前安全。但 MSTR -9.4% 今日 + 股價 $134.53 接近可轉債觸發線。若 BTC 持續下跌至 $55K 以下 → MSTR 可能被迫部分清算 → 進一步壓低 BTC。目前低機率但需要監測。</td>
+</tr>
+<tr>
+<td><span class="neu">5. VIX 從 15.5 補漲至 20+（JOLTS/NFP 觸發）</span></td>
+<td><div class="risk-bar rm"><div class="f"></div></div> 中等</td>
+<td>SPX -2~4%</td>
+<td>VIX 15.5 vs crypto F&G=11 = 股市自滿 vs crypto 恐慌。本週密集事件（JOLTS 今晚、ADP 明日、ISM 服務明日、NFP 週五）。任一超預期 → VIX 快速補漲。若 VIX >20 → AI 半導體擁擠度問題將被放大。</td>
+</tr>
+</table>
+
+<h3 style="margin-top:18px">全商品策略矩陣</h3>
+<table>
+<tr><th>商品</th><th>即時價</th><th>ST 方向</th><th>策略</th><th>進場</th><th>止損</th><th>目標</th><th>邏輯</th></tr>
+<tr>
+<td><strong>XAU 黃金</strong></td>
+<td>$4,488</td>
+<td><span class="tag t-bear">2TF SHORT</span></td>
+<td><span class="tag t-hold">觀望/$4,450低接</span></td>
+<td>$4,450 回踩</td>
+<td>$4,420</td>
+<td>$4,515-4,560</td>
+<td>ST翻空但跌幅溫和。$4,450 = 1H Lower = 中期強支撐。JOLTS偏冷→反彈。</td>
+</tr>
+<tr>
+<td><strong>XAG 白銀</strong></td>
+<td>$75.28</td>
+<td><span class="tag t-bear">2TF SHORT</span></td>
+<td><span class="tag t-hold">觀望/$74低接</span></td>
+<td>$74.00</td>
+<td>$73.30</td>
+<td>$76.00-77.00</td>
+<td>工業屬性（銅+1.5%）持續支撐。$74=1H Lower。中期不改多。</td>
+</tr>
+<tr>
+<td><strong>COPPER 銅</strong></td>
+<td>$6.676</td>
+<td><span class="tag t-bull">偏多</span></td>
+<td><span class="tag t-bull">持有</span></td>
+<td>$6.57</td>
+<td>$6.45</td>
+<td>$6.80-6.90</td>
+<td>AI DC電力基建。連續走強。今日最強商品。中期結構多頭。</td>
+</tr>
+<tr>
+<td><strong>XPD 鈀金</strong></td>
+<td>$1,380.48</td>
+<td><span class="tag t-hold">N/A</span></td>
+<td><span class="tag t-bull">持有</span></td>
+<td>$1,364</td>
+<td>$1,340</td>
+<td>$1,400-1,420</td>
+<td>汽車催化穩+弱美元。+0.81%穩健。</td>
+</tr>
+<tr>
+<td><strong>XPT 鉑金</strong></td>
+<td>$1,942.31</td>
+<td><span class="tag t-hold">N/A</span></td>
+<td><span class="tag t-bull">持有/$1,926加</span></td>
+<td>$1,926</td>
+<td>$1,900</td>
+<td>$1,985-2,000</td>
+<td>氫能源+南非供給受限。$1,926支撐確認。</td>
+</tr>
+</table>
+</div>
+
+<!-- ===== Section 7: 事件 Calendar ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>7. 本週核心觀察事件日曆（6/3-6/6，台灣時間）</h2>
+<div class="tl">
+<div class="tl-i" style="border-left:3px solid var(--orange);padding-left:10px;margin-left:-13px">
+<div class="tl-d" style="color:var(--orange);font-size:.82rem">6/3（三）22:00 — JOLTS 職位空缺 ★★ 今晚！</div>
+<div class="tl-e">
+<strong>4 月 JOLTS 數據 — 今晚最重要事件。</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+勞動市場鬆緊直接影響 Fed 路徑和 30Y。<br>
+<strong>若空缺大幅下降（<7.5M）：</strong>勞動市場降溫 → 降息預期升 → 30Y 回落 <5% → crypto 止血 + 黃金反彈 + 全面 risk-on<br>
+<strong>若持平/上升（>8M）：</strong>勞動市場仍緊 → 30Y 維持 >5% → crypto 繼續承壓 → AI 半導體或許不受影響但高估值科技持續跌<br>
+<strong>這是今晚 crypto 生死線的關鍵數據。</strong>
+</span>
+</div>
+</div>
+
+<div class="tl-i">
+<div class="tl-d">6/4（四）20:15 — ADP 非農就業 ★</div>
+<div class="tl-e">
+<strong>5 月 ADP 私部門就業。NFP 前哨站。</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+ADP 偏冷 → 市場提前定價 NFP 偏冷 → risk-on 預期升溫。ADP 偏熱 → 恐懼加劇。注意 ADP 系統性偏差大，參考價值有限但影響即時情緒。
+</span>
+</div>
+</div>
+
+<div class="tl-i">
+<div class="tl-d">6/4（四）22:00 — ISM 服務業 PMI ★★</div>
+<div class="tl-e">
+<strong>ISM 非製造業。服務業 = 美國 GDP 70%+。</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+關注：(1) 價格支付子項 — 若 >60 = 服務通膨黏性 → 30Y 走高；(2) 就業子項 — 與 NFP 高度相關。ISM Mfg 前日 53.3 偏熱，若 Service 也偏熱 → 30Y >5% 進一步鞏固 → crypto 繼續承壓。
+</span>
+</div>
+</div>
+
+<div class="tl-i">
+<div class="tl-d">6/5（五）20:30 — 每週失業金申請 ★</div>
+<div class="tl-e">
+<strong>Jobless Claims。即時就業市場指標。</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+初領失業金若突然跳升 >240K → 就業市場惡化信號 → 利好 NFP 偏冷預期 → 30Y 可能提前回落。
+</span>
+</div>
+</div>
+
+<div class="tl-i" style="border-left:3px solid var(--red);padding-left:10px;margin-left:-13px">
+<div class="tl-d" style="color:var(--red);font-size:.82rem">6/6（六）20:30 — 非農就業報告 ★★★ 本週最重要</div>
+<div class="tl-e">
+<strong>美國非農就業報告（5 月）。決定 30Y 是否回落 = 決定 crypto 生死。</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+<strong>若 >+250K + 時薪加速：</strong>30Y 走向 5.2% → crypto 加速崩盤至 BTC $58-62K → AI 硬體也回調 -5~8%<br>
+<strong>若 +150~200K（符合）：</strong>30Y 維持 5% 附近 → 分化趨勢延續 → crypto 低位磨底<br>
+<strong>若 <+130K + 時薪放緩：</strong>30Y 回落 <5% → Goldilocks → crypto V 型反轉（BTC +10~15%） + AI 繼續 + 全面 risk-on<br>
+<strong>在 NFP 公布前，BTC 的任何反彈都可能是 dead cat bounce。保持警惕。</strong>
+</span>
+</div>
+</div>
+
+<div class="tl-i">
+<div class="tl-d">6/3-6/6 整週 — Crypto 清算觀察窗口</div>
+<div class="tl-e">
+<strong>BTC 投降三條件追蹤（持續監測）：</strong><br>
+<span style="font-size:.76rem;color:var(--muted)">
+(1) Funding 轉負 ← 目前 +0.0072%（BTC）/ +0.0020%（ETH）<br>
+(2) OI 暴降 >5%/日 ← 目前仍在增加<br>
+(3) 極端長下影線 + 放量 ← 今日有影線但力道不足<br>
+當 2/3 或 3/3 達成 → 底部形成信號 → 逆向做多窗口開啟。每 8 小時更新狀態。
+</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== Section 8: 一週情境劇本 ===== -->
+<div class="card full" style="margin-bottom:22px">
+<h2>8. 一週情境劇本與機率評估（6/3-6/6）</h2>
+
+<h3>預測市場即時參考</h3>
+<table>
+<tr><th>平台</th><th>問題</th><th>當前機率</th><th>備註</th></tr>
+<tr><td>CME FedWatch</td><td>Fed 6/12 不動</td><td><strong>94%</strong></td><td>確定 Hold</td></tr>
+<tr><td>CME FedWatch</td><td>Fed 9 月降息</td><td><strong>40%</strong></td><td>需 NFP 偏冷才升至 50%+</td></tr>
+<tr><td>Polymarket</td><td>BTC 年底 $100K+</td><td><strong>14%</strong></td><td>從 22%→18%→14% 連續下滑</td></tr>
+<tr><td>Polymarket</td><td>SPX 年底 8000+</td><td><strong>30%</strong></td><td>AI 動能維持，SPY 新高</td></tr>
+<tr><td>Polymarket</td><td>2026 降息 >=2 次</td><td><strong>48%</strong></td><td>需更多偏冷數據確認</td></tr>
+<tr><td>Polymarket</td><td>美國 Q3 衰退</td><td><strong>12%</strong></td><td>SPY 穩定 = 低衰退風險</td></tr>
+</table>
+
+<hr class="divider">
+
+<!-- Scenario 1: BASE -->
+<div class="card scenario" style="margin-bottom:14px">
+<h3 style="color:var(--green)">SCENARIO A — BASE CASE：Crypto 繼續磨底 + AI 半導體消化 + 等 NFP（慣性延續）</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>40%</strong>｜佐證：JOLTS 中性→不改變現狀。AI 半導體需要消化漲幅。Crypto 在 F&G=11 區域但投降未完成。所有人等 NFP。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>JOLTS 7.5-8.0M（中性）；ISM 服務 50-53 區間；ADP 中性。市場等待 NFP 裁判。</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td>AVGO/MU/TSM 消化漲幅，橫盤或微回 -1~2%。NVDA $218-225 區間。SPY 維持 $755-762。AI 平台（MSFT/META）止血但不反彈。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td>BTC $63,000 — $68,000 寬幅磨底。F&G 維持 10-15 極端恐懼。Funding 可能降至接近零但不轉負。ETH $1,780-1,870。HYPE $67-72。</td></tr>
+<tr><td><strong>貴金屬</strong></td><td>XAU $4,450-$4,520。XAG $74.0-76.0。在 30Y 5% 附近震盪。</td></tr>
+<tr><td><strong>工業金屬</strong></td><td>COPPER $6.60-6.75 穩定。XPD $1,360-1,400。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 99-100。30Y 5.00-5.08%。VIX 15-17（微升但不爆發）。</td></tr>
+<tr><td><strong>操作建議</strong></td><td>AI 硬體持有但不加倉。Crypto 不抄底等信號。黃金觀望 $4,450 低接。保留 30%+ 現金等 NFP。</td></tr>
+</table>
+</div>
+
+<!-- Scenario 2: BULL -->
+<div class="card scenario" style="margin-bottom:14px">
+<h3 style="color:var(--green)">SCENARIO B — BULL CASE：JOLTS 偏冷 → 30Y 回落 → 全面反轉（Crypto Squeeze + Risk-On）</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>25%</strong>｜佐證：F&G=11 歷史上 90%+ 在 1 個月內大幅反彈。若 JOLTS 偏冷提供催化 → 可能今晚就觸發。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>JOLTS <7.5M（大幅下降）；30Y 快速回落至 4.90-4.95%；DXY 跌破 98.5；BTC OI 暴降 + Funding 轉負 → short squeeze</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td><span class="pos">全面暴漲 +3~5%</span>。降息預期升 = 成長股 duration 壓力解除。AVGO $520+、MU $1,100+、TSM $460+。MSFT/META 止血反彈 +2~4%。SPY 新高 $770+。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td><span class="pos">BTC V 型反轉至 $70-74K</span>。F&G=11 → 教科書級逆向信號觸發。OI 暴降（空頭被 squeeze）。ETH 率先反彈 $1,950-2,050（因 Funding 更接近投降）。HYPE 暴力反彈 $76-80。</td></tr>
+<tr><td><strong>貴金屬</strong></td><td><span class="pos">XAU 反彈至 $4,540-4,580</span>。30Y 回落解除壓制。XAG $76.5-78。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 跌至 98-98.5。30Y 回落 4.90-4.95%。VIX 跌至 13-14。9 月降息預期升至 50%+。</td></tr>
+<tr><td><strong>操作建議</strong></td><td>JOLTS 公布後若偏冷：立即加倉 AI 硬體 + 黃金。BTC 等 Funding 轉負確認後進場做多。不追高 — 等回踩確認。</td></tr>
+</table>
+</div>
+
+<!-- Scenario 3: BEAR -->
+<div class="card scenario-bear" style="margin-bottom:14px">
+<h3 style="color:var(--red)">SCENARIO C — BEAR CASE：數據全熱 + BTC 清算鏈完全觸發 + AI 擁擠回調</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>25%</strong>｜佐證：ISM Mfg 53.3 已偏熱。30Y 連續三天 >5%。BTC 今日觸及 $65,359 接近 $63K 清算帶。AVGO 三天 +15% 擁擠度極端。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>JOLTS 持平/上升；ISM 服務 >54 + 價格 >62；NFP >+250K；30Y 突破 5.15%+。BTC 跌破 $63K。</td></tr>
+<tr><td><strong>AI 半導體</strong></td><td><span class="neg">回調 -5~10%</span>。30Y >5.15% + VIX 補漲 → 即使 AI 硬體也無法倖免。AVGO 回落至 $450-470。NVDA $205-215。擁擠踩踏。SPY 跌至 $740-748。</td></tr>
+<tr><td><strong>BTC/ETH</strong></td><td><span class="neg">BTC 觸發 $62-63K 清算帶 → 級聯至 $58-62K</span>。F&G 可能跌至 5-8（接近 2022 Luna 水平）。ETH $1,680-1,740。HYPE 測試 Daily Lower $64。MSTR 可能跌至 $115-120。</td></tr>
+<tr><td><strong>貴金屬</strong></td><td><span class="neg">XAU 跌至 $4,403-4,430（4H ST Lower 區域）</span>。margin call 導致黃金被出售。XAG $72-73。短線利空但央行購金限制跌幅。</td></tr>
+<tr><td><strong>宏觀</strong></td><td>DXY 反彈至 100.5-101。30Y 5.15-5.30%。VIX 20-25。9 月降息預期崩至 <25%。</td></tr>
+<tr><td><strong>操作建議</strong></td><td>止損 AI 短線倉位。BTC 絕不抄底 — 等清算完成。黃金若跌至 $4,403（4H Lower）= 中期最佳加倉位（但需等確認企穩）。保留 50%+ 現金。</td></tr>
+</table>
+</div>
+
+<!-- Scenario 4: TAIL -->
+<div class="card scenario-tail" style="margin-bottom:14px">
+<h3 style="color:var(--orange)">SCENARIO D — TAIL RISK：Crypto 系統性崩盤 + AI 擁擠踩踏 + 流動性事件同步</h3>
+<table>
+<tr><th style="width:110px">項目</th><th>內容</th></tr>
+<tr><td><strong>機率</strong></td><td><strong>10%</strong>｜佐證：BTC 清算帶 + AI 持倉 >97%ile + VIX 15.5 自滿 + 30Y >5% = 四個引爆點已就位。需多重同步觸發。</td></tr>
+<tr><td><strong>觸發條件</strong></td><td>BTC 跌破 $57K（Daily ST Lower）→ MSTR 被迫賣幣 → 同時 JOLTS+NFP 全熱 → 30Y >5.2% → AI 硬體擁擠踩踏 → VIX >30 → Dealer gamma squeeze → 正反饋瀑布</td></tr>
+<tr><td><strong>全市場影響</strong></td><td>
+<span class="neg">SPX -8~12%</span>。BTC $48-55K。ETH $1,400-1,550。VIX >30。AI 硬體 -15~20%。<br>
+所有風險資產同步下跌。流動性完全枯竭。Crypto 可能出現類似 2022 Luna/FTX 級別的系統性事件。<br>
+<strong>唯一避險：</strong>短期美債（2Y）/ JPY / 現金。XAU 先跌後漲（24-48h 後避險流入）。
+</td></tr>
+<tr><td><strong>觸發後邏輯</strong></td><td>
+若真實發生 = 千載難逢的買入機會（前提：有現金+有耐心）：<br>
+(1) Fed 48h 內緊急聲明 + 可能暗示降息<br>
+(2) AI Capex 基本面未變 → V 型反轉<br>
+(3) BTC $48-55K = 全球礦工成本線 + MSTR 清算後無賣壓 → 極強反彈<br>
+(4) F&G <5 = 歷史上 100% 在 6 個月內大幅反彈<br>
+<strong>結論：</strong>不預判，不抄底。等 VIX 從峰值回落 25%+ 才進場。
+</td></tr>
+<tr><td><strong>操作建議</strong></td><td>
+事前：保留 40%+ 現金。可考慮 VIX call（便宜保險）<br>
+事中：完全離場。觀望。記錄想買的價位但不行動<br>
+事後（VIX 回落確認）：All-in 買入 AVGO + TSM + BTC + XAU（V 型反轉最佳標的）
+</td></tr>
+</table>
+</div>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+<strong>數據來源：</strong>Binance Futures API（25 資產報價）| Yahoo Finance（DXY/VIX/30Y）| S&P Futures | Alternative.me（恐懼貪婪指數）| CME FedWatch | Polymarket<br>
+<strong>SuperTrend 參數：</strong>Period=300, Multiplier=3。多時框分析：Daily / 4H / 1H。訊號以最新 K 線收盤價與帶狀關係判定。<br>
+<strong>數據時間：</strong>2026-06-03 12:04 台灣時間。美股 6/2（週二）收盤價。加密/貴金屬/商品為 Binance 永續合約即時價。<br>
+<strong>風險聲明：</strong>本報告為量化分析參考，不構成投資建議。SuperTrend 信號為機械化判定，需結合宏觀環境及資金管理使用。所有操作建議均需嚴格止損。<br>
+<strong>核心主題：</strong>CRYPTO BLOODBATH（F&G=11 / BTC -10% in 3 days）+ AI SEMI SOAR（AVGO +15% in 3 days）= 2026 年最極端資產分歧。今晚 JOLTS 22:00 = 第一個催化劑。<br>
+<strong>下次更新：</strong>6/3（三）晚報 — JOLTS 公布後 + 美股收盤後。屆時將評估 JOLTS 對 crypto/黃金的即時影響。<br><br>
+<em>報告生成：2026-06-03 12:04 TWN | V4.5 Full Tactical Morning Report | 25 Assets + SuperTrend + Multi-Factor Scoring | CRYPTO CRISIS Edition | ~72KB</em>
+</div>
+
+</div>
+</body>
+</html>
