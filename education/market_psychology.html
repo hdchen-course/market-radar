@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>市場心理學與主力行為分析 — 群眾行為、聰明錢與政治交易信號</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --yellow: #d97706;
+  --yellow-l: #fef3c7;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #ffedd5;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.back-link:hover { text-decoration: underline; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text3);
+  margin-bottom: 24px;
+}
+
+/* TAB NAV */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 6px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: var(--bg3); }
+.tab-btn.active {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* TAB CONTENT */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* CARDS */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s;
+}
+.card:hover { box-shadow: var(--shadow); }
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.card h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--text);
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* LISTS */
+.bullet-list {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.bullet-list li {
+  margin-bottom: 6px;
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.bullet-list li strong { color: var(--text); }
+
+/* HIGHLIGHT BOXES */
+.highlight-box {
+  background: var(--blue-l);
+  border-left: 3px solid var(--blue);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.highlight-box strong { color: var(--blue); }
+
+.warning-box {
+  background: var(--red-l);
+  border-left: 3px solid var(--red);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.warning-box strong { color: var(--red); }
+
+.green-box {
+  background: var(--green-l);
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.green-box strong { color: var(--green); }
+
+.purple-box {
+  background: var(--purple-l);
+  border-left: 3px solid var(--purple);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.purple-box strong { color: var(--purple); }
+
+.orange-box {
+  background: var(--orange-l);
+  border-left: 3px solid var(--orange);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.orange-box strong { color: var(--orange); }
+
+/* SVG */
+.svg-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+.svg-container svg {
+  background: var(--bg3);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+
+/* TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.data-table th {
+  background: var(--bg3);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.data-table td {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+.data-table tr:hover td { background: var(--bg3); }
+
+/* CODE */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--purple);
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 2px 4px 2px 0;
+}
+.tag-green { background: var(--green-l); color: var(--green); }
+.tag-red { background: var(--red-l); color: var(--red); }
+.tag-blue { background: var(--blue-l); color: var(--blue); }
+.tag-purple { background: var(--purple-l); color: var(--purple); }
+.tag-orange { background: var(--orange-l); color: var(--orange); }
+.tag-yellow { background: var(--yellow-l); color: var(--yellow); }
+
+/* QUIZ */
+.quiz-section { margin-top: 24px; }
+.quiz-q {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.quiz-q h4 { margin-top: 0; margin-bottom: 12px; color: var(--text); font-size: 14px; }
+.quiz-q .options { margin: 12px 0; }
+.quiz-q label { display: block; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; font-size: 14px; color: var(--text2); }
+.quiz-q label:hover { background: var(--bg3); }
+.quiz-q input[type="radio"] { margin-right: 8px; }
+.quiz-q .explanation {
+  display: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.quiz-q .explanation.correct { display: block; background: var(--green-l); color: #166534; }
+.quiz-q .explanation.wrong { display: block; background: var(--red-l); color: #991b1b; }
+
+.quiz-btn {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  font-family: inherit;
+}
+.quiz-btn:hover { background: #1d4ed8; }
+
+#scoreDisplay {
+  display: none;
+  margin-top: 16px;
+  padding: 16px 24px;
+  background: var(--bg2);
+  border: 2px solid var(--blue);
+  border-radius: var(--r);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--blue);
+  text-align: center;
+}
+
+/* FLOW DIAGRAM STEPS */
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.flow-step {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  font-size: 13px;
+  position: relative;
+}
+.flow-step .step-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 4px;
+}
+.flow-step .step-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.flow-step .step-desc {
+  color: var(--text3);
+  font-size: 12px;
+}
+
+/* QUADRANT */
+.quadrant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+  max-width: 500px;
+}
+.quadrant-cell {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .tab-nav { gap: 2px; padding: 4px; }
+  .tab-btn { padding: 8px 10px; font-size: 11px; }
+  .flow-steps { grid-template-columns: 1fr; }
+  .quadrant-grid { grid-template-columns: 1fr; }
+  body { padding: 12px; }
+}
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>市場心理學與主力行為分析</h1>
+<p class="subtitle">讀懂群眾行為、識別聰明錢動向、解析政治交易信號 — 讓你站在市場的正確一邊</p>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab(0)">群眾心理與市場週期</button>
+  <button class="tab-btn" onclick="showTab(1)">主力 vs 散戶行為</button>
+  <button class="tab-btn" onclick="showTab(2)">川普交易心理學</button>
+  <button class="tab-btn" onclick="showTab(3)">新聞與媒體心理</button>
+  <button class="tab-btn" onclick="showTab(4)">預測市場工具</button>
+  <button class="tab-btn" onclick="showTab(5)">市場結構與操縱</button>
+  <button class="tab-btn" onclick="showTab(6)">互動測驗</button>
+</nav>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<h3 style="color:#ea580c;">⚠️ 市場結構非二元</h3>
+<p>本教學中「主力 vs 散戶」是簡化的教學框架。現實中市場參與者包括：長期資本（退休基金/主權基金）、主動對沖基金、量化/CTA、做市商、ETF 被動流、零售散戶等，各自有不同時間框架和行為模式。「Smart Money」並非單一群體，他們之間也互相博弈。</p>
+</div>
+
+<!-- ==================== TAB 0: 群眾心理與市場週期 ==================== -->
+<div class="tab-content active" id="tab0">
+<h2 class="section-title">群眾心理與市場週期</h2>
+
+<div class="card">
+<h3>群眾心理的四個階段</h3>
+<p style="color:var(--text2); font-size:14px; margin-bottom:16px;">市場永遠在四個階段中循環。理解你身處哪個階段，是所有交易決策的基礎。</p>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:680px" viewBox="0 0 680 380">
+  <!-- Cycle Path -->
+  <path d="M 340 40 C 520 40, 620 140, 620 190 C 620 240, 520 340, 340 340 C 160 340, 60 240, 60 190 C 60 140, 160 40, 340 40" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- Accumulation (Bottom Left) -->
+  <rect x="40" y="220" width="160" height="100" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="120" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#2563eb">累積期</text>
+  <text x="120" y="270" text-anchor="middle" font-size="11" fill="#334155">Accumulation</text>
+  <text x="120" y="290" text-anchor="middle" font-size="10" fill="#64748b">聰明錢入場</text>
+  <text x="120" y="305" text-anchor="middle" font-size="10" fill="#64748b">散戶恐懼/無聊</text>
+
+  <!-- Markup (Top Left) -->
+  <rect x="40" y="50" width="160" height="100" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="120" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#16a34a">上升期</text>
+  <text x="120" y="100" text-anchor="middle" font-size="11" fill="#334155">Markup</text>
+  <text x="120" y="120" text-anchor="middle" font-size="10" fill="#64748b">趨勢確認</text>
+  <text x="120" y="135" text-anchor="middle" font-size="10" fill="#64748b">散戶開始進場</text>
+
+  <!-- Distribution (Top Right) -->
+  <rect x="480" y="50" width="160" height="100" rx="12" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+  <text x="560" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#ea580c">派發期</text>
+  <text x="560" y="100" text-anchor="middle" font-size="11" fill="#334155">Distribution</text>
+  <text x="560" y="120" text-anchor="middle" font-size="10" fill="#64748b">聰明錢出場</text>
+  <text x="560" y="135" text-anchor="middle" font-size="10" fill="#64748b">散戶狂熱</text>
+
+  <!-- Markdown (Bottom Right) -->
+  <rect x="480" y="220" width="160" height="100" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="560" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">下降期</text>
+  <text x="560" y="270" text-anchor="middle" font-size="11" fill="#334155">Markdown</text>
+  <text x="560" y="290" text-anchor="middle" font-size="10" fill="#64748b">散戶套牢</text>
+  <text x="560" y="305" text-anchor="middle" font-size="10" fill="#64748b">恐慌拋售</text>
+
+  <!-- Arrows -->
+  <polygon points="200,85 220,75 220,95" fill="#16a34a"/>
+  <polygon points="480,85 460,75 460,95" fill="#ea580c"/>
+  <polygon points="480,275 460,265 460,285" fill="#dc2626"/>
+  <polygon points="200,275 220,265 220,285" fill="#2563eb"/>
+
+  <!-- Center Label -->
+  <text x="340" y="185" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">市場永恆循環</text>
+  <text x="340" y="205" text-anchor="middle" font-size="10" fill="#64748b">Smart Money Cycle</text>
+</svg>
+</div>
+
+<h4>累積期 (Accumulation)</h4>
+<ul class="bullet-list">
+  <li><strong>特徵:</strong> 低波動、低成交量、負面新聞但價格不再跌</li>
+  <li><strong>聰明錢:</strong> 靜默吸籌，不引起注意，用時間換空間</li>
+  <li><strong>散戶:</strong> 恐懼或無聊，認為「永遠不會漲了」</li>
+  <li><strong>識別:</strong> 長期橫盤 + 成交量萎縮 + 新聞全面看空 + 價格拒絕再創新低</li>
+</ul>
+
+<h4>上升期 (Markup)</h4>
+<ul class="bullet-list">
+  <li><strong>特徵:</strong> 價格突破盤整區、成交量增加、正面新聞開始出現</li>
+  <li><strong>聰明錢:</strong> 已經有大量倉位，開始讓市場自己推動</li>
+  <li><strong>散戶:</strong> 從半信半疑到逐步入場（越晚越多）</li>
+  <li><strong>識別:</strong> 突破關鍵阻力 + 回調不破前低 + 移動平均線多頭排列</li>
+</ul>
+
+<h4>派發期 (Distribution)</h4>
+<ul class="bullet-list">
+  <li><strong>特徵:</strong> 高波動、天量成交、所有人都在談論、「這次不一樣」</li>
+  <li><strong>聰明錢:</strong> 分批出貨，利用散戶的貪婪作為流動性</li>
+  <li><strong>散戶:</strong> 全面樂觀，加倉加槓桿，認為會漲到天上去</li>
+  <li><strong>識別:</strong> 天量但價格滯漲 + 大幅震盪 + 媒體瘋狂報導 + 計程車司機都在談</li>
+</ul>
+
+<h4>下降期 (Markdown)</h4>
+<ul class="bullet-list">
+  <li><strong>特徵:</strong> 壞消息連環爆、反彈微弱、「永遠不碰了」</li>
+  <li><strong>聰明錢:</strong> 等待，準備在底部再次累積</li>
+  <li><strong>散戶:</strong> 套牢死扛 → 絕望割肉 → 發誓「永遠不碰了」</li>
+  <li><strong>識別:</strong> 每次反彈都被賣壓打回 + 利好消息也無法推動上漲</li>
+</ul>
+
+<div class="warning-box">
+  <strong>核心認知:</strong> 你不需要完美判斷當前在哪個階段。你只需要知道「不在」哪個階段。如果所有人都在討論某資產（派發期特徵），你至少不應該加倉。
+</div>
+</div>
+
+<div class="card">
+<h3>情緒溫度計 — 如何量化市場情緒</h3>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>指標</th>
+      <th>恐懼/底部信號</th>
+      <th>中性</th>
+      <th>貪婪/頂部信號</th>
+      <th>數據源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Fear & Greed Index</strong></td>
+      <td><span class="tag tag-green">0-25 極度恐懼</span></td>
+      <td>25-75</td>
+      <td><span class="tag tag-red">75-100 極度貪婪</span></td>
+      <td>CNN / Alternative.me</td>
+    </tr>
+    <tr>
+      <td><strong>VIX</strong></td>
+      <td><span class="tag tag-green">>30 恐慌</span></td>
+      <td>15-25</td>
+      <td><span class="tag tag-red">&lt;15 自滿</span></td>
+      <td>CBOE</td>
+    </tr>
+    <tr>
+      <td><strong>Put/Call Ratio</strong></td>
+      <td><span class="tag tag-green">>1.2 極度恐慌</span></td>
+      <td>0.7-1.0</td>
+      <td><span class="tag tag-red">&lt;0.5 極度樂觀</span></td>
+      <td>CBOE / CME</td>
+    </tr>
+    <tr>
+      <td><strong>Social Media Sentiment</strong></td>
+      <td>全部喊跌 = 可能底部</td>
+      <td>混合觀點</td>
+      <td>全部喊漲 = 準備跌</td>
+      <td>LunarCrush / StockTwits</td>
+    </tr>
+    <tr>
+      <td><strong>Google Trends</strong></td>
+      <td>搜尋量歸零</td>
+      <td>—</td>
+      <td>「how to buy bitcoin」爆量</td>
+      <td>Google Trends</td>
+    </tr>
+    <tr>
+      <td><strong>AAII Bull/Bear</strong></td>
+      <td><span class="tag tag-green">Bull &lt; 20%</span></td>
+      <td>Bull 30-40%</td>
+      <td><span class="tag tag-red">Bull > 60%</span></td>
+      <td>AAII Survey</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>使用要點:</strong> 單一情緒指標不夠可靠。當 3 個以上指標同時達到極端值，配合技術面反轉信號，才是高機率的逆向交易時機。
+</div>
+</div>
+
+<div class="card">
+<h3>逆向指標的使用</h3>
+
+<div class="purple-box">
+  <strong>經典名言:</strong> 「當擦鞋童都在談論股票時，就該賣了。」— J.P. Morgan, 1929
+</div>
+
+<h4>逆向操作的核心邏輯</h4>
+<ul class="bullet-list">
+  <li>逆向不是「永遠反著做」，是「在極端時反著做」</li>
+  <li>市場在 80% 的時間是趨勢或盤整 → 逆向無用</li>
+  <li>只在 20% 的極端時刻，逆向思維才有 edge</li>
+</ul>
+
+<h4>逆向操作的確認清單</h4>
+<ul class="bullet-list">
+  <li><strong>情緒極端</strong>: 至少 3 個情緒指標同時達到極值</li>
+  <li><strong>技術面反轉信號</strong>: K 線反轉形態 + 量能背離</li>
+  <li><strong>時間充足</strong>: 趨勢已持續足夠長時間（不是剛開始就逆向）</li>
+  <li><strong>催化劑存在</strong>: 有可能改變敘事的事件即將發生</li>
+</ul>
+
+<div class="warning-box">
+  <strong>常見錯誤:</strong> 單獨的情緒極端不構成交易信號。熊市可以恐懼很久、牛市可以貪婪很久。「市場保持非理性的時間比你保持有償付能力的時間更長。」— Keynes
+</div>
+
+<h4>逆向指標實例</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>信號</th><th>含義</th><th>歷史案例</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>雜誌封面 bearish</td><td>底部可能臨近</td><td>2009 Newsweek「The Case for $500 Gold」→ 黃金續漲</td></tr>
+    <tr><td>所有分析師看漲</td><td>可能接近頂部</td><td>2021 年底全員看多 BTC $100K → 暴跌</td></tr>
+    <tr><td>「永遠的牛市」報導</td><td>最危險的信號</td><td>2000 年 dot-com 泡沫頂部</td></tr>
+    <tr><td>大眾開始離場</td><td>累積期可能開始</td><td>2022 加密寒冬 → 2023 觸底反彈</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 1: 主力 vs 散戶行為辨識 ==================== -->
+<div class="tab-content" id="tab1">
+<h2 class="section-title">主力 vs 散戶行為辨識</h2>
+
+<div class="card">
+<h3>主力的行為模式 — 他們的目的 = 流動性</h3>
+<p style="color:var(--text2); font-size:14px; margin-bottom:16px;">主力（機構、做市商、大戶）的核心困境: 他們的單子太大，無法一次性執行而不影響價格。因此他們需要「對手盤」— 也就是你。</p>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:700px" viewBox="0 0 700 300">
+  <!-- Timeline -->
+  <line x1="50" y1="200" x2="650" y2="200" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- Phase 1: Create Fear -->
+  <rect x="60" y="80" width="130" height="90" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="125" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">製造恐慌</text>
+  <text x="125" y="125" text-anchor="middle" font-size="10" fill="#334155">放出利空消息</text>
+  <text x="125" y="140" text-anchor="middle" font-size="10" fill="#334155">小幅砸盤製造恐懼</text>
+  <text x="125" y="155" text-anchor="middle" font-size="10" fill="#334155">散戶恐慌賣出</text>
+  <circle cx="125" cy="200" r="6" fill="#dc2626"/>
+  <text x="125" y="225" text-anchor="middle" font-size="10" fill="#64748b">Phase 1</text>
+
+  <!-- Arrow -->
+  <polygon points="200,200 210,195 210,205" fill="#64748b"/>
+
+  <!-- Phase 2: Accumulate -->
+  <rect x="220" y="80" width="130" height="90" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="285" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#2563eb">靜默吸籌</text>
+  <text x="285" y="125" text-anchor="middle" font-size="10" fill="#334155">低位承接散戶拋壓</text>
+  <text x="285" y="140" text-anchor="middle" font-size="10" fill="#334155">分批買入不引起注意</text>
+  <text x="285" y="155" text-anchor="middle" font-size="10" fill="#334155">成交量維持低迷</text>
+  <circle cx="285" cy="200" r="6" fill="#2563eb"/>
+  <text x="285" y="225" text-anchor="middle" font-size="10" fill="#64748b">Phase 2</text>
+
+  <!-- Arrow -->
+  <polygon points="360,200 370,195 370,205" fill="#64748b"/>
+
+  <!-- Phase 3: Markup -->
+  <rect x="380" y="80" width="130" height="90" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="445" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">拉升出貨</text>
+  <text x="445" y="125" text-anchor="middle" font-size="10" fill="#334155">推動價格上漲</text>
+  <text x="445" y="140" text-anchor="middle" font-size="10" fill="#334155">散戶追高買入</text>
+  <text x="445" y="155" text-anchor="middle" font-size="10" fill="#334155">分批賣出給散戶</text>
+  <circle cx="445" cy="200" r="6" fill="#16a34a"/>
+  <text x="445" y="225" text-anchor="middle" font-size="10" fill="#64748b">Phase 3</text>
+
+  <!-- Arrow -->
+  <polygon points="520,200 530,195 530,205" fill="#64748b"/>
+
+  <!-- Phase 4: Distribute -->
+  <rect x="540" y="80" width="130" height="90" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="605" y="105" text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c">完成派發</text>
+  <text x="605" y="125" text-anchor="middle" font-size="10" fill="#334155">製造狂熱氣氛</text>
+  <text x="605" y="140" text-anchor="middle" font-size="10" fill="#334155">散戶全面樂觀</text>
+  <text x="605" y="155" text-anchor="middle" font-size="10" fill="#334155">主力清空倉位</text>
+  <circle cx="605" cy="200" r="6" fill="#ea580c"/>
+  <text x="605" y="225" text-anchor="middle" font-size="10" fill="#64748b">Phase 4</text>
+
+  <!-- Bottom labels -->
+  <text x="125" y="255" text-anchor="middle" font-size="9" fill="#dc2626">散戶: 恐慌賣出</text>
+  <text x="285" y="255" text-anchor="middle" font-size="9" fill="#2563eb">散戶: 不敢買</text>
+  <text x="445" y="255" text-anchor="middle" font-size="9" fill="#16a34a">散戶: 追高買入</text>
+  <text x="605" y="255" text-anchor="middle" font-size="9" fill="#ea580c">散戶: 加碼加槓桿</text>
+</svg>
+</div>
+
+<div class="highlight-box">
+  <strong>核心概念:</strong> 主力需要流動性來建倉和出貨。散戶的情緒化行為恰好提供了這個流動性。恐慌時賣出 = 給主力提供低價買入機會。狂熱時買入 = 給主力提供高價賣出對象。
+</div>
+</div>
+
+<div class="card">
+<h3>散戶的典型行為模式（你以前的自己）</h3>
+
+<div class="flow-steps">
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-num">底部</div>
+    <div class="step-title">恐慌割肉</div>
+    <div class="step-desc">看到連跌 → 恐慌 → 割肉<br>把籌碼交給主力</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--yellow);">
+    <div class="step-num">拉升初期</div>
+    <div class="step-title">半信半疑</div>
+    <div class="step-desc">不敢進場 → 觀望<br>錯過最甜的一段</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--green);">
+    <div class="step-num">拉升中期</div>
+    <div class="step-title">開始相信</div>
+    <div class="step-desc">終於入場<br>主力已吃一半利潤</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--orange);">
+    <div class="step-num">頂部</div>
+    <div class="step-title">全面樂觀</div>
+    <div class="step-desc">加倉加槓桿<br>成為出貨對象</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--purple);">
+    <div class="step-num">下跌初期</div>
+    <div class="step-title">「只是回調」</div>
+    <div class="step-desc">死扛不跑<br>套牢開始</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-num">下跌中期</div>
+    <div class="step-title">絕望割肉</div>
+    <div class="step-desc">最低點附近賣出<br>把籌碼還給主力</div>
+  </div>
+</div>
+
+<div class="warning-box">
+  <strong>自我檢查:</strong> 如果你現在有強烈的「一定要買/賣」的衝動，先停下來想: 你是在提供流動性給主力嗎？你的情緒是不是被製造出來的？
+</div>
+</div>
+
+<div class="card">
+<h3>識別主力行為的指標</h3>
+
+<h4>OI + Price 四象限分析</h4>
+<div class="quadrant-grid">
+  <div class="quadrant-cell" style="background: var(--green-l);">
+    <strong>價格漲 + OI 增</strong><br>
+    <span style="font-size:12px; color:var(--green);">新多頭入場 (Bullish)</span>
+  </div>
+  <div class="quadrant-cell" style="background: var(--orange-l);">
+    <strong>價格漲 + OI 減</strong><br>
+    <span style="font-size:12px; color:var(--orange);">空頭平倉 (Short Covering)</span>
+  </div>
+  <div class="quadrant-cell" style="background: var(--red-l);">
+    <strong>價格跌 + OI 增</strong><br>
+    <span style="font-size:12px; color:var(--red);">新空頭入場 (Bearish)</span>
+  </div>
+  <div class="quadrant-cell" style="background: var(--blue-l);">
+    <strong>價格跌 + OI 減</strong><br>
+    <span style="font-size:12px; color:var(--blue);">多頭平倉 (Long Liquidation)</span>
+  </div>
+</div>
+
+<h4>其他主力行為指標</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>指標</th><th>如何讀取</th><th>主力動作暗示</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>CVD 背離</strong></td>
+      <td>價格新高但 CVD 沒有跟隨創新高</td>
+      <td>主力在高位出貨（真實買盤不足）</td>
+    </tr>
+    <tr>
+      <td><strong>Whale Alert</strong></td>
+      <td>大額 BTC/ETH 轉入交易所</td>
+      <td>大戶準備賣出</td>
+    </tr>
+    <tr>
+      <td><strong>異常期權 Flow</strong></td>
+      <td>大量 OTM Put/Call 被買入</td>
+      <td>機構在佈局大行情</td>
+    </tr>
+    <tr>
+      <td><strong>COT 報告</strong></td>
+      <td>Commercial 淨持倉方向</td>
+      <td>產業內部人（最了解市場的人）在做什麼</td>
+    </tr>
+    <tr>
+      <td><strong>Dark Pool Prints</strong></td>
+      <td>大額暗池交易在某個價位密集出現</td>
+      <td>機構在特定價位有重大倉位</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>流動性獵殺 (Liquidity Hunt / Stop Hunt)</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:500px" viewBox="0 0 500 260">
+  <!-- Price action line -->
+  <polyline points="50,180 100,160 140,170 180,140 210,150 240,130 260,145 280,120 300,80 310,140 330,130 360,110 400,100 440,85" fill="none" stroke="#2563eb" stroke-width="2"/>
+
+  <!-- Stop loss zone -->
+  <rect x="270" y="60" width="60" height="30" rx="4" fill="#fee2e2" opacity="0.6" stroke="#dc2626" stroke-dasharray="4,2"/>
+  <text x="300" y="50" text-anchor="middle" font-size="9" fill="#dc2626">止損密集區</text>
+
+  <!-- Wick (spike up) -->
+  <line x1="300" y1="80" x2="300" y2="45" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="300" cy="45" r="3" fill="#dc2626"/>
+
+  <!-- Labels -->
+  <text x="300" y="35" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="600">獵殺長影線</text>
+
+  <!-- Annotations -->
+  <text x="50" y="240" font-size="10" fill="#64748b">1. 散戶空單止損設在前高上方</text>
+  <text x="50" y="255" font-size="10" fill="#64748b">2. 主力推價觸發止損 → 3. 影線收回 → 4. 反向下跌</text>
+
+  <!-- Arrow showing reversal -->
+  <path d="M 310 140 Q 340 160 370 180 Q 400 200 440 210" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="440" y="225" text-anchor="middle" font-size="9" fill="#16a34a">真實方向</text>
+</svg>
+</div>
+
+<h4>流動性獵殺的機制</h4>
+<ul class="bullet-list">
+  <li><strong>主力知道止損在哪:</strong> 散戶習慣把止損放在最明顯的技術位（前高/前低/整數關口上下方）</li>
+  <li><strong>操作流程:</strong> 推價到止損密集區 → 觸發連環止損 → 製造假突破 → 主力在此建立反向倉位</li>
+  <li><strong>識別方法:</strong> 長影線快速掃過關鍵位後迅速收回 = 流動性獵殺完成</li>
+  <li><strong>時間偏好:</strong> 亞盤流動性薄的時候、重要數據發布前後</li>
+</ul>
+
+<h4>交易策略</h4>
+<ul class="bullet-list">
+  <li>不要把止損放在最明顯的位置（稍微遠一點，或用時間止損）</li>
+  <li>等獵殺完成後入場（確認影線收回 + 收盤確認）</li>
+  <li>把獵殺當成入場信號，而非出場信號</li>
+  <li>如果無法避開獵殺，就用更小的倉位（允許更寬的止損）</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>機構時間框架 vs 散戶時間框架</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>維度</th><th>機構 / 主力</th><th>散戶</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>建倉時間</strong></td><td>數天到數週（量太大，分批執行）</td><td>即時決策，秒級建倉/平倉</td></tr>
+    <tr><td><strong>決策框架</strong></td><td>4H / Daily / Weekly</td><td>1m / 5m / 15m</td></tr>
+    <tr><td><strong>對手</strong></td><td>其他機構 + 演算法</td><td>機構 + 演算法 + 做市商</td></tr>
+    <tr><td><strong>信息優勢</strong></td><td>訂單流、暗池、早期消息</td><td>延遲的公開信息</td></tr>
+    <tr><td><strong>工具</strong></td><td>TWAP/VWAP 演算法、暗池</td><td>手動下單、市價單</td></tr>
+  </tbody>
+</table>
+
+<div class="warning-box">
+  <strong>殘酷現實:</strong> 如果你看 1 分鐘圖做日內交易，你在跟演算法對打。演算法的延遲是微秒級，你的延遲是秒級。這是一場你不可能贏的速度競賽。
+</div>
+
+<div class="green-box">
+  <strong>建議:</strong> 至少看 4H 級別的走勢做決策。把你的時間框架與機構對齊，而非與其他散戶對齊。機構的動作需要時間展開 → 你有足夠時間觀察和跟隨。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: 川普交易心理學 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">川普交易心理學</h2>
+
+<div class="card">
+<h3>川普的市場影響力機制</h3>
+
+<div class="flow-steps">
+  <div class="flow-step">
+    <div class="step-num">Step 1</div>
+    <div class="step-title">Truth Social 發文</div>
+    <div class="step-desc">通常清晨 6-8AM ET<br>或深夜</div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">Step 2</div>
+    <div class="step-title">演算法抓取</div>
+    <div class="step-desc">NLP 解析情緒<br>自動觸發交易</div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">Step 3</div>
+    <div class="step-title">新聞頭條</div>
+    <div class="step-desc">CNBC/Bloomberg<br>Breaking News</div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">Step 4</div>
+    <div class="step-title">市場反應</div>
+    <div class="step-desc">通常 &lt;5 分鐘<br>價格已大幅波動</div>
+  </div>
+</div>
+
+<ul class="bullet-list">
+  <li>他是第一個「Social Media 治國」的總統 → 市場被迫對每條貼文定價</li>
+  <li>他知道市場在看 → 他利用這個來施壓（對 Fed / 中國 / 企業）</li>
+  <li>他的貼文是「政策預告」也是「談判工具」→ 需要區分這兩者</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>川普的典型操作模式（歷史歸納）</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 220">
+  <!-- Pattern flow -->
+  <rect x="20" y="70" width="120" height="60" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="80" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">極端威脅</text>
+  <text x="80" y="112" text-anchor="middle" font-size="9" fill="#334155">「將對中國加</text>
+  <text x="80" y="124" text-anchor="middle" font-size="9" fill="#334155">200% 關稅」</text>
+
+  <path d="M 140 100 L 170 100" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="175" y="70" width="120" height="60" rx="8" fill="#ffedd5" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="235" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#ea580c">市場恐慌</text>
+  <text x="235" y="112" text-anchor="middle" font-size="9" fill="#334155">SPY -3~5%</text>
+  <text x="235" y="124" text-anchor="middle" font-size="9" fill="#334155">散戶恐慌賣出</text>
+
+  <path d="M 295 100 L 325 100" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="330" y="70" width="120" height="60" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="390" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#d97706">談判讓步</text>
+  <text x="390" y="112" text-anchor="middle" font-size="9" fill="#334155">「電話打得很好」</text>
+  <text x="390" y="124" text-anchor="middle" font-size="9" fill="#334155">48-72h 後軟化</text>
+
+  <path d="M 450 100 L 480 100" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="485" y="70" width="100" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="535" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">「偉大的交易」</text>
+  <text x="535" y="112" text-anchor="middle" font-size="9" fill="#334155">市場暴漲</text>
+  <text x="535" y="124" text-anchor="middle" font-size="9" fill="#334155">SPY +5~13%</text>
+
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Historical examples -->
+  <text x="300" y="170" text-anchor="middle" font-size="11" fill="#334155" font-weight="600">歷史案例:</text>
+  <text x="300" y="188" text-anchor="middle" font-size="10" fill="#64748b">2018-2019 中美貿易戰: 關稅威脅暴跌 → 電話協商 → 暴漲</text>
+  <text x="300" y="205" text-anchor="middle" font-size="10" fill="#64748b">2025 關稅 90 天暫停: 市場暴漲 13% (單日最大漲幅之一)</text>
+</svg>
+</div>
+
+<div class="orange-box">
+  <strong>模式總結:</strong> 川普先製造恐慌（壓低市場）→ 然後釋放利好（推高市場）。他的「極端言論」大多數是談判籌碼，而非最終政策。理解這個模式，你就不會在恐慌時割肉。
+</div>
+</div>
+
+<div class="card">
+<h3>川普相關交易的時間節奏</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>維度</th><th>規律</th><th>交易含義</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>發文時間</strong></td>
+      <td>美東清晨 6-8AM 或深夜</td>
+      <td>影響亞洲/歐洲開盤；美股開盤前已消化第一波</td>
+    </tr>
+    <tr>
+      <td><strong>政策公布</strong></td>
+      <td>通常在市場收盤後（週五傍晚最常見）</td>
+      <td>Friday Night News Dump → 週末消化 → 週一 gap</td>
+    </tr>
+    <tr>
+      <td><strong>極端→軟化</strong></td>
+      <td>48-72 小時內通常會軟化</td>
+      <td>大多數恐慌是短命的 → 不要追跌</td>
+    </tr>
+    <tr>
+      <td><strong>選舉前</strong></td>
+      <td>傾向釋放利好維持市場</td>
+      <td>選前 6 個月更少真正的負面政策</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>如何交易川普相關事件 — 實戰框架</h3>
+
+<h4>Rule 1: 第一反應通常過度</h4>
+<ul class="bullet-list">
+  <li>演算法和散戶的即時反應往往是過度的</li>
+  <li>不要追跌/追漲 → 讓第一波情緒過去</li>
+</ul>
+
+<h4>Rule 2: 等 15-30 分鐘看二次反應</h4>
+<ul class="bullet-list">
+  <li>第一波: 恐慌/狂喜（演算法 + 散戶情緒）</li>
+  <li>第二波: 理性評估（機構分析後的動作）</li>
+  <li>第二波方向 = 真正的市場共識</li>
+</ul>
+
+<h4>Rule 3: 區分「真政策」vs「談判姿態」</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>類型</th><th>特徵</th><th>交易反應</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>真政策</strong></td>
+      <td>行政命令已簽署、國會通過</td>
+      <td>尊重方向，跟隨趨勢</td>
+    </tr>
+    <tr>
+      <td><strong>談判姿態</strong></td>
+      <td>Truth Social 威脅、口頭聲明</td>
+      <td>大概率 48h 內軟化 → 反向交易</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Rule 4: 做反向思考</h4>
+<ul class="bullet-list">
+  <li>問自己:「他這麼說是為了達成什麼目的？」</li>
+  <li>威脅中國 = 想要更好的貿易條件（不是真的要脫鉤）</li>
+  <li>攻擊 Fed = 想要降息（不是真的要開除 Fed Chair）</li>
+  <li>理解動機 → 預測結局 → 提前佈局</li>
+</ul>
+
+<h4>Rule 5: 用 Polymarket 判斷</h4>
+<ul class="bullet-list">
+  <li>Polymarket 上的事件合約 = 市場對結果的共識機率</li>
+  <li>如果「川普真的會對中國加 200% 關稅」只有 10% 機率 → 不要恐慌</li>
+  <li>如果機率上升到 50%+ → 需要認真對待</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>川普時代的受影響資產清單</h3>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>川普言論類型</th>
+      <th>受益資產</th>
+      <th>受損資產</th>
+      <th>歷史反應幅度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>加徵關稅</strong></td>
+      <td>DXY, 美國製造業</td>
+      <td>EM, 中概, 全球供應鏈</td>
+      <td>SPY -2~5%</td>
+    </tr>
+    <tr>
+      <td><strong>攻擊 Fed / 要求降息</strong></td>
+      <td>黃金, BTC</td>
+      <td>USD (短線)</td>
+      <td>XAU +1~3%</td>
+    </tr>
+    <tr>
+      <td><strong>美伊 / 中東言論</strong></td>
+      <td>油, 黃金, 軍工</td>
+      <td>航空, 旅遊</td>
+      <td>Oil +3~8%</td>
+    </tr>
+    <tr>
+      <td><strong>與中國和解 / 交易</strong></td>
+      <td>中概(BABA/JD), EM</td>
+      <td>黃金(避險降)</td>
+      <td>中概 +5~15%</td>
+    </tr>
+    <tr>
+      <td><strong>加密友好言論</strong></td>
+      <td>BTC, ETH, MSTR</td>
+      <td>—</td>
+      <td>BTC +3~8%</td>
+    </tr>
+    <tr>
+      <td><strong>科技監管威脅</strong></td>
+      <td>—</td>
+      <td>META, GOOGL, AMZN</td>
+      <td>個股 -3~5%</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>實戰提示:</strong> 建立一個「川普言論 → 資產映射」的快速參考表。當 Breaking News 出現時，你已經知道要看哪些標的，不需要臨時反應。準備 > 反應。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: 新聞與媒體心理 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">新聞與媒體心理</h2>
+
+<div class="card">
+<h3>新聞的本質: 落後指標而非領先指標</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:560px" viewBox="0 0 560 240">
+  <!-- Price curve -->
+  <path d="M 40 180 Q 100 180, 140 160 Q 180 140, 220 100 Q 260 60, 300 50 Q 340 40, 380 55 Q 420 70, 460 120 Q 500 170, 540 190" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+
+  <!-- News labels at wrong times -->
+  <rect x="380" y="10" width="140" height="30" rx="4" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="450" y="30" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">「永遠的牛市！」</text>
+
+  <rect x="40" y="160" width="140" height="30" rx="4" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="110" y="180" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="600">「末日來臨！」</text>
+
+  <!-- Arrows pointing to wrong times -->
+  <line x1="420" y1="40" x2="380" y2="55" stroke="#16a34a" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="140" y1="160" x2="145" y2="155" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Axis labels -->
+  <text x="40" y="220" font-size="10" fill="#64748b">底部</text>
+  <text x="280" y="220" font-size="10" fill="#64748b">頂部</text>
+  <text x="520" y="220" font-size="10" fill="#64748b">底部</text>
+
+  <!-- Key insight -->
+  <text x="280" y="230" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="600">好新聞出現在頂部，壞新聞出現在底部</text>
+</svg>
+</div>
+
+<ul class="bullet-list">
+  <li><strong>好新聞在頂部出現最多:</strong> 因為過去表現好 → 媒體報導 → 吸引更多散戶</li>
+  <li><strong>壞新聞在底部出現最多:</strong> 因為過去表現差 → 媒體報導 → 嚇跑最後的持有者</li>
+  <li><strong>啟示:</strong> 新聞告訴你「已經發生了什麼」，不是「將要發生什麼」</li>
+  <li><strong>數據:</strong> 研究顯示，按照新聞做交易的平均報酬率為負</li>
+</ul>
+
+<div class="warning-box">
+  <strong>核心認知:</strong> 媒體的商業模式是「吸引注意力」，不是「幫你賺錢」。恐慌的標題 = 更多點擊。他們的激勵機制與你的利益不一致。
+</div>
+</div>
+
+<div class="card">
+<h3>「Buy the Rumor, Sell the News」</h3>
+
+<h4>機制解析</h4>
+<ul class="bullet-list">
+  <li>市場在「預期」中上漲（rumor 階段 → 買入）</li>
+  <li>在「事實確認」時平倉（news 確認 → 賣出）</li>
+  <li>因為等到新聞出來時，所有利好已經 priced in</li>
+</ul>
+
+<h4>經典案例</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>事件</th><th>Rumor 階段表現</th><th>News 當天表現</th><th>教訓</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BTC ETF 獲批 (2024.1)</td>
+      <td>傳言期漲 50%+</td>
+      <td>獲批當天反跌 -5%</td>
+      <td>所有利好已 priced in</td>
+    </tr>
+    <tr>
+      <td>Fed 降息 (各次)</td>
+      <td>預期降息前漲</td>
+      <td>降息當天常常跌</td>
+      <td>「符合預期」= 平倉信號</td>
+    </tr>
+    <tr>
+      <td>財報超預期</td>
+      <td>預期中股價已漲</td>
+      <td>超預期但股價跌</td>
+      <td>「超預期」已在漲幅中</td>
+    </tr>
+    <tr>
+      <td>ETH 合併 (2022.9)</td>
+      <td>合併預期前漲 80%</td>
+      <td>合併完成後跌 20%</td>
+      <td>技術里程碑 = 賣出信號</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="green-box">
+  <strong>如何利用:</strong> 在 rumor 階段輕倉跟隨 → 在 news 確認前減倉或完全退出。不要等到「好消息正式公布」才入場，那時你就是最後的接盤者。
+</div>
+</div>
+
+<div class="card">
+<h3>媒體敘事的滯後性</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>媒體敘事</th><th>出現時機</th><th>實際含義</th><th>正確反應</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>「AI 泡沫」</td>
+      <td>AI 股連漲 6 個月後</td>
+      <td>通常是中繼不是頂部</td>
+      <td>不急著做空（泡沫可以膨脹更久）</td>
+    </tr>
+    <tr>
+      <td>「BTC 已死」(第 N 次)</td>
+      <td>BTC 暴跌 50%+ 後</td>
+      <td>通常接近底部</td>
+      <td>開始分批建倉</td>
+    </tr>
+    <tr>
+      <td>「永遠的牛市」</td>
+      <td>連漲 12-18 個月後</td>
+      <td>最危險的信號</td>
+      <td>開始減倉 / 提高警戒</td>
+    </tr>
+    <tr>
+      <td>「現金為王」</td>
+      <td>大跌 30%+ 後</td>
+      <td>通常是投降信號</td>
+      <td>考慮逆向建倉</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="purple-box">
+  <strong>量化方法:</strong> 追蹤 Bloomberg / CNBC 的牛熊文章比例。當看多文章占比 > 80% → 警戒。當看空文章占比 > 80% → 機會接近。用 Google Trends 搜尋相關關鍵字作為代理指標。
+</div>
+</div>
+
+<div class="card">
+<h3>KOL / 分析師的心理偏誤</h3>
+
+<h4>他們也是人，有一樣的認知偏誤</h4>
+<ul class="bullet-list">
+  <li><strong>確認偏誤:</strong> 傾向維持之前公開發表的觀點（認錯 = 失去追隨者）</li>
+  <li><strong>聲譽管理:</strong> 不願認錯 → 會找各種理由解釋為什麼「方向對但時機不對」</li>
+  <li><strong>利益衝突:</strong> 有倉位的人不會叫你賣（他需要你的買入來維持價格）</li>
+  <li><strong>倖存者偏誤:</strong> 你看到的「準確預測」是因為猜對的人被放大，猜錯的被遺忘</li>
+</ul>
+
+<h4>正確的使用方式</h4>
+<ul class="bullet-list">
+  <li>當「參考」而非「指令」— 沒有人能持續準確預測市場</li>
+  <li>看「邏輯」不看「結論」— 邏輯對但結論錯是正常的；邏輯錯結論對是僥倖</li>
+  <li>追蹤勝率 — 記錄他們的預測和結果，用數據而非感覺判斷</li>
+  <li>警惕一致性 — 當所有 KOL 看法一致時 = 最大的逆向信號</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>社群媒體的群體極化</h3>
+
+<ul class="bullet-list">
+  <li><strong>回聲室效應:</strong> Twitter/Discord 群組只讓你看到支持自己觀點的內容 → 放大極端觀點</li>
+  <li><strong>「所有人都看多」:</strong> 可能只是你的 bubble 都看多 → 需要量化確認（不是感覺）</li>
+  <li><strong>群體極化:</strong> 討論讓中立觀點消失，只剩極端多或極端空 → 容易被主力利用</li>
+  <li><strong>FOMO 傳播:</strong> 社群媒體加速了 FOMO 的傳播速度 → 泡沫形成和破裂都更快</li>
+</ul>
+
+<h4>追蹤工具</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>工具</th><th>用途</th><th>逆向信號</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>LunarCrush</td><td>加密社群情緒量化</td><td>Social Dominance 極高 = 可能過熱</td></tr>
+    <tr><td>StockTwits</td><td>個股 Bull/Bear Ratio</td><td>Bull > 80% = 逆向看空</td></tr>
+    <tr><td>Reddit WallStreetBets</td><td>散戶熱門標的追蹤</td><td>Meme 數量爆發 = 接近頂部</td></tr>
+    <tr><td>Twitter/X Sentiment</td><td>即時市場情緒</td><td>極端一致性 = 逆向機會</td></tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 4: 預測市場作為情緒量化工具 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">預測市場作為情緒量化工具</h2>
+
+<div class="card">
+<h3>Polymarket 的本質</h3>
+
+<ul class="bullet-list">
+  <li><strong>不是占卜:</strong> 是「群體智慧的即時定價」</li>
+  <li><strong>準確性:</strong> 歷史上預測市場的校準度 > 專家預測 > 民調</li>
+  <li><strong>為什麼準確:</strong> 有真金白銀下注 → 強制理性思考 → 過度自信者被市場懲罰</li>
+  <li><strong>局限性:</strong> 流動性不足時可能失真、可能被巨鯨操縱短期價格</li>
+</ul>
+
+<div class="highlight-box">
+  <strong>核心價值:</strong> Polymarket 給你一個「市場共識機率」的即時數字。當你有一個觀點時，先看 Polymarket — 如果市場已經定價 80% 同意你，那你的觀點已經沒有 edge。
+</div>
+</div>
+
+<div class="card">
+<h3>如何用 Polymarket 判斷交易</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>事件機率</th><th>含義</th><th>交易策略</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tag tag-green">> 80%</span></td>
+      <td>已經 priced in</td>
+      <td>不要交易這個方向（沒有 edge）。除非你認為會意外反轉。</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-blue">30-70%</span></td>
+      <td>最有交易價值</td>
+      <td>不確定性最大 → 波動最大 → 結果揭曉時價格波動最劇烈</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-red">&lt; 20%</span></td>
+      <td>市場認為不太可能</td>
+      <td>如果你有理由認為機率被低估 → 不對稱機會（低 cost, 高 payoff）</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-orange">快速變化</span></td>
+      <td>新信息正在流入</td>
+      <td>跟隨機率變化的方向 → 有人知道你不知道的事</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>機率 vs 市場反應不一致 = 套利機會</h4>
+<ul class="bullet-list">
+  <li>如果 Polymarket 說「降息」80% → 但債券還沒漲 → 債券被低估</li>
+  <li>如果 Polymarket 說「關稅」90% → 但股市還沒跌 → 可能市場認為影響有限，或者股市被高估</li>
+  <li>利用預測市場和金融市場的「定價不一致」找到 edge</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>CME FedWatch 解讀</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:500px" viewBox="0 0 500 200">
+  <!-- Probability scale -->
+  <rect x="50" y="60" width="400" height="30" rx="15" fill="#f1f5f9" stroke="#cbd5e1"/>
+
+  <!-- Zones -->
+  <rect x="50" y="60" width="80" height="30" rx="15" fill="#dcfce7"/>
+  <rect x="210" y="60" width="80" height="30" fill="#fef3c7"/>
+  <rect x="370" y="60" width="80" height="30" rx="15" fill="#fee2e2"/>
+
+  <!-- Labels on scale -->
+  <text x="90" y="80" text-anchor="middle" font-size="10" font-weight="600" fill="#16a34a">&lt;30%</text>
+  <text x="250" y="80" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">~50%</text>
+  <text x="410" y="80" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">>80%</text>
+
+  <!-- Descriptions -->
+  <text x="90" y="115" text-anchor="middle" font-size="9" fill="#334155">意外降息 =</text>
+  <text x="90" y="128" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="600">暴漲 (Surprise)</text>
+
+  <text x="250" y="115" text-anchor="middle" font-size="9" fill="#334155">最大不確定性 =</text>
+  <text x="250" y="128" text-anchor="middle" font-size="9" fill="#d97706" font-weight="600">最大波動</text>
+
+  <text x="410" y="115" text-anchor="middle" font-size="9" fill="#334155">已充分定價 =</text>
+  <text x="410" y="128" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="600">降息當天不漲</text>
+
+  <!-- Bottom note -->
+  <text x="250" y="170" text-anchor="middle" font-size="11" fill="#64748b">降息機率 (CME FedWatch)</text>
+  <text x="250" y="188" text-anchor="middle" font-size="10" fill="#334155" font-weight="500">規則: 交易 surprise，不交易 consensus</text>
+</svg>
+</div>
+
+<h4>實戰要點</h4>
+<ul class="bullet-list">
+  <li><strong>降息機率 > 80%:</strong> 降息已充分定價。降息當天不會大漲，甚至可能「sell the news」</li>
+  <li><strong>降息機率 < 30%:</strong> 如果意外降息 → 暴漲（因為完全出乎意料）</li>
+  <li><strong>最大波動:</strong> 市場定價 50/50 時，結果揭曉的那一刻波動最大</li>
+  <li><strong>點陣圖比單次決議更重要:</strong> 一次降息 priced in，但未來路徑的改變沒有 priced in</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>賠率 vs 機率 — 不對稱機會</h3>
+
+<h4>核心概念: 不是找「最可能發生的事」，是找「機率被低估的事」</h4>
+
+<div class="flow-steps">
+  <div class="flow-step">
+    <div class="step-num">概念</div>
+    <div class="step-title">Expected Value</div>
+    <div class="step-desc">EV = (機率 x 報酬) - (1-機率 x 損失)<br>EV > 0 就值得交易</div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">範例</div>
+    <div class="step-title">BTC 大跌後</div>
+    <div class="step-desc">Polymarket: 年底 >$100K = 5%<br>你判斷: 實際 15%<br>3x 的 edge!</div>
+  </div>
+  <div class="flow-step">
+    <div class="step-num">執行</div>
+    <div class="step-title">小注大賠率</div>
+    <div class="step-desc">用預測市場找 mispricing<br>在金融市場執行</div>
+  </div>
+</div>
+
+<h4>不對稱機會的特徵</h4>
+<ul class="bullet-list">
+  <li><strong>大眾忽視:</strong> 事件不在主流討論範圍內（但你有信息優勢）</li>
+  <li><strong>極端定價:</strong> 機率被定在 &lt;5% 或 >95%（容易出現 mispricing）</li>
+  <li><strong>催化劑存在:</strong> 有即將發生的事件可能改變機率</li>
+  <li><strong>風險有限:</strong> 最大損失 = 投入資金（不會爆倉）</li>
+</ul>
+
+<div class="green-box">
+  <strong>實戰框架:</strong> 每週花 30 分鐘瀏覽 Polymarket 上的低機率事件。問自己: 「如果這件事真的發生，市場會怎麼反應？」如果報酬/風險比 > 5:1 且你有理由認為機率被低估 → 小倉位佈局。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 市場結構與操縱 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">市場結構與操縱</h2>
+
+<div class="card">
+<h3>做市商 (Market Maker) 的角色</h3>
+
+<ul class="bullet-list">
+  <li><strong>他們不是「操縱者」:</strong> 他們的核心功能是「提供流動性」— 讓你隨時能買賣</li>
+  <li><strong>信息優勢:</strong> 他們看到完整的 order book 深度，知道大單在哪裡</li>
+  <li><strong>獲利方式:</strong> bid-ask spread + 對沖利潤（不是方向性交易）</li>
+  <li><strong>價格影響:</strong> 他們的 Delta Hedging 行為會影響價格（GEX 正/負決定波動方向）</li>
+</ul>
+
+<h4>GEX (Gamma Exposure) 的影響</h4>
+<table class="data-table">
+  <thead>
+    <tr><th>GEX 狀態</th><th>做市商行為</th><th>對市場的影響</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tag tag-green">GEX 正值（大）</span></td>
+      <td>漲時賣、跌時買（均值回歸）</td>
+      <td>低波動、窄幅震盪、pin 在 max pain</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-red">GEX 負值</span></td>
+      <td>漲時追買、跌時追賣（趨勢放大）</td>
+      <td>高波動、大幅單邊走勢、容易暴漲暴跌</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <strong>實戰意義:</strong> 當 GEX 為大正值時，做突破交易很難成功（做市商會壓制波動）。當 GEX 翻負時，趨勢交易更容易成功（做市商在放大波動）。
+</div>
+</div>
+
+<div class="card">
+<h3>價格操縱的常見手法（加密市場更嚴重）</h3>
+
+<table class="data-table">
+  <thead>
+    <tr><th>手法</th><th>操作方式</th><th>散戶被騙的過程</th><th>識別方法</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Spoofing</strong></td>
+      <td>掛大單製造假支撐/壓力 → 撤單反向操作</td>
+      <td>看到「大買牆」以為有支撐 → 買入 → 牆消失暴跌</td>
+      <td>Order book 大單頻繁出現又消失</td>
+    </tr>
+    <tr>
+      <td><strong>Wash Trading</strong></td>
+      <td>自買自賣製造假成交量</td>
+      <td>以為有量代表真實需求 → 跟進</td>
+      <td>高成交量但 OI 沒增加 / 價格沒變</td>
+    </tr>
+    <tr>
+      <td><strong>Front Running</strong></td>
+      <td>看到大單即將執行 → 提前買入</td>
+      <td>你的大單推高了價格 → 你的成交價更差</td>
+      <td>分批下單 / 用暗池 / 用 TWAP</td>
+    </tr>
+    <tr>
+      <td><strong>長影線掃蕩</strong></td>
+      <td>短時間巨量砸盤/拉升 → 觸發止損 → 恢復原價</td>
+      <td>被止損掃出局 → 價格回到原位</td>
+      <td>極長影線 + 快速恢復 + 低流動性時段</td>
+    </tr>
+    <tr>
+      <td><strong>Pump & Dump</strong></td>
+      <td>散布假消息推高價格 → 高位拋售</td>
+      <td>看到「內幕消息」追高 → 被高位套牢</td>
+      <td>小幣 + 無基本面 + 社群突然炒作</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>為什麼加密比傳統市場更容易被操控</h3>
+
+<div class="flow-steps">
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-title">24/7 交易</div>
+    <div class="step-desc">凌晨流動性極薄<br>= 小資金大波動</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-title">100x 槓桿</div>
+    <div class="step-desc">小資金可以撬動<br>巨大的價格波動</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-title">監管薄弱</div>
+    <div class="step-desc">傳統市場 spoofing<br>會被 SEC 罰款</div>
+  </div>
+  <div class="flow-step" style="border-color: var(--red);">
+    <div class="step-title">利益一致</div>
+    <div class="step-desc">交易所可能與<br>做市商利益一致</div>
+  </div>
+</div>
+
+<div class="warning-box">
+  <strong>殘酷數據:</strong> 研究顯示加密市場超過 70% 的交易量可能是 wash trading。在小幣上這個比例更高。不要用「成交量」作為判斷依據，除非你能確認它是真實的。
+</div>
+</div>
+
+<div class="card">
+<h3>如何保護自己</h3>
+
+<h4>倉位管理</h4>
+<ul class="bullet-list">
+  <li><strong>不在深夜/流動性差時持有高槓桿:</strong> 亞盤凌晨 2-5AM 是最容易被獵殺的時段</li>
+  <li><strong>用限價單而非市價單:</strong> 避免 slippage，特別是在波動大的時候</li>
+  <li><strong>分散交易所:</strong> 不要把所有資金放在同一個交易所（對手方風險）</li>
+</ul>
+
+<h4>止損策略</h4>
+<ul class="bullet-list">
+  <li><strong>不放在「所有人都會放的位置」:</strong> Round numbers（$60,000）、明顯的前低/前高、整數支撐位</li>
+  <li><strong>偏移策略:</strong> 如果明顯止損位在 $59,800 → 放在 $59,200（給一些 buffer）</li>
+  <li><strong>時間止損:</strong> 如果 X 小時內沒按預期方向走 → 退出（不給止損位的機會被掃）</li>
+  <li><strong>看收盤價而非盤中影線:</strong> 影線可能是操縱，收盤價是真實意圖</li>
+</ul>
+
+<h4>信息篩選</h4>
+<ul class="bullet-list">
+  <li>不信任匿名「內幕消息」— 90% 是操縱的一部分</li>
+  <li>看鏈上數據而非人嘴 — 資金流向不會說謊</li>
+  <li>驗證成交量真實性 — 對比多個數據源</li>
+</ul>
+
+<div class="green-box">
+  <strong>黃金法則:</strong> 如果你不知道流動性從哪裡來，那麼你就是流動性。如果你不理解為什麼價格在動，不要參與。等你理解了再入場，市場永遠在那裡。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">互動測驗</h2>
+<p style="color:var(--text2); margin-bottom:20px;">測試你對市場心理學和主力行為的理解。共 25 題，涵蓋所有章節。</p>
+
+<div class="quiz-section" id="quizContainer">
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q1. 市場處於「派發期」(Distribution) 的典型特徵是什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> A. 低波動、低成交量、負面新聞但價格不再跌</label>
+    <label><input type="radio" name="q1" value="b"> B. 價格突破、成交量增加、正面新聞增多</label>
+    <label><input type="radio" name="q1" value="c"> C. 高波動、天量成交、所有人都在談論、「這次不一樣」</label>
+    <label><input type="radio" name="q1" value="d"> D. 壞消息連環爆、反彈微弱、「永遠不碰了」</label>
+  </div>
+  <div class="explanation">派發期的特徵是: 高波動、成交量爆大（天量）、所有人都在討論、散戶全面樂觀。這是聰明錢在利用散戶的狂熱來出貨的階段。A 是累積期，B 是上升期，D 是下降期。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q2. Fear & Greed Index 顯示 12（極度恐懼），VIX 在 35，Put/Call Ratio 為 1.4。最佳的交易策略是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> A. 立即全倉做多，極度恐懼 = 必漲</label>
+    <label><input type="radio" name="q2" value="b"> B. 等待技術面反轉信號確認後，考慮逆向做多</label>
+    <label><input type="radio" name="q2" value="c"> C. 跟隨恐慌繼續做空</label>
+    <label><input type="radio" name="q2" value="d"> D. 情緒指標沒有任何參考價值，忽略它們</label>
+  </div>
+  <div class="explanation">多個情緒指標同時達到極端值是強烈的逆向信號，但單獨的情緒極端不構成交易信號。需要等待技術面反轉確認（如 K 線反轉形態 + 量能背離）才能入場。「市場保持非理性的時間比你保持有償付能力的時間更長。」</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q3. 在散戶的典型行為週期中，「在最低點附近把籌碼還給主力」發生在哪個階段？</h4>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> A. 下跌中期 — 絕望割肉</label>
+    <label><input type="radio" name="q3" value="b"> B. 底部 — 恐慌割肉</label>
+    <label><input type="radio" name="q3" value="c"> C. 下跌初期 — 「只是回調」</label>
+    <label><input type="radio" name="q3" value="d"> D. 拉升初期 — 半信半疑</label>
+  </div>
+  <div class="explanation">下跌中期散戶已經從「只是回調」轉為「絕望」，在接近最低點時割肉賣出。這正是主力等待的時刻 — 他們承接這些恐慌拋售的籌碼，準備下一輪的累積。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q4. 價格創新高，但 CVD (Cumulative Volume Delta) 沒有跟隨創新高，這代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> A. 完全正常，CVD 經常落後</label>
+    <label><input type="radio" name="q4" value="b"> B. 新多頭正在入場，趨勢健康</label>
+    <label><input type="radio" name="q4" value="c"> C. 空頭正在大量入場</label>
+    <label><input type="radio" name="q4" value="d"> D. 真實買盤不足，主力可能在出貨</label>
+  </div>
+  <div class="explanation">CVD 背離（價格新高但 CVD 沒跟上）= 真實買盤不足。價格上漲是靠流動性稀薄或少量交易推動的，而非大量新買單。這是主力在高位利用散戶追漲來出貨的典型信號。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q5. 一根長上影線快速掃過前高後迅速收回，成交量瞬間放大然後恢復正常。這最可能是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> A. 真正的突破嘗試失敗</label>
+    <label><input type="radio" name="q5" value="b"> B. 消息面利空導致的拋售</label>
+    <label><input type="radio" name="q5" value="c"> C. 流動性獵殺 — 主力掃散戶空單止損後反向建倉</label>
+    <label><input type="radio" name="q5" value="d"> D. 做市商的正常 Delta Hedging</label>
+  </div>
+  <div class="explanation">長影線快速掃過關鍵位（前高 = 空單止損密集區）後迅速收回 = 典型的流動性獵殺。主力推價觸發散戶的止損單，獲得流動性後反向建倉。這是一個反向入場的信號，而非跟隨突破的信號。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q6. 川普在 Truth Social 發文「將對中國加徵 200% 關稅！」，SPY 期貨立即跌 2%。根據歷史模式，最佳反應是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> A. 立即做空，川普說到做到</label>
+    <label><input type="radio" name="q6" value="b"> B. 等 15-30 分鐘看二次反應，判斷是「談判姿態」還是「真政策」</label>
+    <label><input type="radio" name="q6" value="c"> C. 立即全倉做多，反正都會收回</label>
+    <label><input type="radio" name="q6" value="d"> D. 完全忽略，川普的話沒有影響</label>
+  </div>
+  <div class="explanation">歷史模式顯示川普的極端威脅大多是「談判姿態」而非最終政策。Rule 1: 第一反應通常過度，不追跌。Rule 2: 等 15-30 分鐘看二次反應。Rule 3: Truth Social 威脅（未簽署行政命令）= 談判姿態，48h 內大概率軟化。但不能立即全倉做多，因為有時他真的會執行。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q7. 川普攻擊 Fed 主席並要求降息，最可能受益的資產是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> A. 黃金和 BTC</label>
+    <label><input type="radio" name="q7" value="b"> B. 美元指數 (DXY)</label>
+    <label><input type="radio" name="q7" value="c"> C. 中國概念股</label>
+    <label><input type="radio" name="q7" value="d"> D. 航空和旅遊股</label>
+  </div>
+  <div class="explanation">川普攻擊 Fed/要求降息 → 市場擔心 Fed 獨立性 → 美元短線走弱 → 黃金和 BTC 作為「對抗法幣貶值」的資產受益。歷史反應幅度: XAU +1~3%。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q8. BTC ETF 終於獲得 SEC 批准，消息公布當天你應該？</h4>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> A. 全力追多，這是歷史性利好</label>
+    <label><input type="radio" name="q8" value="b"> B. 加倉並設緊密止損</label>
+    <label><input type="radio" name="q8" value="c"> C. 觀望等回調再買</label>
+    <label><input type="radio" name="q8" value="d"> D. 如果之前在 rumor 階段有倉位，考慮減倉（sell the news）</label>
+  </div>
+  <div class="explanation">典型的「Buy the Rumor, Sell the News」。BTC 在 ETF 獲批傳言期已上漲 50%+，所有利好已 priced in。歷史事實: 2024 年 1 月 ETF 獲批當天 BTC 反跌 -5%。在 news 確認時減倉是正確策略。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q9. Bloomberg 封面出現「永遠的牛市」相關報導，這代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> A. 牛市剛開始，媒體終於認知到了</label>
+    <label><input type="radio" name="q9" value="b"> B. 中性信號，媒體只是在描述事實</label>
+    <label><input type="radio" name="q9" value="c"> C. 最危險的信號之一，可能接近頂部</label>
+    <label><input type="radio" name="q9" value="d"> D. 與交易無關的媒體噱頭</label>
+  </div>
+  <div class="explanation">「永遠的牛市」類型的報導只會在市場已經連漲 12-18 個月後出現。媒體的敘事具有極強的滯後性。歷史上每次出現這類報導都接近週期頂部。這是最危險的逆向信號之一。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q10. Polymarket 上「Fed 下次會議降息」的機率為 85%。降息真的發生了。你預期市場反應是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> A. 大幅上漲，降息是利好</label>
+    <label><input type="radio" name="q10" value="b"> B. 反應平淡或小跌（已充分定價）</label>
+    <label><input type="radio" name="q10" value="c"> C. 暴漲，因為確認了方向</label>
+    <label><input type="radio" name="q10" value="d"> D. 無法預測</label>
+  </div>
+  <div class="explanation">當降息機率 > 80% 時，降息已被充分定價（priced in）。市場早在預期中就已上漲。降息真正發生時反而可能是「sell the news」。只有「意外」才能推動大波動。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q11. Polymarket 上某事件機率從 20% 在 2 小時內快速上升到 55%。這意味著？</h4>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> A. 有新信息正在流入，有人知道你不知道的事</label>
+    <label><input type="radio" name="q11" value="b"> B. 市場操縱，忽略它</label>
+    <label><input type="radio" name="q11" value="c"> C. 隨機波動，不需關注</label>
+    <label><input type="radio" name="q11" value="d"> D. 表示事件一定會發生</label>
+  </div>
+  <div class="explanation">預測市場機率的快速變化代表新信息正在被定價。有真金白銀在下注 → 這些人可能有信息優勢。跟隨機率變化的方向是合理策略。但不代表事件一定會發生（55% 仍然意味著 45% 不發生）。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q12. GEX（Gamma Exposure）從大正值翻為負值，你預期市場接下來會？</h4>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> A. 繼續低波動窄幅震盪</label>
+    <label><input type="radio" name="q12" value="b"> B. 一定會下跌</label>
+    <label><input type="radio" name="q12" value="c"> C. 一定會上漲</label>
+    <label><input type="radio" name="q12" value="d"> D. 波動率大幅上升，可能出現大幅單邊走勢</label>
+  </div>
+  <div class="explanation">GEX 正值時做市商是「穩定器」（漲時賣、跌時買），GEX 負值時做市商變成「放大器」（漲時追買、跌時追賣）。翻負 = 波動率將大幅上升，但不決定方向。突破交易在 GEX 負值時更容易成功。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q13. 你在做 BTC 空單，止損設在 $60,000 整數上方。凌晨 3 點（亞盤流動性最薄時）BTC 突然衝到 $60,200 然後在 5 分鐘內跌回 $59,500。你的止損被觸發了。這最可能是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> A. 真正的趨勢反轉，你該慶幸止損了</label>
+    <label><input type="radio" name="q13" value="b"> B. 重大利好消息驅動的上漲</label>
+    <label><input type="radio" name="q13" value="c"> C. 流動性獵殺 — 你的止損位太明顯了</label>
+    <label><input type="radio" name="q13" value="d"> D. 做市商正常的對沖操作</label>
+  </div>
+  <div class="explanation">所有特徵都指向流動性獵殺: 整數關口止損密集區 + 凌晨流動性薄 + 快速衝高後迅速回落。教訓: 不要把止損放在最明顯的位置（整數關口），不要在深夜持有高槓桿倉位。可以稍微偏移止損位或用時間止損。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q14. COT 報告顯示 Commercial（套保商）大幅增加黃金淨多頭，Non-commercial（投機者）大幅做空。這暗示？</h4>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> A. 黃金即將暴跌（投機者做空 = 趨勢向下）</label>
+    <label><input type="radio" name="q14" value="b"> B. 黃金可能即將上漲（商業內部人看多 = 知道真相）</label>
+    <label><input type="radio" name="q14" value="c"> C. 信號矛盾，無法判斷</label>
+    <label><input type="radio" name="q14" value="d"> D. COT 報告已過時，不再有用</label>
+  </div>
+  <div class="explanation">Commercial（套保商）= 產業內部人，他們最了解自己行業的供需。當 Commercial 大幅做多而投機者做空時，歷史上 Commercial 的方向更可靠。他們有信息優勢。跟隨 Commercial 而非 Non-commercial。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q15. 所有 KOL 和分析師都在看多同一個標的，Twitter 上全是看多貼文。你應該？</h4>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> A. 提高警戒 — 一致性極端是逆向信號，考慮減倉</label>
+    <label><input type="radio" name="q15" value="b"> B. 加倉 — 這麼多人看好一定沒錯</label>
+    <label><input type="radio" name="q15" value="c"> C. 立即全部做空</label>
+    <label><input type="radio" name="q15" value="d"> D. 完全忽略 — KOL 的觀點沒有任何價值</label>
+  </div>
+  <div class="explanation">當所有 KOL 看法一致時 = 最大的逆向信號。這意味著看多的人都已經買入了（沒有新買家了），風險嚴重偏向下方。但不代表要立即做空（泡沫可以持續更久）。正確做法: 提高警戒、減倉、收緊止損。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q16. 主力為什麼需要「製造恐慌」才能吸籌？</h4>
+  <div class="options">
+    <label><input type="radio" name="q16" value="a"> A. 因為他們喜歡看散戶虧錢</label>
+    <label><input type="radio" name="q16" value="b"> B. 因為監管要求他們這樣做</label>
+    <label><input type="radio" name="q16" value="c"> C. 因為恐慌會降低資產的基本面價值</label>
+    <label><input type="radio" name="q16" value="d"> D. 因為他們的單子太大，需要散戶的恐慌拋售來提供足夠的流動性</label>
+  </div>
+  <div class="explanation">主力的核心困境是「量太大」。如果他們直接在市場上買入，價格會被自己推高。所以他們需要「對手盤」— 製造恐慌讓散戶大量賣出，他們才能在低位慢慢承接而不影響價格。這不是惡意，是市場結構的必然。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q17. 你看 1 分鐘 K 線做日內短線交易，最大的問題是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q17" value="a"> A. 手續費太高</label>
+    <label><input type="radio" name="q17" value="b"> B. 精神壓力太大</label>
+    <label><input type="radio" name="q17" value="c"> C. 你在跟演算法對打 — 速度差距是不可逾越的</label>
+    <label><input type="radio" name="q17" value="d"> D. 1 分鐘 K 線數據不準確</label>
+  </div>
+  <div class="explanation">在 1 分鐘級別，你的對手是延遲微秒級的高頻交易演算法。你的延遲是秒級，信息也有延遲。這是一場你在速度上不可能贏的競賽。建議至少看 4H 級別，把時間框架與機構對齊。機構的動作需要時間展開，你有足夠時間觀察和跟隨。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q18. 川普在週五傍晚（收盤後）宣布新的關稅政策。為什麼選這個時間？</h4>
+  <div class="options">
+    <label><input type="radio" name="q18" value="a"> A. 隨機巧合，沒有特別原因</label>
+    <label><input type="radio" name="q18" value="b"> B. Friday Night News Dump — 讓市場週末消化，避免即時恐慌拋售</label>
+    <label><input type="radio" name="q18" value="c"> C. 因為週五傍晚媒體注意力最高</label>
+    <label><input type="radio" name="q18" value="d"> D. 因為法律要求在收盤後公布</label>
+  </div>
+  <div class="explanation">Friday Night News Dump 是經典的政治操作。在週五傍晚公布 → 市場已收盤無法即時反應 → 週末有兩天時間讓市場「消化」和冷靜 → 週一開盤時恐慌已經減弱。比起週一盤中公布，這種做法減少了市場的即時恐慌程度。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q19. Spoofing 是什麼？散戶如何被騙？</h4>
+  <div class="options">
+    <label><input type="radio" name="q19" value="a"> A. 掛大單製造假支撐/壓力 → 散戶跟單 → 撤單反向操作</label>
+    <label><input type="radio" name="q19" value="b"> B. 自買自賣製造假成交量</label>
+    <label><input type="radio" name="q19" value="c"> C. 看到大單提前買入</label>
+    <label><input type="radio" name="q19" value="d"> D. 散布假消息推高價格</label>
+  </div>
+  <div class="explanation">Spoofing = 在 order book 上掛大量虛假訂單（大買牆/賣牆）→ 散戶看到「支撐/壓力」跟著下單 → 操縱者撤掉虛假訂單 → 反向操作。B 是 Wash Trading，C 是 Front Running，D 是 Pump & Dump。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q20. Polymarket 顯示「BTC 年底超過 $150K」的機率為 5%，但你有強烈理由認為實際機率是 20%。這個機會的特點是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q20" value="a"> A. 風險極高，應該避免</label>
+    <label><input type="radio" name="q20" value="b"> B. 機率太低，不值得關注</label>
+    <label><input type="radio" name="q20" value="c"> C. 應該全倉押注</label>
+    <label><input type="radio" name="q20" value="d"> D. 不對稱機會 — 小注大賠率，EV 為正</label>
+  </div>
+  <div class="explanation">如果市場定價 5% 但你認為是 20%，你有 4 倍的 edge。這是典型的不對稱機會: 最大損失有限（投入資金），但潛在報酬巨大。不應全倉（因為 80% 機率仍然不發生），但值得小倉位佈局。用預測市場找 mispricing → 在金融市場執行。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q21. 「OI 增加 + 價格下跌」代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q21" value="a"> A. 多頭正在平倉 (Long Liquidation)</label>
+    <label><input type="radio" name="q21" value="b"> B. 空頭正在平倉 (Short Covering)</label>
+    <label><input type="radio" name="q21" value="c"> C. 新空頭正在入場 (New Shorts / Bearish)</label>
+    <label><input type="radio" name="q21" value="d"> D. 新多頭正在入場 (New Longs / Bullish)</label>
+  </div>
+  <div class="explanation">OI 增加 = 有新倉位被建立。價格下跌 = 賣方主導。兩者結合 = 新的空頭倉位被建立（bearish）。如果是多頭平倉，OI 會減少。OI + Price 四象限是判斷市場參與者行為的基礎工具。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q22. 社群媒體上「全部喊漲」是否構成做空信號？</h4>
+  <div class="options">
+    <label><input type="radio" name="q22" value="a"> A. 是，立即做空</label>
+    <label><input type="radio" name="q22" value="b"> B. 是逆向信號但需要量化確認 — 你的 bubble 不代表全市場</label>
+    <label><input type="radio" name="q22" value="c"> C. 不是，多數人看多代表趨勢健康</label>
+    <label><input type="radio" name="q22" value="d"> D. 社群情緒與市場走勢完全無關</label>
+  </div>
+  <div class="explanation">社群媒體上的「全部喊漲」可能只是你的回聲室（bubble）效果，不代表全市場都看多。需要量化確認: 用 StockTwits Bull/Bear Ratio、LunarCrush 等工具客觀衡量情緒。只有量化指標達到極端時才有逆向意義。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q23. 川普宣布與中國達成貿易協議（「偉大的交易」），哪些資產最可能受益？</h4>
+  <div class="options">
+    <label><input type="radio" name="q23" value="a"> A. 中概股 (BABA/JD) 和新興市場</label>
+    <label><input type="radio" name="q23" value="b"> B. 黃金和比特幣</label>
+    <label><input type="radio" name="q23" value="c"> C. 美元指數 (DXY)</label>
+    <label><input type="radio" name="q23" value="d"> D. 美國軍工股</label>
+  </div>
+  <div class="explanation">川普與中國和解/達成交易 → 貿易風險降低 → 中概股和新興市場受益最大（歷史反應: 中概 +5~15%）。黃金作為避險資產反而可能下跌（風險偏好回升，避險需求降低）。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q24. 加密市場比傳統市場更容易被操控的最主要原因是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q24" value="a"> A. 因為加密貨幣沒有基本面</label>
+    <label><input type="radio" name="q24" value="b"> B. 因為加密投資者都是散戶</label>
+    <label><input type="radio" name="q24" value="c"> C. 因為加密價格是隨機的</label>
+    <label><input type="radio" name="q24" value="d"> D. 24/7 交易（流動性薄時段）+ 高槓桿 + 監管薄弱 + 交易所利益衝突</label>
+  </div>
+  <div class="explanation">加密市場更容易被操控的原因是結構性的: 24/7 交易意味著有流動性極薄的時段、100x 槓桿意味著小資金可以撬動大價格、監管薄弱意味著 spoofing 不會被處罰、交易所可能與做市商利益一致。這些都是傳統市場不存在或較少的問題。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q25. 你的止損應該怎麼設置以避免被流動性獵殺？</h4>
+  <div class="options">
+    <label><input type="radio" name="q25" value="a"> A. 放在最明顯的前低/前高，因為那是技術分析教科書說的</label>
+    <label><input type="radio" name="q25" value="b"> B. 稍微偏移（不放在整數/明顯技術位），或使用時間止損</label>
+    <label><input type="radio" name="q25" value="c"> C. 不設止損，避免被掃</label>
+    <label><input type="radio" name="q25" value="d"> D. 設極緊密的止損，被掃了再進</label>
+  </div>
+  <div class="explanation">最明顯的位置（整數關口、前低/前高正下/上方）是止損密集區 = 主力獵殺的目標。偏移策略: 如果明顯止損位在 $60,000 → 放在 $59,200。或用時間止損: X 小時內沒按預期走就退出。不設止損（C）是最危險的，極緊止損（D）則保證被掃。</div>
+</div>
+
+</div>
+
+<button class="quiz-btn" onclick="gradeQuiz()">提交答案</button>
+<div id="scoreDisplay"></div>
+</div>
+
+<script>
+function showTab(n) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + n).classList.add('active');
+  document.querySelectorAll('.tab-btn')[n].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function gradeQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let score = 0;
+  let total = questions.length;
+
+  questions.forEach((q, i) => {
+    const correct = q.dataset.correct;
+    const selected = q.querySelector('input[name="q' + (i + 1) + '"]:checked');
+    const explanation = q.querySelector('.explanation');
+
+    // Reset
+    explanation.classList.remove('correct', 'wrong');
+
+    if (selected) {
+      if (selected.value === correct) {
+        score++;
+        explanation.classList.add('correct');
+      } else {
+        explanation.classList.add('wrong');
+      }
+    } else {
+      explanation.classList.add('wrong');
+    }
+  });
+
+  const display = document.getElementById('scoreDisplay');
+  display.style.display = 'block';
+  const pct = Math.round((score / total) * 100);
+  let grade = '';
+  if (pct >= 90) grade = 'A+ 出色！';
+  else if (pct >= 80) grade = 'A 優秀！';
+  else if (pct >= 70) grade = 'B 良好';
+  else if (pct >= 60) grade = 'C 及格';
+  else grade = 'D 需要複習';
+  display.textContent = `得分：${score} / ${total}（${pct}%）— ${grade}`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>永續合約籌碼分析完全教學 — OI / CVD / Funding / 清算圖</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --yellow: #d97706;
+  --yellow-l: #fef3c7;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 20px;
+}
+.back-link:hover { text-decoration: underline; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text3);
+  margin-bottom: 24px;
+}
+
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 6px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: var(--bg3); }
+.tab-btn.active {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.card:hover { box-shadow: var(--shadow); }
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.card h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text2);
+  margin-top: 16px;
+}
+
+.card p, .card li {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+
+.card ul, .card ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.card li { margin-bottom: 6px; }
+
+.highlight-box {
+  background: var(--blue-l);
+  border-left: 3px solid var(--blue);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.highlight-box strong { color: var(--blue); }
+
+.warning-box {
+  background: var(--red-l);
+  border-left: 3px solid var(--red);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.warning-box strong { color: var(--red); }
+
+.green-box {
+  background: var(--green-l);
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.green-box strong { color: var(--green); }
+
+.purple-box {
+  background: var(--purple-l);
+  border-left: 3px solid var(--purple);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.purple-box strong { color: var(--purple); }
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.quadrant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.quadrant-item {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+table th, table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+table th {
+  background: var(--bg3);
+  font-weight: 700;
+  font-size: 12px;
+}
+table tr:hover { background: var(--bg3); }
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.step-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.step-content { flex: 1; }
+</style>
+</head>
+<body>
+
+<div>
+  <a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+  <a href="candlestick_patterns.html" class="back-link">&larr; K線型態教學</a>
+</div>
+
+<h1>永續合約籌碼分析完全教學</h1>
+<p class="subtitle">OI / CVD / Funding Rate / 清算圖 — 從零到實戰的完整指南</p>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">OI 研判</button>
+  <button class="tab-btn" data-tab="tab2">CVD 分析</button>
+  <button class="tab-btn" data-tab="tab3">Funding Rate</button>
+  <button class="tab-btn" data-tab="tab4">清算圖與 L/S Ratio</button>
+  <button class="tab-btn" data-tab="tab5">完整 SOP</button>
+  <button class="tab-btn" data-tab="tab6">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<h3 style="color:#ea580c;">⚠️ 使用限制</h3>
+<p>OI/CVD/Funding 等衍生品指標提供<strong>概率傾向</strong>而非確定方向。OI↑+Price↑ 代表新多頭可能性高，但也可能是空頭加碼做對沖。CVD 不可單獨使用 — 必須配合 OI 和價格方向。所有框架都有失效時期，特別是在極端事件或流動性危機中。</p>
+</div>
+
+<!-- ==================== TAB 1: OI 研判 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2 class="section-title">Open Interest (OI) 研判</h2>
+
+<div class="card">
+<h3>1. 什麼是 OI（未平倉量）</h3>
+<p>永續合約中所有未平倉合約的總量。每個合約必然有一個多方和一個空方配對。</p>
+<ul>
+  <li><strong>OI 增加</strong> = 新合約被創建（一個新多頭 + 一個新空頭同時進場）</li>
+  <li><strong>OI 減少</strong> = 舊合約被關閉（多頭平倉配對空頭平倉，或者一方被清算）</li>
+  <li><strong>OI 不變</strong> = 一個新進場者接手了一個離場者的部位（如：新多頭接手舊多頭的平倉單）</li>
+</ul>
+<div class="highlight-box">
+  <strong>核心概念：</strong>OI 反映的是市場中「未結算的槓桿」有多少。OI 越高，代表場上的賭注越大，一旦方向明確，波動也越劇烈。
+</div>
+<div class="svg-container">
+  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+    <text x="250" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">OI 變化機制</text>
+    <!-- OI Increase -->
+    <rect x="20" y="40" width="140" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="90" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">OI 增加</text>
+    <text x="90" y="80" text-anchor="middle" font-size="10" fill="#334155">新多 + 新空 進場</text>
+    <text x="90" y="94" text-anchor="middle" font-size="10" fill="#334155">槓桿增加</text>
+    <!-- OI Decrease -->
+    <rect x="180" y="40" width="140" height="60" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="250" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">OI 減少</text>
+    <text x="250" y="80" text-anchor="middle" font-size="10" fill="#334155">多平 + 空平 離場</text>
+    <text x="250" y="94" text-anchor="middle" font-size="10" fill="#334155">或被清算</text>
+    <!-- OI Unchanged -->
+    <rect x="340" y="40" width="140" height="60" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="410" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">OI 不變</text>
+    <text x="410" y="80" text-anchor="middle" font-size="10" fill="#334155">新進場 接手 舊離場</text>
+    <text x="410" y="94" text-anchor="middle" font-size="10" fill="#334155">部位轉移</text>
+    <!-- Arrow and explanation -->
+    <text x="250" y="130" text-anchor="middle" font-size="11" fill="#64748b">OI 本身不告訴你方向，需要配合價格變化來判讀</text>
+    <path d="M250,140 L250,165" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+    <text x="250" y="178" text-anchor="middle" font-size="12" font-weight="700" fill="#2563eb">OI + Price = 四象限分析法</text>
+    <defs><marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/></marker></defs>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>2. OI + 價格四象限（核心分析框架）</h3>
+<p>這是 OI 分析中最重要的框架。透過 OI 變化方向 + 價格變化方向的組合，判斷市場中「誰在做什麼」。</p>
+
+<div class="svg-container">
+  <svg viewBox="0 0 520 320" width="100%" style="max-width:520px">
+    <text x="260" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">OI + Price 四象限分析</text>
+    <!-- Axes -->
+    <line x1="260" y1="40" x2="260" y2="300" stroke="#cbd5e1" stroke-width="2"/>
+    <line x1="30" y1="170" x2="490" y2="170" stroke="#cbd5e1" stroke-width="2"/>
+    <!-- Labels -->
+    <text x="260" y="36" text-anchor="middle" font-size="10" fill="#64748b">OI 增加</text>
+    <text x="260" y="314" text-anchor="middle" font-size="10" fill="#64748b">OI 減少</text>
+    <text x="494" y="174" text-anchor="start" font-size="10" fill="#64748b">Price</text>
+    <text x="490" y="162" text-anchor="end" font-size="9" fill="#16a34a">上漲 &rarr;</text>
+    <text x="34" y="162" text-anchor="start" font-size="9" fill="#dc2626">&larr; 下跌</text>
+    <!-- Q1: OI up + Price up -->
+    <rect x="270" y="48" width="210" height="112" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="375" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">新多頭建倉</text>
+    <text x="375" y="90" text-anchor="middle" font-size="10" fill="#334155">OI&uarr; + Price&uarr;</text>
+    <text x="375" y="108" text-anchor="middle" font-size="10" fill="#334155">趨勢健康，真漲</text>
+    <text x="375" y="126" text-anchor="middle" font-size="9" fill="#64748b">新資金流入做多</text>
+    <text x="375" y="142" text-anchor="middle" font-size="9" fill="#64748b">上漲有持續動力</text>
+    <!-- Q2: OI up + Price down -->
+    <rect x="40" y="48" width="210" height="112" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="145" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">新空頭建倉</text>
+    <text x="145" y="90" text-anchor="middle" font-size="10" fill="#334155">OI&uarr; + Price&darr;</text>
+    <text x="145" y="108" text-anchor="middle" font-size="10" fill="#334155">趨勢健康，真跌</text>
+    <text x="145" y="126" text-anchor="middle" font-size="9" fill="#64748b">新資金流入做空</text>
+    <text x="145" y="142" text-anchor="middle" font-size="9" fill="#64748b">下跌有持續動力</text>
+    <!-- Q3: OI down + Price up -->
+    <rect x="270" y="180" width="210" height="112" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+    <text x="375" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">空頭平倉 (Squeeze)</text>
+    <text x="375" y="222" text-anchor="middle" font-size="10" fill="#334155">OI&darr; + Price&uarr;</text>
+    <text x="375" y="240" text-anchor="middle" font-size="10" fill="#334155">反彈不持久</text>
+    <text x="375" y="258" text-anchor="middle" font-size="9" fill="#64748b">空頭被迫買回平倉</text>
+    <text x="375" y="274" text-anchor="middle" font-size="9" fill="#64748b">squeeze 結束後易回落</text>
+    <!-- Q4: OI down + Price down -->
+    <rect x="40" y="180" width="210" height="112" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="145" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">多頭投降 (Capitulation)</text>
+    <text x="145" y="222" text-anchor="middle" font-size="10" fill="#334155">OI&darr; + Price&darr;</text>
+    <text x="145" y="240" text-anchor="middle" font-size="10" fill="#334155">接近底部</text>
+    <text x="145" y="258" text-anchor="middle" font-size="9" fill="#64748b">多頭認輸拋售平倉</text>
+    <text x="145" y="274" text-anchor="middle" font-size="9" fill="#64748b">槓桿清除後可能觸底</text>
+  </svg>
+</div>
+
+<div class="quadrant-grid">
+  <div class="quadrant-item" style="background:var(--green-l);">
+    <h4 style="color:var(--green); margin-top:0;">OI&uarr; + Price&uarr; = 新多建倉</h4>
+    <p>新資金進場做多，推動價格上漲。這是最健康的上漲結構。</p>
+    <p><strong>實戰案例：</strong>BTC 從 $25k 漲到 $30k，OI 同步增加 20%。表示有大量新多頭在建倉，趨勢有持續動力。可以順勢做多。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--red-l);">
+    <h4 style="color:var(--red); margin-top:0;">OI&uarr; + Price&darr; = 新空建倉</h4>
+    <p>新資金進場做空，推動價格下跌。健康的下跌結構。</p>
+    <p><strong>實戰案例：</strong>ETH 從 $2000 跌到 $1800，OI 增加 15%。主力新空入場壓制價格，不宜抄底，應順勢做空。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--yellow-l);">
+    <h4 style="color:var(--yellow); margin-top:0;">OI&darr; + Price&uarr; = 空頭被軋 (Squeeze)</h4>
+    <p>空頭被迫平倉買回，推動短期上漲。但這不是新資金進場，反彈往往不持久。</p>
+    <p><strong>實戰案例：</strong>BTC 快速從 $28k 反彈到 $30k，但 OI 下降 10%。這是 short squeeze，空頭被軋爆。反彈結束後可能回落。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--purple-l);">
+    <h4 style="color:var(--purple); margin-top:0;">OI&darr; + Price&darr; = 多頭投降</h4>
+    <p>多頭認輸或被清算，主動/被動平倉。槓桿被清除，接近底部訊號。</p>
+    <p><strong>實戰案例：</strong>BTC 從 $30k 急跌到 $27k，OI 暴跌 25%。多頭大規模投降/被清算。槓桿清除後，底部往往不遠。</p>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>3. OI 絕對值 vs 變化量</h3>
+<h4>絕對值的意義</h4>
+<ul>
+  <li><strong>OI 絕對值高</strong> = 市場上的槓桿總量大 = 波動加劇的潛力大</li>
+  <li>高 OI 就像「炸藥」：一旦價格朝某方向突破，清算會引發級聯反應</li>
+  <li>歷史 ATH（All Time High）的 OI 水位是特別危險的信號</li>
+</ul>
+<h4>變化量才是關鍵</h4>
+<ul>
+  <li>OI 突然暴增 + 價格方向明確 = 判斷誰在建倉（配合四象限）</li>
+  <li>OI 突然暴降 = 大規模平倉或清算正在發生</li>
+  <li>OI 緩慢上升 = 市場參與度增加，醞釀大波動</li>
+</ul>
+<div class="svg-container">
+  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+    <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">OI 水位與波動關係</text>
+    <!-- OI line (rising) -->
+    <path d="M40,160 Q80,155 120,145 Q160,135 200,120 Q240,100 280,85 Q320,70 360,60 Q400,55 440,50" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+    <text x="445" y="48" font-size="9" fill="#2563eb">OI</text>
+    <!-- Price line -->
+    <path d="M40,140 Q80,138 120,130 Q160,125 200,115 Q230,108 250,110 Q270,112 280,130 Q290,145 300,160 Q310,165 320,155 Q340,140 360,125 Q380,115 400,108 Q420,100 440,90" stroke="#16a34a" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+    <text x="445" y="88" font-size="9" fill="#16a34a">Price</text>
+    <!-- Danger zone annotation -->
+    <rect x="280" y="25" width="80" height="20" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-dasharray="2,2"/>
+    <text x="320" y="39" text-anchor="middle" font-size="8" fill="#dc2626">OI 高位</text>
+    <!-- Drop annotation -->
+    <line x1="280" y1="108" x2="280" y2="160" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+    <text x="285" y="145" font-size="8" fill="#dc2626">清算瀑布</text>
+    <!-- Axis labels -->
+    <text x="240" y="190" text-anchor="middle" font-size="9" fill="#64748b">OI 高位 + 價格反向 = 清算級聯</text>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>4. OI 的清算含義</h3>
+<div class="warning-box">
+  <strong>核心規則：</strong>OI 高 + 價格快速反向 = 大規模清算即將發生。清算是級聯的：一個被清算 &rarr; 價格惡化 &rarr; 更多被清算 &rarr; 瀑布式崩盤/暴漲。
+</div>
+<ul>
+  <li>高 OI 是「燃料」，價格方向是「火柴」</li>
+  <li>100x 槓桿的合約只需 1% 的反向波動就會被清算</li>
+  <li>清算單是市場單（Market Order），會直接衝擊價格</li>
+  <li>Binance BTC 永續的清算引擎是最大的「鯨魚」</li>
+</ul>
+<div class="svg-container">
+  <svg viewBox="0 0 460 160" width="100%" style="max-width:460px">
+    <text x="230" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算級聯反應</text>
+    <!-- Step boxes -->
+    <rect x="10" y="40" width="100" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="60" y="60" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">價格下跌</text>
+    <text x="60" y="76" text-anchor="middle" font-size="8" fill="#334155">觸發清算線</text>
+    <path d="M110,65 L130,65" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+    <rect x="130" y="40" width="100" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="180" y="60" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">多頭被清算</text>
+    <text x="180" y="76" text-anchor="middle" font-size="8" fill="#334155">市價賣出</text>
+    <path d="M230,65 L250,65" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+    <rect x="250" y="40" width="100" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="300" y="60" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">價格更低</text>
+    <text x="300" y="76" text-anchor="middle" font-size="8" fill="#334155">更多人觸清算</text>
+    <path d="M350,65 L370,65" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+    <rect x="370" y="40" width="80" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="410" y="60" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">瀑布式</text>
+    <text x="410" y="76" text-anchor="middle" font-size="8" fill="#334155">崩盤</text>
+
+    <!-- Feedback loop arrow -->
+    <path d="M410,90 Q410,120 300,120 Q180,120 60,120 Q40,120 40,100 L40,90" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="4,2" marker-end="url(#arrowPurple)"/>
+    <text x="230" y="138" text-anchor="middle" font-size="9" fill="#7c3aed">正反饋循環（直到槓桿被清除）</text>
+
+    <defs>
+      <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/></marker>
+      <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7c3aed"/></marker>
+    </defs>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>5. Coinglass OI 數據解讀</h3>
+<h4>全市場 OI vs 單交易所 OI</h4>
+<ul>
+  <li><strong>全市場 OI：</strong>反映整體市場的槓桿水位</li>
+  <li><strong>Binance OI：</strong>散戶為主，OI 佔比最大（通常 40-50%）</li>
+  <li><strong>Bybit OI：</strong>專業交易者偏多</li>
+  <li><strong>CME OI：</strong>機構資金，反映華爾街態度</li>
+</ul>
+<h4>OI-weighted Funding</h4>
+<p>不同交易所的 Funding Rate 不同，而 OI 佔比最大的交易所的 Funding 對價格影響最大。Coinglass 的 OI-weighted funding 給出加權平均值，更有參考意義。</p>
+<div class="highlight-box">
+  <strong>實戰技巧：</strong>如果 Binance（OI 最大）的 Funding 是 0.08%，而 Bybit 是 0.02%，代表散戶過度做多。此時 Binance 的清算風險最高。
+</div>
+</div>
+</div><!-- end tab1 -->
+
+<!-- ==================== TAB 2: CVD ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">CVD（Cumulative Volume Delta）</h2>
+
+<div class="card">
+<h3>1. 什麼是 CVD</h3>
+<p>CVD = 累計（主動買入量 - 主動賣出量）。它衡量的是「急著交易」的人的方向。</p>
+<ul>
+  <li><strong>Taker Buy</strong> = 買方主動吃 Ask（買方等不及，願意付更高價 = 真正急著買）</li>
+  <li><strong>Taker Sell</strong> = 賣方主動打 Bid（賣方等不及，願意接受更低價 = 真正急著賣）</li>
+  <li><strong>CVD = &Sigma;(Taker Buy - Taker Sell)</strong>，累計所有差值</li>
+</ul>
+<div class="highlight-box">
+  <strong>CVD vs 單純成交量：</strong>成交量只告訴你「交易活躍度」，CVD 告訴你「誰更急著交易」。一個急著買的人比 10 個掛單等待的人更能推動價格。
+</div>
+<div class="svg-container">
+  <svg viewBox="0 0 480 180" width="100%" style="max-width:480px">
+    <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 累計原理</text>
+    <!-- Order book visualization -->
+    <rect x="30" y="35" width="180" height="130" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="120" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#334155">Order Book</text>
+    <!-- Ask side -->
+    <rect x="120" y="60" width="80" height="12" rx="3" fill="#fee2e2" opacity="0.5"/>
+    <text x="125" y="70" font-size="8" fill="#dc2626">Ask $30,100</text>
+    <rect x="120" y="74" width="60" height="12" rx="3" fill="#fee2e2" opacity="0.4"/>
+    <text x="125" y="84" font-size="8" fill="#dc2626">Ask $30,050</text>
+    <!-- Bid side -->
+    <rect x="40" y="100" width="70" height="12" rx="3" fill="#dcfce7" opacity="0.5"/>
+    <text x="45" y="110" font-size="8" fill="#16a34a">Bid $30,000</text>
+    <rect x="40" y="114" width="55" height="12" rx="3" fill="#dcfce7" opacity="0.4"/>
+    <text x="45" y="124" font-size="8" fill="#16a34a">Bid $29,950</text>
+    <!-- Taker buy arrow -->
+    <path d="M45,90 Q80,75 115,68" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+    <text x="50" y="88" font-size="8" fill="#16a34a">Taker Buy</text>
+    <!-- Result -->
+    <rect x="260" y="50" width="190" height="100" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="355" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">CVD 計算</text>
+    <text x="275" y="92" font-size="10" fill="#334155">每根 K 線:</text>
+    <text x="275" y="110" font-size="10" font-family="JetBrains Mono" fill="#334155">delta = TakerBuy - TakerSell</text>
+    <text x="275" y="130" font-size="10" fill="#334155">CVD = &Sigma; delta (累加)</text>
+    <text x="275" y="146" font-size="9" fill="#64748b">CVD 是趨勢型指標</text>
+    <defs><marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#16a34a"/></marker></defs>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>2. CVD 趨勢解讀</h3>
+<ul>
+  <li><strong>CVD 上升趨勢</strong> = 主動買入持續大於主動賣出 = 市場上真正有人在買（不只是被動掛單）</li>
+  <li><strong>CVD 下降趨勢</strong> = 主動賣出持續大於主動買入 = 真正有人在拋售</li>
+  <li><strong>CVD 走平</strong> = 買賣平衡，市場進入觀望</li>
+</ul>
+<div class="svg-container">
+  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+    <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 趨勢方向</text>
+    <!-- Axes -->
+    <line x1="40" y1="30" x2="40" y2="180" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="40" y1="105" x2="460" y2="105" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+    <text x="35" y="108" text-anchor="end" font-size="8" fill="#64748b">0</text>
+    <!-- CVD rising -->
+    <path d="M50,150 Q100,140 150,125 Q200,110 250,95 Q300,80 350,65 Q400,55 450,45" stroke="#16a34a" stroke-width="2.5" fill="none"/>
+    <!-- Gradient fill -->
+    <path d="M50,150 Q100,140 150,125 Q200,110 250,95 Q300,80 350,65 Q400,55 450,45 L450,180 L50,180 Z" fill="#16a34a" fill-opacity="0.08"/>
+    <text x="380" y="42" font-size="9" font-weight="600" fill="#16a34a">CVD 上升</text>
+    <text x="380" y="188" font-size="9" fill="#64748b">= 持續真買入</text>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>3. CVD 背離（最強信號）</h3>
+<p>CVD 背離是判斷假突破和趨勢反轉最有力的工具之一。</p>
+
+<div class="svg-container">
+  <svg viewBox="0 0 500 240" width="100%" style="max-width:500px">
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 頂背離（Bearish Divergence）</text>
+    <!-- Price chart -->
+    <text x="50" y="40" font-size="9" fill="#334155">Price</text>
+    <path d="M60,110 Q120,90 180,80 Q220,75 260,70 Q300,75 340,65 Q380,60 420,55" stroke="#0f172a" stroke-width="2" fill="none"/>
+    <!-- Price higher highs -->
+    <circle cx="260" cy="70" r="4" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <circle cx="420" cy="55" r="4" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+    <line x1="260" y1="70" x2="420" y2="55" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="340" y="50" text-anchor="middle" font-size="9" fill="#dc2626">價格新高</text>
+
+    <!-- CVD chart -->
+    <line x1="50" y1="140" x2="450" y2="140" stroke="#cbd5e1" stroke-width="0.5"/>
+    <text x="50" y="155" font-size="9" fill="#2563eb">CVD</text>
+    <path d="M60,200 Q120,185 180,170 Q220,160 260,155 Q300,162 340,168 Q380,172 420,175" stroke="#2563eb" stroke-width="2" fill="none"/>
+    <path d="M60,200 Q120,185 180,170 Q220,160 260,155 Q300,162 340,168 Q380,172 420,175 L420,220 L60,220 Z" fill="#2563eb" fill-opacity="0.06"/>
+    <!-- CVD lower highs -->
+    <circle cx="260" cy="155" r="4" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+    <circle cx="420" cy="175" r="4" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+    <line x1="260" y1="155" x2="420" y2="175" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="340" y="192" text-anchor="middle" font-size="9" fill="#2563eb">CVD 沒新高（走低）</text>
+
+    <!-- Warning -->
+    <rect x="150" y="218" width="200" height="20" rx="4" fill="#fee2e2"/>
+    <text x="250" y="232" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">頂背離 = 主力暗中出貨！</text>
+  </svg>
+</div>
+
+<div class="quadrant-grid">
+  <div class="quadrant-item" style="background:var(--red-l);">
+    <h4 style="color:var(--red); margin-top:0;">頂背離 (Bearish Divergence)</h4>
+    <p>價格創新高 but CVD 沒有創新高。代表雖然價格在漲，但主動買入力道在減弱。價格靠被動單（Maker/限價單）撐著，主力正在暗中出貨。</p>
+    <p><strong>操作：</strong>減倉或準備做空。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--green-l);">
+    <h4 style="color:var(--green); margin-top:0;">底背離 (Bullish Divergence)</h4>
+    <p>價格創新低 but CVD 沒有創新低。代表雖然價格在跌，但主動賣出力道在減弱。主力正在暗中吸籌。</p>
+    <p><strong>操作：</strong>準備做多或觀察反轉訊號。</p>
+  </div>
+</div>
+<div class="warning-box">
+  <strong>判斷假突破的利器：</strong>價格突破前高，但 CVD 沒有同步突破 = 高機率是假突破。真正的突破需要 CVD 共振確認。
+</div>
+</div>
+
+<div class="card">
+<h3>4. CVD + OI 組合判讀</h3>
+<table>
+  <thead>
+    <tr>
+      <th>CVD</th>
+      <th>OI</th>
+      <th>Price</th>
+      <th>判讀</th>
+      <th>操作建議</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color:var(--green);">CVD &uarr;</td>
+      <td style="color:var(--green);">OI &uarr;</td>
+      <td style="color:var(--green);">Price &uarr;</td>
+      <td><strong>最健康上漲</strong></td>
+      <td>真買 + 新多建倉，順勢做多</td>
+    </tr>
+    <tr>
+      <td style="color:var(--red);">CVD &darr;</td>
+      <td style="color:var(--green);">OI &uarr;</td>
+      <td style="color:var(--red);">Price &darr;</td>
+      <td><strong>最健康下跌</strong></td>
+      <td>真賣 + 新空建倉，順勢做空</td>
+    </tr>
+    <tr>
+      <td style="color:var(--green);">CVD &uarr;</td>
+      <td style="color:var(--red);">OI &darr;</td>
+      <td style="color:var(--green);">Price &uarr;</td>
+      <td><strong>Short Squeeze</strong></td>
+      <td>空頭被迫買回，反彈不持久</td>
+    </tr>
+    <tr>
+      <td style="color:var(--red);">CVD &darr;</td>
+      <td>-</td>
+      <td style="color:var(--green);">Price &uarr;</td>
+      <td style="color:var(--red);"><strong>危險！</strong></td>
+      <td>有人在拋售但價格還沒反映，即將反轉</td>
+    </tr>
+    <tr>
+      <td style="color:var(--green);">CVD &uarr;</td>
+      <td>-</td>
+      <td style="color:var(--red);">Price &darr;</td>
+      <td style="color:var(--green);"><strong>底部訊號</strong></td>
+      <td>有人在吸籌但價格還沒反映，準備反彈</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>5. CVD 在 Coinglass 的使用</h3>
+<h4>Spot CVD vs Futures CVD</h4>
+<ul>
+  <li><strong>Spot CVD（現貨）：</strong>更反映真實需求。現貨買入 = 真金白銀購買，沒有槓桿和清算問題。</li>
+  <li><strong>Futures CVD（合約）：</strong>反映投機情緒。合約的 CVD 可能被高槓桿放大。</li>
+  <li><strong>關鍵判讀：</strong>Spot CVD 上升 + Futures CVD 上升 = 最強信號（真需求 + 投機都看多）</li>
+  <li><strong>警訊：</strong>Spot CVD 下降 + Futures CVD 上升 = 泡沫（真需求減少但投機加倍看多）</li>
+</ul>
+<div class="highlight-box">
+  <strong>Coinglass 操作提示：</strong>在 Coinglass 的 Spot/Futures CVD 頁面，可以選擇交易所和時間框架。建議同時觀察 Binance Spot CVD 和全市場 Futures CVD 的趨勢是否同步。
+</div>
+</div>
+</div><!-- end tab2 -->
+
+<!-- ==================== TAB 3: Funding Rate ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">Funding Rate 深度解析</h2>
+
+<div class="card">
+<h3>1. Funding 機制原理</h3>
+<p>永續合約沒有到期日（不像期貨有交割日），靠 Funding Rate 機制來讓永續價格錨定現貨價。</p>
+<ul>
+  <li><strong>Funding > 0</strong> = 永續價 > 現貨價 = 多方付費給空方 = 做多成本高 = 市場偏多</li>
+  <li><strong>Funding < 0</strong> = 永續價 < 現貨價 = 空方付費給多方 = 做空成本高 = 市場偏空</li>
+  <li><strong>結算頻率：</strong>每 8 小時結算一次（00:00 / 08:00 / 16:00 UTC）</li>
+</ul>
+<div class="svg-container">
+  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 機制</text>
+    <!-- Positive funding -->
+    <rect x="30" y="35" width="200" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="130" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Funding > 0</text>
+    <text x="130" y="72" text-anchor="middle" font-size="9" fill="#334155">永續價 > 現貨價</text>
+    <text x="130" y="87" text-anchor="middle" font-size="9" fill="#334155">多方 &rarr; 付費 &rarr; 空方</text>
+    <!-- Negative funding -->
+    <rect x="270" y="35" width="200" height="60" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="370" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Funding < 0</text>
+    <text x="370" y="72" text-anchor="middle" font-size="9" fill="#334155">永續價 < 現貨價</text>
+    <text x="370" y="87" text-anchor="middle" font-size="9" fill="#334155">空方 &rarr; 付費 &rarr; 多方</text>
+    <!-- Purpose -->
+    <rect x="100" y="115" width="300" height="50" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="250" y="137" text-anchor="middle" font-size="10" font-weight="600" fill="#2563eb">Funding 的目的</text>
+    <text x="250" y="155" text-anchor="middle" font-size="9" fill="#334155">透過付費懲罰多數方，激勵少數方進場，讓永續價回歸現貨價</text>
+  </svg>
+</div>
+</div>
+
+<div class="card">
+<h3>2. Funding 極端值的意義</h3>
+<div class="svg-container">
+  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 區間與含義</text>
+    <!-- Horizontal bar chart representation -->
+    <line x1="250" y1="40" x2="250" y2="180" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="250" y="192" text-anchor="middle" font-size="9" fill="#64748b">0% (中性)</text>
+    <!-- Positive extreme -->
+    <rect x="250" y="50" width="180" height="25" rx="4" fill="#dc2626" fill-opacity="0.2"/>
+    <text x="345" y="67" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">> 0.05% 極端做多（過熱）</text>
+    <rect x="250" y="80" width="120" height="25" rx="4" fill="#d97706" fill-opacity="0.2"/>
+    <text x="315" y="97" text-anchor="middle" font-size="9" fill="#d97706">0.02-0.05% 偏多</text>
+    <!-- Neutral -->
+    <rect x="200" y="110" width="100" height="25" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="250" y="127" text-anchor="middle" font-size="9" fill="#334155">-0.01 ~ 0.01% 中性</text>
+    <!-- Negative -->
+    <rect x="80" y="80" width="170" height="25" rx="4" fill="#d97706" fill-opacity="0.2"/>
+    <text x="165" y="97" text-anchor="middle" font-size="9" fill="#d97706">-0.05 ~ -0.02% 偏空</text>
+    <rect x="50" y="50" width="200" height="25" rx="4" fill="#16a34a" fill-opacity="0.2"/>
+    <text x="150" y="67" text-anchor="middle" font-size="9" font-weight="600" fill="#16a34a">< -0.05% 極端做空（過冷）</text>
+    <!-- Annotations -->
+    <text x="430" y="60" font-size="8" fill="#dc2626">容易被殺多</text>
+    <text x="50" y="48" font-size="8" fill="#16a34a">容易 squeeze</text>
+  </svg>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Funding 範圍</th>
+      <th>市場狀態</th>
+      <th>歷史統計</th>
+      <th>操作建議</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="mono" style="color:var(--red);">> 0.1%</td>
+      <td>極度過熱</td>
+      <td>70% 機率 24H 內回調 5%+</td>
+      <td>高風險做多區，考慮獲利了結</td>
+    </tr>
+    <tr>
+      <td class="mono" style="color:var(--red);">0.05% ~ 0.1%</td>
+      <td>過熱</td>
+      <td>60% 機率出現回調</td>
+      <td>收緊停損，不追高</td>
+    </tr>
+    <tr>
+      <td class="mono">0.01% ~ 0.05%</td>
+      <td>正常偏多</td>
+      <td>趨勢中正常</td>
+      <td>可以持有多倉</td>
+    </tr>
+    <tr>
+      <td class="mono">-0.01% ~ 0.01%</td>
+      <td>中性</td>
+      <td>方向由現貨決定</td>
+      <td>觀察其他指標</td>
+    </tr>
+    <tr>
+      <td class="mono" style="color:var(--green);">-0.05% ~ -0.01%</td>
+      <td>偏空</td>
+      <td>空頭佔優但非極端</td>
+      <td>可以持有空倉</td>
+    </tr>
+    <tr>
+      <td class="mono" style="color:var(--green);">< -0.05%</td>
+      <td>極度過冷</td>
+      <td>65% 機率出現 squeeze 反彈</td>
+      <td>空頭擁擠，反向做多勝率高</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>3. Funding 與 OI 配合</h3>
+<div class="quadrant-grid">
+  <div class="quadrant-item" style="background:var(--red-l);">
+    <h4 style="color:var(--red); margin-top:0;">高 Funding + 高 OI = 最危險</h4>
+    <p>多頭結構過度擁擠。大量高槓桿多頭在場上，每 8 小時還要付費。一旦下跌 = 踩踏式崩盤。</p>
+    <p class="mono" style="font-size:12px; color:var(--red);">歷史案例：2021/4/18 BTC $64k &rarr; $51k (一天 -20%)</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--green-l);">
+    <h4 style="color:var(--green); margin-top:0;">負 Funding + 高 OI = 空頭擁擠</h4>
+    <p>大量空頭在場上且在付費做空。一旦反彈觸發清算，squeeze 動力非常強。是逆向做多的好時機。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--purple-l);">
+    <h4 style="color:var(--purple); margin-top:0;">低 Funding + 低 OI = 冷淡觸底</h4>
+    <p>市場無人問津，槓桿被清除。這往往是大週期底部區域。耐心等待 OI 回升 + Funding 轉正 = 新一輪行情啟動。</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--yellow-l);">
+    <h4 style="color:var(--yellow); margin-top:0;">高 Funding + 低 OI = 小範圍過熱</h4>
+    <p>少量多頭佔據市場，Funding 高但 OI 低。清算風險有限，但仍需警惕短期回調。</p>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>4. Funding Rate 套利</h3>
+<p>當 Funding 持續為正且較高時，可以進行「資金費率套利」：</p>
+<div class="green-box">
+  <strong>策略：</strong>永續合約做空 + 現貨做多 = Delta Neutral（市場漲跌都無風險）+ 收取 Funding 費<br><br>
+  <strong>年化收益計算：</strong><br>
+  <span class="mono">假設平均 Funding = 0.03% / 8H</span><br>
+  <span class="mono">日收益 = 0.03% x 3 = 0.09%</span><br>
+  <span class="mono">年化 = 0.09% x 365 = 32.85%</span>
+</div>
+<h4>風險注意</h4>
+<ul>
+  <li>Funding 可能突然轉負 = 從收錢變成付錢</li>
+  <li>永續做空的保證金需要足夠，避免被清算</li>
+  <li>現貨要放在同交易所避免出金延遲風險</li>
+  <li>適合 Funding 持續高位的牛市環境</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>5. 歷史 Funding 極端事件統計</h3>
+<table>
+  <thead>
+    <tr>
+      <th>日期</th>
+      <th>BTC 價格</th>
+      <th>Funding</th>
+      <th>後續 24H</th>
+      <th>後續 7D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2021/02/21</td>
+      <td>$57,000</td>
+      <td class="mono" style="color:var(--red);">+0.15%</td>
+      <td style="color:var(--red);">-12%</td>
+      <td style="color:var(--red);">-25%</td>
+    </tr>
+    <tr>
+      <td>2021/04/14</td>
+      <td>$64,800</td>
+      <td class="mono" style="color:var(--red);">+0.12%</td>
+      <td style="color:var(--red);">-5%</td>
+      <td style="color:var(--red);">-22%</td>
+    </tr>
+    <tr>
+      <td>2022/06/18</td>
+      <td>$18,900</td>
+      <td class="mono" style="color:var(--green);">-0.09%</td>
+      <td style="color:var(--green);">+8%</td>
+      <td style="color:var(--green);">+15%</td>
+    </tr>
+    <tr>
+      <td>2022/11/09</td>
+      <td>$15,800</td>
+      <td class="mono" style="color:var(--green);">-0.11%</td>
+      <td style="color:var(--green);">+3%</td>
+      <td>+1%</td>
+    </tr>
+    <tr>
+      <td>2024/03/14</td>
+      <td>$73,000</td>
+      <td class="mono" style="color:var(--red);">+0.08%</td>
+      <td style="color:var(--red);">-8%</td>
+      <td style="color:var(--red);">-15%</td>
+    </tr>
+  </tbody>
+</table>
+<div class="highlight-box">
+  <strong>統計結論：</strong>Funding > 0.08% 後 7 天內出現 10%+ 回調的機率約 70%。Funding < -0.08% 後 7 天內出現 10%+ 反彈的機率約 60%。Funding 是最好的逆向指標之一。
+</div>
+</div>
+</div><!-- end tab3 -->
+
+<!-- ==================== TAB 4: 清算圖與 L/S Ratio ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">清算圖與 Long/Short Ratio</h2>
+
+<div class="card">
+<h3>1. 清算熱力圖 (Liquidation Heatmap)</h3>
+<p>清算熱力圖顯示在不同價位上，有多少槓桿部位會被清算。顏色越深 = 清算量越大 = 價格磁鐵越強。</p>
+<div class="svg-container">
+  <svg viewBox="0 0 500 260" width="100%" style="max-width:500px">
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算熱力圖示意</text>
+    <!-- Y axis (Price) -->
+    <line x1="50" y1="30" x2="50" y2="240" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="25" y="140" text-anchor="middle" font-size="9" fill="#64748b" transform="rotate(-90,25,140)">Price</text>
+    <text x="45" y="55" text-anchor="end" font-size="8" fill="#64748b">$32k</text>
+    <text x="45" y="100" text-anchor="end" font-size="8" fill="#64748b">$31k</text>
+    <text x="45" y="145" text-anchor="end" font-size="8" fill="#64748b">$30k</text>
+    <text x="45" y="190" text-anchor="end" font-size="8" fill="#64748b">$29k</text>
+    <text x="45" y="235" text-anchor="end" font-size="8" fill="#64748b">$28k</text>
+    <!-- X axis (Time) -->
+    <line x1="50" y1="240" x2="470" y2="240" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="260" y="255" text-anchor="middle" font-size="9" fill="#64748b">Time</text>
+    <!-- Heatmap blocks - short liquidations (above current price) -->
+    <rect x="60" y="50" width="30" height="20" rx="2" fill="#d97706" opacity="0.3"/>
+    <rect x="100" y="45" width="30" height="25" rx="2" fill="#d97706" opacity="0.5"/>
+    <rect x="140" y="42" width="35" height="28" rx="2" fill="#d97706" opacity="0.7"/>
+    <rect x="180" y="40" width="40" height="30" rx="2" fill="#d97706" opacity="0.9"/>
+    <rect x="230" y="38" width="45" height="32" rx="2" fill="#dc2626" opacity="0.9"/>
+    <rect x="285" y="42" width="35" height="28" rx="2" fill="#d97706" opacity="0.6"/>
+    <rect x="330" y="48" width="30" height="22" rx="2" fill="#d97706" opacity="0.4"/>
+    <!-- Annotation for short liq zone -->
+    <text x="400" y="55" font-size="8" fill="#dc2626">空頭清算密集區</text>
+    <line x1="380" y1="55" x2="278" y2="55" stroke="#dc2626" stroke-width="0.8" stroke-dasharray="2,2"/>
+
+    <!-- Heatmap blocks - long liquidations (below current price) -->
+    <rect x="80" y="190" width="30" height="20" rx="2" fill="#7c3aed" opacity="0.3"/>
+    <rect x="120" y="185" width="35" height="30" rx="2" fill="#7c3aed" opacity="0.5"/>
+    <rect x="165" y="180" width="40" height="35" rx="2" fill="#7c3aed" opacity="0.8"/>
+    <rect x="215" y="178" width="50" height="37" rx="2" fill="#7c3aed" opacity="0.95"/>
+    <rect x="275" y="182" width="40" height="33" rx="2" fill="#7c3aed" opacity="0.7"/>
+    <rect x="325" y="188" width="35" height="27" rx="2" fill="#7c3aed" opacity="0.4"/>
+    <!-- Annotation for long liq zone -->
+    <text x="400" y="195" font-size="8" fill="#7c3aed">多頭清算密集區</text>
+    <line x1="380" y1="195" x2="318" y2="195" stroke="#7c3aed" stroke-width="0.8" stroke-dasharray="2,2"/>
+
+    <!-- Current price line -->
+    <line x1="50" y1="135" x2="470" y2="135" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="475" y="138" font-size="8" fill="#2563eb">當前價</text>
+
+    <!-- Price path -->
+    <path d="M60,150 Q120,145 180,140 Q240,135 300,130 Q360,125 420,120" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+
+    <!-- Magnet arrows -->
+    <path d="M430,120 Q440,80 435,60" stroke="#dc2626" stroke-width="1" fill="none" marker-end="url(#arrowRed2)" stroke-dasharray="3,2"/>
+    <path d="M430,120 Q440,160 435,190" stroke="#7c3aed" stroke-width="1" fill="none" marker-end="url(#arrowPurp2)" stroke-dasharray="3,2"/>
+    <text x="445" y="68" font-size="7" fill="#dc2626">吸引力</text>
+    <text x="445" y="185" font-size="7" fill="#7c3aed">吸引力</text>
+
+    <defs>
+      <marker id="arrowRed2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
+      <marker id="arrowPurp2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/></marker>
+    </defs>
+  </svg>
+</div>
+<div class="highlight-box">
+  <strong>清算密集區 = 價格磁鐵。</strong>價格傾向被吸引到清算密集區，因為觸發清算會產生更多動能（正反饋），這等於「免費流動性」，主力最喜歡在這裡操作。
+</div>
+<h4>主力的策略</h4>
+<ol>
+  <li>觀察清算熱力圖，找到清算密集的價格區域</li>
+  <li>推動價格到該區域，觸發大量清算</li>
+  <li>清算產生大量市場單 = 極好的流動性</li>
+  <li>在這個流動性中反向建倉（別人被清算時你進場）</li>
+</ol>
+</div>
+
+<div class="card">
+<h3>2. Long/Short Ratio</h3>
+<p>Long/Short Ratio 顯示散戶帳戶中做多 vs 做空的比例。注意：這是「帳戶數量」比，不是「金額」比。</p>
+<div class="svg-container">
+  <svg viewBox="0 0 460 150" width="100%" style="max-width:460px">
+    <text x="230" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Long/Short Ratio 解讀</text>
+    <!-- L/S > 1 -->
+    <rect x="20" y="35" width="200" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="120" y="57" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">L/S > 1（散戶偏多）</text>
+    <text x="120" y="74" text-anchor="middle" font-size="9" fill="#334155">逆向指標：常做反</text>
+    <!-- L/S < 1 -->
+    <rect x="240" y="35" width="200" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="340" y="57" text-anchor="middle" font-size="10" font-weight="600" fill="#16a34a">L/S < 1（散戶偏空）</text>
+    <text x="340" y="74" text-anchor="middle" font-size="9" fill="#334155">逆向指標：反彈機率高</text>
+    <!-- Warning -->
+    <rect x="60" y="100" width="340" height="35" rx="6" fill="#fef3c7" stroke="#d97706"/>
+    <text x="230" y="122" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">注意：這是散戶情緒指標，不是主力行為！</text>
+  </svg>
+</div>
+<div class="warning-box">
+  <strong>使用注意：</strong>L/S Ratio 是帳戶數量比，不是資金量比。100 個小散戶做多 vs 1 個鯨魚做空，L/S 顯示多頭佔優但實際空方力量更大。因此這是「反向指標」——散戶大量做多時反而要小心。
+</div>
+</div>
+
+<div class="card">
+<h3>3. 清算級聯 (Cascade)</h3>
+<p>加密貨幣市場的波動比傳統市場大的核心原因之一就是清算級聯機制。</p>
+<div class="svg-container">
+  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算級聯正反饋循環</text>
+    <!-- Central cycle -->
+    <circle cx="250" cy="110" r="70" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <!-- Nodes -->
+    <rect x="215" y="35" width="70" height="28" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="250" y="53" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">價格下跌</text>
+
+    <rect x="310" y="85" width="80" height="28" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="350" y="103" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">多頭被清算</text>
+
+    <rect x="225" y="155" width="80" height="28" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="265" y="173" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">市價賣出</text>
+
+    <rect x="135" y="85" width="80" height="28" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+    <text x="175" y="103" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">價格更低</text>
+
+    <!-- Arrows connecting nodes -->
+    <path d="M285,58 Q310,70 315,85" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arrowRed3)"/>
+    <path d="M345,113 Q330,140 305,158" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arrowRed3)"/>
+    <path d="M225,168 Q200,155 195,113" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arrowRed3)"/>
+    <path d="M165,85 Q180,70 215,58" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arrowRed3)"/>
+
+    <!-- Amplifying factors -->
+    <text x="430" y="55" font-size="8" fill="#64748b">100x 槓桿</text>
+    <text x="430" y="70" font-size="8" fill="#64748b">24/7 交易</text>
+    <text x="430" y="85" font-size="8" fill="#64748b">無漲跌停</text>
+    <text x="430" y="100" font-size="8" fill="#64748b">跨交易所</text>
+    <rect x="420" y="40" width="75" height="68" rx="6" fill="none" stroke="#64748b" stroke-dasharray="2,2"/>
+    <text x="457" y="118" text-anchor="middle" font-size="7" fill="#64748b">放大因子</text>
+
+    <!-- Stop condition -->
+    <text x="250" y="198" text-anchor="middle" font-size="9" fill="#7c3aed">直到槓桿被完全清除（OI 大幅下降），循環才會停止</text>
+
+    <defs>
+      <marker id="arrowRed3" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#dc2626"/></marker>
+    </defs>
+  </svg>
+</div>
+<h4>為什麼加密市場波動比傳統市場大？</h4>
+<ul>
+  <li><strong>100x 槓桿：</strong>1% 波動就清算，傳統市場最高 5-10x</li>
+  <li><strong>24/7 交易：</strong>沒有熔斷機制，半夜也能崩盤</li>
+  <li><strong>無漲跌停：</strong>一天跌 30-50% 完全可能</li>
+  <li><strong>級聯清算：</strong>正反饋循環加劇波動</li>
+  <li><strong>交叉交易所：</strong>A 所清算 &rarr; 套利者搬磚 &rarr; B 所也跌 &rarr; B 所清算</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>4. 實戰應用：用清算圖找交易機會</h3>
+<div class="quadrant-grid">
+  <div class="quadrant-item" style="background:var(--purple-l);">
+    <h4 style="color:var(--purple); margin-top:0;">情境 A：下方有大量多頭清算</h4>
+    <p>如果當前價 $30k，而 $28k-$29k 有大量多頭清算密集區：</p>
+    <ul>
+      <li>價格可能被「吸下去」觸發清算</li>
+      <li>清算完成後（OI 暴降），反而是底部</li>
+      <li>策略：在清算區下方設限價買單，等待 V 反</li>
+    </ul>
+  </div>
+  <div class="quadrant-item" style="background:var(--yellow-l);">
+    <h4 style="color:var(--yellow); margin-top:0;">情境 B：上方有大量空頭清算</h4>
+    <p>如果當前價 $30k，而 $31k-$32k 有大量空頭清算密集區：</p>
+    <ul>
+      <li>價格可能被「軋上去」觸發 squeeze</li>
+      <li>Squeeze 完成後（空頭被清除），上漲動力消失</li>
+      <li>策略：順勢做多搭車，但在清算區頂部附近獲利了結</li>
+    </ul>
+  </div>
+</div>
+<div class="highlight-box">
+  <strong>Coinglass 清算圖使用技巧：</strong>
+  <ol style="margin-top:8px; padding-left:16px;">
+    <li>選擇 BTC/USDT 永續合約</li>
+    <li>觀察清算密度最高的價格區域（顏色最深處）</li>
+    <li>距離當前價越近的清算密集區 = 越容易被觸發 = 短期價格方向</li>
+    <li>距離當前價較遠的清算密集區 = 中期目標位</li>
+  </ol>
+</div>
+</div>
+</div><!-- end tab4 -->
+
+<!-- ==================== TAB 5: 完整 SOP ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">完整籌碼分析 SOP</h2>
+
+<div class="card">
+<h3>1. 五步驟判讀流程</h3>
+<div class="svg-container">
+  <svg viewBox="0 0 520 100" width="100%" style="max-width:520px">
+    <!-- Step circles and labels -->
+    <circle cx="50" cy="40" r="22" fill="#2563eb" stroke="none"/>
+    <text x="50" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">1</text>
+    <text x="50" y="75" text-anchor="middle" font-size="8" fill="#334155">OI 方向</text>
+
+    <line x1="72" y1="40" x2="108" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+
+    <circle cx="130" cy="40" r="22" fill="#2563eb" stroke="none"/>
+    <text x="130" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">2</text>
+    <text x="130" y="75" text-anchor="middle" font-size="8" fill="#334155">四象限</text>
+
+    <line x1="152" y1="40" x2="188" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+
+    <circle cx="210" cy="40" r="22" fill="#16a34a" stroke="none"/>
+    <text x="210" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">3</text>
+    <text x="210" y="75" text-anchor="middle" font-size="8" fill="#334155">CVD 確認</text>
+
+    <line x1="232" y1="40" x2="268" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+
+    <circle cx="290" cy="40" r="22" fill="#d97706" stroke="none"/>
+    <text x="290" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">4</text>
+    <text x="290" y="75" text-anchor="middle" font-size="8" fill="#334155">Funding</text>
+
+    <line x1="312" y1="40" x2="348" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+
+    <circle cx="370" cy="40" r="22" fill="#7c3aed" stroke="none"/>
+    <text x="370" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">5</text>
+    <text x="370" y="75" text-anchor="middle" font-size="8" fill="#334155">清算圖</text>
+
+    <line x1="392" y1="40" x2="428" y2="40" stroke="#cbd5e1" stroke-width="2"/>
+
+    <circle cx="460" cy="40" r="26" fill="#0f172a" stroke="none"/>
+    <text x="460" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">交易</text>
+    <text x="460" y="49" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">決策</text>
+    <text x="460" y="82" text-anchor="middle" font-size="8" fill="#334155">綜合判斷</text>
+  </svg>
+</div>
+
+<div class="step-row">
+  <span class="step-num">1</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">看 OI 變化方向</h4>
+    <p>OI 增加 = 新倉進場（新合約被創建）<br>OI 減少 = 舊倉離場（合約被關閉）<br>判斷是「新錢進場」還是「舊錢離場」</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">2</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">配合價格方向 - 四象限定位</h4>
+    <p>OI&uarr;+Price&uarr; = 新多 | OI&uarr;+Price&darr; = 新空 | OI&darr;+Price&uarr; = Squeeze | OI&darr;+Price&darr; = 投降<br>定位當前市場在哪個象限，判斷趨勢性質</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">3</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">看 CVD 確認真買/真賣 or 被動</h4>
+    <p>CVD 同向 = 確認（真正有人主動交易）<br>CVD 背離 = 假突破/即將反轉<br>CVD 是判斷「力道真假」的關鍵</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">4</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">看 Funding 判斷市場溫度</h4>
+    <p>Funding 極端正 = 過熱 = 回調風險<br>Funding 極端負 = 過冷 = 反彈動力<br>Funding 中性 = 健康趨勢中</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">5</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">看清算圖找短期價格磁鐵</h4>
+    <p>上方清算密集 = 可能被軋上去<br>下方清算密集 = 可能被吸下去<br>找到最近的清算密集區 = 短期目標位</p>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>2. 籌碼分析 + K 線整合</h3>
+<table>
+  <thead>
+    <tr>
+      <th>OI</th>
+      <th>Price</th>
+      <th>CVD</th>
+      <th>K 線</th>
+      <th>Funding</th>
+      <th>結論</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--green);">&uarr;</td>
+      <td>大陽線</td>
+      <td>正常</td>
+      <td style="color:var(--green); font-weight:600;">全確認做多</td>
+    </tr>
+    <tr>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--red);">&darr;</td>
+      <td style="color:var(--red);">&darr;</td>
+      <td>空頭吞噬</td>
+      <td>正常/負</td>
+      <td style="color:var(--red); font-weight:600;">全確認做空</td>
+    </tr>
+    <tr>
+      <td style="color:var(--red);">&darr;</td>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--green);">&uarr;</td>
+      <td>長上影</td>
+      <td>極正</td>
+      <td style="color:var(--yellow); font-weight:600;">Squeeze 結束，準備回落</td>
+    </tr>
+    <tr>
+      <td style="color:var(--red);">&darr;</td>
+      <td style="color:var(--red);">&darr;</td>
+      <td style="color:var(--red);">&darr;</td>
+      <td>長下影</td>
+      <td>轉負</td>
+      <td style="color:var(--purple); font-weight:600;">底部信號，準備反轉</td>
+    </tr>
+    <tr>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--green);">&uarr;</td>
+      <td style="color:var(--red);">背離&darr;</td>
+      <td>十字/小實體</td>
+      <td>極正</td>
+      <td style="color:var(--red); font-weight:600;">危險！假突破即將反轉</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h3>3. 不同時間框架的 OI/CVD</h3>
+<div class="quadrant-grid">
+  <div class="quadrant-item" style="background:var(--blue-l);">
+    <h4 style="color:var(--blue); margin-top:0;">短線 (1-4H)</h4>
+    <p><strong>關注：</strong>Funding Rate + OI 快速變化</p>
+    <p><strong>用途：</strong>Scalping 入場點 / 短期方向</p>
+    <p><strong>技巧：</strong>Funding 結算前後 OI 變化常產生短線機會（結算前平倉 &rarr; 結算後重建）</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--green-l);">
+    <h4 style="color:var(--green); margin-top:0;">中線 (日線)</h4>
+    <p><strong>關注：</strong>OI 趨勢 + CVD 背離</p>
+    <p><strong>用途：</strong>Swing Trade 方向判斷</p>
+    <p><strong>技巧：</strong>日線 CVD 背離是最可靠的反轉信號之一，配合 OI 四象限做方向判斷</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--purple-l);">
+    <h4 style="color:var(--purple); margin-top:0;">長線 (週線)</h4>
+    <p><strong>關注：</strong>總 OI 水位 + Funding 均值</p>
+    <p><strong>用途：</strong>大週期頂底判斷</p>
+    <p><strong>技巧：</strong>OI ATH + Funding 長期高位 = 週期頂部。OI 極低 + Funding 長期負值 = 週期底部</p>
+  </div>
+  <div class="quadrant-item" style="background:var(--yellow-l);">
+    <h4 style="color:var(--yellow); margin-top:0;">多時間框架整合</h4>
+    <p><strong>原則：</strong>大時框定方向，小時框找入場</p>
+    <p>週線判斷牛/熊 &rarr; 日線找趨勢 &rarr; 4H 找進場點</p>
+    <p><strong>衝突時：</strong>以大時框為準，不逆勢操作</p>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>4. 完整案例分析：BTC 假設場景</h3>
+<div class="highlight-box">
+  <strong>場景設定：</strong>BTC 從 $28,000 連漲到 $32,000，你需要決定是否繼續做多。
+</div>
+
+<div class="step-row" style="margin-top:16px;">
+  <span class="step-num">1</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">Step 1 - OI 分析</h4>
+    <p>過去 3 天 OI 從 $12B 增加到 $14.5B（+20%）。<br><strong>判讀：</strong>大量新倉進場。</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">2</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">Step 2 - 四象限定位</h4>
+    <p>OI &uarr; + Price &uarr; = 新多建倉象限。<br><strong>判讀：</strong>趨勢健康，有新資金做多推動。</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">3</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">Step 3 - CVD 確認</h4>
+    <p>CVD 在前兩天同步上升，但今天價格創新高 $32k 時 CVD 卻沒有跟上（頂背離出現）。<br><strong style="color:var(--red);">警訊！</strong>主動買入力道減弱，價格靠被動單撐。</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">4</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">Step 4 - Funding 判斷</h4>
+    <p>Funding Rate = 0.08%（極端偏高）。<br><strong style="color:var(--red);">警訊！</strong>做多成本高，市場過熱。多頭需要每 8 小時付 0.08%。</p>
+  </div>
+</div>
+
+<div class="step-row">
+  <span class="step-num">5</span>
+  <div class="step-content">
+    <h4 style="margin-top:0;">Step 5 - 清算圖</h4>
+    <p>$30k-$30.5k 有大量多頭清算密集區。上方 $33k 有一些空頭清算但量不大。<br><strong>判讀：</strong>下方吸引力 > 上方吸引力。</p>
+  </div>
+</div>
+
+<div class="warning-box">
+  <strong>綜合結論：</strong><br>
+  雖然 Step 1-2 顯示上漲健康，但 Step 3-5 亮起紅燈：CVD 頂背離 + Funding 過熱 + 下方清算密集。<br><br>
+  <strong>操作決策：</strong>不追多！收緊停損到 $30.5k（清算密集區上方）。如果價格跌破 $31k 且 OI 開始下降 = 確認反轉，減倉或反手做空。
+</div>
+</div>
+</div><!-- end tab5 -->
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">互動測驗</h2>
+
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+
+<div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
+  <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
+  <div id="quiz-question-text" style="font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); text-align:center;"></div>
+  <div id="quiz-context" style="font-size:13px; color:var(--text2); margin-bottom:16px; background:var(--bg3); padding:14px; border-radius:8px; line-height:1.8;"></div>
+  <div id="quiz-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+</div>
+
+<div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
+  <div id="quiz-result-icon" style="font-size:28px; text-align:center; margin-bottom:8px;"></div>
+  <div id="quiz-result-answer" style="font-size:14px; font-weight:600; text-align:center; margin-bottom:12px;"></div>
+  <div id="quiz-result-explanation" style="font-size:13px; line-height:1.8; color:var(--text2); background:var(--bg3); padding:14px; border-radius:8px;"></div>
+</div>
+
+<div style="text-align:center; margin-bottom:20px;">
+  <button id="quiz-next-btn" style="padding:12px 32px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--blue)'">下一題</button>
+</div>
+
+<div id="quiz-final" style="display:none; text-align:center; padding:40px 20px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); margin-top:20px;">
+  <p style="font-size:22px; font-weight:700; margin-bottom:8px;" id="quiz-final-text"></p>
+  <p style="font-size:14px; color:var(--text3);" id="quiz-final-sub"></p>
+  <button id="quiz-restart-btn" style="margin-top:16px; padding:10px 24px; background:var(--green); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">重新測驗</button>
+</div>
+
+<script>
+(function() {
+  const questions = [
+    {
+      question: 'OI 增加 + 價格上漲，代表什麼？',
+      context: 'BTC 從 $28,000 漲到 $30,000，同時 OI 從 $10B 增加到 $12B。',
+      options: ['新多頭建倉（趨勢健康）', '空頭平倉（Short Squeeze）', '多頭投降', '新空頭建倉'],
+      correct: 0,
+      explanation: '<strong>OI&uarr; + Price&uarr; = 新多頭建倉。</strong>OI 增加代表有新合約被創建，配合價格上漲，表示新資金流入做多。這是最健康的上漲結構，趨勢有持續動力。'
+    },
+    {
+      question: 'OI 減少 + 價格上漲，代表什麼？',
+      context: 'ETH 快速從 $1,800 反彈到 $2,000，但 OI 同時下降了 15%。',
+      options: ['新多頭建倉', '空頭平倉（Short Squeeze）', '趨勢健康的上漲', '新空頭建倉'],
+      correct: 1,
+      explanation: '<strong>OI&darr; + Price&uarr; = 空頭平倉 / Short Squeeze。</strong>OI 減少代表舊合約被關閉。價格上漲+OI減少 = 空頭被迫買回平倉，推動短期上漲。但這不是新資金進場，反彈往往不持久。'
+    },
+    {
+      question: 'OI 減少 + 價格下跌，代表什麼？',
+      context: 'BTC 從 $30,000 急跌到 $27,000，OI 暴跌 25%。',
+      options: ['新空頭建倉', '趨勢繼續下跌', '多頭投降（接近底部）', 'Short Squeeze'],
+      correct: 2,
+      explanation: '<strong>OI&darr; + Price&darr; = 多頭投降 / Long Capitulation。</strong>多頭認輸或被清算，主動/被動平倉。槓桿被清除，往往是底部區域的訊號。OI 暴跌 25% 說明大量多頭已出場。'
+    },
+    {
+      question: '價格創新高，但 CVD 沒有創新高，這是什麼信號？',
+      context: 'BTC 突破前高到 $35,000，但 CVD 指標的高點低於上次 $33,000 時的 CVD 高點。',
+      options: ['確認突破有效', 'CVD 頂背離（主力出貨）', '底背離（準備更大漲幅）', '正常波動無意義'],
+      correct: 1,
+      explanation: '<strong>CVD 頂背離 = 主力暗中出貨。</strong>價格新高但 CVD 沒新高，代表主動買入力道在減弱。價格靠被動單（限價單）撐著，主力正在利用高價出貨。是判斷假突破的利器。'
+    },
+    {
+      question: 'CVD 上升 + OI 下降 + 價格上漲，代表什麼？',
+      context: '過去 4 小時 CVD 快速上升，OI 下降 8%，價格漲了 3%。',
+      options: ['健康的上漲趨勢', 'Short Squeeze（空頭被軋）', '新多頭大量建倉', '市場中性'],
+      correct: 1,
+      explanation: '<strong>CVD&uarr; + OI&darr; + Price&uarr; = Short Squeeze。</strong>CVD 上升說明有大量主動買入，OI 下降說明是「舊倉平倉」而非新倉建立。空頭被迫買回平倉 = 典型 squeeze。反彈結束後容易回落。'
+    },
+    {
+      question: 'Funding Rate = 0.1%，代表什麼？',
+      context: 'BTC 連漲 3 天後 Funding 飆升到 0.1%/8H。',
+      options: ['市場中性，正常波動', '極度做空，即將 squeeze', '極度做多過熱，回調風險高', '底部訊號'],
+      correct: 2,
+      explanation: '<strong>Funding 0.1% = 極度做多過熱。</strong>Funding > 0.05% 就算過熱，0.1% 是極端水平。意味著多頭每 8 小時要付 0.1% 的持倉成本。歷史統計，這種極端 Funding 後 24H 內回調 5%+ 的機率約 70%。'
+    },
+    {
+      question: '高 Funding + 高 OI 的組合代表什麼風險？',
+      context: 'Funding = 0.08%，全市場 OI 處於歷史高位。',
+      options: ['安全的做多環境', '最危險的多頭結構', '底部反轉訊號', '空頭過度擁擠'],
+      correct: 1,
+      explanation: '<strong>高 Funding + 高 OI = 最危險的多頭結構。</strong>大量高槓桿多頭在場上（高 OI），且每 8 小時付高額費用（高 Funding）。一旦價格下跌觸發清算 = 級聯式崩盤。這是歷史上多次暴跌前的共同特徵。'
+    },
+    {
+      question: '負 Funding + 高 OI 的組合，該如何操作？',
+      context: 'Funding = -0.06%，OI 維持在高位不降。',
+      options: ['繼續做空', '考慮逆向做多', '觀望不動', '清倉離場'],
+      correct: 1,
+      explanation: '<strong>負 Funding + 高 OI = 空頭擁擠。</strong>大量空頭在場上且付費做空。一旦價格小幅反彈就可能觸發空頭清算 squeeze，動力非常強。是逆向做多的好時機，但要設好停損。'
+    },
+    {
+      question: '清算熱力圖顯示 $28k-$29k 有大量多頭清算密集區，當前價 $30k，你預期？',
+      context: '下方清算密度遠高於上方，當前 OI 偏高。',
+      options: ['價格會被吸引到 $28k-$29k', '價格會往上突破', '價格會保持在 $30k 橫盤', '清算圖無參考意義'],
+      correct: 0,
+      explanation: '<strong>清算密集區 = 價格磁鐵。</strong>下方有大量多頭清算 = 價格容易被「吸下去」。主力策略是推價觸發清算 &rarr; 清算產生市場單 &rarr; 製造流動性 &rarr; 在流動性中反向操作。OI 高位更增加了觸發清算的可能性。'
+    },
+    {
+      question: 'Long/Short Ratio > 2.0（散戶大量做多），你會如何解讀？',
+      context: 'Binance L/S Ratio = 2.3，代表散戶帳戶中 70% 做多，30% 做空。',
+      options: ['跟著散戶做多', '這是逆向指標，小心回調', '代表趨勢即將加速上漲', '無參考價值'],
+      correct: 1,
+      explanation: '<strong>L/S Ratio 是逆向指標。</strong>散戶大量做多（L/S > 2.0）往往代表市場情緒過於樂觀。主力傾向在散戶一致看多時反向操作（獵殺多頭）。應該收緊停損，不追高。'
+    },
+    {
+      question: 'CVD 下降 + 價格上漲，這代表什麼？',
+      context: '過去 12 小時 BTC 漲了 2%，但 CVD 持續走低。',
+      options: ['健康上漲確認', '危險！有人在拋售但價格還沒反映', '底背離看多', '正常的趨勢延續'],
+      correct: 1,
+      explanation: '<strong>CVD&darr; + Price&uarr; = 危險信號！</strong>價格在漲但主動賣出大於主動買入。代表有人在高位拋售，但價格暫時被被動買單（限價單）撐住。一旦被動買單被消耗完，價格將快速反映真實的賣壓。'
+    },
+    {
+      question: 'Spot CVD 下降 + Futures CVD 上升，代表什麼？',
+      context: '過去一週現貨 CVD 持續下降，但合約市場的 CVD 在上升。',
+      options: ['最強的看多信號', '泡沫信號（投機超過真實需求）', '底部反轉', '中性無意義'],
+      correct: 1,
+      explanation: '<strong>Spot CVD&darr; + Futures CVD&uarr; = 泡沫警訊。</strong>現貨 CVD 下降代表真實購買需求在減少（真金白銀在離場），但合約 CVD 上升代表投機情緒在加倍。當投機超過真實需求時，一旦槓桿被清除，價格會大幅回落。'
+    },
+    {
+      question: '完整籌碼分析：OI&uarr; + Price&uarr; + CVD 頂背離 + Funding 0.07%，你的判斷？',
+      context: 'BTC 連漲突破新高，OI 增加，但 CVD 沒同步新高，Funding 偏高。',
+      options: ['全確認做多', '趨勢健康繼續持有', '危險！減倉或準備反手', '做空'],
+      correct: 2,
+      explanation: '<strong>危險的組合！</strong>雖然 OI&uarr;+Price&uarr; 看起來健康，但 CVD 頂背離說明主動買入力道在減弱（主力可能在出貨），Funding 0.07% 說明市場過熱。當 3/5 個指標亮紅燈時，應該收緊停損或減倉，不要貪心追高。'
+    },
+    {
+      question: 'OI 大幅下降 + Price 急跌 + Funding 由正轉負 + 長下影線 K 線，這是？',
+      context: 'BTC 4 小時內跌 8%，OI 暴跌 20%，Funding 從 0.03% 變成 -0.02%，K 線出現長下影。',
+      options: ['趨勢剛開始，繼續做空', '底部信號，準備反轉', '無法判斷', 'Short Squeeze'],
+      correct: 1,
+      explanation: '<strong>典型的底部信號組合。</strong>OI 暴跌 = 多頭投降/被清算（槓桿被清除）。Funding 轉負 = 多頭已不再擁擠。長下影線 = 有買方力量承接。這個組合出現在急跌後，通常代表最恐慌的拋售已結束，底部大概率已形成。'
+    },
+    {
+      question: '你在日線觀察到 OI 持續增加但價格橫盤，接下來最可能發生什麼？',
+      context: '過去一週 BTC 在 $29k-$31k 間橫盤，但 OI 增加了 30%。',
+      options: ['繼續橫盤', '即將出現大波動（方向待確認）', '一定會上漲', '一定會下跌'],
+      correct: 1,
+      explanation: '<strong>OI 增加 + 價格橫盤 = 大波動即將來臨。</strong>新合約在被大量創建（多空雙方在對賭），但價格沒有方向。一旦其中一方被突破，累積的槓桿會讓波動劇烈放大。應該等待方向確認後再入場，或使用止損限價單兩邊掛。'
+    },
+    {
+      question: 'Funding 套利的原理是什麼？',
+      context: 'Funding 持續為正 0.05%/8H。',
+      options: ['做多永續 + 做空現貨', '做空永續 + 做多現貨（Delta Neutral + 收 Funding）', '兩邊都做多', '只做空永續'],
+      correct: 1,
+      explanation: '<strong>做空永續 + 做多現貨 = Funding 套利。</strong>現貨做多和永續做空對沖，Delta 為零（不受漲跌影響）。Funding 為正時空方收錢，所以永續做空可以每 8 小時收取 Funding 費。年化計算：0.05% x 3 x 365 = 54.75%。風險在於 Funding 可能轉負。'
+    },
+    {
+      question: '什麼情況下 Short Squeeze 最容易發生？',
+      context: '請選出最容易觸發 Short Squeeze 的條件組合。',
+      options: ['高 OI + 正 Funding + 價格下跌', '高 OI + 負 Funding + 價格小幅反彈', '低 OI + 中性 Funding + 橫盤', '低 OI + 正 Funding + 上漲'],
+      correct: 1,
+      explanation: '<strong>高 OI + 負 Funding + 價格反彈 = Squeeze 條件。</strong>高 OI 代表大量空頭在場（因為 Funding 為負 = 空方付費），價格小幅反彈觸發部分空頭的停損/清算線，級聯效應導致更多空頭被清算 = Short Squeeze 爆發。'
+    },
+    {
+      question: '清算級聯最終會停止，其停止的條件是什麼？',
+      context: '一個急跌觸發了大量清算，形成正反饋循環。',
+      options: ['交易所人工干預', '槓桿被完全清除（OI 大幅下降）', '24 小時後自動停止', 'Funding 歸零'],
+      correct: 1,
+      explanation: '<strong>清算級聯停止的條件 = 槓桿被清除。</strong>當 OI 大幅下降（可能降 30-50%），代表大部分脆弱的槓桿部位已被清算或主動平倉。沒有更多合約可以被清算時，正反饋循環自然停止。這也是為什麼 OI 暴跌後往往見底。'
+    }
+  ];
+
+  let shuffledQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let total = 0;
+  let answered = false;
+
+  const scoreEl = document.getElementById('quiz-score');
+  const progressEl = document.getElementById('quiz-progress');
+  const questionText = document.getElementById('quiz-question-text');
+  const contextEl = document.getElementById('quiz-context');
+  const optionsEl = document.getElementById('quiz-options');
+  const resultEl = document.getElementById('quiz-result');
+  const resultIcon = document.getElementById('quiz-result-icon');
+  const resultAnswer = document.getElementById('quiz-result-answer');
+  const resultExplanation = document.getElementById('quiz-result-explanation');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  const finalEl = document.getElementById('quiz-final');
+  const finalText = document.getElementById('quiz-final-text');
+  const finalSub = document.getElementById('quiz-final-sub');
+  const restartBtn = document.getElementById('quiz-restart-btn');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    shuffledQuestions = shuffle(questions);
+    currentIndex = 0;
+    score = 0;
+    total = 0;
+    answered = false;
+    finalEl.style.display = 'none';
+    document.getElementById('quiz-question-area').style.display = 'block';
+    nextBtn.style.display = 'inline-block';
+    updateScore();
+    showQuestion();
+  }
+
+  function updateScore() {
+    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+  }
+
+  function showQuestion() {
+    if (currentIndex >= shuffledQuestions.length) {
+      showFinal();
+      return;
+    }
+    answered = false;
+    resultEl.style.display = 'none';
+    const q = shuffledQuestions[currentIndex];
+    progressEl.textContent = '第 ' + (currentIndex + 1) + ' / ' + shuffledQuestions.length + ' 題';
+    questionText.textContent = q.question;
+    contextEl.innerHTML = q.context;
+    optionsEl.innerHTML = '';
+    q.options.forEach(function(opt, idx) {
+      const btn = document.createElement('button');
+      btn.textContent = String.fromCharCode(65 + idx) + ') ' + opt;
+      btn.style.cssText = 'padding:12px 16px; border:1px solid var(--border); border-radius:8px; background:var(--bg2); font-size:13px; font-weight:500; cursor:pointer; text-align:left; transition:all .15s; font-family:inherit; color:var(--text);';
+      btn.onmouseover = function() { if (!answered) this.style.background = 'var(--bg3)'; };
+      btn.onmouseout = function() { if (!answered) this.style.background = 'var(--bg2)'; };
+      btn.onclick = function() { selectAnswer(idx, btn); };
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(idx, btn) {
+    if (answered) return;
+    answered = true;
+    total++;
+    const q = shuffledQuestions[currentIndex];
+    const buttons = optionsEl.querySelectorAll('button');
+
+    if (idx === q.correct) {
+      score++;
+      btn.style.background = 'var(--green-l)';
+      btn.style.borderColor = 'var(--green)';
+      btn.style.color = 'var(--green)';
+      resultIcon.textContent = '✅';
+      resultAnswer.style.color = 'var(--green)';
+      resultAnswer.textContent = '正確！';
+    } else {
+      btn.style.background = 'var(--red-l)';
+      btn.style.borderColor = 'var(--red)';
+      btn.style.color = 'var(--red)';
+      buttons[q.correct].style.background = 'var(--green-l)';
+      buttons[q.correct].style.borderColor = 'var(--green)';
+      buttons[q.correct].style.color = 'var(--green)';
+      resultIcon.textContent = '❌';
+      resultAnswer.style.color = 'var(--red)';
+      resultAnswer.textContent = '錯誤！正確答案：' + String.fromCharCode(65 + q.correct) + ') ' + q.options[q.correct];
+    }
+
+    buttons.forEach(function(b) { b.style.cursor = 'default'; });
+    resultExplanation.innerHTML = q.explanation;
+    resultEl.style.display = 'block';
+    updateScore();
+  }
+
+  function showFinal() {
+    document.getElementById('quiz-question-area').style.display = 'none';
+    resultEl.style.display = 'none';
+    nextBtn.style.display = 'none';
+    finalEl.style.display = 'block';
+    const pct = Math.round((score / total) * 100);
+    finalText.textContent = '最終得分：' + score + ' / ' + total + ' (' + pct + '%)';
+    if (pct >= 80) finalSub.textContent = '優秀！你對籌碼分析的掌握很好！';
+    else if (pct >= 60) finalSub.textContent = '不錯！再多練習可以更好。建議回去看 Tab 1-5 的內容。';
+    else finalSub.textContent = '需要加強復習！建議從 Tab 1 開始重新學習。';
+  }
+
+  nextBtn.addEventListener('click', function() {
+    currentIndex++;
+    showQuestion();
+  });
+
+  restartBtn.addEventListener('click', startQuiz);
+
+  startQuiz();
+})();
+</script>
+</div><!-- end tab6 -->
+
+<footer style="margin-top:32px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
+  <p>永續合約籌碼分析完全教學 | 內容僅供學習參考，不構成投資建議</p>
+  <p style="margin-top:4px;">所有指標需綜合判斷，單一指標不足以做出交易決策</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+});
+</script>
+
+</body>
+</html>

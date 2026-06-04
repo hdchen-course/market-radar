@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>交易策略與日常作業流程</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #ffedd5;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.8;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+header h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+header .sub { color: var(--text3); font-size: 14px; }
+.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-size: 14px; font-weight: 500; }
+.back-link:hover { text-decoration: underline; }
+
+/* Navigation Tabs */
+.nav { display: flex; justify-content: center; gap: 6px; margin-bottom: 40px; flex-wrap: wrap; }
+.nav-btn {
+  padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg2); color: var(--text2); cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: all .2s; white-space: nowrap;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
+
+/* Sections */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card-header {
+  padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: background .15s;
+}
+.card-header:hover { background: var(--bg3); }
+.card-header .arrow { color: var(--text3); transition: transform .2s; font-size: 12px; }
+.card-header.open .arrow { transform: rotate(90deg); }
+.card-header h3 { font-size: 16px; font-weight: 600; flex: 1; }
+.card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
+.card-body.open { display: block; }
+
+/* Typography */
+h2 { font-size: 22px; font-weight: 700; margin: 28px 0 16px; color: var(--blue); }
+h3 { font-size: 17px; font-weight: 600; margin: 20px 0 10px; }
+h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text2); }
+p { margin-bottom: 12px; color: var(--text2); }
+ul, ol { margin: 8px 0 16px 24px; color: var(--text2); }
+li { margin-bottom: 6px; }
+strong { color: var(--text); }
+code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+/* Tags */
+.tag {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 600; margin-right: 6px; margin-bottom: 4px;
+}
+.tag-green { background: var(--green-l); color: var(--green); }
+.tag-red { background: var(--red-l); color: var(--red); }
+.tag-blue { background: var(--blue-l); color: var(--blue); }
+.tag-purple { background: var(--purple-l); color: var(--purple); }
+.tag-orange { background: var(--orange-l); color: var(--orange); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+th { background: var(--bg3); font-weight: 600; }
+tr:hover { background: var(--bg3); }
+
+/* SVG container */
+.svg-container { margin: 20px 0; text-align: center; overflow-x: auto; }
+.svg-container svg { max-width: 100%; height: auto; }
+
+/* Principle boxes */
+.principle-box {
+  background: var(--blue-l); border-left: 4px solid var(--blue);
+  padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0;
+}
+.principle-box.warning {
+  background: var(--red-l); border-left-color: var(--red);
+}
+.principle-box.success {
+  background: var(--green-l); border-left-color: var(--green);
+}
+.principle-box.info {
+  background: var(--purple-l); border-left-color: var(--purple);
+}
+
+/* Timeline */
+.timeline-item {
+  display: flex; gap: 16px; margin-bottom: 16px; padding: 12px 16px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+}
+.timeline-time {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  font-weight: 600; color: var(--blue); white-space: nowrap; min-width: 110px;
+}
+.timeline-desc { flex: 1; }
+.timeline-item.highlight {
+  border-color: var(--green); background: var(--green-l);
+}
+
+/* Quiz */
+.quiz-container { margin-top: 20px; }
+.quiz-question {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 20px; margin-bottom: 16px;
+}
+.quiz-question h4 { margin-bottom: 12px; color: var(--text); }
+.quiz-options { list-style: none; margin: 0; padding: 0; }
+.quiz-options li {
+  padding: 10px 16px; margin: 6px 0; border: 1px solid var(--border);
+  border-radius: 8px; cursor: pointer; transition: all .2s;
+}
+.quiz-options li:hover { background: var(--bg3); }
+.quiz-options li.correct { background: var(--green-l); border-color: var(--green); }
+.quiz-options li.wrong { background: var(--red-l); border-color: var(--red); }
+.quiz-options li.disabled { pointer-events: none; }
+.quiz-explanation {
+  margin-top: 12px; padding: 12px 16px; border-radius: 8px;
+  background: var(--bg3); display: none; font-size: 14px;
+}
+.quiz-score {
+  text-align: center; padding: 24px; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: var(--r); margin-top: 20px;
+}
+.quiz-score .score-num { font-size: 48px; font-weight: 800; color: var(--blue); }
+.quiz-score .score-label { color: var(--text3); font-size: 14px; }
+
+/* Formula box */
+.formula {
+  font-family: 'JetBrains Mono', monospace; background: var(--bg3);
+  padding: 16px 20px; border-radius: 8px; margin: 12px 0;
+  font-size: 14px; border: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav { gap: 4px; }
+  .nav-btn { padding: 8px 12px; font-size: 12px; }
+  header h1 { font-size: 24px; }
+  .timeline-item { flex-direction: column; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<header>
+  <h1>交易策略與日常作業流程</h1>
+  <div class="sub">系統化交易 SOP — 從台灣時區出發的美股/加密/期貨交易框架</div>
+</header>
+
+<div class="nav">
+  <button class="nav-btn active" data-tab="schedule">交易日程與時區</button>
+  <button class="nav-btn" data-tab="prep">行前準備 SOP</button>
+  <button class="nav-btn" data-tab="tactics">日內交易戰術</button>
+  <button class="nav-btn" data-tab="weekly">五日交易週期</button>
+  <button class="nav-btn" data-tab="risk">風險管理</button>
+  <button class="nav-btn" data-tab="review">交易復盤框架</button>
+  <button class="nav-btn" data-tab="quiz">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<h3 style="color:#ea580c;">⚠️ 策略驗證</h3>
+<p>本頁策略框架基於交易實務慣例而非嚴格回測。任何策略在實盤使用前應先進行：(1) 模擬盤驗證至少 30 筆 (2) 計算期望值 = 勝率 × 平均盈利 - 敗率 × 平均虧損 (3) 確認正期望值後再投入真金白銀。<br>注意 <strong>Overfitting 風險</strong>：針對過去數據完美優化的策略通常在實盤中失效。策略越簡單、參數越少，越可能在未來有效。</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 1: 交易日程與時區 -->
+<!-- ============================================================ -->
+<div id="schedule" class="tab-content active">
+<h2>交易日程與時區</h2>
+<p>身在台灣（UTC+8），你的交易節奏必須配合美股、歐洲盤和加密市場的時間差。以下是完整的時段對照與策略建議。</p>
+
+<div class="principle-box">
+  <strong>核心原則：計劃交易，交易計劃</strong> — 沒有計劃 = 不交易。每個時段都有特定的任務，不要在觀察時段下單。
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>台灣時間 vs 全球市場時段對照</h3>
+</div>
+<div class="card-body">
+<div class="svg-container">
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="900" height="420" fill="#f8fafc" rx="12"/>
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-family="Inter" font-size="16" font-weight="700" fill="#0f172a">台灣時間 24 小時市場活動圖</text>
+  <!-- Time axis -->
+  <line x1="50" y1="60" x2="850" y2="60" stroke="#cbd5e1" stroke-width="2"/>
+  <!-- Hour markers -->
+  <g font-family="JetBrains Mono" font-size="11" fill="#64748b">
+    <text x="50" y="55" text-anchor="middle">00</text>
+    <text x="150" y="55" text-anchor="middle">04</text>
+    <text x="250" y="55" text-anchor="middle">08</text>
+    <text x="350" y="55" text-anchor="middle">12</text>
+    <text x="450" y="55" text-anchor="middle">16</text>
+    <text x="550" y="55" text-anchor="middle">20</text>
+    <text x="650" y="55" text-anchor="middle">22</text>
+    <text x="750" y="55" text-anchor="middle">24(00)</text>
+  </g>
+  <!-- Session bars -->
+  <!-- Asia/Taiwan 09-13:30 -->
+  <rect x="275" y="80" width="150" height="32" rx="6" fill="#dbeafe"/>
+  <text x="350" y="101" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#2563eb">台股/亞洲 09-13:30</text>
+  <!-- Europe 16-00 -->
+  <rect x="433" y="120" width="267" height="32" rx="6" fill="#ede9fe"/>
+  <text x="566" y="141" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#7c3aed">歐洲盤 16:00-00:00</text>
+  <!-- US Pre-market 20:00-21:30 -->
+  <rect x="533" y="160" width="67" height="32" rx="6" fill="#ffedd5"/>
+  <text x="566" y="181" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#ea580c">盤前 20-21:30</text>
+  <!-- US Market 21:30-04:00 -->
+  <rect x="600" y="200" width="200" height="36" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="700" y="223" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#16a34a">美股 21:30-04:00</text>
+  <!-- Star marker for main window -->
+  <rect x="600" y="245" width="100" height="30" rx="6" fill="#16a34a"/>
+  <text x="650" y="265" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#fff">主力窗口 21:30-23:30</text>
+  <!-- Crypto 24/7 -->
+  <rect x="50" y="290" width="800" height="28" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="450" y="309" text-anchor="middle" font-family="Inter" font-size="12" font-weight="500" fill="#64748b">加密永續合約 24/7（BTC/ETH 全天可交易）</text>
+  <!-- Gold/Silver -->
+  <rect x="433" y="330" width="200" height="28" rx="6" fill="#fff3bf"/>
+  <text x="533" y="349" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#92400e">黃金/白銀 最活躍 20-22</text>
+  <!-- Sleep window -->
+  <rect x="67" y="370" width="150" height="28" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="4"/>
+  <text x="142" y="389" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">睡眠 01:00-07:00</text>
+  <!-- Legend -->
+  <text x="50" y="415" font-family="Inter" font-size="11" fill="#64748b">提示：綠色邊框 = 你的主要交易窗口 | 虛線 = 建議休息</text>
+</svg>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>每個時段該做什麼 vs 不該做什麼</h3>
+</div>
+<div class="card-body">
+
+<div class="timeline-item">
+  <div class="timeline-time">08:00-09:00</div>
+  <div class="timeline-desc">
+    <strong>亞洲早盤準備</strong><br>
+    <span class="tag tag-green">DO</span> 看夜盤結果、讀宏觀報告、檢查持倉<br>
+    <span class="tag tag-red">DON'T</span> 不要衝動修改昨晚的持倉
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">09:00-13:30</div>
+  <div class="timeline-desc">
+    <strong>台股/亞洲時段</strong><br>
+    <span class="tag tag-green">DO</span> 加密永續合約如有策略可執行；觀察亞洲資金流向<br>
+    <span class="tag tag-red">DON'T</span> 不要因為無聊就開倉；美股相關標的此時流動性差
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">16:00-20:00</div>
+  <div class="timeline-desc">
+    <strong>歐洲盤</strong><br>
+    <span class="tag tag-green">DO</span> 外匯/黃金/白銀開始活躍，可操作貴金屬<br>
+    <span class="tag tag-red">DON'T</span> 不要在美股盤前亂猜方向
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">20:00-21:30</div>
+  <div class="timeline-desc">
+    <strong>美股盤前 + 經濟數據</strong><br>
+    <span class="tag tag-green">DO</span> 執行行前準備 SOP（見 Tab 2）；經濟數據 20:30 公布<br>
+    <span class="tag tag-red">DON'T</span> 數據公布前不要建倉；等數據消化 15 分鐘再反應
+  </div>
+</div>
+
+<div class="timeline-item highlight">
+  <div class="timeline-time">21:30-22:00</div>
+  <div class="timeline-desc">
+    <strong>開盤前 30 分鐘 — 觀察不操作</strong><br>
+    <span class="tag tag-green">DO</span> 記錄 Opening Range 高低點、觀察成交量<br>
+    <span class="tag tag-red">DON'T</span> 不要追開盤跳空！假突破在這 30 分鐘最多
+  </div>
+</div>
+
+<div class="timeline-item highlight">
+  <div class="timeline-time">22:00-23:30</div>
+  <div class="timeline-desc">
+    <strong>主力交易窗口</strong><br>
+    <span class="tag tag-green">DO</span> 方向確認後入場；這是成交量和波動最大的時段<br>
+    <span class="tag tag-red">DON'T</span> 不要同時開太多倉位；專注 1-2 個標的
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">23:30-01:00</div>
+  <div class="timeline-desc">
+    <strong>美股午盤</strong><br>
+    <span class="tag tag-green">DO</span> 可以管理持倉、移動止盈；波動通常下降<br>
+    <span class="tag tag-red">DON'T</span> 不要開新倉；這段時間方向感最差
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">01:00-04:00</div>
+  <div class="timeline-desc">
+    <strong>美股尾盤</strong><br>
+    <span class="tag tag-green">DO</span> 收盤前 30 分鐘可能有方向性動作（MOC orders）<br>
+    <span class="tag tag-red">DON'T</span> 犧牲睡眠不值得 — 除非有重要持倉需要管理
+  </div>
+</div>
+
+<div class="timeline-item">
+  <div class="timeline-time">05:00-06:30</div>
+  <div class="timeline-desc">
+    <strong>早起看盤（可選）</strong><br>
+    <span class="tag tag-green">DO</span> 如果早起，看收盤結果和亞洲早盤反應<br>
+    <span class="tag tag-red">DON'T</span> 不要因為早起焦慮就亂操作
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週間每日特性</h3>
+</div>
+<div class="card-body">
+<table>
+<thead>
+<tr><th>日</th><th>特性</th><th>策略建議</th><th>注意事項</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>週一</strong></td>
+  <td>承接上週趨勢或反轉；消化週末消息</td>
+  <td>不重倉，觀察為主</td>
+  <td>波動通常較小；Gap 容易回補</td>
+</tr>
+<tr>
+  <td><strong>週二</strong></td>
+  <td>本週真正方向開始展開</td>
+  <td>確認方向後可建倉</td>
+  <td>JOLTS/ISM 等數據常在此日</td>
+</tr>
+<tr>
+  <td><strong>週三</strong></td>
+  <td>趨勢延續或加速</td>
+  <td>允許最大倉位</td>
+  <td>ADP 就業、FOMC（如有）</td>
+</tr>
+<tr>
+  <td><strong>週四</strong></td>
+  <td>延續或開始消化前兩天的動能</td>
+  <td>決定週五前是否減倉</td>
+  <td>初請失業金；如果持有隔夜倉注意</td>
+</tr>
+<tr>
+  <td><strong>週五</strong></td>
+  <td>NFP（每月第一週五）；期權到期</td>
+  <td>無把握不開新倉</td>
+  <td>午後回歸 Max Pain；週末 gap 風險</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box info">
+  <strong>週末風險提醒：</strong>加密 24/7 運作但美股不能操作。留倉過週末要考慮：1) 週末可能出現的宏觀新聞 2) 加密波動可能帶動週一美股 gap 3) 留倉成本（funding rate）
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>不同資產的最佳交易時段</h3>
+</div>
+<div class="card-body">
+<table>
+<thead>
+<tr><th>資產</th><th>最佳時段（台灣時間）</th><th>原因</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>BTC / ETH</strong></td>
+  <td>21:30-23:30 + 09:00-11:00</td>
+  <td>美股時段連動最強；亞洲早盤有獨立行情</td>
+</tr>
+<tr>
+  <td><strong>美股個股</strong></td>
+  <td>21:30-23:30</td>
+  <td>流動性最好、spread 最小</td>
+</tr>
+<tr>
+  <td><strong>黃金 / 白銀</strong></td>
+  <td>20:00-22:00</td>
+  <td>歐美交接時段波動最大</td>
+</tr>
+<tr>
+  <td><strong>銅 / 商品</strong></td>
+  <td>15:00-18:00 + 21:30-22:30</td>
+  <td>歐洲盤 + 美股開盤初期</td>
+</tr>
+<tr>
+  <td><strong>外匯主要對</strong></td>
+  <td>16:00-22:00</td>
+  <td>歐洲+美國重疊時段流動性最高</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 2: 行前準備 SOP -->
+<!-- ============================================================ -->
+<div id="prep" class="tab-content">
+<h2>行前準備 SOP</h2>
+<p>每日開盤前必做的準備清單，建議在 20:00-21:30 執行。總計約 27 分鐘。</p>
+
+<div class="principle-box">
+  <strong>核心原則：保護本金第一，獲利第二</strong> — 準備工作的目的是確保你帶著清晰的頭腦和明確的計劃進入市場，而不是盲目開槍。
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>1. 宏觀快速掃描（5 分鐘）</h3>
+  <span class="tag tag-blue">必做</span>
+</div>
+<div class="card-body">
+<h4>檢查清單：</h4>
+<ul>
+  <li><strong>DXY（美元指數）今日方向</strong> — 美元走強通常壓制風險資產</li>
+  <li><strong>30Y / 10Y 殖利率變化</strong> — 殖利率飆升 = 成長股壓力</li>
+  <li><strong>VIX 水平</strong> — &lt;15 低波動 / 15-20 正常 / 20-25 警戒 / &gt;25 高波動（縮小倉位）</li>
+  <li><strong>今日重要數據/事件</strong> — CPI/PPI/NFP/FOMC/財報</li>
+  <li><strong>隔夜主要變化</strong> — 亞歐盤有無重大消息</li>
+</ul>
+
+<div class="principle-box info">
+  <strong>快速判斷框架：</strong><br>
+  DXY 弱 + 殖利率降 + VIX 低 = Risk-On（做多科技/加密）<br>
+  DXY 強 + 殖利率升 + VIX 升 = Risk-Off（做空或觀望）<br>
+  混合信號 = 小倉位或不交易
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>2. 技術面準備（10 分鐘）</h3>
+  <span class="tag tag-blue">必做</span>
+</div>
+<div class="card-body">
+<h4>逐項檢查：</h4>
+<ul>
+  <li><strong>各持倉資產 SuperTrend 三時框狀態</strong>
+    <ul>
+      <li>日線方向 = 大趨勢</li>
+      <li>4H 方向 = 中期動能</li>
+      <li>1H 方向 = 短線節奏</li>
+      <li>三時框同向 = 最強信號；矛盾 = 降低倉位</li>
+    </ul>
+  </li>
+  <li><strong>關鍵支撐/壓力位標記</strong> — 畫出今日最重要的 2-3 個價位</li>
+  <li><strong>今日 24h 預估區間</strong>（from ATR）
+    <div class="formula">預估範圍 = 當前價格 +/- 1x Daily ATR(14)</div>
+  </li>
+  <li><strong>布林通道位置</strong> — Squeeze（收斂）= 大行情即將到來</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>3. 籌碼面快掃（5 分鐘）</h3>
+  <span class="tag tag-purple">加密專用</span>
+</div>
+<div class="card-body">
+<ul>
+  <li><strong>BTC/ETH Funding Rate</strong>
+    <ul>
+      <li>極正（>0.05%/8h）= 多頭過擠，注意回調</li>
+      <li>極負（&lt;-0.03%/8h）= 空頭過擠，注意軋空</li>
+    </ul>
+  </li>
+  <li><strong>Open Interest 變化</strong> — OI 急升 + 價格不動 = 即將大波動</li>
+  <li><strong>Fear & Greed 指數</strong> — 極恐懼時考慮做多；極貪婪時考慮做空</li>
+  <li><strong>異常清算/大額轉帳</strong> — 大規模清算後通常有反彈機會</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>4. 制定今日計劃（5 分鐘）</h3>
+  <span class="tag tag-green">核心</span>
+</div>
+<div class="card-body">
+<h4>必須回答的問題：</h4>
+<ol>
+  <li><strong>今日交易方向</strong> — 做多 / 做空 / 觀望（三選一，不要含糊）</li>
+  <li><strong>最多開幾個倉位</strong> — 建議 1-2 個，最多 3 個</li>
+  <li><strong>每筆最大虧損額度</strong> — 帳戶的 1-2%</li>
+  <li><strong>IF-THEN 計劃</strong>（寫下來！）：</li>
+</ol>
+
+<div class="formula">
+IF 價格到達 [具體價位]<br>
+THEN 我做 [具體動作：買入/賣出/加倉]<br>
+止損設在 [具體價位]<br>
+目標設在 [具體價位]<br>
+倉位大小 = [具體數量]
+</div>
+
+<div class="principle-box warning">
+  <strong>沒有 IF-THEN 計劃 = 今天不交易。</strong>如果你無法寫出具體的進出場條件，代表你還沒準備好。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>5. 心態檢查（2 分鐘）</h3>
+  <span class="tag tag-red">最重要</span>
+</div>
+<div class="card-body">
+<h4>誠實回答自己：</h4>
+<table>
+<thead>
+<tr><th>問題</th><th>如果是</th><th>行動</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>今天情緒狀態如何？</td>
+  <td>疲倦/焦慮/憤怒</td>
+  <td>不交易，或倉位減半</td>
+</tr>
+<tr>
+  <td>是否連續虧損中？</td>
+  <td>連虧 2+ 筆</td>
+  <td>倉位降低 50%</td>
+</tr>
+<tr>
+  <td>有沒有「一定要賺回來」的想法？</td>
+  <td>有</td>
+  <td><strong>絕對不交易</strong>（最危險信號）</td>
+</tr>
+<tr>
+  <td>白天工作壓力大嗎？</td>
+  <td>很大</td>
+  <td>只做觀察，不開倉</td>
+</tr>
+<tr>
+  <td>是否有足夠睡眠？</td>
+  <td>&lt; 6 小時</td>
+  <td>降低複雜度，只做最簡單策略</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box warning">
+  <strong>報復性交易是帳戶殺手 #1。</strong>當你有「要把虧損賺回來」的念頭時，你的判斷力已經被情緒劫持。最好的交易就是不交易。
+</div>
+</div>
+</div>
+
+<div class="svg-container">
+<svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="180" fill="#f8fafc" rx="12"/>
+  <text x="400" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">行前準備流程圖</text>
+  <!-- Steps -->
+  <rect x="20" y="50" width="130" height="60" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="85" y="75" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#2563eb">宏觀掃描</text>
+  <text x="85" y="95" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">5 分鐘</text>
+  <text x="165" y="82" font-size="16" fill="#64748b">&rarr;</text>
+
+  <rect x="180" y="50" width="130" height="60" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="245" y="75" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#2563eb">技術面準備</text>
+  <text x="245" y="95" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">10 分鐘</text>
+  <text x="325" y="82" font-size="16" fill="#64748b">&rarr;</text>
+
+  <rect x="340" y="50" width="130" height="60" rx="8" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="405" y="75" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#7c3aed">籌碼面快掃</text>
+  <text x="405" y="95" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">5 分鐘</text>
+  <text x="485" y="82" font-size="16" fill="#64748b">&rarr;</text>
+
+  <rect x="500" y="50" width="130" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="565" y="75" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#16a34a">制定計劃</text>
+  <text x="565" y="95" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">5 分鐘</text>
+  <text x="645" y="82" font-size="16" fill="#64748b">&rarr;</text>
+
+  <rect x="660" y="50" width="120" height="60" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="720" y="75" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#dc2626">心態檢查</text>
+  <text x="720" y="95" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">2 分鐘</text>
+
+  <!-- Decision -->
+  <text x="400" y="145" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="#0f172a">全部通過 → 準備就緒，等待信號</text>
+  <text x="400" y="167" text-anchor="middle" font-family="Inter" font-size="12" fill="#dc2626">任一環節紅燈 → 降低倉位或不交易</text>
+</svg>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 3: 日內交易戰術 -->
+<!-- ============================================================ -->
+<div id="tactics" class="tab-content">
+<h2>日內交易戰術</h2>
+<p>以下是適合你時段（21:30-23:30）的五種核心日內策略，以及最重要的第六種：不交易。</p>
+
+<div class="principle-box">
+  <strong>核心原則：少即是多</strong> — 一週做 3-5 筆精選交易 > 每天 20 筆亂做。每種策略都有特定的適用環境。
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>1. Opening Range Breakout (ORB)</h3>
+  <span class="tag tag-green">趨勢日</span>
+</div>
+<div class="card-body">
+<h4>定義</h4>
+<p>開盤前 15-30 分鐘（21:30-22:00）建立的高低範圍。</p>
+
+<h4>策略規則</h4>
+<ul>
+  <li>突破 OR 高點 + 收盤確認 → 做多</li>
+  <li>突破 OR 低點 + 收盤確認 → 做空</li>
+  <li>止損：OR 範圍的另一端（或中間線）</li>
+  <li>目標：1x OR 範圍 為第一目標，2x 為第二目標</li>
+</ul>
+
+<h4>過濾條件（必須全部滿足）</h4>
+<ol>
+  <li>大方向一致（SuperTrend 日線/4H 同向）</li>
+  <li>突破時成交量 > 前 5 根平均 1.5 倍</li>
+  <li>不在重大數據公布後 15 分鐘內</li>
+</ol>
+
+<div class="svg-container">
+<svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="280" fill="#f8fafc" rx="12"/>
+  <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">Opening Range Breakout 示意圖</text>
+  <!-- Time axis -->
+  <line x1="80" y1="250" x2="650" y2="250" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="150" y="268" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">21:30</text>
+  <text x="280" y="268" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">22:00</text>
+  <text x="450" y="268" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">22:30</text>
+  <text x="600" y="268" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#64748b">23:00</text>
+  <!-- OR Zone -->
+  <rect x="100" y="100" width="200" height="80" rx="4" fill="#dbeafe" opacity="0.5" stroke="#2563eb" stroke-dasharray="4"/>
+  <text x="200" y="95" text-anchor="middle" font-family="Inter" font-size="11" fill="#2563eb">Opening Range</text>
+  <!-- OR High line -->
+  <line x1="100" y1="100" x2="650" y2="100" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="6"/>
+  <text x="660" y="104" font-family="Inter" font-size="10" fill="#16a34a">OR High</text>
+  <!-- OR Low line -->
+  <line x1="100" y1="180" x2="650" y2="180" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="6"/>
+  <text x="660" y="184" font-family="Inter" font-size="10" fill="#dc2626">OR Low</text>
+  <!-- Breakout candles -->
+  <rect x="310" y="80" width="8" height="30" fill="#16a34a"/>
+  <line x1="314" y1="75" x2="314" y2="80" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="325" y="70" width="8" height="25" fill="#16a34a"/>
+  <rect x="340" y="60" width="8" height="20" fill="#16a34a"/>
+  <rect x="355" y="65" width="8" height="15" fill="#16a34a"/>
+  <!-- Entry arrow -->
+  <text x="320" y="55" font-family="Inter" font-size="10" font-weight="600" fill="#16a34a">Entry</text>
+  <!-- Target lines -->
+  <line x1="400" y1="20" x2="650" y2="20" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3"/>
+  <text x="660" y="24" font-family="Inter" font-size="9" fill="#7c3aed">Target 2x</text>
+</svg>
+</div>
+
+<h4>適用環境</h4>
+<p>趨勢明確的日子（SuperTrend 三時框同向）、大數據後方向已確認。</p>
+
+<h4>不適用</h4>
+<p>窄幅震盪日、VIX spike 日、重大不確定事件前。</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>2. VWAP 策略</h3>
+  <span class="tag tag-blue">趨勢回調</span>
+</div>
+<div class="card-body">
+<h4>什麼是 VWAP</h4>
+<p>VWAP = Volume Weighted Average Price（成交量加權平均價）。代表日內的「公平價格」。機構交易員用它來判斷買入/賣出是否划算。</p>
+
+<h4>核心規則</h4>
+<ul>
+  <li>價格持續在 VWAP 之上 = 日內偏多（多方控制）</li>
+  <li>價格持續在 VWAP 之下 = 日內偏空（空方控制）</li>
+  <li><strong>回測 VWAP 入場</strong> = 趨勢日中最安全的入場方式</li>
+</ul>
+
+<h4>策略</h4>
+<ol>
+  <li>確認日內方向（價格 > VWAP 且保持）</li>
+  <li>等待價格回測 VWAP（不要追高）</li>
+  <li>在 VWAP 附近出現反轉 K 線時入場</li>
+  <li>止損：VWAP 另一側 + buffer</li>
+  <li>目標：前高/前低 或 VWAP 上下一個標準差</li>
+</ol>
+
+<div class="svg-container">
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="250" fill="#f8fafc" rx="12"/>
+  <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">VWAP 回測入場示意圖</text>
+  <!-- VWAP line -->
+  <path d="M 80 150 Q 200 140, 300 130 T 500 120 T 650 110" stroke="#2563eb" stroke-width="2.5" fill="none"/>
+  <text x="660" y="110" font-family="Inter" font-size="10" font-weight="600" fill="#2563eb">VWAP</text>
+  <!-- Price action above VWAP -->
+  <path d="M 100 130 L 150 110 L 180 100 L 220 90 L 260 95 L 290 120 L 310 128 L 330 115 L 360 95 L 400 80 L 440 75 L 480 85 L 520 70 L 560 65 L 600 60" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+  <!-- Pullback to VWAP -->
+  <circle cx="290" cy="120" r="12" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <text x="290" y="145" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="#16a34a">Entry!</text>
+  <text x="290" y="160" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">回測VWAP+反轉K</text>
+  <!-- Arrow showing direction -->
+  <path d="M 310 110 L 400 80" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <defs><marker id="arrowhead" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#16a34a"/></marker></defs>
+</svg>
+</div>
+
+<div class="principle-box success">
+  <strong>VWAP 策略的優勢：</strong>風險小（止損近）、勝率高（順勢入場）、適合上班族（不用一直盯盤，設好條件單即可）。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>3. 動能交易 (Momentum)</h3>
+  <span class="tag tag-orange">高波動</span>
+</div>
+<div class="card-body">
+<h4>適用情境</h4>
+<ul>
+  <li>經濟數據大幅超預期</li>
+  <li>財報爆發（beat + raise guidance）</li>
+  <li>突發重大新聞（政策轉向、併購、黑天鵝）</li>
+</ul>
+
+<h4>入場條件</h4>
+<ol>
+  <li>放量突破關鍵位（成交量 > 2x 平均）</li>
+  <li>等待第一次回踩（不追第一根大陽/大陰）</li>
+  <li>回踩不破前低/高 → 入場</li>
+  <li>確認後可加倉（金字塔法）</li>
+</ol>
+
+<h4>風控</h4>
+<ul>
+  <li>止損：回踩低點下方</li>
+  <li>止盈：用 trailing stop（ATR x 2）跟隨</li>
+  <li><strong>絕對禁止</strong>：追高被套後不止損、無止損裸追</li>
+</ul>
+
+<div class="principle-box warning">
+  <strong>Momentum 交易的陷阱：</strong>看到大漲就想追。正確做法是等回踩確認。如果已經漲了 5%+ 才看到，通常已經太晚。寧可錯過也不要被套。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>4. 區間交易 (Range Trading)</h3>
+  <span class="tag tag-purple">震盪日</span>
+</div>
+<div class="card-body">
+<h4>適用情境</h4>
+<ul>
+  <li>無明確趨勢 / 等待重大事件前</li>
+  <li>VIX 在 15 以下（低波動）</li>
+  <li>布林通道收縮但尚未突破</li>
+</ul>
+
+<h4>策略規則</h4>
+<ol>
+  <li>定義區間：前日高低 / 布林通道上下軌 / 明確支撐壓力</li>
+  <li>上緣做空（配合反轉信號）</li>
+  <li>下緣做多（配合反轉信號）</li>
+  <li>中間不操作！</li>
+  <li>止損：區間外 + 1x ATR</li>
+</ol>
+
+<h4>最大風險</h4>
+<p>區間突破時會被大幅止損。解法：</p>
+<ul>
+  <li>倉位小（因為止損相對寬）</li>
+  <li>重大數據/事件前關閉區間交易</li>
+  <li>布林 squeeze 太久了 → 預期突破，不做區間</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>5. 事件驅動交易</h3>
+  <span class="tag tag-orange">數據日</span>
+</div>
+<div class="card-body">
+<h4>交易流程</h4>
+<table>
+<thead>
+<tr><th>時間點</th><th>動作</th><th>原因</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>數據前 30 分鐘</td>
+  <td>不建倉 / 僅小倉位方向性 bet</td>
+  <td>結果未知，風險無限大</td>
+</tr>
+<tr>
+  <td>數據公布 0-15 分鐘</td>
+  <td>觀察初始反應，不入場</td>
+  <td>第一根 K 線常是 stop hunt</td>
+</tr>
+<tr>
+  <td>數據後 15-30 分鐘</td>
+  <td>確認真實方向後入場</td>
+  <td>市場消化數據需要時間</td>
+</tr>
+<tr>
+  <td>數據後 30-60 分鐘</td>
+  <td>趨勢確認，可加倉</td>
+  <td>方向已明確，動能延續</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box warning">
+  <strong>關鍵認知：</strong>數據公布瞬間的第一個方向常常是假的（stop hunt）。不要在數據出來的那一秒就追。等 15 分鐘，讓市場告訴你真正的方向。
+</div>
+
+<h4>重要經濟數據時刻表（台灣時間）</h4>
+<table>
+<thead>
+<tr><th>數據</th><th>公布時間</th><th>影響等級</th></tr>
+</thead>
+<tbody>
+<tr><td>NFP 非農就業</td><td>20:30（每月第一週五）</td><td>最高</td></tr>
+<tr><td>CPI 消費者物價</td><td>20:30</td><td>最高</td></tr>
+<tr><td>FOMC 利率決議</td><td>02:00</td><td>最高</td></tr>
+<tr><td>PPI 生產者物價</td><td>20:30</td><td>高</td></tr>
+<tr><td>初請失業金</td><td>20:30（每週四）</td><td>中</td></tr>
+<tr><td>ISM 製造業/服務業</td><td>22:00</td><td>高</td></tr>
+<tr><td>JOLTS 職位空缺</td><td>22:00</td><td>中高</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>6. 不交易的情境（最重要的策略）</h3>
+  <span class="tag tag-red">必讀</span>
+</div>
+<div class="card-body">
+<div class="principle-box warning">
+  <strong>市場永遠在 — 錯過不是虧損，衝動才是。</strong>
+</div>
+
+<h4>強制停止交易的條件：</h4>
+<table>
+<thead>
+<tr><th>情境</th><th>行動</th><th>恢復條件</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>連虧 3 筆</td>
+  <td>強制停止今日交易</td>
+  <td>明天重新開始，倉位減半</td>
+</tr>
+<tr>
+  <td>VIX spike + 方向不確定</td>
+  <td>全部觀望</td>
+  <td>等 VIX 穩定 + 方向明確</td>
+</tr>
+<tr>
+  <td>重大數據前 30 分鐘</td>
+  <td>不開新倉</td>
+  <td>數據消化 15 分鐘後</td>
+</tr>
+<tr>
+  <td>情緒失控</td>
+  <td>關掉螢幕</td>
+  <td>至少休息一天</td>
+</tr>
+<tr>
+  <td>日虧損達帳戶 3%</td>
+  <td>今日結束</td>
+  <td>明天重新評估</td>
+</tr>
+<tr>
+  <td>連虧 3 天</td>
+  <td>休息 1-2 天</td>
+  <td>完成復盤後才回來</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box success">
+  <strong>頂尖交易者的秘密：</strong>他們大部分時間都在等待。70% 的時間觀察，20% 準備，10% 執行。一年只需要抓住幾十個好機會就夠了。
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 4: 五日交易週期 -->
+<!-- ============================================================ -->
+<div id="weekly" class="tab-content">
+<h2>五日交易週期</h2>
+<p>每一週都有其固有的節奏。理解這個節奏可以幫助你在對的日子用力、錯的日子休息。</p>
+
+<div class="principle-box">
+  <strong>核心原則：復盤比交易更重要</strong> — 不復盤的交易 = 賭博。每週的結構讓你有系統地成長。
+</div>
+
+<div class="svg-container">
+<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="200" fill="#f8fafc" rx="12"/>
+  <text x="400" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">五日交易週期能量圖</text>
+  <!-- Week bars -->
+  <rect x="60" y="80" width="100" height="70" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="110" y="105" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#2563eb">週一</text>
+  <text x="110" y="125" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">定調日</text>
+  <text x="110" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 30%</text>
+
+  <rect x="190" y="55" width="100" height="95" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="240" y="85" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#16a34a">週二</text>
+  <text x="240" y="105" text-anchor="middle" font-family="Inter" font-size="10" fill="#16a34a">主攻日</text>
+  <text x="240" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 100%</text>
+
+  <rect x="320" y="55" width="100" height="95" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="370" y="85" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#16a34a">週三</text>
+  <text x="370" y="105" text-anchor="middle" font-family="Inter" font-size="10" fill="#16a34a">主攻日</text>
+  <text x="370" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 100%</text>
+
+  <rect x="450" y="70" width="100" height="80" rx="6" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="500" y="100" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#ea580c">週四</text>
+  <text x="500" y="120" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">延續/預備</text>
+  <text x="500" y="137" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 70%</text>
+
+  <rect x="580" y="85" width="100" height="65" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="630" y="110" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#dc2626">週五</text>
+  <text x="630" y="128" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">結算日</text>
+  <text x="630" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 30%</text>
+
+  <rect x="710" y="90" width="70" height="60" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="745" y="115" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#64748b">週末</text>
+  <text x="745" y="132" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">復盤</text>
+
+  <!-- Energy curve -->
+  <path d="M 110 170 C 160 165, 200 150, 240 148 C 280 146, 330 146, 370 148 C 410 150, 460 155, 500 158 C 540 161, 590 168, 630 172" stroke="#0f172a" stroke-width="2" fill="none" stroke-dasharray="4"/>
+  <text x="400" y="190" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">--- 市場能量/方向確定性 ---</text>
+</svg>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週一：定調日</h3>
+  <span class="tag tag-blue">觀察為主</span>
+</div>
+<div class="card-body">
+<h4>特徵</h4>
+<ul>
+  <li>承接上週趨勢或反轉（週末消息消化）</li>
+  <li>波動通常較小（機構還在評估）</li>
+  <li>Gap 容易回補（除非有重大消息）</li>
+</ul>
+
+<h4>任務清單</h4>
+<ol>
+  <li>看上週五收盤後的 gap 方向和大小</li>
+  <li>判斷本週主線：延續 or 反轉</li>
+  <li>確認本週關鍵事件日曆</li>
+  <li>設定觀察清單（本週想交易的標的）</li>
+</ol>
+
+<h4>倉位建議</h4>
+<p>最大 30% 正常倉位。通常不重倉 — 等方向確認。</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週二/三：主攻日</h3>
+  <span class="tag tag-green">最大機會</span>
+</div>
+<div class="card-body">
+<h4>特徵</h4>
+<ul>
+  <li>本週真正趨勢在這兩天展開</li>
+  <li>重要中段數據（ISM/JOLTS/ADP）</li>
+  <li>機構定調本週方向</li>
+</ul>
+
+<h4>策略</h4>
+<ol>
+  <li>方向確認後建中期倉位</li>
+  <li>允許最大倉位（100%）</li>
+  <li>趨勢明確 → ORB 或 Momentum 策略</li>
+  <li>如果週一判斷正確，週二加碼</li>
+</ol>
+
+<h4>注意事項</h4>
+<ul>
+  <li>即使是主攻日，依然要遵守風控規則</li>
+  <li>最大倉位 ≠ 不設止損</li>
+  <li>如果方向不明確，寧可等到週三</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週四：延續或預備日</h3>
+  <span class="tag tag-orange">管理</span>
+</div>
+<div class="card-body">
+<h4>特徵</h4>
+<ul>
+  <li>延續週二三方向 or 開始消化</li>
+  <li>初請失業金數據（20:30 台灣時間）</li>
+  <li>週五前的最後完整交易日</li>
+</ul>
+
+<h4>決策框架</h4>
+<ol>
+  <li>持有中期倉位？→ 決定週五前是否減倉</li>
+  <li>趨勢是否開始減弱？（成交量下降、動能消退）</li>
+  <li>週五有重大事件嗎？（NFP/期權到期）→ 如果有，考慮減倉</li>
+</ol>
+
+<h4>倉位建議</h4>
+<p>最大 70% 正常倉位。如果持有隔夜倉，設好防守位。</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週五：結算日</h3>
+  <span class="tag tag-red">謹慎</span>
+</div>
+<div class="card-body">
+<h4>特徵</h4>
+<ul>
+  <li>NFP（每月第一週五）— 本月最大波動日</li>
+  <li>期權到期 — Max Pain 引力強</li>
+  <li>下午尾盤：機構調倉 + position squaring</li>
+</ul>
+
+<h4>策略</h4>
+<ul>
+  <li>如果無把握，週五不開新倉</li>
+  <li>NFP 日：只做事件驅動策略（數據後 15 分鐘入場）</li>
+  <li>午後回歸 Max Pain — 不要跟這個力量作對</li>
+</ul>
+
+<h4>週末風險考量</h4>
+<ul>
+  <li>加密 24/7 運作但美股週末關閉</li>
+  <li>留美股倉位 → 週一 gap 風險</li>
+  <li>留加密倉位 → 週末流動性差，但有時有獨立行情</li>
+  <li>Funding rate 成本累積</li>
+</ul>
+
+<div class="principle-box info">
+  <strong>經驗法則：</strong>如果你不願意在一整個週末不看盤的情況下持有這個倉位，那就不要留倉過週末。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>週末：復盤與準備</h3>
+  <span class="tag tag-purple">成長</span>
+</div>
+<div class="card-body">
+<h4>週六：本週交易復盤（見 Tab 6）</h4>
+<ol>
+  <li>統計本週所有交易的勝率和總 R</li>
+  <li>找出本週最好和最差的交易</li>
+  <li>檢查是否有違反規則的行為</li>
+  <li>情緒日誌回顧</li>
+</ol>
+
+<h4>週日：下週準備</h4>
+<ol>
+  <li>下週重要事件日曆（數據/財報/FOMC）</li>
+  <li>各標的週線技術面分析</li>
+  <li>調整策略（如果本週某策略不適用）</li>
+  <li>設定下週觀察清單和 watchlist</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 5: 風險管理 -->
+<!-- ============================================================ -->
+<div id="risk" class="tab-content">
+<h2>風險管理</h2>
+<p>風險管理不是可選的附加功能 — 它是交易的全部。沒有風險管理的交易就是賭博。</p>
+
+<div class="principle-box warning">
+  <strong>活著才能交易明天。</strong>一次爆倉可以毀掉一年的努力。保護本金永遠是第一優先。
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>1. 倉位大小計算</h3>
+  <span class="tag tag-green">核心公式</span>
+</div>
+<div class="card-body">
+<h4>固定風險法（推薦）</h4>
+<p>每筆交易最多虧損帳戶的 1-2%。不管多有信心，都不超過 2%。</p>
+
+<div class="formula">
+倉位大小 = (帳戶資金 x 風險百分比) / (入場價 - 止損價)<br><br>
+範例：<br>
+帳戶 = $10,000<br>
+風險 = 1% = $100<br>
+入場價 = $50<br>
+止損價 = $48<br>
+止損距離 = $2<br>
+倉位大小 = $100 / $2 = 50 股
+</div>
+
+<div class="svg-container">
+<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="220" fill="#f8fafc" rx="12"/>
+  <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">倉位大小計算示意</text>
+  <!-- Account box -->
+  <rect x="40" y="50" width="160" height="80" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="120" y="75" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#2563eb">帳戶 $10,000</text>
+  <text x="120" y="100" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">風險 1% = $100</text>
+  <text x="120" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">每筆最多虧 $100</text>
+  <!-- Arrow -->
+  <text x="220" y="92" font-size="20" fill="#64748b">&rarr;</text>
+  <!-- Calculation -->
+  <rect x="250" y="50" width="200" height="80" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="350" y="75" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0f172a">$100 / $2(止損距離)</text>
+  <text x="350" y="100" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#0f172a">= 50 股</text>
+  <text x="350" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">總投入 $2,500</text>
+  <!-- Arrow -->
+  <text x="470" y="92" font-size="20" fill="#64748b">&rarr;</text>
+  <!-- Result -->
+  <rect x="500" y="50" width="160" height="80" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="580" y="75" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#16a34a">結果</text>
+  <text x="580" y="100" text-anchor="middle" font-family="Inter" font-size="11" fill="#0f172a">買入 50 股 @ $50</text>
+  <text x="580" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">風險 = 帳戶 1%</text>
+  <!-- Note -->
+  <text x="350" y="160" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#dc2626">止損越遠 → 倉位越小 | 止損越近 → 倉位越大</text>
+  <text x="350" y="185" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">這樣無論止損距離如何，每筆虧損金額固定</text>
+</svg>
+</div>
+
+<h4>加密合約計算（含槓桿）</h4>
+<div class="formula">
+保證金 = (帳戶 x 風險%) / (止損% x 槓桿倍數)<br><br>
+範例：<br>
+帳戶 = $10,000 | 風險 = 1% = $100<br>
+止損距離 = 2% | 槓桿 = 5x<br>
+保證金 = $100 / (2% x 5) = $100 / 10% = $1,000<br>
+實際倉位 = $1,000 x 5 = $5,000
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>2. 止損設定原則</h3>
+  <span class="tag tag-red">生死線</span>
+</div>
+<div class="card-body">
+<h4>三種止損方法</h4>
+<table>
+<thead>
+<tr><th>方法</th><th>設定方式</th><th>適用情境</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>技術止損</strong></td>
+  <td>結構失效點（支撐跌破、SuperTrend 翻轉）</td>
+  <td>大多數情境，最精確</td>
+</tr>
+<tr>
+  <td><strong>ATR 止損</strong></td>
+  <td>入場價 +/- 1~1.5x ATR(14)</td>
+  <td>沒有明確結構時</td>
+</tr>
+<tr>
+  <td><strong>時間止損</strong></td>
+  <td>入場後 X 根 K 線沒有朝預期方向動</td>
+  <td>動能交易 — 預期快速獲利</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box warning">
+  <strong>絕對禁止：移動止損往虧損方向！</strong><br>
+  「再給它一點空間」= 最常見的破產藉口。止損設好了就不要動。如果覺得止損太近，那是你入場時沒算好 — 下次改善，但這次不要動。
+</div>
+
+<h4>止損常見錯誤</h4>
+<ul>
+  <li>不設止損（「先看看再說」→ 虧損從 2% 變 20%）</li>
+  <li>心理止損（「等到那個價位我就手動出」→ 到了又不出）</li>
+  <li>止損太近（被正常波動洗出去）</li>
+  <li>止損設在整數關口（所有人都設在那裡 → stop hunt）</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>3. 加倉 vs 攤平</h3>
+  <span class="tag tag-green">進階</span>
+</div>
+<div class="card-body">
+<h4>加倉（正確做法 — 金字塔法）</h4>
+<p>只在獲利時加倉。每次加倉量遞減：</p>
+<div class="formula">
+第一筆：50% 計劃倉位（方向初步確認）<br>
+第二筆：30% 計劃倉位（方向進一步確認）<br>
+第三筆：20% 計劃倉位（趨勢明確加速）<br><br>
+每次加倉都要重新計算整體止損位！
+</div>
+
+<h4>攤平（危險做法）</h4>
+<div class="principle-box warning">
+  <strong>在虧損時加倉 = 最快破產的方式。</strong><br>
+  「跌了這麼多一定會反彈」— 這是最危險的想法。趨勢可以持續比你想像更久。
+</div>
+
+<h4>唯一例外：事先計劃好的分批建倉</h4>
+<div class="formula">
+事先計劃：<br>
+價格到 A → 買入 1/3<br>
+價格到 B（更低）→ 買入 1/3<br>
+價格到 C（最低）→ 買入 1/3<br>
+整體止損設在 C 下方<br><br>
+這不是「攤平」— 這是計劃內的分批入場。<br>
+差別在於：事先計劃 vs 臨時決定。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>4. 日最大虧損限制</h3>
+  <span class="tag tag-red">硬規則</span>
+</div>
+<div class="card-body">
+<table>
+<thead>
+<tr><th>規則</th><th>觸發條件</th><th>行動</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>單筆止損</td>
+  <td>虧損達帳戶 1-2%</td>
+  <td>平倉，執行止損</td>
+</tr>
+<tr>
+  <td>日最大虧損</td>
+  <td>當日累計虧損達帳戶 3-5%</td>
+  <td>強制停止交易，明天再來</td>
+</tr>
+<tr>
+  <td>連虧規則</td>
+  <td>連虧 3 筆</td>
+  <td>今日停止 + 倉位減半</td>
+</tr>
+<tr>
+  <td>連虧 3 天</td>
+  <td>連續 3 天虧損</td>
+  <td>休息 1 天，完成復盤</td>
+</tr>
+<tr>
+  <td>週最大虧損</td>
+  <td>本週虧損達帳戶 8-10%</td>
+  <td>本週結束，等下週一</td>
+</tr>
+<tr>
+  <td>月最大虧損</td>
+  <td>本月虧損達帳戶 15-20%</td>
+  <td>停止 1 週，全面復盤</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box success">
+  <strong>這些規則不是建議 — 是硬性限制。</strong>就像開車有速限一樣，違反的後果是災難性的。把它們寫在紙上貼在螢幕旁邊。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>5. 槓桿管理（加密特別重要）</h3>
+  <span class="tag tag-orange">高風險</span>
+</div>
+<div class="card-body">
+<h4>建議槓桿上限</h4>
+<table>
+<thead>
+<tr><th>經驗等級</th><th>建議最大槓桿</th><th>原因</th></tr>
+</thead>
+<tbody>
+<tr><td>新手（&lt; 6 個月）</td><td>2-3x</td><td>還在學習，要給自己犯錯空間</td></tr>
+<tr><td>中等（6-24 個月）</td><td>3-5x</td><td>有系統但還在優化</td></tr>
+<tr><td>資深（2年+且有正期望）</td><td>5-10x</td><td>僅限高確信度交易</td></tr>
+</tbody>
+</table>
+
+<h4>槓桿 vs 爆倉距離</h4>
+<table>
+<thead>
+<tr><th>槓桿倍數</th><th>爆倉距離（不含手續費）</th><th>BTC 日波動 3% 的風險</th></tr>
+</thead>
+<tbody>
+<tr><td>2x</td><td>50%</td><td>安全</td></tr>
+<tr><td>3x</td><td>33%</td><td>安全</td></tr>
+<tr><td>5x</td><td>20%</td><td>中等風險</td></tr>
+<tr><td>10x</td><td>10%</td><td>高風險（一天大波動可能爆）</td></tr>
+<tr><td>20x</td><td>5%</td><td>極高風險（常規波動即爆）</td></tr>
+<tr><td>50x</td><td>2%</td><td>賭博（幾乎必爆）</td></tr>
+<tr><td>100x</td><td>1%</td><td>瞬間爆倉</td></tr>
+</tbody>
+</table>
+
+<div class="principle-box warning">
+  <strong>真實計算：</strong>10x 槓桿 + 10% 止損 = 100% 本金虧損。很多新手不理解這一點。槓桿放大的不只是獲利，更是虧損。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>6. 風報比 (Risk:Reward)</h3>
+  <span class="tag tag-green">數學</span>
+</div>
+<div class="card-body">
+<h4>最低要求</h4>
+<ul>
+  <li>最低 R:R = 1:1.5（贏的時候比輸多 50%）</li>
+  <li>理想 R:R = 1:2 以上</li>
+  <li>絕對不做 R:R < 1:1 的交易</li>
+</ul>
+
+<h4>為什麼 R:R 比勝率重要</h4>
+<div class="formula">
+期望值 = (勝率 x 平均獲利) - (敗率 x 平均虧損)<br><br>
+場景 A（高勝率低 R:R）:<br>
+勝率 70%, 平均贏 $100, 平均虧 $200<br>
+期望值 = (0.7 x $100) - (0.3 x $200) = $70 - $60 = +$10 ← 勉強正<br><br>
+場景 B（低勝率高 R:R）:<br>
+勝率 40%, 平均贏 $250, 平均虧 $100<br>
+期望值 = (0.4 x $250) - (0.6 x $100) = $100 - $60 = +$40 ← 優秀！<br><br>
+結論：40% 勝率 + 1:2.5 R:R > 70% 勝率 + 1:0.5 R:R
+</div>
+
+<h4>勝率 vs R:R 損益平衡表</h4>
+<table>
+<thead>
+<tr><th>R:R</th><th>損益平衡勝率</th><th>如果勝率 45%</th></tr>
+</thead>
+<tbody>
+<tr><td>1:1</td><td>50%</td><td>虧損</td></tr>
+<tr><td>1:1.5</td><td>40%</td><td>獲利</td></tr>
+<tr><td>1:2</td><td>33%</td><td>獲利</td></tr>
+<tr><td>1:3</td><td>25%</td><td>獲利</td></tr>
+<tr><td>1:4</td><td>20%</td><td>獲利</td></tr>
+</tbody>
+</table>
+
+<div class="principle-box success">
+  <strong>重點：</strong>如果你能維持 1:2 的 R:R，你只需要贏 34% 以上就能長期獲利。把精力放在找高 R:R 的機會，而不是追求高勝率。
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 6: 交易復盤框架 -->
+<!-- ============================================================ -->
+<div id="review" class="tab-content">
+<h2>交易復盤框架</h2>
+<p>復盤是交易者成長的引擎。沒有復盤，你只是在重複同樣的錯誤。</p>
+
+<div class="principle-box info">
+  <strong>核心心法：</strong>不是每筆虧損都是錯誤。正確的交易也會虧錢。真正的錯誤是：違反規則、衝動交易、移動止損、過大倉位。按計劃執行但市場走反 = 好的虧損。
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>1. 單筆交易復盤模板</h3>
+  <span class="tag tag-blue">每筆</span>
+</div>
+<div class="card-body">
+<h4>記錄項目</h4>
+<table>
+<thead>
+<tr><th>欄位</th><th>說明</th><th>範例</th></tr>
+</thead>
+<tbody>
+<tr><td>日期時間</td><td>入場和出場時間</td><td>2024/03/15 22:15 - 23:40</td></tr>
+<tr><td>標的</td><td>交易的資產</td><td>BTC/USDT Perpetual</td></tr>
+<tr><td>方向</td><td>做多或做空</td><td>做多</td></tr>
+<tr><td>入場價</td><td>實際成交價</td><td>$67,200</td></tr>
+<tr><td>止損價</td><td>設定的止損位</td><td>$66,400</td></tr>
+<tr><td>目標價</td><td>預設的止盈位</td><td>$68,800</td></tr>
+<tr><td>出場價</td><td>實際出場價</td><td>$68,500</td></tr>
+<tr><td>倉位大小</td><td>金額 + 槓桿</td><td>$2,000 x 5x</td></tr>
+<tr><td>R 值</td><td>盈虧 / 計劃風險</td><td>+1.6R</td></tr>
+</tbody>
+</table>
+
+<h4>分析項目（最重要！）</h4>
+<ol>
+  <li><strong>入場理由</strong>（寫下來！不是事後合理化）
+    <ul><li>當時看到什麼信號？</li><li>符合哪個策略？</li></ul>
+  </li>
+  <li><strong>做對了什麼？</strong>
+    <ul><li>入場時機好？止損設定合理？耐心等待確認？</li></ul>
+  </li>
+  <li><strong>做錯了什麼？</strong>
+    <ul><li>追高了？止損太遠？倉位太大？沒有等確認？</li></ul>
+  </li>
+  <li><strong>下次遇到相同情境怎麼改進？</strong>
+    <ul><li>具體的、可執行的改進方案</li></ul>
+  </li>
+</ol>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>2. 每日復盤（10 分鐘）</h3>
+  <span class="tag tag-green">每天</span>
+</div>
+<div class="card-body">
+<h4>每日復盤檢查清單</h4>
+<ol>
+  <li><strong>計劃 vs 實際執行</strong>
+    <ul>
+      <li>今天的 IF-THEN 計劃執行了嗎？</li>
+      <li>有沒有偏離計劃？為什麼？</li>
+    </ul>
+  </li>
+  <li><strong>衝動交易檢查</strong>
+    <ul>
+      <li>有沒有「不在計劃中的交易」？</li>
+      <li>如果有 → 這是需要最優先改善的問題</li>
+    </ul>
+  </li>
+  <li><strong>數字記錄</strong>
+    <ul>
+      <li>今日 P&L: +/- $___</li>
+      <li>今日交易筆數: ___</li>
+      <li>本週累計 P&L: +/- $___</li>
+    </ul>
+  </li>
+  <li><strong>情緒記錄（1-10 分）</strong>
+    <ul>
+      <li>交易前情緒: ___/10</li>
+      <li>交易中情緒: ___/10</li>
+      <li>交易後情緒: ___/10</li>
+      <li>有沒有情緒影響決策的時刻？</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="principle-box success">
+  <strong>10 分鐘復盤的投資報酬率是所有交易活動中最高的。</strong>它能讓你在幾週內識別出自己的模式和弱點。
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>3. 每週復盤（30 分鐘，週末做）</h3>
+  <span class="tag tag-purple">每週</span>
+</div>
+<div class="card-body">
+<h4>週復盤框架</h4>
+<ol>
+  <li><strong>績效統計</strong>
+    <ul>
+      <li>本週勝率: ___% （目標 > 40%）</li>
+      <li>總 R: +/- ___R</li>
+      <li>最大贏家: ___ (+___R)</li>
+      <li>最大輸家: ___ (-___R)</li>
+      <li>交易筆數: ___ （目標 3-8 筆/週）</li>
+    </ul>
+  </li>
+  <li><strong>策略分析</strong>
+    <ul>
+      <li>哪些策略有效？（繼續執行）</li>
+      <li>哪些策略無效？（暫停或調整）</li>
+      <li>方向判斷準確率: ___%</li>
+    </ul>
+  </li>
+  <li><strong>規則遵守檢查</strong>
+    <ul>
+      <li>有沒有違反止損規則？</li>
+      <li>有沒有超出最大倉位？</li>
+      <li>有沒有在不該交易時交易？</li>
+      <li><strong>如果有任何違反 → 這是第一優先改善項</strong></li>
+    </ul>
+  </li>
+  <li><strong>下週調整</strong>
+    <ul>
+      <li>需要調整什麼？</li>
+      <li>哪些標的表現好，繼續關注？</li>
+      <li>哪些標的應該暫時放棄？</li>
+    </ul>
+  </li>
+</ol>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>4. 月度復盤（1 小時）</h3>
+  <span class="tag tag-orange">每月</span>
+</div>
+<div class="card-body">
+<h4>月度復盤項目</h4>
+<ol>
+  <li><strong>績效指標</strong>
+    <ul>
+      <li>月報酬率: ___%</li>
+      <li>Sharpe Ratio（月化）: ___</li>
+      <li>Max Drawdown: ___%</li>
+      <li>最長連虧天數: ___</li>
+    </ul>
+  </li>
+  <li><strong>交易品質</strong>
+    <ul>
+      <li>總交易筆數: ___</li>
+      <li>最佳筆數估算: ___（是否過度交易？）</li>
+      <li>衝動交易次數: ___</li>
+      <li>規則違反次數: ___</li>
+    </ul>
+  </li>
+  <li><strong>資產/策略分解</strong>
+    <ul>
+      <li>哪個資產貢獻最多利潤？</li>
+      <li>哪個資產造成最多虧損？</li>
+      <li>哪個策略最有效？</li>
+      <li>需要停止交易的資產/策略？</li>
+    </ul>
+  </li>
+  <li><strong>心態趨勢</strong>
+    <ul>
+      <li>情緒分數趨勢（從每日記錄彙總）</li>
+      <li>是否越來越焦慮？</li>
+      <li>報復性交易有沒有增加？</li>
+      <li>是否有 burnout 跡象？</li>
+    </ul>
+  </li>
+  <li><strong>下月計劃</strong>
+    <ul>
+      <li>保持什麼？</li>
+      <li>改變什麼？</li>
+      <li>停止什麼？</li>
+    </ul>
+  </li>
+</ol>
+</div>
+</div>
+
+<div class="card">
+<div class="card-header" onclick="toggleCard(this)">
+  <span class="arrow">&#9654;</span>
+  <h3>5. 復盤的核心心法</h3>
+  <span class="tag tag-red">最重要</span>
+</div>
+<div class="card-body">
+<h4>區分「好的虧損」vs「壞的虧損」</h4>
+<table>
+<thead>
+<tr><th>好的虧損</th><th>壞的虧損</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td>按計劃執行，但市場走反</td>
+  <td>沒有計劃就入場</td>
+</tr>
+<tr>
+  <td>止損設在合理位置，被觸發</td>
+  <td>沒設止損，或移動止損往虧損方向</td>
+</tr>
+<tr>
+  <td>倉位大小合理，虧損在預期內</td>
+  <td>倉位太大，一筆虧掉太多</td>
+</tr>
+<tr>
+  <td>等待信號確認後入場</td>
+  <td>衝動入場、追高殺低</td>
+</tr>
+<tr>
+  <td>情緒穩定，接受結果</td>
+  <td>報復性交易、情緒化操作</td>
+</tr>
+</tbody>
+</table>
+
+<div class="principle-box success">
+  <strong>正確的虧損不需要自責。</strong>如果你按照計劃執行，止損被觸發了，那只是機率在運作。長期來看，正確的虧損加上正確的獲利 = 持續盈利。
+</div>
+
+<div class="principle-box warning">
+  <strong>真正需要自責和改善的：</strong>違反自己的規則。每一次違反規則都要認真對待，找出原因，設定防護措施。
+</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 7: 互動測驗 -->
+<!-- ============================================================ -->
+<div id="quiz" class="tab-content">
+<h2>互動測驗 + 情境模擬</h2>
+<p>以下 20 題測試你對交易策略和風險管理的理解。每題選擇後會顯示解析。</p>
+
+<div class="quiz-container" id="quizContainer"></div>
+
+<div class="quiz-score" id="quizScore" style="display:none;">
+  <div class="score-num" id="scoreNum">0</div>
+  <div class="score-label">/ 20 正確</div>
+  <p id="scoreMsg" style="margin-top:12px; color: var(--text2);"></p>
+  <button onclick="resetQuiz()" style="margin-top:16px; padding:10px 24px; background:var(--blue); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;">重新測驗</button>
+</div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+// Tab navigation
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Card toggle
+function toggleCard(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// Quiz data
+const quizData = [
+  {
+    q: "台灣時間 21:35，美股剛開盤 5 分鐘，你的觀察清單上有一檔股票跳空高開 3%。你應該？",
+    options: ["立刻追多，趁熱度還在", "等待 Opening Range 建立完成（22:00 後），再判斷是否入場", "做空它，因為 gap 一定回補", "全倉買入，這是天大的機會"],
+    correct: 1,
+    explain: "開盤前 30 分鐘（21:30-22:00）是 Opening Range 建立期間，假突破最多。正確做法是觀察不操作，等 OR 建立後再根據策略決定。"
+  },
+  {
+    q: "你的帳戶有 $20,000，使用 1% 固定風險法。入場價 $100，止損設在 $96。你最多可以買幾股？",
+    options: ["200 股", "50 股", "100 股", "500 股"],
+    correct: 1,
+    explain: "風險金額 = $20,000 x 1% = $200。止損距離 = $100 - $96 = $4。倉位 = $200 / $4 = 50 股。"
+  },
+  {
+    q: "你今天已經連虧 3 筆，每筆都按計劃執行且止損。現在看到一個「完美的入場機會」。你應該？",
+    options: ["入場，因為這次信號很強", "加大倉位入場，要把虧損賺回來", "強制停止今日交易，明天再來", "用一半倉位試試"],
+    correct: 2,
+    explain: "連虧 3 筆 = 強制停止今日交易。這是硬規則，不管機會多好。連虧後判斷力下降，情緒可能已經被影響。明天重新開始，倉位減半。"
+  },
+  {
+    q: "現在是週三 22:00，ISM 製造業數據即將在 22:00 公布。你持有 BTC 多單。數據出來後 BTC 瞬間下跌 2%，然後又彈回。你應該？",
+    options: ["馬上止損出場", "加倉做多，因為已經彈回了", "等待 15 分鐘觀察真實方向", "轉做空"],
+    correct: 2,
+    explain: "數據公布後的第一個反應常常是假的（stop hunt）。正確做法是等 15 分鐘，讓市場消化數據，然後判斷真實方向。不要在數據出來的瞬間做決策。"
+  },
+  {
+    q: "你使用 5x 槓桿做多 BTC，保證金 $2,000（倉位 $10,000）。BTC 下跌多少百分比你就爆倉？",
+    options: ["5%", "10%", "20%", "50%"],
+    correct: 2,
+    explain: "5x 槓桿的爆倉距離 = 100% / 5 = 20%。這代表 BTC 下跌 20% 你就虧光全部保證金。所以 5x 槓桿必須設在 20% 以內的止損。"
+  },
+  {
+    q: "你的交易紀錄顯示：本月 30 筆交易，勝率 60%，但月底虧損。最可能的原因是？",
+    options: ["運氣不好", "風報比太低（贏的時候賺太少，輸的時候虧太多）", "交易次數太少", "市場太難做"],
+    correct: 1,
+    explain: "勝率 60% 但虧損 = R:R 有問題。例如平均贏 $50 但平均虧 $100，即使贏 6 次輸 4 次：(6x$50)-(4x$100) = $300-$400 = -$100。解法：提高 R:R 到至少 1:1.5。"
+  },
+  {
+    q: "現在是週五，美股尾盤。你的期權倉位的標的物正在靠近 Max Pain 價位。你應該？",
+    options: ["加碼做多，期待最後一波拉升", "不跟 Max Pain 作對，考慮減倉或平倉", "做空它，Max Pain 只是理論", "不管它，週末再看"],
+    correct: 1,
+    explain: "期權到期日，Max Pain（讓最多期權買方虧損的價位）有強大引力。不要在到期日跟 Max Pain 反方向操作。如果持倉方向與 Max Pain 相反，考慮減倉。"
+  },
+  {
+    q: "你在做多後，股價緩慢下跌接近你的止損位。你心想「再給它一點空間」。正確做法是？",
+    options: ["把止損往下移 2%，給更多空間", "取消止損，改用心理止損", "維持原始止損不動，如果被觸發就接受", "加倉攤平，降低持倉成本"],
+    correct: 2,
+    explain: "止損設好就不要動。「再給它一點空間」是最常見的破產藉口。如果覺得止損太近，那是入場時的計算問題，下次改善。這次遵守紀律。"
+  },
+  {
+    q: "週一開盤，上週五美股大跌 3%。今天開盤你應該？",
+    options: ["立刻做空，趨勢已經反轉", "立刻抄底做多，跌這麼多一定反彈", "不重倉，觀察今日方向是否確認週一定調", "全倉做空加 10x 槓桿"],
+    correct: 2,
+    explain: "週一是定調日，通常波動較小。不要在週一重倉。等方向確認後再在週二/三建倉。週一的 gap 也容易回補。正確做法是觀察為主。"
+  },
+  {
+    q: "你的 BTC 多單已獲利 +2R，趨勢依然向上。你想加倉。使用金字塔法，第二筆應該是？",
+    options: ["加倍（200% 第一筆）", "等量（100% 第一筆）", "減量（約 60% 第一筆）", "看心情決定"],
+    correct: 2,
+    explain: "金字塔法：第一筆 50%，第二筆 30%，第三筆 20%。第二筆約為第一筆的 60%（30/50）。每次加倉量遞減，確保平均成本不會被拉高太多。"
+  },
+  {
+    q: "Funding Rate 為 +0.08%/8h（極正），同時 OI 創新高。這代表？",
+    options: ["繼續做多，動能很強", "多頭過於擁擠，注意回調風險", "做空的好時機", "跟資金費率無關，不用管"],
+    correct: 1,
+    explain: "極正的 Funding Rate（>0.05%/8h）代表多頭過擠。很多人做多且願意付費維持。這通常是回調的前兆（不是一定，但要警覺）。不是立刻做空的信號，但要注意風險。"
+  },
+  {
+    q: "你今天工作壓力很大，下班後感到焦慮和疲倦。打開交易軟體看到「好的機會」。你應該？",
+    options: ["小倉位試試，不會虧太多", "正常交易，工作歸工作交易歸交易", "不交易，情緒狀態不適合做決策", "加大倉位，賺錢可以紓壓"],
+    correct: 2,
+    explain: "心態檢查是行前準備的最後一步。疲倦+焦慮 = 判斷力下降。「好的機會」在這種狀態下很可能是你的焦慮在製造幻覺。市場明天還在，今天休息。"
+  },
+  {
+    q: "你的週復盤顯示：本週 8 筆交易，3 筆獲利 +5R，5 筆虧損 -5R。最需要改善什麼？",
+    options: ["提高勝率", "減少交易筆數", "兩個問題差不多大", "其實表現不錯，不需改善"],
+    correct: 0,
+    explain: "勝率 37.5%（3/8）且淨 R = 0。如果能把勝率提升到 50%（4/8），假設同樣 R:R，表現會好很多。但也要檢查那 5 筆虧損是否有衝動交易或規則違反。"
+  },
+  {
+    q: "VWAP 策略中，價格整天都在 VWAP 之下。下午出現一根大陽線站上 VWAP。你應該？",
+    options: ["立刻做多，方向反轉了", "等待價格回測 VWAP，在 VWAP 附近有反轉確認後入場做多", "做空，因為日內趨勢是空", "什麼都不做，信號衝突"],
+    correct: 1,
+    explain: "站上 VWAP 可能代表日內方向轉多，但最安全的入場是等回測。直接追突破風險高。等價格回測 VWAP 後有反轉 K 線再入場，止損設在 VWAP 下方。"
+  },
+  {
+    q: "你計算出一筆交易的 R:R 是 1:0.8（風險 $100，潛在獲利 $80）。你應該？",
+    options: ["入場，因為勝率很高", "不做這筆交易，R:R 低於 1:1.5 最低標準", "加大倉位補償低 R:R", "調整止損讓 R:R 看起來更好"],
+    correct: 1,
+    explain: "R:R < 1:1.5 = 不做。即使勝率高，長期來看低 R:R 會侵蝕獲利。不要為了做交易而降低標準。調整止損讓 R:R 看起來更好 = 自欺欺人（止損要基於技術位）。"
+  },
+  {
+    q: "現在是台灣時間 20:25，5 分鐘後有 CPI 數據公布。你目前空手。最正確的做法是？",
+    options: ["根據預期猜方向，趕快建倉", "不建倉，等數據出來後 15 分鐘再評估", "買多賣空同時建倉（對沖）", "小倉位 50x 槓桿賭方向"],
+    correct: 1,
+    explain: "重大數據前 30 分鐘不開新倉。CPI 是最高影響等級的數據，結果完全不可預測。等數據消化 15 分鐘後，確認真實方向再入場。"
+  },
+  {
+    q: "你的月度復盤顯示：交易筆數從上月 15 筆增加到本月 45 筆，但獲利反而減少。最可能的問題是？",
+    options: ["市場變難了", "過度交易（trading too much）", "策略失效需要換", "需要更多槓桿"],
+    correct: 1,
+    explain: "交易筆數暴增 3 倍但獲利下降 = 過度交易的典型症狀。可能原因：想要「賺回來」、無聊而交易、降低了入場標準。解法：回到每週 3-5 筆精選交易。"
+  },
+  {
+    q: "你正在做 Opening Range Breakout 策略。OR 建立後，價格向上突破 OR 高點但成交量比平均還低。你應該？",
+    options: ["入場做多，突破就是突破", "不入場，缺乏成交量確認的突破容易是假突破", "做空，這是假突破信號", "等成交量放大後追入"],
+    correct: 1,
+    explain: "ORB 策略的過濾條件之一是成交量確認（> 前 5 根平均 1.5 倍）。沒有量的突破 = 假突破機率高。不入場，等待更好的機會。"
+  },
+  {
+    q: "你昨天虧了 4%（超過日最大虧損限制 3%），但沒有停止交易。今天的復盤中，這屬於什麼類型的錯誤？",
+    options: ["好的虧損（按計劃執行）", "壞的虧損（違反規則）", "普通虧損（市場波動）", "不算錯誤"],
+    correct: 1,
+    explain: "超過日最大虧損限制後繼續交易 = 違反規則 = 壞的虧損。這比任何單筆虧損都更嚴重，因為它代表紀律崩壞。必須找出為什麼沒有執行停止規則，並設定防護措施。"
+  },
+  {
+    q: "週二 22:00，SuperTrend 日線做多、4H 做多、1H 剛翻多。ISM 數據超預期，BTC 放量突破。這是什麼類型的機會？",
+    options: ["區間交易機會", "觀望不操作", "高確信度趨勢交易（三時框同向 + 催化劑 + 量能）", "做空反轉機會"],
+    correct: 2,
+    explain: "三時框 SuperTrend 同向（全部做多）+ 催化劑（ISM 超預期）+ 量能確認 + 週二主攻日 = 高確信度做多機會。這種時候可以用正常或稍大的倉位。但依然要設止損！"
+  }
+];
+
+// Quiz rendering
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.id = 'q' + idx;
+    let optionsHtml = '<ul class="quiz-options">';
+    item.options.forEach((opt, oi) => {
+      optionsHtml += `<li onclick="selectAnswer(${idx}, ${oi})" data-idx="${oi}">${String.fromCharCode(65+oi)}. ${opt}</li>`;
+    });
+    optionsHtml += '</ul>';
+    div.innerHTML = `<h4>Q${idx+1}. ${item.q}</h4>${optionsHtml}<div class="quiz-explanation" id="exp${idx}">${item.explain}</div>`;
+    container.appendChild(div);
+  });
+}
+
+let answered = 0;
+let score = 0;
+
+function selectAnswer(qIdx, aIdx) {
+  const qDiv = document.getElementById('q' + qIdx);
+  const options = qDiv.querySelectorAll('.quiz-options li');
+  if (options[0].classList.contains('disabled')) return;
+
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === quizData[qIdx].correct) opt.classList.add('correct');
+    if (i === aIdx && i !== quizData[qIdx].correct) opt.classList.add('wrong');
+  });
+
+  document.getElementById('exp' + qIdx).style.display = 'block';
+
+  if (aIdx === quizData[qIdx].correct) score++;
+  answered++;
+
+  if (answered === quizData.length) {
+    const scoreDiv = document.getElementById('quizScore');
+    scoreDiv.style.display = 'block';
+    document.getElementById('scoreNum').textContent = score;
+    const pct = Math.round(score / quizData.length * 100);
+    let msg = '';
+    if (pct >= 90) msg = '出色！你對交易策略和風險管理有深刻的理解。';
+    else if (pct >= 70) msg = '不錯！大部分概念掌握得好，複習錯題可以更進步。';
+    else if (pct >= 50) msg = '及格，但建議重新閱讀前六個 Tab 的內容，特別是風險管理。';
+    else msg = '建議從頭到尾仔細閱讀所有 Tab，然後再重新測驗。';
+    document.getElementById('scoreMsg').textContent = msg;
+  }
+}
+
+function resetQuiz() {
+  answered = 0;
+  score = 0;
+  document.getElementById('quizScore').style.display = 'none';
+  renderQuiz();
+}
+
+// Initialize
+renderQuiz();
+</script>
+</body>
+</html>
