@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>期權與波動率交易 — 完整學習指南</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #ffedd5;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+header h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
+header .sub { color: var(--text3); font-size: 14px; }
+.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-weight: 500; font-size: 14px; }
+.back-link:hover { text-decoration: underline; }
+
+/* Navigation */
+.nav { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+.nav-btn {
+  padding: 10px 18px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg2); color: var(--text2); cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: all .2s;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
+
+/* Sections */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card-header {
+  padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: background .15s;
+}
+.card-header:hover { background: var(--bg3); }
+.card-header .arrow { color: var(--text3); transition: transform .2s; font-size: 12px; }
+.card-header.open .arrow { transform: rotate(90deg); }
+.card-header h3 { font-size: 16px; font-weight: 600; flex: 1; margin: 0; }
+.card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
+.card-body.open { display: block; }
+
+/* Typography */
+h2 { font-size: 22px; font-weight: 700; margin: 32px 0 16px; color: var(--blue); }
+h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
+p { margin-bottom: 12px; color: var(--text2); }
+ul, ol { margin: 12px 0 12px 24px; color: var(--text2); }
+li { margin-bottom: 6px; }
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3); padding: 2px 6px; border-radius: 4px;
+  font-size: 13px; color: var(--purple);
+}
+.highlight {
+  background: var(--blue-l); border-left: 4px solid var(--blue);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0;
+}
+.highlight.green { background: var(--green-l); border-color: var(--green); }
+.highlight.red { background: var(--red-l); border-color: var(--red); }
+.highlight.purple { background: var(--purple-l); border-color: var(--purple); }
+.highlight.orange { background: var(--orange-l); border-color: var(--orange); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+th { background: var(--bg3); font-weight: 600; color: var(--text); }
+td { color: var(--text2); }
+tr:nth-child(even) { background: var(--bg3); }
+
+/* SVG Container */
+.svg-container { margin: 20px 0; text-align: center; }
+.svg-container svg { max-width: 100%; height: auto; }
+
+/* Quiz */
+.quiz-section { margin-top: 24px; }
+.quiz-q {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.quiz-q h4 { margin-top: 0; color: var(--text); }
+.quiz-q .options { margin: 12px 0; }
+.quiz-q label { display: block; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.quiz-q label:hover { background: var(--bg3); }
+.quiz-q input[type="radio"] { margin-right: 8px; }
+.quiz-q .explanation {
+  display: none; margin-top: 12px; padding: 12px 16px;
+  border-radius: 8px; font-size: 14px;
+}
+.quiz-q .explanation.correct { display: block; background: var(--green-l); color: #166534; }
+.quiz-q .explanation.wrong { display: block; background: var(--red-l); color: #991b1b; }
+.quiz-btn {
+  padding: 10px 24px; border-radius: 8px; border: none;
+  background: var(--blue); color: #fff; cursor: pointer;
+  font-size: 14px; font-weight: 600; transition: background .2s;
+}
+.quiz-btn:hover { background: #1d4ed8; }
+.score-display {
+  font-size: 18px; font-weight: 700; color: var(--blue);
+  margin-top: 16px; padding: 16px; background: var(--blue-l);
+  border-radius: var(--r); text-align: center; display: none;
+}
+
+/* Tag */
+.tag {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 12px; font-weight: 600; margin-right: 6px;
+}
+.tag.bullish { background: var(--green-l); color: var(--green); }
+.tag.bearish { background: var(--red-l); color: var(--red); }
+.tag.neutral { background: var(--orange-l); color: var(--orange); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<header>
+  <h1>期權與波動率交易</h1>
+  <p class="sub">Options Greeks, Flow 解讀, IV Skew, GEX, 波動率策略 | 完整學習指南</p>
+</header>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showTab(0)">期權基礎</button>
+  <button class="nav-btn" onclick="showTab(1)">Options Flow 解讀</button>
+  <button class="nav-btn" onclick="showTab(2)">Max Pain + IV Skew + GEX</button>
+  <button class="nav-btn" onclick="showTab(3)">波動率交易</button>
+  <button class="nav-btn" onclick="showTab(4)">期權策略實戰</button>
+  <button class="nav-btn" onclick="showTab(5)">互動測驗</button>
+</div>
+
+<!-- ==================== TAB 1: 期權基礎 ==================== -->
+<div class="tab-content active" id="tab0">
+<h2>期權基礎</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Call / Put 基礎概念</h3>
+  </div>
+  <div class="card-body">
+    <table>
+      <tr><th>操作</th><th>中文</th><th>方向觀點</th><th>最大虧損</th><th>最大獲利</th></tr>
+      <tr><td>Buy Call</td><td>買入買權</td><td><span class="tag bullish">看漲</span></td><td>權利金</td><td>理論無限</td></tr>
+      <tr><td>Sell Call</td><td>賣出買權</td><td><span class="tag bearish">看跌/收租</span></td><td>理論無限</td><td>權利金</td></tr>
+      <tr><td>Buy Put</td><td>買入賣權</td><td><span class="tag bearish">看跌/避險</span></td><td>權利金</td><td>Strike - Premium</td></tr>
+      <tr><td>Sell Put</td><td>賣出賣權</td><td><span class="tag bullish">看漲/接貨</span></td><td>Strike x 100</td><td>權利金</td></tr>
+    </table>
+
+    <h4>核心術語</h4>
+    <ul>
+      <li><strong>Call = 買權（看漲權利）</strong>：持有者有權在到期前以 Strike Price 買入標的</li>
+      <li><strong>Put = 賣權（看跌權利）</strong>：持有者有權在到期前以 Strike Price 賣出標的</li>
+      <li><strong>Premium = 權利金</strong>：買方付出的代價，也是賣方的收入</li>
+      <li><strong>Strike = 行使價</strong>：約定的交易價格</li>
+      <li><strong>Expiry = 到期日</strong>：期權合約的最後有效日</li>
+      <li><strong>Moneyness</strong>：ITM（價內）/ ATM（價平）/ OTM（價外）</li>
+    </ul>
+
+    <h4>內在價值 vs 時間價值</h4>
+    <div class="highlight">
+      <p><code>Option Premium = 內在價值 + 時間價值</code></p>
+      <ul>
+        <li><strong>內在價值 (Intrinsic Value)</strong>：期權立即行使的收益。Call: max(Stock - Strike, 0)；Put: max(Strike - Stock, 0)</li>
+        <li><strong>時間價值 (Extrinsic / Time Value)</strong>：剩餘時間帶來的不確定性溢價。到期時歸零（Theta decay）</li>
+        <li><strong>OTM 期權只有時間價值</strong>：內在價值為 0，全部 premium 都是時間價值</li>
+      </ul>
+    </div>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:600px" viewBox="0 0 600 320">
+        <rect width="600" height="320" fill="#f8fafc" rx="8"/>
+        <text x="300" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Call / Put Payoff Diagram</text>
+        <!-- Axes for Call -->
+        <line x1="50" y1="160" x2="270" y2="160" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="140" y1="60" x2="140" y2="260" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="160" y="275" font-size="11" fill="#64748b">Stock Price</text>
+        <text x="55" y="75" font-size="11" fill="#64748b">P/L</text>
+        <text x="140" y="290" font-size="12" font-weight="600" fill="#0f172a">Buy Call Payoff</text>
+        <!-- Buy Call line -->
+        <polyline points="60,190 140,190 240,90" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <!-- Break-even -->
+        <line x1="160" y1="155" x2="160" y2="165" stroke="#7c3aed" stroke-width="2"/>
+        <text x="165" y="150" font-size="10" fill="#7c3aed">Break-even</text>
+        <text x="135" y="175" font-size="10" fill="#64748b">K</text>
+        <line x1="60" y1="190" x2="140" y2="190" stroke="#dc2626" stroke-width="1" stroke-dasharray="4"/>
+        <text x="70" y="205" font-size="10" fill="#dc2626">-Premium</text>
+
+        <!-- Axes for Put -->
+        <line x1="330" y1="160" x2="550" y2="160" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="430" y1="60" x2="430" y2="260" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="450" y="275" font-size="11" fill="#64748b">Stock Price</text>
+        <text x="335" y="75" font-size="11" fill="#64748b">P/L</text>
+        <text x="430" y="290" font-size="12" font-weight="600" fill="#0f172a">Buy Put Payoff</text>
+        <!-- Buy Put line -->
+        <polyline points="340,80 430,190 540,190" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+        <text x="425" y="175" font-size="10" fill="#64748b">K</text>
+        <line x1="430" y1="190" x2="540" y2="190" stroke="#dc2626" stroke-width="1" stroke-dasharray="4"/>
+        <text x="460" y="205" font-size="10" fill="#dc2626">-Premium</text>
+        <line x1="410" y1="155" x2="410" y2="165" stroke="#7c3aed" stroke-width="2"/>
+        <text x="370" y="150" font-size="10" fill="#7c3aed">Break-even</text>
+        <text x="52" y="155" font-size="10" fill="#64748b">0</text>
+        <text x="332" y="155" font-size="10" fill="#64748b">0</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Greeks 入門 — Delta, Gamma, Theta, Vega</h3>
+  </div>
+  <div class="card-body">
+    <h4>四大 Greeks 概覽</h4>
+    <table>
+      <tr><th>Greek</th><th>衡量</th><th>Call</th><th>Put</th><th>直覺理解</th></tr>
+      <tr><td><strong>Delta (&#916;)</strong></td><td>標的價格變動 $1 對 Premium 的影響</td><td>0 ~ +1</td><td>-1 ~ 0</td><td>方向敏感度 / 到期概率近似</td></tr>
+      <tr><td><strong>Gamma (&#915;)</strong></td><td>標的價格變動 $1 對 Delta 的影響</td><td>正值</td><td>正值</td><td>加速度 / ATM 最大</td></tr>
+      <tr><td><strong>Theta (&#920;)</strong></td><td>每天時間流逝對 Premium 的影響</td><td>負值(買)</td><td>負值(買)</td><td>時間侵蝕 / 賣方的朋友</td></tr>
+      <tr><td><strong>Vega (V)</strong></td><td>IV 變動 1% 對 Premium 的影響</td><td>正值(買)</td><td>正值(買)</td><td>波動率敏感度</td></tr>
+    </table>
+
+    <h4>Delta 深入</h4>
+    <div class="highlight green">
+      <ul>
+        <li><strong>Delta 0.5</strong> = ATM Call（50% 到期價內機率近似）</li>
+        <li><strong>Delta 0.8</strong> = 深度 ITM，行為接近股票</li>
+        <li><strong>Delta 0.2</strong> = 深度 OTM，便宜但低概率</li>
+        <li><strong>Position Delta</strong> = 所有持倉 Delta 加總 = 淨方向暴露</li>
+      </ul>
+    </div>
+
+    <h4>Gamma 深入</h4>
+    <ul>
+      <li>Gamma 在 ATM + 近到期 時最大</li>
+      <li>Long Gamma = 持有期權買方 = 希望大波動</li>
+      <li>Short Gamma = 期權賣方 = 希望不動（被 Gamma risk 威脅）</li>
+      <li>0DTE 期權的 Gamma 極端大 — 小幅價格變動可以讓 Delta 從 0.2 跳到 0.8</li>
+    </ul>
+
+    <h4>Theta 深入</h4>
+    <div class="highlight orange">
+      <ul>
+        <li><strong>Theta Decay 不是線性的</strong> — 最後 30 天加速，最後 7 天極速</li>
+        <li>ATM 期權的 Theta 最大（因為時間價值最高）</li>
+        <li>賣方策略本質 = 收取 Theta，承擔 Gamma 風險</li>
+        <li>週末也消耗 Theta（雖然市場不交易），但通常週五已 price in</li>
+      </ul>
+    </div>
+
+    <h4>Vega 深入</h4>
+    <ul>
+      <li>Vega 在 ATM + 長到期 時最大</li>
+      <li>Long Vega = 持有期權買方 = 賺 IV 上升</li>
+      <li>Short Vega = 期權賣方 = 賺 IV 下降（IV crush）</li>
+      <li>財報前 IV 膨脹 → 財報後 IV 崩塌 = Vega 驅動的盈虧</li>
+    </ul>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:600px" viewBox="0 0 600 280">
+        <rect width="600" height="280" fill="#f8fafc" rx="8"/>
+        <text x="300" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Greeks 隨 Moneyness 變化</text>
+        <!-- X-axis -->
+        <line x1="60" y1="220" x2="540" y2="220" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="300" y="250" text-anchor="middle" font-size="11" fill="#64748b">Stock Price (OTM &larr; ATM &rarr; ITM)</text>
+        <!-- ATM line -->
+        <line x1="300" y1="40" x2="300" y2="220" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="300" y="265" text-anchor="middle" font-size="10" fill="#64748b">ATM (Strike)</text>
+        <!-- Delta curve -->
+        <path d="M 80,210 Q 180,200 240,170 Q 280,140 300,110 Q 320,80 360,60 Q 420,45 540,40" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <text x="545" y="42" font-size="10" fill="#2563eb">Delta</text>
+        <!-- Gamma curve (bell shape at ATM) -->
+        <path d="M 80,210 Q 160,205 220,180 Q 260,140 300,80 Q 340,140 380,180 Q 440,205 540,210" fill="none" stroke="#16a34a" stroke-width="2"/>
+        <text x="305" y="72" font-size="10" fill="#16a34a">Gamma</text>
+        <!-- Theta curve (inverted bell, negative) -->
+        <path d="M 80,225 Q 160,228 220,235 Q 260,250 300,260 Q 340,250 380,235 Q 440,228 540,225" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5"/>
+        <text x="305" y="272" font-size="10" fill="#dc2626">Theta (neg)</text>
+        <!-- Legend -->
+        <rect x="80" y="38" width="15" height="3" fill="#2563eb"/>
+        <text x="100" y="42" font-size="10" fill="#0f172a">Delta (0→1)</text>
+        <rect x="180" y="38" width="15" height="3" fill="#16a34a"/>
+        <text x="200" y="42" font-size="10" fill="#0f172a">Gamma (ATM peak)</text>
+        <rect x="310" y="38" width="15" height="3" fill="#dc2626"/>
+        <text x="330" y="42" font-size="10" fill="#0f172a">|Theta| (ATM peak)</text>
+      </svg>
+    </div>
+
+    <h4>Greeks 互動關係</h4>
+    <table>
+      <tr><th>關係</th><th>說明</th><th>實戰意義</th></tr>
+      <tr><td>Long Gamma = Short Theta</td><td>買方享受 Gamma 但承擔 Theta 衰減</td><td>需要大幅波動才能彌補時間損耗</td></tr>
+      <tr><td>Short Gamma = Long Theta</td><td>賣方收 Theta 但承擔 Gamma 風險</td><td>盤整環境最佳，大幅波動會虧損</td></tr>
+      <tr><td>Long Vega + Long Gamma</td><td>買入期權 = 做多波動率</td><td>適合低 IV 環境 + 預期波動擴大</td></tr>
+      <tr><td>Short Vega + Short Gamma</td><td>賣出期權 = 做空波動率</td><td>適合高 IV 環境 + 預期回歸平靜</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>期權定價基礎 — Black-Scholes 直覺</h3>
+  </div>
+  <div class="card-body">
+    <h4>影響期權價格的 5 個因素</h4>
+    <table>
+      <tr><th>因素</th><th>Call 影響</th><th>Put 影響</th><th>對應 Greek</th></tr>
+      <tr><td>標的價格 &#8593;</td><td>&#8593;</td><td>&#8595;</td><td>Delta</td></tr>
+      <tr><td>波動率 &#8593;</td><td>&#8593;</td><td>&#8593;</td><td>Vega</td></tr>
+      <tr><td>時間流逝</td><td>&#8595;</td><td>&#8595;</td><td>Theta</td></tr>
+      <tr><td>行使價 &#8593;</td><td>&#8595;</td><td>&#8593;</td><td>-</td></tr>
+      <tr><td>利率 &#8593;</td><td>&#8593;</td><td>&#8595;</td><td>Rho</td></tr>
+    </table>
+
+    <div class="highlight purple">
+      <strong>實戰重點</strong>：不需要記住 Black-Scholes 公式，但要理解：
+      <ul>
+        <li>期權價格 = f(標的價格, 波動率, 時間, 行使價, 利率)</li>
+        <li>波動率是唯一無法直接觀察的因素 → 這就是 IV 的由來</li>
+        <li>IV 本質是「市場對未來波動的預期」被倒推出來的數字</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: Options Flow 解讀 ==================== -->
+<div class="tab-content" id="tab1">
+<h2>Options Flow 解讀</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>異常期權活動 — Sweep / Block / Unusual</h3>
+  </div>
+  <div class="card-body">
+    <h4>三種關鍵大單類型</h4>
+    <table>
+      <tr><th>類型</th><th>定義</th><th>含義</th><th>急迫性</th></tr>
+      <tr><td><strong>大單 (Block)</strong></td><td>單筆 &gt; $1M 的期權成交</td><td>機構場外協商交易</td><td>中</td></tr>
+      <tr><td><strong>Sweep</strong></td><td>跨多個交易所同時買入同一 strike</td><td>急迫性強，不計成本掃貨</td><td>極高</td></tr>
+      <tr><td><strong>Unusual Activity</strong></td><td>成交量 &gt; 5x Open Interest</td><td>新的大額建倉</td><td>高</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>為什麼期權 flow 比股票 flow 更有資訊量？</strong>
+      <ul>
+        <li><strong>槓桿效應</strong>：$100K 期權 = 控制 $1-5M 股票，所以期權上的 $1M 代表更強的 conviction</li>
+        <li><strong>時間限制</strong>：期權有到期日，代表交易者對 timing 有信心</li>
+        <li><strong>透明度</strong>：大額期權必須在公開市場成交，不像股票可以暗池（Dark Pool）交易</li>
+      </ul>
+    </div>
+
+    <h4>Sweep vs Block 的差異</h4>
+    <ul>
+      <li><strong>Sweep</strong>：在公開市場掃貨，表示不願等待更好價格 = 極度急迫</li>
+      <li><strong>Block</strong>：場外協商後一次過戶 = 機構行為，可能是避險也可能是方向性</li>
+    </ul>
+
+    <div class="highlight orange">
+      <strong>注意</strong>：不是所有大單都是方向性交易。機構常用期權做 hedge（避險），需要結合其他資訊判斷。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>判讀方向 — Premium vs Volume</h3>
+  </div>
+  <div class="card-body">
+    <h4>核心原則：看 Premium Paid，不是 Volume</h4>
+    <div class="highlight">
+      <p>大量 premium 買入 Call = 真看多<br>
+      大量 premium 買入 Put = 真看空<br>
+      高 volume 但不知道是 buy 還是 sell = 無法判斷方向</p>
+    </div>
+
+    <h4>買賣方判斷</h4>
+    <table>
+      <tr><th>條件</th><th>判定</th><th>方向</th></tr>
+      <tr><td>Trade at Ask (成交在賣價)</td><td>買方主動買入</td><td>Call=看多, Put=看空</td></tr>
+      <tr><td>Trade at Bid (成交在買價)</td><td>賣方主動賣出</td><td>Call=看空, Put=看多</td></tr>
+      <tr><td>Trade between Bid/Ask</td><td>不確定</td><td>需要更多context</td></tr>
+    </table>
+
+    <h4>Open Interest (OI) 變化判讀</h4>
+    <ul>
+      <li><strong>Volume &gt; OI 且次日 OI 增加</strong>：新建倉（新的方向性觀點）</li>
+      <li><strong>Volume &gt; OI 且次日 OI 減少</strong>：平倉（獲利了結或停損）</li>
+      <li><strong>持續 OI 堆積在某 strike</strong>：該 strike 成為磁吸點（magnet）</li>
+    </ul>
+
+    <div class="highlight red">
+      <strong>常見陷阱</strong>：Sell Call 也會產生高 volume，但方向完全相反！永遠要確認是 Buy to Open 還是 Sell to Open。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>實戰案例 + Dark Pool 配合</h3>
+  </div>
+  <div class="card-body">
+    <h4>實戰案例解讀</h4>
+    <table>
+      <tr><th>情境</th><th>解讀</th><th>信心等級</th></tr>
+      <tr><td>NVDA $150 Call Sweep at Ask, $3M, 2 week expiry, Vol > 10x OI</td><td>強烈看多 — Sweep + 新建倉 + 大額 + 短期</td><td><span class="tag bullish">極高</span></td></tr>
+      <tr><td>SPY $400 Put Block, $5M, 3 month expiry</td><td>可能是避險 — Block (場外) + 較長期 = 可能是 portfolio hedge</td><td><span class="tag neutral">中等</span></td></tr>
+      <tr><td>TSLA $300 Call at Bid, $2M, Vol = OI</td><td>賣出 Call — at Bid = 主動賣出 + Vol=OI = 可能在平倉</td><td><span class="tag bearish">看空</span></td></tr>
+      <tr><td>AAPL $180 Put Sweep at Ask, $4M, weekly expiry</td><td>強烈看空 — Put Sweep + 本週到期 = 預期快速下跌</td><td><span class="tag bearish">極高</span></td></tr>
+    </table>
+
+    <h4>Dark Pool Prints 配合期權 Flow</h4>
+    <ul>
+      <li><strong>Dark Pool 大額買入 + Call Sweep</strong>：機構同時在股票和期權市場建多頭 = 極強信號</li>
+      <li><strong>Dark Pool 大額賣出 + Put Sweep</strong>：機構出貨 + 期權避險 = 強看空</li>
+      <li><strong>只有期權 Flow 沒有 Dark Pool 配合</strong>：可能只是單一交易者的觀點，謹慎看待</li>
+    </ul>
+
+    <h4>Options Flow 工具推薦</h4>
+    <table>
+      <tr><th>工具</th><th>特色</th><th>費用</th></tr>
+      <tr><td>Unusual Whales</td><td>Options Flow, GEX, Dark Pool, 議員追蹤</td><td>$$$</td></tr>
+      <tr><td>Barchart</td><td>Options Flow、PCR、基本 OI 分析</td><td>免費/付費</td></tr>
+      <tr><td>FlowAlgo</td><td>即時 Flow 推送、Block/Sweep 分類</td><td>$$</td></tr>
+      <tr><td>Cheddar Flow</td><td>簡潔介面、專注大單</td><td>$$</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Put/Call Ratio (PCR) 情緒指標</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義與解讀</h4>
+    <p><code>PCR = Put Volume / Call Volume</code></p>
+
+    <table>
+      <tr><th>PCR 值</th><th>含義</th><th>逆向信號</th></tr>
+      <tr><td>&gt; 1.0</td><td>Put 成交大於 Call = 市場恐懼</td><td><span class="tag bullish">逆向看多</span></td></tr>
+      <tr><td>0.7 - 1.0</td><td>正常範圍</td><td>中性</td></tr>
+      <tr><td>&lt; 0.5</td><td>Call 遠多於 Put = 市場過度樂觀</td><td><span class="tag bearish">逆向看空</span></td></tr>
+    </table>
+
+    <div class="highlight orange">
+      <strong>重要區分</strong>：
+      <ul>
+        <li><strong>Equity PCR</strong>：個股期權 — 反映散戶情緒，適合逆向操作</li>
+        <li><strong>Index PCR</strong>：指數期權 — 包含大量機構避險（買 SPX Put），不適合逆向解讀</li>
+        <li>永遠看 <strong>Equity PCR</strong> 做情緒判斷！</li>
+      </ul>
+    </div>
+
+    <h4>CBOE PCR 歷史極值</h4>
+    <ul>
+      <li>2020/3 COVID 崩盤：PCR 飆升至 1.8+ → 絕佳買點</li>
+      <li>2021/1 GME 狂潮：PCR 跌至 0.3 → 隨後大修正</li>
+      <li>2022/10 熊市底部：PCR 再度衝高 → 開啟新一輪漲勢</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: Max Pain + IV Skew + GEX ==================== -->
+<div class="tab-content" id="tab2">
+<h2>Max Pain + IV Skew + GEX</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Max Pain（最大痛點）</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p>Max Pain = 使最多期權合約到期歸零（worthless）的價格。在該價格，期權買方的總虧損最大，也就是期權賣方（主要是 Market Maker）的獲利最大。</p>
+
+    <h4>原理</h4>
+    <div class="highlight purple">
+      <strong>Max Pain 理論</strong>：Market Maker 作為大多數期權的對手方，有經濟動機將價格「釘」在 Max Pain 附近。雖然這是爭議性理論，但統計上確實有效，尤其在到期週。
+    </div>
+
+    <h4>有效性排序</h4>
+    <table>
+      <tr><th>到期時間</th><th>有效性</th><th>原因</th></tr>
+      <tr><td>週到期 (Weekly)</td><td><span class="tag bullish">最高</span></td><td>OI 集中，MM pin 意願最強</td></tr>
+      <tr><td>月到期 (Monthly)</td><td><span class="tag neutral">中等</span></td><td>OI 較分散</td></tr>
+      <tr><td>季到期 (Quarterly)</td><td><span class="tag bearish">較低</span></td><td>距離太遠，變數太多</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 280">
+        <rect width="560" height="280" fill="#f8fafc" rx="8"/>
+        <text x="280" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Max Pain Diagram</text>
+        <line x1="60" y1="240" x2="520" y2="240" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="240" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="280" y="265" text-anchor="middle" font-size="11" fill="#64748b">Strike Price</text>
+        <text x="25" y="140" font-size="11" fill="#64748b" transform="rotate(-90,25,140)">Total $ Loss</text>
+        <polyline points="80,220 140,210 200,190 260,160 320,120 380,80 440,50 500,30" fill="none" stroke="#2563eb" stroke-width="2"/>
+        <polyline points="80,40 140,70 200,100 260,140 320,180 380,210 440,225 500,230" fill="none" stroke="#dc2626" stroke-width="2"/>
+        <polyline points="80,130 140,140 200,145 260,150 290,148 320,150 380,145 440,138 500,130" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="6"/>
+        <line x1="290" y1="45" x2="290" y2="240" stroke="#16a34a" stroke-width="2" stroke-dasharray="4"/>
+        <text x="290" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">Max Pain</text>
+        <rect x="360" y="50" width="12" height="3" fill="#2563eb"/>
+        <text x="378" y="54" font-size="10" fill="#0f172a">Call Holder Loss</text>
+        <rect x="360" y="66" width="12" height="3" fill="#dc2626"/>
+        <text x="378" y="70" font-size="10" fill="#0f172a">Put Holder Loss</text>
+        <rect x="360" y="82" width="12" height="3" fill="#7c3aed"/>
+        <text x="378" y="86" font-size="10" fill="#0f172a">Combined (min = Max Pain)</text>
+        <text x="80" y="254" font-size="9" fill="#64748b">$140</text>
+        <text x="200" y="254" font-size="9" fill="#64748b">$150</text>
+        <text x="290" y="254" font-size="9" fill="#64748b" font-weight="600">$155</text>
+        <text x="380" y="254" font-size="9" fill="#64748b">$160</text>
+        <text x="500" y="254" font-size="9" fill="#64748b">$170</text>
+      </svg>
+    </div>
+
+    <h4>實戰應用</h4>
+    <ul>
+      <li>到期前 2-3 天開始觀察 Max Pain 位置</li>
+      <li>如果價格偏離 Max Pain 太遠，有向 Max Pain 回歸的傾向</li>
+      <li>重大事件（財報、FOMC）可以打破 Max Pain 引力</li>
+      <li>Max Pain 約 60% 有效 — 不可作為唯一依據</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>IV Skew + IV Term Structure</h3>
+  </div>
+  <div class="card-body">
+    <h4>三種 Skew 狀態</h4>
+    <table>
+      <tr><th>Skew 類型</th><th>特徵</th><th>市場含義</th><th>交易信號</th></tr>
+      <tr><td><strong>正常 Put Skew</strong></td><td>OTM Put IV &gt; OTM Call IV</td><td>市場怕下跌，願意付更高溢價保護下行</td><td>正常狀態，非信號</td></tr>
+      <tr><td><strong>Skew Inversion</strong></td><td>Call IV &gt; Put IV</td><td>散戶瘋狂買 Call（2021 GME 式狂熱）</td><td><span class="tag bearish">逆向看空</span></td></tr>
+      <tr><td><strong>Flat Skew</strong></td><td>Call IV ≈ Put IV</td><td>市場對方向沒有共識</td><td>等待突破</td></tr>
+    </table>
+
+    <div class="highlight red">
+      <strong>交易含義</strong>：Skew 極端 = 逆向信號。當 Put Skew 極度陡峭（恐懼極致），通常是底部附近；當 Call Skew（inversion）出現，通常是瘋狂頂部。
+    </div>
+
+    <h4>25-Delta Skew</h4>
+    <p>最常用的衡量方式：<code>25D Put IV - 25D Call IV</code></p>
+    <ul>
+      <li>正值 = 正常（Put 更貴）</li>
+      <li>負值 = Inversion（Call 更貴）= 極端樂觀</li>
+      <li>歷史百分位 &gt; 90% = 極端恐懼 = 逆向看多</li>
+    </ul>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 260">
+        <rect width="560" height="260" fill="#f8fafc" rx="8"/>
+        <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">IV Skew — Volatility Smile / Smirk</text>
+        <line x1="60" y1="210" x2="520" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="280" y="240" text-anchor="middle" font-size="11" fill="#64748b">Strike Price (OTM Put &larr; ATM &rarr; OTM Call)</text>
+        <text x="25" y="125" font-size="11" fill="#64748b" transform="rotate(-90,25,125)">Implied Vol</text>
+        <path d="M 80,70 Q 150,85 200,110 Q 260,145 290,155 Q 350,170 420,180 Q 470,185 520,190" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <path d="M 80,170 Q 150,165 200,155 Q 260,140 290,130 Q 350,110 420,85 Q 470,70 520,60" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6"/>
+        <path d="M 80,130 Q 200,128 290,127 Q 400,128 520,130" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3"/>
+        <line x1="290" y1="40" x2="290" y2="210" stroke="#16a34a" stroke-width="1" stroke-dasharray="4"/>
+        <text x="290" y="35" text-anchor="middle" font-size="10" fill="#16a34a">ATM</text>
+        <text x="100" y="248" font-size="10" fill="#64748b">Deep OTM Put</text>
+        <text x="440" y="248" font-size="10" fill="#64748b">Deep OTM Call</text>
+        <rect x="360" y="42" width="20" height="3" fill="#2563eb"/>
+        <text x="385" y="46" font-size="10" fill="#0f172a">Normal Put Skew (正常)</text>
+        <rect x="360" y="58" width="20" height="3" fill="#dc2626"/>
+        <text x="385" y="62" font-size="10" fill="#0f172a">Inverted / Call Skew (狂熱)</text>
+        <rect x="360" y="74" width="20" height="3" fill="#64748b"/>
+        <text x="385" y="78" font-size="10" fill="#0f172a">Flat Skew (無共識)</text>
+      </svg>
+    </div>
+
+    <h4>IV Term Structure（期限結構）</h4>
+    <div class="highlight">
+      <strong>定義</strong>：不同到期日的 ATM IV 排列形成的曲線。
+    </div>
+    <table>
+      <tr><th>形態</th><th>名稱</th><th>含義</th><th>交易信號</th></tr>
+      <tr><td>前端 IV &gt; 後端 IV</td><td>Backwardation（倒掛）</td><td>市場預期近期波動大 = 事件驅動</td><td>短期期權被高估，可賣 front / 買 back</td></tr>
+      <tr><td>前端 IV &lt; 後端 IV</td><td>Contango（正常）</td><td>遠期不確定性更高</td><td>正常狀態，非信號</td></tr>
+      <tr><td>整體 IV 拉平在高位</td><td>Flat &amp; Elevated</td><td>市場預期持續高波動</td><td>系統性風險，考慮避險</td></tr>
+      <tr><td>前端急劇陡峭</td><td>Event Kink</td><td>財報/FOMC 特定事件前</td><td>買跨式或等 IV Crush 後進場</td></tr>
+    </table>
+
+    <h4>Term Structure 交易策略</h4>
+    <ul>
+      <li><strong>Calendar Spread</strong>：利用 front/back IV 差異 — 賣近月高 IV，買遠月低 IV</li>
+      <li><strong>財報前</strong>：近月 IV 膨脹（Backwardation） → 財報後 IV 崩塌 = Calendar Spread 獲利</li>
+      <li><strong>VIX Term Structure</strong>：VIX 現貨 > VIX 期貨 = 市場恐慌（通常是底部信號）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>GEX（Gamma Exposure）</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p><strong>GEX = Dealer 的淨 Gamma 暴露</strong>。Dealer（做市商）通常是期權的對手方，他們需要 delta hedge 來保持中性。Gamma 決定了他們 hedge 的方向。</p>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 320">
+        <rect width="580" height="320" fill="#f8fafc" rx="8"/>
+        <text x="290" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">GEX 機制：Dealer Hedging 行為</text>
+        <rect x="30" y="50" width="240" height="120" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+        <text x="150" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">Positive GEX (穩定器)</text>
+        <text x="150" y="95" text-anchor="middle" font-size="11" fill="#334155">Dealer 持有正 Gamma</text>
+        <text x="150" y="115" text-anchor="middle" font-size="11" fill="#334155">價格漲 → Dealer 賣出 hedge</text>
+        <text x="150" y="135" text-anchor="middle" font-size="11" fill="#334155">價格跌 → Dealer 買入 hedge</text>
+        <text x="150" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">= 抑制波動 = 低 Vol 環境</text>
+        <rect x="310" y="50" width="240" height="120" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+        <text x="430" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">Negative GEX (放大器)</text>
+        <text x="430" y="95" text-anchor="middle" font-size="11" fill="#334155">Dealer 持有負 Gamma</text>
+        <text x="430" y="115" text-anchor="middle" font-size="11" fill="#334155">價格漲 → Dealer 追買 hedge</text>
+        <text x="430" y="135" text-anchor="middle" font-size="11" fill="#334155">價格跌 → Dealer 追賣 hedge</text>
+        <text x="430" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">= 放大波動 = 高 Vol 環境</text>
+        <path d="M 230 210 Q 290 190 350 210" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#7c3aed"/></marker></defs>
+        <text x="290" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">GEX Flip = 爆發點</text>
+        <rect x="30" y="250" width="520" height="55" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
+        <text x="290" y="270" text-anchor="middle" font-size="11" fill="#334155">常見情境：SPY 在高 GEX 區間盤整數日 → GEX 翻負 → 突然大跌 3%+</text>
+        <text x="290" y="290" text-anchor="middle" font-size="11" fill="#334155">策略：在 GEX 極高時賣出 Straddle 收租 | GEX 翻負時準備 hedge 或做多 VIX</text>
+      </svg>
+    </div>
+
+    <h4>GEX 關鍵水位</h4>
+    <table>
+      <tr><th>GEX 狀態</th><th>市場表現</th><th>策略</th></tr>
+      <tr><td>極高正值</td><td>低波動、窄幅盤整</td><td>賣選擇權收租（Theta decay）</td></tr>
+      <tr><td>正值但下降中</td><td>可能即將突破</td><td>準備 breakout 交易</td></tr>
+      <tr><td>剛翻負</td><td>波動即將放大</td><td>買入 Straddle / VIX Call</td></tr>
+      <tr><td>極低負值</td><td>已在高波動中</td><td>尋找 mean-reversion 機會</td></tr>
+    </table>
+
+    <h4>GEX 相關概念：Charm & Vanna & 0DTE</h4>
+    <div class="highlight">
+      <ul>
+        <li><strong>Charm (Delta Decay)</strong>：時間流逝導致 Delta 改變 → Dealer 被迫調整 hedge。接近到期時 Charm 影響放大。</li>
+        <li><strong>Vanna</strong>：IV 變化對 Delta 的影響。IV 下降 → OTM options Delta 下降 → Dealer 需要 unwind hedge = 賣壓。</li>
+        <li><strong>0DTE 效應</strong>：零日到期期權的 Gamma 極高，使 GEX 在到期日劇烈波動，可能造成尾盤大波動。</li>
+      </ul>
+    </div>
+
+    <h4>SPX 0DTE 與市場結構改變</h4>
+    <p>自 2022 年 0DTE options 爆發後，市場結構已改變：</p>
+    <ul>
+      <li>每日 GEX 波動更劇烈，盤中可能翻轉</li>
+      <li>傳統的「週到期 pin」效果減弱</li>
+      <li>收盤前最後 30 分鐘的 Gamma effect 被放大</li>
+      <li>需要更頻繁地更新 GEX 數據（盤中 vs 只看收盤）</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: 波動率交易 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>波動率交易</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>IV vs RV — 隱含波動率 vs 已實現波動率</h3>
+  </div>
+  <div class="card-body">
+    <h4>核心概念</h4>
+    <table>
+      <tr><th>指標</th><th>定義</th><th>計算</th><th>用途</th></tr>
+      <tr><td><strong>IV (Implied Volatility)</strong></td><td>市場預期的未來波動率</td><td>從期權價格反推</td><td>期權定價、情緒判斷</td></tr>
+      <tr><td><strong>RV (Realized Volatility)</strong></td><td>已經發生的實際波動率</td><td>歷史回報標準差</td><td>衡量真實波動</td></tr>
+      <tr><td><strong>HV (Historical Volatility)</strong></td><td>= RV 的另一個名稱</td><td>通常取 20/30 日</td><td>與 IV 比較</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>核心交易邏輯</strong>：
+      <ul>
+        <li><strong>IV &gt; RV</strong>：期權被高估 → 賣出策略有利（Short Vol）</li>
+        <li><strong>IV &lt; RV</strong>：期權被低估 → 買入策略有利（Long Vol）</li>
+        <li><strong>Volatility Risk Premium (VRP)</strong> = IV - RV，長期平均為正值（因為市場傾向高估風險）</li>
+      </ul>
+    </div>
+
+    <h4>IV Percentile vs IV Rank</h4>
+    <table>
+      <tr><th>指標</th><th>計算</th><th>用途</th></tr>
+      <tr><td>IV Rank</td><td>(Current IV - 52wk Low) / (52wk High - 52wk Low)</td><td>目前 IV 在過去一年的相對位置</td></tr>
+      <tr><td>IV Percentile</td><td>過去一年中有多少%天的 IV 低於當前</td><td>更穩健，不受極端值影響</td></tr>
+    </table>
+    <ul>
+      <li><strong>IV Rank &gt; 80%</strong>：IV 在歷史高位 → 傾向賣期權</li>
+      <li><strong>IV Rank &lt; 20%</strong>：IV 在歷史低位 → 傾向買期權</li>
+    </ul>
+
+    <h4>VRP 策略</h4>
+    <div class="highlight purple">
+      <strong>Volatility Risk Premium 策略</strong>：由於 IV 長期高於 RV（平均約 2-4%），系統性地賣出期權可以獲取這個溢價。這是許多對沖基金的核心策略。
+      <ul>
+        <li>平均而言，每月約 70% 的時間 IV > RV</li>
+        <li>但 30% 的時間 IV < RV 可能產生巨大虧損（尾部風險）</li>
+        <li>需要嚴格的風控和倉位管理</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>IV Crush — 財報前後的波動率坍塌</h3>
+  </div>
+  <div class="card-body">
+    <h4>什麼是 IV Crush？</h4>
+    <p>財報、FOMC、重大事件前，IV 膨脹（因為不確定性增加）。事件過後，不確定性消除，IV 急劇下降 = <strong>IV Crush</strong>。</p>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260">
+        <rect width="580" height="260" fill="#f8fafc" rx="8"/>
+        <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">IV Crush: 財報前後 IV 變化</text>
+        <!-- Axes -->
+        <line x1="60" y1="200" x2="520" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="290" y="235" text-anchor="middle" font-size="11" fill="#64748b">Time</text>
+        <text x="25" y="120" font-size="11" fill="#64748b" transform="rotate(-90,25,120)">IV Level</text>
+        <!-- IV curve: rises into earnings, crashes after -->
+        <path d="M 80,160 Q 150,150 200,130 Q 260,100 300,60 L 310,60 L 320,150 Q 380,170 450,175 Q 500,178 520,180" fill="none" stroke="#7c3aed" stroke-width="2.5"/>
+        <!-- Earnings line -->
+        <line x1="310" y1="40" x2="310" y2="200" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+        <text x="310" y="245" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Earnings</text>
+        <!-- Labels -->
+        <text x="200" y="50" font-size="10" fill="#7c3aed">IV 膨脹 (不確定性增加)</text>
+        <text x="420" y="145" font-size="10" fill="#7c3aed">IV Crush (不確定性消除)</text>
+        <!-- Arrow showing crush -->
+        <path d="M 320,65 L 320,145" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowred)"/>
+        <defs><marker id="arrowred" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#dc2626"/></marker></defs>
+        <text x="340" y="110" font-size="10" font-weight="600" fill="#dc2626">Crush!</text>
+        <!-- Normal IV level -->
+        <line x1="60" y1="175" x2="520" y2="175" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="540" y="179" font-size="9" fill="#64748b">Normal IV</text>
+      </svg>
+    </div>
+
+    <h4>IV Crush 的數據</h4>
+    <table>
+      <tr><th>事件類型</th><th>典型 IV 膨脹</th><th>典型 IV Crush</th><th>舉例</th></tr>
+      <tr><td>大型科技財報</td><td>+30-60% vs normal</td><td>-40-70% overnight</td><td>NVDA, TSLA, META</td></tr>
+      <tr><td>FOMC 決議</td><td>+15-25%</td><td>-20-40%</td><td>SPY, QQQ</td></tr>
+      <tr><td>CPI 數據</td><td>+10-20%</td><td>-15-30%</td><td>SPY</td></tr>
+      <tr><td>小型股財報</td><td>+50-100%</td><td>-50-80%</td><td>Meme stocks</td></tr>
+    </table>
+
+    <h4>如何利用 IV Crush</h4>
+    <div class="highlight">
+      <strong>賣方策略（收割 IV Crush）</strong>：
+      <ul>
+        <li><strong>Short Straddle/Strangle</strong>：財報前賣出，收取膨脹的 premium</li>
+        <li><strong>Iron Condor</strong>：有限風險版本，設定 wing 保護</li>
+        <li><strong>注意</strong>：即使 IV Crush 發生，如果標的大幅跳空超過 premium，仍會虧損</li>
+      </ul>
+    </div>
+    <div class="highlight red">
+      <strong>買方陷阱</strong>：
+      <ul>
+        <li>財報前買 Call/Put，即使方向對了，IV Crush 可能讓你虧錢！</li>
+        <li>例如：AAPL 漲 3%，但 IV 從 50% crush 到 25% → 你的 Call 可能不賺甚至虧</li>
+        <li>需要標的移動幅度 > 「Expected Move」才能獲利</li>
+      </ul>
+    </div>
+
+    <h4>Expected Move 計算</h4>
+    <p><code>Expected Move = ATM Straddle Price x 0.85</code></p>
+    <p>或：<code>Expected Move = Stock Price x IV x sqrt(DTE/365)</code></p>
+    <ul>
+      <li>這是市場定價的「期望移動幅度」</li>
+      <li>統計上約 68% 的時間，實際移動在 Expected Move 範圍內</li>
+      <li>超出 Expected Move = 高波動事件 = Straddle 買方獲利</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>VIX 作為交易工具</h3>
+  </div>
+  <div class="card-body">
+    <h4>VIX 基礎</h4>
+    <p><strong>VIX = CBOE Volatility Index</strong>，衡量 SPX 期權未來 30 天的隱含波動率。被稱為「恐懼指數」。</p>
+
+    <table>
+      <tr><th>VIX 水位</th><th>市場狀態</th><th>歷史參考</th></tr>
+      <tr><td>&lt; 12</td><td>極度自滿 / 低波動</td><td>2017 年大部分時間、2024 H1</td></tr>
+      <tr><td>12 - 20</td><td>正常範圍</td><td>大部分時間</td></tr>
+      <tr><td>20 - 30</td><td>恐懼升溫</td><td>一般修正</td></tr>
+      <tr><td>30 - 40</td><td>高度恐懼</td><td>2018/12, 2022</td></tr>
+      <tr><td>&gt; 40</td><td>極端恐慌</td><td>COVID (80+), 2008 (90+)</td></tr>
+    </table>
+
+    <h4>VIX 的特性</h4>
+    <ul>
+      <li><strong>Mean Reversion</strong>：VIX 長期平均約 18-20，會回歸均值</li>
+      <li><strong>Skew</strong>：VIX spike（急漲）快，下降慢 — 恐慌來得突然</li>
+      <li><strong>與 SPX 負相關</strong>：約 -0.8 相關性，但非完美 — 偶爾同步上漲（2018/2 Volmageddon）</li>
+      <li><strong>不可直接交易</strong>：VIX 是指數，需要透過期貨或 ETF（VXX, UVXY, SVXY）</li>
+    </ul>
+
+    <h4>VIX 交易策略</h4>
+    <div class="highlight">
+      <ul>
+        <li><strong>VIX &lt; 13 時</strong>：買入 VIX Call（便宜的 tail hedge），或買入 SPX Put Spread</li>
+        <li><strong>VIX &gt; 35 時</strong>：考慮做空 VIX（mean reversion），或買入 SPX Call</li>
+        <li><strong>VIX Term Structure</strong>：Contango = 正常；Backwardation = 恐慌（逆向看多信號）</li>
+      </ul>
+    </div>
+
+    <div class="highlight red">
+      <strong>VIX 交易陷阱</strong>：
+      <ul>
+        <li>VIX ETF（VXX, UVXY）因期貨 roll cost 長期下跌 — 不適合長期持有</li>
+        <li>做空 VIX 雖然長期有正 carry，但單次 spike 可以爆倉（2018/2 XIV 歸零）</li>
+        <li>VIX options 的定價基於 VIX 期貨，不是 VIX 現貨 — 要注意這個差距</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Volatility Smile / Smirk 深入</h3>
+  </div>
+  <div class="card-body">
+    <h4>為什麼存在 Volatility Smile？</h4>
+    <p>Black-Scholes 假設波動率恆定，但現實中不同 strike 的 IV 不同。這形成了「微笑」或「偏斜」形狀。</p>
+
+    <table>
+      <tr><th>形狀</th><th>名稱</th><th>原因</th><th>常見資產</th></tr>
+      <tr><td>對稱 U 形</td><td>Smile</td><td>尾部風險雙向定價</td><td>外匯、商品</td></tr>
+      <tr><td>左高右低</td><td>Smirk / Skew</td><td>下行保護需求 > 上行投機</td><td>股票指數（SPX）</td></tr>
+      <tr><td>左低右高</td><td>Reverse Skew</td><td>上行投機需求極強</td><td>Meme stocks、GME 時期</td></tr>
+    </table>
+
+    <h4>Skew 的深層原因</h4>
+    <ul>
+      <li><strong>機構避險需求</strong>：大型基金持有股票部位，需要買 OTM Put 保護 → 推高 Put IV</li>
+      <li><strong>槓桿效應</strong>：股價下跌 → 公司槓桿增加 → 真實波動率上升 → 合理高估下行 IV</li>
+      <li><strong>跳躍風險</strong>：市場「跳水」的概率 > 「跳漲」的概率 → Put IV 有合理溢價</li>
+      <li><strong>供需失衡</strong>：OTM Put 是保險，需求永遠存在；OTM Call 是投機，需求波動大</li>
+    </ul>
+
+    <h4>Skew 的交易應用</h4>
+    <div class="highlight green">
+      <strong>Skew Trade 機會</strong>：
+      <ul>
+        <li><strong>Skew 極端陡峭</strong>：Put 太貴 → 賣 Put Spread + 買 Call Spread（Risk Reversal）</li>
+        <li><strong>Skew 極端平坦</strong>：Put 太便宜 → 買入 Put 做 tail hedge</li>
+        <li><strong>跨資產 Skew</strong>：比較不同股票的 skew，找出相對被高估/低估的期權</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 期權策略實戰 ==================== -->
+<div class="tab-content" id="tab4">
+<h2>期權策略實戰</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Covered Call（備兌開倉）</h3>
+  </div>
+  <div class="card-body">
+    <h4>結構</h4>
+    <p><strong>持有 100 股 + 賣出 1 張 OTM Call</strong></p>
+
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag neutral">中性偏多</span> — 認為短期不會大漲</td></tr>
+      <tr><td>最大獲利</td><td>(Strike - 買入成本) + Premium</td></tr>
+      <tr><td>最大虧損</td><td>買入成本 - Premium（股票歸零）</td></tr>
+      <tr><td>Break-even</td><td>買入成本 - Premium</td></tr>
+      <tr><td>何時使用</td><td>持有股票、看法中性偏多、想增加收入</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+        <rect width="500" height="220" fill="#f8fafc" rx="8"/>
+        <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Covered Call Payoff</text>
+        <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="50" y1="30" x2="50" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="250" y="215" text-anchor="middle" font-size="10" fill="#64748b">Stock Price at Expiry</text>
+        <!-- Covered Call payoff -->
+        <polyline points="70,190 200,110 300,110" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <!-- Stock only (reference) -->
+        <polyline points="70,200 300,60" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+        <!-- Labels -->
+        <text x="200" y="100" font-size="10" fill="#2563eb">Max Profit (capped)</text>
+        <text x="310" y="65" font-size="9" fill="#64748b">Stock alone</text>
+        <line x1="200" y1="125" x2="200" y2="135" stroke="#16a34a" stroke-width="2"/>
+        <text x="200" y="148" font-size="9" fill="#16a34a">Strike</text>
+        <line x1="130" y1="125" x2="130" y2="135" stroke="#7c3aed" stroke-width="2"/>
+        <text x="130" y="148" font-size="9" fill="#7c3aed">Break-even</text>
+        <text x="52" y="125" font-size="9" fill="#64748b">0</text>
+      </svg>
+    </div>
+
+    <div class="highlight">
+      <strong>適用情境</strong>：持有 AAPL 長期部位，股價 $180，賣出下週 $185 Call 收 $2 premium。如果股價不超過 $185，白賺 $200/周。如果超過 $185，以 $185 被 call away（但你已鎖利 + 收 premium）。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Protective Put（保護性賣權）</h3>
+  </div>
+  <div class="card-body">
+    <h4>結構</h4>
+    <p><strong>持有 100 股 + 買入 1 張 OTM Put</strong></p>
+
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag bullish">看多</span> — 但想保護下行</td></tr>
+      <tr><td>最大獲利</td><td>無限（股票上漲）</td></tr>
+      <tr><td>最大虧損</td><td>(買入成本 - Strike) + Premium</td></tr>
+      <tr><td>Break-even</td><td>買入成本 + Premium</td></tr>
+      <tr><td>何時使用</td><td>持有股票、看多但擔心黑天鵝事件</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+        <rect width="500" height="220" fill="#f8fafc" rx="8"/>
+        <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Protective Put Payoff</text>
+        <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="50" y1="30" x2="50" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="250" y="215" text-anchor="middle" font-size="10" fill="#64748b">Stock Price at Expiry</text>
+        <!-- Protective Put payoff -->
+        <polyline points="70,155 150,155 350,50" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+        <!-- Stock only (reference) -->
+        <polyline points="70,200 350,50" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4"/>
+        <!-- Labels -->
+        <text x="90" y="150" font-size="10" fill="#16a34a">Loss capped</text>
+        <text x="360" y="55" font-size="9" fill="#64748b">Stock alone</text>
+        <line x1="150" y1="125" x2="150" y2="135" stroke="#dc2626" stroke-width="2"/>
+        <text x="150" y="148" font-size="9" fill="#dc2626">Put Strike</text>
+        <text x="52" y="125" font-size="9" fill="#64748b">0</text>
+      </svg>
+    </div>
+
+    <div class="highlight orange">
+      <strong>成本考量</strong>：Protective Put = 買保險，有成本。如果市場不跌，你會虧掉 premium。適合在 VIX 低（保險便宜）時購買，不適合在市場已經恐慌時才買（太貴）。
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Straddle / Strangle（跨式/寬跨式）</h3>
+  </div>
+  <div class="card-body">
+    <h4>Long Straddle</h4>
+    <p><strong>買入同 Strike 的 Call + Put（通常 ATM）</strong></p>
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag neutral">中性</span> — 預期大幅波動，不確定方向</td></tr>
+      <tr><td>最大獲利</td><td>無限（任一方向大幅移動）</td></tr>
+      <tr><td>最大虧損</td><td>兩張期權的 Premium 總和</td></tr>
+      <tr><td>何時使用</td><td>財報前、重大事件前、預期 IV 低估</td></tr>
+    </table>
+
+    <h4>Long Strangle</h4>
+    <p><strong>買入 OTM Call + OTM Put（不同 Strike）</strong></p>
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag neutral">中性</span> — 預期大幅波動</td></tr>
+      <tr><td>成本</td><td>比 Straddle 便宜（都是 OTM）</td></tr>
+      <tr><td>需要更大波動</td><td>因為需要突破 OTM strike 才能獲利</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+        <rect width="500" height="220" fill="#f8fafc" rx="8"/>
+        <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Long Straddle Payoff</text>
+        <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="50" y1="30" x2="50" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="250" y="215" text-anchor="middle" font-size="10" fill="#64748b">Stock Price at Expiry</text>
+        <!-- Straddle V-shape -->
+        <polyline points="70,40 250,170 430,40" fill="none" stroke="#7c3aed" stroke-width="2.5"/>
+        <!-- Max loss line -->
+        <line x1="200" y1="170" x2="300" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4"/>
+        <text x="250" y="185" text-anchor="middle" font-size="9" fill="#dc2626">Max Loss = Total Premium</text>
+        <!-- Break-even points -->
+        <line x1="140" y1="125" x2="140" y2="135" stroke="#16a34a" stroke-width="2"/>
+        <text x="140" y="148" font-size="9" fill="#16a34a">BE Low</text>
+        <line x1="360" y1="125" x2="360" y2="135" stroke="#16a34a" stroke-width="2"/>
+        <text x="360" y="148" font-size="9" fill="#16a34a">BE High</text>
+        <text x="250" y="145" text-anchor="middle" font-size="9" fill="#64748b">Strike</text>
+        <text x="52" y="125" font-size="9" fill="#64748b">0</text>
+      </svg>
+    </div>
+
+    <div class="highlight purple">
+      <strong>Straddle vs Strangle 選擇</strong>：
+      <ul>
+        <li>Straddle：更高成本，但更容易獲利（ATM 開始計算）</li>
+        <li>Strangle：更低成本，但需要更大波動才能越過 OTM 門檻</li>
+        <li>實戰中常用 Strangle（節省 premium），設定 25-30 Delta 的 OTM 位置</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Vertical Spread（垂直價差）</h3>
+  </div>
+  <div class="card-body">
+    <h4>Bull Call Spread（看多 Call 價差）</h4>
+    <p><strong>買入低 Strike Call + 賣出高 Strike Call（同到期日）</strong></p>
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag bullish">看多</span></td></tr>
+      <tr><td>最大獲利</td><td>Strike 差距 - 淨 Premium</td></tr>
+      <tr><td>最大虧損</td><td>淨 Premium（有限）</td></tr>
+      <tr><td>優勢</td><td>比單買 Call 便宜（賣出的 Call 抵消部分成本）</td></tr>
+    </table>
+
+    <h4>Bear Put Spread（看空 Put 價差）</h4>
+    <p><strong>買入高 Strike Put + 賣出低 Strike Put（同到期日）</strong></p>
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag bearish">看空</span></td></tr>
+      <tr><td>最大獲利</td><td>Strike 差距 - 淨 Premium</td></tr>
+      <tr><td>最大虧損</td><td>淨 Premium（有限）</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+        <rect width="500" height="220" fill="#f8fafc" rx="8"/>
+        <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Bull Call Spread Payoff</text>
+        <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="50" y1="30" x2="50" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="250" y="215" text-anchor="middle" font-size="10" fill="#64748b">Stock Price at Expiry</text>
+        <!-- Bull Call Spread -->
+        <polyline points="70,160 180,160 300,80 430,80" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <!-- Labels -->
+        <text x="130" y="175" font-size="9" fill="#dc2626">Max Loss = Net Debit</text>
+        <text x="370" y="72" font-size="9" fill="#16a34a">Max Profit = Width - Debit</text>
+        <line x1="180" y1="125" x2="180" y2="135" stroke="#64748b" stroke-width="2"/>
+        <text x="180" y="148" font-size="9" fill="#64748b">Long Strike</text>
+        <line x1="300" y1="125" x2="300" y2="135" stroke="#64748b" stroke-width="2"/>
+        <text x="300" y="148" font-size="9" fill="#64748b">Short Strike</text>
+        <text x="52" y="125" font-size="9" fill="#64748b">0</text>
+      </svg>
+    </div>
+
+    <h4>Spread 的 Risk/Reward 設計</h4>
+    <div class="highlight">
+      <ul>
+        <li><strong>窄 Spread（$5 寬）</strong>：便宜，但最大獲利也小 → 高概率小額</li>
+        <li><strong>寬 Spread（$20 寬）</strong>：較貴，但最大獲利大 → 低概率大額</li>
+        <li><strong>最佳 R/R</strong>：通常設定 1:2 到 1:3 的風險回報比</li>
+        <li><strong>Delta 選擇</strong>：Long leg 選 40-50 Delta，Short leg 選 20-30 Delta</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Iron Condor（鐵鷹）</h3>
+  </div>
+  <div class="card-body">
+    <h4>結構</h4>
+    <p><strong>= Bull Put Spread + Bear Call Spread = 同時賣出 OTM Put Spread + OTM Call Spread</strong></p>
+
+    <table>
+      <tr><th>項目</th><th>說明</th></tr>
+      <tr><td>方向</td><td><span class="tag neutral">中性</span> — 認為標的將在一定範圍內波動</td></tr>
+      <tr><td>最大獲利</td><td>淨收取的 Premium（全部期權到期 OTM 時）</td></tr>
+      <tr><td>最大虧損</td><td>任一 Spread 的寬度 - 淨 Premium</td></tr>
+      <tr><td>Break-even</td><td>短 Put Strike - Premium 或 短 Call Strike + Premium</td></tr>
+      <tr><td>何時使用</td><td>高 IV 環境 + 預期盤整 + Positive GEX</td></tr>
+    </table>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+        <rect width="500" height="220" fill="#f8fafc" rx="8"/>
+        <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Iron Condor Payoff</text>
+        <line x1="50" y1="110" x2="450" y2="110" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="50" y1="30" x2="50" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="250" y="215" text-anchor="middle" font-size="10" fill="#64748b">Stock Price at Expiry</text>
+        <!-- Iron Condor shape -->
+        <polyline points="60,160 120,160 180,90 320,90 380,160 440,160" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+        <!-- Labels -->
+        <text x="250" y="82" text-anchor="middle" font-size="9" fill="#16a34a">Max Profit = Net Credit</text>
+        <text x="90" y="175" font-size="9" fill="#dc2626">Max Loss</text>
+        <text x="400" y="175" font-size="9" fill="#dc2626">Max Loss</text>
+        <!-- Strike labels -->
+        <text x="120" y="195" font-size="8" fill="#64748b">Long Put</text>
+        <text x="180" y="195" font-size="8" fill="#64748b">Short Put</text>
+        <text x="320" y="195" font-size="8" fill="#64748b">Short Call</text>
+        <text x="380" y="195" font-size="8" fill="#64748b">Long Call</text>
+        <text x="52" y="105" font-size="9" fill="#64748b">0</text>
+      </svg>
+    </div>
+
+    <h4>Iron Condor 管理技巧</h4>
+    <div class="highlight green">
+      <ul>
+        <li><strong>進場時機</strong>：IV Rank > 50%，GEX 正值，無重大事件</li>
+        <li><strong>Wing 寬度</strong>：通常 $5-$10 寬，取決於標的價格和你的風險容忍度</li>
+        <li><strong>Short Strike 選擇</strong>：15-20 Delta（約 70-80% 勝率）</li>
+        <li><strong>獲利了結</strong>：達到最大獲利 50% 時平倉（不需等到到期）</li>
+        <li><strong>停損</strong>：虧損達到收取 Premium 的 2x 時平倉</li>
+        <li><strong>調整</strong>：若某一邊 threatened，可以 roll（移動）short strike 或平掉該邊</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>策略選擇決策樹</h3>
+  </div>
+  <div class="card-body">
+    <h4>根據市場環境選策略</h4>
+    <table>
+      <tr><th>市場環境</th><th>IV 狀態</th><th>推薦策略</th><th>理由</th></tr>
+      <tr><td><span class="tag bullish">強烈看多</span></td><td>IV 低</td><td>Long Call / Bull Call Spread</td><td>便宜 + 方向明確</td></tr>
+      <tr><td><span class="tag bullish">溫和看多</span></td><td>IV 高</td><td>Short Put / Bull Put Spread</td><td>收取膨脹的 premium + 向下保護</td></tr>
+      <tr><td><span class="tag bearish">強烈看空</span></td><td>IV 低</td><td>Long Put / Bear Put Spread</td><td>便宜 + 方向明確</td></tr>
+      <tr><td><span class="tag bearish">溫和看空</span></td><td>IV 高</td><td>Short Call / Bear Call Spread</td><td>收取膨脹的 premium</td></tr>
+      <tr><td><span class="tag neutral">預期大波動</span></td><td>IV 低</td><td>Long Straddle / Strangle</td><td>做多便宜的 Vol</td></tr>
+      <tr><td><span class="tag neutral">預期盤整</span></td><td>IV 高</td><td>Iron Condor / Short Strangle</td><td>收割 IV Crush + Theta</td></tr>
+      <tr><td>持股 + 中性</td><td>IV 高</td><td>Covered Call</td><td>增加持股收入</td></tr>
+      <tr><td>持股 + 擔憂</td><td>IV 低</td><td>Protective Put</td><td>便宜保險</td></tr>
+    </table>
+
+    <h4>進階組合思路</h4>
+    <div class="highlight purple">
+      <ul>
+        <li><strong>Jade Lizard</strong>：Short Put + Short Call Spread = 收取高 premium，上方風險有限</li>
+        <li><strong>Broken Wing Butterfly</strong>：非對稱蝴蝶，一邊 no risk + 收 credit</li>
+        <li><strong>Calendar Spread</strong>：利用 IV Term Structure 差異獲利</li>
+        <li><strong>Diagonal Spread</strong>：不同到期 + 不同 strike 的 spread = PMCC (Poor Man's Covered Call)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>期權風控與倉位管理</h3>
+  </div>
+  <div class="card-body">
+    <h4>Position Sizing 原則</h4>
+    <table>
+      <tr><th>規則</th><th>說明</th><th>理由</th></tr>
+      <tr><td>單筆最大虧損 &lt; 2% 總資本</td><td>每筆期權交易的最大虧損不超過帳戶 2%</td><td>允許連續 10 次錯誤仍能存活</td></tr>
+      <tr><td>總 Theta 暴露 &lt; 0.5% /天</td><td>所有買方部位每天的 Theta 損耗不超過帳戶 0.5%</td><td>防止時間侵蝕過快消耗資本</td></tr>
+      <tr><td>淨 Delta &lt; 30% 帳戶價值</td><td>方向性暴露不超過帳戶 30%</td><td>防止單方向風險過大</td></tr>
+      <tr><td>同一到期日暴露 &lt; 40%</td><td>不要把所有期權集中在同一到期日</td><td>分散 Gamma risk / pin risk</td></tr>
+    </table>
+
+    <h4>Greeks 風控面板</h4>
+    <div class="highlight">
+      <strong>每日檢查清單</strong>：
+      <ul>
+        <li><strong>Portfolio Delta</strong>：整體方向暴露在可接受範圍？</li>
+        <li><strong>Portfolio Gamma</strong>：Short Gamma 是否過大？（大波動時會放大虧損）</li>
+        <li><strong>Portfolio Theta</strong>：每天自然收入/支出多少？</li>
+        <li><strong>Portfolio Vega</strong>：如果 IV 突然漲/跌 5%，影響多大？</li>
+        <li><strong>Concentration</strong>：是否過度集中在單一標的或到期日？</li>
+      </ul>
+    </div>
+
+    <h4>常見錯誤</h4>
+    <div class="highlight red">
+      <ul>
+        <li><strong>Sell Naked Options 無限風險</strong>：永遠用 Spread 限制最大虧損</li>
+        <li><strong>忽略 Assignment 風險</strong>：ITM Short Options 可能被提前行使</li>
+        <li><strong>Over-leveraging</strong>：期權自帶槓桿，不要再加倉位槓桿</li>
+        <li><strong>不設停損</strong>：Short Gamma 部位必須有停損，一次 tail event 可以毀掉一年利潤</li>
+        <li><strong>Earnings 前不管理部位</strong>：財報前應該減少 Vega 暴露或主動選擇方向</li>
+      </ul>
+    </div>
+
+    <h4>期權數據來源推薦</h4>
+    <table>
+      <tr><th>工具</th><th>特色</th><th>費用</th></tr>
+      <tr><td>Unusual Whales</td><td>Options Flow, GEX, Dark Pool, 議員追蹤</td><td>$$$</td></tr>
+      <tr><td>SpotGamma</td><td>GEX 專精，每日 levels 報告</td><td>$$$</td></tr>
+      <tr><td>TradingView</td><td>基礎 IV、OI 圖表，免費入門</td><td>免費/付費</td></tr>
+      <tr><td>Barchart</td><td>Options Flow、PCR、OI 分析</td><td>免費/付費</td></tr>
+      <tr><td>CBOE</td><td>官方 PCR、VIX 數據</td><td>免費</td></tr>
+      <tr><td>OptionStrat</td><td>策略視覺化、P/L 圖生成器</td><td>免費/付費</td></tr>
+      <tr><td>TastyTrade</td><td>教育資源 + 實戰策略分析</td><td>免費（broker）</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>互動測驗</h2>
+<p>測試你對期權與波動率交易的理解。共 15 題。</p>
+
+<div class="quiz-section" id="quizContainer">
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q1. Delta 為 0.3 的 OTM Call，標的上漲 $2，期權 premium 大約增加多少？</h4>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> A. $0.30</label>
+    <label><input type="radio" name="q1" value="b"> B. $0.60</label>
+    <label><input type="radio" name="q1" value="c"> C. $2.00</label>
+    <label><input type="radio" name="q1" value="d"> D. $0.15</label>
+  </div>
+  <div class="explanation">Delta 0.3 表示標的每漲 $1，期權漲 $0.30。漲 $2 則約增加 $0.60（忽略 Gamma 的二階效應）。實際上因為 Gamma 存在，Delta 在上漲過程中增加，所以真實增幅會略高於 $0.60。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q2. 你賣出一張 ATM Straddle。以下哪個環境對你最有利？</h4>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> A. GEX 翻負，VIX 上升</label>
+    <label><input type="radio" name="q2" value="b"> B. 財報即將公布，IV 繼續膨脹</label>
+    <label><input type="radio" name="q2" value="c"> C. GEX 極高正值，標的窄幅盤整，IV 緩慢下降</label>
+    <label><input type="radio" name="q2" value="d"> D. 標的大幅跳空 5%</label>
+  </div>
+  <div class="explanation">賣出 Straddle = Short Gamma + Long Theta + Short Vega。最有利環境是：不動（賺 Theta）+ IV 下降（賺 Vega）+ 低波動（Gamma 風險小）。GEX 正值 = 穩定器 = 完美環境。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q3. IV Rank 為 92%，市場呈盤整格局。最適合什麼策略？</h4>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> A. 賣出 Iron Condor（做空波動率）</label>
+    <label><input type="radio" name="q3" value="b"> B. 買入 Long Straddle（做多波動率）</label>
+    <label><input type="radio" name="q3" value="c"> C. 買入單腿 OTM Call</label>
+    <label><input type="radio" name="q3" value="d"> D. 等 IV Rank 更高再進場</label>
+  </div>
+  <div class="explanation">IV Rank 92% = IV 在歷史高位 = 期權被高估 → 賣出策略有利。市場盤整 = 不需要方向觀點。Iron Condor = 賣出波動率 + 有限風險 = 完美匹配。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q4. NVDA 財報前一天你買入 ATM Call，財報後 NVDA 漲 4% 但你的 Call 虧錢。為什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> A. Delta 太低</label>
+    <label><input type="radio" name="q4" value="b"> B. Gamma 的影響</label>
+    <label><input type="radio" name="q4" value="c"> C. 利率變動</label>
+    <label><input type="radio" name="q4" value="d"> D. IV Crush — 波動率坍塌抵消了方向收益</label>
+  </div>
+  <div class="explanation">財報後 IV Crush 是經典陷阱。NVDA 漲 4% 讓你的 Delta 賺了，但 IV 從 80% 崩到 35% 讓你的 Vega 虧了更多。只有超出 Expected Move 的移動才能抵消 IV Crush。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q5. GEX 從極高正值突然翻負，你應該？</h4>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> A. 加碼賣 Straddle（IV 還沒漲）</label>
+    <label><input type="radio" name="q5" value="b"> B. 買入 Straddle 或 VIX Call，準備波動放大</label>
+    <label><input type="radio" name="q5" value="c"> C. 全部平倉做空市場</label>
+    <label><input type="radio" name="q5" value="d"> D. GEX 翻負不影響策略選擇</label>
+  </div>
+  <div class="explanation">GEX 翻負 = Dealer 從穩定器變放大器 = 波動即將放大（但不確定方向）。買入 Straddle/Strangle 或 VIX Call = 做多波動率 = 正確回應。不能做空市場因為 GEX 不決定方向。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q6. Theta 衰減速度何時最快？</h4>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> A. 到期前 60 天</label>
+    <label><input type="radio" name="q6" value="b"> B. 到期前 30 天</label>
+    <label><input type="radio" name="q6" value="c"> C. 到期前 7 天內，ATM 期權</label>
+    <label><input type="radio" name="q6" value="d"> D. Theta 衰減速度恆定</label>
+  </div>
+  <div class="explanation">Theta 衰減呈非線性加速。ATM 期權在最後一週的 Theta 衰減最劇烈（因為時間價值從有到無的轉變最急劇）。這就是為什麼賣方策略常選 30-45 DTE 進場（在加速開始前建倉）。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q7. IV Term Structure 呈現 Backwardation（前端 IV > 後端 IV），代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> A. 市場預期近期有重大事件/高波動，可用 Calendar Spread 獲利</label>
+    <label><input type="radio" name="q7" value="b"> B. 市場非常平靜，期權被低估</label>
+    <label><input type="radio" name="q7" value="c"> C. 長期 IV 比短期高是正常的</label>
+    <label><input type="radio" name="q7" value="d"> D. 只影響 VIX，不影響個股</label>
+  </div>
+  <div class="explanation">Backwardation（前高後低）= 市場為近期事件（財報、FOMC）支付溢價。事件過後前端 IV 崩塌回正常 → Calendar Spread（賣前端高 IV + 買後端低 IV）可在事件後獲利。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q8. 你持有 AAPL 300 股，想每週增加收入但不想被 call away。最佳策略？</h4>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> A. 賣出 ATM Covered Call</label>
+    <label><input type="radio" name="q8" value="b"> B. 買入 OTM Put</label>
+    <label><input type="radio" name="q8" value="c"> C. 賣出 3 張 ATM Put</label>
+    <label><input type="radio" name="q8" value="d"> D. 賣出 3 張遠 OTM Call（20-30 Delta），每週到期</label>
+  </div>
+  <div class="explanation">Covered Call 選擇遠 OTM（20-30 Delta）= 被 call away 概率低（70-80% 安全）+ 每週收取 premium。ATM 太容易被 call away。選擇 weekly expiry 加速 Theta 收割。3 張 = 300 股的完整覆蓋。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q9. VIX 為 11，SPX 連續 20 天波動 < 0.5%。此時最有價值的交易是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> A. 繼續賣 Straddle 收租</label>
+    <label><input type="radio" name="q9" value="b"> B. 買入 VIX Call 或 SPX Put 作為 tail hedge（便宜保險）</label>
+    <label><input type="radio" name="q9" value="c"> C. 做空 VIX（它會繼續下跌）</label>
+    <label><input type="radio" name="q9" value="d"> D. 此時波動率策略無效</label>
+  </div>
+  <div class="explanation">VIX 11 = 極度自滿。保險（VIX Call / SPX Put）此時極便宜。歷史上 VIX 在 11 附近時，未來 3 個月出現 VIX spike > 25 的概率很高。Risk/Reward 極佳：花小錢買大保險。賣 Straddle 此時 Theta 太低，風險/回報不佳。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q10. 什麼是 Volatility Risk Premium (VRP)？</h4>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> A. VIX 與 SPX 的相關性</label>
+    <label><input type="radio" name="q10" value="b"> B. 期權的時間價值</label>
+    <label><input type="radio" name="q10" value="c"> C. IV 長期高於 RV 的差額 — 市場對不確定性的額外定價</label>
+    <label><input type="radio" name="q10" value="d"> D. Gamma 的風險補償</label>
+  </div>
+  <div class="explanation">VRP = IV - RV，平均為正值（約 2-4%），代表市場願意為不確定性支付的「保險費」。這個溢價是系統性賣期權策略的利潤來源。但要注意尾部風險可能一次回吐多月利潤。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q11. 你的 Iron Condor 短 Put leg 被 threatened（價格逼近 short Put strike）。最佳調整？</h4>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> A. Roll short Put 到更低 strike + 延長到期日，或平掉 Put spread 保留 Call spread</label>
+    <label><input type="radio" name="q11" value="b"> B. 等到期看結果</label>
+    <label><input type="radio" name="q11" value="c"> C. 加倍賣出更多 Put 攤平</label>
+    <label><input type="radio" name="q11" value="d"> D. 把 Call spread 也移近以收更多 premium</label>
+  </div>
+  <div class="explanation">被 threatened 時的最佳做法：(1) Roll down and out（移到更低 strike + 更遠到期日）收取額外 credit，或 (2) 認賠平倉受威脅那邊。加倍是最差做法（加大風險）。等到期可能導致最大虧損。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q12. Gamma 在何種條件下最大？</h4>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> A. Deep ITM + 長到期</label>
+    <label><input type="radio" name="q12" value="b"> B. Deep OTM + 短到期</label>
+    <label><input type="radio" name="q12" value="c"> C. ATM + 長到期</label>
+    <label><input type="radio" name="q12" value="d"> D. ATM + 短到期（尤其 0DTE）</label>
+  </div>
+  <div class="explanation">Gamma 在 ATM + 近到期 時最高。0DTE 的 ATM 期權 Gamma 極端大 — 標的小幅移動就能讓 Delta 從 0.5 變成 0.9 或 0.1。這就是為什麼 0DTE 市場對市場結構影響如此大。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q13. Expected Move = $8，你的 Long Straddle 成本 = $10。股票漲了 $7。你的 P/L？</h4>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> A. 獲利 $7</label>
+    <label><input type="radio" name="q13" value="b"> B. 虧損約 $3（方向收益不足以覆蓋 premium）</label>
+    <label><input type="radio" name="q13" value="c"> C. Break-even</label>
+    <label><input type="radio" name="q13" value="d"> D. 無法判斷</label>
+  </div>
+  <div class="explanation">Straddle 成本 $10 = 需要標的移動 > $10 才能獲利。股票漲 $7 = Call 約值 $7（at expiry），但你付了 $10 → 虧損 $3。Expected Move $8 意味著市場認為 $8 是最可能的移動幅度，但你的 break-even 在 $10。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q14. 以下哪個 IV Skew 情境是逆向看多信號？</h4>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> A. Flat Skew（Call IV = Put IV）</label>
+    <label><input type="radio" name="q14" value="b"> B. Call Skew Inversion（Call IV > Put IV）</label>
+    <label><input type="radio" name="q14" value="c"> C. Put Skew 極端陡峭（25D Skew 在歷史 95 百分位）</label>
+    <label><input type="radio" name="q14" value="d"> D. Normal Put Skew</label>
+  </div>
+  <div class="explanation">Put Skew 極端陡峭 = 市場極度恐懼下跌，願意支付極高溢價買 Put 保護。歷史上這種恐懼極端往往對應市場底部。25D Skew 在 95 百分位 = 逆向看多信號。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q15. Vanna 的定義是什麼？在什麼情境下 Vanna 效應對市場影響最大？</h4>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> A. IV 變化對 Delta 的影響；大量 OTM 期權 + IV 急劇下降時</label>
+    <label><input type="radio" name="q15" value="b"> B. 時間對 Gamma 的影響；接近到期時</label>
+    <label><input type="radio" name="q15" value="c"> C. 標的價格對 Vega 的影響；ATM 期權最大</label>
+    <label><input type="radio" name="q15" value="d"> D. Theta 對 IV 的影響；低 VIX 環境</label>
+  </div>
+  <div class="explanation">Vanna = dDelta/dIV。當 IV 下降時，OTM 期權的 Delta 降低 → Dealer 的 hedge 需要調整（unwind 部位）。大量 OTM 期權存在 + IV 急降 = Vanna flow 顯著影響市場。這是 OPEX (Options Expiration) 日常見的現象。</div>
+</div>
+
+</div>
+
+<button class="quiz-btn" onclick="gradeQuiz()">提交答案</button>
+<div class="score-display" id="scoreDisplay"></div>
+
+</div>
+
+</div><!-- end container -->
+
+<script>
+// Tab navigation
+function showTab(index) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + index).classList.add('active');
+  document.querySelectorAll('.nav-btn')[index].classList.add('active');
+}
+
+// Accordion cards
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Quiz grading
+function gradeQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let score = 0;
+  let total = questions.length;
+
+  questions.forEach((q, i) => {
+    const correct = q.dataset.correct;
+    const selected = q.querySelector('input[name="q' + (i + 1) + '"]:checked');
+    const explanation = q.querySelector('.explanation');
+
+    explanation.classList.remove('correct', 'wrong');
+
+    if (selected) {
+      if (selected.value === correct) {
+        score++;
+        explanation.classList.add('correct');
+      } else {
+        explanation.classList.add('wrong');
+      }
+    } else {
+      explanation.classList.add('wrong');
+    }
+  });
+
+  const display = document.getElementById('scoreDisplay');
+  display.style.display = 'block';
+  const pct = Math.round((score / total) * 100);
+  let grade = '';
+  if (pct >= 90) grade = 'A+ 出色！';
+  else if (pct >= 80) grade = 'A 優秀！';
+  else if (pct >= 70) grade = 'B 良好';
+  else if (pct >= 60) grade = 'C 及格';
+  else grade = 'D 需要複習';
+  display.textContent = `得分：${score} / ${total}（${pct}%）— ${grade}`;
+}
+
+// Auto-open first card in each tab
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    const firstHeader = tab.querySelector('.card-header');
+    if (firstHeader) {
+      firstHeader.classList.add('open');
+      firstHeader.nextElementSibling.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>

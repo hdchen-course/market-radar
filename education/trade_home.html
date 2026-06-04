@@ -5,208 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>交易技術分析學習中心</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #ffffff;
-  --bg3: #f1f5f9;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --green: #16a34a;
-  --red: #dc2626;
-  --purple: #7c3aed;
-  --orange: #ea580c;
-  --r: 16px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding: 40px 20px;
-}
-.container { max-width: 900px; width: 100%; margin: 0 auto; }
-header { text-align: center; margin-bottom: 48px; }
-header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-header p { color: var(--text3); font-size: 15px; }
+body { max-width: 960px; padding: 40px 20px; }
+header { text-align: center; margin-bottom: 40px; }
+header h1 { font-size: 26px; }
+header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 20px;
+  gap: 16px;
 }
 .card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 28px;
+  padding: 24px;
   text-decoration: none;
   color: inherit;
   transition: all .2s;
   display: block;
   position: relative;
-  overflow: hidden;
 }
 .card:hover {
   box-shadow: 0 8px 30px rgba(0,0,0,0.08);
   transform: translateY(-2px);
   border-color: var(--blue);
+  text-decoration: none;
 }
-.card .icon {
-  font-size: 36px;
-  margin-bottom: 14px;
-  display: block;
-}
-.card h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-.card p { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
-.card .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-}
-.tag-green { background: #dcfce7; color: #16a34a; }
-.tag-blue { background: #dbeafe; color: #2563eb; }
-.tag-purple { background: #ede9fe; color: #7c3aed; }
-.tag-orange { background: #ffedd5; color: #ea580c; }
-.tag-red { background: #fee2e2; color: #dc2626; }
-.card .arrow {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  color: var(--text3);
-  transition: .2s;
-}
-.card:hover .arrow { color: var(--blue); right: 16px; }
-.footer { text-align: center; margin-top: 40px; color: var(--text3); font-size: 12px; }
-@media (max-width: 480px) {
-  .grid { grid-template-columns: 1fr; }
-}
+.card .icon { font-size: 32px; margin-bottom: 10px; display: block; }
+.card h2 { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.card p { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+.card .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.card .arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--text3); transition: .2s; }
+.card:hover .arrow { color: var(--blue); right: 14px; }
+.section-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin: 28px 0 12px; padding-left: 4px; }
+.footer { text-align: center; margin-top: 36px; color: var(--text3); font-size: 11px; padding-top: 16px; border-top: 1px solid var(--border); }
+@media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="container">
 
 <header>
   <h1>交易技術分析學習中心</h1>
-  <p>從裸 K 型態到宏觀流動性，系統化建立交易分析框架</p>
+  <p>11 個模組 · 200+ 互動測驗 · 從裸 K 到宏觀流動性的完整交易分析框架</p>
 </header>
 
+<div class="section-label">技術分析</div>
 <div class="grid">
-
 <a class="card" href="candlestick_patterns.html">
   <span class="icon">🕯️</span>
   <h2>裸 K 線型態與主力心理</h2>
-  <p>8 種基礎 K 線 → 雙 K/三 K 組合 → 趨勢結構 → 主力洗盤/出貨辨識 → 布林通道 + SuperTrend 整合 → 互動測驗</p>
-  <div class="tags">
-    <span class="tag tag-green">8 Tab 完整課程</span>
-    <span class="tag tag-blue">25 題互動測驗</span>
-    <span class="tag tag-orange">SVG 互動圖</span>
-  </div>
+  <p>基礎/雙K/三K → 趨勢結構 → 主力動向 → 布林+SuperTrend整合 → 測驗</p>
+  <div class="tags"><span class="tag tag-green">8 Tab</span><span class="tag tag-blue">25 題</span></div>
   <span class="arrow">→</span>
 </a>
+<a class="card" href="options_volatility.html">
+  <span class="icon">📈</span>
+  <h2>期權與波動率交易</h2>
+  <p>Greeks → Options Flow → GEX/MaxPain/IV Skew → 波動率交易 → 期權策略</p>
+  <div class="tags"><span class="tag tag-purple">Greeks</span><span class="tag tag-orange">IV Crush</span><span class="tag tag-blue">15 題</span></div>
+  <span class="arrow">→</span>
+</a>
+</div>
 
+<div class="section-label">衍生品與鏈上</div>
+<div class="grid">
 <a class="card" href="futures_analytics.html">
   <span class="icon">📊</span>
   <h2>永續合約籌碼分析</h2>
-  <p>OI 四象限研判 → CVD 背離 → Funding Rate 極端值 → 清算熱力圖 → Long/Short Ratio → 完整籌碼 SOP → 互動測驗</p>
-  <div class="tags">
-    <span class="tag tag-purple">OI + CVD + Funding</span>
-    <span class="tag tag-red">清算級聯分析</span>
-    <span class="tag tag-blue">18 題測驗</span>
-  </div>
+  <p>OI 四象限 → CVD 背離 → Funding → 清算熱力圖 → 完整 SOP</p>
+  <div class="tags"><span class="tag tag-purple">OI+CVD</span><span class="tag tag-red">清算級聯</span><span class="tag tag-blue">18 題</span></div>
   <span class="arrow">→</span>
 </a>
+<a class="card" href="onchain_crypto.html">
+  <span class="icon">⛓️</span>
+  <h2>鏈上數據分析 (Crypto)</h2>
+  <p>NUPL/MVRV/SOPR → STH/LTH 成本線 → Stablecoin 流動性 → 綜合框架</p>
+  <div class="tags"><span class="tag tag-green">BTC 鏈上</span><span class="tag tag-orange">Stablecoin</span><span class="tag tag-blue">15 題</span></div>
+  <span class="arrow">→</span>
+</a>
+</div>
 
+<div class="section-label">宏觀與外匯</div>
+<div class="grid">
 <a class="card" href="macro_liquidity.html">
   <span class="icon">🌊</span>
   <h2>宏觀流動性與經濟數據</h2>
-  <p>全球淨流動性公式 → Fed QE/QT 傳導 → 殖利率曲線 → DXY 作為 master variable → 信用利差 → 經濟數據判讀 → 日圓 Carry Trade → 流動性與資產輪動</p>
-  <div class="tags">
-    <span class="tag tag-blue">流動性公式</span>
-    <span class="tag tag-orange">Fed/TGA/RRP</span>
-    <span class="tag tag-green">經濟數據判讀</span>
-  </div>
+  <p>Net Liquidity 公式 → Fed QE/QT → 殖利率曲線 → DXY → 信用利差 → 經濟數據</p>
+  <div class="tags"><span class="tag tag-blue">流動性</span><span class="tag tag-orange">Fed/TGA/RRP</span><span class="tag tag-blue">25 題</span></div>
   <span class="arrow">→</span>
 </a>
-
-<a class="card" href="options_onchain.html">
-  <span class="icon">⛓️</span>
-  <h2>期權結構 + 鏈上指標</h2>
-  <p>Options Flow 解讀 → Max Pain / IV Skew / GEX → Put/Call Ratio → 鏈上 NUPL/MVRV → STH/LTH 成本線 → 交易所淨流出 → Stablecoin 供給信號</p>
-  <div class="tags">
-    <span class="tag tag-purple">Gamma Exposure</span>
-    <span class="tag tag-red">鏈上數據</span>
-    <span class="tag tag-orange">Stablecoin Flow</span>
-  </div>
-  <span class="arrow">→</span>
-</a>
-
-<a class="card" href="trading_strategy.html">
-  <span class="icon">⏱️</span>
-  <h2>日內交易 + 五日週期戰略</h2>
-  <p>台灣時區交易日程 → 行前準備 SOP → ORB/VWAP/動能戰術 → 五日週期節奏 → 風險管理(倉位/止損/槓桿) → 復盤框架 → 情境測驗</p>
-  <div class="tags">
-    <span class="tag tag-red">風險管理</span>
-    <span class="tag tag-blue">行前 SOP</span>
-    <span class="tag tag-green">復盤框架</span>
-    <span class="tag tag-purple">20 題測驗</span>
-  </div>
-  <span class="arrow">→</span>
-</a>
-
 <a class="card" href="forex_analysis.html">
   <span class="icon">💱</span>
   <h2>外匯 + 原物料 + 宏觀傳導</h2>
-  <p>DXY 深度分析 → USD/JPY Carry Trade → 台幣/亞洲貨幣 → 商品貨幣(AUD/CAD) → 外匯交易策略 → 全景傳導圖 → 互動測驗</p>
-  <div class="tags">
-    <span class="tag tag-blue">DXY + Dollar Smile</span>
-    <span class="tag tag-red">Carry Trade 危機</span>
-    <span class="tag tag-green">台幣/亞洲 FX</span>
-    <span class="tag tag-orange">24 題測驗</span>
-  </div>
+  <p>DXY → USD/JPY Carry Trade → 台幣/亞洲 FX → 商品貨幣 → 全景傳導圖</p>
+  <div class="tags"><span class="tag tag-red">Carry Trade</span><span class="tag tag-green">台幣</span><span class="tag tag-blue">24 題</span></div>
   <span class="arrow">→</span>
 </a>
+</div>
 
+<div class="section-label">風控與回測</div>
+<div class="grid">
+<a class="card" href="risk_management.html">
+  <span class="icon">🛡️</span>
+  <h2>資金管理與風險控制</h2>
+  <p>R-Multiple → 凱利公式 → 部位計算機 → 最大回撤 → 槓桿風控 → 組合風險</p>
+  <div class="tags"><span class="tag tag-red">Risk of Ruin</span><span class="tag tag-purple">計算機</span><span class="tag tag-blue">16 題</span></div>
+  <span class="arrow">→</span>
+</a>
+<a class="card" href="backtesting.html">
+  <span class="icon">🔬</span>
+  <h2>回測與績效統計</h2>
+  <p>Sharpe/Sortino → 期望值 → 交易日誌(localStorage) → Walk-Forward → Overfitting</p>
+  <div class="tags"><span class="tag tag-green">互動日誌</span><span class="tag tag-orange">Monte Carlo</span><span class="tag tag-blue">16 題</span></div>
+  <span class="arrow">→</span>
+</a>
+</div>
+
+<div class="section-label">策略與心理</div>
+<div class="grid">
+<a class="card" href="trading_strategy.html">
+  <span class="icon">⏱️</span>
+  <h2>日內交易 + 五日週期戰略</h2>
+  <p>台灣時區日程 → 行前 SOP → ORB/VWAP → 週期節奏 → 風控 → 復盤</p>
+  <div class="tags"><span class="tag tag-blue">SOP</span><span class="tag tag-green">復盤</span><span class="tag tag-blue">20 題</span></div>
+  <span class="arrow">→</span>
+</a>
 <a class="card" href="trading_psychology.html">
   <span class="icon">🧠</span>
   <h2>交易心理學 — 讓自己不輸錢</h2>
-  <p>認知偏誤圖鑑 → 虧損模式辨識(報復/FOMO/不停損) → 紀律系統 → 心態管理技巧 → 贏家心態模型 → 情境模擬 → 自我評估測驗</p>
-  <div class="tags">
-    <span class="tag tag-purple">認知偏誤</span>
-    <span class="tag tag-red">虧損模式</span>
-    <span class="tag tag-green">紀律系統</span>
-    <span class="tag tag-blue">35 題測驗</span>
-  </div>
+  <p>認知偏誤 → 虧損模式 → 紀律系統 → 心態管理 → 贏家模型 → 情境模擬</p>
+  <div class="tags"><span class="tag tag-purple">偏誤</span><span class="tag tag-red">紀律</span><span class="tag tag-blue">35 題</span></div>
   <span class="arrow">→</span>
 </a>
-
 <a class="card" href="market_psychology.html">
   <span class="icon">🎭</span>
   <h2>市場心理 + 主力動向 + 川普交易</h2>
-  <p>群眾心理週期 → 主力 vs 散戶辨識 → 川普操作模式與反向交易 → 新聞/媒體心理 → Polymarket 量化情緒 → 市場操縱辨識 → 互動測驗</p>
-  <div class="tags">
-    <span class="tag tag-orange">川普交易</span>
-    <span class="tag tag-purple">主力行為</span>
-    <span class="tag tag-blue">流動性獵殺</span>
-    <span class="tag tag-green">25 題測驗</span>
-  </div>
+  <p>群眾週期 → 主力 vs 散戶 → 川普模式 → 新聞心理 → Polymarket → 操縱辨識</p>
+  <div class="tags"><span class="tag tag-orange">川普</span><span class="tag tag-purple">主力</span><span class="tag tag-blue">25 題</span></div>
   <span class="arrow">→</span>
 </a>
-
 </div>
 
 <div class="footer">
-  Built for systematic trading education | 所有頁面含互動測驗與 SVG 圖解
+  11 modules · 200+ quiz questions · Zero dependencies<br>
+  <a href="https://hdchen-course.github.io/market-radar/education/" style="color:var(--text3);">GitHub Pages</a>
 </div>
 
-</div>
 </body>
 </html>

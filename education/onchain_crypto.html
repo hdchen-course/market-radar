@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鏈上數據分析 — 加密貨幣完整學習指南</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #ffedd5;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+header h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
+header .sub { color: var(--text3); font-size: 14px; }
+.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-weight: 500; font-size: 14px; }
+.back-link:hover { text-decoration: underline; }
+
+/* Navigation */
+.nav { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+.nav-btn {
+  padding: 10px 18px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg2); color: var(--text2); cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: all .2s;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
+
+/* Sections */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.card-header {
+  padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+  transition: background .15s;
+}
+.card-header:hover { background: var(--bg3); }
+.card-header .arrow { color: var(--text3); transition: transform .2s; font-size: 12px; }
+.card-header.open .arrow { transform: rotate(90deg); }
+.card-header h3 { font-size: 16px; font-weight: 600; flex: 1; margin: 0; }
+.card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
+.card-body.open { display: block; }
+
+/* Typography */
+h2 { font-size: 22px; font-weight: 700; margin: 32px 0 16px; color: var(--blue); }
+h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
+p { margin-bottom: 12px; color: var(--text2); }
+ul, ol { margin: 12px 0 12px 24px; color: var(--text2); }
+li { margin-bottom: 6px; }
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3); padding: 2px 6px; border-radius: 4px;
+  font-size: 13px; color: var(--purple);
+}
+.highlight {
+  background: var(--blue-l); border-left: 4px solid var(--blue);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0;
+}
+.highlight.green { background: var(--green-l); border-color: var(--green); }
+.highlight.red { background: var(--red-l); border-color: var(--red); }
+.highlight.purple { background: var(--purple-l); border-color: var(--purple); }
+.highlight.orange { background: var(--orange-l); border-color: var(--orange); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+th { background: var(--bg3); font-weight: 600; color: var(--text); }
+td { color: var(--text2); }
+tr:nth-child(even) { background: var(--bg3); }
+
+/* SVG Container */
+.svg-container { margin: 20px 0; text-align: center; }
+.svg-container svg { max-width: 100%; height: auto; }
+
+/* Quiz */
+.quiz-section { margin-top: 24px; }
+.quiz-q {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.quiz-q h4 { margin-top: 0; color: var(--text); }
+.quiz-q .options { margin: 12px 0; }
+.quiz-q label { display: block; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background .15s; }
+.quiz-q label:hover { background: var(--bg3); }
+.quiz-q input[type="radio"] { margin-right: 8px; }
+.quiz-q .explanation {
+  display: none; margin-top: 12px; padding: 12px 16px;
+  border-radius: 8px; font-size: 14px;
+}
+.quiz-q .explanation.correct { display: block; background: var(--green-l); color: #166534; }
+.quiz-q .explanation.wrong { display: block; background: var(--red-l); color: #991b1b; }
+.quiz-btn {
+  padding: 10px 24px; border-radius: 8px; border: none;
+  background: var(--blue); color: #fff; cursor: pointer;
+  font-size: 14px; font-weight: 600; transition: background .2s;
+}
+.quiz-btn:hover { background: #1d4ed8; }
+.score-display {
+  font-size: 18px; font-weight: 700; color: var(--blue);
+  margin-top: 16px; padding: 16px; background: var(--blue-l);
+  border-radius: var(--r); text-align: center; display: none;
+}
+
+/* Tag */
+.tag {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 12px; font-weight: 600; margin-right: 6px;
+}
+.tag.bullish { background: var(--green-l); color: var(--green); }
+.tag.bearish { background: var(--red-l); color: var(--red); }
+.tag.neutral { background: var(--orange-l); color: var(--orange); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<header>
+  <h1>鏈上數據分析</h1>
+  <p class="sub">On-Chain Analytics | BTC / ETH / DeFi / Stablecoin 完整學習指南</p>
+</header>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showTab(0)">鏈上基礎</button>
+  <button class="nav-btn" onclick="showTab(1)">BTC 鏈上指標</button>
+  <button class="nav-btn" onclick="showTab(2)">ETH + DeFi</button>
+  <button class="nav-btn" onclick="showTab(3)">Stablecoin 流動性</button>
+  <button class="nav-btn" onclick="showTab(4)">綜合鏈上框架</button>
+  <button class="nav-btn" onclick="showTab(5)">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<div class="card-body" style="display:block;border-top:none;">
+<h4 style="color:#ea580c;">指標使用限制</h4>
+<p><strong>鏈上指標</strong> 提供長期趨勢判斷，不適合短線進出場 timing。NUPL/MVRV 適合判斷週期位置，不適合日內交易。<br>
+<strong>數據延遲</strong>：鏈上數據通常有 1-24 小時延遲，不是即時交易信號。<br>
+<strong>生態變化</strong>：ETF、L2、跨鏈橋等新基礎設施會改變傳統鏈上指標的有效性。</p>
+</div>
+</div>
+
+<!-- ==================== TAB 1: 鏈上基礎 ==================== -->
+<div class="tab-content active" id="tab0">
+<h2>鏈上基礎</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>什麼是鏈上數據？</h3>
+  </div>
+  <div class="card-body">
+    <h4>核心概念</h4>
+    <p>鏈上數據 (On-Chain Data) 是直接從區塊鏈上提取的交易和活動資訊。由於區塊鏈是公開帳本，所有交易都是透明且不可篡改的 — 這讓我們可以追蹤「大戶行為」。</p>
+
+    <div class="highlight green">
+      <strong>為什麼鏈上數據有效？</strong>
+      <ul>
+        <li><strong>透明性</strong>：每筆交易永久記錄在區塊鏈上，任何人都可以驗證</li>
+        <li><strong>不可偽造</strong>：不像社交媒體情緒可以被操縱，鏈上行為需要真金白銀</li>
+        <li><strong>先行指標</strong>：大戶的鏈上行為（轉帳、質押、提幣）往往先於價格變動</li>
+        <li><strong>全面性</strong>：涵蓋所有參與者 — 從散戶到鯨魚到礦工</li>
+      </ul>
+    </div>
+
+    <h4>鏈上 vs 鏈下數據</h4>
+    <table>
+      <tr><th>類型</th><th>來源</th><th>範例</th><th>特性</th></tr>
+      <tr><td><strong>鏈上 (On-Chain)</strong></td><td>區塊鏈公開帳本</td><td>UTXO 移動、智能合約互動、Gas 費</td><td>透明、不可篡改、有延遲</td></tr>
+      <tr><td><strong>鏈下 (Off-Chain)</strong></td><td>交易所、社交媒體</td><td>Order book、Funding Rate、Twitter 情緒</td><td>即時但可被操縱</td></tr>
+      <tr><td><strong>混合型</strong></td><td>交易所 + 鏈上</td><td>Exchange Flow（交易所流入/流出）</td><td>結合兩者優勢</td></tr>
+    </table>
+
+    <h4>UTXO 模型 vs Account 模型</h4>
+    <ul>
+      <li><strong>UTXO (Bitcoin)</strong>：每筆交易消耗舊的輸出、產生新的輸出。可以精確追蹤每個「幣」的歷史，計算持有時間和成本</li>
+      <li><strong>Account (Ethereum)</strong>：類似銀行帳戶模型。追蹤地址餘額變化，但無法像 UTXO 一樣精確追蹤「哪顆幣」</li>
+      <li><strong>影響</strong>：BTC 的鏈上指標（如 SOPR、Coin Days Destroyed）基於 UTXO，比 ETH 更精確</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>鏈上數據的核心分析框架</h3>
+  </div>
+  <div class="card-body">
+    <h4>四大分析維度</h4>
+    <table>
+      <tr><th>維度</th><th>問什麼</th><th>代表指標</th></tr>
+      <tr><td><strong>估值</strong></td><td>市場被高估還是低估？</td><td>NUPL, MVRV, NVT Ratio</td></tr>
+      <tr><td><strong>行為</strong></td><td>參與者在做什麼？</td><td>SOPR, Exchange Flow, Active Addresses</td></tr>
+      <tr><td><strong>供給</strong></td><td>供給分佈如何？</td><td>STH/LTH Supply, Miner Balance, Whale Holdings</td></tr>
+      <tr><td><strong>流動性</strong></td><td>有多少「彈藥」準備入場？</td><td>Stablecoin Supply, Exchange Stablecoin Ratio</td></tr>
+    </table>
+
+    <div class="highlight purple">
+      <strong>分析原則</strong>：
+      <ul>
+        <li>單一指標永遠不足以做決策 — 至少看 3-4 個不同維度的指標</li>
+        <li>鏈上指標是「方向指南針」而非「精確計時器」— 適合判斷週期位置，不適合抓精確頂底</li>
+        <li>結合宏觀環境（利率、DXY）使用效果更好</li>
+      </ul>
+    </div>
+
+    <h4>鏈上分析 vs 傳統技術分析</h4>
+    <table>
+      <tr><th>維度</th><th>鏈上分析</th><th>傳統技術分析</th></tr>
+      <tr><td>數據來源</td><td>區塊鏈公開帳本</td><td>價格、成交量</td></tr>
+      <tr><td>適用時間框架</td><td>中長期（週/月）</td><td>短中長期皆可</td></tr>
+      <tr><td>獨特優勢</td><td>看到「誰」在做什麼</td><td>看到「市場」在做什麼</td></tr>
+      <tr><td>最佳用途</td><td>判斷週期位置和大戶行為</td><td>判斷進出場時機和支撐阻力</td></tr>
+      <tr><td>局限</td><td>有延遲、不適合短線</td><td>無法區分散戶和機構</td></tr>
+    </table>
+    <div class="highlight">
+      <strong>最佳組合</strong>：鏈上分析判斷「大方向」（現在應該做多還是做空？）+ 技術分析判斷「精確時機」（在哪個價位進場？）
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>數據源與工具</h3>
+  </div>
+  <div class="card-body">
+    <h4>主要鏈上數據平台</h4>
+    <table>
+      <tr><th>平台</th><th>強項</th><th>特色功能</th><th>費用</th></tr>
+      <tr><td><strong>Glassnode</strong></td><td>最全面的 BTC/ETH 指標</td><td>NUPL, MVRV, SOPR, STH/LTH</td><td>$$$（免費版有限）</td></tr>
+      <tr><td><strong>CryptoQuant</strong></td><td>Exchange Flow, 衍生品</td><td>Funding Rate, Exchange Reserve, Whale Alert</td><td>免費/付費</td></tr>
+      <tr><td><strong>Dune Analytics</strong></td><td>自定義查詢（SQL）</td><td>用戶自建 Dashboard, DeFi 深度分析</td><td>免費/付費</td></tr>
+      <tr><td><strong>DefiLlama</strong></td><td>DeFi TVL 追蹤</td><td>所有鏈的 TVL, Protocol 比較</td><td>免費</td></tr>
+      <tr><td><strong>Nansen</strong></td><td>Smart Money 追蹤</td><td>地址標籤, Token Flow, NFT 分析</td><td>$$$</td></tr>
+      <tr><td><strong>IntoTheBlock</strong></td><td>地址分析</td><td>大額交易, 持有時間分佈, 盈虧分佈</td><td>免費/付費</td></tr>
+      <tr><td><strong>Artemis</strong></td><td>跨鏈比較</td><td>Developer Activity, Fees, TVL 比較</td><td>免費/付費</td></tr>
+    </table>
+
+    <h4>免費起步方案</h4>
+    <div class="highlight">
+      <ul>
+        <li><strong>Glassnode 免費版</strong>：基礎的 NUPL, MVRV 圖表（延遲 24h）</li>
+        <li><strong>CryptoQuant 免費版</strong>：Exchange Flow, Funding Rate</li>
+        <li><strong>DefiLlama</strong>：完全免費的 TVL 和 Stablecoin 追蹤</li>
+        <li><strong>Dune</strong>：免費查詢社群 Dashboard</li>
+        <li><strong>Whale Alert (Twitter)</strong>：免費的大額轉帳通知</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: BTC 鏈上指標 ==================== -->
+<div class="tab-content" id="tab1">
+<h2>BTC 鏈上指標</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>NUPL (Net Unrealized Profit/Loss)</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p><code>NUPL = (Market Cap - Realized Cap) / Market Cap</code></p>
+    <p>衡量整個市場參與者的「帳面盈虧」狀態。Realized Cap 是每個 UTXO 最後一次移動時的價格加總。</p>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260">
+        <rect width="580" height="260" fill="#f8fafc" rx="8"/>
+        <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">NUPL Bands 與市場週期</text>
+        <rect x="60" y="35" width="480" height="30" fill="#dc262640" rx="4"/>
+        <rect x="60" y="65" width="480" height="30" fill="#ea580c40" rx="4"/>
+        <rect x="60" y="95" width="480" height="30" fill="#eab30840" rx="4"/>
+        <rect x="60" y="125" width="480" height="30" fill="#16a34a40" rx="4"/>
+        <rect x="60" y="155" width="480" height="30" fill="#2563eb40" rx="4"/>
+        <rect x="60" y="185" width="480" height="30" fill="#7c3aed40" rx="4"/>
+        <text x="55" y="55" text-anchor="end" font-size="10" fill="#dc2626" font-weight="600">&gt;0.75</text>
+        <text x="55" y="85" text-anchor="end" font-size="10" fill="#ea580c" font-weight="600">0.5-0.75</text>
+        <text x="55" y="115" text-anchor="end" font-size="10" fill="#eab308" font-weight="600">0.25-0.5</text>
+        <text x="55" y="145" text-anchor="end" font-size="10" fill="#16a34a" font-weight="600">0-0.25</text>
+        <text x="55" y="175" text-anchor="end" font-size="10" fill="#2563eb" font-weight="600">-0.25-0</text>
+        <text x="55" y="205" text-anchor="end" font-size="10" fill="#7c3aed" font-weight="600">&lt;-0.25</text>
+        <text x="300" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Euphoria (歷史頂部)</text>
+        <text x="300" y="85" text-anchor="middle" font-size="11" font-weight="600" fill="#ea580c">Greed (貪婪)</text>
+        <text x="300" y="115" text-anchor="middle" font-size="11" font-weight="600" fill="#eab308">Optimism (樂觀)</text>
+        <text x="300" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Hope (希望)</text>
+        <text x="300" y="175" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Fear (恐懼)</text>
+        <text x="300" y="205" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Capitulation (投降 / 歷史底部)</text>
+        <polyline points="80,170 120,130 160,90 200,50 220,45 240,55 260,110 300,160 340,180 370,170 400,120 430,75 460,50 480,48 500,60 520,100" fill="none" stroke="#0f172a" stroke-width="2"/>
+        <text x="200" y="240" text-anchor="middle" font-size="10" fill="#64748b">2017 Top</text>
+        <text x="320" y="240" text-anchor="middle" font-size="10" fill="#64748b">2018 Bottom</text>
+        <text x="460" y="240" text-anchor="middle" font-size="10" fill="#64748b">2021 Top</text>
+      </svg>
+    </div>
+
+    <h4>實戰規則</h4>
+    <table>
+      <tr><th>NUPL 區間</th><th>狀態</th><th>操作建議</th></tr>
+      <tr><td>&gt; 0.75</td><td>Euphoria</td><td><span class="tag bearish">分批出場</span> 歷史上都是頂部</td></tr>
+      <tr><td>0.5 - 0.75</td><td>Greed</td><td>開始減倉、提高警覺</td></tr>
+      <tr><td>0.25 - 0.5</td><td>Optimism</td><td>持有，趨勢仍在</td></tr>
+      <tr><td>0 - 0.25</td><td>Hope</td><td>開始建倉</td></tr>
+      <tr><td>&lt; 0</td><td>Capitulation</td><td><span class="tag bullish">極端抄底機會</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>MVRV (Market Value to Realized Value)</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p><code>MVRV = Market Cap / Realized Cap</code></p>
+    <p>衡量市場目前的定價相對於所有持有者的平均成本（Realized Cap）是高估還是低估。</p>
+
+    <h4>關鍵閾值</h4>
+    <table>
+      <tr><th>MVRV</th><th>含義</th><th>歷史對應</th></tr>
+      <tr><td>&gt; 3.5</td><td>極度過熱，所有人平均獲利 250%+</td><td>2017/12, 2021/4</td></tr>
+      <tr><td>2.0 - 3.5</td><td>偏高但未到極端</td><td>牛市中段</td></tr>
+      <tr><td>1.0 - 2.0</td><td>正常範圍</td><td>大部分時間</td></tr>
+      <tr><td>&lt; 1.0</td><td>所有人平均虧損！</td><td>2018/12, 2020/3, 2022/11</td></tr>
+    </table>
+
+    <h4>MVRV Z-Score</h4>
+    <p><code>Z-Score = (Market Cap - Realized Cap) / Std(Market Cap)</code></p>
+    <div class="highlight green">
+      <strong>Z-Score 更精確</strong>：消除了 market cap 成長帶來的偏差。Z-Score &gt; 7 = 賣出，Z-Score &lt; 0.1 = 買入。
+    </div>
+
+    <h4>MVRV 的變體</h4>
+    <ul>
+      <li><strong>STH-MVRV</strong>：只看短期持有者的 MVRV — 更敏感，適合判斷短期支撐/阻力</li>
+      <li><strong>LTH-MVRV</strong>：只看長期持有者的 MVRV — 更穩定，適合判斷大週期</li>
+      <li><strong>實戰</strong>：STH-MVRV < 1 + LTH-MVRV > 1 = 短期痛苦但長期持有者仍獲利 = 修正非熊市</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>STH / LTH 成本線 + Supply 分佈</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <ul>
+      <li><strong>STH (Short-Term Holder)</strong>：持有 &lt; 155 天的地址</li>
+      <li><strong>LTH (Long-Term Holder)</strong>：持有 &gt; 155 天的地址</li>
+      <li><strong>Realized Price</strong>：該群體所有 UTXO 的加權平均成本</li>
+    </ul>
+
+    <h4>解讀框架</h4>
+    <table>
+      <tr><th>價格位置</th><th>含義</th><th>歷史出現</th></tr>
+      <tr><td>Price &gt; STH Cost</td><td>短期持有者獲利 → 市場健康</td><td>正常牛市</td></tr>
+      <tr><td>Price &lt; STH Cost</td><td>短期持有者虧損 → 恐慌拋售加速</td><td>修正初期</td></tr>
+      <tr><td>Price &lt; LTH Cost</td><td>長期持有者也虧損 → 極端熊市底部</td><td>2015, 2018/12, 2022/11</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>牛市中的支撐</strong>：在牛市中，BTC 價格回測 STH Realized Price 通常是絕佳買點（類似傳統技術分析中的「回測均線」）。
+    </div>
+
+    <h4>STH-SOPR 組合</h4>
+    <p>當 STH 的 SOPR &lt; 1（短期持有者在虧損狀態下賣出）+ 價格觸及 STH Realized Price = 高概率反轉點。</p>
+
+    <h4>LTH/STH Supply Ratio</h4>
+    <div class="highlight purple">
+      <ul>
+        <li><strong>LTH Supply 佔比上升</strong>：更多 BTC 被長期鎖定 = 流動供給減少 = 長期利好</li>
+        <li><strong>LTH Supply 佔比下降</strong>：長期持有者開始分發 = Distribution 階段開始</li>
+        <li><strong>歷史規律</strong>：每個牛市頂部前 3-6 個月，LTH Supply 開始下降</li>
+        <li><strong>Illiquid Supply</strong>：從不移動或極少移動的 BTC 數量 — 持續上升代表「鑽石手」增加</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>SOPR (Spent Output Profit Ratio)</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p><code>SOPR = 賣出時價值 / 買入時價值</code>（所有當天移動的 UTXO 加總）</p>
+
+    <table>
+      <tr><th>SOPR 值</th><th>含義</th><th>信號</th></tr>
+      <tr><td>&gt; 1</td><td>平均而言賣出者在獲利</td><td>牛市中回測 1.0 是支撐</td></tr>
+      <tr><td>= 1</td><td>盈虧平衡</td><td>關鍵支撐/阻力</td></tr>
+      <tr><td>&lt; 1</td><td>平均而言賣出者在虧損</td><td>投降信號 / 底部信號</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>牛市法則</strong>：在確認的牛市中，SOPR 回測 1.0 並反彈 = 買入機會（人們在成本價選擇不賣）。<br>
+      <strong>熊市法則</strong>：在熊市中，SOPR 反彈到 1.0 後再度下跌 = 做空機會（人們在回本時急忙出逃）。
+    </div>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 220">
+        <rect width="560" height="220" fill="#f8fafc" rx="8"/>
+        <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">SOPR 行為模式：牛市 vs 熊市</text>
+        <rect x="20" y="35" width="250" height="170" rx="6" fill="#dcfce740" stroke="#16a34a" stroke-width="1"/>
+        <text x="145" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">牛市 SOPR 行為</text>
+        <line x1="40" y1="130" x2="250" y2="130" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="255" y="134" font-size="9" fill="#64748b">1.0</text>
+        <polyline points="50,90 80,100 110,120 130,130 145,125 170,100 200,85 230,95" fill="none" stroke="#16a34a" stroke-width="2"/>
+        <circle cx="130" cy="130" r="4" fill="#16a34a"/>
+        <text x="130" y="155" text-anchor="middle" font-size="9" fill="#16a34a">Support! Buy here</text>
+        <rect x="290" y="35" width="250" height="170" rx="6" fill="#fee2e240" stroke="#dc2626" stroke-width="1"/>
+        <text x="415" y="52" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">熊市 SOPR 行為</text>
+        <line x1="310" y1="110" x2="520" y2="110" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="525" y="114" font-size="9" fill="#64748b">1.0</text>
+        <polyline points="320,150 350,140 380,120 400,112 410,115 430,130 460,155 490,165" fill="none" stroke="#dc2626" stroke-width="2"/>
+        <circle cx="400" cy="112" r="4" fill="#dc2626"/>
+        <text x="400" y="100" text-anchor="middle" font-size="9" fill="#dc2626">Resistance! Sell here</text>
+      </svg>
+    </div>
+
+    <h4>aSOPR (Adjusted SOPR)</h4>
+    <p>移除了 coin age &lt; 1 hour 的交易（排除交易所內部轉帳和 change outputs），更能反映真實的獲利/虧損行為。</p>
+
+    <h4>SOPR 的進階用法</h4>
+    <table>
+      <tr><th>SOPR 變體</th><th>定義</th><th>最佳用途</th></tr>
+      <tr><td>STH-SOPR</td><td>只看短期持有者的 SOPR</td><td>判斷短期市場情緒和支撐/阻力</td></tr>
+      <tr><td>LTH-SOPR</td><td>只看長期持有者的 SOPR</td><td>判斷大週期的分發/積累</td></tr>
+      <tr><td>aSOPR</td><td>去除 noise 的調整版</td><td>最乾淨的通用信號</td></tr>
+      <tr><td>Entity-Adjusted SOPR</td><td>以實體（非地址）為單位</td><td>消除同一人多地址的干擾</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>LTH-SOPR 進場的週期信號</strong>：
+      <ul>
+        <li>LTH-SOPR 從 > 1 持續下降到接近 1 = LTH 獲利空間壓縮 = 分發減速</li>
+        <li>LTH-SOPR < 1 = 長期持有者在虧損賣出 = 極端投降 = 歷史底部</li>
+        <li>LTH-SOPR 從 < 1 回升突破 1 = 投降結束，新一輪上漲開始</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Exchange Flow + 礦工指標</h3>
+  </div>
+  <div class="card-body">
+    <h4>交易所淨流出 / 流入</h4>
+    <p><code>Exchange Netflow = 流入交易所的 BTC - 流出交易所的 BTC</code></p>
+
+    <table>
+      <tr><th>情境</th><th>Netflow</th><th>含義</th><th>方向</th></tr>
+      <tr><td>大量流入</td><td>&gt; 0</td><td>準備在交易所賣出</td><td><span class="tag bearish">Bearish</span></td></tr>
+      <tr><td>大量流出</td><td>&lt; 0</td><td>提幣到冷錢包 = 長期持有</td><td><span class="tag bullish">Bullish</span></td></tr>
+      <tr><td>鯨魚單筆大額流入</td><td>&gt; 0</td><td>大戶即將出貨</td><td><span class="tag bearish">Strong Bearish</span></td></tr>
+    </table>
+
+    <div class="highlight orange">
+      <strong>注意事項</strong>：
+      <ul>
+        <li>需要區分是「真正的個人錢包流出」還是「交易所之間的內部轉帳」</li>
+        <li>ETF 上市後，部分流入可能是 ETF custodian 的調度，不是散戶賣出</li>
+        <li>最好結合「鯨魚地址追蹤」一起看</li>
+      </ul>
+    </div>
+
+    <h4>礦工指標 + 減半週期</h4>
+    <table>
+      <tr><th>指標</th><th>定義</th><th>信號</th></tr>
+      <tr><td>Hash Ribbon</td><td>30D vs 60D Hash Rate MA</td><td>30D &lt; 60D = 礦工投降 = 底部信號</td></tr>
+      <tr><td>Puell Multiple</td><td>Daily Miner Revenue / 365D MA Revenue</td><td>&lt; 0.5 = 低估, &gt; 4 = 過熱</td></tr>
+      <tr><td>Miner Outflow</td><td>從礦池地址流出到交易所的 BTC</td><td>大額流出 = 礦工需要套現 = 賣壓</td></tr>
+      <tr><td>Difficulty Ribbon</td><td>不同 MA 期間的挖礦難度帶</td><td>壓縮 = 礦工投降結束 = 買入</td></tr>
+    </table>
+
+    <h4>減半週期效應</h4>
+    <ul>
+      <li><strong>減半前 6 個月</strong>：市場開始 price in，通常溫和上漲</li>
+      <li><strong>減半後 3-6 個月</strong>：供給衝擊開始顯現，加速上漲</li>
+      <li><strong>減半後 12-18 個月</strong>：歷史上每次都達到新 ATH</li>
+      <li><strong>注意</strong>：每次減半效應遞減（區塊獎勵佔比越來越小）</li>
+    </ul>
+
+    <div class="highlight purple">
+      <strong>Stock-to-Flow 模型</strong>：雖然已被部分「證偽」（2022 年嚴重偏離），但其核心邏輯（供給減少 + 需求增加 = 價格上漲）仍然有效。不要作為精確定價模型使用，但供給衝擊的方向性判斷仍有參考價值。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: ETH + DeFi ==================== -->
+<div class="tab-content" id="tab2">
+<h2>ETH + DeFi 鏈上指標</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>ETH Staking + Gas + Burn</h3>
+  </div>
+  <div class="card-body">
+    <h4>1. Staking Rate（質押比例）</h4>
+    <table>
+      <tr><th>指標</th><th>Bullish</th><th>Bearish</th></tr>
+      <tr><td>Staking Ratio 上升</td><td>供給減少 + 長期信心增加</td><td>-</td></tr>
+      <tr><td>Staking Ratio 下降</td><td>-</td><td>validators 退出 = 信心動搖</td></tr>
+      <tr><td>Staking Queue 增長</td><td>需求旺盛</td><td>-</td></tr>
+      <tr><td>Exit Queue 增長</td><td>-</td><td>大規模退出 = 風險</td></tr>
+    </table>
+
+    <h4>2. Gas Fee（Gas 費用）</h4>
+    <ul>
+      <li><strong>High Gas (&gt; 50 gwei)</strong>：鏈上活躍度高 = 使用需求強 = 生態健康</li>
+      <li><strong>Low Gas (&lt; 10 gwei)</strong>：鏈上沉寂 = 需求疲弱 = 可能見底也可能持續低迷</li>
+      <li><strong>Gas Spike</strong>：通常由 NFT mint、DeFi 清算、或新協議上線引發</li>
+    </ul>
+
+    <h4>3. ETH Burn Rate (EIP-1559)</h4>
+    <div class="highlight purple">
+      <strong>EIP-1559 機制</strong>：每筆交易的 base fee 被永久銷毀。<br>
+      <ul>
+        <li><strong>High Burn</strong>：大量 ETH 被銷毀 → 供給通縮 → 長期利好價格</li>
+        <li><strong>Low Burn</strong>：銷毀量低於 PoS 新發行量 → ETH 供給通膨</li>
+        <li><strong>淨通縮日</strong>：Burn &gt; Issuance = 每天 ETH 總量在減少</li>
+      </ul>
+    </div>
+
+    <div class="svg-container">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 240">
+        <rect width="560" height="240" fill="#f8fafc" rx="8"/>
+        <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">ETH Supply Change: Burn vs Issuance</text>
+        <line x1="60" y1="120" x2="520" y2="120" stroke="#cbd5e1" stroke-width="1"/>
+        <line x1="60" y1="40" x2="60" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="280" y="225" text-anchor="middle" font-size="11" fill="#64748b">Time</text>
+        <text x="540" y="115" font-size="10" fill="#64748b">0</text>
+        <rect x="80" y="95" width="420" height="25" fill="#dc262630" rx="2"/>
+        <text x="290" y="112" text-anchor="middle" font-size="10" fill="#dc2626">PoS Issuance (~1600 ETH/day)</text>
+        <rect x="80" y="120" width="40" height="60" fill="#16a34a80" rx="2"/>
+        <rect x="130" y="120" width="40" height="40" fill="#16a34a80" rx="2"/>
+        <rect x="180" y="120" width="40" height="80" fill="#16a34a80" rx="2"/>
+        <rect x="230" y="120" width="40" height="30" fill="#16a34a80" rx="2"/>
+        <rect x="280" y="120" width="40" height="50" fill="#16a34a80" rx="2"/>
+        <rect x="330" y="120" width="40" height="90" fill="#16a34a80" rx="2"/>
+        <rect x="380" y="120" width="40" height="20" fill="#16a34a80" rx="2"/>
+        <rect x="430" y="120" width="40" height="70" fill="#16a34a80" rx="2"/>
+        <polyline points="100,85 150,100 200,65 250,110 300,95 350,55 400,115 450,80" fill="none" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="80" y="38" width="12" height="12" fill="#dc262630"/>
+        <text x="98" y="48" font-size="10" fill="#0f172a">Daily Issuance</text>
+        <rect x="200" y="38" width="12" height="12" fill="#16a34a80"/>
+        <text x="218" y="48" font-size="10" fill="#0f172a">Daily Burn (EIP-1559)</text>
+        <rect x="340" y="38" width="12" height="3" fill="#7c3aed"/>
+        <text x="358" y="43" font-size="10" fill="#0f172a">Net Supply Change</text>
+        <text x="350" y="57" font-size="9" font-weight="600" fill="#16a34a">Deflationary Day</text>
+        <text x="60" y="88" font-size="9" fill="#16a34a">Deflation</text>
+        <text x="60" y="140" font-size="9" fill="#dc2626">Inflation</text>
+      </svg>
+    </div>
+
+    <h4>ETH/BTC Ratio 作為風險偏好指標</h4>
+    <ul>
+      <li><strong>ETH/BTC 上升</strong>：市場 risk-on，資金從 BTC 流向更高 beta 資產</li>
+      <li><strong>ETH/BTC 下降</strong>：市場 risk-off，資金回流 BTC 避險</li>
+      <li><strong>歷史規律</strong>：牛市後期 ETH outperform BTC → ALT season 信號</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>DeFi TVL 與生態健康</h3>
+  </div>
+  <div class="card-body">
+    <h4>定義</h4>
+    <p><strong>TVL (Total Value Locked)</strong> = 所有 DeFi 協議中鎖定的資產總值。代表市場願意承擔智能合約風險的資金量。</p>
+
+    <table>
+      <tr><th>TVL 變化</th><th>含義</th><th>延伸</th></tr>
+      <tr><td>TVL 增長</td><td>生態健康，資金在鏈上工作</td><td>利好 ETH（gas demand）和 DeFi tokens</td></tr>
+      <tr><td>TVL 暴跌</td><td>風險規避，資金撤離</td><td>可能有系統性風險（如 Terra/LUNA、FTX）</td></tr>
+      <tr><td>TVL 穩定但 Token 價格跌</td><td>只是投機降溫，基本面仍在</td><td>反而是好的買入時機</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>注意 TVL 的幻覺</strong>：TVL 以 USD 計算時，token 價格下跌會自動降低 TVL。需要看「以 ETH 計價」的 TVL 來判斷真實資金流動。
+    </div>
+
+    <h4>關鍵 DeFi 指標</h4>
+    <ul>
+      <li><strong>DEX Volume / CEX Volume</strong>：比率上升 = 鏈上活躍度增加</li>
+      <li><strong>Lending Protocol Utilization</strong>：高借款利率 = 槓桿需求高 = 牛市特徵</li>
+      <li><strong>Liquidation Volume</strong>：大量清算 = 去槓桿 = 可能接近底部</li>
+    </ul>
+
+    <h4>DeFi 系統性風險指標</h4>
+    <table>
+      <tr><th>警示信號</th><th>含義</th><th>歷史案例</th></tr>
+      <tr><td>Stablecoin de-peg (&gt; 1%)</td><td>市場對 stablecoin 信心動搖</td><td>UST (2022/5), USDC (2023/3 SVB)</td></tr>
+      <tr><td>Protocol TVL 24h -30%+</td><td>可能有 exploit 或 bank run</td><td>Terra/Anchor, FTX/Alameda</td></tr>
+      <tr><td>Lending 清算 cascade</td><td>槓桿過度 → 連鎖清算</td><td>2021/5 BTC 從 $58K 到 $30K</td></tr>
+      <tr><td>Bridge exploit</td><td>跨鏈橋被駭 → 信心崩塌</td><td>Ronin, Wormhole, Nomad</td></tr>
+    </table>
+
+    <div class="highlight red">
+      <strong>DeFi 風險管理原則</strong>：
+      <ul>
+        <li>不在單一協議部署超過總資產 20%</li>
+        <li>監控 stablecoin peg — 任何 de-peg 立即撤資</li>
+        <li>留意「不可能的高利率」— 如果 yield > 20% 且來源不明 = Ponzi 結構風險</li>
+        <li>使用 DefiSafety 或 DeFiLlama Risk 評分篩選協議</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>L2 生態與跨鏈數據</h3>
+  </div>
+  <div class="card-body">
+    <h4>L2 對鏈上分析的影響</h4>
+    <p>隨著 Arbitrum、Optimism、Base 等 L2 成長，傳統的 L1 指標可能低估了實際的鏈上活躍度。</p>
+
+    <table>
+      <tr><th>指標</th><th>L1 Only 視角</th><th>L1 + L2 完整視角</th></tr>
+      <tr><td>Gas Fee 低</td><td>「需求疲弱」</td><td>可能只是活動遷移到 L2</td></tr>
+      <tr><td>ETH Burn 低</td><td>「通膨」</td><td>L2 batch posting 使用更有效率</td></tr>
+      <tr><td>Active Addresses 減少</td><td>「用戶流失」</td><td>用戶可能在 L2 上活躍</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>完整分析應包含</strong>：
+      <ul>
+        <li>L2 的 TVL 趨勢（DefiLlama L2 section）</li>
+        <li>L2 的日活地址和交易數</li>
+        <li>L2 向 L1 發布的 batch 數據量</li>
+        <li>跨鏈橋的資金流向</li>
+      </ul>
+    </div>
+
+    <h4>跨鏈資金流追蹤</h4>
+    <ul>
+      <li><strong>資金流入新鏈</strong>：代表該生態有吸引力（新 dApp、空投預期）</li>
+      <li><strong>資金從新鏈流回 ETH</strong>：該生態降溫，資金回歸安全資產</li>
+      <li><strong>追蹤工具</strong>：DefiLlama Bridges、Dune cross-chain dashboards</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: Stablecoin 流動性 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>Stablecoin 流動性</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Stablecoin 供給 — 加密市場的「場外流動性」</h3>
+  </div>
+  <div class="card-body">
+    <h4>核心邏輯</h4>
+    <div class="highlight">
+      <strong>Stablecoin Market Cap = 加密市場的「彈藥庫」</strong>。更多 stablecoin 被鑄造 = 更多法幣進入加密生態 = 潛在買壓。
+    </div>
+
+    <table>
+      <tr><th>指標</th><th>Bullish</th><th>Bearish</th></tr>
+      <tr><td>USDT Market Cap 增加</td><td>新錢入場，尤其是亞洲/新興市場</td><td>-</td></tr>
+      <tr><td>USDT Market Cap 減少</td><td>-</td><td>資金離場</td></tr>
+      <tr><td>USDC Market Cap 增加</td><td>美國機構/合規資金入場</td><td>-</td></tr>
+      <tr><td>Stablecoin / Total Crypto MC 比例高</td><td>大量 dry powder 等待部署</td><td>-</td></tr>
+    </table>
+
+    <h4>USDC vs USDT 的差異</h4>
+    <ul>
+      <li><strong>USDT</strong>：全球性，亞洲主導，零售和場外交易為主</li>
+      <li><strong>USDC</strong>：美國合規，機構偏好，代表「聰明錢」入場</li>
+      <li>當 USDC 供給增長但 USDT 持平 = 機構在建倉</li>
+    </ul>
+
+    <h4>Stablecoin Dominance</h4>
+    <p><code>Stablecoin Dominance = Stablecoin MC / Total Crypto MC</code></p>
+    <ul>
+      <li>Dominance 高（&gt; 10%）= 資金在觀望，尚未入場 = 未來有買壓空間</li>
+      <li>Dominance 低（&lt; 5%）= 資金已 fully deployed = 缺乏增量資金</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>USDT/USDC Mint-Burn 作為先行指標</h3>
+  </div>
+  <div class="card-body">
+    <h4>Mint (鑄造) = 新供給 = 新資金入場</h4>
+    <div class="highlight green">
+      <strong>Mint 邏輯</strong>：Tether/Circle 只會在收到法幣後才鑄造新的 stablecoin。所以每一次大額 mint = 有人存入了等量的美元。
+      <ul>
+        <li><strong>$500M+ USDT Mint</strong>：大型場外交易或機構入場</li>
+        <li><strong>連續多日 Mint</strong>：持續性的資金流入 = 強烈看多</li>
+        <li><strong>Mint 到交易所地址</strong>：準備直接買幣</li>
+        <li><strong>Mint 到 DeFi 地址</strong>：準備部署收益策略</li>
+      </ul>
+    </div>
+
+    <h4>Burn (銷毀) = 供給減少 = 資金離場</h4>
+    <div class="highlight red">
+      <strong>Burn 邏輯</strong>：用戶將 stablecoin 贖回為法幣時，stablecoin 被銷毀。
+      <ul>
+        <li><strong>大額 USDT Burn</strong>：資金從加密市場撤離</li>
+        <li><strong>連續 Burn</strong>：持續性的資金流出 = 看空</li>
+        <li><strong>Burn 後 Supply 明顯下降</strong>：需要觀察是「恐慌性出逃」還是「正常贖回」</li>
+      </ul>
+    </div>
+
+    <h4>歷史 Mint/Burn 與價格對照</h4>
+    <table>
+      <tr><th>時期</th><th>Stablecoin 行為</th><th>BTC 走勢</th><th>結論</th></tr>
+      <tr><td>2020 Q3-Q4</td><td>USDT 連續大規模 Mint</td><td>$10K → $30K</td><td>Mint 是先行指標 (+3-4 週)</td></tr>
+      <tr><td>2021 Q4</td><td>Mint 停滯，USDC 開始 Burn</td><td>$69K → $35K</td><td>流入枯竭預示頂部</td></tr>
+      <tr><td>2022 Q2</td><td>USDT 大規模 Burn（Luna 效應）</td><td>$30K → $17K</td><td>Burn 加速下跌</td></tr>
+      <tr><td>2023 Q4</td><td>USDT 恢復 Mint + USDC 回穩</td><td>$27K → $45K</td><td>Mint 恢復 = 信心回歸</td></tr>
+    </table>
+
+    <h4>追蹤工具</h4>
+    <ul>
+      <li><strong>Whale Alert (@whale_alert)</strong>：即時通知大額 mint/burn</li>
+      <li><strong>Tether Transparency Page</strong>：官方供給數據</li>
+      <li><strong>DefiLlama Stablecoins</strong>：所有穩定幣供給匯總圖表</li>
+      <li><strong>Dune @steakhouse</strong>：詳細的 USDC mint/burn 分析 dashboard</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>交易所 Stablecoin 流入 + Exchange Stablecoin Ratio</h3>
+  </div>
+  <div class="card-body">
+    <h4>方向判斷</h4>
+    <table>
+      <tr><th>Flow 方向</th><th>含義</th><th>信號</th></tr>
+      <tr><td>大量 USDT 流入交易所</td><td>準備買幣</td><td><span class="tag bullish">Bullish</span></td></tr>
+      <tr><td>大量 USDT 從交易所流出</td><td>OTC 出金 或 DeFi 部署</td><td><span class="tag bearish">Bearish</span> 或 中性</td></tr>
+      <tr><td>Stablecoin 流入 + BTC 流出</td><td>資金在「換車」：用穩定幣買 BTC 並提幣</td><td><span class="tag bullish">Strong Bullish</span></td></tr>
+    </table>
+
+    <h4>Exchange Stablecoin Ratio (ESR)</h4>
+    <p><code>ESR = Exchange Stablecoin Balance / BTC Exchange Balance (in USD)</code></p>
+
+    <div class="highlight">
+      <strong>ESR 的含義</strong>：
+      <ul>
+        <li><strong>ESR 高</strong>：交易所上穩定幣相對 BTC 很多 = 大量「子彈」準備部署 = 買壓潛力大</li>
+        <li><strong>ESR 低</strong>：穩定幣已被部署（換成 BTC 了）= 缺乏增量資金</li>
+        <li><strong>ESR 突然上升</strong>：大量 stablecoin 湧入但 BTC 未動 = 即將有大動作</li>
+      </ul>
+    </div>
+
+    <h4>On-Chain vs CEX Flow 的差異</h4>
+    <table>
+      <tr><th>數據源</th><th>代表</th><th>限制</th></tr>
+      <tr><td>On-Chain Stablecoin Flow</td><td>實際的區塊鏈轉帳</td><td>無法區分「買幣意圖」vs「做 DeFi」</td></tr>
+      <tr><td>CEX Order Book</td><td>交易所內的買賣意圖</td><td>可以被 spoof（假單）</td></tr>
+      <tr><td>Combined</td><td>Stablecoin 流入 CEX = 買幣意圖明確</td><td>最佳組合信號</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Stablecoin De-Peg 風險監控</h3>
+  </div>
+  <div class="card-body">
+    <h4>為什麼 De-Peg 是最嚴重的風險信號</h4>
+    <p>穩定幣是加密生態的基礎設施。當穩定幣脫錨，整個生態的信任基礎動搖。</p>
+
+    <table>
+      <tr><th>De-Peg 幅度</th><th>嚴重程度</th><th>應對</th></tr>
+      <tr><td>&lt; 0.5%</td><td>正常波動</td><td>觀察，不需反應</td></tr>
+      <tr><td>0.5% - 2%</td><td>值得關注</td><td>減少該 stablecoin 敞口</td></tr>
+      <tr><td>2% - 5%</td><td>嚴重警告</td><td>立即撤出所有相關部位</td></tr>
+      <tr><td>&gt; 5%</td><td>系統性風險</td><td>全面避險，考慮做空</td></tr>
+    </table>
+
+    <h4>歷史 De-Peg 事件</h4>
+    <div class="highlight red">
+      <ul>
+        <li><strong>UST (2022/5)</strong>：從 $1 → $0.06。觸發整個加密市場崩盤，BTC 跌 40%</li>
+        <li><strong>USDC (2023/3)</strong>：SVB 暴雷導致短暫脫錨至 $0.87。48 小時內恢復，但過程中引發恐慌</li>
+        <li><strong>DAI (2020/3)</strong>：Black Thursday 清算 cascade 導致短暫脫錨</li>
+      </ul>
+    </div>
+
+    <h4>監控清單</h4>
+    <ul>
+      <li>DEX 上的 Stablecoin 交易對價格（Curve 3pool 比例）</li>
+      <li>Curve 的 Stablecoin 池平衡度 — 不平衡 = 有人在拋售某個 stablecoin</li>
+      <li>Circle/Tether 的官方儲備報告</li>
+      <li>社交媒體的 FUD 程度（Twitter, Reddit）</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>Stablecoin 市場結構與新興趨勢</h3>
+  </div>
+  <div class="card-body">
+    <h4>主要穩定幣對比</h4>
+    <table>
+      <tr><th>穩定幣</th><th>機制</th><th>市場份額</th><th>鏈上分析價值</th></tr>
+      <tr><td><strong>USDT</strong></td><td>法幣抵押（中心化）</td><td>~65%</td><td>全球零售需求指標，亞洲市場主導</td></tr>
+      <tr><td><strong>USDC</strong></td><td>法幣抵押（合規）</td><td>~20%</td><td>美國機構需求指標</td></tr>
+      <tr><td><strong>DAI/USDS</strong></td><td>超額抵押（去中心化）</td><td>~5%</td><td>DeFi 生態健康指標</td></tr>
+      <tr><td><strong>FDUSD</strong></td><td>法幣抵押（Binance 生態）</td><td>~3%</td><td>Binance 交易需求指標</td></tr>
+      <tr><td><strong>USDe (Ethena)</strong></td><td>Delta-Neutral 策略</td><td>~2%</td><td>DeFi 創新風險指標</td></tr>
+    </table>
+
+    <h4>Stablecoin 作為全球美元需求代理</h4>
+    <div class="highlight green">
+      <strong>宏觀視角</strong>：Stablecoin 供給增長反映的不只是加密市場需求，還包括：
+      <ul>
+        <li><strong>新興市場美元需求</strong>：阿根廷、土耳其、奈及利亞等國家的人民用 USDT 規避本幣貶值</li>
+        <li><strong>跨境匯款</strong>：比傳統匯款更快更便宜的替代方案</li>
+        <li><strong>DeFi 收益</strong>：持有 stablecoin 在 DeFi 中獲得美元收益率</li>
+        <li><strong>交易結算</strong>：加密交易對的主要計價單位</li>
+      </ul>
+    </div>
+
+    <h4>Stablecoin Yield 作為市場情緒指標</h4>
+    <table>
+      <tr><th>DeFi Stablecoin Yield</th><th>含義</th><th>市場階段</th></tr>
+      <tr><td>&gt; 10%</td><td>借貸需求極高 = 市場槓桿過度</td><td>牛市後期 / 過熱</td></tr>
+      <tr><td>5% - 10%</td><td>健康的借貸需求</td><td>正常牛市</td></tr>
+      <tr><td>2% - 5%</td><td>借貸需求偏低</td><td>整理期</td></tr>
+      <tr><td>&lt; 2%</td><td>幾乎無借貸需求</td><td>熊市底部 / 極度冷清</td></tr>
+    </table>
+
+    <div class="highlight purple">
+      <strong>進階用法</strong>：比較 DeFi Stablecoin Yield vs US Treasury Yield：
+      <ul>
+        <li>DeFi Yield > Treasury：資金有動機留在鏈上 = bullish for crypto</li>
+        <li>DeFi Yield < Treasury：資金有動機回歸 TradFi = bearish for crypto</li>
+        <li>2022-2023 年 Fed 加息使 Treasury yield 大幅上升，資金從 DeFi 流出</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 綜合鏈上框架 ==================== -->
+<div class="tab-content" id="tab4">
+<h2>綜合鏈上框架</h2>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>多空力量評估模型 — 打分卡</h3>
+  </div>
+  <div class="card-body">
+    <h4>完整指標打分卡</h4>
+    <table>
+      <tr><th>類別</th><th>指標</th><th>Bullish 條件 (+1)</th><th>Bearish 條件 (-1)</th></tr>
+      <tr><td>估值</td><td>NUPL</td><td>&lt; 0.25 (低估)</td><td>&gt; 0.75 (泡沫)</td></tr>
+      <tr><td>估值</td><td>MVRV</td><td>&lt; 1.0 (低估)</td><td>&gt; 3.5 (過熱)</td></tr>
+      <tr><td>行為</td><td>SOPR</td><td>&lt; 1 且牛市回測</td><td>&gt; 1 且持續上升</td></tr>
+      <tr><td>行為</td><td>Exchange Flow (BTC)</td><td>淨流出</td><td>淨流入</td></tr>
+      <tr><td>供給</td><td>LTH Supply</td><td>持續增加（囤幣中）</td><td>開始減少（分發中）</td></tr>
+      <tr><td>供給</td><td>Miner Behavior</td><td>Hash Ribbon 買入信號</td><td>大額 Miner Outflow</td></tr>
+      <tr><td>流動性</td><td>Stablecoin Supply</td><td>供給增加（新錢入場）</td><td>供給減少（資金離場）</td></tr>
+      <tr><td>流動性</td><td>Stablecoin Exchange</td><td>流入交易所（準備買）</td><td>流出交易所</td></tr>
+      <tr><td>衍生品</td><td>Funding Rate</td><td>&lt; 0 (空頭擠壓)</td><td>&gt; 0.05% (過熱)</td></tr>
+      <tr><td>衍生品</td><td>OI + Price</td><td>OI 下降 + Price 下降 (投降)</td><td>OI 上升 + Price 上升 (過熱)</td></tr>
+      <tr><td>DeFi</td><td>TVL (ETH 計價)</td><td>增長中</td><td>急劇下降</td></tr>
+      <tr><td>ETH</td><td>ETH/BTC Ratio</td><td>上升（risk-on）</td><td>下降（risk-off）</td></tr>
+    </table>
+
+    <div class="highlight purple">
+      <strong>使用方法</strong>：<br>
+      每個指標給 +1（Bullish）、0（中性）、-1（Bearish）分數。<br>
+      加總 &gt; +6 = 強烈看多 | 加總 &lt; -6 = 強烈看空 | -3 到 +3 = 混合信號，觀望。
+    </div>
+
+    <h4>權重建議</h4>
+    <ul>
+      <li><strong>核心指標（2x 權重）</strong>：NUPL, MVRV, Stablecoin Supply — 這些歷史上最準確</li>
+      <li><strong>確認指標（1x 權重）</strong>：SOPR, Exchange Flow, Funding — 用於確認方向</li>
+      <li><strong>輔助指標（0.5x 權重）</strong>：TVL, ETH/BTC, Miner — 提供額外 context</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>市場週期定位 — Wyckoff 階段 + 鏈上映射</h3>
+  </div>
+  <div class="card-body">
+    <div class="svg-container">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 300">
+        <rect width="580" height="300" fill="#f8fafc" rx="8"/>
+        <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Wyckoff 市場週期 + 鏈上指標對應</text>
+        <path d="M 40,200 Q 80,200 100,180 Q 130,140 160,120 Q 200,90 240,80 Q 280,75 300,90 Q 330,110 340,130 Q 360,160 380,180 Q 400,200 420,210 Q 450,220 470,210 Q 490,195 510,170 Q 530,140 550,120" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+        <rect x="40" y="230" width="100" height="50" rx="6" fill="#dcfce7" stroke="#16a34a"/>
+        <text x="90" y="250" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Accumulation</text>
+        <text x="90" y="268" text-anchor="middle" font-size="9" fill="#334155">NUPL&lt;0, MVRV&lt;1</text>
+        <rect x="160" y="40" width="100" height="50" rx="6" fill="#dbeafe" stroke="#2563eb"/>
+        <text x="210" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Markup</text>
+        <text x="210" y="78" text-anchor="middle" font-size="9" fill="#334155">SOPR>1, Flow Out</text>
+        <rect x="280" y="40" width="100" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+        <text x="330" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Distribution</text>
+        <text x="330" y="78" text-anchor="middle" font-size="9" fill="#334155">NUPL>0.75, Flow In</text>
+        <rect x="430" y="230" width="110" height="50" rx="6" fill="#ffedd5" stroke="#ea580c"/>
+        <text x="485" y="250" text-anchor="middle" font-size="11" font-weight="600" fill="#ea580c">Markdown</text>
+        <text x="485" y="268" text-anchor="middle" font-size="9" fill="#334155">SOPR&lt;1, Funding-</text>
+      </svg>
+    </div>
+
+    <h4>各階段詳細指標特徵</h4>
+    <table>
+      <tr><th>Wyckoff 階段</th><th>鏈上特徵</th><th>衍生品特徵</th><th>Stablecoin 特徵</th></tr>
+      <tr><td><strong>Accumulation</strong><br>(底部建倉)</td><td>NUPL &lt; 0, MVRV &lt; 1<br>Exchange Outflow 持續<br>LTH 不賣</td><td>OI 低, Funding 負或零<br>清算已完成</td><td>Supply 停止下降<br>開始微量 Mint</td></tr>
+      <tr><td><strong>Markup</strong><br>(上漲趨勢)</td><td>SOPR &gt; 1 且穩步上升<br>LTH 不賣<br>STH Cost 作為支撐</td><td>OI 緩慢增長<br>Funding 微正</td><td>Supply 穩定增長<br>流入交易所增加</td></tr>
+      <tr><td><strong>Distribution</strong><br>(頂部出貨)</td><td>NUPL &gt; 0.75<br>Exchange Inflow 增加<br>LTH 開始賣出</td><td>OI 極高<br>Funding &gt; 0.05%</td><td>Mint 停滯<br>Supply 增長放緩</td></tr>
+      <tr><td><strong>Markdown</strong><br>(下跌趨勢)</td><td>SOPR &lt; 1<br>STH 全部虧損<br>Exchange Inflow 恐慌</td><td>連續清算<br>OI 崩塌</td><td>大規模 Burn<br>Supply 下降</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>歷史回測案例</h3>
+  </div>
+  <div class="card-body">
+    <h4>案例 1: 2020 年 3 月 — COVID 崩盤底部</h4>
+    <div class="highlight green">
+      <table>
+        <tr><th>指標</th><th>當時數值</th><th>信號</th></tr>
+        <tr><td>NUPL</td><td>-0.02 (Capitulation)</td><td><span class="tag bullish">Extreme Bullish</span></td></tr>
+        <tr><td>MVRV</td><td>0.85</td><td><span class="tag bullish">Extreme Bullish</span></td></tr>
+        <tr><td>Exchange Flow</td><td>淨流出（恐慌後回穩）</td><td><span class="tag bullish">Bullish</span></td></tr>
+        <tr><td>SOPR</td><td>0.85</td><td><span class="tag bullish">Capitulation</span></td></tr>
+        <tr><td>Stablecoin</td><td>USDT 開始大規模 Mint</td><td><span class="tag bullish">Strong Bullish</span></td></tr>
+      </table>
+      <p><strong>結果</strong>：BTC 從 $3,800 漲至 $65,000（+1600%）<br>
+      <strong>教訓</strong>：所有鏈上指標同時達到極端 = 世代級買入機會</p>
+    </div>
+
+    <h4>案例 2: 2021 年 11 月 — 歷史頂部</h4>
+    <div class="highlight red">
+      <table>
+        <tr><th>指標</th><th>當時數值</th><th>信號</th></tr>
+        <tr><td>NUPL</td><td>0.74 (接近 Euphoria)</td><td><span class="tag bearish">Extreme Bearish</span></td></tr>
+        <tr><td>MVRV</td><td>3.2</td><td><span class="tag bearish">Overheated</span></td></tr>
+        <tr><td>Exchange Flow</td><td>大額流入</td><td><span class="tag bearish">Bearish</span></td></tr>
+        <tr><td>LTH Supply</td><td>開始下降（分發）</td><td><span class="tag bearish">Bearish</span></td></tr>
+        <tr><td>Stablecoin Growth</td><td>停滯</td><td><span class="tag bearish">Bearish</span></td></tr>
+        <tr><td>Funding Rate</td><td>0.08%+</td><td><span class="tag bearish">Overheated</span></td></tr>
+      </table>
+      <p><strong>結果</strong>：BTC 從 $69,000 跌至 $15,500（-77%）<br>
+      <strong>教訓</strong>：LTH 開始分發 + Stablecoin 停止流入 = 頂部最可靠信號</p>
+    </div>
+
+    <h4>案例 3: 2022 年 6-11 月 — FTX 前的混合信號</h4>
+    <div class="highlight orange">
+      <table>
+        <tr><th>指標</th><th>當時數值</th><th>信號</th></tr>
+        <tr><td>NUPL</td><td>-0.15 (Capitulation)</td><td><span class="tag bullish">Bullish</span></td></tr>
+        <tr><td>MVRV</td><td>0.9</td><td><span class="tag bullish">Bullish</span></td></tr>
+        <tr><td>Stablecoin</td><td>USDT 贖回中（Luna 崩盤效應）</td><td><span class="tag bearish">Bearish</span></td></tr>
+        <tr><td>Exchange Flow</td><td>流入增加</td><td><span class="tag bearish">Bearish</span></td></tr>
+        <tr><td>DeFi TVL</td><td>暴跌 60%</td><td><span class="tag bearish">Bearish</span></td></tr>
+      </table>
+      <p><strong>結果</strong>：混合信號 → 反彈但隨後 FTX 爆雷再度暴跌。<br>
+      <strong>教訓</strong>：信號不一致時需要更多確認。估值便宜不代表不會更便宜 — Stablecoin 外流是關鍵警訊。</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>實戰工作流程 — 每日鏈上分析 SOP</h3>
+  </div>
+  <div class="card-body">
+    <h4>Step 1: 宏觀 + 流動性環境（5 分鐘）</h4>
+    <ul>
+      <li>DXY 趨勢 — 美元走弱利好加密</li>
+      <li>全球流動性方向（Fed Balance Sheet、M2）</li>
+      <li>Stablecoin 總供給變化（DefiLlama）</li>
+    </ul>
+
+    <h4>Step 2: BTC 鏈上核心指標（10 分鐘）</h4>
+    <ul>
+      <li><strong>NUPL/MVRV</strong>：市場在什麼週期位置？</li>
+      <li><strong>STH Realized Price</strong>：距離當前價格多遠？（支撐/阻力）</li>
+      <li><strong>Exchange Balance</strong>：BTC 交易所餘額趨勢</li>
+      <li><strong>SOPR</strong>：回測 1.0 了嗎？在 1 上方還是下方？</li>
+    </ul>
+
+    <h4>Step 3: 流動性 + 衍生品（5 分鐘）</h4>
+    <ul>
+      <li><strong>Stablecoin Flow</strong>：有無大額 Mint/Burn？交易所流向？</li>
+      <li><strong>Funding Rate</strong>：BTC/ETH 永續合約 funding</li>
+      <li><strong>OI 變化</strong>：增倉還是減倉？</li>
+      <li><strong>鯨魚追蹤</strong>：Whale Alert 有無大額異動？</li>
+    </ul>
+
+    <h4>Step 4: 綜合打分 + 決策（5 分鐘）</h4>
+    <div class="highlight">
+      <strong>決策矩陣：</strong>
+      <ul>
+        <li><strong>Score &gt; +6</strong>：加倉多頭，使用 70%+ 倉位</li>
+        <li><strong>Score +3 到 +6</strong>：維持多頭偏向，50% 倉位</li>
+        <li><strong>Score -3 到 +3</strong>：觀望或僅小倉位嘗試</li>
+        <li><strong>Score -3 到 -6</strong>：減倉或小型避險</li>
+        <li><strong>Score &lt; -6</strong>：全面避險或做空，保護資本</li>
+      </ul>
+    </div>
+
+    <h4>數據來源推薦</h4>
+    <table>
+      <tr><th>類型</th><th>工具</th><th>特色</th></tr>
+      <tr><td>BTC 鏈上</td><td>Glassnode / CryptoQuant</td><td>NUPL, MVRV, SOPR, STH/LTH</td></tr>
+      <tr><td>Exchange Flow</td><td>CryptoQuant / IntoTheBlock</td><td>即時流入流出, 鯨魚追蹤</td></tr>
+      <tr><td>DeFi</td><td>DefiLlama</td><td>TVL, Protocol 比較（免費）</td></tr>
+      <tr><td>Stablecoin</td><td>DefiLlama + Whale Alert</td><td>供給追蹤 + 大額 Mint/Burn 通知</td></tr>
+      <tr><td>Smart Money</td><td>Nansen / Arkham</td><td>地址標籤, 資金流向</td></tr>
+      <tr><td>自定義查詢</td><td>Dune Analytics</td><td>SQL 查詢任何鏈上數據</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>衍生品鏈上指標 — Funding + OI + 清算</h3>
+  </div>
+  <div class="card-body">
+    <h4>永續合約 Funding Rate</h4>
+    <p><code>Funding Rate = 多頭支付給空頭（正值）或空頭支付給多頭（負值）</code></p>
+
+    <table>
+      <tr><th>Funding Rate</th><th>含義</th><th>交易信號</th></tr>
+      <tr><td>&gt; 0.05% (per 8h)</td><td>多頭過度擁擠，槓桿過高</td><td><span class="tag bearish">過熱，可能大回調</span></td></tr>
+      <tr><td>0.01% - 0.05%</td><td>正常看多共識</td><td>中性偏多</td></tr>
+      <tr><td>0% - 0.01%</td><td>平衡</td><td>無信號</td></tr>
+      <tr><td>&lt; 0%</td><td>空頭過度擁擠</td><td><span class="tag bullish">Short Squeeze 風險</span></td></tr>
+      <tr><td>&lt; -0.03%</td><td>極度看空共識</td><td><span class="tag bullish">逆向看多</span></td></tr>
+    </table>
+
+    <h4>Open Interest (OI) + Price 組合判讀</h4>
+    <table>
+      <tr><th>OI 變化</th><th>價格變化</th><th>含義</th></tr>
+      <tr><td>OI 增加</td><td>Price 上漲</td><td>新多頭建倉 → 趨勢健康但注意過熱</td></tr>
+      <tr><td>OI 增加</td><td>Price 下跌</td><td>新空頭建倉 → 看空趨勢加強</td></tr>
+      <tr><td>OI 減少</td><td>Price 上漲</td><td>空頭平倉（Short Squeeze）→ 反彈可能不持久</td></tr>
+      <tr><td>OI 減少</td><td>Price 下跌</td><td>多頭投降平倉 → 去槓桿，接近底部</td></tr>
+    </table>
+
+    <h4>清算數據</h4>
+    <div class="highlight orange">
+      <strong>清算 (Liquidation) 作為情緒指標</strong>：
+      <ul>
+        <li><strong>大量多頭清算</strong>：市場下跌引發連鎖停損 → 可能是瀑布式下跌的加速器</li>
+        <li><strong>大量空頭清算</strong>：上漲引發空頭止損 → Short Squeeze 放大漲幅</li>
+        <li><strong>清算結束後</strong>：槓桿被清除 = 市場更健康 = 可能是反轉起點</li>
+        <li><strong>$1B+ 清算日</strong>：歷史上通常是極端事件的結束點，可以開始逆向布局</li>
+      </ul>
+    </div>
+
+    <h4>Funding + OI 組合策略</h4>
+    <ul>
+      <li><strong>Funding 極高 + OI 新高 + Price 新高</strong>：三重過熱 → 強烈的回調信號</li>
+      <li><strong>Funding 極負 + OI 增加 + Price 下跌</strong>：空頭積極建倉 → Short Squeeze 即將到來</li>
+      <li><strong>OI 崩塌 + Funding 歸零</strong>：去槓桿完成 → 開始觀察新的方向信號</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span class="arrow">&#9654;</span>
+    <h3>鏈上指標的局限性與進化</h3>
+  </div>
+  <div class="card-body">
+    <h4>ETF 時代對鏈上分析的影響</h4>
+    <p>2024 年 BTC ETF 上市後，傳統鏈上指標面臨新的挑戰：</p>
+    <table>
+      <tr><th>變化</th><th>對傳統指標的影響</th><th>調整方式</th></tr>
+      <tr><td>ETF 持有 BTC 在 custodian</td><td>Exchange Balance 可能失真</td><td>區分 ETF custodian vs 散戶交易所</td></tr>
+      <tr><td>ETF 資金流入/流出</td><td>不經過傳統鏈上路徑</td><td>需要結合 ETF Flow 數據</td></tr>
+      <tr><td>BTC 「紙上」交易增加</td><td>鏈上活躍度可能與實際需求脫節</td><td>Active Addresses 需要重新校準</td></tr>
+      <tr><td>機構參與度增加</td><td>傳統散戶行為模式可能不再主導</td><td>需要追蹤 Coinbase Premium Index</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>新時代補充指標</strong>：
+      <ul>
+        <li><strong>ETF Net Flow</strong>：每日 ETF 淨流入/流出（替代部分 Exchange Flow 功能）</li>
+        <li><strong>Coinbase Premium</strong>：Coinbase 價格 vs Binance 價格的溢價 = 美國機構需求</li>
+        <li><strong>Grayscale Discount/Premium</strong>：GBTC 折溢價反映機構情緒</li>
+        <li><strong>CME Futures Basis</strong>：CME 期貨溢價 = 機構的 carry trade 需求</li>
+      </ul>
+    </div>
+
+    <h4>指標失效的情境</h4>
+    <div class="highlight red">
+      <strong>鏈上指標可能失效的場景</strong>：
+      <ul>
+        <li><strong>黑天鵝事件</strong>：FTX 級別的交易所爆雷 — 所有指標無法預測</li>
+        <li><strong>監管突襲</strong>：政府突然禁令 — 基本面指標無法反映政策風險</li>
+        <li><strong>技術故障</strong>：協議 bug 或 hack — 鏈上數據可能出現異常讀數</li>
+        <li><strong>市場結構變化</strong>：新工具（如 ETF）改變資金路徑 — 舊指標需要重新校準</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>互動測驗</h2>
+<p>測試你對鏈上數據分析的理解。共 15 題。</p>
+
+<div class="quiz-section" id="quizContainer">
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q1. NUPL 值為 0.82，市場最可能處於什麼階段？</h4>
+  <div class="options">
+    <label><input type="radio" name="q1" value="a"> A. Accumulation（底部建倉）</label>
+    <label><input type="radio" name="q1" value="b"> B. Hope（希望）</label>
+    <label><input type="radio" name="q1" value="c"> C. Euphoria（歷史頂部區域）</label>
+    <label><input type="radio" name="q1" value="d"> D. Fear（恐懼）</label>
+  </div>
+  <div class="explanation">NUPL > 0.75 = Euphoria。歷史上每次進入此區間都是牛市頂部，應該開始分批減倉。2017 和 2021 的頂部都出現在此區間。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q2. 交易所出現大量 BTC 淨流入（Netflow > 0），這代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q2" value="a"> A. 機構在增持 BTC</label>
+    <label><input type="radio" name="q2" value="b"> B. 持有者準備在交易所賣出</label>
+    <label><input type="radio" name="q2" value="c"> C. 交易所在做內部調度</label>
+    <label><input type="radio" name="q2" value="d"> D. DeFi 資金回流 CeFi</label>
+  </div>
+  <div class="explanation">BTC 流入交易所的主要原因是準備賣出。BTC 存入交易所後可以快速掛賣單，這是 bearish 信號。但需要排除 ETF custodian 的調度。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q3. Stablecoin 供給增加 + 大量流入交易所 + BTC Exchange 餘額下降，綜合判斷？</h4>
+  <div class="options">
+    <label><input type="radio" name="q3" value="a"> A. Bearish — 資金在離開加密市場</label>
+    <label><input type="radio" name="q3" value="b"> B. 中性 — 信號互相矛盾</label>
+    <label><input type="radio" name="q3" value="c"> C. 無法判斷</label>
+    <label><input type="radio" name="q3" value="d"> D. Bullish — 新資金入場，正在買入 BTC 並提幣</label>
+  </div>
+  <div class="explanation">Stablecoin 增加 = 新錢入場。流入交易所 = 準備買幣。BTC 餘額下降 = BTC 被買走並提到冷錢包。三者結合 = 強烈的買入信號，代表「聰明錢」在積累。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q4. MVRV 為 0.85，SOPR 為 0.88，交易所 BTC 出現大額流入。綜合判斷？</h4>
+  <div class="options">
+    <label><input type="radio" name="q4" value="a"> A. 確定是底部，立即全倉買入</label>
+    <label><input type="radio" name="q4" value="b"> B. 接近底部但尚在投降中，可能還有最後一跌</label>
+    <label><input type="radio" name="q4" value="c"> C. 牛市初期</label>
+    <label><input type="radio" name="q4" value="d"> D. 沒有任何參考價值</label>
+  </div>
+  <div class="explanation">MVRV < 1 和 SOPR < 1 都顯示市場在底部區域（所有人虧損）。但大額流入交易所 = 仍有拋壓。結合看 = 投降階段進行中，接近但可能未到最低點。分批建倉合適，不宜一次梭哈。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q5. 在牛市中，BTC 的 SOPR 回測 1.0 後反彈，應該如何操作？</h4>
+  <div class="options">
+    <label><input type="radio" name="q5" value="a"> A. 加倉買入 — SOPR = 1 是牛市中的支撐</label>
+    <label><input type="radio" name="q5" value="b"> B. 停損出場</label>
+    <label><input type="radio" name="q5" value="c"> C. 減倉</label>
+    <label><input type="radio" name="q5" value="d"> D. 觀望</label>
+  </div>
+  <div class="explanation">牛市中 SOPR 回測 1.0 = 賣出者「回本就不賣了」= 支撐確立。這是經典的牛市中加倉機會，歷史上多次應驗（2017, 2020-2021 多次回測）。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q6. ETH Gas Fee 持續低迷（< 5 gwei）配合 ETH Burn Rate 低於每日發行量，代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q6" value="a"> A. ETH 供給在通縮，利好價格</label>
+    <label><input type="radio" name="q6" value="b"> B. 鏈上活躍度高</label>
+    <label><input type="radio" name="q6" value="c"> C. 鏈上需求疲弱 + ETH 供給通膨，雙重利空</label>
+    <label><input type="radio" name="q6" value="d"> D. L2 遷移的正常現象，不影響 ETH 價值</label>
+  </div>
+  <div class="explanation">低 Gas = 鏈上需求不足。Burn < Issuance = ETH 淨供給在增加（通膨）。兩者結合 = 對 ETH 的價格有雙重負面影響。雖然 L2 遷移可以解釋部分原因，但對 ETH L1 的價值捕獲確實是利空。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q7. USDC 供給快速增長但 USDT 持平，這代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q7" value="a"> A. 監管打壓 USDT，資金轉移</label>
+    <label><input type="radio" name="q7" value="b"> B. 亞洲資金入場</label>
+    <label><input type="radio" name="q7" value="c"> C. 沒有新資金入場，只是互相轉換</label>
+    <label><input type="radio" name="q7" value="d"> D. 美國機構/合規資金入場，是 bullish 信號</label>
+  </div>
+  <div class="explanation">USDC 代表美國合規資金和機構。USDC 獨立增長 = 機構在主動增加加密市場敞口。這通常預示著更大的資金流入，是 bullish 信號。USDT 代表亞洲/散戶；只有 USDC 漲 = 機構主導。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q8. DeFi TVL 以 ETH 計價仍在增長，但以 USD 計價在下跌。代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q8" value="a"> A. DeFi 基本面健康，只是 token 價格下跌拉低了 USD 計價 TVL</label>
+    <label><input type="radio" name="q8" value="b"> B. 資金在撤離 DeFi</label>
+    <label><input type="radio" name="q8" value="c"> C. 完全 bearish</label>
+    <label><input type="radio" name="q8" value="d"> D. TVL 數據不可靠</label>
+  </div>
+  <div class="explanation">以 ETH 計價 TVL 增長 = 實際上更多 ETH 被部署到 DeFi 中 = 使用需求真實增長。USD 計價下跌只是因為 ETH 價格跌了。這反而可能是好的買入時機 —— 基本面在改善但價格被壓制。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q9. 以下哪個組合最代表 Wyckoff Distribution 階段？</h4>
+  <div class="options">
+    <label><input type="radio" name="q9" value="a"> A. NUPL < 0, MVRV < 1, Exchange Outflow</label>
+    <label><input type="radio" name="q9" value="b"> B. SOPR > 1 穩定上升, Funding 0.01%, OI 緩增</label>
+    <label><input type="radio" name="q9" value="c"> C. SOPR < 1, 大量清算, OI 崩塌</label>
+    <label><input type="radio" name="q9" value="d"> D. NUPL > 0.7, Exchange Inflow 增加, LTH 開始賣, Funding > 0.05%</label>
+  </div>
+  <div class="explanation">Distribution = 頂部出貨。特徵：NUPL 極高（所有人獲利 = 出貨動機強）、Exchange Inflow（準備賣）、LTH 分發、高 Funding（槓桿多頭過熱）。A = Accumulation, B = Markup, C = Markdown。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q10. BTC 價格跌破 STH Realized Price，但 LTH 未賣出。判斷？</h4>
+  <div class="options">
+    <label><input type="radio" name="q10" value="a"> A. 市場已經見底</label>
+    <label><input type="radio" name="q10" value="b"> B. 短期可能加速下跌（STH 恐慌），但 LTH 信心在 = 不是熊市底部</label>
+    <label><input type="radio" name="q10" value="c"> C. 完全 bearish，立即出場</label>
+    <label><input type="radio" name="q10" value="d"> D. LTH 不賣出代表流動性枯竭</label>
+  </div>
+  <div class="explanation">Price < STH Cost = 短期持有者虧損 → 恐慌拋售可能加速（短期利空）。但 LTH 不賣 = 長期持有者仍有信心 = 不是系統性崩盤。通常是修正而非熊市底部。歷史上真正的底部需要 LTH 也投降（Price < LTH Cost）。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q11. Funding Rate 為 -0.03%，同時 Open Interest 在增加，代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q11" value="a"> A. 多頭在加倉</label>
+    <label><input type="radio" name="q11" value="b"> B. 市場在去槓桿</label>
+    <label><input type="radio" name="q11" value="c"> C. 空頭在加倉，可能面臨 short squeeze</label>
+    <label><input type="radio" name="q11" value="d"> D. 沒有方向意義</label>
+  </div>
+  <div class="explanation">負 Funding = 空頭佔多數（空頭付錢給多頭）。OI 增加 = 新倉在建立。結合 = 空頭在積極建倉。但這也意味著如果價格上漲，大量空頭被迫平倉 = short squeeze 風險高。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q12. 大額 USDT Mint ($1B) 出現，但 24 小時內未流入任何交易所。最可能的解讀？</h4>
+  <div class="options">
+    <label><input type="radio" name="q12" value="a"> A. 場外 OTC 交易或機構正在準備建倉，是前瞻性 bullish 信號</label>
+    <label><input type="radio" name="q12" value="b"> B. Tether 在做帳，不是真實需求</label>
+    <label><input type="radio" name="q12" value="c"> C. Bearish — 資金沒有進入市場</label>
+    <label><input type="radio" name="q12" value="d"> D. 對市場無影響</label>
+  </div>
+  <div class="explanation">大額 Mint 代表有人存入了真實的美元換取 USDT。未立即流入交易所可能是：(1) 場外 OTC 大宗交易，(2) 機構在準備分批建倉。無論哪種，新的 $1B 進入生態 = 長期 bullish。通常 Mint 後 1-3 週會看到市場影響。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q13. Curve 3pool 中 USDT 比例從 33% 上升到 55%。代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q13" value="a"> A. 人們偏好 USDT</label>
+    <label><input type="radio" name="q13" value="b"> B. 市場在拋售 USDT（換成 USDC/DAI），可能有 USDT de-peg 風險</label>
+    <label><input type="radio" name="q13" value="c"> C. 正常的 AMM 重平衡</label>
+    <label><input type="radio" name="q13" value="d"> D. Bullish for USDT</label>
+  </div>
+  <div class="explanation">Curve 3pool 的平衡反映市場對各 stablecoin 的信心。USDT 比例上升 = 人們在拋售 USDT 換成其他 stablecoin = 市場對 USDT 信心下降。這是 de-peg 風險的早期信號，需要密切關注。2022 年 Luna 崩盤時也出現過類似情況。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q14. Hash Ribbon 發出買入信號（30D MA 重新超越 60D MA），同時 MVRV < 1。操作建議？</h4>
+  <div class="options">
+    <label><input type="radio" name="q14" value="a"> A. 觀望 — 只有兩個指標不夠</label>
+    <label><input type="radio" name="q14" value="b"> B. 做空 — 礦工在投降代表還要跌</label>
+    <label><input type="radio" name="q14" value="c"> C. 開始建倉 — Hash Ribbon 買入 + MVRV 低估 是歷史上最強的底部組合信號之一</label>
+    <label><input type="radio" name="q14" value="d"> D. 全倉 all-in</label>
+  </div>
+  <div class="explanation">Hash Ribbon 買入信號 = 礦工投降結束（最弱的礦工已退出，壓力釋放）。配合 MVRV < 1 = 估值在歷史低位。兩者組合在 2015, 2019, 2020, 2022 底部都出現過，是最可靠的底部信號之一。開始建倉（分批）是正確做法。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q15. 完整面板：NUPL 0.68 | LTH Supply 開始下降 | Stablecoin Mint 停滯 | Funding 0.06% | Exchange Inflow 增加。你的操作？</h4>
+  <div class="options">
+    <label><input type="radio" name="q15" value="a"> A. 追多 — NUPL 還沒到 0.75</label>
+    <label><input type="radio" name="q15" value="b"> B. 觀望 — 信號混合</label>
+    <label><input type="radio" name="q15" value="c"> C. 加倉做多 — 牛市趨勢仍強</label>
+    <label><input type="radio" name="q15" value="d"> D. 減倉 + 設定停損 — 多個分發信號出現，風險增加</label>
+  </div>
+  <div class="explanation">NUPL 0.68（接近 Greed/Euphoria）+ LTH 開始賣 + Stablecoin 不再增長 + 高 Funding + Exchange Inflow = 4-5 個 Distribution 信號。雖然尚未確認頂部（NUPL 沒到 0.75），但風險明顯增加。正確做法是減倉保護利潤 + 設停損，而非追高。</div>
+</div>
+
+</div>
+
+<button class="quiz-btn" onclick="gradeQuiz()">提交答案</button>
+<div class="score-display" id="scoreDisplay"></div>
+
+</div>
+
+</div><!-- end container -->
+
+<script>
+// Tab navigation
+function showTab(index) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab' + index).classList.add('active');
+  document.querySelectorAll('.nav-btn')[index].classList.add('active');
+}
+
+// Accordion cards
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Quiz grading
+function gradeQuiz() {
+  const questions = document.querySelectorAll('.quiz-q');
+  let score = 0;
+  let total = questions.length;
+
+  questions.forEach((q, i) => {
+    const correct = q.dataset.correct;
+    const selected = q.querySelector('input[name="q' + (i + 1) + '"]:checked');
+    const explanation = q.querySelector('.explanation');
+
+    explanation.classList.remove('correct', 'wrong');
+
+    if (selected) {
+      if (selected.value === correct) {
+        score++;
+        explanation.classList.add('correct');
+      } else {
+        explanation.classList.add('wrong');
+      }
+    } else {
+      explanation.classList.add('wrong');
+    }
+  });
+
+  const display = document.getElementById('scoreDisplay');
+  display.style.display = 'block';
+  const pct = Math.round((score / total) * 100);
+  let grade = '';
+  if (pct >= 90) grade = 'A+ 出色！';
+  else if (pct >= 80) grade = 'A 優秀！';
+  else if (pct >= 70) grade = 'B 良好';
+  else if (pct >= 60) grade = 'C 及格';
+  else grade = 'D 需要複習';
+  display.textContent = `得分：${score} / ${total}（${pct}%）— ${grade}`;
+}
+
+// Auto-open first card in each tab
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    const firstHeader = tab.querySelector('.card-header');
+    if (firstHeader) {
+      firstHeader.classList.add('open');
+      firstHeader.nextElementSibling.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>

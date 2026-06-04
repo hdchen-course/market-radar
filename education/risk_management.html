@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>風險管理與部位大小 — 交易教育</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --green: #16a34a;
+  --red: #dc2626;
+  --purple: #7c3aed;
+  --orange: #ea580c;
+  --r: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 32px 20px;
+  line-height: 1.7;
+}
+.container { max-width: 1000px; margin: 0 auto; }
+.back-link {
+  display: inline-block;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: opacity .2s;
+}
+.back-link:hover { opacity: 0.7; }
+header { margin-bottom: 28px; }
+header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+header p { color: var(--text3); font-size: 14px; }
+
+/* Disclaimer */
+.disclaimer {
+  background: #fffbeb;
+  border: 1px solid #fbbf24;
+  border-radius: var(--r);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.disclaimer .icon { font-size: 22px; flex-shrink: 0; }
+.disclaimer p { font-size: 13px; color: #92400e; line-height: 1.6; }
+.disclaimer strong { color: #78350f; }
+
+/* Tabs */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+  overflow-x: auto;
+  padding-bottom: 0;
+}
+.tab-btn {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: none;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: all .2s;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+.tab-content { display: none; animation: fadeIn .3s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Content styling */
+.section { margin-bottom: 32px; }
+.section h2 { font-size: 20px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.section h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--text); }
+.section p { font-size: 14px; color: var(--text2); margin-bottom: 12px; }
+.section ul, .section ol { padding-left: 20px; margin-bottom: 14px; }
+.section li { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
+
+/* Card boxes */
+.card-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card-box h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.card-box p { font-size: 13px; color: var(--text2); }
+
+/* Highlight boxes */
+.highlight {
+  background: var(--bg3);
+  border-left: 4px solid var(--blue);
+  padding: 16px 20px;
+  border-radius: 0 var(--r) var(--r) 0;
+  margin-bottom: 16px;
+}
+.highlight.green { border-left-color: var(--green); }
+.highlight.red { border-left-color: var(--red); background: #fef2f2; }
+.highlight.purple { border-left-color: var(--purple); background: #faf5ff; }
+.highlight.orange { border-left-color: var(--orange); background: #fff7ed; }
+.highlight p { margin: 0; font-size: 13px; }
+.highlight strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+/* Formula */
+.formula {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--purple);
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+.data-table th, .data-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.data-table th {
+  background: var(--bg3);
+  font-weight: 600;
+  color: var(--text);
+}
+.data-table td { color: var(--text2); }
+.data-table tr:hover td { background: #f8fafc; }
+
+/* SVG container */
+.svg-container {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  overflow-x: auto;
+}
+.svg-container svg { max-width: 100%; height: auto; }
+
+/* Calculator */
+.calc-container {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.calc-container h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--blue);
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.calc-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+.calc-field input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  transition: border-color .2s;
+}
+.calc-field input:focus { border-color: var(--blue); }
+.calc-btn {
+  padding: 10px 24px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity .2s;
+}
+.calc-btn:hover { opacity: 0.85; }
+.calc-result {
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: var(--bg3);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.8;
+  display: none;
+}
+.calc-result.show { display: block; }
+
+/* Quiz */
+.quiz-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.quiz-box .q-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.quiz-box .q-text {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.quiz-box .options label {
+  display: block;
+  padding: 8px 14px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.quiz-box .options label:hover { background: var(--bg3); }
+.quiz-box .options input { margin-right: 8px; }
+.quiz-box .feedback {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: none;
+}
+.quiz-box .feedback.correct { display: block; background: #dcfce7; color: #166534; }
+.quiz-box .feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+.quiz-score {
+  background: var(--blue);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: var(--r);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 20px;
+  display: none;
+}
+.quiz-score.show { display: block; }
+
+/* Compare grid */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) {
+  .compare-grid { grid-template-columns: 1fr; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .tab-nav { gap: 0; }
+  .tab-btn { padding: 8px 10px; font-size: 12px; }
+}
+
+/* Mono text */
+.mono { font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<header>
+  <h1>風險管理與部位大小</h1>
+  <p>Risk Management &amp; Position Sizing — 存活是獲利的前提</p>
+</header>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <span class="icon">&#9888;</span>
+  <div>
+    <p><strong>免責聲明</strong></p>
+    <p>本頁面內容僅供教育參考，不構成任何投資建議。風險管理是指導原則而非保證——市場可能出現超越歷史極端的波動（黑天鵝事件）。交易涉及重大資金損失風險，請務必只用可承受損失的資金進行交易。過往績效不代表未來結果。</p>
+  </div>
+</div>
+
+<!-- Tab Navigation -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="philosophy">風險管理哲學</button>
+  <button class="tab-btn" data-tab="rmultiple">R-Multiple 系統</button>
+  <button class="tab-btn" data-tab="position">部位大小計算</button>
+  <button class="tab-btn" data-tab="drawdown">最大回撤控制</button>
+  <button class="tab-btn" data-tab="crypto">加密貨幣風控</button>
+  <button class="tab-btn" data-tab="portfolio">組合風險管理</button>
+  <button class="tab-btn" data-tab="quiz">測驗 + 計算機</button>
+</nav>
+
+<!-- ==================== Tab 1: 風險管理哲學 ==================== -->
+<div class="tab-content active" id="tab-philosophy">
+
+<div class="section">
+  <h2>為什麼風控 &gt; 策略 &gt; 心態</h2>
+  <p>大多數新手交易者把 90% 的時間花在尋找「聖杯策略」，卻忽略了最關鍵的事實：<strong>即使擁有正期望值策略，沒有風控照樣會破產。</strong></p>
+
+  <div class="highlight">
+    <strong>交易成功的優先順序</strong>
+    <p>1. 風險管理（存活）→ 2. 策略（優勢）→ 3. 心態（執行）。順序不可顛倒。</p>
+  </div>
+
+  <ul>
+    <li><strong>風控決定存亡</strong>：沒有資金就沒有下一筆交易的機會</li>
+    <li><strong>策略決定方向</strong>：正期望值讓你在大數法則下獲利</li>
+    <li><strong>心態決定執行</strong>：紀律讓你能夠堅持執行前兩者</li>
+  </ul>
+
+  <p>想像兩位交易者：A 有 70% 勝率但每筆賭上 30% 資金；B 只有 45% 勝率但每筆風險 1%。長期而言，B 幾乎確定存活並獲利，A 則幾乎確定破產。</p>
+</div>
+
+<div class="section">
+  <h2>Risk of Ruin（破產風險）</h2>
+  <p>Risk of Ruin 描述的是交易者在正期望值系統下仍然破產的機率。公式的簡化版本：</p>
+
+  <div class="formula">
+    Risk of Ruin ≈ ((1 - Edge) / (1 + Edge)) ^ (Capital Units)
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:-8px;">其中 Edge = Win% × Avg_Win / Avg_Loss - Loss%</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background grid -->
+      <defs>
+        <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#fff;stop-opacity:1"/>
+        </linearGradient>
+      </defs>
+      <rect x="60" y="20" width="520" height="280" fill="url(#gridGrad)" rx="4"/>
+      <!-- Grid lines -->
+      <g stroke="#e2e8f0" stroke-width="0.5">
+        <line x1="60" y1="76" x2="580" y2="76"/>
+        <line x1="60" y1="132" x2="580" y2="132"/>
+        <line x1="60" y1="188" x2="580" y2="188"/>
+        <line x1="60" y1="244" x2="580" y2="244"/>
+      </g>
+      <!-- Axes -->
+      <line x1="60" y1="300" x2="580" y2="300" stroke="#334155" stroke-width="1.5"/>
+      <line x1="60" y1="20" x2="60" y2="300" stroke="#334155" stroke-width="1.5"/>
+      <!-- Y axis labels -->
+      <text x="50" y="24" font-size="11" fill="#64748b" text-anchor="end">100%</text>
+      <text x="50" y="80" font-size="11" fill="#64748b" text-anchor="end">80%</text>
+      <text x="50" y="136" font-size="11" fill="#64748b" text-anchor="end">60%</text>
+      <text x="50" y="192" font-size="11" fill="#64748b" text-anchor="end">40%</text>
+      <text x="50" y="248" font-size="11" fill="#64748b" text-anchor="end">20%</text>
+      <text x="50" y="304" font-size="11" fill="#64748b" text-anchor="end">0%</text>
+      <!-- X axis labels -->
+      <text x="60" y="318" font-size="11" fill="#64748b" text-anchor="middle">1%</text>
+      <text x="164" y="318" font-size="11" fill="#64748b" text-anchor="middle">5%</text>
+      <text x="268" y="318" font-size="11" fill="#64748b" text-anchor="middle">10%</text>
+      <text x="372" y="318" font-size="11" fill="#64748b" text-anchor="middle">15%</text>
+      <text x="476" y="318" font-size="11" fill="#64748b" text-anchor="middle">20%</text>
+      <text x="580" y="318" font-size="11" fill="#64748b" text-anchor="middle">25%</text>
+      <!-- Axis titles -->
+      <text x="320" y="342" font-size="12" fill="#334155" text-anchor="middle" font-weight="600">每筆交易風險 %</text>
+      <text x="16" y="160" font-size="12" fill="#334155" text-anchor="middle" font-weight="600" transform="rotate(-90,16,160)">破產機率</text>
+      <!-- Curve: 40% win rate (worst) -->
+      <polyline points="60,58 112,62 164,78 216,108 268,155 320,198 372,236 424,258 476,272 528,280 580,284" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Curve: 50% win rate -->
+      <polyline points="60,160 112,175 164,210 216,240 268,258 320,270 372,278 424,283 476,287 528,292 580,295" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Curve: 55% win rate -->
+      <polyline points="60,230 112,255 164,272 216,282 268,288 320,292 372,295 424,296 476,297 528,298 580,299" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Curve: 60% win rate (best) -->
+      <polyline points="60,272 112,284 164,292 216,295 268,297 320,298 372,299 424,299 476,300 528,300 580,300" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Legend -->
+      <rect x="380" y="30" width="190" height="90" fill="white" stroke="#e2e8f0" rx="6"/>
+      <line x1="390" y1="48" x2="415" y2="48" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="420" y="52" font-size="11" fill="#334155">40% 勝率 (1:1.2 盈虧比)</text>
+      <line x1="390" y1="68" x2="415" y2="68" stroke="#ea580c" stroke-width="2.5"/>
+      <text x="420" y="72" font-size="11" fill="#334155">50% 勝率 (1:1.2 盈虧比)</text>
+      <line x1="390" y1="88" x2="415" y2="88" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="420" y="92" font-size="11" fill="#334155">55% 勝率 (1:1.5 盈虧比)</text>
+      <line x1="390" y1="108" x2="415" y2="108" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="420" y="112" font-size="11" fill="#334155">60% 勝率 (1:1.5 盈虧比)</text>
+    </svg>
+  </div>
+  <p style="font-size:12px;color:var(--text3);text-align:center;">每筆交易風險越大，破產機率越高。即使勝率 60%，風險超過 10% 仍有顯著破產可能。</p>
+</div>
+
+<div class="section">
+  <h2>「一筆交易不該改變你的生活」</h2>
+  <div class="highlight green">
+    <strong>核心原則</strong>
+    <p>如果任何單一筆交易的結果讓你焦慮到影響睡眠、情緒或日常生活，代表你的倉位過大。正確的倉位大小應該讓你對任何單筆虧損都感到「無所謂」——因為它只是統計上的一個數據點。</p>
+  </div>
+  <ul>
+    <li>每筆風險 1-2% 意味著連虧 10 次也只損失 10-20%</li>
+    <li>對比：每筆風險 10% 連虧 5 次就損失超過 40%</li>
+    <li>心理負擔與倉位大小成正比——壓力會導致判斷失誤</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>專業交易員 vs 散戶的風控差異</h2>
+  <div class="compare-grid">
+    <div class="card-box">
+      <h4 style="color:var(--green);">專業交易員</h4>
+      <ul style="font-size:13px;">
+        <li>每筆風險 0.5%-2% 帳戶</li>
+        <li>嚴格止損，無例外</li>
+        <li>有每日/週/月最大虧損限制</li>
+        <li>回撤時主動降倉</li>
+        <li>先計算風險，再決定是否進場</li>
+        <li>接受虧損是交易的成本</li>
+        <li>記錄每筆交易的 R 值</li>
+      </ul>
+    </div>
+    <div class="card-box">
+      <h4 style="color:var(--red);">散戶常見錯誤</h4>
+      <ul style="font-size:13px;">
+        <li>按「感覺」決定倉位</li>
+        <li>不設止損或移動止損</li>
+        <li>虧損加碼攤平成本</li>
+        <li>回撤時加大倉位「回本」</li>
+        <li>先看獲利空間，不管風險</li>
+        <li>把虧損視為人身攻擊</li>
+        <li>只看總 P&L，不衡量風險調整報酬</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- end tab-philosophy -->
+
+<!-- ==================== Tab 2: R-Multiple 系統 ==================== -->
+<div class="tab-content" id="tab-rmultiple">
+
+<div class="section">
+  <h2>什麼是 R？</h2>
+  <p><strong>R = 你在一筆交易中預設的風險金額</strong>（Initial Risk）。它等於止損距離乘以倉位大小。</p>
+
+  <div class="formula">
+    R = (Entry Price - Stop Price) × Position Size
+  </div>
+
+  <div class="highlight">
+    <strong>為什麼用 R 衡量？</strong>
+    <p>使用 R 作為統一單位，你可以跨市場、跨時間框架地比較交易表現。賺了 $500 毫無意義——如果你的 R 是 $100，那就是 +5R（很好）；但如果你的 R 是 $1000，那就是 +0.5R（不及格）。</p>
+  </div>
+
+  <p>範例：帳戶 $100,000，風險 1% → R = $1,000</p>
+  <ul>
+    <li>買入 BTC @ $60,000，止損 @ $59,000 → 風險 $1,000/BTC → 買 1 BTC</li>
+    <li>如果賣出 @ $62,000 → 獲利 $2,000 = <strong>+2R</strong></li>
+    <li>如果被止損 @ $59,000 → 虧損 $1,000 = <strong>-1R</strong></li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>用 R 衡量所有交易</h2>
+  <p>一旦你開始用 R 來記錄，交易結果的分析就變得清晰：</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>交易 #</th><th>標的</th><th>方向</th><th>結果</th><th>R-Multiple</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>BTC</td><td>Long</td><td>止損</td><td style="color:var(--red);">-1R</td></tr>
+      <tr><td>2</td><td>ETH</td><td>Long</td><td>獲利</td><td style="color:var(--green);">+2.3R</td></tr>
+      <tr><td>3</td><td>SOL</td><td>Short</td><td>止損</td><td style="color:var(--red);">-1R</td></tr>
+      <tr><td>4</td><td>BTC</td><td>Long</td><td>大獲利</td><td style="color:var(--green);">+5.1R</td></tr>
+      <tr><td>5</td><td>AVAX</td><td>Long</td><td>止損</td><td style="color:var(--red);">-1R</td></tr>
+      <tr><td>6</td><td>ETH</td><td>Short</td><td>獲利</td><td style="color:var(--green);">+1.8R</td></tr>
+      <tr><td>7</td><td>BTC</td><td>Long</td><td>止損</td><td style="color:var(--red);">-1R</td></tr>
+      <tr><td>8</td><td>SOL</td><td>Long</td><td>獲利</td><td style="color:var(--green);">+3.2R</td></tr>
+    </tbody>
+  </table>
+  <p>加總：-1 + 2.3 - 1 + 5.1 - 1 + 1.8 - 1 + 3.2 = <strong>+8.4R</strong>（8 筆交易淨賺 8.4R）</p>
+</div>
+
+<div class="section">
+  <h2>期望值（Expectancy）</h2>
+  <div class="formula">
+    期望值 = Σ(所有 R-Multiples) / 交易總數 = 8.4R / 8 = +1.05R
+  </div>
+  <p>這代表平均每筆交易賺 1.05R。如果 R = $1,000，則每筆期望獲利 $1,050。</p>
+
+  <div class="highlight purple">
+    <strong>另一種計算方式</strong>
+    <p>期望值 = (勝率 × 平均獲利R) - (敗率 × 平均虧損R)<br>
+    = (50% × 3.1R) - (50% × 1R) = 1.55R - 0.5R = +1.05R</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>為什麼正期望值系統仍會連虧？</h2>
+  <p>許多交易者在連虧 5-8 筆後就放棄策略——但數學告訴我們，<strong>即使期望值為正，連虧是必然發生的事件</strong>。</p>
+
+  <div class="card-box">
+    <h4>蒙特卡羅模擬結論（50% 勝率、2:1 盈虧比、1000 次模擬）</h4>
+    <ul style="font-size:13px;">
+      <li>連虧 5 筆的機率：<strong>≈ 97%</strong>（幾乎必然）</li>
+      <li>連虧 8 筆的機率：<strong>≈ 45%</strong></li>
+      <li>連虧 10 筆的機率：<strong>≈ 18%</strong></li>
+      <li>連虧 12 筆的機率：<strong>≈ 6%</strong></li>
+    </ul>
+    <p style="margin-top:10px;">如果你一年交易 200 次，連虧 8 筆<strong>幾乎是確定</strong>會發生的事。</p>
+  </div>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="300" y="20" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">R-Multiple 分布圖（100 筆交易）</text>
+      <!-- Background -->
+      <rect x="60" y="30" width="520" height="230" fill="#f8fafc" rx="4"/>
+      <!-- X axis -->
+      <line x1="60" y1="260" x2="580" y2="260" stroke="#334155" stroke-width="1"/>
+      <!-- Y axis -->
+      <line x1="60" y1="30" x2="60" y2="260" stroke="#334155" stroke-width="1"/>
+      <!-- Y labels -->
+      <text x="50" y="264" font-size="10" fill="#64748b" text-anchor="end">0</text>
+      <text x="50" y="214" font-size="10" fill="#64748b" text-anchor="end">10</text>
+      <text x="50" y="164" font-size="10" fill="#64748b" text-anchor="end">20</text>
+      <text x="50" y="114" font-size="10" fill="#64748b" text-anchor="end">30</text>
+      <text x="50" y="64" font-size="10" fill="#64748b" text-anchor="end">40</text>
+      <!-- X labels -->
+      <text x="100" y="278" font-size="10" fill="#64748b" text-anchor="middle">-2R</text>
+      <text x="170" y="278" font-size="10" fill="#64748b" text-anchor="middle">-1R</text>
+      <text x="240" y="278" font-size="10" fill="#64748b" text-anchor="middle">0</text>
+      <text x="310" y="278" font-size="10" fill="#64748b" text-anchor="middle">+1R</text>
+      <text x="380" y="278" font-size="10" fill="#64748b" text-anchor="middle">+2R</text>
+      <text x="450" y="278" font-size="10" fill="#64748b" text-anchor="middle">+3R</text>
+      <text x="520" y="278" font-size="10" fill="#64748b" text-anchor="middle">+5R</text>
+      <!-- Bars (losses in red, wins in green) -->
+      <rect x="85" y="235" width="30" height="25" fill="#dc2626" opacity="0.8" rx="2"/>
+      <rect x="155" y="145" width="30" height="115" fill="#dc2626" opacity="0.8" rx="2"/>
+      <rect x="225" y="235" width="30" height="25" fill="#94a3b8" opacity="0.6" rx="2"/>
+      <rect x="295" y="170" width="30" height="90" fill="#16a34a" opacity="0.8" rx="2"/>
+      <rect x="365" y="195" width="30" height="65" fill="#16a34a" opacity="0.8" rx="2"/>
+      <rect x="435" y="215" width="30" height="45" fill="#16a34a" opacity="0.8" rx="2"/>
+      <rect x="505" y="237" width="30" height="23" fill="#16a34a" opacity="0.8" rx="2"/>
+      <!-- Annotation -->
+      <text x="300" y="295" font-size="11" fill="#334155" text-anchor="middle">R-Multiple 值</text>
+      <text x="15" y="150" font-size="11" fill="#334155" text-anchor="middle" transform="rotate(-90,15,150)">交易筆數</text>
+      <!-- Mean line -->
+      <line x1="330" y1="35" x2="330" y2="260" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="335" y="45" font-size="10" fill="#7c3aed">平均 +1.05R</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end tab-rmultiple -->
+
+<!-- ==================== Tab 3: 部位大小計算 ==================== -->
+<div class="tab-content" id="tab-position">
+
+<div class="section">
+  <h2>固定風險法（Fixed Fractional）</h2>
+  <p>最基本也最重要的部位大小計算方法：</p>
+  <div class="formula">
+    Position Size = (Account × Risk%) / (Entry - Stop)
+  </div>
+  <p>範例：帳戶 $50,000、風險 2%、入場 $100、止損 $95</p>
+  <div class="highlight">
+    <p>Position Size = ($50,000 × 0.02) / ($100 - $95) = $1,000 / $5 = <strong>200 股</strong></p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>波動度調整法（Volatility-Adjusted）</h2>
+  <p>使用 ATR（Average True Range）來根據市場波動度調整倉位：</p>
+  <div class="formula">
+    Position Size = (Account × Risk%) / (N × ATR)
+  </div>
+  <p>N 通常取 2-3（代表 2-3 倍 ATR 作為止損距離）。波動大的市場自動縮小倉位，波動小的市場自動放大倉位。</p>
+  <div class="card-box">
+    <h4>範例比較</h4>
+    <table class="data-table">
+      <thead><tr><th>資產</th><th>ATR</th><th>N</th><th>止損距離</th><th>倉位（$100K, 1%）</th></tr></thead>
+      <tbody>
+        <tr><td>SPY ($450)</td><td>$5</td><td>2</td><td>$10</td><td>100 股</td></tr>
+        <tr><td>BTC ($60,000)</td><td>$2,000</td><td>2</td><td>$4,000</td><td>0.25 BTC</td></tr>
+        <tr><td>TSLA ($200)</td><td>$8</td><td>2</td><td>$16</td><td>62 股</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>凱利公式（Kelly Criterion）</h2>
+  <div class="formula">
+    f* = (b × p - q) / b
+  </div>
+  <p>其中：f* = 最佳下注比例、b = 盈虧比（Avg Win / Avg Loss）、p = 勝率、q = 1 - p</p>
+
+  <div class="highlight orange">
+    <strong>為什麼用 Half-Kelly？</strong>
+    <p>Full Kelly 假設你精確知道勝率和盈虧比——但現實中我們只有估計值。Full Kelly 的波動極大（最大回撤可達 50-70%）。使用 Half-Kelly（f*/2）可以獲得 75% 的成長率，但只承受約一半的波動。</p>
+  </div>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+      <text x="300" y="18" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">凱利公式：下注比例 vs 資金成長率</text>
+      <rect x="70" y="28" width="510" height="250" fill="#f8fafc" rx="4"/>
+      <!-- Grid -->
+      <g stroke="#e2e8f0" stroke-width="0.5">
+        <line x1="70" y1="78" x2="580" y2="78"/>
+        <line x1="70" y1="128" x2="580" y2="128"/>
+        <line x1="70" y1="178" x2="580" y2="178"/>
+        <line x1="70" y1="228" x2="580" y2="228"/>
+      </g>
+      <!-- Axes -->
+      <line x1="70" y1="278" x2="580" y2="278" stroke="#334155" stroke-width="1.5"/>
+      <line x1="70" y1="28" x2="70" y2="278" stroke="#334155" stroke-width="1.5"/>
+      <!-- Y labels -->
+      <text x="60" y="282" font-size="10" fill="#64748b" text-anchor="end">-Max</text>
+      <text x="60" y="232" font-size="10" fill="#64748b" text-anchor="end">0</text>
+      <text x="60" y="178" font-size="10" fill="#64748b" text-anchor="end">G/4</text>
+      <text x="60" y="128" font-size="10" fill="#64748b" text-anchor="end">G/2</text>
+      <text x="60" y="78" font-size="10" fill="#64748b" text-anchor="end">3G/4</text>
+      <text x="60" y="32" font-size="10" fill="#64748b" text-anchor="end">G_max</text>
+      <!-- X labels -->
+      <text x="70" y="295" font-size="10" fill="#64748b" text-anchor="middle">0%</text>
+      <text x="172" y="295" font-size="10" fill="#64748b" text-anchor="middle">20%</text>
+      <text x="274" y="295" font-size="10" fill="#64748b" text-anchor="middle">40%</text>
+      <text x="376" y="295" font-size="10" fill="#64748b" text-anchor="middle">60%</text>
+      <text x="478" y="295" font-size="10" fill="#64748b" text-anchor="middle">80%</text>
+      <text x="580" y="295" font-size="10" fill="#64748b" text-anchor="middle">100%</text>
+      <!-- Parabola curve (Kelly growth curve) -->
+      <polyline points="70,228 121,145 172,80 223,40 274,28 325,40 376,80 427,145 478,228 529,278 580,308" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- f* marker -->
+      <line x1="274" y1="28" x2="274" y2="278" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="274" y="310" font-size="11" fill="#7c3aed" text-anchor="middle" font-weight="600">f* (Kelly)</text>
+      <!-- Half Kelly marker -->
+      <line x1="172" y1="80" x2="172" y2="278" stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="172" y="310" font-size="11" fill="#16a34a" text-anchor="middle" font-weight="600">f*/2 (Half Kelly)</text>
+      <!-- Annotations -->
+      <circle cx="274" cy="28" r="4" fill="#7c3aed"/>
+      <circle cx="172" cy="80" r="4" fill="#16a34a"/>
+      <!-- Zero line -->
+      <line x1="70" y1="228" x2="580" y2="228" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="2,2"/>
+      <text x="585" y="232" font-size="9" fill="#94a3b8">G=0</text>
+      <!-- Labels -->
+      <text x="300" y="310" font-size="11" fill="#334155" text-anchor="middle">下注比例 (f)</text>
+    </svg>
+  </div>
+  <p style="font-size:12px;color:var(--text3);text-align:center;">超過 Kelly 比例 (f*) 的下注不僅不會增加報酬，反而會導致負成長</p>
+</div>
+
+<div class="section">
+  <h2>互動計算機：部位大小</h2>
+  <div class="calc-container">
+    <h4>固定風險法計算機</h4>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>帳戶大小 ($)</label>
+        <input type="number" id="ps-account" value="100000" placeholder="100000">
+      </div>
+      <div class="calc-field">
+        <label>風險百分比 (%)</label>
+        <input type="number" id="ps-risk" value="1" step="0.1" placeholder="1">
+      </div>
+      <div class="calc-field">
+        <label>入場價格 ($)</label>
+        <input type="number" id="ps-entry" value="60000" placeholder="60000">
+      </div>
+      <div class="calc-field">
+        <label>止損價格 ($)</label>
+        <input type="number" id="ps-stop" value="58000" placeholder="58000">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcPositionSize()">計算部位大小</button>
+    <div class="calc-result" id="ps-result"></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>互動計算機：凱利公式</h2>
+  <div class="calc-container">
+    <h4>Kelly Criterion 計算機</h4>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>勝率 (%)</label>
+        <input type="number" id="kelly-winrate" value="55" step="1" placeholder="55">
+      </div>
+      <div class="calc-field">
+        <label>盈虧比 (Reward:Risk)</label>
+        <input type="number" id="kelly-rr" value="2" step="0.1" placeholder="2">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcKelly()">計算最佳下注比例</button>
+    <div class="calc-result" id="kelly-result"></div>
+  </div>
+</div>
+
+</div><!-- end tab-position -->
+
+<!-- ==================== Tab 4: 最大回撤控制 ==================== -->
+<div class="tab-content" id="tab-drawdown">
+
+<div class="section">
+  <h2>Maximum Drawdown 定義</h2>
+  <p>最大回撤 = 從資金高點到低點的最大百分比跌幅。它衡量的是「最痛苦的時刻有多痛苦」。</p>
+  <div class="formula">
+    Max Drawdown = (Peak - Trough) / Peak × 100%
+  </div>
+</div>
+
+<div class="section">
+  <h2>Recovery Factor：虧損與回本的非對稱性</h2>
+  <p>這是風控最重要的數學事實之一：<strong>虧損和回本不是對稱的</strong>。</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+      <text x="300" y="20" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">虧損 vs 回本所需報酬率</text>
+      <!-- Background bars -->
+      <g>
+        <!-- Loss bars (left, red) -->
+        <rect x="80" y="50" width="60" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="80" width="90" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="110" width="120" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="140" width="150" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="170" width="200" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="200" width="250" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <rect x="80" y="230" width="300" height="20" fill="#dc2626" opacity="0.8" rx="3"/>
+        <!-- Recovery bars (right, green) -->
+        <rect x="320" y="50" width="66" height="20" fill="#16a34a" opacity="0.8" rx="3"/>
+        <rect x="320" y="80" width="110" height="20" fill="#16a34a" opacity="0.8" rx="3"/>
+        <rect x="320" y="110" width="165" height="20" fill="#16a34a" opacity="0.8" rx="3"/>
+        <rect x="320" y="140" width="220" height="20" fill="#16a34a" opacity="0.8" rx="3"/>
+        <rect x="320" y="170" width="260" height="20" fill="#16a34a" opacity="0.7" rx="3"/>
+        <rect x="320" y="200" width="260" height="20" fill="#16a34a" opacity="0.6" rx="3"/>
+        <rect x="320" y="230" width="260" height="20" fill="#16a34a" opacity="0.5" rx="3"/>
+      </g>
+      <!-- Labels -->
+      <text x="75" y="64" font-size="11" fill="#334155" text-anchor="end">-10%</text>
+      <text x="75" y="94" font-size="11" fill="#334155" text-anchor="end">-20%</text>
+      <text x="75" y="124" font-size="11" fill="#334155" text-anchor="end">-30%</text>
+      <text x="75" y="154" font-size="11" fill="#334155" text-anchor="end">-40%</text>
+      <text x="75" y="184" font-size="11" fill="#334155" text-anchor="end">-50%</text>
+      <text x="75" y="214" font-size="11" fill="#334155" text-anchor="end">-70%</text>
+      <text x="75" y="244" font-size="11" fill="#334155" text-anchor="end">-90%</text>
+      <!-- Recovery labels -->
+      <text x="392" y="64" font-size="11" fill="#fff" font-weight="600">+11%</text>
+      <text x="382" y="94" font-size="11" fill="#fff" font-weight="600">+25%</text>
+      <text x="410" y="124" font-size="11" fill="#fff" font-weight="600">+43%</text>
+      <text x="438" y="154" font-size="11" fill="#fff" font-weight="600">+67%</text>
+      <text x="458" y="184" font-size="11" fill="#fff" font-weight="600">+100%</text>
+      <text x="458" y="214" font-size="11" fill="#fff" font-weight="600">+233%</text>
+      <text x="458" y="244" font-size="11" fill="#fff" font-weight="600">+900%</text>
+      <!-- Center divider -->
+      <line x1="310" y1="40" x2="310" y2="260" stroke="#334155" stroke-width="1" stroke-dasharray="3,2"/>
+      <!-- Header labels -->
+      <text x="190" y="40" font-size="11" fill="#dc2626" text-anchor="middle" font-weight="600">虧損幅度</text>
+      <text x="450" y="40" font-size="11" fill="#16a34a" text-anchor="middle" font-weight="600">回本所需漲幅</text>
+    </svg>
+  </div>
+
+  <div class="highlight red">
+    <strong>關鍵洞察</strong>
+    <p>虧損 50% 後需要 100% 的報酬才能回本。虧損 70% 後需要 233%。這就是為什麼「防守比進攻重要」——永遠不要讓回撤超過 20-25%。</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>回撤限制設定</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>時間框架</th><th>建議最大回撤</th><th>觸發動作</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>每日</td><td>2-3%</td><td>當日停止交易</td></tr>
+      <tr><td>每週</td><td>5-6%</td><td>該週停止交易，覆盤</td></tr>
+      <tr><td>每月</td><td>8-10%</td><td>降低倉位 50%，檢視策略</td></tr>
+      <tr><td>季度</td><td>15-20%</td><td>暫停交易，完整系統審查</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>動態降倉規則</h2>
+  <p>不要等到虧光才行動。根據回撤深度自動調整倉位大小：</p>
+
+  <div class="card-box">
+    <h4>階梯式降倉模型</h4>
+    <table class="data-table">
+      <thead><tr><th>回撤深度</th><th>倉位調整</th><th>邏輯</th></tr></thead>
+      <tbody>
+        <tr><td>0-5%</td><td>100% 正常倉位</td><td>正常波動範圍</td></tr>
+        <tr><td>5-10%</td><td>50% 倉位</td><td>可能遇到不適合的市場環境</td></tr>
+        <tr><td>10-15%</td><td>25% 倉位</td><td>策略可能需要調整</td></tr>
+        <tr><td>&gt;15%</td><td>停止交易</td><td>完整系統覆盤</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Equity Curve 管理</h2>
+  <p>把你的帳戶權益曲線當作一檔「股票」來管理：</p>
+
+  <div class="highlight">
+    <strong>20 日移動平均線規則</strong>
+    <p>如果你的權益曲線跌破自身的 20 日移動平均線，將風險降低至原來的 50%。當權益曲線回到 20MA 上方，恢復正常倉位。這個簡單規則能大幅減少最大回撤。</p>
+  </div>
+
+  <ul>
+    <li><strong>權益曲線在 MA 之上</strong> → 系統運作良好，正常交易</li>
+    <li><strong>權益曲線在 MA 之下</strong> → 市場可能不適合你的策略，保守操作</li>
+    <li>這等於是對你自己的策略做「趨勢追蹤」</li>
+  </ul>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+      <text x="300" y="18" font-size="12" fill="#334155" text-anchor="middle" font-weight="600">Equity Curve + 20MA 管理示意圖</text>
+      <rect x="50" y="28" width="530" height="195" fill="#f8fafc" rx="4"/>
+      <!-- Equity curve (jagged up-trend) -->
+      <polyline points="60,190 90,175 110,180 130,160 150,155 170,165 190,145 210,140 230,150 250,130 270,120 290,125 310,135 330,145 350,155 370,148 390,135 410,120 430,110 450,100 470,95 490,85 510,75 530,70 550,60 570,55" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+      <!-- 20MA (smoother) -->
+      <polyline points="60,192 90,185 110,180 130,172 150,165 170,162 190,158 210,152 230,148 250,142 270,135 290,130 310,128 330,130 350,135 370,138 390,136 410,130 430,122 450,114 470,106 490,98 510,90 530,82 550,74 570,68" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4,3" stroke-linecap="round"/>
+      <!-- Shaded area where equity < MA (drawdown period) -->
+      <rect x="290" y="125" width="80" height="35" fill="#fee2e2" opacity="0.5" rx="3"/>
+      <text x="330" y="170" font-size="9" fill="#dc2626" text-anchor="middle">降低倉位區間</text>
+      <!-- Legend -->
+      <line x1="400" y1="235" x2="425" y2="235" stroke="#2563eb" stroke-width="2"/>
+      <text x="430" y="239" font-size="10" fill="#334155">Equity Curve</text>
+      <line x1="500" y1="235" x2="525" y2="235" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="530" y="239" font-size="10" fill="#334155">20-MA</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end tab-drawdown -->
+
+<!-- ==================== Tab 5: 加密貨幣特殊風控 ==================== -->
+<div class="tab-content" id="tab-crypto">
+
+<div class="section">
+  <h2>高槓桿風控：永續合約正確用法</h2>
+  <p>加密貨幣永續合約提供 2x-125x 槓桿，但<strong>高槓桿 ≠ 高風險</strong>——前提是你理解「帳戶風險」與「槓桿」的區別。</p>
+
+  <div class="highlight">
+    <strong>核心觀念</strong>
+    <p>槓桿只決定你需要多少保證金，<strong>不應改變你的止損位置或帳戶風險百分比</strong>。正確用法：先決定止損位置 → 再算倉位大小 → 槓桿只是讓你不需要那麼多保證金。</p>
+  </div>
+
+  <div class="card-box">
+    <h4>範例：$10,000 帳戶，風險 1% ($100)</h4>
+    <p>BTC 入場 $60,000，止損 $59,400（1% 距離）</p>
+    <ul style="font-size:13px;margin-top:8px;">
+      <li><strong>1x 無槓桿</strong>：買 0.167 BTC（需 $10,000 本金）→ 止損虧 $100</li>
+      <li><strong>5x 槓桿</strong>：買 0.167 BTC（需 $2,000 保證金）→ 止損虧 $100</li>
+      <li><strong>10x 槓桿</strong>：買 0.167 BTC（需 $1,000 保證金）→ 止損虧 $100</li>
+    </ul>
+    <p style="margin-top:8px;color:var(--green);font-weight:600;">三種情況帳戶風險完全相同！差別只在保證金佔用。</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>槓桿 vs 爆倉距離</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>槓桿倍數</th><th>爆倉距離（約）</th><th>適用場景</th><th>建議止損距離</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2x</td><td>~50%</td><td>波段交易</td><td>5-15%</td></tr>
+      <tr><td>3x</td><td>~33%</td><td>中長期趨勢</td><td>5-10%</td></tr>
+      <tr><td>5x</td><td>~20%</td><td>短波段</td><td>3-5%</td></tr>
+      <tr><td>10x</td><td>~10%</td><td>日內/短線</td><td>1-3%</td></tr>
+      <tr><td>20x</td><td>~5%</td><td>極短線/Scalp</td><td>0.5-1.5%</td></tr>
+      <tr><td>50x</td><td>~2%</td><td style="color:var(--red);">極度危險</td><td style="color:var(--red);">不建議使用</td></tr>
+      <tr><td>100x</td><td>~1%</td><td style="color:var(--red);">賭博</td><td style="color:var(--red);">不建議使用</td></tr>
+    </tbody>
+  </table>
+
+  <div class="calc-container">
+    <h4>槓桿爆倉計算機</h4>
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>入場價格 ($)</label>
+        <input type="number" id="lev-entry" value="60000" placeholder="60000">
+      </div>
+      <div class="calc-field">
+        <label>槓桿倍數 (x)</label>
+        <input type="number" id="lev-leverage" value="10" step="1" placeholder="10">
+      </div>
+      <div class="calc-field">
+        <label>方向</label>
+        <input type="text" id="lev-direction" value="Long" placeholder="Long / Short">
+      </div>
+      <div class="calc-field">
+        <label>維持保證金率 (%)</label>
+        <input type="number" id="lev-mmr" value="0.5" step="0.1" placeholder="0.5">
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calcLiquidation()">計算爆倉價格</button>
+    <div class="calc-result" id="lev-result"></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>24/7 市場的隔夜風險</h2>
+  <p>加密貨幣市場永不休息，這帶來傳統市場沒有的風險：</p>
+  <ul>
+    <li><strong>無法「收盤前出場」</strong>：風險持續 24 小時，包括你睡覺的時候</li>
+    <li><strong>週末流動性下降</strong>：大額訂單可能造成更大滑點</li>
+    <li><strong>亞洲/歐洲/美洲時段輪動</strong>：每個時段可能有不同走勢</li>
+  </ul>
+  <div class="highlight orange">
+    <strong>隔夜風控建議</strong>
+    <p>1. 睡前確認所有部位都有硬止損（非心理止損）<br>
+    2. 高槓桿部位不持過夜——至少降至 3x 以下<br>
+    3. 重大事件前（FOMC、CPI）降低曝險<br>
+    4. 使用 trailing stop 在趨勢中保護利潤</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>跨交易所分散</h2>
+  <div class="card-box">
+    <h4>為什麼不能把所有資金放同一交易所？</h4>
+    <ul style="font-size:13px;">
+      <li><strong>FTX 崩盤</strong>（2022）：客戶資金被挪用，數十億美元蒸發</li>
+      <li><strong>交易所被駭</strong>：Mt.Gox (2014), Bitfinex (2016)</li>
+      <li><strong>監管凍結</strong>：某些國家突然禁止提款</li>
+      <li><strong>系統宕機</strong>：極端行情時交易所無法登入</li>
+    </ul>
+    <p style="margin-top:10px;font-weight:600;">建議：任何單一交易所不超過帳戶總資金的 30-40%</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Stablecoin 曝險</h2>
+  <p>穩定幣不是真的「穩定」——它們各有風險：</p>
+  <table class="data-table">
+    <thead><tr><th>穩定幣</th><th>類型</th><th>主要風險</th><th>歷史事件</th></tr></thead>
+    <tbody>
+      <tr><td>USDT</td><td>法幣抵押</td><td>儲備透明度、監管</td><td>多次脫鉤至 $0.95</td></tr>
+      <tr><td>USDC</td><td>法幣抵押</td><td>銀行風險、監管凍結</td><td>SVB 事件脫鉤至 $0.87</td></tr>
+      <tr><td>UST</td><td>算法穩定</td><td>死亡螺旋</td><td style="color:var(--red);">2022 歸零</td></tr>
+      <tr><td>DAI</td><td>超額抵押</td><td>抵押品波動、治理</td><td>相對穩定</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight red">
+    <strong>UST 崩盤教訓</strong>
+    <p>2022 年 5 月 UST 從 $1 歸零，LUNA 從 $80+ 歸零。教訓：永遠不要把所有資金放在單一穩定幣中，尤其是算法穩定幣。分散到 2-3 種不同類型的穩定幣。</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>黑天鵝防護</h2>
+  <div class="highlight green">
+    <strong>永遠持有部分穩定幣（現金倉位）</strong>
+    <p>建議至少保持 20-30% 的穩定幣現金部位。好處：<br>
+    1. 黑天鵝事件時有資金可以低價加碼<br>
+    2. 心理安全感——知道最壞情況下仍有資金<br>
+    3. 保持交易靈活性，隨時可以把握機會</p>
+  </div>
+</div>
+
+</div><!-- end tab-crypto -->
+
+<!-- ==================== Tab 6: 組合風險管理 ==================== -->
+<div class="tab-content" id="tab-portfolio">
+
+<div class="section">
+  <h2>相關性風險</h2>
+  <p>最常見的組合風險錯誤：以為持有不同資產就是分散，但實際上它們高度相關。</p>
+
+  <div class="card-box">
+    <h4>偽分散的例子</h4>
+    <p>同時做多 BTC + ETH + SOL + MSTR + COIN = <strong>實質上 5x 同一方向的曝險</strong></p>
+    <p style="margin-top:8px;">這些資產在牛市時相關係數 &gt; 0.85，在崩盤時相關係數 &gt; 0.95（危機時相關性趨近 1）。</p>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>資產對</th><th>牛市相關性</th><th>崩盤時相關性</th><th>實質曝險</th></tr></thead>
+    <tbody>
+      <tr><td>BTC / ETH</td><td>0.85</td><td>0.95</td><td>幾乎相同</td></tr>
+      <tr><td>BTC / SOL</td><td>0.80</td><td>0.92</td><td>高度相關</td></tr>
+      <tr><td>BTC / SPY</td><td>0.45</td><td>0.70</td><td>中度相關</td></tr>
+      <tr><td>BTC / Gold</td><td>0.10</td><td>-0.20</td><td>低相關/部分對沖</td></tr>
+      <tr><td>BTC / DXY</td><td>-0.40</td><td>-0.60</td><td>負相關/對沖</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>最大同向曝險限制</h2>
+  <p>設定每個方向和資產類別的最大曝險上限：</p>
+
+  <div class="compare-grid">
+    <div class="card-box">
+      <h4 style="color:var(--blue);">曝險限制範例</h4>
+      <ul style="font-size:13px;">
+        <li>加密貨幣總曝險：最多帳戶 30%</li>
+        <li>單一幣種：最多帳戶 15%</li>
+        <li>同方向相關資產：最多帳戶 40%</li>
+        <li>高槓桿部位總計：最多帳戶 20%</li>
+        <li>單一交易所：最多帳戶 35%</li>
+      </ul>
+    </div>
+    <div class="card-box">
+      <h4 style="color:var(--purple);">為什麼需要限制？</h4>
+      <ul style="font-size:13px;">
+        <li>2022.5 LUNA 崩盤：全加密市場暴跌 40%</li>
+        <li>2022.11 FTX 崩盤：BTC -25% 一週</li>
+        <li>2020.3 COVID：BTC -50% 兩天</li>
+        <li>2024.8 日圓套利拆倉：全球資產同步暴跌</li>
+        <li>如果你滿倉加密且無限制 → 以上任何事件都可能摧毀你</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>跨資產對沖概念</h2>
+  <p>真正的分散需要持有<strong>負相關或低相關</strong>的資產：</p>
+
+  <div class="card-box">
+    <h4>對沖組合範例</h4>
+    <table class="data-table">
+      <thead><tr><th>多頭</th><th>空頭/對沖</th><th>對沖邏輯</th></tr></thead>
+      <tbody>
+        <tr><td>BTC Long</td><td>DXY Long (UUP)</td><td>BTC 與美元負相關</td></tr>
+        <tr><td>加密多頭組合</td><td>黃金 Long</td><td>避險 + 流動性風險分散</td></tr>
+        <tr><td>科技股 Long</td><td>公債 Long (TLT)</td><td>利率風險對沖</td></tr>
+        <tr><td>BTC Long</td><td>BTC Put Options</td><td>尾部風險保護</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Beta 調整</h2>
+  <p>不同資產的波動度不同。$10,000 的 BTC 部位和 $10,000 的 SPY 部位<strong>風險完全不同</strong>。</p>
+
+  <div class="formula">
+    Beta 調整倉位 = 名目倉位 × Beta
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>資產</th><th>約略 Beta (vs SPY)</th><th>$10K 名目的等效 SPY 風險</th></tr></thead>
+    <tbody>
+      <tr><td>SPY</td><td>1.0x</td><td>$10,000</td></tr>
+      <tr><td>QQQ</td><td>1.3x</td><td>$13,000</td></tr>
+      <tr><td>BTC</td><td>2.0-2.5x</td><td>$20,000-25,000</td></tr>
+      <tr><td>ETH</td><td>2.5-3.0x</td><td>$25,000-30,000</td></tr>
+      <tr><td>SOL</td><td>3.5-4.5x</td><td>$35,000-45,000</td></tr>
+      <tr><td>Meme Coins</td><td>5-10x</td><td>$50,000-100,000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight purple">
+    <strong>實際意義</strong>
+    <p>如果你帳戶有 $100K，持有 $30K BTC（Beta ≈ 2x），你的「等效股市曝險」是 $60K（60% 帳戶）。再加上 $20K SOL（Beta ≈ 4x）= 等效 $80K。合計等效曝險 = $140K = 帳戶的 1.4 倍！表面上只用了 50% 資金，實際風險卻超過 100%。</p>
+  </div>
+</div>
+
+</div><!-- end tab-portfolio -->
+
+<!-- ==================== Tab 7: 互動測驗 + 計算機整合 ==================== -->
+<div class="tab-content" id="tab-quiz">
+
+<div class="section">
+  <h2>風險管理測驗</h2>
+  <p>測試你對風險管理概念的理解。完成所有題目後點擊「計算分數」。</p>
+</div>
+
+<div id="quiz-container">
+  <!-- Q1 -->
+  <div class="quiz-box" data-answer="b">
+    <div class="q-num">問題 1 / 16</div>
+    <div class="q-text">帳戶 $50,000，風險 2%，入場價 $100，止損 $96。正確的部位大小是？</div>
+    <div class="options">
+      <label><input type="radio" name="q1" value="a"> 200 股</label>
+      <label><input type="radio" name="q1" value="b"> 250 股</label>
+      <label><input type="radio" name="q1" value="c"> 500 股</label>
+      <label><input type="radio" name="q1" value="d"> 125 股</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-box" data-answer="c">
+    <div class="q-num">問題 2 / 16</div>
+    <div class="q-text">虧損 40% 後需要多少漲幅才能回本？</div>
+    <div class="options">
+      <label><input type="radio" name="q2" value="a"> 40%</label>
+      <label><input type="radio" name="q2" value="b"> 50%</label>
+      <label><input type="radio" name="q2" value="c"> 67%</label>
+      <label><input type="radio" name="q2" value="d"> 80%</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-box" data-answer="a">
+    <div class="q-num">問題 3 / 16</div>
+    <div class="q-text">凱利公式中，勝率 60%、盈虧比 2:1，最佳下注比例 f* 是？</div>
+    <div class="options">
+      <label><input type="radio" name="q3" value="a"> 40%</label>
+      <label><input type="radio" name="q3" value="b"> 30%</label>
+      <label><input type="radio" name="q3" value="c"> 20%</label>
+      <label><input type="radio" name="q3" value="d"> 50%</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-box" data-answer="b">
+    <div class="q-num">問題 4 / 16</div>
+    <div class="q-text">為什麼專業交易員建議使用 Half-Kelly 而非 Full Kelly？</div>
+    <div class="options">
+      <label><input type="radio" name="q4" value="a"> Half-Kelly 的報酬率是 Full Kelly 的一半</label>
+      <label><input type="radio" name="q4" value="b"> 估計值有誤差，Half-Kelly 大幅降低波動但保留 75% 成長率</label>
+      <label><input type="radio" name="q4" value="c"> Full Kelly 是違法的</label>
+      <label><input type="radio" name="q4" value="d"> Half-Kelly 只適用於加密貨幣</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-box" data-answer="d">
+    <div class="q-num">問題 5 / 16</div>
+    <div class="q-text">一位交易者 10 筆交易結果為：+2R, -1R, +3R, -1R, -1R, +1.5R, -1R, +4R, -1R, +2R。期望值是多少？</div>
+    <div class="options">
+      <label><input type="radio" name="q5" value="a"> +0.5R</label>
+      <label><input type="radio" name="q5" value="b"> +0.65R</label>
+      <label><input type="radio" name="q5" value="c"> +0.8R</label>
+      <label><input type="radio" name="q5" value="d"> +0.75R</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-box" data-answer="c">
+    <div class="q-num">問題 6 / 16</div>
+    <div class="q-text">使用 10x 槓桿做多 BTC，大約在價格下跌多少時會被爆倉？</div>
+    <div class="options">
+      <label><input type="radio" name="q6" value="a"> 5%</label>
+      <label><input type="radio" name="q6" value="b"> 8%</label>
+      <label><input type="radio" name="q6" value="c"> 10%</label>
+      <label><input type="radio" name="q6" value="d"> 20%</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-box" data-answer="b">
+    <div class="q-num">問題 7 / 16</div>
+    <div class="q-text">同時做多 BTC、ETH、SOL 各佔帳戶 20%，在崩盤時的實質曝險最接近？</div>
+    <div class="options">
+      <label><input type="radio" name="q7" value="a"> 20%（最大的單一部位）</label>
+      <label><input type="radio" name="q7" value="b"> 接近 60%（三者高度相關）</label>
+      <label><input type="radio" name="q7" value="c"> 40%（取平均值）</label>
+      <label><input type="radio" name="q7" value="d"> 分散到可以忽略</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-box" data-answer="a">
+    <div class="q-num">問題 8 / 16</div>
+    <div class="q-text">交易成功的優先順序正確的是？</div>
+    <div class="options">
+      <label><input type="radio" name="q8" value="a"> 風控 > 策略 > 心態</label>
+      <label><input type="radio" name="q8" value="b"> 策略 > 心態 > 風控</label>
+      <label><input type="radio" name="q8" value="c"> 心態 > 風控 > 策略</label>
+      <label><input type="radio" name="q8" value="d"> 策略 > 風控 > 心態</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-box" data-answer="c">
+    <div class="q-num">問題 9 / 16</div>
+    <div class="q-text">帳戶回撤 8% 後，根據動態降倉規則應該？</div>
+    <div class="options">
+      <label><input type="radio" name="q9" value="a"> 加大倉位回本</label>
+      <label><input type="radio" name="q9" value="b"> 維持正常倉位</label>
+      <label><input type="radio" name="q9" value="c"> 降至 50% 倉位</label>
+      <label><input type="radio" name="q9" value="d"> 停止所有交易</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-box" data-answer="b">
+    <div class="q-num">問題 10 / 16</div>
+    <div class="q-text">BTC 的 Beta 約為 2x（vs SPY）。持有 $20,000 BTC 的等效 SPY 風險是？</div>
+    <div class="options">
+      <label><input type="radio" name="q10" value="a"> $20,000</label>
+      <label><input type="radio" name="q10" value="b"> $40,000</label>
+      <label><input type="radio" name="q10" value="c"> $10,000</label>
+      <label><input type="radio" name="q10" value="d"> $60,000</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="quiz-box" data-answer="d">
+    <div class="q-num">問題 11 / 16</div>
+    <div class="q-text">以下哪個是正確的對沖邏輯？</div>
+    <div class="options">
+      <label><input type="radio" name="q11" value="a"> Long BTC + Long ETH（分散）</label>
+      <label><input type="radio" name="q11" value="b"> Long BTC + Long MSTR（對沖）</label>
+      <label><input type="radio" name="q11" value="c"> Long BTC + Long SOL（降低風險）</label>
+      <label><input type="radio" name="q11" value="d"> Long BTC + Long Gold（部分對沖 DXY 風險）</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="quiz-box" data-answer="a">
+    <div class="q-num">問題 12 / 16</div>
+    <div class="q-text">波動度調整法中，ATR = $2,000，N = 2，帳戶 $200,000，風險 1%。倉位大小是？</div>
+    <div class="options">
+      <label><input type="radio" name="q12" value="a"> 0.5 BTC</label>
+      <label><input type="radio" name="q12" value="b"> 1 BTC</label>
+      <label><input type="radio" name="q12" value="c"> 0.25 BTC</label>
+      <label><input type="radio" name="q12" value="d"> 2 BTC</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="quiz-box" data-answer="b">
+    <div class="q-num">問題 13 / 16</div>
+    <div class="q-text">UST 崩盤的主要教訓是？</div>
+    <div class="options">
+      <label><input type="radio" name="q13" value="a"> 所有穩定幣都會歸零</label>
+      <label><input type="radio" name="q13" value="b"> 不要將所有資金放在單一穩定幣，尤其是算法穩定幣</label>
+      <label><input type="radio" name="q13" value="c"> 法幣抵押穩定幣比算法穩定幣更危險</label>
+      <label><input type="radio" name="q13" value="d"> 穩定幣不適合用於交易</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="quiz-box" data-answer="c">
+    <div class="q-num">問題 14 / 16</div>
+    <div class="q-text">50% 勝率、2:1 盈虧比的系統，模擬 200 筆交易時連虧 5 筆的機率大約是？</div>
+    <div class="options">
+      <label><input type="radio" name="q14" value="a"> 10%</label>
+      <label><input type="radio" name="q14" value="b"> 50%</label>
+      <label><input type="radio" name="q14" value="c"> 97%（幾乎必然）</label>
+      <label><input type="radio" name="q14" value="d"> 3%</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="quiz-box" data-answer="a">
+    <div class="q-num">問題 15 / 16</div>
+    <div class="q-text">Equity Curve 跌破 20 日移動平均線時，建議的行動是？</div>
+    <div class="options">
+      <label><input type="radio" name="q15" value="a"> 將風險降低至原來的 50%</label>
+      <label><input type="radio" name="q15" value="b"> 立即停止所有交易</label>
+      <label><input type="radio" name="q15" value="c"> 加大倉位以快速回本</label>
+      <label><input type="radio" name="q15" value="d"> 切換到完全不同的策略</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="quiz-box" data-answer="d">
+    <div class="q-num">問題 16 / 16</div>
+    <div class="q-text">場景題：帳戶 $100,000，你做多 BTC @ $65,000 止損 @ $63,000，做多 ETH @ $3,500 止損 @ $3,400。BTC 倉位 0.5 BTC，ETH 倉位 10 ETH。你的總帳戶風險是多少？</div>
+    <div class="options">
+      <label><input type="radio" name="q16" value="a"> 1%</label>
+      <label><input type="radio" name="q16" value="b"> 1.5%</label>
+      <label><input type="radio" name="q16" value="c"> 3%</label>
+      <label><input type="radio" name="q16" value="d"> 2%</label>
+    </div>
+    <div class="feedback"></div>
+  </div>
+</div>
+
+<button class="calc-btn" onclick="scoreQuiz()" style="margin-top:16px;">計算分數</button>
+<div class="quiz-score" id="quiz-score-display"></div>
+
+<!-- Integrated Calculators -->
+<div class="section" style="margin-top:40px;">
+  <h2>整合計算機</h2>
+</div>
+
+<div class="calc-container">
+  <h4>部位大小計算機（固定風險法）</h4>
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label>帳戶大小 ($)</label>
+      <input type="number" id="q-ps-account" value="50000" placeholder="50000">
+    </div>
+    <div class="calc-field">
+      <label>風險百分比 (%)</label>
+      <input type="number" id="q-ps-risk" value="2" step="0.1" placeholder="2">
+    </div>
+    <div class="calc-field">
+      <label>入場價格 ($)</label>
+      <input type="number" id="q-ps-entry" value="100" placeholder="100">
+    </div>
+    <div class="calc-field">
+      <label>止損價格 ($)</label>
+      <input type="number" id="q-ps-stop" value="95" placeholder="95">
+    </div>
+  </div>
+  <button class="calc-btn" onclick="calcPositionSizeQ()">計算</button>
+  <div class="calc-result" id="q-ps-result"></div>
+</div>
+
+<div class="calc-container">
+  <h4>凱利公式計算機</h4>
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label>勝率 (%)</label>
+      <input type="number" id="q-kelly-wr" value="55" step="1" placeholder="55">
+    </div>
+    <div class="calc-field">
+      <label>盈虧比 (Reward:Risk)</label>
+      <input type="number" id="q-kelly-rr" value="2" step="0.1" placeholder="2">
+    </div>
+  </div>
+  <button class="calc-btn" onclick="calcKellyQ()">計算</button>
+  <div class="calc-result" id="q-kelly-result"></div>
+</div>
+
+<div class="calc-container">
+  <h4>槓桿清算價格計算機</h4>
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label>入場價格 ($)</label>
+      <input type="number" id="q-lev-entry" value="60000" placeholder="60000">
+    </div>
+    <div class="calc-field">
+      <label>槓桿倍數 (x)</label>
+      <input type="number" id="q-lev-leverage" value="10" step="1" placeholder="10">
+    </div>
+    <div class="calc-field">
+      <label>方向 (Long/Short)</label>
+      <input type="text" id="q-lev-direction" value="Long" placeholder="Long / Short">
+    </div>
+    <div class="calc-field">
+      <label>維持保證金率 (%)</label>
+      <input type="number" id="q-lev-mmr" value="0.5" step="0.1" placeholder="0.5">
+    </div>
+  </div>
+  <button class="calc-btn" onclick="calcLiquidationQ()">計算</button>
+  <div class="calc-result" id="q-lev-result"></div>
+</div>
+
+</div><!-- end tab-quiz -->
+
+</div><!-- end container -->
+
+<script>
+// ===== Tab Navigation =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ===== Position Size Calculator (Tab 3) =====
+function calcPositionSize() {
+  const account = parseFloat(document.getElementById('ps-account').value);
+  const risk = parseFloat(document.getElementById('ps-risk').value) / 100;
+  const entry = parseFloat(document.getElementById('ps-entry').value);
+  const stop = parseFloat(document.getElementById('ps-stop').value);
+
+  if (!account || !risk || !entry || !stop || entry === stop) {
+    alert('請填入所有欄位且入場價與止損價不可相同');
+    return;
+  }
+
+  const riskAmount = account * risk;
+  const stopDistance = Math.abs(entry - stop);
+  const positionSize = riskAmount / stopDistance;
+  const positionValue = positionSize * entry;
+  const leverage = positionValue / account;
+
+  const el = document.getElementById('ps-result');
+  el.innerHTML = `<strong>計算結果：</strong><br>` +
+    `風險金額 (R)：$${riskAmount.toLocaleString()}<br>` +
+    `止損距離：$${stopDistance.toLocaleString()}<br>` +
+    `建議倉位大小：${positionSize.toFixed(4)} 單位<br>` +
+    `倉位價值：$${positionValue.toLocaleString(undefined, {maximumFractionDigits:2})}<br>` +
+    `最大虧損金額：$${riskAmount.toLocaleString()}<br>` +
+    `實際槓桿：${leverage.toFixed(2)}x`;
+  el.classList.add('show');
+}
+
+// ===== Kelly Calculator (Tab 3) =====
+function calcKelly() {
+  const winRate = parseFloat(document.getElementById('kelly-winrate').value) / 100;
+  const rr = parseFloat(document.getElementById('kelly-rr').value);
+
+  if (!winRate || !rr || winRate <= 0 || winRate >= 1) {
+    alert('請填入有效的勝率 (1-99%) 和盈虧比');
+    return;
+  }
+
+  const lossRate = 1 - winRate;
+  const kelly = (rr * winRate - lossRate) / rr;
+  const halfKelly = kelly / 2;
+  const expectancy = (winRate * rr) - lossRate;
+
+  const el = document.getElementById('kelly-result');
+  el.innerHTML = `<strong>計算結果：</strong><br>` +
+    `期望值 (Expectancy)：${expectancy.toFixed(3)}R<br>` +
+    `Full Kelly (f*)：${(kelly * 100).toFixed(2)}%<br>` +
+    `Half Kelly (f*/2)：${(halfKelly * 100).toFixed(2)}%<br>` +
+    `建議使用：<strong>${(halfKelly * 100).toFixed(2)}% 帳戶風險</strong><br>` +
+    (kelly <= 0 ? `<span style="color:var(--red);">&#9888; 此系統期望值為負，不建議交易！</span>` :
+    `<span style="color:var(--green);">此系統有正期望值，可執行。</span>`);
+  el.classList.add('show');
+}
+
+// ===== Liquidation Calculator (Tab 5) =====
+function calcLiquidation() {
+  const entry = parseFloat(document.getElementById('lev-entry').value);
+  const leverage = parseFloat(document.getElementById('lev-leverage').value);
+  const direction = document.getElementById('lev-direction').value.trim().toLowerCase();
+  const mmr = parseFloat(document.getElementById('lev-mmr').value) / 100;
+
+  if (!entry || !leverage || leverage <= 0) {
+    alert('請填入有效的數值');
+    return;
+  }
+
+  let liqPrice, liqDistance;
+  if (direction === 'long' || direction === 'l') {
+    liqPrice = entry * (1 - (1 / leverage) + mmr);
+    liqDistance = ((entry - liqPrice) / entry * 100);
+  } else {
+    liqPrice = entry * (1 + (1 / leverage) - mmr);
+    liqDistance = ((liqPrice - entry) / entry * 100);
+  }
+
+  const el = document.getElementById('lev-result');
+  el.innerHTML = `<strong>計算結果：</strong><br>` +
+    `方向：${direction === 'long' || direction === 'l' ? 'Long (做多)' : 'Short (做空)'}<br>` +
+    `入場價格：$${entry.toLocaleString()}<br>` +
+    `槓桿倍數：${leverage}x<br>` +
+    `預估爆倉價格：<strong style="color:var(--red);">$${liqPrice.toLocaleString(undefined, {maximumFractionDigits:2})}</strong><br>` +
+    `距爆倉：${liqDistance.toFixed(2)}%<br>` +
+    `<span style="font-size:11px;color:var(--text3);">* 實際爆倉價格因交易所計算方式略有不同</span>`;
+  el.classList.add('show');
+}
+
+// ===== Quiz Scoring =====
+function scoreQuiz() {
+  const quizBoxes = document.querySelectorAll('.quiz-box');
+  let correct = 0;
+  let total = quizBoxes.length;
+
+  const explanations = {
+    q1: '$50,000 × 2% = $1,000 風險 / ($100 - $96) = $4 止損距離 = 250 股',
+    q2: '虧損 40% 後剩 60%。回本需要: 40/60 = 66.7% ≈ 67%',
+    q3: 'f* = (b×p - q) / b = (2×0.6 - 0.4) / 2 = (1.2 - 0.4) / 2 = 0.4 = 40%',
+    q4: 'Half-Kelly 保留約 75% 的最大成長率，同時大幅減少波動和最大回撤',
+    q5: '(2 - 1 + 3 - 1 - 1 + 1.5 - 1 + 4 - 1 + 2) / 10 = 7.5 / 10 = +0.75R',
+    q6: '10x 槓桿的爆倉距離約為 1/10 = 10%（不計維持保證金）',
+    q7: 'BTC、ETH、SOL 在崩盤時相關性 > 0.9，三個 20% 部位幾乎等於 60% 單一方向曝險',
+    q8: '存活（風控）是前提，有優勢（策略）是核心，紀律（心態）是執行保障',
+    q9: '回撤 5-10% 區間 → 降至 50% 倉位（動態降倉規則）',
+    q10: 'Beta 調整：$20,000 × 2.0 = $40,000 等效 SPY 風險',
+    q11: 'Gold 與 BTC 相關性低，且與 DXY 負相關，形成部分對沖',
+    q12: '$200,000 × 1% / (2 × $2,000) = $2,000 / $4,000 = 0.5 BTC',
+    q13: 'UST 是算法穩定幣，存在死亡螺旋風險。應分散到多種不同類型的穩定幣',
+    q14: '50% 勝率連虧 5 筆的單次機率是 3.125%，但 200 筆中出現至少一次的機率約 97%',
+    q15: 'Equity Curve 管理：跌破 20MA 時降低風險至 50%，回到上方時恢復正常',
+    q16: 'BTC 風險: 0.5 × ($65,000-$63,000) = $1,000。ETH 風險: 10 × ($3,500-$3,400) = $1,000。總計 $2,000/$100,000 = 2%'
+  };
+
+  quizBoxes.forEach((box, i) => {
+    const answer = box.dataset.answer;
+    const selected = box.querySelector(`input[name="q${i+1}"]:checked`);
+    const feedback = box.querySelector('.feedback');
+
+    feedback.classList.remove('correct', 'wrong');
+
+    if (selected && selected.value === answer) {
+      correct++;
+      feedback.textContent = '正確！' + explanations['q' + (i+1)];
+      feedback.classList.add('correct');
+    } else if (selected) {
+      feedback.textContent = '錯誤。正確答案：' + answer.toUpperCase() + '。' + explanations['q' + (i+1)];
+      feedback.classList.add('wrong');
+    } else {
+      feedback.textContent = '未作答。正確答案：' + answer.toUpperCase() + '。' + explanations['q' + (i+1)];
+      feedback.classList.add('wrong');
+    }
+  });
+
+  const scoreEl = document.getElementById('quiz-score-display');
+  const pct = Math.round((correct / total) * 100);
+  let grade = '';
+  if (pct >= 90) grade = '優秀！風控觀念紮實。';
+  else if (pct >= 70) grade = '良好！但還有進步空間。';
+  else if (pct >= 50) grade = '及格，建議重新閱讀相關章節。';
+  else grade = '需要加強！請仔細複習所有內容。';
+
+  scoreEl.textContent = `得分：${correct} / ${total} (${pct}%) — ${grade}`;
+  scoreEl.classList.add('show');
+}
+
+// ===== Quiz Tab Calculators =====
+function calcPositionSizeQ() {
+  const account = parseFloat(document.getElementById('q-ps-account').value);
+  const risk = parseFloat(document.getElementById('q-ps-risk').value) / 100;
+  const entry = parseFloat(document.getElementById('q-ps-entry').value);
+  const stop = parseFloat(document.getElementById('q-ps-stop').value);
+
+  if (!account || !risk || !entry || !stop || entry === stop) {
+    alert('請填入所有欄位');
+    return;
+  }
+
+  const riskAmount = account * risk;
+  const stopDistance = Math.abs(entry - stop);
+  const positionSize = riskAmount / stopDistance;
+  const positionValue = positionSize * entry;
+  const leverage = positionValue / account;
+
+  const el = document.getElementById('q-ps-result');
+  el.innerHTML = `<strong>結果：</strong> 倉位 = ${positionSize.toFixed(4)} 單位 | 風險 = $${riskAmount.toLocaleString()} | 倉位價值 = $${positionValue.toLocaleString(undefined,{maximumFractionDigits:2})} | 槓桿 = ${leverage.toFixed(2)}x`;
+  el.classList.add('show');
+}
+
+function calcKellyQ() {
+  const winRate = parseFloat(document.getElementById('q-kelly-wr').value) / 100;
+  const rr = parseFloat(document.getElementById('q-kelly-rr').value);
+
+  if (!winRate || !rr || winRate <= 0 || winRate >= 1) {
+    alert('請填入有效數值');
+    return;
+  }
+
+  const lossRate = 1 - winRate;
+  const kelly = (rr * winRate - lossRate) / rr;
+  const halfKelly = kelly / 2;
+  const expectancy = (winRate * rr) - lossRate;
+
+  const el = document.getElementById('q-kelly-result');
+  el.innerHTML = `<strong>結果：</strong> 期望值 = ${expectancy.toFixed(3)}R | Full Kelly = ${(kelly*100).toFixed(2)}% | <strong>Half Kelly = ${(halfKelly*100).toFixed(2)}%</strong>` +
+    (kelly <= 0 ? ' | <span style="color:var(--red);">負期望值系統！</span>' : '');
+  el.classList.add('show');
+}
+
+function calcLiquidationQ() {
+  const entry = parseFloat(document.getElementById('q-lev-entry').value);
+  const leverage = parseFloat(document.getElementById('q-lev-leverage').value);
+  const direction = document.getElementById('q-lev-direction').value.trim().toLowerCase();
+  const mmr = parseFloat(document.getElementById('q-lev-mmr').value) / 100;
+
+  if (!entry || !leverage || leverage <= 0) {
+    alert('請填入有效數值');
+    return;
+  }
+
+  let liqPrice;
+  if (direction === 'long' || direction === 'l') {
+    liqPrice = entry * (1 - (1 / leverage) + mmr);
+  } else {
+    liqPrice = entry * (1 + (1 / leverage) - mmr);
+  }
+  const liqDist = Math.abs(liqPrice - entry) / entry * 100;
+
+  const el = document.getElementById('q-lev-result');
+  el.innerHTML = `<strong>結果：</strong> 爆倉價 = <span style="color:var(--red);">$${liqPrice.toLocaleString(undefined,{maximumFractionDigits:2})}</span> | 距爆倉 = ${liqDist.toFixed(2)}% | 方向 = ${direction === 'long' || direction === 'l' ? 'Long' : 'Short'}`;
+  el.classList.add('show');
+}
+</script>
+</body>
+</html>
