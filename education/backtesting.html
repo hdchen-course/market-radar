@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回測與績效分析 — Backtesting & Performance Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --green: #16a34a;
+  --red: #dc2626;
+  --purple: #7c3aed;
+  --orange: #ea580c;
+  --r: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 32px 20px;
+  line-height: 1.7;
+}
+.container { max-width: 1000px; margin: 0 auto; }
+.back-link {
+  display: inline-block;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  transition: opacity .2s;
+}
+.back-link:hover { opacity: 0.7; }
+header { margin-bottom: 32px; }
+header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+header p { color: var(--text2); font-size: 14px; }
+
+/* Tabs */
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 0;
+}
+.tab-btn {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: none;
+  color: var(--text3);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all .2s;
+  font-family: inherit;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Content styles */
+h2 { font-size: 20px; font-weight: 700; margin: 28px 0 14px; color: var(--text); }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 16px; font-weight: 600; margin: 20px 0 10px; color: var(--text); }
+p { margin-bottom: 12px; color: var(--text2); font-size: 14px; }
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-blue { border-left: 4px solid var(--blue); }
+.card-green { border-left: 4px solid var(--green); }
+.card-red { border-left: 4px solid var(--red); }
+.card-purple { border-left: 4px solid var(--purple); }
+.card-orange { border-left: 4px solid var(--orange); }
+.formula {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  overflow-x: auto;
+}
+ul, ol { margin: 10px 0 16px 24px; color: var(--text2); font-size: 14px; }
+li { margin-bottom: 6px; }
+strong { color: var(--text); font-weight: 600; }
+.highlight { background: #fef3c7; padding: 2px 6px; border-radius: 4px; }
+.svg-container {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 16px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 13px;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  text-align: left;
+}
+th {
+  background: var(--bg3);
+  font-weight: 600;
+  color: var(--text);
+}
+td { color: var(--text2); }
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+/* Interactive calculator */
+.calc-container {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin: 20px 0;
+}
+.calc-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  align-items: center;
+}
+.calc-group { display: flex; flex-direction: column; gap: 4px; }
+.calc-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+}
+.calc-group input {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  width: 130px;
+  background: var(--bg3);
+}
+.calc-group input:focus { outline: 2px solid var(--blue); border-color: transparent; }
+.calc-result {
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.calc-result .positive { color: var(--green); font-weight: 600; }
+.calc-result .negative { color: var(--red); font-weight: 600; }
+button.calc-btn {
+  padding: 8px 20px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity .2s;
+}
+button.calc-btn:hover { opacity: 0.85; }
+
+/* Journal */
+.journal-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.journal-form input, .journal-form select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  background: var(--bg3);
+}
+.journal-form input:focus, .journal-form select:focus {
+  outline: 2px solid var(--blue);
+  border-color: transparent;
+}
+.journal-table-wrap { overflow-x: auto; }
+.journal-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.stat-card {
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-card .stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.stat-card .stat-label {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* Quiz */
+.quiz-question {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.quiz-question h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.quiz-options { display: flex; flex-direction: column; gap: 8px; }
+.quiz-option {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .2s;
+  background: var(--bg3);
+}
+.quiz-option:hover { border-color: var(--blue); background: #eff6ff; }
+.quiz-option.correct { background: #dcfce7; border-color: var(--green); color: var(--green); }
+.quiz-option.wrong { background: #fee2e2; border-color: var(--red); color: var(--red); }
+.quiz-explanation {
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--bg3);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text2);
+  display: none;
+}
+.quiz-score {
+  background: var(--blue);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: var(--r);
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Disclaimer */
+.disclaimer {
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: var(--r);
+  padding: 16px 20px;
+  margin-top: 40px;
+  font-size: 12px;
+  color: #92400e;
+  line-height: 1.6;
+}
+.disclaimer strong { color: #78350f; }
+
+/* Delete button */
+.btn-delete {
+  padding: 4px 10px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.btn-delete:hover { opacity: 0.8; }
+.btn-clear {
+  padding: 6px 14px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<header>
+  <h1>回測與績效分析</h1>
+  <p>Backtesting & Performance Analytics — 用數據驗證你的交易策略</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="why">為什麼需要回測</button>
+  <button class="tab-btn" data-tab="metrics">績效指標全解</button>
+  <button class="tab-btn" data-tab="journal">交易日誌系統</button>
+  <button class="tab-btn" data-tab="methodology">回測方法論</button>
+  <button class="tab-btn" data-tab="live">從回測到實盤</button>
+  <button class="tab-btn" data-tab="quiz">互動測驗</button>
+</nav>
+
+<!-- ==================== Tab 1: 為什麼需要回測 ==================== -->
+<div class="tab-panel active" id="panel-why">
+<h2>回測的目的：驗證策略是否有正期望值</h2>
+<div class="card card-blue">
+  <p>回測（Backtesting）是將交易策略應用於歷史數據，驗證在過去的市場條件下該策略是否能產生正的期望值。這不是為了「預測未來」，而是為了<strong>過濾掉注定失敗的策略</strong>。</p>
+  <p>一個連歷史數據都無法產生正期望值的策略，在實盤中幾乎不可能盈利。回測是你的第一道防線。</p>
+</div>
+
+<h2>歷史表現 ≠ 未來表現</h2>
+<div class="card card-orange">
+  <p><strong>核心認知：</strong>通過回測不代表策略一定有效，但沒通過回測的策略更不可能在未來有效。</p>
+  <ul>
+    <li>市場是動態的 — regime 會改變（趨勢市 vs 震盪市）</li>
+    <li>流動性條件會變化 — 過去能執行的價格未來未必能拿到</li>
+    <li>參與者結構會演變 — 當太多人使用同一策略，edge 就消失了</li>
+    <li>回測是<strong>必要條件</strong>，不是充分條件</li>
+  </ul>
+</div>
+
+<h2>Forward Test vs Backtest vs Paper Trading</h2>
+<div class="comparison-grid">
+  <div class="card">
+    <h3 style="color:var(--blue)">Backtest（回測）</h3>
+    <p><strong>時間：</strong>過去的歷史數據</p>
+    <p><strong>特點：</strong>速度快，可大量測試</p>
+    <p><strong>風險：</strong>Overfitting、Look-ahead bias</p>
+    <p><strong>用途：</strong>初步篩選策略</p>
+  </div>
+  <div class="card">
+    <h3 style="color:var(--green)">Paper Trading（模擬交易）</h3>
+    <p><strong>時間：</strong>當前即時市場</p>
+    <p><strong>特點：</strong>無真實資金風險</p>
+    <p><strong>風險：</strong>缺乏心理壓力</p>
+    <p><strong>用途：</strong>驗證執行可行性</p>
+  </div>
+  <div class="card">
+    <h3 style="color:var(--purple)">Forward Test（前測）</h3>
+    <p><strong>時間：</strong>未來的即時市場（小資金）</p>
+    <p><strong>特點：</strong>真實的 slippage 和心理</p>
+    <p><strong>風險：</strong>真金白銀的虧損</p>
+    <p><strong>用途：</strong>最終驗證策略有效性</p>
+  </div>
+</div>
+
+<h2>Overfitting 的致命陷阱</h2>
+<div class="card card-red">
+  <p><strong>Overfitting（過度擬合）：</strong>策略對過去數據的「完美」適配 = 對未來數據的「完美」失敗。</p>
+  <p>當你不斷調整參數讓回測曲線更漂亮時，你不是在發現市場規律，而是在<span class="highlight">記憶歷史噪音</span>。</p>
+  <ul>
+    <li><strong>參數越多 = overfitting 風險越高</strong>（每個參數都是一次「偷看答案」的機會）</li>
+    <li>如果策略需要 5+ 個精確參數才能盈利，它幾乎肯定是 overfitted</li>
+    <li>真正 robust 的策略在參數小幅變動時表現不會劇烈變化</li>
+  </ul>
+</div>
+
+<div class="svg-container">
+  <svg viewBox="0 0 700 320" width="100%" style="max-width:700px">
+    <defs>
+      <linearGradient id="gradGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#16a34a;stop-opacity:0.2"/>
+        <stop offset="100%" style="stop-color:#16a34a;stop-opacity:0"/>
+      </linearGradient>
+      <linearGradient id="gradRed" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#dc2626;stop-opacity:0.2"/>
+        <stop offset="100%" style="stop-color:#dc2626;stop-opacity:0"/>
+      </linearGradient>
+    </defs>
+    <!-- Background -->
+    <rect x="0" y="0" width="700" height="320" fill="#f8fafc" rx="8"/>
+    <!-- Dividing line -->
+    <line x1="350" y1="40" x2="350" y2="290" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="175" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">In-Sample（訓練期）</text>
+    <text x="525" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Out-of-Sample（驗證期）</text>
+    <!-- Axis -->
+    <line x1="40" y1="270" x2="660" y2="270" stroke="#cbd5e1" stroke-width="1"/>
+    <!-- Overfitted model: perfect in-sample -->
+    <polyline points="50,250 80,230 110,200 140,190 170,160 200,140 230,110 260,95 290,75 320,60 340,55"
+              fill="none" stroke="#dc2626" stroke-width="2.5"/>
+    <!-- Overfitted model: terrible out-of-sample -->
+    <polyline points="360,70 390,100 420,140 450,180 480,200 510,230 540,220 570,250 600,240 630,260 650,265"
+              fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,3"/>
+    <!-- Robust model: decent in-sample -->
+    <polyline points="50,240 80,235 110,225 140,220 170,210 200,205 230,195 260,190 290,180 320,175 340,170"
+              fill="none" stroke="#16a34a" stroke-width="2.5"/>
+    <!-- Robust model: still decent out-of-sample -->
+    <polyline points="360,172 390,175 420,170 450,168 480,172 510,165 540,160 570,158 600,155 630,150 650,148"
+              fill="none" stroke="#16a34a" stroke-width="2.5"/>
+    <!-- Labels -->
+    <rect x="420" y="80" width="160" height="50" fill="#fee2e2" rx="6"/>
+    <text x="500" y="100" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Overfitted 策略</text>
+    <text x="500" y="118" text-anchor="middle" font-size="10" fill="#dc2626">訓練期完美，驗證期崩盤</text>
+    <rect x="420" y="140" width="160" height="50" fill="#dcfce7" rx="6"/>
+    <text x="500" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Robust 策略</text>
+    <text x="500" y="178" text-anchor="middle" font-size="10" fill="#16a34a">兩期表現一致且穩定</text>
+    <!-- Y axis label -->
+    <text x="25" y="165" text-anchor="middle" font-size="10" fill="#64748b" transform="rotate(-90,25,165)">績效 (Equity)</text>
+    <text x="350" y="300" text-anchor="middle" font-size="10" fill="#64748b">時間軸</text>
+  </svg>
+  <p style="font-size:12px; color:var(--text3); margin-top:8px;">Overfitting 示意圖：紅線在訓練期完美但驗證期崩盤；綠線在兩期都穩健</p>
+</div>
+
+<div class="card card-purple">
+  <h3>如何避免 Overfitting</h3>
+  <ol>
+    <li><strong>Out-of-sample testing：</strong>保留 30% 數據不參與策略開發</li>
+    <li><strong>減少參數：</strong>策略越簡單，overfitting 風險越低</li>
+    <li><strong>Walk-forward analysis：</strong>滾動視窗驗證</li>
+    <li><strong>多市場驗證：</strong>策略在不同市場/標的上也能運作</li>
+    <li><strong>邏輯先行：</strong>先有交易邏輯，再去驗證，而非先看數據再找規律</li>
+  </ol>
+</div>
+</div>
+
+<!-- ==================== Tab 2: 績效指標全解 ==================== -->
+<div class="tab-panel" id="panel-metrics">
+<h2>勝率 (Win Rate)</h2>
+<div class="card card-blue">
+  <p>勝率衡量你在所有交易中獲利的比例。<strong>高勝率不等於盈利</strong> — 如果每次贏小輸大，高勝率照樣虧錢。</p>
+  <div class="formula">Win Rate = 獲利交易次數 / 總交易次數 × 100%</div>
+  <div class="svg-container" style="border:none; padding:10px;">
+    <svg viewBox="0 0 400 100" width="100%" style="max-width:400px">
+      <rect x="10" y="30" width="240" height="40" fill="#dcfce7" rx="6"/>
+      <rect x="250" y="30" width="140" height="40" fill="#fee2e2" rx="6"/>
+      <text x="130" y="55" text-anchor="middle" font-size="13" font-weight="600" fill="#16a34a">60% Wins</text>
+      <text x="320" y="55" text-anchor="middle" font-size="13" font-weight="600" fill="#dc2626">40% Losses</text>
+      <text x="200" y="88" text-anchor="middle" font-size="10" fill="#64748b">100 筆交易中 60 筆獲利 = 60% 勝率</text>
+    </svg>
+  </div>
+</div>
+
+<h2>盈虧比 (Profit Factor)</h2>
+<div class="card card-green">
+  <p>盈虧比衡量每 1 元虧損能帶來多少元獲利。PF > 1 表示系統整體盈利。</p>
+  <div class="formula">Profit Factor = 所有獲利交易的利潤總和 / 所有虧損交易的虧損總和</div>
+  <p><strong>參考基準：</strong>PF 1.5 = 還行 | PF 2.0 = 不錯 | PF 3.0+ = 非常好（但可能 overfitted）</p>
+</div>
+
+<h2>期望值 (Expectancy)</h2>
+<div class="card card-purple">
+  <p>期望值是每筆交易的平均獲利/虧損。正期望值 = 長期下來你會賺錢。</p>
+  <div class="formula">Expectancy = (Win% × Avg Win) - (Loss% × Avg Loss)</div>
+  <p>例：勝率 40%、平均獲利 $300、平均虧損 $100<br>
+  E = (0.40 × $300) - (0.60 × $100) = $120 - $60 = <strong>+$60 per trade</strong></p>
+</div>
+
+<h2>Sharpe Ratio</h2>
+<div class="card card-blue">
+  <p>Sharpe Ratio 衡量每承受一單位風險能獲得多少超額報酬。越高越好。</p>
+  <div class="formula">Sharpe Ratio = (Rp - Rf) / σp
+  Rp = 策略報酬率, Rf = 無風險利率, σp = 報酬率標準差</div>
+  <p><strong>參考基準：</strong>< 1.0 = 不理想 | 1.0-2.0 = 可接受 | 2.0-3.0 = 很好 | > 3.0 = 傑出（或 overfitted）</p>
+  <div class="svg-container" style="border:none; padding:10px;">
+    <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+      <!-- Normal distribution curve -->
+      <path d="M 50,170 Q 100,168 130,160 Q 160,145 190,120 Q 220,80 250,50 Q 280,80 310,120 Q 340,145 370,160 Q 400,168 450,170" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+      <path d="M 50,170 Q 100,168 130,160 Q 160,145 190,120 Q 220,80 250,50 Q 280,80 310,120 Q 340,145 370,160 Q 400,168 450,170 Z" fill="url(#gradBlue2)" opacity="0.3"/>
+      <defs>
+        <linearGradient id="gradBlue2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.3"/>
+          <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0"/>
+        </linearGradient>
+      </defs>
+      <!-- Mean line -->
+      <line x1="250" y1="45" x2="250" y2="175" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="250" y="190" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="600">Mean Return (Rp)</text>
+      <!-- Std dev -->
+      <line x1="190" y1="120" x2="310" y2="120" stroke="#7c3aed" stroke-width="1.5"/>
+      <line x1="190" y1="115" x2="190" y2="125" stroke="#7c3aed" stroke-width="1.5"/>
+      <line x1="310" y1="115" x2="310" y2="125" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="250" y="112" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="500">1 Std Dev (σ)</text>
+      <!-- Rf line -->
+      <line x1="180" y1="45" x2="180" y2="175" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="180" y="40" text-anchor="middle" font-size="9" fill="#dc2626">Rf</text>
+      <!-- Arrow showing excess return -->
+      <line x1="185" y1="145" x2="245" y2="145" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowG)"/>
+      <defs><marker id="arrowG" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#16a34a"/></marker></defs>
+      <text x="215" y="138" text-anchor="middle" font-size="9" fill="#16a34a" font-weight="600">Excess Return</text>
+    </svg>
+  </div>
+</div>
+
+<h2>Sortino Ratio</h2>
+<div class="card card-green">
+  <p>Sortino 只懲罰<strong>下行波動</strong>（虧損），比 Sharpe 更合理，因為上行波動（賺錢）不應被懲罰。</p>
+  <div class="formula">Sortino Ratio = (Rp - Rf) / σ_downside
+  σ_downside = 只計算負報酬的標準差</div>
+  <p>如果你的策略偶爾有大賺的 outlier，Sortino 會比 Sharpe 好看很多（這是合理的）。</p>
+</div>
+
+<h2>Maximum Drawdown（最大回撤）</h2>
+<div class="card card-red">
+  <p>最大回撤是資金從峰值跌到谷底的最大幅度。它衡量<strong>你最痛苦的時期有多痛苦</strong>。</p>
+  <div class="formula">Max Drawdown = (Peak - Trough) / Peak × 100%</div>
+  <div class="svg-container" style="border:none; padding:10px;">
+    <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+      <!-- Equity curve -->
+      <polyline points="30,140 60,120 90,100 120,80 150,70 180,55 210,60 240,90 270,120 300,130 330,110 360,85 390,70 420,55 450,45 470,40"
+                fill="none" stroke="#2563eb" stroke-width="2"/>
+      <!-- Peak and trough -->
+      <circle cx="180" cy="55" r="4" fill="#16a34a"/>
+      <circle cx="300" cy="130" r="4" fill="#dc2626"/>
+      <!-- Drawdown area -->
+      <rect x="180" y="55" width="120" height="75" fill="#dc2626" opacity="0.08" rx="4"/>
+      <line x1="180" y1="55" x2="300" y2="55" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="295" y1="55" x2="295" y2="130" stroke="#dc2626" stroke-width="2"/>
+      <text x="310" y="95" font-size="10" fill="#dc2626" font-weight="600">Max DD</text>
+      <text x="180" y="47" font-size="9" fill="#16a34a" font-weight="600">Peak</text>
+      <text x="300" y="147" font-size="9" fill="#dc2626" font-weight="600">Trough</text>
+    </svg>
+  </div>
+  <p><strong>心理現實：</strong>20% 的 drawdown 感覺像世界末日。50% 的 drawdown 需要 100% 回報才能回本。</p>
+</div>
+
+<h2>Calmar Ratio & Recovery Factor</h2>
+<div class="card card-orange">
+  <div class="formula">Calmar Ratio = 年化報酬率 / Max Drawdown</div>
+  <p>Calmar > 1.0 = 報酬大於最大風險；Calmar > 3.0 = 傑出。</p>
+  <div class="formula">Recovery Factor = 總淨利潤 / Max Drawdown</div>
+  <p>Recovery Factor 越高，策略從最大回撤中恢復的能力越強。> 5 通常是好策略的特徵。</p>
+  <table>
+    <thead><tr><th>指標</th><th>差</th><th>普通</th><th>好</th><th>傑出</th></tr></thead>
+    <tbody>
+      <tr><td>Calmar Ratio</td><td>&lt; 0.5</td><td>0.5 - 1.0</td><td>1.0 - 3.0</td><td>&gt; 3.0</td></tr>
+      <tr><td>Recovery Factor</td><td>&lt; 2</td><td>2 - 5</td><td>5 - 10</td><td>&gt; 10</td></tr>
+      <tr><td>Sharpe Ratio</td><td>&lt; 0.5</td><td>0.5 - 1.0</td><td>1.0 - 2.0</td><td>&gt; 2.0</td></tr>
+      <tr><td>Profit Factor</td><td>&lt; 1.0</td><td>1.0 - 1.5</td><td>1.5 - 2.5</td><td>&gt; 2.5</td></tr>
+      <tr><td>Max Drawdown</td><td>&gt; 40%</td><td>20-40%</td><td>10-20%</td><td>&lt; 10%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>指標之間的關係</h2>
+<div class="card card-purple">
+  <p>績效指標不是獨立的，它們互相制約：</p>
+  <ul>
+    <li><strong>高勝率 + 低盈虧比</strong> = 趨勢跟隨策略的相反（如做市策略，頻繁小賺偶爾大虧）</li>
+    <li><strong>低勝率 + 高盈虧比</strong> = 典型趨勢跟隨策略（大部分小虧，少數大賺覆蓋虧損）</li>
+    <li><strong>Sharpe 很高但 Max DD 也很高</strong> = 策略可能有尾部風險（平時穩定，偶爾崩盤）</li>
+    <li><strong>Profit Factor 很高但交易次數少</strong> = 樣本量不足，統計不可靠</li>
+  </ul>
+  <p><strong>關鍵原則：</strong>不要只看單一指標。一個好的策略應該在多個指標上都表現合理，而不是某個指標極端突出但其他都不行。</p>
+</div>
+
+<h2>互動計算機</h2>
+<div class="calc-container">
+  <h3>績效指標計算器</h3>
+  <div class="calc-row">
+    <div class="calc-group">
+      <label>勝率 (%)</label>
+      <input type="number" id="calc-winrate" value="55" min="0" max="100" step="1">
+    </div>
+    <div class="calc-group">
+      <label>平均獲利 ($)</label>
+      <input type="number" id="calc-avgwin" value="200" min="0" step="10">
+    </div>
+    <div class="calc-group">
+      <label>平均虧損 ($)</label>
+      <input type="number" id="calc-avgloss" value="100" min="0" step="10">
+    </div>
+    <div class="calc-group">
+      <label>總交易次數</label>
+      <input type="number" id="calc-trades" value="100" min="1" step="1">
+    </div>
+    <div class="calc-group">
+      <label>年化報酬 (%)</label>
+      <input type="number" id="calc-annual" value="25" step="1">
+    </div>
+    <div class="calc-group">
+      <label>報酬率 Std (%)</label>
+      <input type="number" id="calc-std" value="15" min="0.1" step="0.5">
+    </div>
+  </div>
+  <button class="calc-btn" onclick="calculateMetrics()">計算</button>
+  <div class="calc-result" id="calc-output">
+    點擊「計算」查看結果...
+  </div>
+</div>
+</div>
+
+<!-- ==================== Tab 3: 交易日誌系統 ==================== -->
+<div class="tab-panel" id="panel-journal">
+<h2>為什麼日誌比回測更重要</h2>
+<div class="card card-blue">
+  <p>回測告訴你策略在<strong>過去</strong>能否運作。日誌告訴你<strong>你自己</strong>在即時市場中能否正確執行策略。</p>
+  <ul>
+    <li>回測無法模擬情緒：恐懼、貪婪、FOMO</li>
+    <li>日誌能揭示你的行為模式：什麼時候你會偏離計劃？</li>
+    <li>最好的交易者都有一本厚厚的交易日誌</li>
+    <li>沒有日誌 = 沒有進步的基礎</li>
+  </ul>
+</div>
+
+<h2>必記欄位</h2>
+<div style="overflow-x:auto;">
+<table>
+  <thead>
+    <tr>
+      <th>日期</th><th>標的</th><th>方向</th><th>入場價</th><th>止損價</th><th>出場價</th><th>R值</th><th>理由</th><th>情緒</th><th>遵守規則?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2024-01-15</td><td>AAPL</td><td>做多</td><td>185.5</td><td>183.0</td><td>191.0</td><td>+2.2R</td><td>突破+量增</td><td>冷靜</td><td>是</td>
+    </tr>
+    <tr>
+      <td>2024-01-16</td><td>TSLA</td><td>做空</td><td>220.0</td><td>225.0</td><td>225.0</td><td>-1.0R</td><td>假突破</td><td>急躁</td><td>否（提前進場）</td>
+    </tr>
+    <tr>
+      <td>2024-01-17</td><td>NVDA</td><td>做多</td><td>560.0</td><td>550.0</td><td>580.0</td><td>+2.0R</td><td>趨勢回踩</td><td>冷靜</td><td>是</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>統計匯總重點</h2>
+<div class="comparison-grid">
+  <div class="card">
+    <h3>每日檢視</h3>
+    <ul>
+      <li>今天是否遵守交易計劃？</li>
+      <li>情緒狀態如何影響決策？</li>
+      <li>有沒有衝動交易？</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>每週統計</h3>
+    <ul>
+      <li>本週勝率與 R 值總和</li>
+      <li>最佳/最差交易分析</li>
+      <li>哪個時段表現最好？</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>每月回顧</h3>
+    <ul>
+      <li>整月期望值是否為正？</li>
+      <li>策略哪些有效/哪些需調整？</li>
+      <li>心態進步/退步了嗎？</li>
+    </ul>
+  </div>
+</div>
+
+<h2>如何從日誌中找出模式</h2>
+<div class="card card-green">
+  <ul>
+    <li><strong>策略層面：</strong>哪種設置（突破/回踩/反轉）的 R 值最高？</li>
+    <li><strong>時間層面：</strong>開盤 30 分鐘 vs 午盤 vs 收盤前，哪個時段勝率最高？</li>
+    <li><strong>情緒層面：</strong>「冷靜」時的交易 vs 「急躁」時的交易，表現差異有多大？</li>
+    <li><strong>規則遵守：</strong>遵守規則的交易 vs 違規的交易，期望值差異多少？</li>
+  </ul>
+</div>
+
+<h2>互動交易日誌</h2>
+<div class="calc-container">
+  <h3>新增交易記錄</h3>
+  <div class="journal-form">
+    <input type="date" id="j-date" placeholder="日期">
+    <input type="text" id="j-symbol" placeholder="標的 (如 AAPL)">
+    <select id="j-direction">
+      <option value="long">做多</option>
+      <option value="short">做空</option>
+    </select>
+    <input type="number" id="j-entry" placeholder="入場價" step="0.01">
+    <input type="number" id="j-stop" placeholder="止損價" step="0.01">
+    <input type="number" id="j-exit" placeholder="出場價" step="0.01">
+    <input type="text" id="j-reason" placeholder="理由">
+    <select id="j-emotion">
+      <option value="冷靜">冷靜</option>
+      <option value="焦慮">焦慮</option>
+      <option value="急躁">急躁</option>
+      <option value="貪婪">貪婪</option>
+      <option value="恐懼">恐懼</option>
+    </select>
+    <select id="j-rule">
+      <option value="是">遵守規則</option>
+      <option value="否">未遵守</option>
+    </select>
+  </div>
+  <div style="display:flex; gap:10px; margin-bottom:16px;">
+    <button class="calc-btn" onclick="addTrade()">新增交易</button>
+    <button class="btn-clear" onclick="clearAllTrades()">清除全部</button>
+  </div>
+
+  <div class="journal-stats" id="journal-stats">
+    <div class="stat-card"><div class="stat-value" id="js-trades">0</div><div class="stat-label">總交易</div></div>
+    <div class="stat-card"><div class="stat-value" id="js-winrate">0%</div><div class="stat-label">勝率</div></div>
+    <div class="stat-card"><div class="stat-value" id="js-expectancy">$0</div><div class="stat-label">期望值</div></div>
+    <div class="stat-card"><div class="stat-value" id="js-totalr">0R</div><div class="stat-label">總 R 值</div></div>
+    <div class="stat-card"><div class="stat-value" id="js-pf">0</div><div class="stat-label">Profit Factor</div></div>
+  </div>
+
+  <div class="journal-table-wrap">
+    <table id="journal-table">
+      <thead>
+        <tr><th>日期</th><th>標的</th><th>方向</th><th>入場</th><th>止損</th><th>出場</th><th>R值</th><th>理由</th><th>情緒</th><th>規則</th><th>操作</th></tr>
+      </thead>
+      <tbody id="journal-body"></tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:20px;">Equity Curve</h3>
+  <div id="equity-chart" class="svg-container" style="min-height:150px;">
+    <p style="color:var(--text3); font-size:12px;">新增交易後將自動繪製 Equity Curve</p>
+  </div>
+</div>
+</div>
+
+<!-- ==================== Tab 4: 回測方法論 ==================== -->
+<div class="tab-panel" id="panel-methodology">
+<h2>手動回測：最有學習效果</h2>
+<div class="card card-blue">
+  <p>逐根 K 線前進，模擬即時決策。雖然慢，但這是學習市場結構最有效的方式。</p>
+  <h3>手動回測步驟</h3>
+  <ol>
+    <li>選擇一個標的和時間段（至少 200 根 K 線）</li>
+    <li>遮住右邊的 K 線（用紙或軟體功能）</li>
+    <li>每次只揭露一根 K 線，決定是否進場</li>
+    <li>如果進場：記錄入場價、止損、目標</li>
+    <li>繼續揭露 K 線直到觸發止損或目標</li>
+    <li>記錄結果並繼續下一筆</li>
+    <li>至少完成 50-100 筆模擬交易</li>
+  </ol>
+  <p><strong>優點：</strong>強迫你在不確定中做決策，最接近真實交易的心理狀態。</p>
+</div>
+
+<h2>手動回測工具推薦</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>工具</th><th>費用</th><th>特點</th></tr></thead>
+    <tbody>
+      <tr><td>TradingView Replay</td><td>Pro 以上方案</td><td>內建於圖表，支援多時間框架同步回放</td></tr>
+      <tr><td>Forex Tester</td><td>付費軟體</td><td>專業級手動回測，支援多幣對、可調速度</td></tr>
+      <tr><td>紙本記錄 + 遮擋法</td><td>免費</td><td>最原始但最有效的學習方式</td></tr>
+      <tr><td>Excel/Google Sheets</td><td>免費</td><td>手動記錄+公式計算績效指標</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>程式回測：Python & PineScript</h2>
+<div class="card card-green">
+  <h3>Python 回測框架（概念）</h3>
+  <div class="formula">
+# 基本回測邏輯（偽代碼）
+for each bar in historical_data:
+    if entry_condition(bar):
+        open_position(bar.close, stop_loss, take_profit)
+    if position_open:
+        if bar.low <= stop_loss:
+            close_position(stop_loss)  # 止損
+        elif bar.high >= take_profit:
+            close_position(take_profit)  # 止盈
+
+# 計算績效
+calculate_metrics(all_trades)
+  </div>
+  <p><strong>常用工具：</strong>Backtrader, Zipline, VectorBT (Python) | TradingView PineScript (圖表內建)</p>
+
+  <h3>TradingView PineScript（概念）</h3>
+  <div class="formula">
+//@version=5
+strategy("Simple MA Cross", overlay=true)
+fast = ta.sma(close, 10)
+slow = ta.sma(close, 30)
+if ta.crossover(fast, slow)
+    strategy.entry("Long", strategy.long)
+if ta.crossunder(fast, slow)
+    strategy.close("Long")
+  </div>
+</div>
+
+<h2>Walk-Forward Analysis</h2>
+<div class="card card-purple">
+  <p>Walk-Forward 是最嚴謹的回測方法。將數據分成多段：每段先最佳化（in-sample），再用緊接著的一段驗證（out-of-sample）。</p>
+  <ol>
+    <li>將歷史數據分成 N 段（如 5 段）</li>
+    <li>用第 1-3 段最佳化參數</li>
+    <li>用第 4 段驗證（不調整參數）</li>
+    <li>滑動視窗：用第 2-4 段最佳化，第 5 段驗證</li>
+    <li>合併所有 OOS 結果 = 真實績效估計</li>
+  </ol>
+</div>
+
+<div class="svg-container">
+  <svg viewBox="0 0 700 220" width="100%" style="max-width:700px">
+    <rect x="0" y="0" width="700" height="220" fill="#f8fafc" rx="8"/>
+    <text x="350" y="25" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Walk-Forward Analysis 分段圖</text>
+    <!-- Window 1 -->
+    <rect x="40" y="50" width="200" height="30" fill="#dbeafe" stroke="#2563eb" stroke-width="1" rx="4"/>
+    <rect x="240" y="50" width="70" height="30" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="4"/>
+    <text x="140" y="70" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="600">IS-1 最佳化</text>
+    <text x="275" y="70" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">OOS-1</text>
+    <!-- Window 2 -->
+    <rect x="110" y="95" width="200" height="30" fill="#dbeafe" stroke="#2563eb" stroke-width="1" rx="4"/>
+    <rect x="310" y="95" width="70" height="30" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="4"/>
+    <text x="210" y="115" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="600">IS-2 最佳化</text>
+    <text x="345" y="115" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">OOS-2</text>
+    <!-- Window 3 -->
+    <rect x="180" y="140" width="200" height="30" fill="#dbeafe" stroke="#2563eb" stroke-width="1" rx="4"/>
+    <rect x="380" y="140" width="70" height="30" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="4"/>
+    <text x="280" y="160" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="600">IS-3 最佳化</text>
+    <text x="415" y="160" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">OOS-3</text>
+    <!-- Window 4 -->
+    <rect x="250" y="185" width="200" height="30" fill="#dbeafe" stroke="#2563eb" stroke-width="1" rx="4"/>
+    <rect x="450" y="185" width="70" height="30" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="4"/>
+    <text x="350" y="205" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="600">IS-4 最佳化</text>
+    <text x="485" y="205" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">OOS-4</text>
+    <!-- Legend -->
+    <rect x="550" y="80" width="12" height="12" fill="#dbeafe" stroke="#2563eb" rx="2"/>
+    <text x="568" y="91" font-size="10" fill="#334155">In-Sample (訓練)</text>
+    <rect x="550" y="100" width="12" height="12" fill="#dcfce7" stroke="#16a34a" rx="2"/>
+    <text x="568" y="111" font-size="10" fill="#334155">Out-of-Sample (驗證)</text>
+    <!-- Arrow -->
+    <text x="600" y="140" font-size="10" fill="#64748b" text-anchor="middle">時間 →</text>
+  </svg>
+</div>
+
+<h2>Monte Carlo Simulation</h2>
+<div class="card card-orange">
+  <p>Monte Carlo 模擬打亂你交易的順序（1000+ 次），產生可能的 equity curve 分布。</p>
+  <h3>為什麼需要？</h3>
+  <ul>
+    <li>同樣的交易結果，不同順序會產生不同的 drawdown</li>
+    <li>你的回測只是「一種」可能的順序 — 也許你很幸運</li>
+    <li>Monte Carlo 告訴你：在最差的情況下，drawdown 可能有多大？</li>
+    <li>95% 信賴區間 = 你有 95% 的信心 drawdown 不會超過這個數字</li>
+  </ul>
+  <div class="formula">
+步驟：
+1. 取得所有交易的 R 值序列：[+2R, -1R, +1.5R, -1R, +3R, ...]
+2. 隨機打亂順序 1000 次
+3. 每次計算 max drawdown
+4. 排序所有 max drawdown
+5. 第 950 個值 = 95% 信賴區間的最大回撤
+  </div>
+</div>
+
+<h2>Monte Carlo 結果解讀</h2>
+<div class="card">
+  <p>Monte Carlo 模擬產生 1000+ 條可能的 equity curve。你需要關注：</p>
+  <div class="svg-container" style="border:none; padding:10px;">
+    <svg viewBox="0 0 500 160" width="100%" style="max-width:500px">
+      <rect x="0" y="0" width="500" height="160" fill="#f8fafc" rx="8"/>
+      <!-- Multiple equity curves (simulated) -->
+      <polyline points="30,80 70,75 110,68 150,72 190,60 230,55 270,50 310,48 350,42 390,38 430,35 460,30" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
+      <polyline points="30,80 70,82 110,78 150,85 190,76 230,70 270,65 310,60 350,55 390,50 430,45 460,42" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
+      <polyline points="30,80 70,85 110,90 150,84 190,88 230,82 270,78 310,74 350,70 390,65 430,60 460,55" fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.5"/>
+      <polyline points="30,80 70,88 110,95 150,100 190,94 230,98 270,92 310,88 350,85 390,80 430,78 460,75" fill="none" stroke="#ea580c" stroke-width="1" opacity="0.4"/>
+      <polyline points="30,80 70,90 110,100 150,110 190,105 230,115 270,120 310,112 350,118 390,110 430,105 460,100" fill="none" stroke="#dc2626" stroke-width="1.5" opacity="0.5"/>
+      <polyline points="30,80 70,92 110,105 150,118 190,125 230,130 270,135 310,128 350,132 390,136 430,130 460,128" fill="none" stroke="#dc2626" stroke-width="1" opacity="0.3"/>
+      <!-- Labels -->
+      <text x="470" y="33" font-size="9" fill="#16a34a" font-weight="600">Best Case</text>
+      <text x="470" y="78" font-size="9" fill="#2563eb" font-weight="600">Median</text>
+      <text x="470" y="105" font-size="9" fill="#dc2626" font-weight="600">95% CI</text>
+      <text x="470" y="132" font-size="9" fill="#dc2626" font-weight="500">Worst</text>
+      <text x="250" y="155" text-anchor="middle" font-size="9" fill="#64748b">交易序號</text>
+    </svg>
+  </div>
+  <ul>
+    <li><strong>Median（中位數）curve：</strong>你最可能經歷的路徑</li>
+    <li><strong>95% CI 下界：</strong>有 95% 的信心不會比這更差</li>
+    <li><strong>最大 Drawdown 分布：</strong>準備好承受 95th percentile 的回撤</li>
+    <li><strong>最大連虧分布：</strong>用來設定「何時停止策略」的閾值</li>
+  </ul>
+</div>
+
+<h2>回測的常見陷阱</h2>
+<div class="card card-red">
+  <table>
+    <thead><tr><th>陷阱</th><th>說明</th><th>如何避免</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Look-ahead Bias</strong></td>
+        <td>使用了「未來」數據做決策（如用收盤價決定是否在開盤進場）</td>
+        <td>確保每個決策只使用「已知」數據</td>
+      </tr>
+      <tr>
+        <td><strong>Survivorship Bias</strong></td>
+        <td>只測試現在還存在的標的（已下市/破產的不包含）</td>
+        <td>使用包含下市股票的完整數據庫</td>
+      </tr>
+      <tr>
+        <td><strong>Over-optimization</strong></td>
+        <td>不斷調參讓回測更好看，實際是在記憶噪音</td>
+        <td>Walk-forward + 減少參數 + OOS 驗證</td>
+      </tr>
+      <tr>
+        <td><strong>忽略 Slippage/Fees</strong></td>
+        <td>假設完美成交，實際會有滑點和手續費</td>
+        <td>加入合理的交易成本（單程 0.05-0.2%）</td>
+      </tr>
+      <tr>
+        <td><strong>Selection Bias</strong></td>
+        <td>測了 100 個策略，只報告最好的一個</td>
+        <td>所有策略都要記錄，計算調整後 p-value</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- ==================== Tab 5: 從回測到實盤 ==================== -->
+<div class="tab-panel" id="panel-live">
+<h2>Paper Trading 階段（至少 30 筆）</h2>
+<div class="card card-blue">
+  <p>回測通過後，進入模擬交易。用即時市場數據，假裝真的在交易（但不下單）。</p>
+  <h3>Paper Trading 的目的</h3>
+  <ul>
+    <li>驗證策略在「當前」市場也能運作（不只是歷史數據）</li>
+    <li>熟悉執行流程：觀察 → 判斷 → 進場 → 管理 → 出場</li>
+    <li>發現回測沒考慮到的問題（盤中波動、假信號等）</li>
+    <li><strong>最低標準：</strong>至少 30 筆交易，期望值為正才能進入下一階段</li>
+  </ul>
+</div>
+
+<h2>Paper Trading 常見錯誤</h2>
+<div class="card card-red">
+  <ul>
+    <li><strong>不認真對待：</strong>因為沒有真金白銀，隨意進出場 → 失去驗證意義</li>
+    <li><strong>跳過不做：</strong>「我已經回測過了直接上實盤」→ 忽略了執行面的問題</li>
+    <li><strong>時間太短：</strong>5 筆交易就說「策略有效」→ 樣本量完全不足</li>
+    <li><strong>不記錄日誌：</strong>模擬交易也要完整記錄，這是養成習慣的時期</li>
+  </ul>
+</div>
+
+<h2>小資金實盤階段</h2>
+<div class="card card-green">
+  <p>Paper Trading 通過後，用<strong>正常倉位的 1/10</strong> 開始實盤。</p>
+  <h3>為什麼要用極小倉位？</h3>
+  <ul>
+    <li>真金白銀才能暴露你的心理弱點</li>
+    <li>用小錢試錯比用大錢試錯便宜太多了</li>
+    <li>即使虧光這 1/10 的資金，對整體影響極小</li>
+    <li>目的不是賺錢，是驗證你能否在有壓力時正確執行</li>
+  </ul>
+  <h3>小資金階段的評估標準</h3>
+  <div class="formula">
+合格標準（至少 30 筆）：
+- 期望值為正
+- 最大回撤在 Monte Carlo 95% CI 以內
+- 規則遵守率 > 80%
+- 情緒管理評分穩定
+  </div>
+</div>
+
+<h2>漸進放大倉位</h2>
+<div class="card card-purple">
+  <h3>放大原則</h3>
+  <div class="svg-container" style="border:none; padding:10px;">
+    <svg viewBox="0 0 600 180" width="100%" style="max-width:600px">
+      <rect x="0" y="0" width="600" height="180" fill="#f8fafc" rx="8"/>
+      <!-- Steps -->
+      <rect x="30" y="120" width="90" height="40" fill="#dbeafe" stroke="#2563eb" rx="6"/>
+      <text x="75" y="138" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">1/10 倉位</text>
+      <text x="75" y="152" text-anchor="middle" font-size="8" fill="#64748b">30+ 筆</text>
+
+      <text x="135" y="140" font-size="14" fill="#64748b">→</text>
+
+      <rect x="155" y="100" width="90" height="60" fill="#dbeafe" stroke="#2563eb" rx="6"/>
+      <text x="200" y="125" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">1/5 倉位</text>
+      <text x="200" y="145" text-anchor="middle" font-size="8" fill="#64748b">連續 2 週正 EV</text>
+
+      <text x="260" y="130" font-size="14" fill="#64748b">→</text>
+
+      <rect x="280" y="80" width="90" height="80" fill="#dcfce7" stroke="#16a34a" rx="6"/>
+      <text x="325" y="115" text-anchor="middle" font-size="9" font-weight="600" fill="#16a34a">1/2 倉位</text>
+      <text x="325" y="135" text-anchor="middle" font-size="8" fill="#64748b">再 2 週正 EV</text>
+
+      <text x="385" y="120" font-size="14" fill="#64748b">→</text>
+
+      <rect x="405" y="50" width="90" height="110" fill="#dcfce7" stroke="#16a34a" rx="6"/>
+      <text x="450" y="100" text-anchor="middle" font-size="9" font-weight="700" fill="#16a34a">正常倉位</text>
+      <text x="450" y="120" text-anchor="middle" font-size="8" fill="#64748b">持續正 EV</text>
+
+      <!-- Arrow back -->
+      <path d="M 500,160 Q 550,170 550,90 Q 550,50 500,40" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowR)"/>
+      <defs><marker id="arrowR" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#dc2626"/></marker></defs>
+      <text x="570" y="100" font-size="8" fill="#dc2626" font-weight="600">失敗則</text>
+      <text x="570" y="112" font-size="8" fill="#dc2626" font-weight="600">降回上級</text>
+    </svg>
+  </div>
+  <ul>
+    <li>連續 2 週正期望值 → 倉位加倍</li>
+    <li>如果在某級別出現超出預期的虧損 → 降回上一級</li>
+    <li>永遠不要在虧損時加大倉位（那是賭徒的行為）</li>
+  </ul>
+</div>
+
+<h2>何時停止策略</h2>
+<div class="card card-red">
+  <h3>停止策略的明確信號</h3>
+  <ol>
+    <li><strong>連續虧損超過 Monte Carlo 95% CI</strong><br>
+    如果你的 MC 模擬說「95% 的情況下不會連虧超過 8 筆」，而你連虧了 10 筆 — 策略可能已經失效。</li>
+    <li><strong>月度 Sharpe &lt; 0 持續 3 個月</strong><br>
+    三個月的負 Sharpe 意味著策略的 edge 可能已經消失。</li>
+    <li><strong>市場 regime 改變</strong><br>
+    你的策略環境消失了：例如趨勢策略在市場轉為震盪時失效。</li>
+    <li><strong>Drawdown 接近心理極限</strong><br>
+    如果你開始情緒失控或無法執行計劃，即使策略還在預期範圍內，也應該暫停。</li>
+  </ol>
+</div>
+
+<h2>心態管理：從回測到實盤的心理轉變</h2>
+<div class="card card-purple">
+  <p>回測中你是「上帝視角」— 沒有情緒壓力。實盤中你面對的是：</p>
+  <ul>
+    <li><strong>不確定性焦慮：</strong>回測時你知道結果，實盤時你不知道</li>
+    <li><strong>虧損厭惡：</strong>虧 $100 的痛苦 > 賺 $100 的快樂（Prospect Theory）</li>
+    <li><strong>結果偏差：</strong>一筆虧損的交易可能是「好交易」（遵守規則但結果不好）</li>
+    <li><strong>頻率錯覺：</strong>你會過度關注最近的幾筆交易，忽略長期統計</li>
+  </ul>
+  <p><strong>解法：</strong>用日誌追蹤「過程品質」而非只看「結果品質」。一筆遵守規則的虧損 > 一筆違反規則的獲利。</p>
+</div>
+
+<h2>Regime Detection 簡介</h2>
+<div class="card card-orange">
+  <p>市場不是永遠相同的。Regime（市場狀態）會在不同模式間切換：</p>
+  <table>
+    <thead><tr><th>Regime</th><th>特徵</th><th>適合策略</th></tr></thead>
+    <tbody>
+      <tr><td>趨勢市（上漲）</td><td>高動能、低波動回撤</td><td>順勢/動能策略</td></tr>
+      <tr><td>趨勢市（下跌）</td><td>恐慌性拋售、VIX 飆升</td><td>做空/避險策略</td></tr>
+      <tr><td>震盪市</td><td>區間波動、均值回歸</td><td>區間/均值回歸策略</td></tr>
+      <tr><td>低波動期</td><td>極小波幅、壓縮</td><td>突破策略（等待）</td></tr>
+    </tbody>
+  </table>
+  <h3>簡易 Regime 判斷方法</h3>
+  <ul>
+    <li><strong>ADX > 25：</strong>趨勢市 → 用趨勢策略</li>
+    <li><strong>ADX < 20：</strong>震盪市 → 用區間策略</li>
+    <li><strong>ATR 排名：</strong>當前 ATR 在過去 100 天的百分位 → 判斷波動高低</li>
+    <li><strong>MA 排列：</strong>MA20 > MA50 > MA200 = 多頭排列（趨勢向上）</li>
+  </ul>
+  <p><strong>實用建議：</strong>每週花 5 分鐘判斷當前 regime，決定這週使用哪套策略。不要在震盪市強行用趨勢策略，反之亦然。知道「什麼時候不交易」比知道「什麼時候交易」更重要。</p>
+</div>
+
+<h2>實盤進階：策略組合（Portfolio of Strategies）</h2>
+<div class="card card-blue">
+  <p>進階交易者不只用一個策略，而是維護一個<strong>策略組合</strong>：</p>
+  <ul>
+    <li><strong>趨勢策略 A：</strong>適用於強趨勢市場</li>
+    <li><strong>均值回歸策略 B：</strong>適用於震盪市場</li>
+    <li><strong>波動率策略 C：</strong>適用於波動壓縮後的突破</li>
+  </ul>
+  <p>就像投資組合分散風險一樣，策略組合讓你在不同 regime 下都有武器可用。但前提是每個策略都獨立通過了完整的回測 → Paper Trading → 小資金驗證流程。</p>
+</div>
+</div>
+
+<!-- ==================== Tab 6: 互動測驗 ==================== -->
+<div class="tab-panel" id="panel-quiz">
+<h2>測驗：回測與績效分析</h2>
+<p>共 16 題。測試你對回測概念、績效指標和實盤應用的理解。</p>
+
+<div id="quiz-container">
+
+<div class="quiz-question" data-correct="2">
+  <h4>Q1. 一個策略勝率 40%，平均獲利 $500，平均虧損 $200，期望值是多少？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. $100</div>
+    <div class="quiz-option" data-idx="1">B. $120</div>
+    <div class="quiz-option" data-idx="2">C. $80</div>
+    <div class="quiz-option" data-idx="3">D. $60</div>
+  </div>
+  <div class="quiz-explanation">E = (0.40 x $500) - (0.60 x $200) = $200 - $120 = $80 per trade</div>
+</div>
+
+<div class="quiz-question" data-correct="1">
+  <h4>Q2. Sharpe Ratio 為 0.5 代表什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 策略非常優秀</div>
+    <div class="quiz-option" data-idx="1">B. 風險調整後報酬偏低，需要改善</div>
+    <div class="quiz-option" data-idx="2">C. 策略沒有風險</div>
+    <div class="quiz-option" data-idx="3">D. 每承受 1 單位風險賺 5 單位報酬</div>
+  </div>
+  <div class="quiz-explanation">Sharpe < 1.0 通常被認為不夠理想。0.5 表示每承受 1 單位風險只獲得 0.5 單位超額報酬，需要改善策略的風險/報酬比。</div>
+</div>
+
+<div class="quiz-question" data-correct="3">
+  <h4>Q3. 什麼是 Overfitting 最明顯的特徵？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 策略在所有時間段都表現一致</div>
+    <div class="quiz-option" data-idx="1">B. 策略參數很少（2-3 個）</div>
+    <div class="quiz-option" data-idx="2">C. 策略在多個市場都能運作</div>
+    <div class="quiz-option" data-idx="3">D. In-sample 表現極好但 Out-of-sample 表現很差</div>
+  </div>
+  <div class="quiz-explanation">Overfitting 的核心特徵就是訓練期（in-sample）表現極佳，但在未見過的數據（out-of-sample）上表現大幅退化。這表明策略在「記憶噪音」而非「學習規律」。</div>
+</div>
+
+<div class="quiz-question" data-correct="0">
+  <h4>Q4. 一個策略的 Profit Factor 是 1.8，代表什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 每虧損 $1 能賺回 $1.80</div>
+    <div class="quiz-option" data-idx="1">B. 勝率是 80%</div>
+    <div class="quiz-option" data-idx="2">C. 最大回撤是 18%</div>
+    <div class="quiz-option" data-idx="3">D. 年化報酬是 180%</div>
+  </div>
+  <div class="quiz-explanation">Profit Factor = 總獲利 / 總虧損。PF 1.8 代表你每虧 $1 就能賺 $1.80。PF > 1 代表策略整體盈利。</div>
+</div>
+
+<div class="quiz-question" data-correct="2">
+  <h4>Q5. Look-ahead Bias 是什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 只測試還存在的股票</div>
+    <div class="quiz-option" data-idx="1">B. 忽略交易手續費</div>
+    <div class="quiz-option" data-idx="2">C. 在回測中使用了決策時點尚未可得的數據</div>
+    <div class="quiz-option" data-idx="3">D. 測試的時間段太短</div>
+  </div>
+  <div class="quiz-explanation">Look-ahead Bias 是在回測中使用了「未來」的數據做決策。例如用當天收盤價來決定是否在當天開盤進場。真實交易中你不可能知道未來的數據。</div>
+</div>
+
+<div class="quiz-question" data-correct="1">
+  <h4>Q6. Sortino Ratio 和 Sharpe Ratio 的主要區別是什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. Sortino 不考慮無風險利率</div>
+    <div class="quiz-option" data-idx="1">B. Sortino 只計算下行波動（虧損），不懲罰上行波動</div>
+    <div class="quiz-option" data-idx="2">C. Sortino 使用年化數據，Sharpe 使用月數據</div>
+    <div class="quiz-option" data-idx="3">D. Sortino 適用於債券，Sharpe 適用於股票</div>
+  </div>
+  <div class="quiz-explanation">Sharpe 使用全部報酬的標準差（包含正報酬的波動），而 Sortino 只計算負報酬的標準差。因為上行波動（賺大錢）不應被懲罰，所以 Sortino 更合理。</div>
+</div>
+
+<div class="quiz-question" data-correct="3">
+  <h4>Q7. 一個策略回撤 50%，需要多少報酬率才能回到原本水位？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 50%</div>
+    <div class="quiz-option" data-idx="1">B. 75%</div>
+    <div class="quiz-option" data-idx="2">C. 80%</div>
+    <div class="quiz-option" data-idx="3">D. 100%</div>
+  </div>
+  <div class="quiz-explanation">如果你有 $100 虧損 50% 剩 $50，要從 $50 回到 $100 需要 100% 的報酬率。這就是為什麼控制 drawdown 如此重要。</div>
+</div>
+
+<div class="quiz-question" data-correct="0">
+  <h4>Q8. Monte Carlo Simulation 的主要目的是什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 打亂交易順序，了解在最差排列下可能的 drawdown</div>
+    <div class="quiz-option" data-idx="1">B. 找到最佳的參數組合</div>
+    <div class="quiz-option" data-idx="2">C. 預測明天的股價</div>
+    <div class="quiz-option" data-idx="3">D. 計算 Sharpe Ratio</div>
+  </div>
+  <div class="quiz-explanation">Monte Carlo 隨機打亂交易順序數千次，讓你了解：雖然結果相同，不同順序可能產生更大的 drawdown。95% CI 告訴你「大概率不會比這更差」。</div>
+</div>
+
+<div class="quiz-question" data-correct="2">
+  <h4>Q9. Paper Trading 通過的最低標準是什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 連續 5 筆獲利</div>
+    <div class="quiz-option" data-idx="1">B. 勝率超過 70%</div>
+    <div class="quiz-option" data-idx="2">C. 至少 30 筆交易且期望值為正</div>
+    <div class="quiz-option" data-idx="3">D. 一週沒有虧損</div>
+  </div>
+  <div class="quiz-explanation">統計上需要至少 30 筆交易才有最基本的樣本量（中央極限定理）。期望值為正代表長期下來策略能盈利。少於 30 筆可能只是運氣。</div>
+</div>
+
+<div class="quiz-question" data-correct="1">
+  <h4>Q10. 以下哪個是停止策略的合理信號？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 本週虧了 2 筆</div>
+    <div class="quiz-option" data-idx="1">B. 月度 Sharpe < 0 持續 3 個月</div>
+    <div class="quiz-option" data-idx="2">C. 今天的交易沒有觸發</div>
+    <div class="quiz-option" data-idx="3">D. 朋友說這個策略不好</div>
+  </div>
+  <div class="quiz-explanation">三個月的負 Sharpe 是一個有統計意義的信號，表明策略的 edge 可能已經消失。短期虧損（幾筆或幾天）是正常的，不需要恐慌。</div>
+</div>
+
+<div class="quiz-question" data-correct="3">
+  <h4>Q11. 一個策略有 8 個需要精確設定的參數，你最該擔心什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 計算速度太慢</div>
+    <div class="quiz-option" data-idx="1">B. 手續費太高</div>
+    <div class="quiz-option" data-idx="2">C. 勝率可能不夠</div>
+    <div class="quiz-option" data-idx="3">D. 極高的 overfitting 風險</div>
+  </div>
+  <div class="quiz-explanation">參數越多，overfitting 風險越高。8 個精確參數意味著你有極高的自由度去「擬合」歷史數據，幾乎肯定是在記憶噪音而非發現真正的市場規律。</div>
+</div>
+
+<div class="quiz-question" data-correct="0">
+  <h4>Q12. Walk-Forward Analysis 的核心概念是什麼？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 分段最佳化，用緊接著的未見數據驗證</div>
+    <div class="quiz-option" data-idx="1">B. 用全部數據一次性最佳化</div>
+    <div class="quiz-option" data-idx="2">C. 只用最近的數據做回測</div>
+    <div class="quiz-option" data-idx="3">D. 前進時只做多，後退時做空</div>
+  </div>
+  <div class="quiz-explanation">Walk-Forward 將數據分成滾動的 in-sample（訓練）和 out-of-sample（驗證）段。在每段上先最佳化，再用未見數據驗證。合併所有 OOS 結果 = 接近真實表現的估計。</div>
+</div>
+
+<div class="quiz-question" data-correct="2">
+  <h4>Q13. 給你以下交易日誌數據，最大的問題是什麼？<br>
+  勝率: 70% | 平均獲利: $50 | 平均虧損: $200 | 規則遵守率: 45%</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 勝率太低</div>
+    <div class="quiz-option" data-idx="1">B. 交易次數不夠</div>
+    <div class="quiz-option" data-idx="2">C. 盈虧比極差（平均虧損是獲利的 4 倍）且規則遵守率太低</div>
+    <div class="quiz-option" data-idx="3">D. 需要更多標的</div>
+  </div>
+  <div class="quiz-explanation">期望值 = (0.70 x $50) - (0.30 x $200) = $35 - $60 = -$25（負期望值！）。雖然勝率高但盈虧比極差。加上 45% 的規則遵守率，這個交易者根本沒在執行計劃。</div>
+</div>
+
+<div class="quiz-question" data-correct="1">
+  <h4>Q14. ADX 讀數為 35，你應該用哪類策略？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 均值回歸策略</div>
+    <div class="quiz-option" data-idx="1">B. 趨勢跟隨策略</div>
+    <div class="quiz-option" data-idx="2">C. 區間交易策略</div>
+    <div class="quiz-option" data-idx="3">D. 任何策略都可以</div>
+  </div>
+  <div class="quiz-explanation">ADX > 25 表示市場處於趨勢狀態。35 是相當強的趨勢。此時應該使用趨勢跟隨/動能策略，而非區間或均值回歸策略。</div>
+</div>
+
+<div class="quiz-question" data-correct="3">
+  <h4>Q15. 以下哪個回測結果最可能是 overfitted？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. Sharpe 1.5，使用 2 個參數，多市場有效</div>
+    <div class="quiz-option" data-idx="1">B. Sharpe 2.0，in-sample 和 OOS 表現接近</div>
+    <div class="quiz-option" data-idx="2">C. Sharpe 1.2，Profit Factor 1.6，穩定的 drawdown</div>
+    <div class="quiz-option" data-idx="3">D. Sharpe 5.0，使用 12 個參數，只在一個市場有效</div>
+  </div>
+  <div class="quiz-explanation">Sharpe 5.0 本身就可疑（幾乎沒有合法策略能持續達到）。加上 12 個參數（極高 overfitting 風險）和只在一個市場有效（缺乏泛化能力），這幾乎肯定是 overfitted。</div>
+</div>
+
+<div class="quiz-question" data-correct="0">
+  <h4>Q16. 你的策略 Monte Carlo 95% CI 顯示最大連虧為 6 筆。你實際連虧了 9 筆，該怎麼做？</h4>
+  <div class="quiz-options">
+    <div class="quiz-option" data-idx="0">A. 暫停策略，重新評估是否策略已失效</div>
+    <div class="quiz-option" data-idx="1">B. 加倍倉位攤平成本</div>
+    <div class="quiz-option" data-idx="2">C. 繼續執行，這只是運氣不好</div>
+    <div class="quiz-option" data-idx="3">D. 調整參數讓回測看起來能承受 9 連虧</div>
+  </div>
+  <div class="quiz-explanation">超過 95% CI 表示有超過 95% 的概率不是「正常波動」。你應該暫停策略並重新評估：市場 regime 是否改變？策略的 edge 是否消失？千萬不要加倍或事後調參。</div>
+</div>
+
+</div>
+
+<div style="text-align:center; margin-top:20px;">
+  <button class="calc-btn" onclick="submitQuiz()" id="quiz-submit-btn">提交測驗</button>
+  <button class="calc-btn" onclick="resetQuiz()" style="background:var(--text3); margin-left:10px; display:none;" id="quiz-reset-btn">重新作答</button>
+</div>
+<div id="quiz-score" style="display:none;"></div>
+</div>
+
+<!-- Quick Reference -->
+<div class="card" style="margin-top:32px; border-left:4px solid var(--blue);">
+  <h3 style="margin-top:0;">快速參考：回測流程 Checklist</h3>
+  <ol>
+    <li>定義明確的進出場規則（可量化、無模糊空間）</li>
+    <li>選擇足夠長的歷史數據（至少包含不同 regime）</li>
+    <li>保留 30% 數據作為 out-of-sample</li>
+    <li>執行回測，記錄所有指標（勝率、期望值、Sharpe、Max DD）</li>
+    <li>進行 Walk-Forward 驗證</li>
+    <li>執行 Monte Carlo 模擬，確定 95% CI</li>
+    <li>Paper Trading 至少 30 筆</li>
+    <li>小倉位實盤測試</li>
+    <li>漸進放大至正常倉位</li>
+    <li>持續記錄交易日誌，定期回顧</li>
+  </ol>
+</div>
+
+<!-- ==================== Disclaimer ==================== -->
+<div class="disclaimer">
+  <strong>免責聲明：</strong>本頁面內容僅供教育目的。回測結果不代表未來表現的保證。歷史數據無法完全反映真實市場的滑點、流動性限制和心理壓力。任何交易策略都有虧損風險，請在充分了解風險後才投入真實資金。過去的績效不是未來結果的可靠指標。
+</div>
+
+</div><!-- container -->
+
+<script>
+// ==================== Tab Navigation ====================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ==================== Performance Calculator ====================
+function calculateMetrics() {
+  const wr = parseFloat(document.getElementById('calc-winrate').value) / 100;
+  const avgWin = parseFloat(document.getElementById('calc-avgwin').value);
+  const avgLoss = parseFloat(document.getElementById('calc-avgloss').value);
+  const trades = parseInt(document.getElementById('calc-trades').value);
+  const annual = parseFloat(document.getElementById('calc-annual').value);
+  const std = parseFloat(document.getElementById('calc-std').value);
+
+  const expectancy = (wr * avgWin) - ((1 - wr) * avgLoss);
+  const profitFactor = (wr * avgWin) / ((1 - wr) * avgLoss);
+  const sharpe = (annual - 4) / std; // Assuming 4% risk-free rate
+  const totalProfit = expectancy * trades;
+
+  // Sortino approximation (assuming downside std is ~70% of total std for losing trades)
+  const downsideStd = std * 0.7;
+  const sortino = (annual - 4) / downsideStd;
+
+  const output = document.getElementById('calc-output');
+  const cls = expectancy >= 0 ? 'positive' : 'negative';
+
+  output.innerHTML = `
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+      <div><strong>期望值：</strong><span class="${cls}">$${expectancy.toFixed(2)} / 筆</span></div>
+      <div><strong>Profit Factor：</strong><span class="${profitFactor >= 1 ? 'positive' : 'negative'}">${profitFactor.toFixed(2)}</span></div>
+      <div><strong>Sharpe Ratio：</strong><span class="${sharpe >= 1 ? 'positive' : 'negative'}">${sharpe.toFixed(2)}</span></div>
+      <div><strong>Sortino Ratio：</strong><span class="${sortino >= 1 ? 'positive' : 'negative'}">${sortino.toFixed(2)}</span></div>
+      <div><strong>${trades} 筆總利潤：</strong><span class="${cls}">$${totalProfit.toFixed(0)}</span></div>
+      <div><strong>盈虧比：</strong>${(avgWin / avgLoss).toFixed(2)} : 1</div>
+    </div>
+    <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:12px; color:var(--text3);">
+      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數）' : '✗ 負期望值系統 — 長期必定虧損，需要調整策略'}
+      ${sharpe >= 2 ? ' | Sharpe 很好' : sharpe >= 1 ? ' | Sharpe 可接受' : ' | Sharpe 偏低，風險調整報酬需改善'}
+    </div>
+  `;
+}
+
+// ==================== Trading Journal ====================
+let trades = JSON.parse(localStorage.getItem('bt_journal') || '[]');
+
+function saveTrades() {
+  localStorage.setItem('bt_journal', JSON.stringify(trades));
+}
+
+function addTrade() {
+  const date = document.getElementById('j-date').value;
+  const symbol = document.getElementById('j-symbol').value.trim();
+  const direction = document.getElementById('j-direction').value;
+  const entry = parseFloat(document.getElementById('j-entry').value);
+  const stop = parseFloat(document.getElementById('j-stop').value);
+  const exit = parseFloat(document.getElementById('j-exit').value);
+  const reason = document.getElementById('j-reason').value.trim();
+  const emotion = document.getElementById('j-emotion').value;
+  const rule = document.getElementById('j-rule').value;
+
+  if (!date || !symbol || isNaN(entry) || isNaN(stop) || isNaN(exit)) {
+    alert('請填寫所有必要欄位（日期、標的、入場、止損、出場）');
+    return;
+  }
+
+  // Calculate R value
+  const risk = Math.abs(entry - stop);
+  let rValue;
+  if (direction === 'long') {
+    rValue = (exit - entry) / risk;
+  } else {
+    rValue = (entry - exit) / risk;
+  }
+
+  trades.push({ date, symbol, direction, entry, stop, exit, rValue, reason, emotion, rule });
+  saveTrades();
+  renderJournal();
+
+  // Clear form
+  document.getElementById('j-symbol').value = '';
+  document.getElementById('j-entry').value = '';
+  document.getElementById('j-stop').value = '';
+  document.getElementById('j-exit').value = '';
+  document.getElementById('j-reason').value = '';
+}
+
+function deleteTrade(idx) {
+  trades.splice(idx, 1);
+  saveTrades();
+  renderJournal();
+}
+
+function clearAllTrades() {
+  if (confirm('確定要清除所有交易記錄嗎？此操作無法復原。')) {
+    trades = [];
+    saveTrades();
+    renderJournal();
+  }
+}
+
+function renderJournal() {
+  const tbody = document.getElementById('journal-body');
+  tbody.innerHTML = '';
+
+  trades.forEach((t, i) => {
+    const rCls = t.rValue >= 0 ? 'color:var(--green)' : 'color:var(--red)';
+    const dir = t.direction === 'long' ? '做多' : '做空';
+    tbody.innerHTML += `<tr>
+      <td>${t.date}</td>
+      <td>${t.symbol}</td>
+      <td>${dir}</td>
+      <td>${t.entry}</td>
+      <td>${t.stop}</td>
+      <td>${t.exit}</td>
+      <td style="${rCls}; font-weight:600; font-family:'JetBrains Mono',monospace;">${t.rValue >= 0 ? '+' : ''}${t.rValue.toFixed(2)}R</td>
+      <td>${t.reason}</td>
+      <td>${t.emotion}</td>
+      <td>${t.rule}</td>
+      <td><button class="btn-delete" onclick="deleteTrade(${i})">刪除</button></td>
+    </tr>`;
+  });
+
+  // Stats
+  if (trades.length === 0) {
+    document.getElementById('js-trades').textContent = '0';
+    document.getElementById('js-winrate').textContent = '0%';
+    document.getElementById('js-expectancy').textContent = '$0';
+    document.getElementById('js-totalr').textContent = '0R';
+    document.getElementById('js-pf').textContent = '0';
+    document.getElementById('equity-chart').innerHTML = '<p style="color:var(--text3); font-size:12px;">新增交易後將自動繪製 Equity Curve</p>';
+    return;
+  }
+
+  const wins = trades.filter(t => t.rValue > 0).length;
+  const winRate = (wins / trades.length * 100).toFixed(1);
+  const totalR = trades.reduce((s, t) => s + t.rValue, 0);
+  const avgR = totalR / trades.length;
+
+  const grossProfit = trades.filter(t => t.rValue > 0).reduce((s, t) => s + t.rValue, 0);
+  const grossLoss = Math.abs(trades.filter(t => t.rValue <= 0).reduce((s, t) => s + t.rValue, 0));
+  const pf = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : 'N/A';
+
+  document.getElementById('js-trades').textContent = trades.length;
+  document.getElementById('js-winrate').textContent = winRate + '%';
+  document.getElementById('js-expectancy').textContent = (avgR >= 0 ? '+' : '') + avgR.toFixed(2) + 'R';
+  document.getElementById('js-totalr').textContent = (totalR >= 0 ? '+' : '') + totalR.toFixed(2) + 'R';
+  document.getElementById('js-pf').textContent = pf;
+
+  // Draw equity curve
+  drawEquityCurve();
+}
+
+function drawEquityCurve() {
+  if (trades.length < 2) {
+    document.getElementById('equity-chart').innerHTML = '<p style="color:var(--text3); font-size:12px;">至少 2 筆交易才能繪製 Equity Curve</p>';
+    return;
+  }
+
+  const cumR = [0];
+  trades.forEach(t => cumR.push(cumR[cumR.length - 1] + t.rValue));
+
+  const minR = Math.min(...cumR);
+  const maxR = Math.max(...cumR);
+  const range = maxR - minR || 1;
+
+  const w = 560, h = 140, padX = 40, padY = 20;
+  const chartW = w - padX * 2;
+  const chartH = h - padY * 2;
+
+  const points = cumR.map((r, i) => {
+    const x = padX + (i / (cumR.length - 1)) * chartW;
+    const y = padY + chartH - ((r - minR) / range) * chartH;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+
+  // Zero line
+  const zeroY = padY + chartH - ((0 - minR) / range) * chartH;
+
+  let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px">`;
+  svg += `<rect x="0" y="0" width="${w}" height="${h}" fill="#f8fafc" rx="6"/>`;
+  // Grid lines
+  svg += `<line x1="${padX}" y1="${zeroY}" x2="${w - padX}" y2="${zeroY}" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="3,3"/>`;
+  // Equity line
+  const lastR = cumR[cumR.length - 1];
+  const lineColor = lastR >= 0 ? '#16a34a' : '#dc2626';
+  svg += `<polyline points="${points}" fill="none" stroke="${lineColor}" stroke-width="2"/>`;
+  // Labels
+  svg += `<text x="${padX - 5}" y="${padY + 4}" text-anchor="end" font-size="9" fill="#64748b">${maxR.toFixed(1)}R</text>`;
+  svg += `<text x="${padX - 5}" y="${h - padY + 4}" text-anchor="end" font-size="9" fill="#64748b">${minR.toFixed(1)}R</text>`;
+  svg += `<text x="${w / 2}" y="${h - 3}" text-anchor="middle" font-size="9" fill="#64748b">交易序號 (${trades.length} 筆)</text>`;
+  svg += `</svg>`;
+
+  document.getElementById('equity-chart').innerHTML = svg;
+}
+
+// Initialize journal on load
+renderJournal();
+
+// ==================== Quiz ====================
+let quizAnswered = {};
+
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const question = this.closest('.quiz-question');
+    const qIdx = Array.from(document.querySelectorAll('.quiz-question')).indexOf(question);
+
+    if (quizAnswered[qIdx] !== undefined) return; // Already answered
+
+    const correct = parseInt(question.dataset.correct);
+    const selected = parseInt(this.dataset.idx);
+    quizAnswered[qIdx] = selected;
+
+    if (selected === correct) {
+      this.classList.add('correct');
+    } else {
+      this.classList.add('wrong');
+      question.querySelectorAll('.quiz-option')[correct].classList.add('correct');
+    }
+
+    question.querySelector('.quiz-explanation').style.display = 'block';
+  });
+});
+
+function submitQuiz() {
+  const total = document.querySelectorAll('.quiz-question').length;
+  const answered = Object.keys(quizAnswered).length;
+
+  if (answered < total) {
+    alert(`你還有 ${total - answered} 題未作答，請完成所有題目。`);
+    return;
+  }
+
+  let correct = 0;
+  document.querySelectorAll('.quiz-question').forEach((q, i) => {
+    if (quizAnswered[i] === parseInt(q.dataset.correct)) correct++;
+  });
+
+  const pct = (correct / total * 100).toFixed(0);
+  let grade = '';
+  if (pct >= 90) grade = '傑出！你對回測和績效分析有深入的理解。';
+  else if (pct >= 75) grade = '很好！大部分概念掌握紮實，繼續加油。';
+  else if (pct >= 60) grade = '及格。建議複習錯誤的題目對應的章節。';
+  else grade = '需要加強。建議重新閱讀本頁內容後再嘗試。';
+
+  const scoreDiv = document.getElementById('quiz-score');
+  scoreDiv.style.display = 'block';
+  scoreDiv.innerHTML = `<div class="quiz-score">${correct} / ${total} 正確 (${pct}%) — ${grade}</div>`;
+
+  document.getElementById('quiz-submit-btn').style.display = 'none';
+  document.getElementById('quiz-reset-btn').style.display = 'inline-block';
+}
+
+function resetQuiz() {
+  quizAnswered = {};
+  document.querySelectorAll('.quiz-option').forEach(o => {
+    o.classList.remove('correct', 'wrong');
+  });
+  document.querySelectorAll('.quiz-explanation').forEach(e => {
+    e.style.display = 'none';
+  });
+  document.getElementById('quiz-score').style.display = 'none';
+  document.getElementById('quiz-submit-btn').style.display = 'inline-block';
+  document.getElementById('quiz-reset-btn').style.display = 'none';
+}
+</script>
+</body>
+</html>
