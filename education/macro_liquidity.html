@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀流動性完全教學 — 淨流動性 / 殖利率曲線 / DXY / 信用壓力</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --yellow: #d97706;
+  --yellow-l: #fef3c7;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #fff7ed;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.back-link:hover { text-decoration: underline; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text3);
+  margin-bottom: 24px;
+}
+
+/* TAB NAV */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 6px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: var(--bg3); }
+.tab-btn.active {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* TAB CONTENT */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.card:hover { box-shadow: var(--shadow); }
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.card h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text2);
+  margin-top: 16px;
+}
+
+.card p, .card li {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+
+.card ul, .card ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.card li { margin-bottom: 6px; }
+
+.highlight-box {
+  background: var(--blue-l);
+  border-left: 3px solid var(--blue);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.highlight-box strong { color: var(--blue); }
+
+.warning-box {
+  background: var(--red-l);
+  border-left: 3px solid var(--red);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.warning-box strong { color: var(--red); }
+
+.green-box {
+  background: var(--green-l);
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.green-box strong { color: var(--green); }
+
+.purple-box {
+  background: var(--purple-l);
+  border-left: 3px solid var(--purple);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.purple-box strong { color: var(--purple); }
+
+.orange-box {
+  background: var(--orange-l);
+  border-left: 3px solid var(--orange);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.orange-box strong { color: var(--orange); }
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.formula-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  margin: 12px 0;
+  color: var(--text);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.data-table th, .data-table td {
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  text-align: left;
+}
+.data-table th {
+  background: var(--bg3);
+  font-weight: 600;
+  color: var(--text);
+}
+.data-table td {
+  color: var(--text2);
+}
+.data-table tr:hover td {
+  background: var(--bg3);
+}
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .tab-btn { padding: 8px 10px; font-size: 11px; }
+  .card { padding: 16px; }
+  h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<h1>宏觀流動性完全教學</h1>
+<p class="subtitle">Net Liquidity / Fed 政策傳導 / 殖利率曲線 / DXY / 信用壓力 / 經濟數據判讀</p>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0)">淨流動性</button>
+  <button class="tab-btn" onclick="switchTab(1)">Fed 政策傳導</button>
+  <button class="tab-btn" onclick="switchTab(2)">殖利率曲線</button>
+  <button class="tab-btn" onclick="switchTab(3)">DXY 與資金流</button>
+  <button class="tab-btn" onclick="switchTab(4)">信用利差</button>
+  <button class="tab-btn" onclick="switchTab(5)">經濟數據</button>
+  <button class="tab-btn" onclick="switchTab(6)">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<h3 style="color:#ea580c;">⚠️ Correlation ≠ Causation</h3>
+<p>淨流動性與資產價格的相關性在 2020-2024 約為 0.7-0.85，但<strong>相關不等於因果</strong>。流動性是重要的狀態變數(State Variable)，但資產定價同時受 Earnings、估值、利率、市場定位等多因素影響。<br><br><strong>失效案例：</strong>2022 年 Q3 淨流動性微升但 BTC 續跌 — 因為利率衝擊主導了那個 regime。流動性框架在利率急速變化期間預測力下降。</p>
+</div>
+
+<!-- ==================== TAB 1: 全球淨流動性 ==================== -->
+<div class="tab-content active" id="tab0">
+<h2 class="section-title">全球淨流動性（Net Liquidity）</h2>
+
+<div class="card">
+<h3>核心公式</h3>
+<div class="formula-box">Net Liquidity = Fed Balance Sheet - TGA - RRP</div>
+<p>這是衡量金融體系中「可用流動性」的最重要公式。三個組件代表了資金的來源與去處。</p>
+
+<h4>Fed Balance Sheet（聯準會資產負債表）</h4>
+<ul>
+<li><strong>QE（量化寬鬆）：</strong>Fed 購買國債/MBS → 資產負債表擴張 → 注入流動性</li>
+<li><strong>QT（量化緊縮）：</strong>Fed 不續買到期債券 → 資產負債表縮減 → 抽走流動性</li>
+<li>2020 疫情 QE：$4.2T → $8.9T（+$4.7T）</li>
+<li>2022-2025 QT：$8.9T → 約 $6.8T</li>
+</ul>
+
+<h4>TGA（Treasury General Account）</h4>
+<ul>
+<li>定義：財政部在 Fed 的帳戶餘額，相當於政府的「支票帳戶」</li>
+<li><strong>TGA 增加 = 抽走流動性</strong>（政府發債收錢但還沒花掉）</li>
+<li><strong>TGA 減少 = 釋放流動性</strong>（政府花錢，資金流入經濟體系）</li>
+<li>正常水位：$500B-$800B</li>
+</ul>
+
+<h4>RRP（Reverse Repo Facility）</h4>
+<ul>
+<li>定義：Fed 的隔夜逆回購工具，貨幣市場基金將閒置資金停泊於此</li>
+<li><strong>RRP 增加 = 吸走流動性</strong>（資金離開市場，停在 Fed）</li>
+<li><strong>RRP 減少 = 釋放流動性</strong>（資金從 Fed 回到市場）</li>
+<li>2022 峰值：$2.5T → 2024 底部接近 $0</li>
+</ul>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg">
+  <!-- Water Tank Metaphor -->
+  <defs>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.7"/>
+    </linearGradient>
+  </defs>
+  <!-- Tank -->
+  <rect x="180" y="40" width="240" height="280" fill="none" stroke="#334155" stroke-width="3" rx="8"/>
+  <text x="300" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">流動性水箱</text>
+  <!-- Water Level -->
+  <rect x="183" y="140" width="234" height="177" fill="url(#waterGrad)" rx="4"/>
+  <text x="300" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#1e40af">Net Liquidity</text>
+  <text x="300" y="262" text-anchor="middle" font-size="11" fill="#1e40af">（可用流動性）</text>
+  <!-- Fed BS Inflow -->
+  <path d="M80 80 L180 80" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowGreen)"/>
+  <rect x="20" y="60" width="60" height="40" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" rx="6"/>
+  <text x="50" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#16a34a">Fed BS</text>
+  <text x="130" y="72" text-anchor="middle" font-size="10" fill="#16a34a">注入</text>
+  <!-- TGA Drain -->
+  <path d="M420 160 L520 160" stroke="#dc2626" stroke-width="3" fill="none" marker-end="url(#arrowRed)"/>
+  <rect x="520" y="140" width="60" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="6"/>
+  <text x="550" y="162" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">TGA</text>
+  <text x="470" y="152" text-anchor="middle" font-size="10" fill="#dc2626">抽走</text>
+  <!-- RRP Drain -->
+  <path d="M420 240 L520 240" stroke="#dc2626" stroke-width="3" fill="none" marker-end="url(#arrowRed)"/>
+  <rect x="520" y="220" width="60" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="6"/>
+  <text x="550" y="242" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">RRP</text>
+  <text x="470" y="232" text-anchor="middle" font-size="10" fill="#dc2626">抽走</text>
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <!-- Formula at bottom -->
+  <rect x="100" y="330" width="400" height="26" fill="#f1f5f9" stroke="#cbd5e1" rx="6"/>
+  <text x="300" y="348" text-anchor="middle" font-size="12" font-family="JetBrains Mono, monospace" font-weight="600" fill="#0f172a">Net Liq = Fed BS (+) - TGA (-) - RRP (-)</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>為什麼這個公式有效 — 相關性數據</h3>
+<p>淨流動性與風險資產的相關性在 2020-2024 年間極為顯著：</p>
+<ul>
+<li><strong>Net Liquidity vs BTC：</strong>相關性 ~0.85（極高正相關）</li>
+<li><strong>Net Liquidity vs S&P 500：</strong>相關性 ~0.70</li>
+<li><strong>Net Liquidity vs NASDAQ：</strong>相關性 ~0.75</li>
+</ul>
+
+<div class="highlight-box">
+<strong>核心邏輯：</strong>當淨流動性增加，多餘的資金無處可去，被迫追逐風險資產（portfolio balance effect）。這不是因果關係（Fed 不是故意推高股市），而是機制性結果。
+</div>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Axis -->
+  <line x1="60" y1="200" x2="560" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="30" x2="60" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+  <!-- Time labels -->
+  <text x="110" y="218" font-size="10" fill="#64748b">2020</text>
+  <text x="230" y="218" font-size="10" fill="#64748b">2021</text>
+  <text x="350" y="218" font-size="10" fill="#64748b">2022</text>
+  <text x="470" y="218" font-size="10" fill="#64748b">2023</text>
+  <!-- Net Liquidity line (blue) -->
+  <polyline points="80,180 120,140 160,90 200,70 240,60 280,55 320,80 360,110 400,130 440,120 480,100 520,90 540,85" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+  <!-- BTC line (orange) -->
+  <polyline points="80,185 120,155 160,100 200,75 240,50 280,45 320,95 360,140 400,150 440,130 480,80 520,60 540,55" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
+  <!-- Legend -->
+  <line x1="350" y1="22" x2="380" y2="22" stroke="#2563eb" stroke-width="2.5"/>
+  <text x="385" y="26" font-size="11" fill="#2563eb">Net Liquidity</text>
+  <line x1="470" y1="22" x2="500" y2="22" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
+  <text x="505" y="26" font-size="11" fill="#ea580c">BTC</text>
+  <!-- Correlation label -->
+  <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">相關性 r = 0.85 (2020-2024)</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>各組件變動的觸發條件</h3>
+
+<h4>Fed Balance Sheet 增加的觸發</h4>
+<ul>
+<li><strong>QE 啟動：</strong>經濟衰退/金融危機時大規模購債</li>
+<li><strong>緊急放貸：</strong>SVB 事件(2023/3) → BTFP 放貸 $300B+</li>
+<li><strong>購買國債：</strong>配合財政部融資需求</li>
+</ul>
+
+<h4>Fed Balance Sheet 減少的觸發</h4>
+<ul>
+<li><strong>QT 正常進行：</strong>到期不續買（上限 $95B/月 → 後調為 $60B/月）</li>
+<li><strong>緊急放貸到期：</strong>BTFP 到期歸還</li>
+</ul>
+
+<h4>TGA 增加的觸發（抽走流動性）</h4>
+<ul>
+<li><strong>國庫券/長債拍賣：</strong>財政部大量發債籌錢</li>
+<li><strong>稅收季：</strong>4月(報稅)、6月(企業)、9月(企業) → TGA 急升</li>
+<li><strong>債務上限解決後：</strong>財政部需重建 TGA 餘額</li>
+</ul>
+
+<h4>TGA 減少的觸發（釋放流動性）</h4>
+<ul>
+<li><strong>政府支出：</strong>撥款、轉移支付、國防開支</li>
+<li><strong>債務上限期間：</strong>無法發債只能花現有餘額 → TGA 被動下降</li>
+<li><strong>年底/季度末支出：</strong>政府預算週期性支出</li>
+</ul>
+
+<h4>RRP 增加的觸發（吸走流動性）</h4>
+<ul>
+<li><strong>短期利率低於 IORB：</strong>貨幣市場基金沒有更好的投資標的</li>
+<li><strong>短債供給不足：</strong>T-bill 發行量低，資金只能停泊 RRP</li>
+</ul>
+
+<h4>RRP 減少的觸發（釋放流動性）</h4>
+<ul>
+<li><strong>T-bill 大量發行：</strong>2023 下半年債務上限解決後 T-bill 供給爆增</li>
+<li><strong>利率結構改變：</strong>短債利率高於 RRP 利率</li>
+</ul>
+
+<div class="green-box">
+<strong>2023 關鍵案例：</strong>債務上限解決後，財政部大量發行 T-bill → 吸引 RRP 資金流出購買 T-bill → RRP 從 $2.5T 降至接近 $0 → 相當於釋放 $2.5T 流動性到市場 → 風險資產暴漲。
+</div>
+</div>
+
+<div class="card">
+<h3>實際操作：如何追蹤</h3>
+
+<table class="data-table">
+<tr><th>數據</th><th>來源</th><th>FRED代碼</th><th>更新頻率</th></tr>
+<tr><td>Fed Balance Sheet</td><td>FRED</td><td>WALCL</td><td>每週四 4:30PM ET</td></tr>
+<tr><td>RRP (Reverse Repo)</td><td>NY Fed</td><td>RRPONTSYD</td><td>每個交易日</td></tr>
+<tr><td>TGA</td><td>Treasury.gov</td><td>Daily Treasury Statement</td><td>每個交易日</td></tr>
+</table>
+
+<div class="highlight-box">
+<strong>建議追蹤頻率：</strong>每週做一次 Net Liquidity 快照，記錄三個組件的數值。重大事件（FOMC、債務上限、拍賣）前後加密監測。可使用 FRED 的圖表工具直接疊圖觀察趨勢。
+</div>
+
+<h4>快速計算範例</h4>
+<div class="formula-box">
+Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
+</div>
+<p>與上週比較：如果 Fed BS 不變，TGA -$100B，RRP 不變 → Net Liq +$100B → 利多風險資產</p>
+
+<h4>每週追蹤模板</h4>
+<table class="data-table">
+<tr><th>日期</th><th>Fed BS ($T)</th><th>TGA ($B)</th><th>RRP ($B)</th><th>Net Liq ($T)</th><th>WoW 變化</th></tr>
+<tr><td>Week 1</td><td>7.40</td><td>700</td><td>100</td><td>6.60</td><td>—</td></tr>
+<tr><td>Week 2</td><td>7.38</td><td>600</td><td>80</td><td>6.70</td><td style="color:#16a34a">+$100B</td></tr>
+<tr><td>Week 3</td><td>7.36</td><td>750</td><td>70</td><td>6.54</td><td style="color:#dc2626">-$160B</td></tr>
+<tr><td>Week 4</td><td>7.34</td><td>500</td><td>60</td><td>6.78</td><td style="color:#16a34a">+$240B</td></tr>
+</table>
+
+<div class="orange-box">
+<strong>進階追蹤：</strong>除了美國 Net Liquidity，全球流動性還需加入 PBOC（中國央行）、ECB、BOJ 的資產負債表變化。全球五大央行合計資產約 $28T，趨勢一致時影響更為顯著。可追蹤 Yardeni Research 的全球央行資產負債表圖表。
+</div>
+</div>
+
+<div class="card">
+<h3>Net Liquidity 的局限性</h3>
+<p>雖然 Net Liquidity 是強大的框架，但需要了解其局限：</p>
+
+<h4>公式不能解釋的情況</h4>
+<ul>
+<li><strong>信用創造：</strong>商業銀行的信貸擴張也是流動性來源，但不在公式中</li>
+<li><strong>海外美元：</strong>歐洲美元市場（Eurodollar）的流動性不受 Fed 直接控制</li>
+<li><strong>私人信貸：</strong>私募信貸市場（BDC, Direct Lending）近年爆發性成長</li>
+<li><strong>加密市場原生流動性：</strong>穩定幣發行量（USDT+USDC）也是加密市場的內生流動性</li>
+</ul>
+
+<h4>何時公式會失效</h4>
+<ul>
+<li><strong>信用事件：</strong>即使 Net Liq 增加，如果市場信心崩潰（如銀行倒閉），資產仍會暴跌</li>
+<li><strong>結構性轉折：</strong>當市場從「流動性驅動」轉為「基本面驅動」（如企業獲利暴跌）</li>
+<li><strong>外生衝擊：</strong>地緣政治事件、疫情等無法用流動性模型預測</li>
+</ul>
+
+<div class="highlight-box">
+<strong>最佳使用方式：</strong>Net Liquidity 作為「大環境風向」指標，搭配技術分析和倉位管理。Net Liq 上升 = 順風做多的環境（但不代表每天都漲）。Net Liq 下降 = 逆風，需要更謹慎、更小的倉位。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: Fed 政策傳導 ==================== -->
+<div class="tab-content" id="tab1">
+<h2 class="section-title">Fed 政策傳導機制</h2>
+
+<div class="card">
+<h3>QE 機制 — 量化寬鬆如何推高資產價格</h3>
+<p>Fed 購買國債和 MBS 的完整傳導路徑：</p>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <!-- Step boxes -->
+  <rect x="20" y="70" width="100" height="60" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" rx="8"/>
+  <text x="70" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Fed 買國債</text>
+  <text x="70" y="112" text-anchor="middle" font-size="9" fill="#334155">印錢購買</text>
+
+  <line x1="120" y1="100" x2="148" y2="100" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <rect x="150" y="70" width="100" height="60" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" rx="8"/>
+  <text x="200" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">銀行準備金</text>
+  <text x="200" y="108" text-anchor="middle" font-size="9" fill="#334155">大幅增加</text>
+
+  <line x1="250" y1="100" x2="278" y2="100" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <rect x="280" y="70" width="100" height="60" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" rx="8"/>
+  <text x="330" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">殖利率下降</text>
+  <text x="330" y="108" text-anchor="middle" font-size="9" fill="#334155">利率壓低</text>
+
+  <line x1="380" y1="100" x2="408" y2="100" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+  <rect x="410" y="70" width="100" height="60" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" rx="8"/>
+  <text x="460" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Risk-On</text>
+  <text x="460" y="108" text-anchor="middle" font-size="9" fill="#334155">資產上漲</text>
+
+  <!-- Sub explanation -->
+  <text x="300" y="165" text-anchor="middle" font-size="11" fill="#334155">投組再平衡效應（Portfolio Balance Effect）：</text>
+  <text x="300" y="183" text-anchor="middle" font-size="11" fill="#334155">國債被買走 → 持有者被迫買入風險更高的資產 → 推升價格</text>
+</svg>
+</div>
+
+<h4>為什麼 QE 推高資產價格</h4>
+<ul>
+<li><strong>直接效果：</strong>Fed 買入國債 → 國債價格上升 → 殖利率下降 → 折現率降低 → 所有資產估值上升</li>
+<li><strong>投組再平衡：</strong>賣國債給 Fed 的機構拿到現金 → 需重新配置 → 買入公司債/股票</li>
+<li><strong>信心效果：</strong>市場知道 Fed 在背後支撐（"Don't fight the Fed"）</li>
+<li><strong>財富效果：</strong>資產價格上升 → 消費者更富有 → 消費增加 → 經濟改善</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>QT 機制 — 量化緊縮</h3>
+<p>Fed 不續買到期國債，讓資產負債表自然縮減。</p>
+
+<h4>QT 的運作方式</h4>
+<ul>
+<li>到期國債不再續買 → 資金回到 Fed → 銀行準備金減少</li>
+<li>2022-2023 QT 速度：國債 $60B/月 + MBS $35B/月 = $95B/月</li>
+<li>2024 起放慢至 $60B/月，後進一步降至 $25B/月</li>
+</ul>
+
+<h4>為什麼 QT 速度很重要</h4>
+<ul>
+<li><strong>$95B/月 vs $25B/月：</strong>速度差 4 倍，對流動性的抽取壓力截然不同</li>
+<li><strong>非線性效果：</strong>準備金充足時，QT 影響很小（like draining a full pool）</li>
+<li><strong>臨界點：</strong>當準備金接近「充裕」邊界（~$3T），QT 衝擊突然放大</li>
+</ul>
+
+<div class="warning-box">
+<strong>QT 的非線性危險：</strong>2019/9 Repo 市場危機就是 QT 進行太久、準備金跌破臨界點的結果。隔夜 Repo 利率一度飆到 10%。Fed 被迫緊急注入流動性。這就是為什麼 Fed 要密切監控準備金水位。
+</div>
+</div>
+
+<div class="card">
+<h3>Fed Funds Rate 傳導</h3>
+<p>Fed 的政策利率如何影響實體經濟：</p>
+
+<div class="formula-box">FFR → SOFR → 房貸利率 / 企業債利率 / 信用卡利率 / 車貸利率</div>
+
+<h4>傳導滯後效應</h4>
+<ul>
+<li><strong>短期（0-3個月）：</strong>金融市場立即反應（股債匯）</li>
+<li><strong>中期（3-12個月）：</strong>企業融資成本上升，投資放緩</li>
+<li><strong>長期（12-18個月）：</strong>消費者感受到衝擊（房貸重置、信用卡利率升）</li>
+<li><strong>就業市場（18-24個月）：</strong>企業開始裁員</li>
+</ul>
+
+<div class="highlight-box">
+<strong>為什麼加息有滯後：</strong>大部分房貸是固定利率（30年）→ 只有新借款受影響。企業債也是鎖定利率 → 只有到期重新融資時才感受壓力。這就是為什麼 Fed 常常「加太多」——等到看到效果時已經過度緊縮了。
+</div>
+</div>
+
+<div class="card">
+<h3>前瞻指引（Forward Guidance）</h3>
+
+<h4>CME FedWatch 怎麼看</h4>
+<ul>
+<li>基於 Fed Funds Futures 市場定價</li>
+<li>顯示各次 FOMC 會議的加息/降息機率</li>
+<li>機率加權：如果 70% 機率降息 25bp → 市場已經 price in 大部分</li>
+<li><strong>關鍵：</strong>如果實際決定和 FedWatch 預期一致 → 反應小；不一致 → 劇烈波動</li>
+</ul>
+
+<h4>Dot Plot（點陣圖）</h4>
+<ul>
+<li>每季（3/6/9/12月）公布</li>
+<li>每位 Fed 委員對未來利率的預期</li>
+<li>中位數 = 市場解讀的「官方指引」</li>
+<li>分散度 = 共識程度（分散大 → 不確定性高）</li>
+</ul>
+
+<h4>為什麼 "Higher for Longer" 比實際利率更重要</h4>
+<ul>
+<li>市場定價的是利率路徑的「面積」（duration x rate）</li>
+<li>即使利率不再升，但維持高位更久 → 累積緊縮效果更大</li>
+<li>這就是 2023-2024 的 regime：利率停在 5.25-5.50% 但時間拉長</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>矛盾情境：QT 但流動性增加</h3>
+
+<div class="purple-box">
+<strong>2023 案例：</strong>Fed 持續 QT（Fed BS 每月縮 $95B），但同時：TGA 從 $800B drain 到 $100B（債務上限）+ RRP 從 $2.3T 降到 $0.8T（T-bill 大量發行吸走）。結果：Net Liquidity 反而大幅增加！S&P 500 全年漲 24%。
+</div>
+
+<p>這個案例完美說明了為什麼只看「QE/QT」不夠：</p>
+<ul>
+<li>QT 每月抽走 $95B → 全年約 -$1.1T</li>
+<li>TGA drain 釋放：+$700B</li>
+<li>RRP drain 釋放：+$1.5T</li>
+<li><strong>淨效果：+$1.1T 流動性增加</strong></li>
+</ul>
+
+<div class="warning-box">
+<strong>投資啟示：</strong>永遠不要只根據「Fed 在 QT」就看空。必須計算 TGA 和 RRP 的變動方向和幅度。Net Liquidity 才是最終決定因素。
+</div>
+</div>
+
+<div class="card">
+<h3>FOMC 日曆與交易節奏</h3>
+
+<h4>FOMC 會議影響的時間結構</h4>
+<ul>
+<li><strong>會議前 1 週：</strong>「靜默期」（Blackout Period）— Fed 官員不發言 → 市場靠猜測 → 波動率上升</li>
+<li><strong>會議日 2:00PM ET：</strong>決議聲明公布 → 第一波反應（通常是演算法交易）</li>
+<li><strong>會議日 2:30PM ET：</strong>主席記者會開始 → 真正的市場方向確認</li>
+<li><strong>會議後 1-3 天：</strong>市場消化前瞻指引 → 通常出現「二次反應」</li>
+</ul>
+
+<h4>FOMC 日的典型交易陷阱</h4>
+<ul>
+<li><strong>2:00-2:15PM 假突破：</strong>聲明公布後的第一個方向有 50% 機率在記者會中被反轉</li>
+<li><strong>"Sell the news" 效應：</strong>如果市場已充分定價某決定，公布後常見反向波動</li>
+<li><strong>記者會隱藏信號：</strong>主席的用詞微妙變化（如 "data dependent" vs "confident"）可以改變整個利率預期路徑</li>
+</ul>
+
+<div class="highlight-box">
+<strong>最佳策略：</strong>FOMC 日不建新倉（除非有明確系統信號）。等到隔天確認方向後再行動。歷史數據顯示 FOMC 後第 2-5 天的趨勢比 FOMC 日本身更可靠。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: 殖利率曲線 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">殖利率曲線（Yield Curve）</h2>
+
+<div class="card">
+<h3>各天期的含義</h3>
+
+<table class="data-table">
+<tr><th>天期</th><th>反映的內容</th><th>主要驅動因子</th></tr>
+<tr><td>2Y</td><td>市場對 Fed 未來 2 年政策利率的預期</td><td>FOMC 決策、點陣圖、通膨數據</td></tr>
+<tr><td>5Y</td><td>中期經濟展望 + 政策路徑</td><td>通膨預期 + 實質利率</td></tr>
+<tr><td>10Y</td><td>長期經濟增長 + 通膨預期</td><td>GDP 趨勢、全球資金流、Term Premium</td></tr>
+<tr><td>30Y</td><td>財政信用（fiscal sustainability）+ Term Premium</td><td>政府債務水平、供給衝擊、保險/退休基金需求</td></tr>
+</table>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Axis -->
+  <line x1="80" y1="250" x2="550" y2="250" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="80" y1="30" x2="80" y2="250" stroke="#cbd5e1" stroke-width="1.5"/>
+  <!-- Y axis labels -->
+  <text x="65" y="245" text-anchor="end" font-size="10" fill="#64748b">1%</text>
+  <text x="65" y="195" text-anchor="end" font-size="10" fill="#64748b">2%</text>
+  <text x="65" y="145" text-anchor="end" font-size="10" fill="#64748b">3%</text>
+  <text x="65" y="95" text-anchor="end" font-size="10" fill="#64748b">4%</text>
+  <text x="65" y="45" text-anchor="end" font-size="10" fill="#64748b">5%</text>
+  <!-- X axis labels -->
+  <text x="120" y="268" text-anchor="middle" font-size="10" fill="#64748b">3M</text>
+  <text x="200" y="268" text-anchor="middle" font-size="10" fill="#64748b">2Y</text>
+  <text x="310" y="268" text-anchor="middle" font-size="10" fill="#64748b">5Y</text>
+  <text x="420" y="268" text-anchor="middle" font-size="10" fill="#64748b">10Y</text>
+  <text x="520" y="268" text-anchor="middle" font-size="10" fill="#64748b">30Y</text>
+  <!-- Normal curve (green) -->
+  <path d="M120,220 C180,200 260,160 310,140 C360,120 440,100 520,90" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+  <!-- Inverted curve (red) -->
+  <path d="M120,80 C180,75 240,85 310,120 C370,150 440,170 520,175" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <!-- Bear steepening (orange) -->
+  <path d="M120,120 C180,115 260,110 310,105 C360,85 440,60 520,45" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="3,3"/>
+  <!-- Legend -->
+  <rect x="150" y="10" width="300" height="20" fill="var(--bg2)" rx="4"/>
+  <line x1="160" y1="20" x2="185" y2="20" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="190" y="24" font-size="10" fill="#16a34a">正常曲線</text>
+  <line x1="260" y1="20" x2="285" y2="20" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,3"/>
+  <text x="290" y="24" font-size="10" fill="#dc2626">倒掛(Inverted)</text>
+  <line x1="380" y1="20" x2="405" y2="20" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="3,3"/>
+  <text x="410" y="24" font-size="10" fill="#ea580c">熊陡(Bear Steep)</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>倒掛（Inversion）：2Y > 10Y</h3>
+
+<h4>歷史紀錄</h4>
+<ul>
+<li>過去 8 次殖利率曲線倒掛中，有 7 次 → 隨後出現衰退</li>
+<li>但滯後時間長：12-24 個月（這就是為什麼很多人嘲笑「狼來了」）</li>
+<li>2022/7 開始倒掛 → 2024 年底仍未衰退 → 打破歷史最長紀錄</li>
+</ul>
+
+<h4>為什麼會倒掛</h4>
+<ul>
+<li>2Y 反映 Fed 現在的高利率</li>
+<li>10Y 反映市場預期未來 Fed 會降息（因為衰退即將來臨）</li>
+<li>所以 2Y > 10Y = 市場說「現在太緊了，未來會被迫放鬆」</li>
+</ul>
+
+<h4>倒掛期間資產走勢</h4>
+<ul>
+<li><strong>股市：</strong>倒掛初期通常繼續上漲（因為衰退還沒來）</li>
+<li><strong>債券：</strong>長債受買盤支撐（避險 + 預期降息）</li>
+<li><strong>美元：</strong>走強（Fed 維持高利率 = 利差優勢）</li>
+</ul>
+
+<div class="warning-box">
+<strong>重要：倒掛本身不是做空信號。</strong>歷史上在倒掛期間做空的人往往被軋，因為市場可以在衰退真正來臨前繼續上漲 6-18 個月。
+</div>
+</div>
+
+<div class="card">
+<h3>解除倒掛（Un-inversion）更危險</h3>
+
+<p>殖利率曲線從倒掛回到正常 = 衰退正在逼近的最強信號。</p>
+
+<h4>解除倒掛的機制</h4>
+<ul>
+<li>Fed 開始降息 → 2Y 殖利率急速下跌</li>
+<li>10Y 也下跌，但幅度較小（長期展望）</li>
+<li>結果：2Y 跌得比 10Y 快 → 曲線重新變正（un-invert）</li>
+</ul>
+
+<h4>為什麼 Un-inversion 才是真正的衰退信號</h4>
+<ul>
+<li>Un-inversion = Fed 認為經濟已經弱到必須降息</li>
+<li>歷史上衰退通常在 un-inversion 後 0-6 個月開始</li>
+<li>2007: Un-inversion → 2008 衰退</li>
+<li>2019: Un-inversion → 2020 衰退（疫情加速）</li>
+</ul>
+
+<div class="warning-box">
+<strong>做空時機：</strong>不是倒掛開始時做空，而是 un-inversion 開始時做空。曲線從倒掛急速回正 = 最危險的時刻。
+</div>
+</div>
+
+<div class="card">
+<h3>Term Premium（期限溢價）</h3>
+
+<div class="formula-box">長債殖利率 = 預期短期利率路徑 + Term Premium</div>
+
+<h4>定義</h4>
+<p>Term Premium = 投資者持有長債（承擔更多不確定性）所要求的額外補償。</p>
+
+<h4>Term Premium 上升的意義</h4>
+<ul>
+<li>市場要求更多補償 → 長債殖利率上升</li>
+<li>可能原因：政府債務增加、通膨不確定性、外國買家減少</li>
+<li><strong>對資產的影響：</strong>成長股壓力增大（DCF 折現率升高）</li>
+</ul>
+
+<h4>2024-2026 的 Term Premium 故事</h4>
+<ul>
+<li>Term Premium 從長期負值轉為正值</li>
+<li>驅動因子：財政赤字持續擴大 + 供給增加 + 海外買家退縮</li>
+<li>30Y 殖利率突破 5% → 主要由 Term Premium 貢獻</li>
+</ul>
+
+<div class="purple-box">
+<strong>分解殖利率上升的原因很重要：</strong>如果 10Y 上升是因為經濟好（growth expectations）→ 股市可能不怕。如果是 Term Premium 上升（供給壓力/信用擔憂）→ 股市承壓。兩種情境的交易策略完全不同。
+</div>
+</div>
+
+<div class="card">
+<h3>殖利率對各資產類別的影響路徑</h3>
+
+<table class="data-table">
+<tr><th>殖利率方向</th><th>資產</th><th>影響</th><th>機制</th></tr>
+<tr><td>上升</td><td>成長股(QQQ)</td><td style="color:#dc2626">承壓</td><td>DCF 折現率升 → 未來現金流現值降低</td></tr>
+<tr><td>上升</td><td>美元(DXY)</td><td style="color:#16a34a">走強</td><td>利差擴大 → 吸引資金流入美國</td></tr>
+<tr><td>上升</td><td>商品/EM</td><td style="color:#dc2626">承壓</td><td>美元升 + 融資成本升</td></tr>
+<tr><td>上升</td><td>BTC</td><td style="color:#dc2626">承壓</td><td>作為零息長久期資產，對利率極度敏感</td></tr>
+<tr><td>上升</td><td>銀行股(KBE)</td><td style="color:#16a34a">受益</td><td>淨利差(NIM)擴大</td></tr>
+<tr><td>下降</td><td>全面</td><td style="color:#16a34a">Risk-On</td><td>折現率降 + 融資成本降 + 美元弱</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 4: DXY 與全球資金流 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">DXY 與全球資金流</h2>
+
+<div class="card">
+<h3>DXY 為什麼是 Master Variable</h3>
+<p>美元是全球融資貨幣（global funding currency），全球約 $13T 的美元計價債務在美國以外。</p>
+
+<ul>
+<li><strong>DXY 走弱 = 全球流動性擴張：</strong>新興市場美元債壓力減輕，出口國獲利增加，資金流向高收益資產</li>
+<li><strong>DXY 走強 = 全球流動性收縮：</strong>新興市場美元債壓力增大，資本回流美國，全球 risk-off</li>
+</ul>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowDark" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#334155"/>
+    </marker>
+  </defs>
+  <!-- Center: DXY -->
+  <circle cx="300" cy="140" r="45" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="300" y="135" text-anchor="middle" font-size="16" font-weight="700" fill="#1e40af">DXY</text>
+  <text x="300" y="155" text-anchor="middle" font-size="10" fill="#334155">美元指數</text>
+  <!-- DXY Up arrows -->
+  <text x="300" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">DXY 走強</text>
+  <!-- Connected assets - left side (inverse) -->
+  <rect x="40" y="60" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
+  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">商品 (下跌)</text>
+  <line x1="140" y1="77" x2="258" y2="120" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <rect x="40" y="110" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
+  <text x="90" y="132" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">新興市場 (下跌)</text>
+  <line x1="140" y1="127" x2="255" y2="137" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <rect x="40" y="160" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
+  <text x="90" y="182" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">BTC/加密 (下跌)</text>
+  <line x1="140" y1="177" x2="258" y2="157" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <rect x="40" y="210" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
+  <text x="90" y="232" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">黃金 (承壓)</text>
+  <line x1="140" y1="227" x2="265" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <!-- Right side (positive or complex) -->
+  <rect x="460" y="80" width="110" height="35" fill="#dcfce7" stroke="#16a34a" rx="6"/>
+  <text x="515" y="102" text-anchor="middle" font-size="11" font-weight="500" fill="#16a34a">美國國債 (資金流入)</text>
+  <line x1="345" y1="125" x2="460" y2="97" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <rect x="460" y="140" width="110" height="35" fill="#fef3c7" stroke="#d97706" rx="6"/>
+  <text x="515" y="162" text-anchor="middle" font-size="11" font-weight="500" fill="#d97706">美股 (複雜)</text>
+  <line x1="345" y1="140" x2="460" y2="155" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <rect x="460" y="200" width="110" height="35" fill="#dcfce7" stroke="#16a34a" rx="6"/>
+  <text x="515" y="222" text-anchor="middle" font-size="11" font-weight="500" fill="#16a34a">美元現金 (king)</text>
+  <line x1="340" y1="165" x2="460" y2="215" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+  <!-- Note -->
+  <text x="300" y="272" text-anchor="middle" font-size="10" fill="#64748b">DXY 與多數風險資產呈反向相關（r = -0.6 to -0.8）</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>DXY 的組成與驅動</h3>
+
+<h4>DXY 組成權重</h4>
+<table class="data-table">
+<tr><th>貨幣</th><th>權重</th><th>備註</th></tr>
+<tr><td>EUR（歐元）</td><td>57.6%</td><td>DXY 基本上是美元對歐元的代理</td></tr>
+<tr><td>JPY（日圓）</td><td>13.6%</td><td>避險貨幣，BOJ 政策敏感</td></tr>
+<tr><td>GBP（英鎊）</td><td>11.9%</td><td>跟隨 ECB 趨勢</td></tr>
+<tr><td>CAD（加元）</td><td>9.1%</td><td>商品貨幣，油價相關</td></tr>
+<tr><td>SEK（瑞典克朗）</td><td>4.2%</td><td>歐洲經濟代理</td></tr>
+<tr><td>CHF（瑞士法郎）</td><td>3.6%</td><td>避險貨幣</td></tr>
+</table>
+
+<h4>DXY 的三大驅動因子</h4>
+<ol>
+<li><strong>利差（Interest Rate Differentials）：</strong>Fed vs ECB/BOJ 的利率差距 → 差距擴大 = DXY 升</li>
+<li><strong>經濟增長差異（Growth Differentials）：</strong>美國 GDP 優於歐洲/日本 → DXY 升</li>
+<li><strong>避險需求（Safe Haven Flows）：</strong>全球恐慌 → 資金湧入美元 → DXY 升</li>
+</ol>
+
+<div class="highlight-box">
+<strong>重要提醒：</strong>DXY 沒有包含人民幣(CNY)。所以 DXY 可能走弱但美元對人民幣走強。追蹤中國/亞洲相關資產時，需要額外關注 USD/CNH。
+</div>
+</div>
+
+<div class="card">
+<h3>日圓 Carry Trade — 全球最大流動性來源之一</h3>
+
+<h4>機制</h4>
+<ol>
+<li>在日本借入日圓（利率 0-0.5%）</li>
+<li>換成美元或其他高息貨幣</li>
+<li>買入高收益資產（美國國債 5%、美股、新興市場）</li>
+<li>賺取利差 + 資產升值</li>
+</ol>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowPurp" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <!-- Build Phase -->
+  <text x="300" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Carry Trade 建倉流程</text>
+  <rect x="30" y="40" width="120" height="50" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" rx="8"/>
+  <text x="90" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">借入日圓</text>
+  <text x="90" y="76" text-anchor="middle" font-size="9" fill="#334155">利率 0-0.5%</text>
+
+  <line x1="150" y1="65" x2="188" y2="65" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurp)"/>
+
+  <rect x="190" y="40" width="120" height="50" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" rx="8"/>
+  <text x="250" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">換成美元</text>
+  <text x="250" y="76" text-anchor="middle" font-size="9" fill="#334155">JPY → USD</text>
+
+  <line x1="310" y1="65" x2="348" y2="65" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurp)"/>
+
+  <rect x="350" y="40" width="120" height="50" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" rx="8"/>
+  <text x="410" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">買入高收益</text>
+  <text x="410" y="76" text-anchor="middle" font-size="9" fill="#334155">美股/國債/EM</text>
+
+  <line x1="470" y1="65" x2="508" y2="65" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurp)"/>
+
+  <rect x="510" y="40" width="70" height="50" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" rx="8"/>
+  <text x="545" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">獲利</text>
+  <text x="545" y="76" text-anchor="middle" font-size="9" fill="#334155">利差+升值</text>
+
+  <!-- Unwind Phase -->
+  <text x="300" y="120" text-anchor="middle" font-size="13" font-weight="700" fill="#dc2626">Carry Trade 平倉（Unwind）— 系統性風險</text>
+  <rect x="30" y="140" width="120" height="50" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="90" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">BOJ 升息</text>
+  <text x="90" y="176" text-anchor="middle" font-size="9" fill="#334155">日圓急升</text>
+
+  <line x1="150" y1="165" x2="188" y2="165" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+  <rect x="190" y="140" width="120" height="50" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="250" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">被迫平倉</text>
+  <text x="250" y="176" text-anchor="middle" font-size="9" fill="#334155">賣出所有資產</text>
+
+  <line x1="310" y1="165" x2="348" y2="165" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+  <rect x="350" y="140" width="120" height="50" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="410" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">買回日圓</text>
+  <text x="410" y="176" text-anchor="middle" font-size="9" fill="#334155">USD → JPY</text>
+
+  <line x1="470" y1="165" x2="508" y2="165" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+  <rect x="510" y="140" width="70" height="50" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="545" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">全球</text>
+  <text x="545" y="176" text-anchor="middle" font-size="9" fill="#334155">閃崩</text>
+
+  <text x="300" y="210" text-anchor="middle" font-size="10" fill="#64748b">估計規模：$1-2 兆美元 | 2024/8 案例：全球股市一日閃崩 5%</text>
+</svg>
+</div>
+
+<h4>Carry Trade Unwind 的觸發條件</h4>
+<ul>
+<li><strong>BOJ 升息：</strong>借貸成本上升 → carry 收益縮小</li>
+<li><strong>日圓急升：</strong>USD/JPY 快速下跌 → 匯損吃掉利差收益</li>
+<li><strong>VIX 飆升：</strong>波動率增加 → 風控系統自動減倉</li>
+<li><strong>美國降息：</strong>美日利差收窄 → carry 不划算</li>
+</ul>
+
+<div class="warning-box">
+<strong>2024/8/5 案例：</strong>BOJ 意外升息 + 日圓一週升值 8% → Carry Trade 大規模 Unwind → 日經 -12.4%（歷史第二大單日跌幅）→ 全球股市閃崩 → S&P -3%，NASDAQ -4%，BTC -15%。這一切發生在 24 小時內。
+</div>
+</div>
+
+<div class="card">
+<h3>美元週期與資產輪動</h3>
+
+<table class="data-table">
+<tr><th>美元週期</th><th>年份</th><th>DXY方向</th><th>表現最好的資產</th></tr>
+<tr><td>弱美元</td><td>2002-2008</td><td>DXY 120→70</td><td>商品(金+300%)、EM、房地產</td></tr>
+<tr><td>強美元</td><td>2014-2016</td><td>DXY 80→103</td><td>美元現金、美國大型股</td></tr>
+<tr><td>弱美元</td><td>2017-2018</td><td>DXY 103→89</td><td>EM、歐股、加密(BTC 2→20K)</td></tr>
+<tr><td>弱美元</td><td>2020-2021</td><td>DXY 103→90</td><td>所有風險資產暴漲</td></tr>
+<tr><td>強美元</td><td>2022</td><td>DXY 95→114</td><td>美元現金、石油、defence</td></tr>
+<tr><td>弱美元</td><td>2025-?</td><td>DXY 107→?</td><td>黃金、BTC、國際股</td></tr>
+</table>
+
+<h4>如何判斷 DXY 趨勢轉折</h4>
+<ul>
+<li><strong>利差見頂：</strong>Fed 停止加息 / ECB 追上來 → 利差收窄</li>
+<li><strong>雙赤字惡化：</strong>財政赤字 + 貿易赤字持續擴大 → 結構性美元走弱</li>
+<li><strong>技術面：</strong>月線跌破 200MA → 趨勢確認轉弱</li>
+<li><strong>資金流向：</strong>外國央行減持美債 → 去美元化趨勢</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>CNH/CNY 的影響</h3>
+
+<h4>人民幣貶值的傳導路徑</h4>
+<ul>
+<li><strong>資本外流：</strong>CNY 貶值預期 → 資金加速流出中國</li>
+<li><strong>區域連動：</strong>亞洲貨幣跟貶（TWD、KRW、VND）</li>
+<li><strong>競爭性貶值：</strong>出口價格戰 → 通縮壓力輸出</li>
+<li><strong>台股/韓股：</strong>外資因匯率風險賣出 → EWT/EWY 承壓</li>
+</ul>
+
+<h4>PBOC 干預信號</h4>
+<ul>
+<li>CNY 中間價大幅高於模型預測 → 明確干預意圖</li>
+<li>離岸(CNH)與在岸(CNY)利差擴大 → 資金緊張</li>
+<li>外匯存底下降 → 正在拋美元護盤</li>
+</ul>
+
+<div class="orange-box">
+<strong>追蹤重點：</strong>USD/CNH 7.35 是近年關鍵心理關口。突破此位 → 加速貶值 → 全球 risk-off 情緒升溫。PBOC 通常會在 7.3+ 加大干預力度。
+</div>
+</div>
+
+<div class="card">
+<h3>美元流動性的「微笑曲線」（Dollar Smile Theory）</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:500px" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+  <!-- Smile curve -->
+  <path d="M60,60 C100,60 150,170 250,170 C350,170 400,60 440,60" fill="none" stroke="#2563eb" stroke-width="3"/>
+  <!-- Labels -->
+  <text x="60" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">美元強</text>
+  <text x="60" y="85" text-anchor="middle" font-size="9" fill="#334155">避險需求</text>
+  <text x="60" y="98" text-anchor="middle" font-size="9" fill="#334155">(全球恐慌)</text>
+  <text x="250" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">美元弱</text>
+  <text x="250" y="210" text-anchor="middle" font-size="9" fill="#334155">全球經濟穩定成長 (Goldilocks)</text>
+  <text x="440" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">美元強</text>
+  <text x="440" y="85" text-anchor="middle" font-size="9" fill="#334155">美國經濟</text>
+  <text x="440" y="98" text-anchor="middle" font-size="9" fill="#334155">獨強 (利差)</text>
+  <!-- Axis labels -->
+  <text x="250" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Dollar Smile Theory</text>
+  <line x1="40" y1="120" x2="460" y2="120" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+</svg>
+</div>
+
+<h4>三種美元強勢的情境</h4>
+<ul>
+<li><strong>左側（避險）：</strong>全球恐慌 → 所有人湧入美元避險 → DXY 飆升（2008、2020/3）</li>
+<li><strong>底部（Goldilocks）：</strong>全球同步增長 → 資金流向高收益/高成長市場 → 美元走弱</li>
+<li><strong>右側（美國獨強）：</strong>美國經濟顯著優於其他國家 → 利差優勢吸引資金 → DXY 升（2022）</li>
+</ul>
+
+<div class="highlight-box">
+<strong>交易啟示：</strong>判斷美元強勢的「原因」比方向本身更重要。避險驅動的美元強 = 做空風險資產。利差驅動的美元強 = 做多美股（因為美國經濟好）。兩種情境的股市策略完全相反。
+</div>
+</div>
+
+<div class="card">
+<h3>全球央行流動性循環</h3>
+
+<h4>五大央行的協同效應</h4>
+<table class="data-table">
+<tr><th>央行</th><th>資產規模(~)</th><th>2024-2025 政策</th><th>對全球流動性影響</th></tr>
+<tr><td>Fed（美聯準會）</td><td>$7.0T</td><td>QT 放慢 → 停止</td><td>中性偏正面</td></tr>
+<tr><td>ECB（歐洲央行）</td><td>$6.5T</td><td>PEPP 到期不續 + 降息</td><td>收縮中但降息對沖</td></tr>
+<tr><td>BOJ（日本央行）</td><td>$4.8T</td><td>YCC 退出 + 緩慢升息</td><td>最大不確定性來源</td></tr>
+<tr><td>PBOC（中國央行）</td><td>$6.0T</td><td>降準降息 + MLF</td><td>擴張（刺激經濟）</td></tr>
+<tr><td>BOE（英國央行）</td><td>$1.0T</td><td>QT 持續 + 降息</td><td>輕微收縮</td></tr>
+</table>
+
+<div class="purple-box">
+<strong>協同效應：</strong>當多數央行同時擴張（如 2020-2021），全球流動性海嘯推動所有資產暴漲。當多數央行同時收縮（如 2022），全球流動性枯竭導致全面 risk-off。目前處於「分化期」——不同央行走不同方向，需要逐一追蹤加總。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 信用利差與系統壓力 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">信用利差與系統壓力指標</h2>
+
+<div class="card">
+<h3>High Yield Spread（高收益利差）</h3>
+
+<div class="formula-box">HY Spread = 高收益(垃圾)債殖利率 - 同天期國債殖利率</div>
+
+<p>HY Spread 是市場對企業違約風險的即時定價。</p>
+
+<table class="data-table">
+<tr><th>HY Spread 水位</th><th>市場狀態</th><th>歷史案例</th></tr>
+<tr><td style="color:#16a34a">&lt; 300bp</td><td>極度樂觀 / Complacent</td><td>2021年中、2024年底</td></tr>
+<tr><td>300-400bp</td><td>正常 / 中性</td><td>大部分非危機時期</td></tr>
+<tr><td style="color:#d97706">400-500bp</td><td>警戒 / 壓力浮現</td><td>2018Q4、2022年中</td></tr>
+<tr><td style="color:#dc2626">500-800bp</td><td>恐慌 / 顯著壓力</td><td>2020年3月初</td></tr>
+<tr><td style="color:#dc2626">&gt; 800bp</td><td>信用危機</td><td>2008(2000bp)、2020/3/23(1100bp)</td></tr>
+</table>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Axis -->
+  <line x1="60" y1="210" x2="560" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="60" y1="20" x2="60" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+  <!-- Y labels -->
+  <text x="50" y="205" text-anchor="end" font-size="9" fill="#64748b">200bp</text>
+  <text x="50" y="165" text-anchor="end" font-size="9" fill="#64748b">400bp</text>
+  <text x="50" y="125" text-anchor="end" font-size="9" fill="#64748b">600bp</text>
+  <text x="50" y="85" text-anchor="end" font-size="9" fill="#64748b">800bp</text>
+  <text x="50" y="45" text-anchor="end" font-size="9" fill="#64748b">1000bp</text>
+  <!-- Time labels -->
+  <text x="100" y="225" font-size="9" fill="#64748b">2018</text>
+  <text x="200" y="225" font-size="9" fill="#64748b">2019</text>
+  <text x="300" y="225" font-size="9" fill="#64748b">2020</text>
+  <text x="400" y="225" font-size="9" fill="#64748b">2022</text>
+  <text x="500" y="225" font-size="9" fill="#64748b">2024</text>
+  <!-- HY Spread line -->
+  <polyline points="80,185 120,175 160,150 180,140 200,180 240,190 280,195 300,40 320,120 360,180 400,155 440,170 480,190 520,195 550,200" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <!-- Crisis markers -->
+  <circle cx="160" cy="150" r="4" fill="#d97706"/>
+  <text x="160" y="140" text-anchor="middle" font-size="8" fill="#d97706">2018Q4</text>
+  <circle cx="300" cy="40" r="5" fill="#dc2626"/>
+  <text x="300" y="30" text-anchor="middle" font-size="8" font-weight="600" fill="#dc2626">2020/3 疫情</text>
+  <!-- Zone coloring -->
+  <rect x="60" y="185" width="500" height="25" fill="#dcfce7" opacity="0.3"/>
+  <rect x="60" y="145" width="500" height="40" fill="#fef3c7" opacity="0.3"/>
+  <rect x="60" y="20" width="500" height="125" fill="#fee2e2" opacity="0.2"/>
+  <!-- Zone labels -->
+  <text x="565" y="200" font-size="8" fill="#16a34a">安全</text>
+  <text x="565" y="168" font-size="8" fill="#d97706">警戒</text>
+  <text x="565" y="90" font-size="8" fill="#dc2626">危機</text>
+</svg>
+</div>
+
+<div class="warning-box">
+<strong>HY Spread 極低（&lt;300bp）不是安全信號，而是危險信號：</strong>代表市場極度 complacent，沒有人在對沖風險。歷史上 HY Spread 壓縮到極低後，往往是暴風雨前的寧靜。
+</div>
+</div>
+
+<div class="card">
+<h3>VIX vs MOVE — 波動率背離</h3>
+
+<h4>兩個波動率指標</h4>
+<ul>
+<li><strong>VIX（CBOE Volatility Index）：</strong>S&P 500 選擇權隱含波動率 → 股市恐懼指標</li>
+<li><strong>MOVE（Merrill Lynch Option Volatility Estimate）：</strong>國債選擇權隱含波動率 → 債市/系統流動性壓力</li>
+</ul>
+
+<h4>正常關係 vs 背離</h4>
+<ul>
+<li><strong>正常：</strong>MOVE 和 VIX 同方向移動（都升 = 全面恐慌）</li>
+<li><strong>危險背離：</strong>MOVE 飆升但 VIX 平靜 → 債市壓力大但股市沒反映</li>
+<li>這種背離通常 1-2 週後 VIX 會「追上來」→ 股市補跌</li>
+</ul>
+
+<h4>歷史案例</h4>
+<ul>
+<li><strong>2023/3 SVB 事件：</strong>MOVE 飆升到 190（接近 2008 水平）→ VIX 才從 20 升到 26 → 隨後銀行股暴跌</li>
+<li><strong>2022/9 英國退休金危機：</strong>英債 MOVE 等價飆升 → 全球債市動盪 → 最後影響股市</li>
+</ul>
+
+<div class="purple-box">
+<strong>交易策略：</strong>當 MOVE > 120 且 VIX < 20 → 這是買入 VIX 看漲期權的好時機。債市壓力最終一定會傳導到股市。
+</div>
+</div>
+
+<div class="card">
+<h3>銀行系統壓力指標</h3>
+
+<h4>KRE（SPDR S&P Regional Banking ETF）</h4>
+<ul>
+<li>區域銀行 ETF，作為銀行業健康的代理指標</li>
+<li>KRE 急跌 → 銀行業有系統性壓力（存款流失、資產減值）</li>
+<li>2023/3：KRE 一週跌 30% → SVB/Signature Bank 倒閉</li>
+</ul>
+
+<h4>Fed 緊急放貸窗口</h4>
+<ul>
+<li><strong>BTFP（Bank Term Funding Program）：</strong>2023年為 SVB 危機創設</li>
+<li>使用量飆升 = 銀行業壓力嚴重（銀行需要緊急流動性）</li>
+<li>正常時期使用量接近 $0</li>
+</ul>
+
+<h4>Repo 市場壓力</h4>
+<ul>
+<li>隔夜 Repo 利率飆升 = 流動性枯竭（機構借不到隔夜資金）</li>
+<li>SOFR 大幅偏離 FFR 目標區間 = 嚴重壓力</li>
+<li>2019/9：Repo 利率飆到 10%（正常 2%）→ Fed 被迫緊急注資</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>信用事件的傳導路徑</h3>
+
+<div class="svg-container">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowFlow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <!-- Step 1 -->
+  <rect x="200" y="10" width="200" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="300" y="35" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">利率持續上升</text>
+  <line x1="300" y1="50" x2="300" y2="68" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowFlow)"/>
+  <!-- Step 2 -->
+  <rect x="200" y="70" width="200" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="300" y="95" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">企業融資成本飆升</text>
+  <line x1="300" y1="110" x2="300" y2="128" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowFlow)"/>
+  <!-- Step 3 -->
+  <rect x="200" y="130" width="200" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="300" y="155" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">弱企業開始違約</text>
+  <line x1="300" y1="170" x2="300" y2="188" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowFlow)"/>
+  <!-- Step 4 -->
+  <rect x="200" y="190" width="200" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="300" y="215" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">HY Spread 急速擴大</text>
+  <line x1="300" y1="230" x2="300" y2="248" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowFlow)"/>
+  <!-- Step 5 -->
+  <rect x="200" y="250" width="200" height="40" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" rx="8"/>
+  <text x="300" y="275" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">基金贖回潮 + 流動性枯竭</text>
+  <line x1="300" y1="290" x2="300" y2="308" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowFlow)"/>
+  <!-- Step 6 -->
+  <rect x="180" y="310" width="240" height="35" fill="#dcfce7" stroke="#16a34a" stroke-width="2" rx="8"/>
+  <text x="300" y="333" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">央行被迫介入（底部形成）</text>
+  <!-- Side annotations -->
+  <text x="430" y="155" font-size="10" fill="#64748b">← CCC級債券先爆</text>
+  <text x="430" y="215" font-size="10" fill="#64748b">← 連 BBB 也被拋售</text>
+  <text x="430" y="275" font-size="10" fill="#64748b">← 連安全資產也跌</text>
+  <text x="430" y="333" font-size="10" fill="#16a34a">← QE/放貸/降息</text>
+</svg>
+</div>
+
+<div class="green-box">
+<strong>底部信號：</strong>當央行被迫介入時（如 2020/3/23 Fed 宣布無限 QE），往往就是市場底部。原因：央行的火力（印鈔機）大於任何市場力量。"Don't fight the Fed" 在這種時刻最適用。
+</div>
+</div>
+
+<div class="card">
+<h3>系統壓力的「早期預警」指標組合</h3>
+
+<p>不要等到危機爆發才反應。以下是按時間順序出現的早期預警信號：</p>
+
+<h4>第一階段：早期警告（提前 2-4 週）</h4>
+<ul>
+<li>FRA-OIS Spread 擴大（銀行間借貸風險上升）</li>
+<li>商業本票(CP) 利差擴大</li>
+<li>MOVE 指數悄悄上升到 100+</li>
+<li>Investment Grade CDX 開始走寬</li>
+</ul>
+
+<h4>第二階段：壓力浮現（提前 1-2 週）</h4>
+<ul>
+<li>HY CDX (高收益信用違約交換) 快速擴大</li>
+<li>KRE（區域銀行ETF）開始下跌</li>
+<li>SOFR-FFR 利差異常</li>
+<li>VIX 期限結構倒掛（近月 > 遠月）</li>
+</ul>
+
+<h4>第三階段：危機確認</h4>
+<ul>
+<li>Fed 宣布緊急放貸工具</li>
+<li>HY Spread 突破 500bp</li>
+<li>金融股/銀行股暴跌</li>
+<li>跨資產相關性飆升（什麼都在跌）</li>
+</ul>
+
+<div class="orange-box">
+<strong>操作建議：</strong>第一階段出現時 → 減少槓桿、增加現金比重。第二階段確認時 → 大幅降低風險曝露。第三階段 → 等待央行行動的信號，準備抄底（但不要接飛刀，等確認底部形成）。
+</div>
+</div>
+
+<div class="card">
+<h3>各壓力指標的追蹤來源</h3>
+
+<table class="data-table">
+<tr><th>指標</th><th>追蹤來源</th><th>閾值/警戒</th><th>歷史危機水平</th></tr>
+<tr><td>HY Spread (OAS)</td><td>FRED: BAMLH0A0HYM2</td><td>> 400bp 警戒</td><td>2008: 2000bp, 2020: 1100bp</td></tr>
+<tr><td>VIX</td><td>CBOE / Yahoo Finance</td><td>> 25 警戒, > 35 恐慌</td><td>2020: 82, 2008: 80</td></tr>
+<tr><td>MOVE</td><td>ICE BofA MOVE</td><td>> 120 警戒</td><td>2023/3: 190, 2008: 260</td></tr>
+<tr><td>KRE</td><td>Yahoo Finance</td><td>跌破 200MA</td><td>2023/3: 一週 -30%</td></tr>
+<tr><td>FRA-OIS</td><td>Bloomberg</td><td>> 30bp 警戒</td><td>2020/3: 75bp</td></tr>
+<tr><td>IG CDX</td><td>Bloomberg / IHS Markit</td><td>> 80bp 警戒</td><td>2020/3: 150bp</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 6: 經濟數據判讀 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">經濟數據判讀</h2>
+
+<div class="card">
+<h3>Tier 1 數據 — 市場反應最大</h3>
+
+<table class="data-table">
+<tr><th>數據</th><th>公布時間</th><th>影響</th><th>關鍵指標</th></tr>
+<tr><td>NFP（非農就業）</td><td>每月第一個週五</td><td>就業 → Fed 決策</td><td>新增就業數、失業率、時薪YoY</td></tr>
+<tr><td>CPI / Core CPI</td><td>每月中旬</td><td>通膨 → 利率路徑</td><td>Core CPI MoM（最重要）</td></tr>
+<tr><td>PCE / Core PCE</td><td>每月底</td><td>Fed 最看重的通膨</td><td>Core PCE YoY vs Fed 2%目標</td></tr>
+<tr><td>ISM Manufacturing</td><td>每月第一個工作日</td><td>經濟擴張/收縮</td><td>>50 擴張，<50 收縮</td></tr>
+<tr><td>ISM Services</td><td>每月第三個工作日</td><td>服務業（GDP 70%）</td><td>>50 擴張，Prices Paid 看通膨</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>如何判讀 — 不是數字本身，是 vs 預期</h3>
+
+<h4>核心原則</h4>
+<ul>
+<li>市場已經 price in 了共識預期（Bloomberg Survey Median）</li>
+<li><strong>數據 > 預期 = surprise 正面</strong> → 經濟強 → 利率維持高 → 美元強 / 股市複雜</li>
+<li><strong>數據 < 預期 = surprise 負面</strong> → 經濟弱 → 降息預期升 → 美元弱 / 債券漲</li>
+</ul>
+
+<h4>"Bad news is good news" vs "Bad news is bad news"</h4>
+<p>市場對壞數據的反應取決於當前 regime：</p>
+
+<table class="data-table">
+<tr><th>階段</th><th>市場擔心什麼</th><th>壞數據的反應</th><th>好數據的反應</th></tr>
+<tr><td>通膨過高期</td><td>Fed 繼續加息</td><td style="color:#16a34a">Good（降息預期升→股漲）</td><td style="color:#dc2626">Bad（加息預期升→股跌）</td></tr>
+<tr><td>衰退恐懼期</td><td>經濟硬著陸</td><td style="color:#dc2626">Bad（真的要衰退→股跌）</td><td style="color:#16a34a">Good（軟著陸→股漲）</td></tr>
+<tr><td>Goldilocks</td><td>什麼都不太擔心</td><td style="color:#16a34a">溫和反應</td><td style="color:#16a34a">溫和反應</td></tr>
+</table>
+
+<div class="highlight-box">
+<strong>如何判斷現在在哪個階段：</strong>看市場對數據的即時反應。如果壞就業數據公布後股市漲 → 你在「通膨擔憂期」。如果壞就業數據後股市跌 → 你在「衰退恐懼期」。這比任何分析師的意見都準確。
+</div>
+</div>
+
+<div class="card">
+<h3>數據公布時的交易策略</h3>
+
+<h4>絕對不要做的事</h4>
+<ul>
+<li><strong>不要在數據公布前 5 分鐘建新倉：</strong>spread 擴大 + 滑點嚴重 + 結果隨機</li>
+<li><strong>不要追第一根 K 線：</strong>公布後前 1-5 分鐘的反應有 40% 機率是「假動作」</li>
+<li><strong>不要用大槓桿在數據前持倉：</strong>NFP/CPI 可以讓 ES 瞬間走 50 點</li>
+</ul>
+
+<h4>建議做法</h4>
+<ol>
+<li>數據公布後等 15 分鐘 → 看 market settle 到哪裡</li>
+<li>確認方向和第一反應一致 → 順勢交易</li>
+<li>如果 15 分鐘後完全回吐第一反應 → 做反向（更可靠的信號）</li>
+<li>重點看「修正值」而非「初值」→ 初值常被大幅修正</li>
+</ol>
+
+<div class="orange-box">
+<strong>NFP 修正值的重要性：</strong>2023-2024 年的 NFP 初值平均被下修 5-8 萬人。市場在初值公布時大幅反應，但真相在一個月後的修正值中。養成看修正值的習慣，能避免被誤導。
+</div>
+</div>
+
+<div class="card">
+<h3>經濟周期與數據組合</h3>
+
+<table class="data-table">
+<tr><th>階段</th><th>GDP</th><th>通膨</th><th>就業</th><th>Fed 政策</th><th>最佳資產</th></tr>
+<tr><td style="color:#16a34a; font-weight:600">擴張初期</td><td>上升</td><td>低/下降</td><td>改善</td><td>降息/寬鬆</td><td>股票 > 債券 > 商品</td></tr>
+<tr><td style="color:#d97706; font-weight:600">擴張後期</td><td>高位</td><td>上升</td><td>充分就業</td><td>開始升息</td><td>商品 > 股票 > 債券</td></tr>
+<tr><td style="color:#dc2626; font-weight:600">衰退初期</td><td>下降</td><td>高/持平</td><td>惡化</td><td>觀望/初期降息</td><td>現金 > 債券 > 股票</td></tr>
+<tr><td style="color:#7c3aed; font-weight:600">衰退後期</td><td>底部</td><td>快速下降</td><td>大幅惡化</td><td>大幅降息/QE</td><td>債券 > 股票 > 商品</td></tr>
+</table>
+
+<div class="highlight-box">
+<strong>判斷當前位置：</strong>不要試圖精確定位，而是判斷趨勢方向。「我們正在從擴張後期走向衰退初期」比「我們現在恰好在X階段」更有用。用多個指標的趨勢方向來確認。
+</div>
+</div>
+
+<div class="card">
+<h3>JOLTS / ADP / ISM 子項判讀</h3>
+
+<h4>JOLTS（Job Openings and Labor Turnover Survey）</h4>
+<ul>
+<li><strong>職位空缺數：</strong>勞動市場供需的領先指標</li>
+<li>空缺/失業人數比（V/U ratio）：>1.5 = 極緊 → Fed 不會降息</li>
+<li>Quits Rate（自願離職率）：高 = 勞工有信心（經濟好）→ 下降 = 擔心找不到工作</li>
+<li><strong>JOLTS 是滯後數據（延遲1個月），但 Fed 非常關注</strong></li>
+</ul>
+
+<h4>ISM 子項判讀</h4>
+<ul>
+<li><strong>ISM New Orders：</strong>經濟動能的最強領先指標（領先 GDP 3-6 個月）</li>
+<li><strong>ISM Prices Paid：</strong>製造業通膨的前瞻指標（領先 CPI 1-2 個月）</li>
+<li><strong>ISM Employment：</strong>就業的領先指標（領先 NFP 1 個月）</li>
+<li><strong>ISM Supplier Deliveries：</strong>供應鏈壓力（越高=越慢=瓶頸）</li>
+</ul>
+
+<h4>ADP 就業報告</h4>
+<ul>
+<li>NFP 前兩天公布，作為「預覽」</li>
+<li>但與 NFP 相關性近年下降（方法論不同）</li>
+<li>ADP 的「薪資增長」數據反而比人數更有參考價值</li>
+</ul>
+
+<div class="purple-box">
+<strong>組合判讀範例：</strong>ISM New Orders 急跌（<45）+ JOLTS 空缺數持續下降 + Core CPI 仍在 4%以上 = 滯脹風險。最差的宏觀組合。Fed 左右為難：降息怕通膨再起，不降怕衰退加深。
+</div>
+</div>
+
+<div class="card">
+<h3>經濟日曆：關鍵數據時間表</h3>
+
+<table class="data-table">
+<tr><th>週別</th><th>常見數據</th><th>重要性</th><th>公布時間(ET)</th></tr>
+<tr><td>每月第1週</td><td>ISM Manufacturing (週一) / NFP (週五)</td><td style="color:#dc2626">極高</td><td>10:00AM / 8:30AM</td></tr>
+<tr><td>每月第1週</td><td>JOLTS (週二)</td><td style="color:#d97706">高</td><td>10:00AM</td></tr>
+<tr><td>每月第2週</td><td>CPI (通常週三或週四)</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
+<tr><td>每月第3週</td><td>Retail Sales / Industrial Production</td><td style="color:#d97706">高</td><td>8:30AM</td></tr>
+<tr><td>每月最後週</td><td>PCE / GDP(季度)</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
+<tr><td>每6週</td><td>FOMC 決議 + 記者會</td><td style="color:#dc2626">最高</td><td>2:00PM / 2:30PM</td></tr>
+</table>
+
+<h4>Sahm Rule — 衰退確認指標</h4>
+<ul>
+<li><strong>定義：</strong>當失業率的 3 個月移動平均值比前 12 個月低點高出 0.5% 以上 → 衰退已開始</li>
+<li><strong>歷史準確率：</strong>自 1970 年以來 100% 準確（11/11）</li>
+<li><strong>即時性：</strong>比 NBER 正式宣布衰退提前 3-6 個月</li>
+<li><strong>限制：</strong>設計用於確認衰退「已發生」，而非預測。當觸發時通常已經太晚做出防禦性調整</li>
+</ul>
+
+<div class="warning-box">
+<strong>Sahm Rule 觸發時的操作：</strong>歷史上觸發時 S&P 平均已從高點下跌 5-10%。此時應：1）減少成長股曝險 2）增加防禦型/國債配置 3）提高現金比重 4）等待 Fed 政策轉向信號。不要等 NBER 正式宣布——那通常是 6-12 個月後的事。
+</div>
+</div>
+
+<div class="card">
+<h3>通膨分解：Goods vs Services vs Shelter</h3>
+
+<h4>CPI 的結構組成</h4>
+<ul>
+<li><strong>Shelter（住房）：</strong>佔 CPI 約 36% → 最大單一組件，具有滯後性（12-18個月）</li>
+<li><strong>Core Services ex-Housing（超級核心通膨）：</strong>Fed 最關注的指標，反映薪資驅動的通膨</li>
+<li><strong>Core Goods：</strong>受供應鏈和中國出口價格影響，已回到通縮</li>
+<li><strong>Food & Energy：</strong>波動大，所以被排除在 Core 之外</li>
+</ul>
+
+<h4>為什麼需要分解看</h4>
+<table class="data-table">
+<tr><th>組件</th><th>驅動因子</th><th>趨勢(2024-2025)</th><th>Fed 態度</th></tr>
+<tr><td>Shelter</td><td>租金、房價(滯後)</td><td>緩慢下降中</td><td>有耐心，知道會降</td></tr>
+<tr><td>Core Services ex-Housing</td><td>薪資、保險、醫療</td><td>黏性高，下降慢</td><td>最擔心，決定是否降息</td></tr>
+<tr><td>Core Goods</td><td>中國出口價、供應鏈</td><td>通縮/持平</td><td>不擔心</td></tr>
+<tr><td>Energy</td><td>油價（OPEC+地緣）</td><td>波動</td><td>視為暫時性</td></tr>
+</table>
+
+<div class="green-box">
+<strong>判讀技巧：</strong>如果 headline CPI 高於預期，但主要是 Shelter 貢獻 → 不用太恐慌（Fed 知道 Shelter 有滯後會降）。如果是 Core Services ex-Housing 超預期 → 這才是真正的 hawkish 信號，意味薪資驅動的通膨未受控。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 7: 互動測驗 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">互動測驗</h2>
+
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+
+<div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
+  <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
+  <div id="quiz-question-text" style="font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); text-align:center;"></div>
+  <div id="quiz-context" style="font-size:13px; color:var(--text2); margin-bottom:16px; background:var(--bg3); padding:14px; border-radius:8px; line-height:1.8;"></div>
+  <div id="quiz-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+</div>
+
+<div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
+  <div id="quiz-result-icon" style="font-size:28px; text-align:center; margin-bottom:8px;"></div>
+  <div id="quiz-result-answer" style="font-size:14px; font-weight:600; text-align:center; margin-bottom:12px;"></div>
+  <div id="quiz-result-explanation" style="font-size:13px; line-height:1.8; color:var(--text2); background:var(--bg3); padding:14px; border-radius:8px;"></div>
+</div>
+
+<div style="text-align:center; margin-bottom:20px;">
+  <button id="quiz-next-btn" style="padding:12px 32px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--blue)'">下一題</button>
+</div>
+
+<div id="quiz-final" style="display:none; text-align:center; padding:40px 20px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); margin-top:20px;">
+  <p style="font-size:22px; font-weight:700; margin-bottom:8px;" id="quiz-final-text"></p>
+  <p style="font-size:14px; color:var(--text3);" id="quiz-final-sub"></p>
+  <button id="quiz-restart-btn" style="margin-top:16px; padding:10px 24px; background:var(--green); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">重新測驗</button>
+</div>
+
+<script>
+(function() {
+  const questions = [
+    {
+      question: 'Net Liquidity 的計算公式為何？',
+      context: '全球淨流動性是衡量金融系統中可用流動性的核心公式。',
+      options: ['Fed BS + TGA + RRP', 'Fed BS - TGA - RRP', 'Fed BS - TGA + RRP', 'Fed BS + TGA - RRP'],
+      correct: 1,
+      explanation: '<strong>Net Liquidity = Fed BS - TGA - RRP。</strong>Fed BS 是流動性的來源，TGA 和 RRP 是流動性的「水槽」，會抽走市場中的可用資金。三者的淨效果決定了金融系統的流動性水平。'
+    },
+    {
+      question: 'TGA 餘額從 $800B 下降到 $300B，對市場流動性有何影響？',
+      context: 'TGA 是財政部在 Fed 的帳戶。債務上限期間政府無法發債，只能花現有餘額。',
+      options: ['流動性減少 $500B', '流動性增加 $500B', '對流動性無影響', '取決於 Fed 政策'],
+      correct: 1,
+      explanation: '<strong>TGA 下降 = 流動性釋放。</strong>TGA 減少 $500B 代表政府支出了這些錢，資金從 Fed 帳戶流入經濟體系和金融市場。公式：Net Liq = Fed BS - TGA - RRP，TGA 下降 $500B → Net Liq +$500B。'
+    },
+    {
+      question: 'RRP 從 $2.5T 降到接近 $0，這代表什麼？',
+      context: '2023年下半年，財政部大量發行 T-bill，吸引貨幣市場基金將資金從 RRP 轉移到購買 T-bill。',
+      options: ['市場流動性大幅減少', '市場流動性大幅增加', '只影響貨幣市場，不影響股市', '代表金融危機即將來臨'],
+      correct: 1,
+      explanation: '<strong>RRP 下降 = 流動性釋放到市場。</strong>$2.5T 的資金從 Fed 的「停車場」(RRP) 釋放出來，流入市場購買 T-bill 和其他資產。這就是 2023 年 S&P 暴漲 24% 的核心流動性驅動因素——即使 Fed 同時在進行 QT。'
+    },
+    {
+      question: '殖利率曲線倒掛（2Y > 10Y）後，最佳做空時機是什麼時候？',
+      context: '歷史上殖利率曲線倒掛是衰退的領先指標，但時間滯後可長達 12-24 個月。',
+      options: ['倒掛開始的第一天', '倒掛持續超過 6 個月時', '解除倒掛（Un-inversion）開始時', '10Y 殖利率創新高時'],
+      correct: 2,
+      explanation: '<strong>Un-inversion 才是真正的衰退/做空信號。</strong>倒掛開始做空常被軋（市場可以繼續漲 6-18 個月）。但 un-inversion = Fed 開始降息 = 認為經濟已經弱到必須行動。歷史上衰退通常在 un-inversion 後 0-6 個月開始。'
+    },
+    {
+      question: 'DXY 走強時，以下哪類資產最可能受益？',
+      context: 'DXY 是美元指數，反映美元對一籃子主要貨幣的強弱。美元是全球融資貨幣。',
+      options: ['新興市場股票', '商品（黃金/原油）', '比特幣', '美元現金 / 短期美債'],
+      correct: 3,
+      explanation: '<strong>DXY 走強時，美元現金為王。</strong>美元走強 = 全球流動性收縮 → 新興市場美元債壓力增大 → EM 下跌。商品以美元計價，美元強→商品弱。BTC 作為風險資產/長久期資產也承壓。只有持有美元本身能在這環境中受益。'
+    },
+    {
+      question: '日圓 Carry Trade 平倉（Unwind）的觸發條件中，哪個最具破壞力？',
+      context: '估計全球有 $1-2T 的日圓 Carry Trade 部位。2024/8/5 的閃崩就是 Carry Unwind 造成的。',
+      options: ['美國 CPI 低於預期', 'BOJ 意外升息 + 日圓急升', 'Fed 宣布放慢 QT', '歐洲經濟數據改善'],
+      correct: 1,
+      explanation: '<strong>BOJ 升息 + 日圓急升是最具破壞力的觸發。</strong>這同時攻擊 Carry Trade 的兩個收益來源：利差收窄（BOJ 升息）+ 匯率損失（日圓升值）。投資者被迫賣出所有高收益資產來買回日圓還債，形成正反饋循環。2024/8/5 就是這個劇本：日經 -12.4%，全球閃崩。'
+    },
+    {
+      question: 'HY Spread 壓縮到 250bp（低於 300bp），這代表什麼？',
+      context: 'High Yield Spread = 垃圾債殖利率 - 國債殖利率，反映市場對違約風險的定價。',
+      options: ['市場極度安全，不用擔心', '市場極度樂觀/Complacent，可能是危險信號', '信用市場正常運作', 'Fed 政策非常寬鬆'],
+      correct: 1,
+      explanation: '<strong>HY Spread 極低 = 市場 Complacent = 危險信號。</strong>這代表沒有人在定價違約風險，所有人都在追逐收益（reaching for yield）。歷史上 HY Spread 壓縮到極低後，往往是暴風雨前的寧靜。不代表明天就會崩盤，但代表市場已沒有安全邊際。'
+    },
+    {
+      question: 'MOVE 飆升到 150 但 VIX 只有 18，這種背離代表什麼？',
+      context: 'MOVE 是債市波動率指標，VIX 是股市波動率指標。正常情況下兩者同方向移動。',
+      options: ['債市無風險，股市即將暴漲', '債市壓力大但股市尚未反映，後續股市可能補跌', '兩個市場各自獨立，沒有關聯', '代表流動性非常充裕'],
+      correct: 1,
+      explanation: '<strong>MOVE > VIX 背離 = 股市尚未反映債市壓力。</strong>歷史上這種背離通常在 1-2 週後，VIX 會「追上來」→ 股市補跌。2023/3 SVB 事件就是這個模式：MOVE 先飆到 190，VIX 才從 20 慢慢升到 26。這是買 VIX 看漲期權的好時機。'
+    },
+    {
+      question: 'Core CPI MoM 公布為 0.5%（預期 0.3%），目前處於「通膨擔憂期」，股市最可能如何反應？',
+      context: '在通膨擔憂期，市場最怕 Fed 繼續加息或維持高利率更久。',
+      options: ['大漲（好數據 = 經濟好）', '大跌（通膨超預期 → 加息/維持高利率預期升）', '不反應', '先跌後漲'],
+      correct: 1,
+      explanation: '<strong>通膨擔憂期 + 通膨超預期 = 股市下跌。</strong>在這個 regime 下，高通膨 = Fed 更 hawkish = 利率維持更高更久 → 折現率升 → 成長股估值壓縮。這就是「好數據是壞消息」的典型案例。只有在「衰退恐懼期」，壞的就業數據才會被解讀為利好。'
+    },
+    {
+      question: 'NFP 大幅低於預期，目前市場處於「衰退恐懼期」，股市最可能如何反應？',
+      context: '衰退恐懼期時，市場最擔心經濟硬著陸。Fed 的降息預期已被市場充分定價。',
+      options: ['大漲（降息預期升）', '大跌（真的要衰退了）', '債券跌、股市漲', '美元走強'],
+      correct: 1,
+      explanation: '<strong>衰退恐懼期 + 壞就業數據 = Bad news is BAD news。</strong>此時市場已經不再因為降息預期而興奮，因為真正的衰退會讓企業獲利暴跌。降息 25-50bp 無法彌補 EPS 下滑 20%。這就是 regime 判斷的重要性——同樣的數據在不同階段有截然不同的市場反應。'
+    },
+    {
+      question: 'Fed 正在進行 QT，但同期 TGA 從 $700B 降到 $200B，RRP 從 $1.5T 降到 $0.5T。Net Liquidity 的方向？',
+      context: 'QT 速度為每月 $60B，已進行 3 個月（共 $180B）。',
+      options: ['Net Liquidity 下降（QT 效果主導）', 'Net Liquidity 上升（TGA + RRP drain 大於 QT）', 'Net Liquidity 不變', '無法判斷'],
+      correct: 1,
+      explanation: '<strong>Net Liquidity 上升。</strong>計算：QT 抽走 -$180B。但 TGA drain 釋放 +$500B，RRP drain 釋放 +$1,000B。淨效果 = -180 + 500 + 1000 = +$1,320B。這就是 2023 年的真實情況：QT 進行中但流動性反而大幅增加，S&P 全年漲 24%。'
+    },
+    {
+      question: 'Term Premium 從負值轉為正值，對以下哪類資產壓力最大？',
+      context: 'Term Premium 上升 = 市場要求更多補償來持有長債 → 長端殖利率上升。',
+      options: ['銀行股（KBE）', '高股息價值股', '長久期成長股（ARKK）', '短期國庫券'],
+      correct: 2,
+      explanation: '<strong>長久期成長股受壓最大。</strong>成長股（如 ARKK 持有的）估值高度依賴 DCF 模型中的折現率。Term Premium 上升 → 長端殖利率升 → 折現率升 → 未來現金流的現值大幅下降。銀行股反而可能受益（NIM 擴大），短期國庫券幾乎不受 Term Premium 影響。'
+    },
+    {
+      question: '以下哪個情境最可能觸發 Fed 緊急降息或重啟 QE？',
+      context: 'Fed 的雙重使命是「穩定物價」和「充分就業」，但金融穩定是隱含的第三使命。',
+      options: ['CPI 降到 2% 以下', 'ISM Manufacturing 跌到 48', 'HY Spread 飆到 800bp + Repo 利率飆升 + KRE 暴跌', '失業率升到 4.5%'],
+      correct: 2,
+      explanation: '<strong>信用危機 + 流動性枯竭 = Fed 被迫緊急行動。</strong>HY Spread 800bp = 信用市場凍結，Repo 利率飆升 = 隔夜融資斷裂，KRE 暴跌 = 銀行體系壓力。這三者同時出現代表系統性風險，Fed 會在幾天內行動（不等 FOMC 會議）。2020/3/23 和 2023/3/12 都是這種模式。'
+    },
+    {
+      question: 'ISM New Orders 從 52 急跌到 43，這對投資者意味著什麼？',
+      context: 'ISM New Orders 是經濟動能的最強領先指標，領先 GDP 約 3-6 個月。',
+      options: ['經濟已經在衰退中', '未來 3-6 個月 GDP 可能大幅放緩', '製造業暫時調整，不用擔心', '只影響製造業，服務業不受影響'],
+      correct: 1,
+      explanation: '<strong>ISM New Orders 急跌到 43 = 未來 3-6 個月 GDP 大幅放緩的強烈信號。</strong>New Orders 是「領先中的領先」，因為訂單先於生產、先於出貨、先於就業。43 的讀數在歷史上對應 GDP 接近 0% 或負增長。這是減少風險暴露的明確信號。'
+    },
+    {
+      question: '如果你看到以下組合：GDP 高位 + 通膨上升 + 就業充分 + Fed 開始升息，你處於哪個經濟周期階段？',
+      context: '經濟周期分為四個主要階段，每個階段有不同的最佳資產配置。',
+      options: ['擴張初期', '擴張後期', '衰退初期', '衰退後期'],
+      correct: 1,
+      explanation: '<strong>擴張後期的典型特徵。</strong>GDP 高位但動能開始減弱，通膨因經濟過熱而上升，就業市場極緊，Fed 被迫開始加息來抑制通膨。這個階段最佳資產是商品（通膨受益）> 股票（仍有獲利但估值壓縮）> 債券（加息環境最差）。'
+    },
+    {
+      question: 'DXY 的組成中，哪個貨幣權重最大？',
+      context: 'DXY 美元指數由 6 種主要貨幣組成，用來衡量美元對一籃子貨幣的相對強弱。',
+      options: ['日圓（JPY）57%', '歐元（EUR）57%', '英鎊（GBP）57%', '加元（CAD）57%'],
+      correct: 1,
+      explanation: '<strong>歐元佔 DXY 權重 57.6%。</strong>這意味著 DXY 基本上是美元對歐元的代理指標。如果 EUR/USD 大幅波動，DXY 幾乎一定跟著反向動。這就是為什麼 ECB 的政策決定對 DXY 影響這麼大。追蹤 DXY 時，必須關注歐洲經濟和 ECB 動向。'
+    },
+    {
+      question: '2019/9 Repo 市場危機的根本原因是什麼？',
+      context: 'Repo 市場是金融機構獲取短期融資的關鍵管道。隔夜利率正常應接近 Fed Funds Rate。',
+      options: ['通膨突然飆升', 'QT 進行太久導致準備金跌破臨界點', '中美貿易戰升級', '油價暴跌'],
+      correct: 1,
+      explanation: '<strong>QT 進行太久，準備金跌破「充裕」邊界。</strong>Fed 的 QT 持續縮減準備金，當準備金從「充裕」跌到「僅足夠」的臨界點時，隔夜融資市場突然凍結。Repo 利率飆到 10%（正常 2%）。這證明了 QT 的非線性：大部分時間無感，但接近臨界點時會突然爆發。Fed 被迫緊急注入流動性。'
+    },
+    {
+      question: '以下哪個組合最代表「滯脹」風險？',
+      context: '滯脹（Stagflation）= 經濟停滯 + 通膨高企。這是對投資者和央行最惡劣的環境。',
+      options: ['ISM > 55 + Core CPI 1.5% + 失業率 3.5%', 'ISM < 45 + Core CPI > 4% + JOLTS 空缺下降', 'ISM > 50 + Core CPI 2% + 失業率 4%', 'ISM < 50 + Core CPI 1% + 失業率 6%'],
+      correct: 1,
+      explanation: '<strong>ISM < 45（經濟收縮）+ Core CPI > 4%（通膨高企）+ JOLTS 下降（就業惡化）= 滯脹。</strong>這是最惡劣的宏觀環境：Fed 想降息救經濟但怕通膨更嚴重，想加息壓通膨但怕經濟崩潰。歷史上滯脹期間幾乎所有資產都表現很差，只有商品和 TIPS 能保值。'
+    },
+    {
+      question: '數據公布後，第一根 5 分鐘 K 線大漲 1%，15 分鐘後完全回吐。你應該怎麼做？',
+      context: '數據公布後的交易策略中，第一反應常常是「假動作」。',
+      options: ['追多（趨勢已確認）', '做空（反轉確認 = 更可靠的信號）', '觀望等待更多確認', '加大槓桿做多'],
+      correct: 1,
+      explanation: '<strong>15 分鐘後完全回吐第一反應 = 做反向是更可靠的信號。</strong>第一根 K 線往往是演算法交易的膝跳反應。如果 15 分鐘後完全回吐，代表「聰明錢」不認同第一反應的方向。這種反轉的勝率通常高於追隨第一反應。但仍需等待確認（如跌破支撐），不要盲目衝進去。'
+    },
+    {
+      question: '以下哪個情境代表「Fed 政策已經在起作用」的最早信號？',
+      context: 'Fed 加息後有 12-18 個月的滯後效應，投資者需要辨識政策傳導的早期信號。',
+      options: ['GDP 季減', '失業率上升 0.5%', '信用卡違約率開始攀升 + 房貸申請量暴跌', 'CPI 回到 2%'],
+      correct: 2,
+      explanation: '<strong>信用卡違約率 + 房貸申請量是最早的傳導信號。</strong>這兩個指標反映的是利率敏感型消費者的即時壓力。加息 → 信用卡利率升（浮動利率）→ 消費者開始違約。加息 → 房貸利率升 → 沒人買房。這些會在 GDP 下滑和失業率上升之前 6-12 個月出現。'
+    },
+    {
+      question: 'Fed Balance Sheet 每週四公布，本週從 $7.4T 增加到 $7.55T（+$150B），但沒有宣布 QE。最可能的原因是？',
+      context: 'Fed Balance Sheet 可以因為多種原因增加，不只是 QE。',
+      options: ['數據錯誤', '緊急放貸（如 BTFP/Discount Window）', 'TGA 自動轉入', '外國央行操作'],
+      correct: 1,
+      explanation: '<strong>非 QE 時期 Fed BS 突然增加 = 緊急放貸。</strong>2023/3 SVB 事件後，Fed BS 一週增加 $300B+，全部來自 BTFP 和 Discount Window 放貸。這代表銀行體系出現壓力，需要緊急流動性支持。這是重要的警告信號：Fed 被迫「悄悄」注入流動性 = 有人在出問題。'
+    },
+    {
+      question: 'CNH 突破 7.35 心理關口持續貶值，以下哪個資產最可能受到負面影響？',
+      context: '人民幣貶值會引發亞洲區域連動效應，外資因匯率風險調整部位。',
+      options: ['美國國債（TLT）', '台股/韓股（EWT/EWY）', '美國能源股（XLE）', '日本股市（EWJ）'],
+      correct: 1,
+      explanation: '<strong>台股/韓股直接受衝擊。</strong>CNH 貶值 → 1）亞洲貨幣跟貶壓力（TWD、KRW）→ 外資因匯率損失賣出；2）中國出口競爭力增強 → 台韓出口承壓；3）中國資本外流 → 區域風險情緒惡化。美國國債反而可能因避險需求受益，美國能源股主要看油價，日股則受日圓走勢影響。'
+    },
+    {
+      question: '以下哪個組合最能確認「Goldilocks」（金髮女孩經濟）環境？',
+      context: 'Goldilocks = 經濟不太熱也不太冷，是風險資產的最佳環境。',
+      options: ['GDP 4% + CPI 4% + 失業率 3%', 'GDP 2-3% + Core PCE 2-2.5% + 失業率 4% + ISM 51-54', 'GDP 0% + CPI 1% + 失業率 5%', 'GDP 5% + CPI 1% + 失業率 2%'],
+      correct: 1,
+      explanation: '<strong>Goldilocks = 溫和增長 + 通膨接近目標 + 就業穩定。</strong>GDP 2-3% 代表持續增長但不過熱，Core PCE 2-2.5% 代表通膨可控（Fed 不需要加息），失業率 4% 代表就業健康，ISM 51-54 代表擴張但不過熱。這種環境 Fed 會按兵不動，市場安心做多。所有風險資產受益。'
+    },
+    {
+      question: 'Forward Guidance：CME FedWatch 顯示下次 FOMC 有 92% 機率降息 25bp。如果 Fed 真的降息 25bp，股市最可能如何反應？',
+      context: '市場已經 price in 了高機率事件。真正移動市場的是「預期之外」的部分。',
+      options: ['大漲（降息 = 利多）', '小幅反應或不反應（已被充分定價）', '大跌（買預期賣事實）', '取決於 Fed 主席記者會的語調'],
+      correct: 3,
+      explanation: '<strong>最關鍵的是記者會的語調和前瞻指引。</strong>92% 已被定價的降息本身不會移動市場。真正的波動來自：1）Fed 主席是否暗示「更多降息」或「到此為止」；2）Dot Plot 是否上移或下移；3）對經濟前景的描述是否變化。FOMC 日的交易策略應聚焦在記者會（會後 30 分鐘），而非決議本身。'
+    },
+    {
+      question: '以下哪個是殖利率曲線「熊陡」（Bear Steepening）的正確定義和含義？',
+      context: '殖利率曲線的形態變化有多種名稱，每種含義不同。',
+      options: ['短端利率上升快於長端 → 曲線更平', '長端利率上升快於短端 → 曲線變陡 → 通常因為 Term Premium 上升或財政擔憂', '短端利率下降快於長端 → 曲線變陡', '所有天期同時下降'],
+      correct: 1,
+      explanation: '<strong>Bear Steepening = 長端上升更快 → 曲線變陡。</strong>「Bear」= 殖利率上升（債券價格下跌）。「Steepening」= 長短端利差擴大。原因通常是：1）Term Premium 飆升；2）財政赤字引發供給擔憂；3）通膨長期預期惡化。這對成長股和長久期資產的壓力最大，因為長端利率是 DCF 的折現率。2023 年 9-10 月就是經典 Bear Steepening。'
+    }
+  ];
+
+  let shuffledQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let total = 0;
+  let answered = false;
+
+  const scoreEl = document.getElementById('quiz-score');
+  const progressEl = document.getElementById('quiz-progress');
+  const questionText = document.getElementById('quiz-question-text');
+  const contextEl = document.getElementById('quiz-context');
+  const optionsEl = document.getElementById('quiz-options');
+  const resultEl = document.getElementById('quiz-result');
+  const resultIcon = document.getElementById('quiz-result-icon');
+  const resultAnswer = document.getElementById('quiz-result-answer');
+  const resultExplanation = document.getElementById('quiz-result-explanation');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  const finalEl = document.getElementById('quiz-final');
+  const finalText = document.getElementById('quiz-final-text');
+  const finalSub = document.getElementById('quiz-final-sub');
+  const restartBtn = document.getElementById('quiz-restart-btn');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    shuffledQuestions = shuffle(questions);
+    currentIndex = 0;
+    score = 0;
+    total = 0;
+    answered = false;
+    finalEl.style.display = 'none';
+    document.getElementById('quiz-question-area').style.display = 'block';
+    nextBtn.style.display = 'inline-block';
+    updateScore();
+    showQuestion();
+  }
+
+  function updateScore() {
+    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+  }
+
+  function showQuestion() {
+    if (currentIndex >= shuffledQuestions.length) {
+      showFinal();
+      return;
+    }
+    answered = false;
+    resultEl.style.display = 'none';
+    const q = shuffledQuestions[currentIndex];
+    progressEl.textContent = '第 ' + (currentIndex + 1) + ' / ' + shuffledQuestions.length + ' 題';
+    questionText.textContent = q.question;
+    contextEl.innerHTML = q.context;
+    optionsEl.innerHTML = '';
+    q.options.forEach(function(opt, idx) {
+      const btn = document.createElement('button');
+      btn.textContent = String.fromCharCode(65 + idx) + ') ' + opt;
+      btn.style.cssText = 'padding:12px 16px; border:1px solid var(--border); border-radius:8px; background:var(--bg2); font-size:13px; font-weight:500; cursor:pointer; text-align:left; transition:all .15s; font-family:inherit; color:var(--text);';
+      btn.onmouseover = function() { if (!answered) this.style.background = 'var(--bg3)'; };
+      btn.onmouseout = function() { if (!answered) this.style.background = 'var(--bg2)'; };
+      btn.onclick = function() { selectAnswer(idx, btn); };
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(idx, btn) {
+    if (answered) return;
+    answered = true;
+    total++;
+    const q = shuffledQuestions[currentIndex];
+    const buttons = optionsEl.querySelectorAll('button');
+
+    if (idx === q.correct) {
+      score++;
+      btn.style.background = 'var(--green-l)';
+      btn.style.borderColor = 'var(--green)';
+      btn.style.color = 'var(--green)';
+      resultIcon.textContent = '✅';
+      resultAnswer.style.color = 'var(--green)';
+      resultAnswer.textContent = '正確！';
+    } else {
+      btn.style.background = 'var(--red-l)';
+      btn.style.borderColor = 'var(--red)';
+      btn.style.color = 'var(--red)';
+      buttons[q.correct].style.background = 'var(--green-l)';
+      buttons[q.correct].style.borderColor = 'var(--green)';
+      buttons[q.correct].style.color = 'var(--green)';
+      resultIcon.textContent = '❌';
+      resultAnswer.style.color = 'var(--red)';
+      resultAnswer.textContent = '錯誤！正確答案：' + String.fromCharCode(65 + q.correct) + ') ' + q.options[q.correct];
+    }
+
+    buttons.forEach(function(b) { b.style.cursor = 'default'; });
+    resultExplanation.innerHTML = q.explanation;
+    resultEl.style.display = 'block';
+    updateScore();
+  }
+
+  function showFinal() {
+    document.getElementById('quiz-question-area').style.display = 'none';
+    resultEl.style.display = 'none';
+    nextBtn.style.display = 'none';
+    finalEl.style.display = 'block';
+    const pct = Math.round((score / total) * 100);
+    finalText.textContent = '最終得分：' + score + ' / ' + total + ' (' + pct + '%)';
+    if (pct >= 80) finalSub.textContent = '優秀！你對宏觀流動性的掌握很好！';
+    else if (pct >= 60) finalSub.textContent = '不錯！再多練習可以更好。建議回去看 Tab 1-6 的內容。';
+    else finalSub.textContent = '需要加強復習！建議從 Tab 1 開始重新學習。';
+  }
+
+  nextBtn.addEventListener('click', function() {
+    currentIndex++;
+    showQuestion();
+  });
+
+  restartBtn.addEventListener('click', startQuiz);
+
+  startQuiz();
+})();
+</script>
+</div>
+
+<!-- ==================== TAB SWITCH SCRIPT ==================== -->
+<script>
+function switchTab(idx) {
+  const tabs = document.querySelectorAll('.tab-content');
+  const btns = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab' + idx).classList.add('active');
+  btns[idx].classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>外匯分析完全教學 — 貨幣機制 / DXY / Carry Trade / 亞洲貨幣 / 宏觀傳導</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg2: #fff;
+  --bg3: #f1f5f9;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text2: #334155;
+  --text3: #64748b;
+  --blue: #2563eb;
+  --blue-l: #dbeafe;
+  --green: #16a34a;
+  --green-l: #dcfce7;
+  --red: #dc2626;
+  --red-l: #fee2e2;
+  --yellow: #d97706;
+  --yellow-l: #fef3c7;
+  --purple: #7c3aed;
+  --purple-l: #ede9fe;
+  --orange: #ea580c;
+  --orange-l: #fff7ed;
+  --r: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.back-link:hover { text-decoration: underline; }
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text3);
+  margin-bottom: 24px;
+}
+
+/* TAB NAV */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 6px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab-btn:hover { background: var(--bg3); }
+.tab-btn.active {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* TAB CONTENT */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.card:hover { box-shadow: var(--shadow); }
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.card h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text2);
+  margin-top: 16px;
+}
+
+.card p, .card li {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+
+.card ul, .card ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.card li { margin-bottom: 6px; }
+
+.highlight-box {
+  background: var(--blue-l);
+  border-left: 3px solid var(--blue);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.highlight-box strong { color: var(--blue); }
+
+.warning-box {
+  background: var(--red-l);
+  border-left: 3px solid var(--red);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.warning-box strong { color: var(--red); }
+
+.green-box {
+  background: var(--green-l);
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.green-box strong { color: var(--green); }
+
+.purple-box {
+  background: var(--purple-l);
+  border-left: 3px solid var(--purple);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.purple-box strong { color: var(--purple); }
+
+.orange-box {
+  background: var(--orange-l);
+  border-left: 3px solid var(--orange);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.orange-box strong { color: var(--orange); }
+
+.svg-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.formula-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  margin: 12px 0;
+  color: var(--text);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.data-table th, .data-table td {
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  text-align: left;
+}
+.data-table th {
+  background: var(--bg3);
+  font-weight: 600;
+  color: var(--text);
+}
+.data-table td {
+  color: var(--text2);
+}
+.data-table tr:hover td {
+  background: var(--bg3);
+}
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .tab-btn { padding: 8px 10px; font-size: 11px; }
+  .card { padding: 16px; }
+  h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>外匯分析完全教學</h1>
+<p class="subtitle">貨幣機制 / DXY / Carry Trade / 亞洲貨幣 / 宏觀傳導 — 從零到實戰的完整框架</p>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(0)">外匯基礎機制</button>
+  <button class="tab-btn" onclick="switchTab(1)">DXY 深度分析</button>
+  <button class="tab-btn" onclick="switchTab(2)">USD/JPY 與日圓</button>
+  <button class="tab-btn" onclick="switchTab(3)">台幣/亞洲貨幣</button>
+  <button class="tab-btn" onclick="switchTab(4)">EUR, GBP, 商品貨幣</button>
+  <button class="tab-btn" onclick="switchTab(5)">外匯交易策略</button>
+  <button class="tab-btn" onclick="switchTab(6)">宏觀傳導總結</button>
+  <button class="tab-btn" onclick="switchTab(7)">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
+<h3 style="color:#ea580c;">⚠️ 驅動力動態變化</h3>
+<p>外匯的五大驅動力（利差、經濟增長、央行政策、資金流、風險情緒）的<strong>權重並非固定</strong> — 在不同市場環境中主導因素會輪換。例如：2022 利差主導一切 → 2023 風險情緒主導 → 2024 央行政策分歧主導。分析時需先判斷「當前 regime 下哪個因素主導」。</p>
+</div>
+
+<!-- ==================== TAB 0: 外匯基礎機制 ==================== -->
+<div class="tab-content active" id="tab0">
+<h2 class="section-title">外匯基礎機制 (FX Fundamentals)</h2>
+
+<div class="card">
+<h3>1. 匯率的本質</h3>
+<p>匯率是兩國貨幣的相對價格，反映兩國之間的：</p>
+<ul>
+<li><strong>利差</strong> — 誰的利率高，資金就流向誰</li>
+<li><strong>經濟強度差異</strong> — 增長快的國家吸引投資</li>
+<li><strong>資金流向</strong> — 貿易、投資組合、央行儲備的跨境流動</li>
+</ul>
+<div class="highlight-box">
+<strong>核心概念：</strong>匯率不是「一國貨幣的絕對價值」，而是兩國經濟基本面的「相對比賽」。美元可以在美國經濟轉差時走強，只要其他國家更差（例如 2022 歐洲能源危機）。
+</div>
+</div>
+
+<div class="card">
+<h3>2. 報價方式</h3>
+<h4>直接報價（以美元為基礎貨幣）</h4>
+<ul>
+<li><code>USD/JPY = 150</code> → 1 美元可以買 150 日圓</li>
+<li><code>USD/TWD = 31.5</code> → 1 美元可以買 31.5 台幣</li>
+<li>數字上升 = 美元走強 / 對方貨幣走弱</li>
+</ul>
+<h4>間接報價（以對方貨幣為基礎）</h4>
+<ul>
+<li><code>EUR/USD = 1.08</code> → 1 歐元可以買 1.08 美元</li>
+<li><code>GBP/USD = 1.26</code> → 1 英鎊可以買 1.26 美元</li>
+<li>數字上升 = 美元走弱 / 對方貨幣走強</li>
+</ul>
+<div class="warning-box">
+<strong>常見混淆：</strong>EUR/USD 上升 = 美元弱（不是美元強）！因為這代表 1 歐元能買到更多美元。反之 USD/JPY 上升 = 美元強。報價方向相反，新手最容易搞混。
+</div>
+</div>
+
+<div class="card">
+<h3>3. 驅動外匯的五大力量（按影響力排序）</h3>
+
+<div class="svg-container">
+<svg viewBox="0 0 600 320" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.9"/><stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.6"/></linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.8"/><stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.5"/></linearGradient>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#16a34a;stop-opacity:0.8"/><stop offset="100%" style="stop-color:#16a34a;stop-opacity:0.5"/></linearGradient>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ea580c;stop-opacity:0.7"/><stop offset="100%" style="stop-color:#ea580c;stop-opacity:0.4"/></linearGradient>
+    <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#dc2626;stop-opacity:0.7"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:0.4"/></linearGradient>
+  </defs>
+  <text x="300" y="25" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">外匯五大驅動力（影響力由大到小）</text>
+  <rect x="40" y="40" width="500" height="44" rx="8" fill="url(#g1)"/><text x="50" y="67" font-size="13" font-weight="600" fill="#fff">1. 利差 (Interest Rate Differential)</text><text x="430" y="67" font-size="11" fill="#fff">影響力 ★★★★★</text>
+  <rect x="40" y="94" width="420" height="44" rx="8" fill="url(#g2)"/><text x="50" y="121" font-size="13" font-weight="600" fill="#fff">2. 經濟增長差異 (GDP/PMI)</text><text x="360" y="121" font-size="11" fill="#fff">★★★★☆</text>
+  <rect x="40" y="148" width="350" height="44" rx="8" fill="url(#g3)"/><text x="50" y="175" font-size="13" font-weight="600" fill="#fff">3. 央行政策預期 (QE/QT/YCC)</text><text x="290" y="175" font-size="11" fill="#fff">★★★★☆</text>
+  <rect x="40" y="202" width="280" height="44" rx="8" fill="url(#g4)"/><text x="50" y="229" font-size="13" font-weight="600" fill="#fff">4. 資金流 (Trade/Portfolio)</text><text x="230" y="229" font-size="11" fill="#fff">★★★☆☆</text>
+  <rect x="40" y="256" width="210" height="44" rx="8" fill="url(#g5)"/><text x="50" y="283" font-size="13" font-weight="600" fill="#fff">5. 風險情緒 (Risk On/Off)</text><text x="170" y="283" font-size="11" fill="#fff">★★☆☆☆</text>
+</svg>
+</div>
+
+<h4>1) 利差 — 最主要驅動力</h4>
+<p>高利率國家的貨幣吸引全球資金流入（追求更高收益）。Fed vs ECB/BOJ 的利率差決定 DXY 大方向。</p>
+<div class="formula-box">利差 = 本國利率 - 外國利率 → 利差擴大 = 本國貨幣升值</div>
+
+<h4>2) 經濟增長差異</h4>
+<p>GDP、PMI、就業數據比對方好 → 貨幣走強。因為經濟強意味著央行可能加息，同時吸引外商直接投資。</p>
+
+<h4>3) 央行政策預期</h4>
+<p>不只是利率本身，還有 QE（印鈔 → 貨幣貶值）、QT（縮表 → 貨幣升值）、YCC（控制殖利率曲線）。市場交易的是「預期」而非「現況」。</p>
+
+<h4>4) 資金流</h4>
+<ul>
+<li>貿易順差國（中國/德國/日本）長期有升值壓力</li>
+<li>投資組合流動：外資買台股需要先買台幣</li>
+<li>外匯儲備管理：央行分散持有不同貨幣</li>
+</ul>
+
+<h4>5) 風險情緒</h4>
+<p>Risk-on（風險偏好）→ 賣出避險貨幣、買入風險貨幣。Risk-off（恐慌）→ 買入避險貨幣。</p>
+</div>
+
+<div class="card">
+<h3>4. 貨幣分類</h3>
+<table class="data-table">
+<tr><th>分類</th><th>貨幣</th><th>特徵</th><th>何時走強</th></tr>
+<tr><td><strong>避險貨幣</strong></td><td>USD, JPY, CHF</td><td>危機時被買入</td><td>全球恐慌/衰退/地緣衝突</td></tr>
+<tr><td><strong>風險貨幣</strong></td><td>AUD, NZD, CAD, EM</td><td>與風險偏好正相關</td><td>全球擴張/寬鬆/商品漲</td></tr>
+<tr><td><strong>融資貨幣</strong></td><td>JPY, CHF</td><td>被借出做 Carry Trade</td><td>Carry Unwind 時急速升值</td></tr>
+<tr><td><strong>商品貨幣</strong></td><td>AUD(鐵礦), CAD(石油), NOK(石油)</td><td>與商品價格正相關</td><td>大宗商品牛市/中國需求強</td></tr>
+</table>
+<div class="purple-box">
+<strong>日圓的矛盾身分：</strong>JPY 既是融資貨幣（低利率被借出）又是避險貨幣（危機時升值）。平時 Carry Trade 讓 JPY 走弱；但一旦恐慌，Carry 平倉 + 避險需求讓 JPY 急升。這種雙重身分使得 JPY 的波動極端——要麼緩慢走弱，要麼急速走強。
+</div>
+</div>
+
+<div class="card">
+<h3>5. 外匯市場的基本運作</h3>
+<h4>市場規模與特性</h4>
+<ul>
+<li><strong>日均交易量</strong>：$7.5 兆（2022 BIS 數據）— 是全球股市的 30 倍以上</li>
+<li><strong>24 小時交易</strong>：週一紐西蘭開盤到週五紐約收盤，不間斷</li>
+<li><strong>OTC 市場</strong>：沒有中央交易所，銀行間直接交易</li>
+<li><strong>主要參與者</strong>：央行、商業銀行、對沖基金、跨國企業、零售交易者</li>
+</ul>
+<h4>影響匯率的短期 vs 長期因素</h4>
+<table class="data-table">
+<tr><th>時間框架</th><th>主要驅動力</th><th>例子</th></tr>
+<tr><td>日內（Intraday）</td><td>經濟數據、央行講話、技術面</td><td>NFP 公布後 DXY 跳升</td></tr>
+<tr><td>週/月</td><td>利率預期變化、資金流</td><td>Fed 鷹派轉向 → DXY 上升趨勢</td></tr>
+<tr><td>季/年</td><td>經濟基本面差異、政策週期</td><td>加息週期 → 持續強美元</td></tr>
+<tr><td>多年</td><td>結構性因素（雙赤字、生產力）</td><td>美國財政赤字擴大 → 長期弱美元</td></tr>
+</table>
+<div class="highlight-box">
+<strong>時間框架一致性原則：</strong>如果你做的是中長期投資（持有數月），應該關注利差和政策週期，而非日內數據波動。如果做短線交易，則數據發布和技術面更重要。不同時間框架看不同因素。
+</div>
+</div>
+
+<div class="card">
+<h3>6. 實質有效匯率（REER）vs 名目匯率</h3>
+<p>名目匯率（我們日常看到的 USD/JPY）不考慮通膨差異。實質有效匯率（REER）才是衡量「真正購買力」的指標：</p>
+<ul>
+<li><strong>REER = 名目匯率 × (本國物價/外國物價)</strong></li>
+<li>如果一國通膨遠高於另一國，即使名目匯率不變，REER 也在升值（出口競爭力下降）</li>
+<li>日圓 2024 年 REER 處於 50 年低點 — 意味著日本商品在全球極便宜</li>
+</ul>
+<div class="green-box">
+<strong>投資含義：</strong>REER 極端低 = 長期均值回歸壓力（日圓長期應該升值）。REER 極端高 = 貨幣被高估（長期有貶值壓力）。雖然 REER 的回歸可能需要數年，但它提供了方向性指引。
+</div>
+</div>
+
+<div class="card">
+<h3>7. 外匯市場的「不可能三角」</h3>
+<p>一個國家不可能同時實現以下三個目標（只能選兩個）：</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 480 260" width="100%" style="max-width:460px" xmlns="http://www.w3.org/2000/svg">
+  <text x="240" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Mundell-Fleming 不可能三角</text>
+  <!-- Triangle -->
+  <polygon points="240,50 80,220 400,220" fill="none" stroke="#2563eb" stroke-width="2"/>
+  <!-- Vertices -->
+  <circle cx="240" cy="50" r="25" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="240" y="47" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">固定匯率</text><text x="240" y="59" text-anchor="middle" font-size="8" fill="#2563eb">Fixed FX</text>
+  <circle cx="80" cy="220" r="25" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="80" y="217" text-anchor="middle" font-size="9" font-weight="600" fill="#16a34a">獨立貨幣</text><text x="80" y="229" text-anchor="middle" font-size="8" fill="#16a34a">政策</text>
+  <circle cx="400" cy="220" r="25" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/><text x="400" y="217" text-anchor="middle" font-size="9" font-weight="600" fill="#7c3aed">資本自由</text><text x="400" y="229" text-anchor="middle" font-size="8" fill="#7c3aed">流動</text>
+  <!-- Examples -->
+  <text x="155" y="125" text-anchor="middle" font-size="9" fill="#334155">中國模式：</text>
+  <text x="155" y="138" text-anchor="middle" font-size="9" fill="#334155">管制資本+控制匯率</text>
+  <text x="325" y="125" text-anchor="middle" font-size="9" fill="#334155">香港模式：</text>
+  <text x="325" y="138" text-anchor="middle" font-size="9" fill="#334155">聯繫匯率+資本開放</text>
+  <text x="240" y="235" text-anchor="middle" font-size="9" fill="#334155">美國/日本模式：浮動匯率+獨立政策+資本自由</text>
+</svg>
+</div>
+
+<h4>對投資者的含義</h4>
+<table class="data-table">
+<tr><th>國家模式</th><th>選擇</th><th>犧牲</th><th>風險</th></tr>
+<tr><td>中國</td><td>獨立政策 + 半固定匯率</td><td>資本管制</td><td>管制鬆動時可能暴貶</td></tr>
+<tr><td>香港</td><td>固定匯率 + 資本自由</td><td>獨立貨幣政策</td><td>被迫跟隨 Fed（不適合本地經濟）</td></tr>
+<tr><td>台灣</td><td>獨立政策 + 資本半自由</td><td>匯率有管控</td><td>被美國施壓開放匯率</td></tr>
+<tr><td>美國</td><td>獨立政策 + 資本自由</td><td>匯率浮動</td><td>匯率波動大（DXY 可以年動 20%）</td></tr>
+</table>
+<div class="highlight-box">
+<strong>為什麼這很重要：</strong>不可能三角解釋了為什麼某些貨幣（如 CNH）在壓力下會突然大幅波動——當基本面壓力（如資本外流）超過管制能力時，累積的壓力一次釋放。這也是為什麼「穩定」的貨幣反而可能有最大的尾部風險。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 1: DXY 深度分析 ==================== -->
+<div class="tab-content" id="tab1">
+<h2 class="section-title">DXY 深度分析 (US Dollar Index)</h2>
+
+<div class="card">
+<h3>1. DXY 組成</h3>
+<p>DXY 美元指數由 6 種貨幣按固定權重組成（1973 年設立，從未調整）：</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 520 340" width="100%" style="max-width:500px" xmlns="http://www.w3.org/2000/svg">
+  <text x="200" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">DXY 權重組成</text>
+  <!-- Pie chart: center(200,180) r=120. Computed with trigonometry. -->
+  <!-- EUR 57.6% -->
+  <path d="M200,180 L200.0,60.0 A120,120 0 1,1 144.9,286.6 Z" fill="#2563eb" opacity="0.85"/>
+  <text x="276" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">EUR 57.6%</text>
+  <!-- JPY 13.6% -->
+  <path d="M200,180 L144.9,286.6 A120,120 0 0,1 83.4,208.4 Z" fill="#7c3aed" opacity="0.75"/>
+  <text x="139" y="248" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">JPY 13.6%</text>
+  <!-- GBP 11.9% -->
+  <path d="M200,180 L83.4,208.4 A120,120 0 0,1 95.2,121.5 Z" fill="#16a34a" opacity="0.75"/>
+  <text x="123" y="169" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">GBP 11.9%</text>
+  <!-- CAD 9.1% -->
+  <path d="M200,180 L95.2,121.5 A120,120 0 0,1 143.5,74.1 Z" fill="#ea580c" opacity="0.75"/>
+  <text x="140" y="107" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">CAD 9.1%</text>
+  <!-- SEK 4.2% -->
+  <path d="M200,180 L143.5,74.1 A120,120 0 0,1 173.1,63.1 Z" fill="#d97706" opacity="0.7"/>
+  <!-- CHF 3.6% -->
+  <path d="M200,180 L173.1,63.1 A120,120 0 0,1 200.0,60.0 Z" fill="#dc2626" opacity="0.65"/>
+  <!-- Legend -->
+  <rect x="370" y="70" width="14" height="14" rx="3" fill="#2563eb" opacity="0.85"/><text x="390" y="82" font-size="11" fill="#334155">EUR 57.6%</text>
+  <rect x="370" y="94" width="14" height="14" rx="3" fill="#7c3aed" opacity="0.75"/><text x="390" y="106" font-size="11" fill="#334155">JPY 13.6%</text>
+  <rect x="370" y="118" width="14" height="14" rx="3" fill="#16a34a" opacity="0.75"/><text x="390" y="130" font-size="11" fill="#334155">GBP 11.9%</text>
+  <rect x="370" y="142" width="14" height="14" rx="3" fill="#ea580c" opacity="0.75"/><text x="390" y="154" font-size="11" fill="#334155">CAD 9.1%</text>
+  <rect x="370" y="166" width="14" height="14" rx="3" fill="#d97706" opacity="0.7"/><text x="390" y="178" font-size="11" fill="#334155">SEK 4.2%</text>
+  <rect x="370" y="190" width="14" height="14" rx="3" fill="#dc2626" opacity="0.65"/><text x="390" y="202" font-size="11" fill="#334155">CHF 3.6%</text>
+  <text x="260" y="320" text-anchor="middle" font-size="11" fill="#64748b">EUR 佔比過半 → DXY 本質上是「反向 EUR/USD」的代理指標</text>
+</svg>
+</div>
+
+<div class="warning-box">
+<strong>關鍵認知：</strong>因為 EUR 佔 57.6%，DXY 幾乎等同「反向 EUR/USD」。DXY 不含人民幣、不含台幣、不含韓元。所以 DXY 上升不一定代表美元對亞洲貨幣走強。分析亞洲市場時，要同時看 DXY + USD/CNH + USD/TWD。
+</div>
+</div>
+
+<div class="card">
+<h3>2. DXY 作為全球流動性指標</h3>
+<ul>
+<li><strong>DXY 上升</strong> = 全球美元流動性收縮（借美元的成本上升，美元回流美國）</li>
+<li><strong>DXY 下降</strong> = 全球美元流動性擴張（美元外流到全球市場）</li>
+</ul>
+<p>全球有超過 $12 兆的美元計價債務（非美國企業/政府借的美元債）。DXY 上升 → 這些債務的償還成本增加 → 新興市場壓力 → 被迫賣出資產。</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 580 200" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg">
+  <text x="290" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">DXY 與各資產的反向相關</text>
+  <!-- DXY box -->
+  <rect x="230" y="40" width="120" height="40" rx="8" fill="#2563eb" opacity="0.9"/><text x="290" y="65" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">DXY 上升</text>
+  <!-- Arrows down -->
+  <line x1="250" y1="80" x2="100" y2="120" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="275" y1="80" x2="220" y2="120" stroke="#dc2626" stroke-width="2"/>
+  <line x1="305" y1="80" x2="360" y2="120" stroke="#dc2626" stroke-width="2"/>
+  <line x1="330" y1="80" x2="480" y2="120" stroke="#dc2626" stroke-width="2"/>
+  <!-- Asset boxes -->
+  <rect x="50" y="120" width="100" height="35" rx="6" fill="#fee2e2"/><text x="100" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">BTC/Crypto</text>
+  <rect x="170" y="120" width="100" height="35" rx="6" fill="#fee2e2"/><text x="220" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Gold/Silver</text>
+  <rect x="310" y="120" width="100" height="35" rx="6" fill="#fee2e2"/><text x="360" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">EM Stocks</text>
+  <rect x="430" y="120" width="100" height="35" rx="6" fill="#fee2e2"/><text x="480" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Commodities</text>
+  <text x="290" y="185" text-anchor="middle" font-size="11" fill="#64748b">DXY 走弱 → 以上全部受益（反向操作）</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>3. DXY 的週期性</h3>
+<h4>Dollar Smile Theory（美元微笑理論）</h4>
+<p>由 Morgan Stanley 的 Stephen Jen 提出，解釋美元在不同經濟環境下的表現：</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 560 260" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+  <text x="280" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Dollar Smile Theory</text>
+  <!-- Smile curve -->
+  <path d="M80,100 Q280,220 480,100" fill="none" stroke="#2563eb" stroke-width="3"/>
+  <!-- Left peak -->
+  <circle cx="80" cy="100" r="6" fill="#dc2626"/>
+  <text x="80" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">DXY 強</text>
+  <text x="80" y="130" text-anchor="middle" font-size="10" fill="#334155">全球衰退</text>
+  <text x="80" y="145" text-anchor="middle" font-size="10" fill="#334155">避險買美元</text>
+  <!-- Bottom -->
+  <circle cx="280" cy="165" r="6" fill="#16a34a"/>
+  <text x="280" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">DXY 弱</text>
+  <text x="280" y="215" text-anchor="middle" font-size="10" fill="#334155">美國經濟普通</text>
+  <text x="280" y="230" text-anchor="middle" font-size="10" fill="#334155">全球還行 → 資金外流</text>
+  <!-- Right peak -->
+  <circle cx="480" cy="100" r="6" fill="#dc2626"/>
+  <text x="480" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">DXY 強</text>
+  <text x="480" y="130" text-anchor="middle" font-size="10" fill="#334155">美國獨強</text>
+  <text x="480" y="145" text-anchor="middle" font-size="10" fill="#334155">資金回流美國</text>
+  <!-- Labels -->
+  <text x="80" y="250" text-anchor="middle" font-size="10" fill="#64748b">左邊微笑</text>
+  <text x="280" y="250" text-anchor="middle" font-size="10" fill="#64748b">底部（最佳 EM 環境）</text>
+  <text x="480" y="250" text-anchor="middle" font-size="10" fill="#64748b">右邊微笑</text>
+</svg>
+</div>
+
+<h4>長週期（7-10 年）</h4>
+<ul>
+<li>DXY 有明確的大週期：上升趨勢持續 5-7 年，下降趨勢類似</li>
+<li>1980-1985 上升 → 1985-1995 下降 → 1995-2002 上升 → 2002-2011 下降 → 2011-2022 上升</li>
+<li>2022 後可能進入長期下降週期（如果 Fed 降息 + 財政雙赤字持續）</li>
+</ul>
+
+<h4>判斷美元微笑位置的方法</h4>
+<table class="data-table">
+<tr><th>位置</th><th>美國經濟</th><th>全球經濟</th><th>市場表現</th><th>確認指標</th></tr>
+<tr><td>左邊微笑（避險強美元）</td><td>衰退中</td><td>更糟/危機</td><td>VIX>30, 信用利差擴大</td><td>TED Spread↑, 美債猛漲</td></tr>
+<tr><td>底部（弱美元）</td><td>普通增長</td><td>全球復甦</td><td>Risk-on, EM 領漲</td><td>銅↑, AUD↑, EM 資金流入</td></tr>
+<tr><td>右邊微笑（增長強美元）</td><td>獨強</td><td>落後/分化</td><td>美股領漲, EM 落後</td><td>US PMI>55, EU PMI<50</td></tr>
+</table>
+<div class="highlight-box">
+<strong>當前判斷（2025-2026）：</strong>如果全球經濟同步復甦 + Fed 降息，DXY 可能向底部移動（弱美元）= 最佳 EM 環境。但如果美國 AI 主導的增長再次超越其他國家，可能回到右邊微笑（美國獨強）。密切追蹤 US vs EU PMI 差異和 Fed vs ECB 利率路徑的分歧。
+</div>
+</div>
+
+<div class="card">
+<h3>4. 技術分析 DXY — 關鍵水位</h3>
+<table class="data-table">
+<tr><th>水位</th><th>意義</th><th>突破後影響</th></tr>
+<tr><td><code>100</code></td><td>心理關口</td><td>跌破 = 弱美元確認 → 商品/EM/加密牛市啟動</td></tr>
+<tr><td><code>103-104</code></td><td>前頂區域</td><td>突破 = 強美元確認 → 全球 risk-off</td></tr>
+<tr><td><code>95-96</code></td><td>前底支撐</td><td>跌破 = 美元崩盤模式 → 黃金/BTC 暴漲</td></tr>
+<tr><td><code>107-108</code></td><td>2022 高點區</td><td>突破 = 極端美元強 → 全球流動性危機</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>5. DXY 對各資產傳導路徑</h3>
+<table class="data-table">
+<tr><th>DXY 方向</th><th>黃金</th><th>白銀</th><th>BTC</th><th>美股</th><th>EM 股</th><th>商品</th></tr>
+<tr><td><strong>上升（走強）</strong></td><td style="color:var(--red)">下跌</td><td style="color:var(--red)">大跌</td><td style="color:var(--red)">大跌</td><td style="color:var(--orange)">下跌/持平</td><td style="color:var(--red)">大跌</td><td style="color:var(--red)">下跌</td></tr>
+<tr><td><strong>下降（走弱）</strong></td><td style="color:var(--green)">上漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">上漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">上漲</td></tr>
+</table>
+<div class="green-box">
+<strong>交易含義：</strong>如果你主要做多 BTC 或 EM 股，DXY 趨勢判斷比個股分析更重要。DXY 下降趨勢中做多 → 順風；DXY 上升趨勢中做多 → 逆風。Beta 勝過 Alpha。
+</div>
+</div>
+
+<div class="card">
+<h3>6. DXY 歷史案例學習</h3>
+<h4>2022 年：DXY 從 95 漲到 114（+20%）</h4>
+<ul>
+<li><strong>驅動力</strong>：Fed 激進加息（0% → 4.5%）+ 歐洲能源危機 + 全球衰退恐慌</li>
+<li><strong>結果</strong>：BTC -65%, 黃金 -20%, 新興市場 -30%, EUR/USD 跌破平價</li>
+<li><strong>教訓</strong>：DXY 上升 20% 是極端事件，對所有非美元資產構成系統性壓力</li>
+</ul>
+<h4>2020 年 3 月 → 2021 年：DXY 從 103 跌到 89（-14%）</h4>
+<ul>
+<li><strong>驅動力</strong>：Fed 零利率 + 無限 QE + 全球復甦預期</li>
+<li><strong>結果</strong>：BTC +900%, 黃金 +25%, EM +80%, 商品超級週期</li>
+<li><strong>教訓</strong>：DXY 下降趨勢 = 做多一切風險資產都能賺錢的時期</li>
+</ul>
+<div class="orange-box">
+<strong>核心規律：</strong>DXY 年度變化超過 +10% = 全球性壓力；年度變化超過 -10% = 全球性牛市。判斷 DXY 大方向是宏觀投資的第一步，其餘資產選擇是第二步。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: USD/JPY 與日圓 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">USD/JPY 與日圓 (JPY Analysis)</h2>
+
+<div class="card">
+<h3>1. 日圓的特殊地位</h3>
+<p>日圓在全球金融體系中扮演獨一無二的角色：</p>
+<ul>
+<li><strong>全球最大的融資貨幣</strong> — 超過 30 年的低利率/零利率/負利率，全球投資者借入日圓投資高收益資產</li>
+<li><strong>避險貨幣</strong> — 日本是全球最大淨債權國（海外資產遠大於負債），危機時資金回流日本</li>
+<li><strong>矛盾的雙重身分</strong> — Carry Trade 讓日圓持續走弱；避險需求讓日圓在恐慌時急升</li>
+</ul>
+<div class="orange-box">
+<strong>實戰觀察：</strong>USD/JPY 的行為模式是「緩慢上升（carry 建倉），急速下跌（carry 平倉）」。就像扶手電梯慢慢上去，電梯急速掉下來。這是因為 Carry 建倉是漸進的，但平倉是恐慌性的連鎖反應。
+</div>
+</div>
+
+<div class="card">
+<h3>2. BOJ 政策（2024-2026 大轉折）</h3>
+<h4>歷史背景（30 年極端寬鬆）</h4>
+<ul>
+<li>1999 年：零利率政策（ZIRP）</li>
+<li>2001 年：量化寬鬆（QE）— 全球首個</li>
+<li>2013 年：安倍經濟學 → 大規模 QQE</li>
+<li>2016 年：負利率 + 殖利率曲線控制（YCC）</li>
+</ul>
+<h4>2024 歷史性轉折</h4>
+<ul>
+<li>2024/3：結束負利率，升息到 0-0.1%（歷史性）</li>
+<li>2024/7：再升息到 0.25%，調整 YCC</li>
+<li>2024/8/5：引發全球 Carry Trade 平倉風暴</li>
+<li>2025-2026：持續正常化，利率可能到 0.5-1.0%</li>
+</ul>
+<div class="warning-box">
+<strong>BOJ 升息的全球影響：</strong>日本利率從 -0.1% 升到 +0.5%，看似微小，但因為全球 Carry Trade 規模估計 $2-4 兆美元，利差收窄意味著 Carry 收益下降 → 部分頭寸被平倉 → 日圓升值 → 更多平倉 → 全球波動放大。
+</div>
+</div>
+
+<div class="card">
+<h3>3. Carry Trade 深度解析</h3>
+
+<div class="svg-container">
+<svg viewBox="0 0 600 300" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+  <text x="300" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Carry Trade 機制 — 建倉 vs 平倉</text>
+  <!-- Build phase -->
+  <rect x="20" y="45" width="270" height="110" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="155" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">建倉 (Build) — 順風期</text>
+  <text x="35" y="88" font-size="11" fill="#334155">1. 借 JPY at 0.5%</text>
+  <text x="35" y="106" font-size="11" fill="#334155">2. 換成 USD（賣 JPY/買 USD）</text>
+  <text x="35" y="124" font-size="11" fill="#334155">3. 買 USD 資產 at 5%</text>
+  <text x="35" y="142" font-size="11" fill="#334155">4. 賺利差 4.5% + JPY 貶值收益</text>
+  <!-- Arrow -->
+  <text x="300" y="100" text-anchor="middle" font-size="20" fill="#64748b">→</text>
+  <!-- Unwind phase -->
+  <rect x="310" y="45" width="270" height="110" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="445" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">平倉 (Unwind) — 危機期</text>
+  <text x="325" y="88" font-size="11" fill="#334155">1. JPY 升值 → Carry 虧損</text>
+  <text x="325" y="106" font-size="11" fill="#334155">2. 被迫平倉：賣 USD 資產/買 JPY</text>
+  <text x="325" y="124" font-size="11" fill="#334155">3. 大量買 JPY → JPY 更升值</text>
+  <text x="325" y="142" font-size="11" fill="#334155">4. 連鎖反應 → 全球股市崩跌</text>
+  <!-- Feedback loop -->
+  <rect x="130" y="180" width="340" height="80" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="300" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">死亡螺旋 (Death Spiral)</text>
+  <text x="145" y="222" font-size="11" fill="#334155">JPY 升值 → 觸發止損 → 更多平倉 → JPY 更升</text>
+  <text x="145" y="242" font-size="11" fill="#334155">→ 賣出全球資產 → VIX 飆升 → 更多風險平倉</text>
+</svg>
+</div>
+
+<h4>2024/8/5 案例復盤</h4>
+<ol>
+<li>BOJ 7/31 意外升息 → USD/JPY 從 153 開始跌</li>
+<li>8/1-2：USD/JPY 跌到 148（-3%），Carry 開始虧損</li>
+<li>8/5（黑色星期一）：USD/JPY 跌到 142 → 日經 -12%（史上最大單日跌幅）</li>
+<li>全球連鎖：S&P -3%, Nasdaq -3.4%, VIX 從 16 飆到 65</li>
+<li>8/6-7：BOJ 鴿派安撫 → USD/JPY 反彈 → 市場穩定</li>
+</ol>
+<div class="highlight-box">
+<strong>教訓：</strong>Carry Trade 平倉不需要經濟衰退就能引發市場崩盤。只需要「利差收窄的預期」就夠了。這使得 BOJ 每次議息都成為全球風險事件。
+</div>
+
+<h4>Carry Trade 規模估算（2024-2025）</h4>
+<table class="data-table">
+<tr><th>資金來源</th><th>估計規模</th><th>主要去向</th><th>平倉觸發點</th></tr>
+<tr><td>日本散戶（Mrs. Watanabe）</td><td>$500-800B</td><td>AUD/NZD 高息存款</td><td>USD/JPY < 145</td></tr>
+<tr><td>全球對沖基金</td><td>$1-2T</td><td>美股/新興市場/商品</td><td>VIX > 25 + JPY 急升</td></tr>
+<tr><td>日本壽險/年金</td><td>$3T+ 海外資產</td><td>美國國債/歐洲債券</td><td>日本國債殖利率回升</td></tr>
+<tr><td>企業外匯曝險</td><td>難估算</td><td>自然對沖/套利</td><td>會計年度末（3/31）</td></tr>
+</table>
+<div class="purple-box">
+<strong>為什麼 Carry 平倉如此危險：</strong>上表顯示潛在規模達 $4-6 兆。即使只有 10% 在短時間內平倉，也是 $4,000-6,000 億的賣壓同時湧向全球市場。這就是為什麼 Carry Unwind 能讓 VIX 從 16 飆到 65——因為規模太龐大了。
+</div>
+</div>
+
+<div class="card">
+<h3>4. USD/JPY 關鍵水位</h3>
+<table class="data-table">
+<tr><th>水位</th><th>含義</th><th>全球影響</th></tr>
+<tr><td><code>&gt; 155</code></td><td>BOJ 干預警戒區</td><td>口頭干預 → 實際干預（賣美元/買日圓）</td></tr>
+<tr><td><code>145-155</code></td><td>Carry Trade 舒適區</td><td>全球風險偏好好，股市/加密友好</td></tr>
+<tr><td><code>140-145</code></td><td>Carry 壓力區</td><td>部分 Carry 開始虧損，波動增大</td></tr>
+<tr><td><code>&lt; 140</code></td><td>Carry Unwind 加速</td><td>全球風險資產承壓，VIX 上升</td></tr>
+<tr><td><code>&lt; 130</code></td><td>全面 Carry 危機</td><td>類似 2024/8/5 等級的全球衝擊</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>5. 如何用 USD/JPY 判斷全球風險偏好</h3>
+<ul>
+<li><strong>USD/JPY 緩慢上升</strong> = Carry 建倉中 → 風險偏好好 → 股市/加密友好環境</li>
+<li><strong>USD/JPY 急速下跌（日圓急升）</strong> = Risk-off → 立即減少所有風險倉位</li>
+<li><strong>速度比方向重要</strong>：USD/JPY 每天跌 0.3% 問題不大；一天跌 2%+ = 危機模式</li>
+</ul>
+<div class="formula-box">判斷規則：USD/JPY 單日跌幅 > 1.5% = 立即警戒；> 2.5% = 全面防禦</div>
+<div class="green-box">
+<strong>實用技巧：</strong>東京盤開盤（台灣時間 08:00）如果 USD/JPY 跳空下跌 1%+，歐美盤很可能延續賣壓。可以在歐洲盤開始（15:00 TWN）前先減少風險部位，不必等到虧損擴大才行動。
+</div>
+</div>
+
+<div class="card">
+<h3>6. BOJ 干預機制</h3>
+<p>日本財務省（MOF）有權指示 BOJ 進行外匯干預。干預分為多個層級：</p>
+<table class="data-table">
+<tr><th>層級</th><th>手段</th><th>觸發條件</th><th>效果</th></tr>
+<tr><td>1</td><td>口頭關切（verbal）</td><td>USD/JPY 快速升破關鍵位</td><td>短暫壓制 0.5-1%，然後恢復</td></tr>
+<tr><td>2</td><td>「率確認」（rate check）</td><td>口頭無效，繼續升值</td><td>市場緊張，暫時回落 1-2%</td></tr>
+<tr><td>3</td><td>實際干預（intervention）</td><td>速度過快/突破心理位</td><td>短期有效 3-5%，長期取決於基本面</td></tr>
+<tr><td>4</td><td>協調干預（G7 coordinated）</td><td>極端情況（罕見）</td><td>趨勢扭轉可能性最大</td></tr>
+</table>
+<h4>2022/9-10 干預案例</h4>
+<ul>
+<li>USD/JPY 升破 145 → MOF 口頭警告</li>
+<li>繼續升到 150 → 9/22 首次干預（$21B）→ 從 146 瞬間跌到 140</li>
+<li>再次升破 150 → 10/21 二次干預（$37B）</li>
+<li>最終在 10/24 觸頂 152 後反轉（Fed pivot 預期 + 干預疲勞）</li>
+</ul>
+<div class="warning-box">
+<strong>干預的侷限性：</strong>單邊干預（只有日本賣美元）只能減緩速度，不能改變趨勢。只有基本面改變（如 Fed 停止加息/BOJ 升息）才能真正扭轉 USD/JPY 趨勢。因此干預後的反彈通常是「賣出機會」而非趨勢反轉——除非同時伴隨政策轉向。
+</div>
+</div>
+
+<div class="card">
+<h3>7. 日圓與全球股市的連動追蹤</h3>
+
+<div class="svg-container">
+<svg viewBox="0 0 560 180" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+  <text x="280" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">USD/JPY 變動 vs 全球資產即時反應</text>
+  <rect x="30" y="40" width="150" height="55" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="105" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">USD/JPY 上升</text>
+  <text x="105" y="75" text-anchor="middle" font-size="10" fill="#334155">（日圓走弱 = Carry OK）</text>
+  <text x="105" y="88" text-anchor="middle" font-size="10" fill="#16a34a">→ 日經↑ 全球股↑ BTC↑</text>
+
+  <rect x="210" y="40" width="150" height="55" rx="8" fill="#fef3c7" stroke="#d97706"/>
+  <text x="285" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#d97706">USD/JPY 緩跌</text>
+  <text x="285" y="75" text-anchor="middle" font-size="10" fill="#334155">（日圓緩慢升值）</text>
+  <text x="285" y="88" text-anchor="middle" font-size="10" fill="#d97706">→ 影響有限，觀察即可</text>
+
+  <rect x="390" y="40" width="150" height="55" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="465" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">USD/JPY 急跌</text>
+  <text x="465" y="75" text-anchor="middle" font-size="10" fill="#334155">（日圓急升 = Carry 危機）</text>
+  <text x="465" y="88" text-anchor="middle" font-size="10" fill="#dc2626">→ 日經↓↓ 全球股↓↓ VIX↑↑</text>
+
+  <text x="280" y="125" text-anchor="middle" font-size="11" fill="#334155">關鍵差異：速度（Velocity）決定嚴重程度</text>
+  <text x="280" y="145" text-anchor="middle" font-size="10" fill="#64748b">每日 -0.3% = 正常 | -1% = 警戒 | -2%+ = 危機模式 | -4%+ = 2024/8/5 級別</text>
+  <text x="280" y="165" text-anchor="middle" font-size="10" fill="#7c3aed">追蹤工具：TradingView USD/JPY 1H 圖 + 日經期貨即時報價</text>
+</svg>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: 台幣/亞洲貨幣 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">台幣/亞洲貨幣 (TWD & Asia FX)</h2>
+
+<div class="card">
+<h3>1. 台幣 (USD/TWD) 的獨特性</h3>
+<ul>
+<li><strong>不完全自由浮動</strong> — 台灣央行會積極干預（控制波動速度而非方向）</li>
+<li><strong>高度依賴出口</strong> — 半導體/電子佔出口 60%+ → 台幣強弱反映科技需求</li>
+<li><strong>外資主導短期走勢</strong> — 外資買台股 → 需先換台幣 → 台幣升值</li>
+</ul>
+<div class="highlight-box">
+<strong>台幣升值 = 外資湧入台股的確認信號。</strong>看到 USD/TWD 從 32 跌到 31，代表外資正在大量匯入資金買台股 → TWII（加權指數）通常同步上漲。反之，台幣貶值 = 外資撤離。
+</div>
+</div>
+
+<div class="card">
+<h3>2. 台幣與台股的關係</h3>
+
+<div class="svg-container">
+<svg viewBox="0 0 560 220" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+  <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">外資買賣超 → 台幣 → 台股 傳導鏈</text>
+  <!-- Bullish flow -->
+  <rect x="20" y="50" width="120" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="80" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">外資匯入</text><text x="80" y="88" text-anchor="middle" font-size="10" fill="#334155">買 TWD</text>
+  <text x="155" y="78" font-size="16" fill="#16a34a">→</text>
+  <rect x="170" y="50" width="120" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="230" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">台幣升值</text><text x="230" y="88" text-anchor="middle" font-size="10" fill="#334155">USD/TWD 下跌</text>
+  <text x="305" y="78" font-size="16" fill="#16a34a">→</text>
+  <rect x="320" y="50" width="120" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="380" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">買台股</text><text x="380" y="88" text-anchor="middle" font-size="10" fill="#334155">TWII 上漲</text>
+  <text x="455" y="78" font-size="16" fill="#16a34a">→</text>
+  <rect x="470" y="50" width="80" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="510" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">多頭確認</text>
+  <!-- Bearish flow -->
+  <rect x="20" y="140" width="120" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/><text x="80" y="162" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">外資匯出</text><text x="80" y="178" text-anchor="middle" font-size="10" fill="#334155">賣 TWD</text>
+  <text x="155" y="168" font-size="16" fill="#dc2626">→</text>
+  <rect x="170" y="140" width="120" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/><text x="230" y="162" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">台幣貶值</text><text x="230" y="178" text-anchor="middle" font-size="10" fill="#334155">USD/TWD 上漲</text>
+  <text x="305" y="168" font-size="16" fill="#dc2626">→</text>
+  <rect x="320" y="140" width="120" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/><text x="380" y="162" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">賣台股</text><text x="380" y="178" text-anchor="middle" font-size="10" fill="#334155">TWII 下跌</text>
+  <text x="455" y="168" font-size="16" fill="#dc2626">→</text>
+  <rect x="470" y="140" width="80" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/><text x="510" y="168" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">空頭警訊</text>
+</svg>
+</div>
+
+<p>追蹤指標：</p>
+<ul>
+<li>每日外資買賣超金額（台灣證交所公布）</li>
+<li>USD/TWD 即時匯率（台北外匯市場）</li>
+<li>外資持股比例（TWSE 統計，約 40-45%）</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>3. 韓元 (USD/KRW) — 亞洲風險的金絲雀</h3>
+<p>韓元是亞洲最敏感的風險指標貨幣，因為韓國同時具備：</p>
+<ul>
+<li><strong>出口導向</strong> — 出口佔 GDP 40%+（半導體、汽車、石化）</li>
+<li><strong>美元債多</strong> — 企業大量借美元債，美元強時償債壓力大</li>
+<li><strong>資本帳開放</strong> — 外資進出自由，反應快速</li>
+<li><strong>流動性高</strong> — 交易量大，全球資金快速調整</li>
+</ul>
+<div class="purple-box">
+<strong>金絲雀效應：</strong>KRW 是亞洲貨幣中反應最快的。當全球風險升高時，USD/KRW 通常比 USD/TWD 先動。如果 KRW 連續 3 天貶值而台幣尚未反應，通常意味著台幣接下來也會承壓。追蹤 EWY (iShares MSCI South Korea ETF) 是觀察韓國風險的便捷方式。
+</div>
+</div>
+
+<div class="card">
+<h3>4. 人民幣 (USD/CNH) 的訊號意義</h3>
+<h4>CNH（離岸）vs CNY（在岸）</h4>
+<ul>
+<li><code>CNH</code>（Hong Kong）— 自由交易，更反映市場預期</li>
+<li><code>CNY</code>（Shanghai）— 受管制，PBOC 每天設定中間價</li>
+<li>CNH - CNY 價差擴大 = 市場預期與央行意圖出現分歧</li>
+</ul>
+<h4>PBOC 中間價的訊號</h4>
+<ul>
+<li>中間價設定比市場預期強 = PBOC 想穩定匯率/抵抗貶值</li>
+<li>中間價設定比市場預期弱 = PBOC 容忍貶值（刺激出口）</li>
+</ul>
+<h4>對亞洲的傳導</h4>
+<ul>
+<li>CNH 貶值 → 資本外流壓力 → 亞洲 EM 連帶承壓</li>
+<li>CNH 穩定/升值 → 中國經濟刺激信心 → 利好亞洲股匯</li>
+<li>CNH 急貶（突破 7.35+）= 區域性警報 → 台韓股匯同步壓力</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>5. 亞洲貨幣聯動效應</h3>
+<p>亞洲貨幣高度連動，一國大幅貶值會引發鄰國跟貶（競爭性貶值/contagion）：</p>
+
+<div class="warning-box">
+<strong>警戒信號：</strong>USD/TWD + USD/KRW + USD/CNH 三者同步上升（亞幣全面貶值）= 區域性風險。這在 2022 年美元強勢期和 1997 年亞洲金融危機都出現過。
+</div>
+
+<h4>追蹤框架</h4>
+<table class="data-table">
+<tr><th>指標</th><th>正常</th><th>警戒</th><th>危機</th></tr>
+<tr><td>USD/TWD</td><td>30-32</td><td>32-33.5</td><td>&gt; 33.5</td></tr>
+<tr><td>USD/KRW</td><td>1250-1350</td><td>1350-1450</td><td>&gt; 1450</td></tr>
+<tr><td>USD/CNH</td><td>7.0-7.2</td><td>7.2-7.35</td><td>&gt; 7.35</td></tr>
+</table>
+
+<h4>2022 案例</h4>
+<p>Fed 激進加息 → DXY 從 95 漲到 114 → 亞幣全面貶值：TWD -10%, KRW -17%, CNH -13% → 外資大舉撤離亞洲股市 → TWII -22%, KOSPI -25%</p>
+
+<div class="green-box">
+<strong>反向操作：</strong>當亞洲貨幣開始同步升值（USD/TWD + USD/KRW + USD/CNH 同步下跌），通常是外資回流亞洲的強烈信號 → 台股/韓股的買點。
+</div>
+</div>
+
+<div class="card">
+<h3>6. 台灣央行（CBC）的操作模式</h3>
+<p>台灣央行與其他央行不同，有獨特的干預風格：</p>
+<ul>
+<li><strong>「柳樹理論」</strong>— 不抵抗趨勢，但減緩速度（像柳樹隨風彎但不折）</li>
+<li><strong>雙向干預</strong> — 升值太快會干預（保護出口），貶值太快也會干預（穩定信心）</li>
+<li><strong>尾盤操作</strong> — 常在收盤前最後幾分鐘大量操作，影響收盤價</li>
+<li><strong>外匯存底</strong> — 台灣外匯存底約 $5,700 億（全球第五），干預能力強</li>
+</ul>
+<h4>對交易者的影響</h4>
+<table class="data-table">
+<tr><th>情境</th><th>央行動作</th><th>你的策略</th></tr>
+<tr><td>台幣一天升 0.8%+</td><td>可能尾盤阻升</td><td>短線買盤動能受限，但趨勢不變</td></tr>
+<tr><td>台幣連續五天貶值</td><td>可能出手穩定</td><td>跌勢可能暫緩，但不改方向</td></tr>
+<tr><td>全球美元暴漲</td><td>有限阻貶，放慢速度</td><td>台幣終究跟貶，買台股要考慮匯率風險</td></tr>
+</table>
+<div class="orange-box">
+<strong>關鍵認知：</strong>台灣央行可以影響速度，但無法改變方向。如果全球資金在流出亞洲（DXY 強勢期），台幣會以比韓元更慢的速度貶值，但最終幅度可能差不多。因此 CBC 干預只是「買時間」，不是「扭轉趨勢」。
+</div>
+</div>
+
+<div class="card">
+<h3>7. 亞洲貨幣實用追蹤工具</h3>
+<table class="data-table">
+<tr><th>工具/來源</th><th>看什麼</th><th>更新頻率</th></tr>
+<tr><td>台北外匯市場（CBC 官網）</td><td>USD/TWD 即時匯率</td><td>盤中即時</td></tr>
+<tr><td>台灣證交所 TWSE</td><td>外資買賣超金額</td><td>每日收盤後</td></tr>
+<tr><td>TradingView: USD/KRW</td><td>韓元即時（金絲雀）</td><td>即時</td></tr>
+<tr><td>PBOC 中間價公告</td><td>每日 09:15 發布</td><td>每日</td></tr>
+<tr><td>USD/CNH (TradingView)</td><td>離岸人民幣即時</td><td>即時</td></tr>
+<tr><td>Bloomberg Asia Dollar Index</td><td>亞幣綜合表現</td><td>即時</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 4: EUR, GBP, 商品貨幣 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">EUR, GBP, 商品貨幣 (Other Majors)</h2>
+
+<div class="card">
+<h3>1. EUR/USD — DXY 的鏡像</h3>
+<p>因為 EUR 佔 DXY 57.6%，EUR/USD 與 DXY 幾乎完美反向：</p>
+<ul>
+<li><strong>EUR/USD 上升</strong> = DXY 下跌 = 弱美元環境</li>
+<li><strong>EUR/USD 下降</strong> = DXY 上升 = 強美元環境</li>
+</ul>
+<h4>驅動因素</h4>
+<ul>
+<li><strong>ECB vs Fed 利差</strong> — 最主要因素</li>
+<li><strong>歐元區 PMI（尤其德國）</strong> — 歐洲經濟的領先指標</li>
+<li><strong>ECB 利率決議</strong> — 鴿派 = EUR 跌，鷹派 = EUR 漲</li>
+<li><strong>歐洲政治風險</strong> — 義大利/法國政治不穩 → EUR 承壓</li>
+</ul>
+<h4>關鍵水位</h4>
+<table class="data-table">
+<tr><th>水位</th><th>含義</th></tr>
+<tr><td><code>EUR/USD &gt; 1.10</code></td><td>弱美元環境確認 → 利好商品/EM/加密</td></tr>
+<tr><td><code>EUR/USD = 1.00 (平價)</code></td><td>極端強美元 → 全球流動性壓力極大</td></tr>
+<tr><td><code>EUR/USD &lt; 1.00</code></td><td>歷史性（2022 曾短暫跌破）→ 全球危機模式</td></tr>
+</table>
+<div class="highlight-box">
+<strong>對交易的意義：</strong>即使不直接交易 EUR/USD，判斷其方向對判斷 DXY 至關重要。如果 EUR/USD 向上突破 1.10，幾乎可以確認 DXY 進入下降趨勢 → 風險資產的利多環境。
+</div>
+</div>
+
+<div class="card">
+<h3>2. GBP/USD — 波動之王</h3>
+<ul>
+<li><strong>波動大</strong>：日均波幅比 EUR/USD 大 20-30%，更適合短線交易</li>
+<li><strong>受 BOE 政策影響大</strong>：英國通膨黏性高 → BOE 政策難預測 → GBP 波動大</li>
+<li><strong>受英國政治影響大</strong>：脫歐後政策不確定性仍高</li>
+</ul>
+<h4>作為 Risk-on 指標</h4>
+<p>GBP 走強通常代表全球風險偏好改善，因為英鎊是 G7 中 Beta 最高的貨幣：</p>
+<ul>
+<li>GBP/USD 上漲 + EUR/USD 上漲 = 強烈的弱美元/risk-on 環境</li>
+<li>GBP/USD 暴跌 = 市場恐慌 + 英國特有風險（如 2022 mini-budget 危機）</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>3. AUD/USD — 中國經濟代理</h3>
+<p>澳洲經濟高度依賴對中國出口鐵礦石（佔出口 35%+），因此 AUD 實際上是「中國需求」的代理指標：</p>
+<ul>
+<li><strong>AUD 走強</strong> = 中國經濟好 / 鐵礦需求強 / 大宗商品牛市</li>
+<li><strong>AUD 走弱</strong> = 中國經濟放緩 / 商品需求減少</li>
+</ul>
+<h4>相關性網絡</h4>
+<table class="data-table">
+<tr><th>AUD 與...</th><th>相關性</th><th>原因</th></tr>
+<tr><td>鐵礦石價格</td><td>高度正相關</td><td>澳洲最大出口商品</td></tr>
+<tr><td>銅價</td><td>正相關</td><td>都反映工業/基建需求</td></tr>
+<tr><td>中國 PMI</td><td>正相關</td><td>中國是最大買家</td></tr>
+<tr><td>中國股市 (FXI)</td><td>正相關</td><td>同受中國經濟驅動</td></tr>
+<tr><td>USD/CNH</td><td>反向</td><td>CNH 強 → 中國好 → AUD 強</td></tr>
+</table>
+<div class="green-box">
+<strong>交易應用：</strong>如果你想判斷中國經濟方向但不直接交易中國市場，AUD/USD 是最好的代理。AUD 突破 0.68 上方 = 中國經濟復甦確認；跌破 0.63 = 中國經濟嚴重放緩。
+</div>
+</div>
+
+<div class="card">
+<h3>4. CAD — 石油代理</h3>
+<p>加拿大是全球第四大產油國，石油佔出口 20%+：</p>
+<ul>
+<li><strong>USD/CAD 下跌（CAD 走強）</strong>= 油價上漲</li>
+<li><strong>USD/CAD 上漲（CAD 走弱）</strong>= 油價下跌</li>
+</ul>
+<h4>注意事項</h4>
+<ul>
+<li>CAD 同時受美國經濟影響大（美國是加拿大最大貿易夥伴，佔 75% 出口）</li>
+<li>因此 CAD 不是純粹的石油代理 — 如果油價漲但美國衰退，CAD 不一定走強</li>
+<li>最佳場景：油價漲 + 美國經濟好 → CAD 最強</li>
+</ul>
+<div class="orange-box">
+<strong>商品貨幣總結：</strong>AUD = 中國/鐵礦代理，CAD = 石油代理，NOK = 歐洲石油代理。當三者同時走強 → 全球大宗商品牛市確認 → 通膨壓力上升 → 央行可能更鷹派。
+</div>
+</div>
+
+<div class="card">
+<h3>5. 外匯相關性快速參考</h3>
+
+<div class="svg-container">
+<svg viewBox="0 0 580 280" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg">
+  <text x="290" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">主要貨幣對相關性網絡</text>
+  <!-- EUR -->
+  <circle cx="290" cy="80" r="35" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="290" y="77" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">EUR/USD</text><text x="290" y="92" text-anchor="middle" font-size="9" fill="#334155">DXY 鏡像</text>
+  <!-- GBP -->
+  <circle cx="140" cy="130" r="32" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><text x="140" y="127" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">GBP/USD</text><text x="140" y="142" text-anchor="middle" font-size="9" fill="#334155">高波動</text>
+  <!-- AUD -->
+  <circle cx="440" cy="130" r="32" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/><text x="440" y="127" text-anchor="middle" font-size="11" font-weight="700" fill="#ea580c">AUD/USD</text><text x="440" y="142" text-anchor="middle" font-size="9" fill="#334155">中國代理</text>
+  <!-- CAD -->
+  <circle cx="180" cy="220" r="30" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/><text x="180" y="218" text-anchor="middle" font-size="11" font-weight="700" fill="#7c3aed">USD/CAD</text><text x="180" y="232" text-anchor="middle" font-size="9" fill="#334155">石油代理</text>
+  <!-- JPY -->
+  <circle cx="400" cy="220" r="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="400" y="218" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">USD/JPY</text><text x="400" y="232" text-anchor="middle" font-size="9" fill="#334155">Carry/避險</text>
+  <!-- Correlation lines -->
+  <line x1="258" y1="96" x2="168" y2="115" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4"/><text x="200" y="98" font-size="8" fill="#16a34a">+0.85</text>
+  <line x1="322" y1="96" x2="412" y2="115" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4"/><text x="370" y="98" font-size="8" fill="#ea580c">+0.60</text>
+  <line x1="160" y1="158" x2="170" y2="193" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3"/><text x="145" y="180" font-size="8" fill="#7c3aed">-0.50</text>
+  <line x1="420" y1="158" x2="410" y2="193" stroke="#dc2626" stroke-width="1" stroke-dasharray="3"/><text x="430" y="180" font-size="8" fill="#dc2626">+0.40</text>
+  <text x="290" y="270" text-anchor="middle" font-size="10" fill="#64748b">正數 = 同方向 | 負數 = 反方向 | 數字越大相關性越強</text>
+</svg>
+</div>
+
+<table class="data-table">
+<tr><th>如果你看到...</th><th>代表...</th><th>可以做...</th></tr>
+<tr><td>EUR + GBP + AUD 同時走強</td><td>DXY 全面走弱，弱美元確認</td><td>做多所有反美元資產</td></tr>
+<tr><td>AUD 走強但 EUR 持平</td><td>中國主題（非美元主題）</td><td>做多商品/中國概念</td></tr>
+<tr><td>GBP 獨自走弱</td><td>英國特有風險（非全球性）</td><td>不影響其他資產判斷</td></tr>
+<tr><td>所有非美元貨幣同時走弱</td><td>美元獨強 / 全球恐慌</td><td>減少所有風險敞口</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>6. 新興市場貨幣快覽</h3>
+<p>雖然不直接交易 EM 貨幣，但它們的走勢提供重要的全球風險信號：</p>
+<table class="data-table">
+<tr><th>貨幣</th><th>特性</th><th>代理意義</th><th>警戒水位</th></tr>
+<tr><td><strong>MXN（墨西哥比索）</strong></td><td>高利率 Carry 標的</td><td>全球 Carry Trade 健康度</td><td>USD/MXN > 20 = 壓力</td></tr>
+<tr><td><strong>ZAR（南非蘭特）</strong></td><td>商品 + EM 風險</td><td>EM 風險偏好指標</td><td>USD/ZAR > 19 = 壓力</td></tr>
+<tr><td><strong>BRL（巴西雷亞爾）</strong></td><td>高利率 + 商品</td><td>拉美 + 商品風險</td><td>USD/BRL > 5.5 = 壓力</td></tr>
+<tr><td><strong>INR（印度盧比）</strong></td><td>亞洲 EM 穩定幣</td><td>亞洲 EM 底線</td><td>USD/INR 連續創高 = 壓力</td></tr>
+</table>
+<div class="purple-box">
+<strong>EM 貨幣作為預警：</strong>EM 貨幣通常比 DM 貨幣先反映全球風險。如果 MXN + ZAR + BRL 同時大幅貶值，即使 DXY 尚未明顯走強，也應該提高警覺——這通常是全球 risk-off 的先兆。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: 外匯交易策略 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">外匯交易策略 (FX Trading)</h2>
+
+<div class="card">
+<h3>1. Carry Trade 策略</h3>
+<h4>原理</h4>
+<p>做多高息貨幣 / 做空低息貨幣，賺取利差收益：</p>
+<div class="formula-box">Carry = 做多貨幣利率 - 做空貨幣利率</div>
+<h4>經典組合（2024-2025）</h4>
+<table class="data-table">
+<tr><th>貨幣對</th><th>做多</th><th>做空</th><th>利差</th></tr>
+<tr><td>AUD/JPY</td><td>AUD 4.35%</td><td>JPY 0.5%</td><td>+3.85%/年</td></tr>
+<tr><td>MXN/JPY</td><td>MXN 10%+</td><td>JPY 0.5%</td><td>+9.5%/年</td></tr>
+<tr><td>USD/JPY (long)</td><td>USD 5%</td><td>JPY 0.5%</td><td>+4.5%/年</td></tr>
+<tr><td>NZD/CHF</td><td>NZD 5.5%</td><td>CHF 1.5%</td><td>+4.0%/年</td></tr>
+</table>
+<h4>風險</h4>
+<ul>
+<li>一天的匯率波動可以吃掉一整年的 Carry 收益</li>
+<li>例：USD/JPY 日均波動 0.5-1% = 年化 180-365% 波動 vs 年化 4.5% Carry</li>
+<li>適合環境：VIX &lt; 15，央行政策穩定，趨勢明確</li>
+</ul>
+<div class="warning-box">
+<strong>Carry Trade 的致命弱點：</strong>收益是線性的（每天賺一點點利差），但風險是非線性的（一天可以虧掉半年收益）。就像「在蒸汽壓路機前撿硬幣」— 大部分時間賺小錢，偶爾被壓扁。
+</div>
+</div>
+
+<div class="card">
+<h3>2. 趨勢跟蹤 (Trend Following)</h3>
+<p>外匯趨勢的持續性比股票強，因為央行政策週期通常持續 1-3 年：</p>
+<ul>
+<li>Fed 加息周期 → DXY 上升趨勢持續 1-2 年</li>
+<li>BOJ 寬鬆周期 → USD/JPY 上升趨勢持續多年</li>
+<li>中國放水周期 → AUD 上升趨勢持續數月</li>
+</ul>
+<h4>技術工具</h4>
+<ul>
+<li><strong>SuperTrend</strong> — 日線判斷大方向</li>
+<li><strong>MA 200（日線）</strong>— 價格在 200 日均線上方 = 多頭；下方 = 空頭</li>
+<li><strong>4H/1H</strong> — 找趨勢中的回調入場點</li>
+</ul>
+<div class="highlight-box">
+<strong>趨勢跟蹤的邏輯：</strong>外匯趨勢之所以持續，是因為驅動因素（利差/政策）改變很慢。Fed 不會一個月加息、下個月降息。政策方向一旦確立，通常持續 12-24 個月。這給了趨勢跟蹤者充足的時間獲利。
+</div>
+
+<h4>趨勢跟蹤的進場與出場規則</h4>
+<table class="data-table">
+<tr><th>步驟</th><th>規則</th><th>例子</th></tr>
+<tr><td>1. 確認趨勢</td><td>價格在 200 日均線同側 + SuperTrend 同向</td><td>DXY 在 200MA 下方 + SuperTrend 紅色 = 空</td></tr>
+<tr><td>2. 等待回調</td><td>價格回測 50 日均線或前高/低</td><td>DXY 從 100 反彈到 102（回測）</td></tr>
+<tr><td>3. 入場信號</td><td>4H K 線反轉確認（pin bar/engulfing）</td><td>DXY 102 出現 4H 長上影線 → 做空</td></tr>
+<tr><td>4. 止損</td><td>放在回調高點/低點之外</td><td>止損 103（前高之上）</td></tr>
+<tr><td>5. 出場</td><td>趨勢指標翻轉或到達目標位</td><td>DXY 到 97 目標位 或 SuperTrend 翻綠</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>3. 利用外匯判斷其他資產方向（不直接交易外匯）</h3>
+<p>即使你主要交易加密貨幣或美股，外匯提供了最有價值的宏觀線索：</p>
+<table class="data-table">
+<tr><th>外匯信號</th><th>動作</th><th>原因</th></tr>
+<tr><td>DXY 跌破 100 / 持續走弱</td><td>加倉 BTC、黃金、白銀</td><td>全球流動性擴張利好硬資產</td></tr>
+<tr><td>USD/JPY 急跌 > 2%/天</td><td>減少所有風險倉位</td><td>Carry Unwind = 全球 risk-off</td></tr>
+<tr><td>AUD/USD 突破上升</td><td>加倉銅/商品股</td><td>中國需求回升確認</td></tr>
+<tr><td>USD/TWD 下跌（台幣升值）</td><td>加倉台股/EWT</td><td>外資回流確認</td></tr>
+<tr><td>EUR/USD 突破 1.10</td><td>確認弱美元 → 做多 EM</td><td>DXY 下降趨勢確立</td></tr>
+<tr><td>亞幣全面貶值</td><td>撤離亞洲 / 買美債避險</td><td>區域性資金外流</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>4. 經濟數據對外匯的即時影響</h3>
+<table class="data-table">
+<tr><th>數據</th><th>超預期時</th><th>低於預期時</th><th>反應速度</th></tr>
+<tr><td>US NFP（非農就業）強</td><td>DXY 上升, USD/JPY 上升</td><td>DXY 下跌, 黃金漲</td><td>秒級</td></tr>
+<tr><td>US CPI 高</td><td>DXY 上升（短線）;長期看降息推遲</td><td>DXY 下跌, 債券漲</td><td>秒級</td></tr>
+<tr><td>BOJ 升息（意外）</td><td>USD/JPY 急跌（日圓升）</td><td>—</td><td>秒級, 可持續數日</td></tr>
+<tr><td>中國 PMI 弱</td><td>—</td><td>AUD 跌, KRW 跌, CNH 跌</td><td>分鐘級</td></tr>
+<tr><td>ECB 鴿派</td><td>—</td><td>EUR/USD 下跌, DXY 上升</td><td>秒級</td></tr>
+<tr><td>Fed Chair 鷹派講話</td><td>DXY 上升, 美債殖利率漲</td><td>—</td><td>秒級</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>5. 外匯交易時段</h3>
+<table class="data-table">
+<tr><th>時段</th><th>台灣時間</th><th>特色</th><th>適合交易</th></tr>
+<tr><td><strong>東京盤</strong></td><td>08:00-15:00</td><td>JPY 對最活躍，波動較小</td><td>USD/JPY, AUD/JPY</td></tr>
+<tr><td><strong>歐洲盤</strong></td><td>15:00-24:00</td><td>EUR/GBP 最活躍，波動增大</td><td>EUR/USD, GBP/USD</td></tr>
+<tr><td><strong>紐約盤</strong></td><td>21:30-04:00</td><td>USD 最活躍，數據公布</td><td>所有美元對</td></tr>
+<tr><td><strong>歐美重疊</strong></td><td>21:30-24:00</td><td>流動性最好，波動最大</td><td>所有主要貨幣對</td></tr>
+</table>
+<div class="green-box">
+<strong>最佳時段：</strong>歐美重疊（21:30-24:00 台灣時間）是全球外匯交易量最大的時段，流動性最好、滑點最小、趨勢最清晰。如果只能在一個時段交易，選這個。
+</div>
+</div>
+
+<div class="card">
+<h3>6. 外匯交易的風險管理</h3>
+<h4>位置大小（Position Sizing）</h4>
+<ul>
+<li>外匯波動看起來小（日均 0.5-1%），但通常使用槓桿（10x-100x）</li>
+<li>規則：單筆交易風險 不超過帳戶的 1-2%</li>
+<li>止損設定在技術位之外（如 ATR 的 1.5-2 倍）</li>
+</ul>
+<div class="formula-box">Position Size = (帳戶風險金額) / (止損點數 x 每點價值)</div>
+
+<h4>外匯特有風險</h4>
+<table class="data-table">
+<tr><th>風險類型</th><th>描述</th><th>防範方式</th></tr>
+<tr><td>跳空（Gap）風險</td><td>週末/節日事件導致開盤跳空</td><td>重要事件前減倉或平倉</td></tr>
+<tr><td>流動性風險</td><td>非主流時段滑點巨大</td><td>只在流動性好的時段交易</td></tr>
+<tr><td>央行干預風險</td><td>突然大幅逆向移動</td><td>避免在干預警戒區持大倉</td></tr>
+<tr><td>相關性風險</td><td>多個貨幣對同方向移動</td><td>計算淨美元暴露，避免過度集中</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>7. 用外匯建立宏觀觀察清單</h3>
+<p>不直接交易外匯的投資者，應每日追蹤以下外匯指標：</p>
+<table class="data-table">
+<tr><th>指標</th><th>看什麼</th><th>對應動作</th><th>頻率</th></tr>
+<tr><td>DXY</td><td>趨勢方向 + 關鍵位</td><td>判斷全球環境</td><td>每日</td></tr>
+<tr><td>USD/JPY</td><td>速度（非方向）</td><td>判斷 risk-on/off</td><td>每日/盤中</td></tr>
+<tr><td>USD/CNH</td><td>7.2/7.35 關鍵位</td><td>判斷亞洲風險</td><td>每日</td></tr>
+<tr><td>USD/TWD</td><td>外資匯出入方向</td><td>台股多空判斷</td><td>每日</td></tr>
+<tr><td>EUR/USD</td><td>1.10 以上/以下</td><td>確認 DXY 方向</td><td>每週</td></tr>
+<tr><td>AUD/USD</td><td>中國需求變化</td><td>商品/EM 配置</td><td>每週</td></tr>
+</table>
+<div class="highlight-box">
+<strong>每日外匯 Check-in（5 分鐘）：</strong>早上 08:30 看一次：1) DXY 比昨天高還低？2) USD/JPY 有沒有異常波動？3) 亞幣方向如何？這三個問題的答案可以決定你今天對風險倉位的態度。
+</div>
+</div>
+
+<div class="card">
+<h3>8. 外匯交易常見錯誤</h3>
+<table class="data-table">
+<tr><th>錯誤</th><th>為什麼危險</th><th>正確做法</th></tr>
+<tr><td>忽視利差方向</td><td>與利差對抗 = 每天流血（負 carry）</td><td>順著利差方向交易，或至少保持中性</td></tr>
+<tr><td>在央行決議前持大倉</td><td>50:50 賭博，結果可能劇烈</td><td>減倉到 50% 以下，等結果再加</td></tr>
+<tr><td>追逐 EM 高息貨幣</td><td>TRY -90% 但利率 40%+ 也補不回</td><td>只做 G10 Carry 或限制 EM 比例 < 20%</td></tr>
+<tr><td>不考慮時段</td><td>亞洲盤做 EUR/USD = 假突破機率高</td><td>在貨幣最活躍的時段交易該貨幣</td></tr>
+<tr><td>忽視 DXY 大方向</td><td>DXY 趨勢性上升時做多 EUR = 逆風</td><td>先判斷 DXY 大方向，再決定做哪個對</td></tr>
+<tr><td>過度槓桿</td><td>1:100 槓桿，1% 波動 = 爆倉</td><td>有效槓桿保持在 5-10 倍以下</td></tr>
+</table>
+<div class="warning-box">
+<strong>最大的錯誤：</strong>把外匯當股票做。股票有「長期上漲」的偏差（企業盈利增長）；外匯沒有——它是零和遊戲。一個貨幣漲，另一個就跌。在外匯中，方向判斷錯誤 + 負 carry + 槓桿 = 快速虧光。紀律和風控比在股票市場更重要 10 倍。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 6: 宏觀傳導總結 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">宏觀傳導總結 (Macro Transmission Map)</h2>
+
+<div class="card">
+<h3>全域傳導圖</h3>
+<p>以 Fed 政策為中心，所有貨幣如何互相影響以及影響其他資產：</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 700 520" width="100%" style="max-width:680px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#64748b"/></marker>
+    <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
+    <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#dc2626"/></marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#16a34a"/></marker>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#7c3aed"/></marker>
+  </defs>
+  <text x="350" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">外匯宏觀傳導全圖</text>
+
+  <!-- Central node: Fed Policy -->
+  <rect x="280" y="40" width="140" height="50" rx="12" fill="#2563eb"/><text x="350" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Fed Policy</text><text x="350" y="78" text-anchor="middle" font-size="10" fill="#dbeafe">利率/QE/QT</text>
+
+  <!-- DXY -->
+  <line x1="350" y1="90" x2="350" y2="130" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowB)"/>
+  <rect x="290" y="130" width="120" height="40" rx="10" fill="#dbeafe" stroke="#2563eb"/><text x="350" y="155" text-anchor="middle" font-size="12" font-weight="700" fill="#2563eb">DXY</text>
+
+  <!-- DXY children -->
+  <line x1="310" y1="170" x2="120" y2="220" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowR)"/>
+  <line x1="330" y1="170" x2="250" y2="220" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowR)"/>
+  <line x1="370" y1="170" x2="450" y2="220" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowR)"/>
+  <line x1="390" y1="170" x2="580" y2="220" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+  <rect x="50" y="220" width="130" height="35" rx="8" fill="#fee2e2"/><text x="115" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Gold/Silver (反向)</text>
+  <rect x="195" y="220" width="120" height="35" rx="8" fill="#fee2e2"/><text x="255" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">BTC/Crypto (反向)</text>
+  <rect x="390" y="220" width="130" height="35" rx="8" fill="#fee2e2"/><text x="455" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">EM Stocks (反向)</text>
+  <rect x="530" y="220" width="130" height="35" rx="8" fill="#fee2e2"/><text x="595" y="242" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Commodities (反向)</text>
+
+  <!-- USD/JPY branch -->
+  <line x1="280" y1="65" x2="100" y2="100" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowP)"/>
+  <rect x="30" y="90" width="130" height="40" rx="10" fill="#ede9fe" stroke="#7c3aed"/><text x="95" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">USD/JPY</text>
+
+  <line x1="95" y1="130" x2="60" y2="170" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrowP)"/>
+  <line x1="95" y1="130" x2="130" y2="170" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrowP)"/>
+  <text x="45" y="188" font-size="9" fill="#7c3aed">Carry Trade</text>
+  <text x="45" y="200" font-size="9" fill="#7c3aed">Build/Unwind</text>
+  <text x="115" y="188" font-size="9" fill="#7c3aed">Global Risk</text>
+  <text x="115" y="200" font-size="9" fill="#7c3aed">Appetite</text>
+
+  <!-- USD/CNH branch -->
+  <line x1="420" y1="65" x2="580" y2="100" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowG)"/>
+  <rect x="530" y="90" width="130" height="40" rx="10" fill="#dcfce7" stroke="#16a34a"/><text x="595" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">USD/CNH</text>
+
+  <line x1="570" y1="130" x2="530" y2="165" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <line x1="620" y1="130" x2="660" y2="165" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <text x="510" y="180" font-size="9" fill="#16a34a">亞洲資金流</text>
+  <text x="510" y="192" font-size="9" fill="#16a34a">台/韓外資</text>
+  <text x="650" y="180" font-size="9" fill="#16a34a">AUD/商品</text>
+  <text x="650" y="192" font-size="9" fill="#16a34a">中國需求</text>
+
+  <!-- USD/TWD -->
+  <rect x="280" y="290" width="140" height="40" rx="10" fill="#fff7ed" stroke="#ea580c"/><text x="350" y="315" text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c">USD/TWD</text>
+  <line x1="350" y1="170" x2="350" y2="290" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow)"/>
+
+  <line x1="350" y1="330" x2="290" y2="365" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="350" y1="330" x2="410" y2="365" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="260" y="380" font-size="9" fill="#ea580c">台股外資</text>
+  <text x="260" y="392" font-size="9" fill="#ea580c">買賣超</text>
+  <text x="400" y="380" font-size="9" fill="#ea580c">TWII</text>
+  <text x="400" y="392" font-size="9" fill="#ea580c">Direction</text>
+
+  <!-- Feedback arrows (CNH -> TWD) -->
+  <path d="M555,130 Q450,280 410,290" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="3" marker-end="url(#arrow)"/>
+  <text x="470" y="270" font-size="8" fill="#64748b">CNH 影響 TWD</text>
+
+  <!-- Summary text -->
+  <text x="350" y="440" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">Fed 政策 → DXY/USD/JPY/USD/CNH → 全球資產定價</text>
+  <text x="350" y="460" text-anchor="middle" font-size="10" fill="#64748b">所有路徑最終都回到一個問題：美元流動性是在擴張還是收縮？</text>
+
+  <!-- Legend -->
+  <rect x="200" y="480" width="300" height="30" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <line x1="220" y1="495" x2="245" y2="495" stroke="#dc2626" stroke-width="2"/><text x="250" y="499" font-size="9" fill="#334155">反向相關</text>
+  <line x1="310" y1="495" x2="335" y2="495" stroke="#2563eb" stroke-width="2"/><text x="340" y="499" font-size="9" fill="#334155">直接驅動</text>
+  <line x1="400" y1="495" x2="425" y2="495" stroke="#64748b" stroke-width="1" stroke-dasharray="3"/><text x="430" y="499" font-size="9" fill="#334155">間接影響</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>環境判斷表 (Regime Table)</h3>
+<p>根據宏觀環境判斷最佳/最差資產配置：</p>
+<table class="data-table">
+<tr><th>環境</th><th>DXY</th><th>JPY</th><th>TWD</th><th>最佳資產</th><th>最差資產</th></tr>
+<tr>
+<td><strong>全球擴張 + 美弱</strong></td>
+<td style="color:var(--red)">下跌</td>
+<td>稍弱（carry）</td>
+<td style="color:var(--green)">升值</td>
+<td style="color:var(--green)">商品/EM/BTC</td>
+<td style="color:var(--red)">美債</td>
+</tr>
+<tr>
+<td><strong>美國獨強</strong></td>
+<td style="color:var(--green)">上升</td>
+<td style="color:var(--red)">貶值（carry）</td>
+<td style="color:var(--red)">貶值</td>
+<td style="color:var(--green)">美股/美元</td>
+<td style="color:var(--red)">EM/商品</td>
+</tr>
+<tr>
+<td><strong>全球衰退</strong></td>
+<td style="color:var(--green)">上升（避險）</td>
+<td style="color:var(--green)">升值（避險）</td>
+<td style="color:var(--red)">貶值</td>
+<td style="color:var(--green)">美債/黃金/JPY</td>
+<td style="color:var(--red)">股市/商品/BTC</td>
+</tr>
+<tr>
+<td><strong>停滯性通膨</strong></td>
+<td>持平/上升</td>
+<td>持平</td>
+<td style="color:var(--red)">貶值</td>
+<td style="color:var(--green)">黃金/商品</td>
+<td style="color:var(--red)">債券/成長股</td>
+</tr>
+</table>
+<div class="purple-box">
+<strong>如何判斷當前 Regime：</strong>
+1) DXY 方向（上/下）→ 判斷美元強弱；
+2) USD/JPY 方向 + 速度 → 判斷 carry/避險；
+3) AUD + 銅 方向 → 判斷全球需求；
+4) 三者結合 = 確定所處環境 → 選擇最佳資產配置。
+</div>
+</div>
+
+<div class="card">
+<h3>傳導時序表</h3>
+<p>當 Fed 政策改變時，各資產反應的先後順序：</p>
+<table class="data-table">
+<tr><th>順序</th><th>資產</th><th>反應時間</th><th>原因</th></tr>
+<tr><td>1</td><td>短期利率/債券</td><td>即時（秒級）</td><td>直接定價 Fed 政策</td></tr>
+<tr><td>2</td><td>DXY / 外匯</td><td>即時-分鐘</td><td>利差交易者立即調整</td></tr>
+<tr><td>3</td><td>黃金 / BTC</td><td>分鐘-小時</td><td>美元+實質利率反向</td></tr>
+<tr><td>4</td><td>美股</td><td>小時-天</td><td>折現率改變 → 估值重估</td></tr>
+<tr><td>5</td><td>EM 股匯</td><td>天-週</td><td>資金流調整需要時間</td></tr>
+<tr><td>6</td><td>實體經濟（GDP/就業）</td><td>6-18 個月</td><td>貨幣政策傳導滯後</td></tr>
+</table>
+<div class="highlight-box">
+<strong>實戰意義：</strong>外匯是第二個反應的資產（僅次於債券）。如果你能從外匯方向判斷 Fed 政策變化的方向，就能在股市和 EM 反應之前佈局。「看外匯做股票」是機構常用策略。
+</div>
+</div>
+
+<div class="card">
+<h3>外匯危機傳染路徑</h3>
+<p>當外匯市場出現系統性壓力時，傳染通常遵循以下路徑：</p>
+
+<div class="svg-container">
+<svg viewBox="0 0 600 260" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+  <text x="300" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">外匯危機傳染路徑（2024/8/5 模式）</text>
+  <!-- Step 1 -->
+  <rect x="20" y="45" width="130" height="45" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="85" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">BOJ 升息</text>
+  <text x="85" y="80" text-anchor="middle" font-size="9" fill="#334155">利差收窄預期</text>
+  <!-- Arrow -->
+  <line x1="150" y1="68" x2="175" y2="68" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Step 2 -->
+  <rect x="180" y="45" width="130" height="45" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="245" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">JPY 急升</text>
+  <text x="245" y="80" text-anchor="middle" font-size="9" fill="#334155">Carry 虧損觸發止損</text>
+  <!-- Arrow -->
+  <line x1="310" y1="68" x2="335" y2="68" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Step 3 -->
+  <rect x="340" y="45" width="130" height="45" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="405" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">賣出全球資產</text>
+  <text x="405" y="80" text-anchor="middle" font-size="9" fill="#334155">平 Carry = 賣美股/EM</text>
+  <!-- Arrow -->
+  <line x1="470" y1="68" x2="495" y2="68" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <!-- Step 4 -->
+  <rect x="500" y="45" width="80" height="45" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="540" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">VIX 飆升</text>
+  <text x="540" y="80" text-anchor="middle" font-size="9" fill="#334155">65+</text>
+  <!-- Second row -->
+  <line x1="540" y1="90" x2="540" y2="120" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="420" y="120" width="160" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="500" y="140" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">Risk Parity 基金被迫減倉</text>
+  <text x="500" y="155" text-anchor="middle" font-size="9" fill="#334155">波動率升 → 降低所有曝險</text>
+  <!-- Arrow -->
+  <line x1="420" y1="142" x2="340" y2="142" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="180" y="120" width="155" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="258" y="140" text-anchor="middle" font-size="10" font-weight="600" fill="#d97706">更多資產被賣出</text>
+  <text x="258" y="155" text-anchor="middle" font-size="9" fill="#334155">債券/黃金/BTC 都跌</text>
+  <!-- Arrow -->
+  <line x1="180" y1="142" x2="150" y2="142" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="120" width="125" height="45" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="83" y="140" text-anchor="middle" font-size="10" font-weight="600" fill="#16a34a">Fed/BOJ 安撫</text>
+  <text x="83" y="155" text-anchor="middle" font-size="9" fill="#334155">鴿派信號 → 企穩</text>
+  <!-- Timeline -->
+  <text x="85" y="195" text-anchor="middle" font-size="9" fill="#64748b">Day 0</text>
+  <text x="245" y="195" text-anchor="middle" font-size="9" fill="#64748b">Day 1-2</text>
+  <text x="405" y="195" text-anchor="middle" font-size="9" fill="#64748b">Day 2-3</text>
+  <text x="540" y="195" text-anchor="middle" font-size="9" fill="#64748b">Day 3-5</text>
+  <text x="300" y="220" text-anchor="middle" font-size="10" fill="#334155">整個過程通常在 5-7 個交易日內完成</text>
+  <text x="300" y="240" text-anchor="middle" font-size="10" fill="#16a34a">恢復期：2-4 週回到事件前水位</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<h3>各 Regime 下的交易手冊</h3>
+<table class="data-table">
+<tr><th>判斷條件</th><th>確認為</th><th>做多</th><th>做空/避開</th><th>對沖工具</th></tr>
+<tr>
+<td>DXY↓ + AUD↑ + JPY 穩</td>
+<td>全球擴張/弱美元</td>
+<td>EM 股/商品/BTC/黃金</td>
+<td>美元/美債</td>
+<td>不需要（順風）</td>
+</tr>
+<tr>
+<td>DXY↑ + EUR↓ + EM幣↓</td>
+<td>美國獨強</td>
+<td>美股（大型科技）/美元</td>
+<td>EM/商品/黃金</td>
+<td>Long DXY ETF</td>
+</tr>
+<tr>
+<td>DXY↑ + JPY↑ + VIX↑</td>
+<td>全球避險</td>
+<td>美債/黃金/JPY/USD</td>
+<td>所有股市/BTC/商品</td>
+<td>Long VIX/Put</td>
+</tr>
+<tr>
+<td>DXY→ + 商品↑ + AUD↑</td>
+<td>通膨週期</td>
+<td>商品/商品股/TIPS</td>
+<td>長天期債券/成長股</td>
+<td>Short TLT</td>
+</tr>
+<tr>
+<td>JPY 急升 + VIX > 30</td>
+<td>Carry 危機</td>
+<td>現金/短期美債</td>
+<td>一切風險資產</td>
+<td>等待 BOJ 安撫</td>
+</tr>
+</table>
+<div class="orange-box">
+<strong>使用方法：</strong>每週日晚間花 10 分鐘判斷當前處於哪個 Regime → 確定本週的資產偏好 → 只在該 Regime 確認的方向上加倉。如果判斷不明確（多個信號矛盾），保持輕倉等待清晰。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 7: 互動測驗 ==================== -->
+<div class="tab-content" id="tab7">
+<h2 class="section-title">互動測驗</h2>
+
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+
+<div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
+  <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
+  <div id="quiz-question-text" style="font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); text-align:center;"></div>
+  <div id="quiz-context" style="font-size:13px; color:var(--text2); margin-bottom:16px; background:var(--bg3); padding:14px; border-radius:8px; line-height:1.8;"></div>
+  <div id="quiz-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+</div>
+
+<div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
+  <div id="quiz-result-icon" style="font-size:28px; text-align:center; margin-bottom:8px;"></div>
+  <div id="quiz-result-answer" style="font-size:14px; font-weight:600; text-align:center; margin-bottom:12px;"></div>
+  <div id="quiz-result-explanation" style="font-size:13px; line-height:1.8; color:var(--text2); background:var(--bg3); padding:14px; border-radius:8px;"></div>
+</div>
+
+<div style="text-align:center; margin-bottom:20px;">
+  <button id="quiz-next-btn" style="padding:12px 32px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--blue)'">下一題</button>
+</div>
+
+<div id="quiz-final" style="display:none; text-align:center; padding:40px 20px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); margin-top:20px;">
+  <p style="font-size:22px; font-weight:700; margin-bottom:8px;" id="quiz-final-text"></p>
+  <p style="font-size:14px; color:var(--text3);" id="quiz-final-sub"></p>
+  <button id="quiz-restart-btn" style="margin-top:16px; padding:10px 24px; background:var(--green); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">重新測驗</button>
+</div>
+
+<script>
+(function() {
+  const questions = [
+    {
+      question: 'USD/JPY 在一天內從 152 急跌到 146（-4%），你應該立即做什麼？',
+      context: 'USD/JPY 急跌代表日圓急速升值，通常伴隨 Carry Trade 大規模平倉。',
+      options: ['加倉做多美股（日圓升值利好日本出口）', '立即減少所有風險資產倉位', '做多 USD/JPY（均值回歸）', '觀望不動'],
+      correct: 1,
+      explanation: '<strong>USD/JPY 單日跌 4% = 全面 Carry Unwind 危機模式。</strong>這意味著全球 Carry Trade 正在恐慌性平倉，資金從所有風險資產（股市、加密、EM）撤出買回日圓。2024/8/5 案例：USD/JPY 急跌導致日經 -12%、全球股市崩跌、VIX 飆升到 65。正確做法是立即減少風險敞口，而非試圖抄底。'
+    },
+    {
+      question: 'DXY 從 106 跌破 100 心理關口，以下哪些資產最可能受益？',
+      context: 'DXY 跌破 100 代表美元進入明確的弱勢趨勢，全球美元流動性擴張。',
+      options: ['美國短期國債 (SHY)', '黃金 + BTC + 新興市場股票', '美元現金', '只有黃金受益，BTC 不受影響'],
+      correct: 1,
+      explanation: '<strong>DXY 跌破 100 = 弱美元環境確認，所有「反美元資產」受益。</strong>黃金和美元反向相關（美元計價的硬資產）；BTC 被視為數位黃金/流動性代理；EM 股票因為美元債務壓力減輕 + 本幣升值帶來外資流入。這三者在弱美元環境中通常同步走強。'
+    },
+    {
+      question: 'Fed 意外降息 50bp（市場預期 25bp），以下反應最可能的順序是？',
+      context: 'Fed 政策改變後，各資產反應有先後順序，外匯通常是第二快反應的（僅次於債券）。',
+      options: ['美股漲 → DXY 跌 → 黃金漲 → EM 跟漲', '債券漲 → DXY 跌 → 黃金/BTC 漲 → 美股漲 → EM 後續跟漲', 'EM 先漲 → 美股跟漲 → DXY 最後才跌', '所有資產同時反應，沒有先後'],
+      correct: 1,
+      explanation: '<strong>反應順序：債券（秒級）→ 外匯/DXY（秒-分鐘）→ 黃金/BTC（分鐘-小時）→ 美股（小時-天）→ EM（天-週）。</strong>債券直接定價利率，反應最快。DXY 因利差立即縮窄而下跌。黃金/BTC 因美元弱+實質利率降而漲。美股需要重估折現率。EM 需要資金流實際調整。理解這個時序差 = 能在較慢資產反應前佈局。'
+    },
+    {
+      question: '台幣連續一週升值（USD/TWD 從 32.5 跌到 31.2），這對台股投資者意味著什麼？',
+      context: '台幣升值通常伴隨外資大量匯入，是台股多頭的確認指標。',
+      options: ['台幣升值利空出口股（台積電），應該賣出', '外資正在大量匯入買台股，確認多頭趨勢', '央行干預失敗，經濟可能衰退', '與台股無關，純粹是匯率市場的波動'],
+      correct: 1,
+      explanation: '<strong>台幣一週升值 4%+ = 外資大規模匯入確認。</strong>外資要買台股必須先把美元換成台幣 → 台幣升值。持續大量升值代表外資不是小幅度調整，而是戰略性增持台股。雖然台幣升值短期不利出口，但外資買盤帶來的股市上漲通常遠大於匯率影響。這是台股多頭的強確認信號。'
+    },
+    {
+      question: 'AUD/USD 從 0.62 快速漲到 0.69，最可能反映什麼基本面變化？',
+      context: 'AUD 是中國經濟的代理貨幣，因為澳洲出口大量鐵礦石到中國。',
+      options: ['美國經濟即將衰退', '中國經濟復甦 / 大規模刺激政策出台', '澳洲央行意外升息', '全球石油供應中斷'],
+      correct: 1,
+      explanation: '<strong>AUD 快速走強最大的驅動力是中國需求回升。</strong>AUD 從 0.62 漲到 0.69（+11%）這種幅度通常需要基本面支撐。鐵礦石是澳洲最大出口品，中國是最大買家。中國推出大規模刺激（如基建投資）→ 鐵礦需求預期大增 → AUD 走強。這也暗示銅等工業金屬可能同步上漲。'
+    },
+    {
+      question: '以下哪個場景代表最高的全球系統性風險？',
+      context: '多個貨幣同步異常波動通常意味著系統性壓力，而非單一國家問題。',
+      options: ['DXY 上升 + USD/JPY 上升 + AUD 走弱', 'DXY 急升 + USD/JPY 急跌（日圓急升）+ 亞幣全面貶值', 'EUR/USD 下跌 + GBP/USD 下跌 + DXY 溫和上升', 'USD/CNH 微幅貶值 + USD/KRW 持平'],
+      correct: 1,
+      explanation: '<strong>DXY 急升 + JPY 急升 + 亞幣全面貶值 = 最大系統性風險。</strong>這個組合意味著：1) 全球恐慌搶美元（DXY 急升）；2) Carry Trade 全面平倉（JPY 急升）；3) 資本從亞洲逃離（亞幣全面貶值）。三者同時出現代表全球性的流動性危機。歷史上 2008、2020/3 都出現過類似模式。選項 A 只是正常的 risk-off，C 是溫和調整。'
+    },
+    {
+      question: '你持有大量 BTC 多頭倉位。以下哪個外匯信號讓你最警覺？',
+      context: 'BTC 與 DXY 高度負相關，同時受全球流動性和風險偏好影響。',
+      options: ['EUR/USD 從 1.10 跌到 1.09', 'DXY 連續三週上升，突破 104 阻力位', 'USD/CAD 微幅上升', 'GBP/USD 日內波動 0.5%'],
+      correct: 1,
+      explanation: '<strong>DXY 突破 104 阻力位 = BTC 的最大利空。</strong>BTC 與 DXY 高度負相關。DXY 連續三週上升並突破技術阻力位，意味著強美元趨勢確立 → 全球美元流動性收縮 → BTC 承壓。選項 A 的 EUR 跌幅太小（1%），C 和 D 的影響微不足道。DXY 趨勢性突破是 BTC 持倉者必須關注的最重要外匯信號。'
+    },
+    {
+      question: 'BOJ 宣布維持利率不變（市場預期升息 25bp），USD/JPY 最可能如何反應？',
+      context: 'BOJ 升息預期落空 = 利差維持 → Carry Trade 安全 → 日圓應該走弱。',
+      options: ['USD/JPY 急跌（日圓急升）', 'USD/JPY 急漲（日圓急貶）', 'USD/JPY 不動（已被定價）', 'USD/JPY 先跌後漲'],
+      correct: 1,
+      explanation: '<strong>BOJ 升息預期落空 → USD/JPY 急漲（日圓急貶）。</strong>市場已經 price in 升息 25bp（部分 Carry 已被平倉），結果沒有升息 → 1) 利差不收窄 → Carry Trade 重新安全；2) 已平倉的 Carry 重新建立（賣 JPY/買 USD）；3) 失望性賣出 JPY。這會導致 USD/JPY 快速反彈。類似 2023 年多次 BOJ 鴿派結果後的走勢。'
+    },
+    {
+      question: '當前 VIX = 12, USD/JPY = 152 穩定上升中。以下哪個 Carry Trade 策略風險最低？',
+      context: 'VIX 低 + USD/JPY 穩定上升 = Carry Trade 的理想環境（低波動 + 匯率方向有利）。',
+      options: ['Long MXN/JPY（利差 10%）', 'Long AUD/JPY（利差 3.8%）', 'Long TRY/JPY（利差 40%+）', 'Long EUR/JPY（利差 3%）'],
+      correct: 1,
+      explanation: '<strong>AUD/JPY 在風險/報酬比上最佳。</strong>MXN 有新興市場政治風險，TRY 波動極大（利差高但匯率風險更高），EUR/JPY 利差較低。AUD/JPY 的優勢：1) 利差合理（3.8%）；2) AUD 是 G10 貨幣，流動性好；3) 如果中國經濟好，AUD 還有額外升值收益；4) 波動比 EM 貨幣小。VIX 12 確認低波動環境適合 Carry。'
+    },
+    {
+      question: 'EUR/USD 突破 1.12 向上，同時 GBP/USD 也創新高。這對你的整體投資組合意味著什麼？',
+      context: 'EUR 和 GBP 同時走強 = DXY 正在大幅走弱（EUR 佔 DXY 57.6%，GBP 佔 11.9%）。',
+      options: ['只影響外匯交易者，對股票/加密無影響', '確認弱美元趨勢 → 增加 EM/商品/BTC 配置', '應該做空 EUR 和 GBP（均值回歸）', '美國經濟正在崩潰，應該全部避險'],
+      correct: 1,
+      explanation: '<strong>EUR + GBP 同步走強 = DXY 弱勢趨勢確立。</strong>兩者合佔 DXY 近 70%，同時走強意味著 DXY 正在明確下跌。弱美元環境是 EM 股票、商品、黃金、BTC 的利多。正確做法是順著這個趨勢增加非美元資產配置。這不代表美國經濟崩潰（可能只是 Fed 開始降息而歐洲追趕），但確實代表美元資產的相對吸引力下降。'
+    },
+    {
+      question: 'USD/CNH 突然從 7.2 跳升到 7.4（人民幣急貶），你持有台股 ETF (EWT)，應該如何反應？',
+      context: '人民幣急貶通常引發亞洲貨幣連帶貶值壓力，外資可能因匯率風險撤離亞洲股市。',
+      options: ['不影響台股，人民幣與台幣沒有關係', '密切關注但不行動（等確認）', '立即減倉 EWT — 亞幣連帶貶值 + 外資撤離風險高', '加倉 EWT — 人民幣貶值利好台灣出口競爭力'],
+      correct: 2,
+      explanation: '<strong>CNH 急貶 2.8% = 立即減倉亞洲股票。</strong>歷史模式：CNH 急貶 → 1) 台幣/韓元跟貶壓力；2) 外資因匯率損失風險賣出亞洲股票；3) 中國資本外流 → 區域風險情緒惡化；4) 可能引發更多 PBOC 干預不確定性。2015/8 人民幣意外貶值導致全球股市暴跌的教訓：不要等「確認」，CNH 急貶本身就是行動信號。'
+    },
+    {
+      question: '東京盤開盤（08:00 TWN）USD/JPY 跳空下跌 1.5%，你預期接下來歐洲盤（15:00 TWN）會怎樣？',
+      context: 'USD/JPY 東京盤大跌通常延續到歐洲盤，因為歐洲的 Carry Trade 頭寸更大。',
+      options: ['歐洲盤會反彈（亞洲過度反應）', 'JPY 跌勢可能延續甚至加速（歐洲 Carry 接力平倉）', '歐洲盤與 USD/JPY 無關', '等紐約盤才會有方向'],
+      correct: 1,
+      explanation: '<strong>東京盤 USD/JPY 跳空 -1.5% = 歐洲盤很可能延續賣壓。</strong>原因：1) 東京盤流動性較差（波動已經大 = 市場有真正壓力）；2) 歐洲銀行和對沖基金持有大量 Carry 頭寸，亞洲盤的虧損觸發歐洲盤的止損；3) 風險管理部門在歐洲盤開盤時發現隔夜損失 → 被迫平倉。實戰策略：在 15:00 前減少風險部位，不要等到歐美盤虧損擴大。'
+    },
+    {
+      question: '目前處於「全球擴張 + 美弱」環境。以下哪個資產配置最合理？',
+      context: '全球擴張 + 弱美元 = 風險偏好高 + 非美資產受益 = EM/商品/BTC 的黃金環境。',
+      options: ['100% 美國長期國債', '50% EM 股票 + 30% 商品 + 20% BTC', '100% 美元現金', '70% 美股 + 30% 美債'],
+      correct: 1,
+      explanation: '<strong>全球擴張 + 美弱 = EM/商品/BTC 的最佳環境。</strong>弱美元 → EM 貨幣升值 + 外資流入 + 美元債務壓力減輕 = EM 股票大漲。弱美元 + 全球需求強 = 商品（油/銅/鐵礦）走強。BTC 作為「反美元/流動性代理」也受益。相反，美債在全球擴張期表現最差（利率上升），美元現金在美元走弱時虧購買力。'
+    },
+    {
+      question: '以下哪個是 Dollar Smile Theory 中「左邊微笑」的正確描述？',
+      context: 'Dollar Smile Theory 解釋美元在不同環境下的非線性表現。',
+      options: ['美國經濟極強，資金回流美國 → DXY 走強', '全球經濟普通，資金外流 → DXY 走弱', '全球衰退/危機，避險需求 → DXY 走強', '歐洲經濟復甦 → DXY 走弱'],
+      correct: 2,
+      explanation: '<strong>左邊微笑 = 全球衰退 → 避險買美元 → DXY 走強。</strong>Dollar Smile 有三段：左邊 = 全球恐慌（避險買美元）；中間底部 = 美國普通、全球OK（資金外流到收益率更高的地方）；右邊 = 美國獨強（增長差異吸引資金回流）。左右兩邊美元都強，但原因完全不同——左邊是恐慌，右邊是信心。判斷在哪一邊很重要，因為其他資產表現完全不同。'
+    },
+    {
+      question: 'USD/KRW 連續 5 天上升（韓元貶值），但 USD/TWD 尚未反應。你應該？',
+      context: '韓元是亞洲最敏感的風險貨幣（金絲雀），通常領先其他亞幣反應。',
+      options: ['KRW 和 TWD 沒有關係，忽略', '預期台幣接下來也會承壓，提前防禦', '做多韓元（均值回歸交易）', '加倉台股（台幣還沒跌 = 安全）'],
+      correct: 1,
+      explanation: '<strong>KRW 是亞洲的金絲雀，通常領先 TWD 反應。</strong>韓元因為資本帳更開放、交易量更大、外資持股集中，對全球風險的反應比台幣快。歷史模式：KRW 連續貶值 3-5 天 → TWD 通常在 1-2 週內跟隨。因為台灣央行會干預延緩貶值速度，但無法對抗趨勢。正確做法：KRW 走弱 = 預警 → 減少台股曝險或準備避險。'
+    },
+    {
+      question: '美國 NFP（非農就業）公布：+350K（遠超預期 +180K）。以下哪個是最可能的即時外匯反應？',
+      context: 'NFP 大幅超預期 = 美國經濟非常強 → Fed 可能推遲降息 → 美元走強。',
+      options: ['DXY 下跌（就業強 = 經濟好 = 不需要避險）', 'DXY 急升 + USD/JPY 急升 + 黃金下跌', 'EUR/USD 急升（歐洲數據不相關）', 'USD/JPY 下跌（日圓避險）'],
+      correct: 1,
+      explanation: '<strong>NFP 大幅超預期 → DXY 急升 + USD/JPY 升 + 黃金跌。</strong>邏輯鏈：NFP 超強 → 市場重新定價 Fed 降息時點推遲 → 利差預期擴大 → 美元走強。USD/JPY 上升因為利差維持高位（Carry 安全）。黃金下跌因為美元強 + 實質利率上升預期。這些反應在數據公布後秒級發生。'
+    },
+    {
+      question: '你觀察到以下組合：DXY 走弱 + USD/JPY 穩定 + AUD 走強 + USD/TWD 下跌。這是什麼環境？',
+      context: '多貨幣信號組合可以幫助判斷全球宏觀 regime。',
+      options: ['全球衰退', '全球擴張 + 弱美元（最佳 risk-on 環境）', '停滯性通膨', '美國獨強'],
+      correct: 1,
+      explanation: '<strong>這是教科書級的「全球擴張 + 弱美元」環境。</strong>DXY 弱 = 美元流動性擴張；USD/JPY 穩定 = Carry 安全（沒有恐慌）；AUD 強 = 中國/全球需求好；USD/TWD 跌 = 外資流入亞洲。四個信號全部指向同一方向 = 高信心判斷。這是做多 EM/商品/BTC 的最佳環境。注意：如果其中一個信號矛盾（如 JPY 急升），就要降低信心度。'
+    },
+    {
+      question: '以下哪個 Carry Trade 場景風險最高？',
+      context: 'Carry Trade 在特定環境下可能突然從獲利變成巨虧。',
+      options: ['VIX=12, USD/JPY=152 穩定, Fed 暫停加息', 'VIX=25, USD/JPY=148 且連跌三天, BOJ 即將開會', 'VIX=14, USD/JPY=150, ECB 降息', 'VIX=10, USD/JPY=145, 全球PMI回升'],
+      correct: 1,
+      explanation: '<strong>VIX=25 + USD/JPY 連跌 + BOJ 即將開會 = Carry 危機前兆。</strong>分析：1) VIX 25 代表市場已經緊張；2) USD/JPY 連跌三天代表 Carry 已在虧損邊緣；3) BOJ 開會可能升息 → 更大的平倉壓力。三者疊加 = Carry Trade 爆倉風險極高。在這種環境下持有 Carry 頭寸就像坐在火藥桶上。2024/7/31 BOJ 升息前就是類似場景。'
+    },
+    {
+      question: 'PBOC 連續三天設定的人民幣中間價都比市場預期強（CNY 中間價更低）。這代表什麼？',
+      context: 'PBOC 透過設定每日中間價來傳達政策意圖。中間價強於市場 = 央行想穩定匯率。',
+      options: ['PBOC 想讓人民幣繼續貶值', 'PBOC 正在抵抗貶值壓力，試圖穩定人民幣', 'PBOC 要升息了', '與市場走勢無關'],
+      correct: 1,
+      explanation: '<strong>中間價連續強於市場預期 = PBOC 明確傳達「不願看到快速貶值」。</strong>這是 PBOC 的「口頭干預」——告訴市場空頭：「我們會穩定匯率」。如果市場忽視，PBOC 可能升級到：1) 提高離岸做空成本；2) 動用外匯儲備干預；3) 收緊跨境資本管制。對投資者的意義：CNH 急貶可能暫緩，但如果基本面壓力持續（如中美利差大），最終 PBOC 可能放棄抵抗。'
+    },
+    {
+      question: '外匯市場最大波動通常出現在哪個時段（台灣時間）？',
+      context: '不同時段有不同的流動性和波動特徵，了解時段特性對避險和交易都很重要。',
+      options: ['08:00-12:00（東京早盤）', '15:00-18:00（歐洲開盤）', '21:30-24:00（歐美重疊）', '03:00-06:00（紐約午後）'],
+      correct: 2,
+      explanation: '<strong>21:30-24:00（歐美重疊時段）波動最大。</strong>原因：1) 這是歐洲和美國市場同時活躍的時段，全球最多交易者在線；2) 美國重要經濟數據在 21:30 公布（NFP、CPI 等）；3) 流動性最好 = 大單可以成交 = 機構在此時段調整倉位。如果你要交易外匯，這是最佳時段；如果你想避開波動風險，注意在此時段前設好止損。'
+    },
+    {
+      question: '停滯性通膨環境下（經濟停滯 + 高通膨），以下哪個外匯/資產組合表現最好？',
+      context: '滯脹是最惡劣的環境——央行左右為難，大多數資產都虧。',
+      options: ['做多 USD/JPY + 做多美股', '做多黃金 + 做多商品貨幣（AUD/CAD）', '做多美國長債 + 做空 DXY', '做多美元現金 + 做空所有風險資產'],
+      correct: 1,
+      explanation: '<strong>滯脹中黃金 + 商品是最佳避風港。</strong>黃金在滯脹中表現最好（通膨保值 + 不依賴經濟增長）。商品貨幣因通膨來自商品漲價而受益（原物料需求/供給不平衡）。美股在滯脹中表現差（盈利下降 + 利率無法降）；美債在通膨高時虧損；純做空風險太高（商品可能繼續漲）。1970s 滯脹期黃金漲了 20 倍。'
+    },
+    {
+      question: '你看到以下數據組合出現：DXY = 95（低位）+ 銅創新高 + AUD/USD = 0.75 + USD/CNH = 6.8。全球正處於什麼階段？',
+      context: '多指標同步確認可以高信心判斷宏觀 regime。',
+      options: ['全球衰退初期', '全球擴張的加速期（中國帶動的超級週期）', '美國獨強期', '停滯性通膨'],
+      correct: 1,
+      explanation: '<strong>這是中國主導的全球擴張超級週期。</strong>所有指標一致：DXY 95（弱美元）= 全球流動性充裕；銅創新高 = 全球工業需求爆發；AUD/USD 0.75（高位）= 中國需求極強；USD/CNH 6.8（人民幣極強）= 中國經濟活力充沛 + 資本流入。這種環境在 2003-2007 和 2009-2011 出現過，EM 股票年化報酬 20-40%。'
+    },
+    {
+      question: '台灣央行被列入美國財政部「匯率操縱觀察名單」。這對台幣走勢有什麼潛在影響？',
+      context: '美國財政部定期評估各國是否刻意壓低匯率來獲取出口優勢。被列入名單的國家面臨壓力不能持續干預。',
+      options: ['台幣會立即大幅升值', '長期來看台灣央行干預空間縮小，台幣偏升值', '完全沒有影響（美國無法強制）', '台幣會貶值（被制裁）'],
+      correct: 1,
+      explanation: '<strong>列入觀察名單 = 長期減少干預空間 → 台幣偏升值方向。</strong>雖然觀察名單不是制裁，但政治壓力使台灣央行在「阻止升值」方面更加克制。歷史上，被列入後台灣央行通常會減少單方向干預（尤其是阻升），讓台幣更自由浮動。這意味著在資金流入時期，台幣升值的幅度可能比過去更大。但這是漸進影響，不是即時衝擊。'
+    },
+    {
+      question: '你注意到 EUR/USD 和 USD/JPY 同時上漲。這代表什麼？',
+      context: '通常 EUR/USD 上漲 = 美元弱，但 USD/JPY 上漲 = 美元強。兩者同時漲似乎矛盾。',
+      options: ['數據一定有錯', '日圓在所有貨幣中最弱（被全面拋售）', '美元在所有貨幣中最強', '歐元在所有貨幣中最強'],
+      correct: 1,
+      explanation: '<strong>EUR/USD↑ + USD/JPY↑ = 日圓是最弱環節。</strong>分析：EUR/USD↑ 代表歐元比美元強；USD/JPY↑ 代表美元比日圓強。合在一起 = EUR > USD > JPY。日圓是被全面拋售的貨幣。這通常出現在 Carry Trade 大量建倉期（借日圓買其他一切）或 BOJ 超級鴿派時。如果 EUR/JPY 也在漲，就完全確認了——日圓是全場最弱。'
+    }
+  ];
+
+  let shuffledQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let total = 0;
+  let answered = false;
+
+  const scoreEl = document.getElementById('quiz-score');
+  const progressEl = document.getElementById('quiz-progress');
+  const questionText = document.getElementById('quiz-question-text');
+  const contextEl = document.getElementById('quiz-context');
+  const optionsEl = document.getElementById('quiz-options');
+  const resultEl = document.getElementById('quiz-result');
+  const resultIcon = document.getElementById('quiz-result-icon');
+  const resultAnswer = document.getElementById('quiz-result-answer');
+  const resultExplanation = document.getElementById('quiz-result-explanation');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  const finalEl = document.getElementById('quiz-final');
+  const finalText = document.getElementById('quiz-final-text');
+  const finalSub = document.getElementById('quiz-final-sub');
+  const restartBtn = document.getElementById('quiz-restart-btn');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    shuffledQuestions = shuffle(questions);
+    currentIndex = 0;
+    score = 0;
+    total = 0;
+    answered = false;
+    finalEl.style.display = 'none';
+    document.getElementById('quiz-question-area').style.display = 'block';
+    nextBtn.style.display = 'inline-block';
+    updateScore();
+    showQuestion();
+  }
+
+  function updateScore() {
+    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+  }
+
+  function showQuestion() {
+    if (currentIndex >= shuffledQuestions.length) {
+      showFinal();
+      return;
+    }
+    answered = false;
+    resultEl.style.display = 'none';
+    const q = shuffledQuestions[currentIndex];
+    progressEl.textContent = '第 ' + (currentIndex + 1) + ' / ' + shuffledQuestions.length + ' 題';
+    questionText.textContent = q.question;
+    contextEl.innerHTML = q.context;
+    optionsEl.innerHTML = '';
+    q.options.forEach(function(opt, idx) {
+      const btn = document.createElement('button');
+      btn.textContent = String.fromCharCode(65 + idx) + ') ' + opt;
+      btn.style.cssText = 'padding:12px 16px; border:1px solid var(--border); border-radius:8px; background:var(--bg2); font-size:13px; font-weight:500; cursor:pointer; text-align:left; transition:all .15s; font-family:inherit; color:var(--text);';
+      btn.onmouseover = function() { if (!answered) this.style.background = 'var(--bg3)'; };
+      btn.onmouseout = function() { if (!answered) this.style.background = 'var(--bg2)'; };
+      btn.onclick = function() { selectAnswer(idx, btn); };
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(idx, btn) {
+    if (answered) return;
+    answered = true;
+    total++;
+    const q = shuffledQuestions[currentIndex];
+    const buttons = optionsEl.querySelectorAll('button');
+
+    if (idx === q.correct) {
+      score++;
+      btn.style.background = 'var(--green-l)';
+      btn.style.borderColor = 'var(--green)';
+      btn.style.color = 'var(--green)';
+      resultIcon.textContent = '✅';
+      resultAnswer.style.color = 'var(--green)';
+      resultAnswer.textContent = '正確！';
+    } else {
+      btn.style.background = 'var(--red-l)';
+      btn.style.borderColor = 'var(--red)';
+      btn.style.color = 'var(--red)';
+      buttons[q.correct].style.background = 'var(--green-l)';
+      buttons[q.correct].style.borderColor = 'var(--green)';
+      buttons[q.correct].style.color = 'var(--green)';
+      resultIcon.textContent = '❌';
+      resultAnswer.style.color = 'var(--red)';
+      resultAnswer.textContent = '錯誤！正確答案：' + String.fromCharCode(65 + q.correct) + ') ' + q.options[q.correct];
+    }
+
+    buttons.forEach(function(b) { b.style.cursor = 'default'; });
+    resultExplanation.innerHTML = q.explanation;
+    resultEl.style.display = 'block';
+    updateScore();
+  }
+
+  function showFinal() {
+    document.getElementById('quiz-question-area').style.display = 'none';
+    resultEl.style.display = 'none';
+    nextBtn.style.display = 'none';
+    finalEl.style.display = 'block';
+    const pct = Math.round((score / total) * 100);
+    finalText.textContent = '最終得分：' + score + ' / ' + total + ' (' + pct + '%)';
+    if (pct >= 80) finalSub.textContent = '優秀！你對外匯分析的掌握很紮實！';
+    else if (pct >= 60) finalSub.textContent = '不錯！再多練習可以更好。建議回去看 Tab 1-6 的內容。';
+    else finalSub.textContent = '需要加強復習！建議從 Tab 1 開始重新學習外匯基礎。';
+  }
+
+  nextBtn.addEventListener('click', function() {
+    currentIndex++;
+    showQuestion();
+  });
+
+  restartBtn.addEventListener('click', startQuiz);
+
+  startQuiz();
+})();
+</script>
+</div>
+
+<!-- ==================== TAB SWITCH SCRIPT ==================== -->
+<script>
+function switchTab(idx) {
+  const tabs = document.querySelectorAll('.tab-content');
+  const btns = document.querySelectorAll('.tab-btn');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  btns.forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab' + idx).classList.add('active');
+  btns[idx].classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
