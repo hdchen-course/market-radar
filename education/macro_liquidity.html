@@ -277,7 +277,8 @@ code {
   <button class="tab-btn" onclick="switchTab(3)">DXY 與資金流</button>
   <button class="tab-btn" onclick="switchTab(4)">信用利差</button>
   <button class="tab-btn" onclick="switchTab(5)">經濟數據</button>
-  <button class="tab-btn" onclick="switchTab(6)">互動測驗</button>
+  <button class="tab-btn" onclick="switchTab(6)">估值泡沫指標</button>
+  <button class="tab-btn" onclick="switchTab(7)">互動測驗</button>
 </div>
 
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
@@ -1461,7 +1462,64 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
 </div>
 
-<!-- ==================== TAB 7: 互動測驗 ==================== -->
+<!-- ==================== TAB 7: 估值泡沫指標 ==================== -->
+<div class="tab-content">
+<h2 class="section-title">估值泡沫指標 — Household Equity Allocation</h2>
+
+<div class="card">
+<h3>美國家庭股票配置比例（Buffett 指標之一）</h3>
+<p>美國家庭金融資產中股票佔比，是判斷長期（3-5年）市場泡沫程度的核心指標。數據來源：Fed Z.1 Financial Accounts（每季公布）。</p>
+
+<div class="highlight-box">
+<strong>原理：</strong>家庭是最後進場、最後離場的群體。當「連鄰居都在買股票」時 = 頂部。當「所有人都發誓永遠不碰股票」時 = 底部。
+</div>
+
+<h4>歷史對照表</h4>
+<table class="data-table">
+<tr><th>時期</th><th>股票佔比</th><th>之後 3 年報酬</th><th>含義</th></tr>
+<tr><td>2000 網路泡沫頂</td><td style="color:#dc2626;font-weight:700">53%</td><td>S&P -40%</td><td>極度泡沫</td></tr>
+<tr><td>2002 底部</td><td style="color:#16a34a;font-weight:700">32%</td><td>S&P +80%</td><td>極度低估</td></tr>
+<tr><td>2007 金融危機前</td><td style="color:#d97706">47%</td><td>S&P -50%</td><td>偏高</td></tr>
+<tr><td>2009 底部</td><td style="color:#16a34a;font-weight:700">29%</td><td>S&P +100%</td><td>歷史底部</td></tr>
+<tr><td>2021 高點</td><td style="color:#dc2626;font-weight:700">51%</td><td>S&P -25%(2022)</td><td>泡沫區</td></tr>
+<tr><td>2024-2025 估計</td><td style="color:#d97706">48-52%</td><td>???</td><td>偏高，類似 2007</td></tr>
+</table>
+
+<h4>判讀規則</h4>
+<table class="data-table">
+<tr><th>區間</th><th>含義</th><th>長期預期報酬（年化）</th><th>操作建議</th></tr>
+<tr><td style="color:#dc2626">&gt; 50%</td><td>極度泡沫</td><td>0-3%</td><td>降低股票配置，增持現金/債券</td></tr>
+<tr><td style="color:#d97706">40-50%</td><td>偏高</td><td>3-6%</td><td>正常配置但留意風險</td></tr>
+<tr><td>30-40%</td><td>正常/偏低</td><td>6-10%</td><td>積極配置</td></tr>
+<tr><td style="color:#16a34a">&lt; 30%</td><td>極度低估</td><td>10-15%</td><td>全力做多（歷史最佳買點）</td></tr>
+</table>
+
+<div class="warning-box">
+<strong>⚠️ 限制：</strong>
+<ul>
+<li>只適合判斷<strong>長期</strong>（3-5年）泡沫程度，不適合短線交易</li>
+<li>數據每季更新一次（Fed Z.1），非即時</li>
+<li>可能因 401K/被動投資結構性增加而偏高（"new normal" 爭議）</li>
+<li>無法告訴你泡沫「何時」破裂 — 只告訴你「是否」在泡沫中</li>
+</ul>
+</div>
+
+<h4>與其他指標搭配</h4>
+<table class="data-table">
+<tr><th>指標</th><th>當前暗示</th><th>搭配使用</th></tr>
+<tr><td>Household Equity Allocation ~50%</td><td>長期報酬偏低</td><td>確認方向</td></tr>
+<tr><td>Buffett Indicator (市值/GDP)</td><td>偏高</td><td>交叉驗證</td></tr>
+<tr><td>Shiller CAPE P/E</td><td>~33x (偏高)</td><td>估值確認</td></tr>
+<tr><td>VIX < 15</td><td>短線自滿</td><td>時機信號</td></tr>
+</table>
+
+<div class="insight-box">
+<strong>實戰應用：</strong>Household Equity Allocation > 50% + VIX < 15 + 30Y 突破關鍵位 = 這就是 2026/6 這週發生的事。長期泡沫 + 短線自滿 + 利率衝擊 = 暴跌的完美條件。這個指標不會告訴你「哪一天」跌，但會告訴你「跌的時候會很慘」。
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 8: 互動測驗 ==================== -->
 <div class="tab-content" id="tab6">
 <h2 class="section-title">互動測驗</h2>
 
