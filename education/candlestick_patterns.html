@@ -1988,6 +1988,96 @@ h1 {
   </div>
 </div>
 
+<!-- 3.5 SuperTrend 偏離度反向交易框架 -->
+<div class="pattern-card">
+  <div class="pattern-header">
+    <div class="pattern-svg">
+      <svg viewBox="0 0 200 120" width="200" height="120">
+        <!-- ST lower band line -->
+        <line x1="5" y1="40" x2="195" y2="40" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="5" y="35" font-size="6" fill="#2563eb">ST Lower Band</text>
+        <!-- 1x ATR -->
+        <line x1="5" y1="55" x2="195" y2="55" stroke="#64748b" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <text x="160" y="53" font-size="5" fill="#64748b">1×ATR</text>
+        <!-- 2x ATR -->
+        <line x1="5" y1="70" x2="195" y2="70" stroke="#d97706" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <text x="160" y="68" font-size="5" fill="#d97706">2×ATR</text>
+        <!-- 3x ATR = extreme zone -->
+        <rect x="5" y="82" width="190" height="30" rx="3" fill="#16a34a" opacity="0.1"/>
+        <line x1="5" y1="85" x2="195" y2="85" stroke="#16a34a" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <text x="160" y="83" font-size="5" fill="#16a34a">3×ATR 反彈區</text>
+        <!-- Price dropping into zone then bouncing -->
+        <polyline points="20,30 40,35 60,45 80,55 100,70 120,88 130,92 140,90 150,85 160,80 170,72 180,65" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+        <!-- Hammer at bottom -->
+        <line x1="130" y1="85" x2="130" y2="100" stroke="#16a34a" stroke-width="1"/>
+        <rect x="128" y="85" width="4" height="7" fill="#16a34a"/>
+        <text x="125" y="112" font-size="5" fill="#16a34a">🔨反轉K線</text>
+      </svg>
+    </div>
+    <div class="pattern-info">
+      <div class="pattern-title">SuperTrend 偏離度反向交易</div>
+      <div class="pattern-title-en">Mean Reversion from ST Deviation</div>
+      <div class="pattern-row"><span class="pattern-label">核心概念</span><span class="pattern-value">價格偏離 SuperTrend band 越遠，反彈機率越高。但「偏離夠遠」只是必要條件，不是充分條件 — 必須搭配確認信號。</span></div>
+    </div>
+  </div>
+  <div class="pattern-body">
+    <h4>偏離度量化（用 ATR 衡量）</h4>
+    <p><strong>公式：</strong>偏離度 = |價格 - ST Band| ÷ ATR</p>
+    <table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;">
+      <tr style="background:#f1f5f9"><th style="padding:8px;border:1px solid #cbd5e1">偏離度</th><th style="padding:8px;border:1px solid #cbd5e1">含義</th><th style="padding:8px;border:1px solid #cbd5e1">反向交易？</th><th style="padding:8px;border:1px solid #cbd5e1">歷史反彈率</th></tr>
+      <tr><td style="padding:8px;border:1px solid #cbd5e1">0-1× ATR</td><td style="padding:8px;border:1px solid #cbd5e1">正常趨勢運行</td><td style="padding:8px;border:1px solid #cbd5e1;color:#dc2626;font-weight:700">❌ 絕不反向</td><td style="padding:8px;border:1px solid #cbd5e1">~20%</td></tr>
+      <tr><td style="padding:8px;border:1px solid #cbd5e1">1-2× ATR</td><td style="padding:8px;border:1px solid #cbd5e1">開始延伸</td><td style="padding:8px;border:1px solid #cbd5e1;color:#d97706">⚠️ 觀察，不入場</td><td style="padding:8px;border:1px solid #cbd5e1">~35%</td></tr>
+      <tr><td style="padding:8px;border:1px solid #cbd5e1;color:#d97706;font-weight:600">2-3× ATR</td><td style="padding:8px;border:1px solid #cbd5e1">明顯超伸</td><td style="padding:8px;border:1px solid #cbd5e1;color:#d97706">🟡 等確認信號</td><td style="padding:8px;border:1px solid #cbd5e1">~55%</td></tr>
+      <tr style="background:#dcfce7"><td style="padding:8px;border:1px solid #cbd5e1;color:#16a34a;font-weight:700">&gt;3× ATR</td><td style="padding:8px;border:1px solid #cbd5e1">極端超伸</td><td style="padding:8px;border:1px solid #cbd5e1;color:#16a34a;font-weight:700">🟢 高機率反彈區</td><td style="padding:8px;border:1px solid #cbd5e1">~70%</td></tr>
+    </table>
+
+    <h4>確認信號 Checklist（必須 ≥3/5 才入場）</h4>
+    <div class="highlight-box">
+    <ol style="margin-left:16px;">
+      <li><strong>偏離 ≥ 2× ATR</strong>（超伸足夠）</li>
+      <li><strong>K 線反轉型態</strong>（Hammer / 吞噬 / 晨星 / 長下影）</li>
+      <li><strong>橫盤確認</strong>（至少 3-4 根 K 線不破新低/新高）</li>
+      <li><strong>MACD 柱體收縮 + 黃金/死亡交叉</strong>（動能衰竭確認）</li>
+      <li><strong>成交量萎縮</strong>（賣壓/買壓衰竭）</li>
+    </ol>
+    </div>
+
+    <h4>實戰案例：白銀 2026/6/5</h4>
+    <table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;">
+      <tr style="background:#f1f5f9"><th style="padding:6px;border:1px solid #cbd5e1">項目</th><th style="padding:6px;border:1px solid #cbd5e1">數據</th><th style="padding:6px;border:1px solid #cbd5e1">判定</th></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">4H ATR</td><td style="padding:6px;border:1px solid #cbd5e1">~$1.0</td><td style="padding:6px;border:1px solid #cbd5e1">—</td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">ST 4H Lower Band</td><td style="padding:6px;border:1px solid #cbd5e1">~$72</td><td style="padding:6px;border:1px solid #cbd5e1">—</td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">價格</td><td style="padding:6px;border:1px solid #cbd5e1">$67.84</td><td style="padding:6px;border:1px solid #cbd5e1">偏離 = $4.16 = <strong>4.2× ATR ✅</strong></td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">K 線反轉</td><td style="padding:6px;border:1px solid #cbd5e1">仍在破新低</td><td style="padding:6px;border:1px solid #cbd5e1;color:#dc2626">❌ 無反轉型態</td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">橫盤</td><td style="padding:6px;border:1px solid #cbd5e1">未橫盤</td><td style="padding:6px;border:1px solid #cbd5e1;color:#dc2626">❌</td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">MACD</td><td style="padding:6px;border:1px solid #cbd5e1">柱體仍在擴大</td><td style="padding:6px;border:1px solid #cbd5e1;color:#dc2626">❌ 未交叉</td></tr>
+      <tr><td style="padding:6px;border:1px solid #cbd5e1">成交量</td><td style="padding:6px;border:1px solid #cbd5e1">放量下跌</td><td style="padding:6px;border:1px solid #cbd5e1;color:#dc2626">❌ 賣壓未衰竭</td></tr>
+    </table>
+    <p><strong>結論：偏離度夠（4.2× ATR ✅），但確認信號只有 1/5 → 不入場。</strong>即使「跌過頭了」的直覺是對的，沒有確認信號就不能買。</p>
+
+    <div class="warning-box">
+      <strong>⚠️ 最重要的規則：</strong>
+      <ul>
+        <li>偏離度只告訴你「反彈機率在升高」，不告訴你「何時反彈」</li>
+        <li>在系統性崩盤中（2020/3、2022/6、2026/6），偏離可以到 5-6× ATR 才見底</li>
+        <li>「跌過頭了」≠「該買了」— 需要等確認信號（橫盤 + K 線反轉 + MACD 交叉）</li>
+        <li>反向交易止損必須設在新低下方 1× ATR — 如果判斷錯了要快走</li>
+      </ul>
+    </div>
+
+    <h4>入場 SOP（偏離度反向交易）</h4>
+    <div class="highlight-box">
+    <p><strong>Step 1：</strong>計算偏離度 = |價格 - ST Band| ÷ ATR → ≥ 2× 才繼續</p>
+    <p><strong>Step 2：</strong>等橫盤（3-4 根 K 不破新低）→ 沒橫盤不做</p>
+    <p><strong>Step 3：</strong>等 K 線反轉信號（Hammer/吞噬）出現</p>
+    <p><strong>Step 4：</strong>確認 MACD 柱體收縮 or 交叉</p>
+    <p><strong>Step 5：</strong>入場，止損設在橫盤低點下方 0.5-1× ATR</p>
+    <p><strong>Step 6：</strong>目標 = ST Band 附近（回歸均值）= 偏離度回到 0</p>
+    <p><strong>風報比要求：</strong>至少 1:2（止損 $1 → 目標 $2+）</p>
+    </div>
+  </div>
+</div>
+
 <!-- 4. 突破 vs 假突破確認清單 -->
 <div class="pattern-card">
   <div class="pattern-header">
