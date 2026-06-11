@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跨資產資金流與商品供需分析 — 判斷錢流去哪裡、商品在囤積嗎？</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc; --bg2: #fff; --bg3: #f1f5f9; --border: #cbd5e1;
+  --text: #0f172a; --text2: #334155; --text3: #64748b;
+  --blue: #2563eb; --blue-l: #dbeafe; --green: #16a34a; --green-l: #dcfce7;
+  --red: #dc2626; --red-l: #fee2e2; --yellow: #d97706; --yellow-l: #fef3c7;
+  --purple: #7c3aed; --purple-l: #ede9fe; --orange: #ea580c; --orange-l: #fff7ed;
+  --r: 12px; --shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh; padding: 20px; }
+.back-link { display: inline-block; margin-bottom: 16px; color: var(--blue); text-decoration: none; font-size: 14px; }
+.back-link:hover { text-decoration: underline; }
+.container { max-width: 880px; margin: 0 auto; }
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+.subtitle { font-size: 15px; color: var(--text3); margin-bottom: 32px; }
+.section-title { font-size: 22px; font-weight: 700; color: var(--blue); margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--blue); }
+h3 { font-size: 17px; font-weight: 700; color: var(--text); margin: 28px 0 12px; }
+p { margin-bottom: 12px; color: var(--text2); }
+ul, ol { margin: 8px 0 16px 20px; color: var(--text2); }
+li { margin-bottom: 6px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+th, td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
+th { background: var(--bg3); font-weight: 600; color: var(--text); }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; margin: 16px 0; box-shadow: var(--shadow); }
+.insight { background: var(--blue-l); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
+.warning { background: var(--red-l); border-left: 4px solid var(--red); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
+.example { background: var(--green-l); border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
+.formula { background: var(--purple-l); border: 1px solid #c4b5fd; border-radius: var(--r); padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.tag-bull { background: var(--green-l); color: var(--green); }
+.tag-bear { background: var(--red-l); color: var(--red); }
+code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.data-source { background: var(--orange-l); border: 1px solid #fed7aa; border-radius: var(--r); padding: 12px 16px; margin: 12px 0; font-size: 13px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>跨資產資金流與商品供需分析</h1>
+<p class="subtitle">判斷錢流去哪裡？商品在囤積嗎？市場泡沫有多大？— 從資金流、情緒指標到實物供需的完整框架</p>
+
+<!-- ===== PART 1: CROSS-ASSET FLOW ===== -->
+<h2 class="section-title">Part 1：跨資產資金流 — 錢在哪裡？</h2>
+
+<h3>資金輪動的四大池子</h3>
+<p>全球資金永遠在四個主要池子之間輪動。判斷「錢在流向哪裡」是所有交易決策的起點。</p>
+
+<table>
+<tr><th>池子</th><th>代表資產</th><th>什麼時候資金流入</th><th>追蹤指標</th></tr>
+<tr><td><strong>風險資產（股票）</strong></td><td>SPY, QQQ, 半導體</td><td>經濟擴張、利率低、信心高</td><td>Equity fund flows, margin debt, AAII</td></tr>
+<tr><td><strong>安全資產（債券）</strong></td><td>TLT, US Treasuries</td><td>衰退恐懼、避險、降息預期</td><td>TLT flows, yield方向, 30Y</td></tr>
+<tr><td><strong>實物資產（商品）</strong></td><td>Gold, Silver, Copper, Oil</td><td>通膨、供需失衡、去美元化</td><td>COT, 庫存, 現貨溢價</td></tr>
+<tr><td><strong>現金（貨幣基金）</strong></td><td>MMF, USDT/USDC, 活存</td><td>不確定性極高、利率高</td><td>Money Market Fund AUM</td></tr>
+</table>
+
+<div class="insight">
+<strong>核心原則：</strong>資金是零和遊戲。流入一個池子 = 流出另一個池子。如果你看到 Money Market Fund AUM 創新高 → 代表錢在場外觀望 → 這些是未來反彈的「彈藥庫」。
+</div>
+
+<h3>如何判斷資金正在流向哪裡？</h3>
+
+<div class="card">
+<h3>指標 1：Fund Flow 數據</h3>
+<p>每週公布的 ETF/共同基金淨流入流出，直接告訴你「機構和散戶把錢放哪」。</p>
+<table>
+<tr><th>數據來源</th><th>頻率</th><th>怎麼看</th></tr>
+<tr><td>EPFR Global Fund Flows</td><td>週報</td><td>股票基金 vs 債券基金 vs 商品基金 vs MMF</td></tr>
+<tr><td>ICI (Investment Company Institute)</td><td>週報</td><td>美國共同基金+ETF資金流</td></tr>
+<tr><td>Bloomberg ETF flows</td><td>日報</td><td>特定ETF的資金淨流入（如GLD, SLV, SPY, TLT）</td></tr>
+<tr><td>BTC ETF Daily Flow</td><td>日報</td><td>加密市場的機構資金動向</td></tr>
+</table>
+
+<div class="data-source">
+<strong>免費查看：</strong>
+<ul>
+<li>ETF flows: etf.com/etf-flow-tool 或 Yahoo Finance ETF頁面</li>
+<li>BTC ETF flows: theblock.co 或 coinglass.com</li>
+<li>Money Market AUM: fred.stlouisfed.org (搜尋 "MMMFFAQ027S")</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>指標 2：Money Market Fund（貨幣基金）AUM</h3>
+<p>Money Market Fund 是「恐懼的量化指標」。當投資人不知道買什麼 → 把錢停在 MMF 賺利息。</p>
+
+<table>
+<tr><th>MMF AUM 狀態</th><th>含義</th><th>後續走勢</th></tr>
+<tr><td>持續創新高</td><td>大量資金在場外觀望（恐懼/不確定）</td><td>一旦信心恢復 → 爆發性流入股市/商品</td></tr>
+<tr><td>開始下降</td><td>資金從場外流入風險資產</td><td>牛市啟動或加速中</td></tr>
+<tr><td>穩定不動</td><td>維持觀望，利率夠高不想動</td><td>需要催化劑（降息/恐慌消退）</td></tr>
+</table>
+
+<div class="example">
+<strong>實例（2026年）：</strong>MMF AUM 在 CPI 4.2% 公布後持續攀升 → 投資人寧可拿 5%+ 利息也不碰股市 → 代表「場外彈藥庫」在累積。當 Fed 最終轉鴿 → 這些資金會爆發性流入。
+</div>
+</div>
+
+<div class="card">
+<h3>指標 3：跨市場相關性與 Rotation 信號</h3>
+<p>通過觀察不同資產間的相對強弱，判斷資金在往哪裡 rotate。</p>
+
+<table>
+<tr><th>觀察組合</th><th>資金流向判讀</th></tr>
+<tr><td>股漲+債跌（殖利率升）</td><td>Risk-On：資金從安全資產流向風險資產</td></tr>
+<tr><td>股跌+債漲（殖利率降）</td><td>Risk-Off：資金逃離股市躲入國債</td></tr>
+<tr><td>股跌+債跌+金漲</td><td>恐慌+通膨：連債都不信任了，只信黃金</td></tr>
+<tr><td>股跌+債跌+金跌+美元漲</td><td>流動性危機：所有人搶美元現金（2020年3月模式）</td></tr>
+<tr><td>金漲+銅漲+油漲+股漲</td><td>再通膨交易：資金湧入所有實物+風險資產</td></tr>
+<tr><td>金漲+銅跌+股跌</td><td>滯脹：只有避險需求，工業需求崩盤</td></tr>
+</table>
+
+<div class="warning">
+<strong>2026年6月的 Regime（滯脹信號）：</strong>金漲但銅跌+股跌+30Y飆升 = 典型滯脹。資金不知道去哪 → 同時流入 MMF（高利息）和黃金（避險）。BTC 出現新的「滯脹避險」角色。
+</div>
+</div>
+
+<!-- ===== PART 2: EQUITY BUBBLE ===== -->
+<h2 class="section-title">Part 2：股市泡沫判斷 — 大家把多少錢拿去投資？</h2>
+
+<h3>家庭股票配置比例（Household Equity Allocation）</h3>
+
+<div class="card">
+<p>衡量美國家庭在金融資產中有多大比例放在股票。這是巴菲特型的長線泡沫指標。</p>
+
+<div class="formula">
+家庭股票配置 = 股票市值 / (股票 + 債券 + 現金 + 其他金融資產)<br>
+<br>
+歷史高點對照：<br>
+• 2000年（.com泡沫峰值）：~52%<br>
+• 2007年（金融海嘯前）：~42%<br>
+• 2021年（疫情牛市峰值）：~51%<br>
+• 若 > 45% → 警戒區<br>
+• 若 > 50% → 極度泡沫區
+</div>
+
+<div class="data-source">
+<strong>數據來源：</strong>Fed Z.1 Financial Accounts (fred.stlouisfed.org 搜尋 "households equity share") — 每季更新
+</div>
+
+<p><strong>為什麼有效：</strong>當家庭把太多比例放在股票 → 代表所有人都已經 All-in → 沒有新的邊際買家 → 任何負面催化都會引發拋售。</p>
+
+<div class="insight">
+<strong>如何使用：</strong>這不是 timing 工具（不能告訴你「明天跌」），而是「環境判斷」— 告訴你現在是在泡沫區還是價值區。在泡沫區應該降低倉位；在低配置區應該大膽加倉。
+</div>
+</div>
+
+<h3>AAII 情緒指標（American Association of Individual Investors）</h3>
+
+<div class="card">
+<p>每週調查美國散戶投資人未來6個月對股市的看法：看多(Bullish)、看空(Bearish)、中立(Neutral)。</p>
+
+<table>
+<tr><th>指標</th><th>極端值</th><th>含義</th><th>歷史勝率</th></tr>
+<tr><td>Bullish > 50%</td><td>極度樂觀</td><td>逆向信號：散戶 All-in → 頂部接近</td><td>後6個月平均報酬低於歷史</td></tr>
+<tr><td>Bearish > 50%</td><td>極度悲觀</td><td>逆向信號：散戶恐慌 → 底部接近</td><td>後6個月平均報酬高於歷史</td></tr>
+<tr><td>Bull-Bear Spread < -20%</td><td>極端恐慌</td><td>強烈買入信號</td><td>歷史上12個月勝率 > 80%</td></tr>
+<tr><td>Bull-Bear Spread > +30%</td><td>極端樂觀</td><td>減倉/警戒信號</td><td>歷史上6個月勝率較低</td></tr>
+</table>
+
+<div class="data-source">
+<strong>每週四公布：</strong>aaii.com/sentimentsurvey — 免費查看
+</div>
+
+<div class="warning">
+<strong>AAII 的局限性：</strong>
+<ul>
+<li>單獨使用不夠 — 需要搭配其他指標（VIX, 資金流, 技術面）</li>
+<li>極端值可以維持很久（市場可以非理性更久）</li>
+<li>更適合作為「確認信號」而非「進場信號」</li>
+<li>只反映美國散戶，不代表機構觀點</li>
+</ul>
+</div>
+
+<div class="example">
+<strong>使用方式：</strong>AAII Bearish > 50% + VIX > 25 + Fund Flow 顯示大量外流 = 三重底部信號。這時候逆向建倉歷史勝率最高。<br><br>
+但 AAII Bullish > 50% 時，不代表「立刻做空」 — 只代表「不要追高，開始設止損」。
+</div>
+</div>
+
+<h3>其他泡沫/情緒指標組合</h3>
+
+<div class="card">
+<table>
+<tr><th>指標</th><th>數據源</th><th>閾值</th><th>含義</th></tr>
+<tr><td>Margin Debt（保證金借款）</td><td>FINRA 月報</td><td>YoY > +30% = 警戒</td><td>散戶借錢買股 → 泡沫。大幅下降 → 去槓桿中</td></tr>
+<tr><td>Shiller CAPE（席勒本益比）</td><td>multpl.com</td><td>> 35 = 極貴, < 15 = 極便宜</td><td>長線估值指標（10年平均盈利PE）</td></tr>
+<tr><td>Buffett Indicator（總市值/GDP）</td><td>currentmarketvaluation.com</td><td>> 180% = 泡沫</td><td>股市相對經濟規模是否過熱</td></tr>
+<tr><td>Put/Call Ratio</td><td>CBOE</td><td>< 0.5 = 極度看多 (危險)</td><td>低=散戶只買call不避險。高=恐慌。</td></tr>
+<tr><td>IPO/SPAC 數量</td><td>Renaissancecapital</td><td>大量=泡沫末期</td><td>垃圾公司都能上市=市場太瘋</td></tr>
+<tr><td>Crypto Fear & Greed</td><td>alternative.me</td><td>< 10 = 極度恐懼（底）</td><td>加密市場情緒（逆向指標）</td></tr>
+</table>
+
+<div class="insight">
+<strong>最強組合（泡沫頂部預警）：</strong><br>
+AAII Bull > 50% + Margin Debt YoY > +30% + CAPE > 35 + IPO爆量 + Household Equity > 48%<br>
+= 五重泡沫信號 → 歷史上只在2000年和2021年出現 → 之後都是大修正。
+</div>
+</div>
+
+<!-- ===== PART 3: COMMODITY INVENTORY ===== -->
+<h2 class="section-title">Part 3：商品囤積信號 — 有人在搶貨嗎？</h2>
+
+<h3>商品定價的核心邏輯</h3>
+<p>商品（金銀銅油）的定價不像股票看盈利，而是看：</p>
+
+<div class="formula">
+商品價格 = f(庫存水位, 供給成本, 需求預期, 投機倉位, 美元)<br>
+<br>
+• 庫存低 + 需求強 → 漲<br>
+• 庫存高 + 需求弱 → 跌<br>
+• 庫存低 + 現貨溢價 + 空頭擁擠 → 暴漲（軋空+搶貨）
+</div>
+
+<h3>庫存數據 — 最核心的供需指標</h3>
+
+<div class="card">
+<table>
+<tr><th>交易所</th><th>追蹤商品</th><th>數據頻率</th><th>如何查看</th></tr>
+<tr><td>COMEX（紐約）</td><td>金、銀、銅</td><td>每日</td><td>cmegroup.com → Market Data → Metals Inventory</td></tr>
+<tr><td>LME（倫敦）</td><td>銅、鋁、鋅、鎳、錫、鉛</td><td>每日</td><td>lme.com → Market Data → Stocks</td></tr>
+<tr><td>SHFE（上海）</td><td>銅、鋁、黃金、白銀</td><td>每週</td><td>shfe.com.cn → 交割倉庫庫存</td></tr>
+<tr><td>EIA（美國能源署）</td><td>原油、汽油、天然氣</td><td>每週三</td><td>eia.gov → Weekly Petroleum Status Report</td></tr>
+</table>
+
+<h3>庫存判讀規則</h3>
+<table>
+<tr><th>庫存趨勢</th><th>價格趨勢</th><th>含義</th></tr>
+<tr><td>庫存下降 + 價格上漲</td><td>↓ 庫 + ↑ 價</td><td><span class="tag tag-bull">健康牛市</span> — 真實需求在消耗庫存</td></tr>
+<tr><td>庫存下降 + 價格下跌</td><td>↓ 庫 + ↓ 價</td><td>供給減少但需求更弱 → 觀望</td></tr>
+<tr><td>庫存上升 + 價格上漲</td><td>↑ 庫 + ↑ 價</td><td><span class="tag tag-bear">投機推動</span> — 囤貨但非真實需求，謹慎</td></tr>
+<tr><td>庫存上升 + 價格下跌</td><td>↑ 庫 + ↓ 價</td><td><span class="tag tag-bear">供過於求</span> — 最弱信號</td></tr>
+<tr><td>庫存驟降（單週>10%）</td><td>急速下降</td><td><span class="tag tag-bull">搶貨信號！</span>注意可能暴漲</td></tr>
+</table>
+</div>
+
+<h3>COT 報告（Commitment of Traders）— 大戶在做什麼？</h3>
+
+<div class="card">
+<p>CFTC 每週五公布（台灣週六凌晨 03:30），顯示期貨市場三類參與者的倉位：</p>
+
+<table>
+<tr><th>參與者</th><th>身份</th><th>行為特徵</th><th>如何解讀</th></tr>
+<tr><td><strong>Commercial（商業）</strong></td><td>生產商、進口商、使用者</td><td>真正有實物需求/供給的人</td><td>淨多=鎖定進貨價（看漲）<br>淨空=鎖定出貨價（看跌）</td></tr>
+<tr><td><strong>Non-Commercial（非商業）</strong></td><td>對沖基金、CTA、投機者</td><td>趨勢跟隨，追漲殺跌</td><td>淨多極端=過熱（可能反轉）<br>淨空極端=軋空潛力</td></tr>
+<tr><td><strong>Non-Reportable</strong></td><td>散戶</td><td>通常是錯的一方</td><td>逆向指標</td></tr>
+</table>
+
+<h3>COT 交易信號</h3>
+<table>
+<tr><th>情境</th><th>信號</th><th>可靠度</th></tr>
+<tr><td>Commercial 淨多創新高 + Non-Commercial 淨空</td><td><span class="tag tag-bull">強烈看多</span> — 聰明錢在囤，投機客在空=軋空條件</td><td>高</td></tr>
+<tr><td>Non-Commercial 淨多創歷史極端</td><td><span class="tag tag-bear">過熱警告</span> — 投機過度=準備回調</td><td>中高</td></tr>
+<tr><td>Commercial 突然大量增加淨多</td><td><span class="tag tag-bull">搶貨信號</span> — 生產商/用戶在鎖定未來供應</td><td>高</td></tr>
+<tr><td>所有類別倉位都縮小</td><td>市場失去興趣 → 低波動盤整期</td><td>中</td></tr>
+</table>
+
+<div class="data-source">
+<strong>免費查看COT：</strong>
+<ul>
+<li>tradingster.com — 視覺化COT圖表</li>
+<li>barchart.com/futures/commitment-of-traders</li>
+<li>cftc.gov/dea/futures — 原始數據</li>
+</ul>
+</div>
+</div>
+
+<h3>現貨溢價與 Backwardation — 搶貨最強信號</h3>
+
+<div class="card">
+<div class="formula">
+期貨曲線形狀：<br>
+• Contango（正常）：遠月 > 近月 > 現貨 → 供給充足，持有成本正常<br>
+• Backwardation（搶貨！）：現貨 > 近月 > 遠月 → 市場急需現貨，願意付溢價取得<br>
+<br>
+Backwardation 出現 = 有人在搶實物 → 價格通常會漲
+</div>
+
+<table>
+<tr><th>曲線狀態</th><th>含義</th><th>交易信號</th></tr>
+<tr><td>深度 Contango</td><td>供過於求。持有成本高。</td><td>偏空。做空近月買遠月（calendar spread）</td></tr>
+<tr><td>Contango 收斂中</td><td>供需在改善</td><td>轉向中性到偏多</td></tr>
+<tr><td>Flat（平坦）</td><td>供需平衡</td><td>中性</td></tr>
+<tr><td>Backwardation</td><td>搶貨中！現貨供不應求</td><td><span class="tag tag-bull">強烈看多</span>做多近月</td></tr>
+<tr><td>深度 Backwardation + 庫存驟降</td><td>供應危機</td><td><span class="tag tag-bull">暴漲前兆</span></td></tr>
+</table>
+
+<div class="example">
+<strong>白銀搶貨案例（2024-2025）：</strong><br>
+COMEX白銀庫存從3億盎司降至1.5億盎司 + Shanghai現貨溢價$2+/oz + Backwardation → 白銀從$25漲到$75+。<br><br>
+<strong>判斷搶貨結束：</strong>庫存止跌回升 + 現貨溢價消失 + Contango回歸 → 搶貨完成 → 1-2個月需求真空 → 價格可能回落。
+</div>
+</div>
+
+<!-- ===== PART 4: SUPPLY DISRUPTION ===== -->
+<h2 class="section-title">Part 4：供需斷裂分析 — 從關稅到地緣的搶購邏輯</h2>
+
+<h3>供應斷裂的類型與判斷</h3>
+
+<div class="card">
+<table>
+<tr><th>斷裂類型</th><th>案例</th><th>影響時間</th><th>判斷信號</th></tr>
+<tr><td><strong>關稅搶購</strong></td><td>2026 Trump可能對銅加關稅</td><td>預期期：1-3月搶購<br>實施後：需求真空</td><td>COMEX庫存暴增（搶進口）+ 國內溢價 vs 國際折價</td></tr>
+<tr><td><strong>地緣供應中斷</strong></td><td>中東衝突→硫酸短缺→銅冶煉受阻</td><td>持續至衝突解除</td><td>冶煉加工費(TC/RC)暴跌 + 產量下修公告</td></tr>
+<tr><td><strong>天災/罷工</strong></td><td>智利銅礦罷工、澳洲洪水</td><td>通常1-3月</td><td>礦商產量指引下修 + 庫存加速消耗</td></tr>
+<tr><td><strong>政策限制</strong></td><td>印尼禁止鎳礦出口</td><td>長期結構性</td><td>出口數據斷崖 + 國際價格飆升</td></tr>
+<tr><td><strong>能源成本飆升</strong></td><td>油$90+→電解鋁/煉銅成本飆</td><td>與油價同步</td><td>冶煉廠減產公告 + 邊際成本線上移</td></tr>
+</table>
+</div>
+
+<h3>銅的供需分析框架（2026案例）</h3>
+
+<div class="card">
+<h3>案例：銅關稅 + 硫酸短缺 雙重衝擊</h3>
+
+<p><strong>情境推演：</strong></p>
+<ol>
+<li><strong>關稅預期（搶購期）：</strong>Trump 威脅對銅加 25% 關稅 → 美國進口商提前搶購 → COMEX 銅庫存暴增（但這是「搶進來」不是「需求增加」）→ 短期推升價格</li>
+<li><strong>中東 → 硫酸短缺：</strong>硫酸是銅冶煉的關鍵原料。伊朗衝突 → 中東硫磺出口中斷 → 全球硫酸供應緊張 → 冶煉廠被迫減產 → 精煉銅產量下降</li>
+<li><strong>雙重效應：</strong>需求端搶購（關稅前囤貨）+ 供給端收縮（硫酸短缺）= 價格飆升壓力</li>
+</ol>
+
+<p><strong>如何追蹤：</strong></p>
+<table>
+<tr><th>觀察點</th><th>數據來源</th><th>判斷</th></tr>
+<tr><td>COMEX銅庫存</td><td>CME每日</td><td>暴增=搶購中。暴增後轉降=搶購結束</td></tr>
+<tr><td>LME銅庫存</td><td>LME每日</td><td>全球庫存趨勢（不只美國）</td></tr>
+<tr><td>銅冶煉加工費TC/RC</td><td>Fastmarkets, 路透</td><td>TC/RC暴跌=冶煉廠利潤壓縮=可能減產</td></tr>
+<tr><td>COMEX vs LME 價差</td><td>期貨報價</td><td>COMEX溢價擴大=美國在搶貨</td></tr>
+<tr><td>中國進口數據</td><td>海關月報</td><td>中國銅進口量是否異常放大</td></tr>
+<tr><td>期貨曲線</td><td>CME/LME</td><td>Backwardation=現貨供不應求</td></tr>
+</table>
+
+<div class="warning">
+<strong>「Buy the rumor, sell the news」陷阱：</strong><br>
+關稅搶購的典型節奏：<br>
+1. 消息傳出 → 搶購開始 → 價格漲（做多窗口）<br>
+2. 關稅正式實施 → 搶購完成 → 1-2月需求真空 → 價格回落<br>
+3. 長期 → 供應鏈重組 → 新均衡價（可能更高或更低）<br><br>
+<strong>最危險的時刻 = 關稅正式公布的那天。之前是利多，之後可能變利空。</strong>
+</div>
+</div>
+
+<h3>搶貨結束後的「需求真空」</h3>
+
+<div class="card">
+<p>搶貨（前置性囤積）最大的問題是：搶完之後，1-2個月內沒有新的採購需求。</p>
+
+<table>
+<tr><th>階段</th><th>庫存</th><th>價格</th><th>操作</th></tr>
+<tr><td>1. 搶貨期（消息到實施前）</td><td>快速增加</td><td>上漲</td><td>順勢做多（但注意出場時機）</td></tr>
+<tr><td>2. 搶貨完成（關稅實施日）</td><td>停止增加</td><td>見頂</td><td>⚠️ 開始減倉/平倉</td></tr>
+<tr><td>3. 需求真空（實施後1-2月）</td><td>緩慢消耗</td><td>下跌/盤整</td><td>偏空或觀望</td></tr>
+<tr><td>4. 新均衡（2-3月後）</td><td>正常化</td><td>新趨勢開始</td><td>看新的供需格局判斷</td></tr>
+</table>
+</div>
+
+<!-- ===== PART 5: PRACTICAL FRAMEWORK ===== -->
+<h2 class="section-title">Part 5：實戰整合 — 每日判斷流程</h2>
+
+<div class="card">
+<h3>每日資金流判斷 Checklist</h3>
+<ol>
+<li><strong>宏觀方向：</strong>看 DXY + VIX + 30Y → 判斷 Risk-On/Off/滯脹</li>
+<li><strong>股市情緒：</strong>AAII + Put/Call + VIX → 極端時逆向操作</li>
+<li><strong>資金流向：</strong>ETF flows + MMF AUM → 錢在場內還場外？流去哪？</li>
+<li><strong>商品供需：</strong>庫存趨勢 + COT + 現貨溢價 → 有人在搶貨嗎？</li>
+<li><strong>供應斷裂：</strong>地緣/關稅/天災 → 是否有新的供應中斷事件？</li>
+</ol>
+</div>
+
+<div class="card">
+<h3>資金流 Regime 速查表</h3>
+<table>
+<tr><th>Regime</th><th>股票</th><th>債券</th><th>商品</th><th>現金</th><th>BTC</th></tr>
+<tr><td><strong>擴張（Risk-On）</strong></td><td class="up">↑↑</td><td>↓</td><td>↑</td><td>↓</td><td>↑</td></tr>
+<tr><td><strong>衰退（Risk-Off）</strong></td><td class="dn">↓↓</td><td>↑↑</td><td>↓</td><td>↑</td><td>↓</td></tr>
+<tr><td><strong>通膨（再通膨）</strong></td><td>→</td><td>↓</td><td>↑↑</td><td>↓</td><td>↑</td></tr>
+<tr><td><strong>滯脹（2026現況）</strong></td><td class="dn">↓</td><td>↓</td><td>分歧（金↑銅↓）</td><td>↑↑</td><td>↑?</td></tr>
+<tr><td><strong>流動性危機</strong></td><td class="dn">↓↓</td><td>↓</td><td>↓</td><td>USD ↑↑↑</td><td>↓→↑</td></tr>
+</table>
+</div>
+
+<h2 class="section-title">互動測驗</h2>
+<div class="card">
+<p><strong>Q1：COMEX 銅庫存連續三週暴增 30%，同時 COMEX vs LME 價差擴大到 $500/噸。這代表什麼？</strong></p>
+<p>A) 美國在搶購銅（可能因關稅預期）→ 短期看漲但注意搶貨結束後的真空</p>
+<p><strong>Q2：AAII Bearish 達到 55%，同時 VIX 25，MMF AUM 創新高。應該怎麼做？</strong></p>
+<p>A) 三重底部信號。開始逆向建立小倉位多頭。但不重倉（等確認信號如VIX回落）。</p>
+<p><strong>Q3：白銀 COT 顯示 Commercial 大幅增加淨多，同時 COMEX 庫存加速下降，期貨曲線出現 Backwardation。這是什麼？</strong></p>
+<p>A) 搶貨信號：聰明錢（生產商/用戶）在囤積 + 庫存被消耗 + 現貨供不應求。強烈看多做多。</p>
+<p><strong>Q4：CPI 4.2%（通膨飆升），但金價反而暴跌4%。為什麼？</strong></p>
+<p>A) 市場在交易「Fed必須升息」而非「通膨利多黃金」。短期利率衝擊壓過通膨避險。但長期（滯脹延續）金最終仍受益。</p>
+</div>
+
+</div>
+</body>
+</html>
