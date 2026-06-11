@@ -263,8 +263,13 @@ def collect_aaii():
         resp = requests.get(AAII_URL, headers=HTTP_HEADERS, timeout=30)
         resp.raise_for_status()
         if resp.content[:5] == b'<html' or len(resp.content) < 10000:
-            print("  WARN: AAII returned HTML instead of Excel (blocked). Using fallback.")
-            return {"error": "AAII blocked direct download. Check manually at aaii.com/sentimentsurvey"}
+            print("  WARN: AAII blocked direct download.")
+            print("  Manual link: https://www.aaii.com/sentimentsurvey")
+            return {
+                "source": "manual",
+                "url": "https://www.aaii.com/sentimentsurvey",
+                "note": "AAII blocks automated downloads. Click link to view latest data.",
+            }
         df = pd.read_excel(io.BytesIO(resp.content), sheet_name=0, engine='xlrd')
 
         # The spreadsheet has columns like: Date, Bullish, Neutral, Bearish, ...
