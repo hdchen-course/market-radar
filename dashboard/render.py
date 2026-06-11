@@ -200,6 +200,13 @@ DASHBOARD_TEMPLATE = """<!DOCTYPE html>
 {% if aaii_data %}
 <div class="section">
 <h2>AAII Investor Sentiment</h2>
+{% if aaii_data.source == 'manual' %}
+<div class="card" style="max-width:500px">
+  <div class="card-title">Manual Check Required</div>
+  <p style="margin:0.5rem 0">AAII blocks automated downloads.</p>
+  <a href="{{ aaii_data.url }}" target="_blank" style="color:var(--accent)">Click here to view latest AAII data →</a>
+</div>
+{% else %}
 <div class="card" style="max-width:500px">
   <div class="card-title">Survey Date: {{ aaii_data.latest_date }}</div>
   <div class="sentiment-bar">
@@ -220,6 +227,7 @@ DASHBOARD_TEMPLATE = """<!DOCTYPE html>
     {% endif %}
   </div>
 </div>
+{% endif %}
 </div>
 {% endif %}
 
