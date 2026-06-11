@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>流動性結構與網格交易 — 主力獵殺、低波動辨識、網格 SOP</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+.liq-zone {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 2;
+  margin: 12px 0;
+}
+.hunt-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: box-shadow .2s;
+}
+.hunt-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.hunt-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.hunt-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.badge-sweep { background: var(--red-l); color: var(--red); }
+.badge-fake { background: var(--orange-l); color: var(--orange); }
+.badge-smc { background: var(--purple-l); color: var(--purple); }
+.badge-grid { background: var(--blue-l); color: var(--blue); }
+.badge-kill { background: var(--red-l); color: var(--red); }
+.badge-safe { background: var(--green-l); color: var(--green); }
+.sop-step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  background: var(--bg3);
+  border-radius: 8px;
+  border-left: 4px solid var(--blue);
+}
+.sop-num {
+  width: 28px;
+  height: 28px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.sop-body { font-size: 14px; color: var(--text2); line-height: 1.7; }
+.grid-param {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 2;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.checklist-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.check-ok { background: var(--green-l); color: var(--green); }
+.check-warn { background: var(--orange-l); color: var(--orange); }
+.check-danger { background: var(--red-l); color: var(--red); }
+.tf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.tf-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+}
+.tf-card h4 { margin-top: 0; }
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--bg3);
+  border-radius: 8px;
+}
+.quiz-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 4px;
+  transition: width .3s;
+}
+.quiz-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.quiz-card .quiz-options li {
+  font-size: 14px;
+}
+.quiz-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.quiz-nav button {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg2);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.quiz-nav button:hover { background: var(--bg3); }
+.quiz-nav button.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.kill-switch {
+  background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(239,68,68,0.02));
+  border: 2px solid var(--red);
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 16px 0;
+}
+.kill-switch h4 { color: var(--red); margin-top: 0; }
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>流動性結構與網格交易</h1>
+<p style="color:var(--text3); margin-bottom:24px;">主力獵殺邏輯 &times; 低波動辨識 &times; 網格策略 SOP &times; 風控殺手開關 &times; 50 題情境測驗</p>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">流動性結構</button>
+  <button class="tab-btn" data-tab="tab2">主力獵殺</button>
+  <button class="tab-btn" data-tab="tab3">低波動辨識</button>
+  <button class="tab-btn" data-tab="tab4">網格策略</button>
+  <button class="tab-btn" data-tab="tab5">網格風控</button>
+  <button class="tab-btn" data-tab="tab6">互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1: 流動性結構 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2>流動性結構</h2>
+
+<div class="card">
+<h3>什麼是流動性？</h3>
+<p>在交易市場中，<strong>流動性 = 停損單的集中地 = 市場主力想要推動價格去的地方</strong>。</p>
+<p>每一個停損單、每一個限價單都是「流動性」。當大量停損單堆積在某個價位附近，那裡就形成了「流動性池」（Liquidity Pool）。主力（做市商、機構）需要這些流動性來完成自己的大額訂單。</p>
+<div class="highlight-box">
+<strong>核心認知：</strong>「市場不是隨機移動的 — 價格會移動到流動性所在的地方。」價格像水一樣，會流向阻力最小、流動性最大的方向。
+</div>
+</div>
+
+<div class="card">
+<h3>流動性池的位置</h3>
+<p>停損單（= 流動性）通常聚集在以下位置：</p>
+<table>
+  <tr><th>位置類型</th><th>為什麼有流動性</th><th>範例</th></tr>
+  <tr><td><strong>前高/前低</strong></td><td>技術分析教科書教所有人把停損放在前高上方/前低下方</td><td>BTC 前低 $94,200 → 大量空單停損在 $94,200 上方</td></tr>
+  <tr><td><strong>等高/等低（Equal Highs/Lows）</strong></td><td>多次觸及同一價位 = 更多人在那裡設停損</td><td>三次觸及 $100,000 不破 → 大量買入停損在 $100,050</td></tr>
+  <tr><td><strong>整數關口</strong></td><td>心理價位，人類偏好在整數設停損和掛單</td><td>$60,000、$65,000、$70,000</td></tr>
+  <tr><td><strong>SuperTrend 線附近</strong></td><td>許多交易者以 ST 線作為停損參考位</td><td>4H ST 在 $96,500 → 停損集中在 $96,200-$96,500</td></tr>
+  <tr><td><strong>布林帶上下軌</strong></td><td>均值回歸交易者的停損區域</td><td>BB 下軌 $62,000 → 停損在 $61,800</td></tr>
+  <tr><td><strong>成交量缺口（FVG）</strong></td><td>快速移動造成的真空區 = 低阻力區域</td><td>從 $95K 跳到 $97K 中間無成交量 = 公允價值缺口</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>如何在圖表上辨識流動性區域</h3>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--blue);">
+  <h4 style="color:var(--blue);">視覺線索 1：多次觸及的水平線</h4>
+  <ul>
+    <li>畫出被觸及 2 次以上但未突破的高/低點</li>
+    <li>觸及次數越多 = 流動性越厚</li>
+    <li>「第三次觸及通常會被突破」— 因為流動性太吸引人了</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--blue);">
+  <h4 style="color:var(--blue);">視覺線索 2：整數 + 密集成交</h4>
+  <ul>
+    <li>看訂單簿深度（Order Book Depth）</li>
+    <li>整數價位上方/下方通常有大量掛單</li>
+    <li>Heatmap（熱力圖）工具可直觀看到</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--blue);">
+  <h4 style="color:var(--blue);">視覺線索 3：Swing Point 密集區</h4>
+  <ul>
+    <li>多個 Swing High 集中在相近價位</li>
+    <li>代表多次嘗試突破 = 多次停損堆積</li>
+    <li>這些區域是「磁鐵」— 價格終將被吸引過去</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--blue);">
+  <h4 style="color:var(--blue);">視覺線索 4：長期盤整區的邊界</h4>
+  <ul>
+    <li>盤整時間越長 = 兩側堆積的流動性越多</li>
+    <li>突破時流動性被觸發 = 加速移動</li>
+    <li>盤整 > 7 天後的突破通常很劇烈</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>訂單簿深度（Order Book Depth）</h3>
+<p>訂單簿顯示所有未成交的限價單分布。它告訴你：</p>
+<div class="liq-zone">
+<strong>// 買方流動性（Bid Side）</strong><br>
+$60,000: 150 BTC 掛單<br>
+$59,500: 80 BTC 掛單<br>
+$59,000: 320 BTC 掛單 ← <span style="color:var(--green);">厚流動性牆</span><br>
+<br>
+<strong>// 賣方流動性（Ask Side）</strong><br>
+$61,000: 120 BTC 掛單<br>
+$61,500: 90 BTC 掛單<br>
+$62,000: 280 BTC 掛單 ← <span style="color:var(--red);">厚流動性牆</span><br>
+<br>
+<strong>// 解讀</strong><br>
+- 大掛單可能是真實的支撐/壓力 → 也可能是「誘餌」(spoofing)<br>
+- 主力會在想買入前先掛大量賣單壓價，吃到低價後撤單<br>
+- 觀察掛單是否在價格靠近時消失 = spoofing 特徵
+</div>
+<div class="warning-box">
+<strong>注意：</strong>訂單簿可以被操縱。大額掛單不一定代表真實意圖。主力經常使用「幽靈掛單」（Spoofing）— 在一側掛大量單來嚇退對手方，然後在另一側吃貨。真正的「流動性」是那些無法撤回的停損單。
+</div>
+</div>
+
+<div class="card">
+<h3>為什麼價格會趨向流動性？</h3>
+<ol style="line-height:2.2;">
+  <li><strong>做市商的需求：</strong>做市商需要對手方才能成交大額訂單。100,000 BTC 的買入不可能一次在市場上完成，需要分批在有流動性的地方吃單。</li>
+  <li><strong>停損觸發的連鎖反應：</strong>當價格觸及停損密集區，停損被觸發 = 市價單湧入 = 更多停損被觸發 = 瀑布效應。這為主力提供了充足的對手盤。</li>
+  <li><strong>成交量需求：</strong>機構交易者需要足夠的成交量來建倉/出貨。流動性池 = 高成交量區 = 機構的「提款機」。</li>
+  <li><strong>路徑最小阻力：</strong>價格傾向走向流動性較多（阻力較小）的方向。如果上方流動性 > 下方，價格更可能先往上走去「收割」上方的停損。</li>
+</ol>
+</div>
+
+<div style="padding:16px 20px; background:var(--green-l); border-radius:var(--r); border:1px solid #bbf7d0; margin-top:20px;">
+  <h3 style="color:var(--green); margin-top:0;">流動性核心法則</h3>
+  <ul style="font-size:14px; line-height:2;">
+    <li>流動性 = 停損單聚集地 = 主力的目標</li>
+    <li>「市場移動到有流動性的地方」— 價格尋找停損</li>
+    <li>前高前低、等高等低、整數關口 = 最明顯的流動性池</li>
+    <li>觸及次數越多的水平線 = 流動性越厚 = 被突破的吸引力越大</li>
+    <li>盤整越久 = 兩側堆積的流動性越多 = 突破越劇烈</li>
+    <li>理解流動性位置 = 理解價格可能去哪裡</li>
+  </ul>
+</div>
+</div><!-- tab1 -->
+
+<!-- ==================== TAB 2: 主力獵殺 ==================== -->
+<div class="tab-content" id="tab2">
+<h2>主力獵殺（Liquidity Hunt）</h2>
+
+<div class="card">
+<h3>什麼是流動性獵殺？</h3>
+<p>流動性獵殺（Liquidity Hunt / Stop Hunt）是市場主力故意推動價格到停損密集區，觸發散戶的停損單，藉此獲得足夠的對手盤來完成自己的大額訂單，然後反向推動價格。</p>
+<div class="grid-param">
+<strong>// 獵殺的基本模式</strong><br>
+1. 識別：找到停損密集區（前高/前低/整數關口）<br>
+2. 推動：用相對少量的資金把價格推到停損區<br>
+3. 收割：停損被觸發 = 大量市價單湧入 = 主力的對手盤<br>
+4. 反轉：主力完成建倉/出貨後，價格迅速反向移動<br>
+<br>
+<strong>// 散戶的視角</strong><br>
+「明明走對了方向，就差一點被掃掉停損，然後就飛了」<br>
+→ 這就是典型的流動性獵殺
+</div>
+</div>
+
+<div class="card">
+<h3>三種主要獵殺模式</h3>
+<div class="tf-grid">
+<div class="hunt-card">
+  <div class="hunt-header">
+    <span class="hunt-badge badge-sweep">掃流動性</span>
+    <strong>Liquidity Sweep（流動性掃蕩）</strong>
+  </div>
+  <p><strong>定義：</strong>價格快速穿越前高/前低，觸發停損後立即反轉。通常在單根或極少根 K 線內完成。</p>
+  <p><strong>特徵：</strong></p>
+  <ul>
+    <li>突破前高/低後<strong>不持續</strong>，立即回撤</li>
+    <li>留下長長的上/下影線（Wick / Shadow）</li>
+    <li>收盤價回到突破前的區間內</li>
+    <li>成交量在突破瞬間暴增然後驟降</li>
+  </ul>
+  <p><strong>範例：</strong>BTC 前低 $94,200，價格跌到 $93,900（穿越 $300），1 小時後回到 $95,500。$93,900-$94,200 這段就是「掃蕩」。</p>
+</div>
+
+<div class="hunt-card">
+  <div class="hunt-header">
+    <span class="hunt-badge badge-fake">假突破</span>
+    <strong>Fake Breakout（假突破）</strong>
+  </div>
+  <p><strong>定義：</strong>看似突破重要技術位但隨後失敗，價格反向移動。持續時間比 sweep 稍長（數小時到一天）。</p>
+  <p><strong>特徵：</strong></p>
+  <ul>
+    <li>突破時成交量不足（真突破應放量）</li>
+    <li>突破後價格在突破位上方/下方猶豫不前</li>
+    <li>後續 K 線實體逐漸縮小（動能衰竭）</li>
+    <li>最終一根大陰/陽線吞沒突破 = 確認假突破</li>
+  </ul>
+  <p><strong>範例：</strong>BTC 盤整上軌 $68,000，突破到 $68,500 後橫盤 6 小時，量能萎縮，隨後暴跌到 $66,000。</p>
+</div>
+
+<div class="hunt-card">
+  <div class="hunt-header">
+    <span class="hunt-badge badge-smc">SMC 獵殺</span>
+    <strong>Smart Money Concept 完整獵殺</strong>
+  </div>
+  <p><strong>定義：</strong>完整的三步驟主力操作模式：掃流動性 → 位移（Displacement）→ 公允價值缺口（FVG）。</p>
+  <p><strong>三步驟：</strong></p>
+  <ol>
+    <li><strong>流動性抓取（Liquidity Grab）：</strong>價格穿越關鍵位觸發停損</li>
+    <li><strong>位移（Displacement）：</strong>緊接著出現連續大實體 K 線反向移動（主力真正的方向）</li>
+    <li><strong>公允價值缺口（Fair Value Gap / FVG）：</strong>位移過程中留下的價格真空區域 = 未來的回踔目標</li>
+  </ol>
+  <p><strong>範例：</strong>BTC 掃 $94,200 低點 → 出現連續 3 根大陽線從 $94,000 漲到 $97,000（位移）→ $95,000-$95,800 之間有 FVG → 後續回踔到 $95,400（FVG 中間）後繼續上漲。</p>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>如何辨識獵殺 vs 真突破</h3>
+<table>
+  <tr><th>判斷要素</th><th>是獵殺（假突破）</th><th>是真突破</th></tr>
+  <tr><td>突破後動能</td><td>突破後價格猶豫、停滯、回撤</td><td>突破後價格加速遠離突破點</td></tr>
+  <tr><td>成交量</td><td>突破瞬間有量但後續量能萎縮</td><td>突破時放量且後續維持高量</td></tr>
+  <tr><td>K 線形態</td><td>長影線、十字星、紡錘線</td><td>大實體 K 線、無/短影線</td></tr>
+  <tr><td>收盤位置</td><td>收盤回到突破前區間內</td><td>收盤遠離突破點（> 0.5-1%）</td></tr>
+  <tr><td>時段</td><td>低流動性時段（亞洲清晨、假日）</td><td>高流動性時段（歐美交疊）</td></tr>
+  <tr><td>多時框配合</td><td>僅 1H 突破、4H/日線未確認</td><td>多時框同時突破</td></tr>
+  <tr><td>後續走勢</td><td>形成反向大 K 線（吞沒）</td><td>形成高低點不斷抬升/降低</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>用影線（Wick）辨識掃蕩</h3>
+<div class="liq-zone">
+<strong>// 影線判讀規則</strong><br>
+<br>
+長下影線 + 小實體 = 下方流動性被掃蕩後買壓進場<br>
+長上影線 + 小實體 = 上方流動性被掃蕩後賣壓進場<br>
+<br>
+<strong>// 有效掃蕩影線的標準</strong><br>
+1. 影線長度 > 實體的 2 倍以上<br>
+2. 影線穿越了明確的流動性位（前高/前低/整數）<br>
+3. 收盤價回到流動性位的正確一側<br>
+4. 該 K 線成交量明顯高於前 5 根平均<br>
+<br>
+<strong>// 操作含義</strong><br>
+看到有效掃蕩影線 → 等下一根 K 線確認方向 → 順反轉方向入場<br>
+止損：影線最末端 + buffer
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--purple);">
+<h3 style="color:var(--purple);">SMC 簡化模型：獵殺 → 位移 → FVG</h3>
+<p>Smart Money Concepts（聰明錢概念）的核心就是一個三步驟模型：</p>
+<div class="sop-step" style="border-left-color:var(--purple);">
+  <div class="sop-num" style="background:var(--purple);">1</div>
+  <div class="sop-body">
+    <strong>流動性抓取（Liquidity Grab）</strong><br>
+    價格快速穿越已知的流動性池（前高/前低）。特徵：長影線、快速回撤。<br>
+    <em>這一步的目的：觸發散戶停損 = 主力獲得對手盤</em>
+  </div>
+</div>
+<div class="sop-step" style="border-left-color:var(--purple);">
+  <div class="sop-num" style="background:var(--purple);">2</div>
+  <div class="sop-body">
+    <strong>位移（Displacement）</strong><br>
+    掃蕩完成後，出現連續 2-3 根大實體 K 線向反方向移動。<br>
+    <em>這一步確認：主力的真正方向 = 位移的方向</em>
+  </div>
+</div>
+<div class="sop-step" style="border-left-color:var(--purple);">
+  <div class="sop-num" style="background:var(--purple);">3</div>
+  <div class="sop-body">
+    <strong>公允價值缺口（Fair Value Gap / FVG）</strong><br>
+    位移過程中，第二根 K 線的高低點與第一、三根 K 線之間出現「缺口」（沒有重疊的價格區域）。<br>
+    <em>FVG 是未來的回踔目標：價格有 70%+ 的機率會回來填補這個缺口</em>
+  </div>
+</div>
+<div class="insight-box">
+<strong>實戰應用：</strong>在 FVG 中間位置掛限價單（Maker），止損在掃蕩影線的最末端。這是風報比極佳的進場策略：入場在 FVG（高機率觸及），止損在掃蕩極值（低機率再次觸及），目標是位移的延伸方向。
+</div>
+</div>
+
+<div class="card">
+<h3>獵殺發生的時機</h3>
+<ul style="line-height:2.2;">
+  <li><strong>亞洲時段尾聲 → 歐洲開盤：</strong>亞洲盤整的高/低點是獵殺目標</li>
+  <li><strong>重大數據公布前 15 分鐘：</strong>低流動性 + 恐慌 = 容易掃蕩</li>
+  <li><strong>週一開盤：</strong>掃蕩週五的高/低點</li>
+  <li><strong>假日薄盤：</strong>少量資金就能推動價格到流動性區</li>
+  <li><strong>長期盤整後：</strong>兩側流動性都很厚，先掃一側再往另一側走</li>
+</ul>
+</div>
+
+<div style="padding:16px 20px; background:var(--red-l); border-radius:var(--r); border:1px solid #fecaca; margin-top:20px;">
+  <h3 style="color:var(--red); margin-top:0;">散戶如何自保</h3>
+  <ul style="font-size:14px; line-height:2;">
+    <li>不要把停損放在「明顯」的位置（正好在前高/前低）</li>
+    <li>停損 = 前高/前低 + 1-2 ATR buffer → 讓掃蕩夠不到你</li>
+    <li>看到長影線掃蕩後的反轉 = 跟隨主力方向入場</li>
+    <li>「被掃蕩」不代表判斷錯誤 — 只是停損設太緊</li>
+    <li>學會在 FVG 回踔時入場，而不是在突破瞬間追單</li>
+  </ul>
+</div>
+</div><!-- tab2 -->
+
+<!-- ==================== TAB 3: 低波動辨識 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>低波動環境辨識</h2>
+
+<div class="card">
+<h3>為什麼需要辨識低波動？</h3>
+<p>SuperTrend 等趨勢指標在<strong>低波動環境中會失靈</strong>。當市場進入極度壓縮期，趨勢策略會被反覆打臉，而<strong>網格策略</strong>則在這種環境中表現最佳。辨識低波動 = 知道何時該關掉趨勢系統、開啟網格系統。</p>
+</div>
+
+<div class="card">
+<h3>低波動的五大辨識指標</h3>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--orange);">
+  <h4 style="color:var(--orange);">1. ATR 壓縮</h4>
+  <ul>
+    <li>ATR(14) 低於過去 60 日平均的 50% 以下</li>
+    <li>4H ATR 和日線 ATR 同時壓縮 = 雙重確認</li>
+    <li>ATR 壓縮持續 > 3 天 = 可以開始準備網格</li>
+    <li>極端壓縮：ATR 創 30 日新低</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--orange);">
+  <h4 style="color:var(--orange);">2. 布林帶擠壓（BB Squeeze）</h4>
+  <ul>
+    <li>上下軌距離收窄到歷史低位</li>
+    <li>BB 帶寬（BandWidth）< 過去 120 日最低值</li>
+    <li>K 線在 BB 中軌附近密集排列</li>
+    <li>擠壓越極端 = 未來突破越猛烈</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--orange);">
+  <h4 style="color:var(--orange);">3. 成交量萎縮</h4>
+  <ul>
+    <li>日成交量低於 20 日平均的 50%</li>
+    <li>連續 3 天以上低量</li>
+    <li>BTC 24h 成交量創近期新低</li>
+    <li>低量 = 無方向性 = 趨勢策略無效</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--orange);">
+  <h4 style="color:var(--orange);">4. 連續小實體 K 線</h4>
+  <ul>
+    <li>連續 5 根以上 K 線實體 < ATR 的 30%</li>
+    <li>紡錘線、十字星頻繁出現</li>
+    <li>無明確的高低點推進</li>
+    <li>視覺上 K 線像「螞蟻在爬」</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--orange);">
+  <h4 style="color:var(--orange);">5. 資金費率趨近零</h4>
+  <ul>
+    <li>永續合約 Funding Rate 在 -0.005% ~ +0.005%</li>
+    <li>代表多空力量完全均衡</li>
+    <li>無方向偏差 = 無趨勢 = 適合網格</li>
+    <li>Funding 持續中性 > 3 天 = 強信號</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>低波動評分系統</h3>
+<table>
+  <tr><th>指標</th><th>條件</th><th>分數</th></tr>
+  <tr><td>ATR(14) / ATR(60)</td><td>< 50%</td><td>+2</td></tr>
+  <tr><td>BB BandWidth</td><td>120 日最低</td><td>+2</td></tr>
+  <tr><td>24h 成交量 / 20MA</td><td>< 50%</td><td>+1</td></tr>
+  <tr><td>連續小實體 K 線</td><td>> 5 根</td><td>+1</td></tr>
+  <tr><td>Funding Rate</td><td>|FR| < 0.005%</td><td>+1</td></tr>
+  <tr><td>ST 翻轉頻率</td><td>1H 一週翻 > 3 次</td><td>+2</td></tr>
+  <tr><td>價格振幅</td><td>5 日最高-最低 < 3%</td><td>+1</td></tr>
+</table>
+<div class="highlight-box">
+<strong>判定標準：</strong>
+<ul style="margin:8px 0;">
+  <li>總分 >= 7：極度低波動 → 適合部署網格</li>
+  <li>總分 5-6：中低波動 → 準備網格參數但暫不啟動</li>
+  <li>總分 < 5：正常或高波動 → 使用趨勢策略（ST）</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>SuperTrend 為什麼在低波動中失靈？</h3>
+<div class="liq-zone">
+<strong>// 正常環境</strong><br>
+ATR(300) = $2,000 → ST 線離價格 $6,000（3 倍 ATR）<br>
+→ 微小波動觸發不了翻轉 → ST 信號可靠<br>
+<br>
+<strong>// 低波動環境</strong><br>
+ATR(300) 壓縮到 $800 → ST 線離價格僅 $2,400<br>
+→ 日常波動就可能觸及 ST 線 → 頻繁假翻轉<br>
+<br>
+<strong>// 結果</strong><br>
+1. ST 翻多 → 你做多 → 沒趨勢 → 價格回落到 ST 線 → 翻空<br>
+2. ST 翻空 → 你做空 → 沒趨勢 → 價格反彈到 ST 線 → 翻多<br>
+3. 反覆被來回打臉 → 連續虧損 → 心態崩潰<br>
+<br>
+<strong>// 正確做法</strong><br>
+辨識低波動 → 關閉 ST 交易系統 → 啟動網格策略
+</div>
+</div>
+
+<div class="card">
+<h3>什麼造成低波動？</h3>
+<table>
+  <tr><th>原因</th><th>持續時間</th><th>後續預期</th></tr>
+  <tr><td><strong>重大事件前夕</strong>（CPI/FOMC/非農）</td><td>1-3 天</td><td>事件公布後劇烈波動 → 不適合網格</td></tr>
+  <tr><td><strong>週末/假日</strong></td><td>2-3 天</td><td>週一/假日後恢復正常波動</td></tr>
+  <tr><td><strong>崩盤後盤整期</strong></td><td>1-4 週</td><td>適合部署中期網格</td></tr>
+  <tr><td><strong>Range-bound 市場</strong></td><td>數週至數月</td><td>最佳網格環境（長期穩定）</td></tr>
+  <tr><td><strong>暑假/年末淡季</strong></td><td>數週</td><td>適合較寬參數的網格</td></tr>
+  <tr><td><strong>監管不確定期</strong></td><td>不定</td><td>可能突然劇烈波動，風控要嚴</td></tr>
+</table>
+<div class="warning-box">
+<strong>關鍵判斷：</strong>低波動原因決定了是否適合開網格。「重大事件前」的低波動<strong>不適合</strong>開網格（因為事件會打破區間）。「崩盤後盤整」和「Range-bound 市場」才是理想環境。
+</div>
+</div>
+
+<div class="card">
+<h3>低波動 → 高波動的轉折信號</h3>
+<p>當以下信號出現時，準備關閉網格、切回趨勢模式：</p>
+<ul style="line-height:2.2;">
+  <li><strong>BB 帶寬開始擴張：</strong>上下軌開始分離 = 壓縮結束</li>
+  <li><strong>突然出現大實體 K 線：</strong>實體 > 前 10 根 K 線的平均 2 倍</li>
+  <li><strong>成交量暴增：</strong>24h 量 > 20MA 的 150%</li>
+  <li><strong>Funding Rate 偏離零值：</strong>|FR| > 0.03% = 方向性出現</li>
+  <li><strong>價格突破 5 日 High/Low：</strong>脫離近期盤整區間</li>
+</ul>
+</div>
+</div><!-- tab3 -->
+
+<!-- ==================== TAB 4: 網格策略 ==================== -->
+<div class="tab-content" id="tab4">
+<h2>網格交易策略 SOP</h2>
+
+<div class="card">
+<h3>什麼是網格交易？</h3>
+<p>網格交易（Grid Trading）是在一個價格區間內，等距設置一系列買入和賣出限價單。當價格在區間內波動時，<strong>自動低買高賣</strong>，每次填充（fill）都產生微利。</p>
+<div class="grid-param">
+<strong>// 網格基本概念</strong><br>
+區間上限 (Upper): $64,000<br>
+區間下限 (Lower): $60,000<br>
+格子數量 (Grids): 20 格<br>
+每格間距: ($64,000 - $60,000) / 20 = $200<br>
+<br>
+<strong>// 運作邏輯</strong><br>
+每個格子 = 一個掛單位<br>
+價格下跌到某格 → 觸發買入限價單<br>
+價格上漲到上一格 → 觸發賣出限價單<br>
+每次「買了又賣」= 賺一個格子的價差（$200）<br>
+<br>
+<strong>// 網格的優勢</strong><br>
+- 不需要預測方向（區間內雙向賺錢）<br>
+- Maker 單 = 零手續費或負手續費（掛單獎勵）<br>
+- 24/7 自動運作，不需盯盤<br>
+- 在低波動環境中持續產生現金流
+</div>
+</div>
+
+<div class="card">
+<h3>何時部署網格 — 啟動條件</h3>
+<div class="sop-step">
+  <div class="sop-num">1</div>
+  <div class="sop-body">
+    <strong>確認低波動環境</strong><br>
+    低波動評分 >= 7 分。ATR 壓縮 + BB 擠壓 + 成交量萎縮至少三項同時出現。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">2</div>
+  <div class="sop-body">
+    <strong>確認無即將到來的重大事件</strong><br>
+    查看經濟日曆：未來 48 小時內無 Tier 1 事件（CPI、FOMC、非農、央行利率決議）。<br>
+    若有事件 → 不開網格，等事件結束後 24 小時再評估。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">3</div>
+  <div class="sop-body">
+    <strong>確認日線 ST 方向穩定</strong><br>
+    日線 ST 在同一方向持續 > 7 天（非剛翻轉）。<br>
+    若日線 ST 剛翻轉 < 3 天 → 可能還在趨勢中，不適合網格。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">4</div>
+  <div class="sop-body">
+    <strong>確認價格在明確區間內</strong><br>
+    過去 5 天的價格都在一個 < 5% 的範圍內波動。<br>
+    能明確畫出上軌和下軌。
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>網格參數設定 SOP</h3>
+<table>
+  <tr><th>參數</th><th>計算方式</th><th>備註</th></tr>
+  <tr><td><strong>區間上限</strong></td><td>近 5 日最高價 + 0.5 ATR(4H)</td><td>留 buffer 避免太容易被突破</td></tr>
+  <tr><td><strong>區間下限</strong></td><td>近 5 日最低價 - 0.5 ATR(4H)</td><td>同上</td></tr>
+  <tr><td><strong>格子間距</strong></td><td>0.3 ~ 0.5 倍 4H ATR</td><td>間距太小 = 手續費吃掉利潤；太大 = 觸發次數少</td></tr>
+  <tr><td><strong>格子數量</strong></td><td>（上限 - 下限）/ 間距</td><td>通常 15-30 格為最佳</td></tr>
+  <tr><td><strong>每格倉位</strong></td><td>總資金 / 格子數量</td><td>確保所有買單都能被填充</td></tr>
+  <tr><td><strong>總資金</strong></td><td><strong>最多 20% 帳戶資金</strong></td><td>鐵律：永遠不超過 20%</td></tr>
+</table>
+<div class="grid-param">
+<strong>// 計算範例</strong><br>
+帳戶資金: $50,000<br>
+網格分配: $50,000 * 20% = $10,000<br>
+<br>
+4H ATR: $800<br>
+5 日最高: $63,500 / 5 日最低: $61,000<br>
+<br>
+區間上限: $63,500 + $400 = $63,900<br>
+區間下限: $61,000 - $400 = $60,600<br>
+區間寬度: $63,900 - $60,600 = $3,300<br>
+<br>
+格子間距: 0.4 * $800 = $320<br>
+格子數量: $3,300 / $320 ≈ 10 格<br>
+每格資金: $10,000 / 10 = $1,000<br>
+每格 BTC: $1,000 / ~$62,000 ≈ 0.016 BTC<br>
+<br>
+<strong>// 預期收益（假設每日觸發 4-6 格）</strong><br>
+每格利潤: $320 * 0.016 BTC ≈ $5.12<br>
+每日: $5.12 * 5 ≈ $25.60<br>
+月化: $25.60 * 30 ≈ $768 (7.68% 月化 on $10,000)
+</div>
+</div>
+
+<div class="card">
+<h3>三種網格類型</h3>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--blue);">
+  <h4 style="color:var(--blue);">中性網格（Neutral Grid）</h4>
+  <p><strong>適用：</strong>無方向偏好，純粹區間震盪</p>
+  <p><strong>設定：</strong>當前價格在區間正中間。上下均勻分布格子。</p>
+  <p><strong>特點：</strong></p>
+  <ul>
+    <li>上半部 = 持有空單（每格賣出）</li>
+    <li>下半部 = 持有多單（每格買入）</li>
+    <li>不預判方向，雙向賺錢</li>
+    <li>最大風險：價格離開區間</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--green);">
+  <h4 style="color:var(--green);">多頭偏向網格（Long-biased Grid）</h4>
+  <p><strong>適用：</strong>日線 ST 多，但短期盤整無方向</p>
+  <p><strong>設定：</strong>只設買入格子（下方）。當價格回落時買入，上漲時分批賣出。</p>
+  <p><strong>特點：</strong></p>
+  <ul>
+    <li>只在下跌時建倉</li>
+    <li>格子都設在當前價格下方</li>
+    <li>如果價格一路上漲 = 沒有成交（錯過）</li>
+    <li>如果價格下跌 = 分批接貨（低於市價）</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4 style="color:var(--red);">空頭偏向網格（Short-biased Grid）</h4>
+  <p><strong>適用：</strong>日線 ST 空，但短期盤整反彈中</p>
+  <p><strong>設定：</strong>只設賣出格子（上方）。當價格反彈時分批做空，下跌時分批平倉。</p>
+  <p><strong>特點：</strong></p>
+  <ul>
+    <li>只在上漲時建空倉</li>
+    <li>格子都設在當前價格上方</li>
+    <li>順日線大方向做空 = 安全邊際高</li>
+    <li>如果趨勢反轉上漲 = 需要嚴格止損</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>Maker 費率優勢</h3>
+<p>網格策略的隱藏優勢：所有掛單都是<strong>限價單（Maker Order）</strong>。</p>
+<table>
+  <tr><th>交易所</th><th>Maker 費率</th><th>Taker 費率</th><th>每格優勢</th></tr>
+  <tr><td>Binance（VIP 0）</td><td>0.02%</td><td>0.04%</td><td>省 0.02% = 每 $10,000 省 $2</td></tr>
+  <tr><td>Binance（VIP 1+）</td><td>0.00%</td><td>0.035%</td><td>零成本！每次 fill 都是純利潤</td></tr>
+  <tr><td>Bybit（VIP 1+）</td><td>-0.005%（獎勵）</td><td>0.025%</td><td>掛單還倒賺手續費！</td></tr>
+  <tr><td>OKX</td><td>0.02%</td><td>0.05%</td><td>省 0.03%</td></tr>
+</table>
+<div class="insight-box">
+<strong>網格 + Maker = 印鈔機：</strong>當你的格子間距是 $320（≈ 0.5%），而 Maker 費率是 0%，那麼每次填充的 $320 就是<strong>純利潤</strong>。不需要像 Taker 一樣扣手續費。這就是網格在低波動中仍能獲利的核心原因 — 成本趨近於零。
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--orange);">
+<h3 style="color:var(--orange);">網格的陷阱與限制</h3>
+<ul style="line-height:2.2;">
+  <li><strong>單向行情 = 災難：</strong>如果價格直接穿越區間一路走掉，所有一側的單都被填充，另一側全空 = 持倉被套</li>
+  <li><strong>資金效率低：</strong>20% 帳戶資金分散在所有格子中，大部分時間只有少數格子在工作</li>
+  <li><strong>不適合高波動：</strong>ATR 突然擴大 = 區間被打破 = 網格失效</li>
+  <li><strong>心理陷阱：</strong>看到一側持倉越來越多（一邊倒）會焦慮，可能過早關閉</li>
+  <li><strong>事件風險：</strong>黑天鵝事件可能讓價格瞬間穿越整個網格 = 單向持倉爆滿</li>
+</ul>
+</div>
+</div><!-- tab4 -->
+
+<!-- ==================== TAB 5: 網格風控 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>網格風險管理</h2>
+
+<div class="card">
+<h3>每日審查清單</h3>
+<p>網格運行期間，每天必須檢查以下項目：</p>
+
+<div class="checklist-item">
+  <div class="checklist-icon check-ok">1</div>
+  <div><strong>價格是否仍在區間內？</strong><br>確認當前價格在網格上限和下限之間。若觸及邊界但未突破 = 暫時安全但需提高警覺。</div>
+</div>
+<div class="checklist-item">
+  <div class="checklist-icon check-ok">2</div>
+  <div><strong>日線 ST 方向是否改變？</strong><br>日線 ST 翻轉 = 可能從盤整轉為趨勢 = 網格環境結束的信號。若翻轉方向 = 網格被套的方向 → 立即關閉。</div>
+</div>
+<div class="checklist-item">
+  <div class="checklist-icon check-ok">3</div>
+  <div><strong>ATR 是否開始擴張？</strong><br>4H ATR 相比開網格時增加 > 50% = 波動率回升 = 區間可能被突破。準備關閉網格。</div>
+</div>
+<div class="checklist-item">
+  <div class="checklist-icon check-warn">4</div>
+  <div><strong>未來 24-48h 有無 Tier 1 事件？</strong><br>CPI、FOMC、非農、央行利率決議。若有 → 事件前 4-12 小時關閉網格或暫停。</div>
+</div>
+<div class="checklist-item">
+  <div class="checklist-icon check-warn">5</div>
+  <div><strong>網格持倉是否過度偏向一側？</strong><br>若所有買單都已成交但無賣單成交 = 持倉全在一側 = 接近被套邊緣。考慮主動減倉。</div>
+</div>
+<div class="checklist-item">
+  <div class="checklist-icon check-danger">6</div>
+  <div><strong>資金費率是否大幅偏離零？</strong><br>|Funding Rate| > 0.05% = 市場開始有方向偏好 = 盤整可能結束。</div>
+</div>
+</div>
+
+<div class="card">
+<h3>殺手開關（Kill Switch）— 必須關閉網格的條件</h3>
+<div class="kill-switch">
+  <h4>立即關閉網格的觸發條件（任一即觸發）</h4>
+  <ol style="line-height:2.5; font-size:14px;">
+    <li><strong>日線 ST 翻轉：</strong>趨勢方向改變 = 盤整結束 → 立即平倉所有網格持倉</li>
+    <li><strong>價格突破區間 > 1 ATR(4H)：</strong>不是只碰到邊界，而是遠離邊界超過一個 ATR = 確認離開區間</li>
+    <li><strong>Tier 1 事件即將在 24h 內發生：</strong>CPI/FOMC/非農 = 會造成劇烈波動打破區間</li>
+    <li><strong>單方向連續行情 > 3%：</strong>連續數小時不回調的單向移動 = 趨勢啟動</li>
+    <li><strong>成交量突然暴增 > 20MA 的 200%：</strong>巨量 = 大資金進場 = 方向性移動即將發生</li>
+    <li><strong>連續 24h 無任何格子觸發：</strong>價格已離開活躍區域 = 網格形同虛設</li>
+  </ol>
+</div>
+</div>
+
+<div class="card">
+<h3>網格被套：一邊倒持倉的處理</h3>
+<p>當價格移動到網格一側邊界，所有同方向的單都被填充：</p>
+
+<div class="hunt-card">
+  <div class="hunt-header">
+    <span class="hunt-badge badge-kill">情境 A：全部買單被填充</span>
+  </div>
+  <p><strong>狀態：</strong>價格從上方跌到下方，所有買入格子都成交了。你持有大量多頭持倉，浮虧中。</p>
+  <p><strong>決策流程：</strong></p>
+  <ol style="line-height:2;">
+    <li>價格仍在區間下限附近（未突破 > 1 ATR）→ <strong>觀察</strong>，可能只是掃蕩下方流動性後反彈</li>
+    <li>價格突破下限 > 1 ATR 且日線 ST 翻空 → <strong>認賠平倉</strong>，不要期待反彈</li>
+    <li>價格突破下限但日線 ST 仍多 → <strong>平一半</strong>持倉，剩餘設止損在區間下限 - 2 ATR</li>
+  </ol>
+</div>
+
+<div class="hunt-card">
+  <div class="hunt-header">
+    <span class="hunt-badge badge-kill">情境 B：全部賣單被填充</span>
+  </div>
+  <p><strong>狀態：</strong>價格從下方漲到上方，所有賣出格子都成交了。你持有大量空頭持倉，浮虧中。</p>
+  <p><strong>決策流程：</strong></p>
+  <ol style="line-height:2;">
+    <li>價格仍在區間上限附近（未突破 > 1 ATR）→ <strong>觀察</strong>，可能只是假突破</li>
+    <li>價格突破上限 > 1 ATR 且日線 ST 翻多 → <strong>認賠平倉</strong>，趨勢已啟動</li>
+    <li>價格突破上限但日線 ST 仍空 → <strong>平一半</strong>，剩餘設止損在區間上限 + 2 ATR</li>
+  </ol>
+</div>
+</div>
+
+<div class="card">
+<h3>資金恢復策略</h3>
+<p>網格被套認賠後，如何恢復資金：</p>
+<div class="sop-step">
+  <div class="sop-num">1</div>
+  <div class="sop-body">
+    <strong>停止操作 24-48 小時</strong><br>
+    認賠後的情緒狀態不適合交易。給自己冷靜期。不要報復性加倉或立即開新網格。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">2</div>
+  <div class="sop-body">
+    <strong>重新評估環境</strong><br>
+    網格被突破 = 市場從盤整轉為趨勢。此時應切回 ST 趨勢策略，而非開新的網格。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">3</div>
+  <div class="sop-body">
+    <strong>降低下一筆的倉位</strong><br>
+    虧損後下一筆交易倉位減半。用小倉位慢慢恢復信心和資金。連續盈利 3 筆後再恢復正常倉位。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">4</div>
+  <div class="sop-body">
+    <strong>記錄並改進</strong><br>
+    為什麼被套？是忽略了殺手開關的信號？還是參數設太窄？記錄下來，下次避免。
+  </div>
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--red);">
+<h3 style="color:var(--red);">網格資金管理鐵律</h3>
+<div style="padding:16px 20px; background:var(--red-l); border-radius:8px; margin:12px 0;">
+<ul style="font-size:14px; line-height:2.2; font-weight:500;">
+  <li><strong>最大 20% 帳戶資金：</strong>因為如果區間被打破，你可能虧損整個網格配置的 30-50%。20% * 50% = 10% 帳戶虧損 = 可承受</li>
+  <li><strong>永遠不用槓桿做網格：</strong>網格本身已經是全額佔用資金，加槓桿 = 爆倉風險</li>
+  <li><strong>單一資產最多一組網格：</strong>不要在同一個幣上開多組重疊網格</li>
+  <li><strong>所有網格加總不超過 40%：</strong>如果同時在 BTC 和 ETH 開網格 = 各 20% = 合計 40% 上限</li>
+  <li><strong>虧損觸及帳戶 5% 時強制關閉：</strong>不管其他條件如何，帳戶級別的止損是最後防線</li>
+</ul>
+</div>
+</div>
+
+<div class="card">
+<h3>網格 vs 趨勢：模式切換流程</h3>
+<div class="grid-param">
+<strong>// 判斷當前環境</strong><br>
+<br>
+[低波動評分 >= 7] ──→ 網格模式<br>
+          │<br>
+          ├── 每日審查通過 → 繼續運行<br>
+          │<br>
+          ├── 殺手開關觸發 → 關閉網格<br>
+          │         │<br>
+          │         └──→ [重新評估]<br>
+          │                  │<br>
+          │                  ├── 低波動恢復 → 開新網格<br>
+          │                  └── 波動擴大 → 切回 ST 趨勢策略<br>
+          │<br>
+[低波動評分 < 5] ──→ ST 趨勢模式<br>
+          │<br>
+          ├── ST 翻轉頻繁（盤整期）→ 檢查低波動評分<br>
+          │         │<br>
+          │         └── >= 7 → 切換到網格模式<br>
+          │<br>
+          └── ST 信號有效 → 繼續趨勢操作
+</div>
+</div>
+
+<div style="padding:16px 20px; background:var(--green-l); border-radius:var(--r); border:1px solid #bbf7d0; margin-top:20px;">
+  <h3 style="color:var(--green); margin-top:0;">網格風控總結</h3>
+  <ul style="font-size:14px; line-height:2;">
+    <li>網格是「有限環境」工具 — 只在確認的低波動區間使用</li>
+    <li>每日審查是非談判性義務 — 跳過一天可能錯過殺手開關信號</li>
+    <li>20% 資金上限是帳戶生存的保險 — 永遠不違反</li>
+    <li>殺手開關 = 不猶豫的機械式行動 — 觸發就關，不期待</li>
+    <li>被套認賠 = 正常成本 — 重要的是控制每次虧損 < 帳戶 5%</li>
+    <li>網格只是工具箱中的一個工具 — 不是所有環境都適用</li>
+  </ul>
+</div>
+</div><!-- tab5 -->
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab6">
+<h2>互動情境測驗（50 題）</h2>
+<p style="margin-bottom:16px; color:var(--text3);">測試你對流動性結構、主力獵殺、網格交易的理解。每題選擇後會顯示解析。</p>
+
+<div class="quiz-progress">
+  <span id="quiz-progress-text">0 / 50</span>
+  <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+  <span id="quiz-score-text">正確：0</span>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="quiz-nav">
+  <button id="quiz-prev" onclick="quizNav(-1)">上一題</button>
+  <button id="quiz-next" class="primary" onclick="quizNav(1)">下一題</button>
+  <button id="quiz-reset" onclick="quizReset()">重新開始</button>
+</div>
+</div><!-- tab6 -->
+
+<footer style="margin-top:40px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
+  <p>流動性結構與網格交易指南 | 內容僅供學習參考，不構成投資建議</p>
+  <p style="margin-top:4px;">交易有風險，網格策略可能在趨勢市場中產生重大虧損</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// Tab navigation
+document.addEventListener('DOMContentLoaded', function() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      if (!targetTab) return;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+
+  initQuiz();
+});
+
+// Quiz data - 50 questions
+const quizData = [
+  {
+    q: "BTC 24h 成交量創 4 年新低，BB 帶寬極度壓縮，Funding Rate 接近 0%。你該用什麼策略？",
+    opts: ["追蹤 SuperTrend 做趨勢", "部署網格交易策略", "重倉做多搶反彈", "完全不交易"],
+    ans: 1,
+    explain: "量創新低 + BB 擠壓 + Funding 接近零 = 教科書級的低波動環境。這正是網格策略的最佳環境：無方向、有來回波動、手續費優勢可以發揮。趨勢策略在此環境會被反覆打臉。"
+  },
+  {
+    q: "價格跌破前低 $94,200 達 $200 後立即反轉，出現一根大陽線收在 $95,500。發生了什麼？",
+    opts: ["趨勢反轉確認", "流動性獵殺（停損掃蕩）", "正常的技術性反彈", "做市商撤退"],
+    ans: 1,
+    explain: "經典的流動性獵殺模式：價格穿越已知的流動性池（前低 $94,200 下方的停損），觸發停損後主力獲得對手盤（大量賣出市價單 = 主力的買入對手盤），然後推動價格反轉上漲。長下影線 + 大陽線收盤 = sweep 的標誌。"
+  },
+  {
+    q: "你的網格機器人已經運行 3 天。今天日線 ST 從多翻空。你該怎麼做？",
+    opts: ["繼續運行，ST 翻轉不影響網格", "立即關閉網格，平倉所有持倉", "只關閉一半格子", "等 4H ST 也翻空再關"],
+    ans: 1,
+    explain: "日線 ST 翻轉是殺手開關的首要條件。ST 翻空 = 趨勢方向改變 = 盤整環境結束 = 網格可能面臨單向行情風險。不管其他條件，日線 ST 翻轉就必須立即關閉。等待確認會讓風險指數級增加。"
+  },
+  {
+    q: "網格設定 $60K-$64K。價格現在 $59,500。所有買入格子都已填充，沒有賣出。你面對什麼局面？",
+    opts: ["正常，等價格回升就好", "被套：需要決定是認賠還是等待", "加碼在 $59,500 做多", "開新的更低區間網格"],
+    ans: 1,
+    explain: "所有買單填充 = 持有大量多頭持倉 + 價格在區間外 = 被套。此時需要決策：(1) 日線 ST 仍多 → 等待反彈，但設止損在區間下限 - 2 ATR；(2) 日線 ST 翻空 → 認賠平倉。絕對不要加碼攤平或開新的更低網格。"
+  },
+  {
+    q: "ATR 已經連續 5 天壓縮，但明天有 CPI 數據公布。你該開網格嗎？",
+    opts: ["應該，ATR 壓縮就是網格信號", "不應該，Tier 1 事件會打破區間", "開一半倉位的網格", "事件前 2 小時開，賭方向"],
+    ans: 1,
+    explain: "即使所有低波動指標都達標，Tier 1 事件（CPI）在 24h 內 = 絕對禁止開網格。CPI 公布可能造成 2-5% 的瞬間移動，直接打穿你的網格區間。正確做法：等 CPI 公布後 24 小時，確認市場重新進入盤整，再評估是否開網格。"
+  },
+  {
+    q: "價格連續觸及 $65,000 三次都沒突破。上方大量停損堆積。接下來最可能發生什麼？",
+    opts: ["永遠不會突破 $65,000", "第四次觸及大機率會掃蕩上方流動性", "應該在 $65,000 做空", "等 ST 翻空確認"],
+    ans: 1,
+    explain: "三次觸及同一價位 = 等高（Equal Highs）= 大量停損堆積在上方。「流動性是磁鐵」— 觸及次數越多，上方停損越厚，主力越有動力去掃蕩它。第四次觸及時很可能會短暫突破上方掃蕩停損，然後可能反轉（如果是假突破）或繼續上漲（如果是真突破）。"
+  },
+  {
+    q: "你帳戶有 $100,000。想同時在 BTC 和 ETH 各開一組網格。每組最多分配多少？",
+    opts: ["各 $50,000（各 50%）", "各 $20,000（各 20%）", "各 $30,000（各 30%）", "各 $40,000（各 40%）"],
+    ans: 1,
+    explain: "單一網格最多 20% 帳戶資金。兩組網格合計不超過 40%。所以 BTC 和 ETH 各 $20,000 = 合計 $40,000 = 40% = 剛好在上限。這確保即使兩組網格同時被突破，最大虧損仍可控制在帳戶的 20% 以內。"
+  },
+  {
+    q: "一根 1H K 線有極長的下影線，穿越了前低 $300，但收盤回到前低上方。下一步最佳操作？",
+    opts: ["立即做多", "等下一根 K 線確認反轉再做多", "做空因為前低已破", "不操作等 4H 收盤"],
+    ans: 1,
+    explain: "長下影線穿越前低 = 疑似流動性掃蕩。但一根 K 線不足以確認。等下一根 K 線：如果收盤也在前低上方且出現上漲動能 = 確認掃蕩完成 → 做多。止損設在影線最低點下方。不要在掃蕩的那根 K 線收盤前就入場。"
+  },
+  {
+    q: "網格運行第 5 天。4H ATR 相比開網格時增加了 60%。你該怎麼做？",
+    opts: ["正常，網格繼續運行", "ATR 擴張 > 50% = 準備關閉網格", "擴大網格區間適應新的 ATR", "加碼因為波動大更賺"],
+    ans: 1,
+    explain: "ATR 擴張超過 50% 是殺手開關的信號之一。波動率回升代表市場正在從盤整轉向趨勢模式。即使區間尚未被突破，也應該開始準備關閉。因為 ATR 擴張 → 區間被突破的機率大增。"
+  },
+  {
+    q: "BTC 在 $60,000-$63,000 盤整了 10 天。你想開網格。格子間距用 4H ATR 的多少倍？",
+    opts: ["0.1 倍（極密）", "0.3-0.5 倍", "1.0 倍", "2.0 倍"],
+    ans: 1,
+    explain: "格子間距 = 0.3-0.5 倍 4H ATR 是最佳區間。太密（0.1 倍）= 觸發頻繁但每格利潤可能被手續費吃掉。太寬（1.0-2.0 倍）= 觸發次數太少，收益不足以承擔風險。0.3-0.5 倍平衡了觸發頻率和每格利潤。"
+  },
+  {
+    q: "做市商在訂單簿賣方掛了 500 BTC 大單在 $65,000。這代表什麼？",
+    opts: ["$65,000 有強大壓力，做空", "可能是 spoofing（幽靈掛單），不可盲信", "一定會在 $65,000 反轉", "立即在 $65,000 掛空單"],
+    ans: 1,
+    explain: "訂單簿大單可能是真實壓力也可能是 spoofing。做市商經常用大額掛單製造「壓力」的假象來嚇退買方，實際上當價格靠近時會撤單。判斷方式：觀察大單是否在價格靠近時消失 = spoofing。不能僅憑訂單簿做交易決策。"
+  },
+  {
+    q: "你的網格在 BTC 上運行。突然看到 ETH/BTC 匯率暴跌，大量資金從 ETH 流入 BTC。對你的 BTC 網格有何影響？",
+    opts: ["有利，BTC 可能突破網格上限", "不利，需要關閉網格", "無影響，各資產獨立", "需要在 ETH 上也開網格"],
+    ans: 0,
+    explain: "資金從 ETH 流入 BTC = BTC 買壓增加 = 可能推動 BTC 價格突破網格上限。這對中性網格不利（上方賣單被套），但對多頭偏向網格有利。無論如何，這是一個需要關注的信號：如果 BTC 因此突破區間 > 1 ATR，應觸發殺手開關。"
+  },
+  {
+    q: "Funding Rate 從接近 0% 突然跳升到 +0.08%。這對你的中性網格意味什麼？",
+    opts: ["沒影響，Funding 跟網格無關", "警告信號：市場開始有多頭方向性，盤整可能結束", "應該改成多頭偏向網格", "Funding 高 = 做空更賺"],
+    ans: 1,
+    explain: "Funding Rate 從 0 跳到 0.08% = 市場多頭共識大幅增加 = 方向性出現。中性網格的前提是「無方向」。當 |FR| > 0.05% 時，你應該在每日審查中將此標記為警告，準備可能需要關閉網格。"
+  },
+  {
+    q: "BTC 前低 $94,200 被掃蕩後，出現連續 3 根大陽線（位移），從 $94,000 漲到 $97,000。$95,000-$95,800 有一個 FVG。最佳進場策略？",
+    opts: ["在 $97,000 追多", "在 $95,400（FVG 中間）掛限價買單", "等回到 $94,200 再買", "不進場，已經錯過了"],
+    ans: 1,
+    explain: "經典 SMC 三步驟完成：掃蕩($94,000) → 位移($94K→$97K) → FVG($95K-$95.8K)。價格有 70%+ 機率回踔到 FVG 區域。在 FVG 中間（$95,400）掛 Maker 限價買單 = 最佳風報比進場。止損在掃蕩低點($93,900)下方。"
+  },
+  {
+    q: "網格運行第 2 天，經濟日曆顯示 48 小時後有 FOMC 會議。你應該？",
+    opts: ["不管，48 小時還很遠", "在 FOMC 前 12 小時關閉網格", "現在就關閉", "加大網格區間"],
+    ans: 1,
+    explain: "FOMC 是 Tier 1 事件。規則是在事件前 4-12 小時關閉網格。48 小時後 = 你還可以繼續運行 36 小時。在 FOMC 前 12 小時關閉是最佳做法 — 既享受了大部分運行時間，又避免了事件風險。"
+  },
+  {
+    q: "你觀察到 BTC 在過去一個月，每次觸及 $70,000 整數關口就會回落 $500-$800 後反彈。這代表什麼？",
+    opts: ["$70,000 有不可突破的壓力", "$70,000 上方有大量流動性，早晚會被掃蕩", "應該在 $70,000 做空", "正常的整數壓力"],
+    ans: 1,
+    explain: "反覆觸及同一位 = 停損在其上方不斷累積。$70,000 作為心理大整數，上方的停損（短線空單的停損 + 突破買單的觸發價）越來越厚。根據「價格移向流動性」的原理，終究會有一次掃蕩上方。問題只是「何時」以及「掃完是繼續還是反轉」。"
+  },
+  {
+    q: "BB 帶寬創 120 日新低，同時 ATR 創 30 日新低。這兩個信號疊加代表什麼？",
+    opts: ["趨勢即將大幅啟動（壓縮後必爆發）", "市場死了，不會動了", "可以開大倉位網格", "應該開小倉位網格 + 準備壓縮結束後的突破交易"],
+    ans: 3,
+    explain: "雙重壓縮 = 確認低波動環境（適合網格），但也暗示「壓縮後必爆發」— BB 擠壓越極端，後續的突破越劇烈。正確策略：開小倉位網格（享受當下的盤整利潤），同時準備突破策略（壓縮結束的第一根大 K 線出現時跟隨方向）。風控必須更嚴。"
+  },
+  {
+    q: "你的中性網格在 BTC $62K-$65K 運行。現在是週六凌晨 3 點，幾乎零成交量。突然價格跌到 $61,800。你怎麼判斷？",
+    opts: ["趨勢反轉，立即平倉", "流動性真空時段的掃蕩，可能是假突破", "等週一再看", "加碼做多"],
+    ans: 1,
+    explain: "週末凌晨 = 流動性極度稀薄的時段。少量資金就能推動價格。$62K 下方 $200 的穿越很可能是低流動性掃蕩而非真正的突破。判斷依據：等高流動性時段（週一歐美交疊）確認。如果到時仍在區間外 = 真突破，觸發殺手開關。"
+  },
+  {
+    q: "日線 ST 多已經 3 週了。但最近 5 天價格幾乎不動（振幅 < 2%）。你想開網格。該選哪種類型？",
+    opts: ["中性網格", "多頭偏向網格", "空頭偏向網格", "不開網格"],
+    ans: 1,
+    explain: "日線 ST 多 = 大方向看多。短期低波動 = 適合網格。結合兩者：多頭偏向網格最合適。在價格下方設買入格子，上漲時分批賣出。好處：即使價格上破區間（順大方向），你只是「沒有持倉」而非「被套空單」。"
+  },
+  {
+    q: "網格的格子間距設為 0.1 倍 4H ATR。這會有什麼問題？",
+    opts: ["格子太密，每格利潤不足以覆蓋手續費", "沒問題，越密越好", "格子太寬", "會觸發太少次"],
+    ans: 0,
+    explain: "0.1 倍 ATR = 極度密集。假設 4H ATR = $800，間距 = $80。每格利潤 $80，但如果 Maker 費率是 0.02%（$12.4/次），來回就是 $24.8。$80 - $24.8 = $55.2 淨利。看似可以，但實際上如此小的間距可能被交易所最小 tick 和滑點吞噬。0.3-0.5 倍更穩健。"
+  },
+  {
+    q: "價格突破你的網格上限 $64,000 達到 $64,500。4H ATR 是 $800。這是否觸發殺手開關？",
+    opts: ["不是，還沒超過 1 ATR", "是的，已經超過邊界 $500", "需要等收盤確認", "只是暫時的，不用管"],
+    ans: 0,
+    explain: "殺手開關條件是「突破區間 > 1 ATR(4H)」。1 ATR = $800。目前只突破 $500 < $800 = 尚未觸發。但這是警告信號：如果繼續上漲到 $64,800（$800 以上）= 觸發。此時應提高警戒，密切觀察是否會被拉回或繼續突破。"
+  },
+  {
+    q: "你在做空掛了限價單（Maker）。成交時交易所給你 -0.005% 的手續費（倒貼）。這對網格策略意味什麼？",
+    opts: ["不重要的小數字", "每次 fill 都是穩賺 — 格子間距 + 手續費獎勵 = 雙重利潤", "應該用 Taker 單代替", "只有做空有獎勵不公平"],
+    ans: 1,
+    explain: "Maker 獎勵（負手續費）= 交易所倒貼給你。網格中每次 fill 都是 Maker 單 = 每次成交都拿獎勵。格子間距利潤 + Maker 獎勵 = 雙重收入來源。這就是為什麼網格策略在低波動中仍有正期望值 — 即使格子間距很小，Maker 獎勵也能確保淨利潤。"
+  },
+  {
+    q: "連續 24 小時你的網格沒有任何格子被觸發。這代表什麼？",
+    opts: ["很正常，等一下就會觸發", "價格已離開活躍區域 — 觸發殺手開關條件之一", "網格設太寬了", "應該加更多格子"],
+    ans: 1,
+    explain: "連續 24h 無觸發 = 價格已經不在你網格的活躍區域 = 網格形同虛設。這是殺手開關的觸發條件之一。應該檢查：價格是否已在區間邊緣/外部？如果是 → 關閉網格。如果只是剛好停在兩個格子中間 → 再觀察 12 小時。"
+  },
+  {
+    q: "主力想在 $62,000 大量買入 BTC。他會怎麼操作？",
+    opts: ["直接市價買入", "先掃蕩 $62,000 下方的流動性再買入", "在 $62,000 掛大額買單等成交", "等自然跌到 $62,000"],
+    ans: 1,
+    explain: "主力需要大量對手盤（賣單）。$62,000 下方有散戶的多單停損（停損 = 賣出市價單 = 主力的買入對手盤）。策略：先用少量資金把價格推到 $62,000 以下觸發停損 → 大量賣出市價單湧出 → 主力在這些賣單上大量吃貨買入 → 然後價格反轉上漲。"
+  },
+  {
+    q: "BTC 在 $60,000-$65,000 盤整了 3 週。上方和下方都堆積了大量流動性。突然一根大陰線跌破 $60,000 到 $59,500，但 30 分鐘後 V 型反轉漲到 $61,000。這是什麼？",
+    opts: ["趨勢開始下跌", "先掃蕩下方流動性，可能接下來會掃蕩上方", "正常波動", "盤整結束的信號"],
+    ans: 1,
+    explain: "盤整 3 週 = 兩側流動性都很厚。先掃一側（下方 $60K）是經典操作。V 型反轉回到區間內 = 下方掃蕩完成。下一步很可能是反向掃蕩上方流動性（$65K 上方）。這是主力的「雙向收割」模式。可以在 FVG 位置做多，目標是上方流動性區。"
+  },
+  {
+    q: "你的網格帳面虧損已達帳戶的 4.5%。殺手開關的其他條件都未觸發。你該怎麼做？",
+    opts: ["繼續運行，殺手開關沒觸發就沒事", "接近 5% 強制止損線了，應該主動減倉或關閉", "加碼攤平降低均價", "等虧損回本再關"],
+    ans: 1,
+    explain: "帳戶級止損線是 5%。4.5% = 已經非常接近。即使其他殺手開關條件未觸發，你也應該主動關閉或減半倉位。因為如果再往下 0.5% 就觸及強制止損。主動管理 > 被動觸發。5% 是「絕對不可逾越」的底線。"
+  },
+  {
+    q: "你看到 BTC 1H 圖上出現三根 K 線組合：第一根收在 $95,800，第二根高點 $97,200 低點 $94,500（大實體陽線），第三根開在 $96,500。$95,800-$96,500 之間沒有被第一和第三根 K 線覆蓋。這是什麼？",
+    opts: ["普通的三根 K 線", "公允價值缺口（FVG）= 未來的回踔目標", "不重要的技術形態", "做空信號"],
+    ans: 1,
+    explain: "FVG 的定義：第二根 K 線的範圍中，第一根的高點和第三根的低點之間沒有重疊的區域。這裡第一根高 ≤ $95,800，第三根低 ≥ $96,500，中間 $95,800-$96,500 = FVG。這代表「未被公平定價」的區域，價格有高機率回來填補。"
+  },
+  {
+    q: "你想部署網格。計算後得出需要 25% 帳戶資金才能設足夠的格子。你該怎麼辦？",
+    opts: ["用 25% 沒什麼問題", "只用 20%，減少格子數量或增大間距", "用 20% + 開槓桿補足", "放棄這次不開網格"],
+    ans: 1,
+    explain: "20% 是鐵律上限。如果計算需要 25%，解決方案是：(1) 減少格子數量（從 25 格減到 20 格）；(2) 增大格子間距；(3) 縮小區間範圍。三者都能讓資金需求回到 20% 以內。絕對不能超過 20%，更不能用槓桿。"
+  },
+  {
+    q: "市場出現了一個「假突破」：價格突破區間上軌 $65,000 到 $65,400 後停滯 4 小時，成交量萎縮，然後一根大陰線回到 $64,200。如果你有中性網格在 $62K-$65K，你的持倉狀態是？",
+    opts: ["不受影響", "上方賣單都被填充了 = 持有空單，現在浮盈", "沒有任何單成交", "網格已經被關閉了"],
+    ans: 1,
+    explain: "價格突破 $65K 時，區間上半部的賣出格子被觸發 = 你建立了空頭持倉。假突破回落到 $64,200 = 你的空單現在浮盈。這是網格的好處：在假突破中自動建立了正確方向的倉位。但如果是真突破不回頭，這些空單就會被套。"
+  },
+  {
+    q: "你的朋友說「我的網格用了 60% 帳戶資金，一個月賺了 15%！」你怎麼看？",
+    opts: ["很厲害，我也要學", "極度危險：60% 資金 + 網格被套 = 可能虧損 30%+ 帳戶", "15% 很正常", "只要賺錢就是對的"],
+    ans: 1,
+    explain: "60% 帳戶資金在網格 = 嚴重違反資金管理鐵律（上限 20%）。一個月賺 15% 可能只是「還沒遇到突破」的運氣。一旦趨勢啟動，60% 資金被套可能虧損 30-40% 帳戶。高報酬的背後是承擔了毀滅性風險。這不是策略，是賭博。"
+  },
+  {
+    q: "低波動評分系統顯示當前得分 6 分（中低波動）。你該怎麼做？",
+    opts: ["開網格，6 分夠了", "準備好網格參數但暫不啟動，等分數到 7+", "完全忽略網格", "用一半資金開測試網格"],
+    ans: 1,
+    explain: "6 分 = 中低波動 = 準備階段。正確做法：計算好網格參數（區間、間距、格子數），設好模板但不啟動。等分數升到 7+ 時可以一鍵啟動。這樣不會錯過最佳時機，也不會在不確定環境中冒險。"
+  },
+  {
+    q: "你注意到 BTC 價格已經連續 8 天在 $96,000-$98,000 之間（2% 振幅）。1H ST 在這期間翻轉了 5 次。這說明什麼？",
+    opts: ["ST 很有效，翻轉 5 次都是機會", "典型的 ST 失靈環境 = 應該切換到網格策略", "需要換更大的 ST 參數", "市場即將大爆發"],
+    ans: 1,
+    explain: "2% 振幅 + ST 翻轉 5 次 = 經典的 ST 失靈 + 理想的網格環境。ST 在盤整中頻繁假翻轉只會讓你虧損。而 $96K-$98K 的區間正好適合部署網格：區間明確、波動存在但不大。切換策略是正確答案。"
+  },
+  {
+    q: "你開了一個網格在 $62K-$65K。第一天就賺了 $150。第二天賺了 $120。第三天只賺了 $30。第四天一格都沒觸發。趨勢是什麼？",
+    opts: ["正常波動，不用擔心", "波動正在衰減 — 可能價格正移向區間邊緣或市場即將突破", "網格太寬需要調整", "應該加格子"],
+    ans: 1,
+    explain: "利潤遞減 + 觸發頻率降低 = 波動在縮小或價格在離開活躍區域。這是警示信號：(1) 檢查價格是否偏向區間一側；(2) 檢查是否有即將到來的事件；(3) 第四天零觸發已接近殺手開關條件（24h 無觸發）。應提高警覺。"
+  },
+  {
+    q: "主力要出貨（大量賣出 BTC）。他會怎麼創造流動性來吸收他的賣單？",
+    opts: ["直接砸盤", "先製造假突破上方阻力位，吸引散戶做多（= 買單 = 主力的賣出對手盤）", "等自然上漲再賣", "在低位出貨"],
+    ans: 1,
+    explain: "主力出貨需要大量買單作為對手盤。策略：推動價格假突破上方阻力 → 散戶看到突破紛紛追多 → 大量買入市價單湧入 → 主力在這些買單上出貨 → 假突破結束，價格暴跌。這就是為什麼很多突破後立即反轉 — 那是主力在出貨。"
+  },
+  {
+    q: "BTC 日線 ST 在一個月前翻多後就再也沒翻轉過。但最近 10 天完全不動（極低波動）。你認為這是什麼狀態？",
+    opts: ["牛市中的蓄力盤整", "趨勢已結束", "ST 失效", "應該做空"],
+    ans: 0,
+    explain: "日線 ST 多 + 長期低波動 = 牛市中的盤整蓄力期。趨勢並未改變（ST 未翻轉），只是暫時休息。這種環境：(1) 不應做空（逆大趨勢）；(2) 可以開多頭偏向網格（順大方向 + 利用盤整）；(3) 壓縮結束後大概率繼續上漲。"
+  },
+  {
+    q: "你的網格被套了（所有買單填充，價格在區間外）。你認賠虧了帳戶 3%。接下來該怎麼做？",
+    opts: ["立即開新網格搶回來", "暫停 24-48 小時，重新評估市場環境", "加大倉位做趨勢追回虧損", "換一個幣開網格"],
+    ans: 1,
+    explain: "認賠後的 SOP：(1) 暫停 24-48 小時冷靜；(2) 重新評估環境 — 網格被突破代表市場進入趨勢模式，應切換策略而非開新網格；(3) 下一筆交易倉位減半。報復性交易（立即重開或加大倉位）是虧損螺旋的開始。"
+  },
+  {
+    q: "一個完整的 SMC 獵殺模式中，「位移」（Displacement）具體指什麼？",
+    opts: ["價格的隨機波動", "掃蕩完成後出現的連續 2-3 根大實體 K 線反向移動", "ST 翻轉", "成交量突然放大"],
+    ans: 1,
+    explain: "位移 = 掃蕩後出現的「主力真正方向」的明確移動。特徵：連續 2-3 根大實體 K 線、方向一致、無明顯回撤。這代表主力已經完成建倉（在掃蕩中吃到了對手盤），現在開始推動價格向有利方向移動。位移的方向 = 未來趨勢的方向。"
+  },
+  {
+    q: "網格運行中，你突然收到新聞推送：「美聯儲緊急會議將在 6 小時後舉行」。你該？",
+    opts: ["無所謂，計劃中的會議不算突發", "緊急會議 = 非計畫事件 = 立即關閉網格", "等開會結果再決定", "收窄網格區間"],
+    ans: 1,
+    explain: "「緊急會議」= 非計劃中的 Tier 1 事件 = 可能引發極端波動。比定期 FOMC 更危險，因為市場完全沒有預期。立即關閉網格是唯一正確選擇。6 小時後的市場可能完全不同於現在。保存資金比追求幾小時的網格利潤重要得多。"
+  },
+  {
+    q: "你觀察到過去 3 天 BTC 每天都在亞洲時段創新低，然後在歐洲開盤後反彈。這是什麼模式？",
+    opts: ["亞洲散戶在恐慌賣出", "亞洲時段低流動性被利用來掃蕩下方停損", "正常的時區輪動", "應該在亞洲時段做空"],
+    ans: 1,
+    explain: "亞洲時段流動性低 = 少量資金就能推動價格。連續 3 天在亞洲時段創新低然後反彈 = 主力利用低流動性時段掃蕩下方停損（觸發散戶的多單停損 = 賣出市價單 = 主力的買入對手盤）。歐洲開盤後流動性恢復，價格回歸正常水平。"
+  },
+  {
+    q: "你在 Bybit 上開網格。Maker 費率是 -0.005%（獎勵）。你的格子間距是 $200，每格持倉 $5,000。每次 fill 的手續費收入是多少？",
+    opts: ["$0（免費）", "$0.25（$5,000 * 0.005%）", "需要付費", "-$0.25（交易所倒貼你）"],
+    ans: 3,
+    explain: "Maker 負費率 = 交易所獎勵你掛單。$5,000 * 0.005% = $0.25。所以每次 fill，除了格子間距利潤（$200/$62,000*$5,000 ≈ $16.13）之外，還額外獲得 $0.25 手續費獎勵。雖然 $0.25 很小，但日積月累（假設每天 10 次 fill = $2.5/天 = $75/月）也是可觀的。"
+  },
+  {
+    q: "價格在你的網格上半部和下半部之間來回震盪了一整天，觸發了 12 次格子。你的淨利潤是正還是負？",
+    opts: ["正的 — 每次觸發都是利潤", "負的 — 來回交易有摩擦成本", "零 — 買賣抵消", "取決於最終價格位置"],
+    ans: 0,
+    explain: "網格的核心優勢：只要價格在區間內波動，每次「低買高賣」的循環都產生一個格子的利潤。12 次觸發 ≈ 6 個完整循環 = 6 格利潤。加上 Maker 費率優勢（零或負手續費），淨利潤確定為正。這就是網格在盤整中「印鈔」的原理。"
+  },
+  {
+    q: "BB 帶寬突然從歷史低位急速擴張，上下軌快速分離。4H K 線出現一根實體超過前 10 根平均 3 倍的大陽線。你的網格該怎麼辦？",
+    opts: ["繼續運行看看", "多個突破信號疊加 — 立即關閉網格", "把網格上限提高", "追多做趨勢"],
+    ans: 1,
+    explain: "BB 帶寬急速擴張 + 巨型 K 線 = 壓縮結束，趨勢啟動。這觸及了多個殺手開關條件：ATR 擴張、價格可能突破區間。立即關閉網格。然後評估是否切換到趨勢策略（跟隨這根大陽線的方向）。"
+  },
+  {
+    q: "你做了一個多頭偏向網格（只有下方的買入格子）。價格一路上漲從未回踔。5 天後你一格都沒成交。這代表什麼？",
+    opts: ["網格失敗了", "錯過了漲幅但沒有虧損 — 這是可接受的結果", "應該追漲", "網格參數設錯了"],
+    ans: 1,
+    explain: "多頭偏向網格只在價格下跌時買入。價格一路上漲 = 你的掛單從未觸及 = 零成交 = 零利潤但也零虧損。這是可接受的結果 — 比追高被套好得多。寧可錯過也不追價。如果持續不觸發 > 5 天，可以考慮上移格子到新的支撐位附近。"
+  },
+  {
+    q: "你在 BTC 和 ETH 上各有一組網格。BTC 的網格被殺手開關觸發關閉了。ETH 的網格是否也要關？",
+    opts: ["必須一起關", "獨立評估：如果 ETH 的殺手開關條件未觸發就繼續", "看 BTC 和 ETH 相關性高不高", "全部關閉最安全"],
+    ans: 1,
+    explain: "每組網格獨立評估殺手開關條件。BTC 突破不代表 ETH 也會突破。但需要注意：如果觸發原因是系統性的（如 FOMC 事件），那所有資產都受影響 = 全部關閉。如果只是 BTC 自身的技術性突破 = ETH 獨立評估。相關性是參考但非決定因素。"
+  },
+  {
+    q: "你觀察到某個幣的訂單簿：買方 $50.00 有 100,000 張掛單。當價格跌到 $50.05 時，這 100,000 張掛單消失了。這代表什麼？",
+    opts: ["正常的撤單行為", "Spoofing（幽靈掛單）— 大單是假的，用來製造支撐假象", "做市商調整價格", "系統錯誤"],
+    ans: 1,
+    explain: "大額掛單在價格接近時消失 = 經典 Spoofing。目的：讓其他交易者以為 $50.00 有強支撐 → 不願賣出或願意買入 → 幫助 Spoofer 在更高價格出貨。一旦出貨完成，撤掉假支撐，真正的賣壓來襲時沒有支撐 = 暴跌。這是為什麼不能依賴訂單簿做決策。"
+  },
+  {
+    q: "你的網格每天穩定賺 $30-50 已經兩週了。你開始想「何不增加資金到 40%？」這個想法對嗎？",
+    opts: ["對的，既然穩定就加碼", "不對 — 過去表現不代表未來。20% 上限是保護你的鐵律", "可以試試 30%", "等賺滿一個月再決定"],
+    ans: 1,
+    explain: "兩週的穩定利潤可能只是「盤整期還沒結束」的運氣。任何時候區間都可能被突破。20% 上限存在的意義就是在「一切看似完美」的時候保護你 — 因為災難往往在你最自信的時候降臨。紀律 > 貪婪。維持 20%。"
+  },
+  {
+    q: "BTC 從 $90,000 崩盤到 $75,000 後，在 $76,000-$79,000 盤整了 8 天。低波動評分 8 分。你開了網格。第 3 天日線 ST 仍空。這個網格安全嗎？",
+    opts: ["安全，評分夠高", "需要注意：日線 ST 空 = 如果跌破盤整下限可能是趨勢延續", "完全不該開", "日線 ST 空跟網格無關"],
+    ans: 1,
+    explain: "崩盤後盤整 + 低波動評分高 = 可以開網格，但風險較高。日線 ST 仍空 = 大趨勢仍是向下。如果價格跌破 $76,000，可能不是簡單的掃蕩而是趨勢延續下跌。因此：(1) 使用較寬的殺手開關距離；(2) 總資金控制在 15% 而非 20%；(3) 密切關注日線 ST 是否翻多作為安全確認。"
+  },
+  {
+    q: "在低波動環境中，你同時看到：(1) ATR 壓縮、(2) BB 擠壓、(3) 成交量萎縮、(4) Funding 近零。但同時日線 ST 三天前剛翻多。你開中性網格還是多頭偏向網格？",
+    opts: ["中性網格 — 低波動無方向", "多頭偏向網格 — 日線 ST 多是方向指引", "不開 — 日線 ST 剛翻轉 < 7 天不符啟動條件", "等 7 天再開"],
+    ans: 2,
+    explain: "啟動條件之一是「日線 ST 在同一方向持續 > 7 天」。三天前才翻多 = 可能還在趨勢初期（不是盤整）。低波動可能只是翻轉後的短暫停頓，接下來可能出現新一波趨勢移動。正確做法：等到第 7 天以上，確認 ST 方向穩定 + 低波動持續，再部署多頭偏向網格。"
+  },
+  {
+    q: "你的網格上限是 $65,000。價格在 $64,900 停了 3 小時（距離上限 0.15%）。你緊張嗎？",
+    opts: ["不緊張，還沒觸及上限", "適度緊張：價格在邊界附近需要監控", "很緊張要立即關閉", "加格子到 $65,500"],
+    ans: 1,
+    explain: "價格在區間邊界附近停留 = 需要提高警覺但不需要恐慌。可能只是短暫觸及後回落，也可能是突破前的蓄力。正確做法：(1) 確認殺手開關條件是否接近觸發；(2) 檢查是否有催化事件；(3) 不主動關閉但不去做其他事（保持監控）。0.15% 的距離在一根 K 線內就可能觸及。"
+  },
+  {
+    q: "關於「價格移動到流動性所在的地方」這個概念，以下哪個表述最準確？",
+    opts: ["價格隨機移動，碰巧遇到流動性", "主力有意識地推動價格到停損密集區以獲取對手盤", "流動性是價格走完之後才形成的", "只有在 BTC 市場才有這個現象"],
+    ans: 1,
+    explain: "核心概念：流動性獵殺是有意識的市場行為。做市商和大型交易者需要對手盤來完成大額訂單。散戶的停損 = 確定會被觸發的市價單 = 可靠的對手盤來源。因此主力有經濟動機推動價格到停損密集區。這不是陰謀論，而是市場微觀結構的必然結果。"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = new Array(quizData.length).fill(false);
+let userAnswers = new Array(quizData.length).fill(-1);
+
+function initQuiz() {
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizData[currentQuestion];
+  const container = document.getElementById('quiz-container');
+
+  let optionsHtml = '';
+  q.opts.forEach((opt, i) => {
+    let cls = '';
+    if (answered[currentQuestion]) {
+      if (i === q.ans) cls = 'correct';
+      else if (i === userAnswers[currentQuestion] && i !== q.ans) cls = 'wrong';
+    }
+    optionsHtml += `<li class="${cls}" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</li>`;
+  });
+
+  container.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-question">Q${currentQuestion+1}. ${q.q}</div>
+      <ul class="quiz-options">${optionsHtml}</ul>
+      <div class="quiz-explanation ${answered[currentQuestion] ? 'show' : ''}" id="quiz-explain">
+        ${answered[currentQuestion] ? q.explain : ''}
+      </div>
+    </div>
+  `;
+
+  // Update progress
+  const answeredCount = answered.filter(a => a).length;
+  document.getElementById('quiz-progress-text').textContent = `${answeredCount} / ${quizData.length}`;
+  document.getElementById('quiz-progress-fill').style.width = (answeredCount / quizData.length * 100) + '%';
+  document.getElementById('quiz-score-text').textContent = `正確：${score}`;
+}
+
+function selectAnswer(idx) {
+  if (answered[currentQuestion]) return;
+
+  answered[currentQuestion] = true;
+  userAnswers[currentQuestion] = idx;
+
+  if (idx === quizData[currentQuestion].ans) {
+    score++;
+  }
+
+  renderQuestion();
+}
+
+function quizNav(dir) {
+  currentQuestion += dir;
+  if (currentQuestion < 0) currentQuestion = 0;
+  if (currentQuestion >= quizData.length) currentQuestion = quizData.length - 1;
+  renderQuestion();
+}
+
+function quizReset() {
+  currentQuestion = 0;
+  score = 0;
+  answered = new Array(quizData.length).fill(false);
+  userAnswers = new Array(quizData.length).fill(-1);
+  renderQuestion();
+}
+</script>
+
+</body>
+</html>
