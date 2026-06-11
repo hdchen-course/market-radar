@@ -23,6 +23,7 @@ Output:
 """
 
 import argparse
+import io
 import json
 import os
 import sys
@@ -30,6 +31,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
+import requests
 import yfinance as yf
 
 from config import (
@@ -37,6 +39,8 @@ from config import (
     COT_CONTRACTS, AAII_URL, COMPARISON_PERIODS,
     DATA_DIR
 )
+
+HTTP_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 
 
 def ensure_dirs():
@@ -189,34 +193,34 @@ def collect_cot():
     """
     print("Fetching CFTC COT data...")
 
-    # CFTC publishes weekly data as a bulk CSV
-    # Current year + prior year combined report
-    cot_url = "https://www.cftc.gov/dea/newcot/deafut.txt"
+    # CFTC annual zip with proper headers (futures-only, legacy format)
+    import zipfile
+    year = datetime.now().year
+    cot_url = f"https://www.cftc.gov/files/dea/history/deacot{year}.zip"
 
     try:
-        # Column names for the short format futures-only report
-        # Reference: https://www.cftc.gov/MarketReports/CommitmentsofTraders/ExplanatoryNotes/index.htm
-        df = pd.read_csv(cot_url, low_memory=False)
+        resp = requests.get(cot_url, headers=HTTP_HEADERS, timeout=60)
+        resp.raise_for_status()
+        z = zipfile.ZipFile(io.BytesIO(resp.content))
+        with z.open(z.namelist()[0]) as f:
+            df = pd.read_csv(f, low_memory=False)
+        df.columns = [c.strip() for c in df.columns]
 
         results = {}
         for contract_code, name, category in COT_CONTRACTS:
-            # Filter by contract code (CFTC_Contract_Market_Code)
-            contract_data = df[df["CFTC_Contract_Market_Code"].astype(str) == contract_code]
+            contract_data = df[df["CFTC Contract Market Code"].astype(str).str.strip() == contract_code]
 
             if contract_data.empty:
                 print(f"  WARN: No COT data for {contract_code} ({name})")
                 continue
 
-            # Get the latest report (most recent date)
-            latest = contract_data.sort_values("As_of_Date_In_Form_YYMMDD", ascending=False).iloc[0]
+            latest = contract_data.sort_values("As of Date in Form YYMMDD", ascending=False).iloc[0]
 
-            # Extract key positioning data
-            # Commercial = hedgers, Non-Commercial = speculators (managed money)
-            noncomm_long = int(latest.get("NonComm_Positions_Long_All", 0))
-            noncomm_short = int(latest.get("NonComm_Positions_Short_All", 0))
-            comm_long = int(latest.get("Comm_Positions_Long_All", 0))
-            comm_short = int(latest.get("Comm_Positions_Short_All", 0))
-            open_interest = int(latest.get("Open_Interest_All", 0))
+            noncomm_long = int(latest.get("Noncommercial Positions-Long (All)", 0))
+            noncomm_short = int(latest.get("Noncommercial Positions-Short (All)", 0))
+            comm_long = int(latest.get("Commercial Positions-Long (All)", 0))
+            comm_short = int(latest.get("Commercial Positions-Short (All)", 0))
+            open_interest = int(latest.get("Open Interest (All)", 0))
 
             net_speculative = noncomm_long - noncomm_short
             net_commercial = comm_long - comm_short
@@ -224,7 +228,7 @@ def collect_cot():
             results[contract_code] = {
                 "name": name,
                 "category": category,
-                "report_date": str(latest.get("As_of_Date_In_Form_YYMMDD", "")),
+                "report_date": str(latest.get("As of Date in Form YYYY-MM-DD", "")),
                 "net_speculative": net_speculative,
                 "net_commercial": net_commercial,
                 "noncomm_long": noncomm_long,
@@ -256,7 +260,12 @@ def collect_aaii():
     print("Fetching AAII sentiment data...")
 
     try:
-        df = pd.read_excel(AAII_URL, sheet_name=0)
+        resp = requests.get(AAII_URL, headers=HTTP_HEADERS, timeout=30)
+        resp.raise_for_status()
+        if resp.content[:5] == b'<html' or len(resp.content) < 10000:
+            print("  WARN: AAII returned HTML instead of Excel (blocked). Using fallback.")
+            return {"error": "AAII blocked direct download. Check manually at aaii.com/sentimentsurvey"}
+        df = pd.read_excel(io.BytesIO(resp.content), sheet_name=0, engine='xlrd')
 
         # The spreadsheet has columns like: Date, Bullish, Neutral, Bearish, ...
         # Normalize column names
