@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperTrend(300,3) 實戰指南 — 多時框方向判斷與交易 SOP</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
+<style>
+.st-formula {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 2;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.scenario-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: box-shadow .2s;
+}
+.scenario-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.scenario-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.badge-bull { background: var(--green-l); color: var(--green); }
+.badge-bear { background: var(--red-l); color: var(--red); }
+.badge-mixed { background: var(--yellow-l); color: var(--yellow); }
+.badge-danger { background: var(--orange-l); color: var(--orange); }
+.sop-step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  background: var(--bg3);
+  border-radius: 8px;
+  border-left: 4px solid var(--blue);
+}
+.sop-num {
+  width: 28px;
+  height: 28px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.sop-body { font-size: 14px; color: var(--text2); line-height: 1.7; }
+.priority-table { margin: 16px 0; }
+.priority-table td:first-child { font-weight: 700; white-space: nowrap; }
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--bg3);
+  border-radius: 8px;
+}
+.quiz-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 4px;
+  transition: width .3s;
+}
+.quiz-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.quiz-card .quiz-options li {
+  font-size: 14px;
+}
+.quiz-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.quiz-nav button {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg2);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.quiz-nav button:hover { background: var(--bg3); }
+.quiz-nav button.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.tf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.tf-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px;
+}
+.tf-card h4 { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>SuperTrend(300,3) 實戰指南</h1>
+<p style="color:var(--text3); margin-bottom:24px;">多時框方向判斷 &times; 進出場 SOP &times; 失靈辨識 &times; 50 題情境測驗</p>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">ST 原理與計算</button>
+  <button class="tab-btn" data-tab="tab2">三時框共振</button>
+  <button class="tab-btn" data-tab="tab3">ST 可信 vs 失靈</button>
+  <button class="tab-btn" data-tab="tab4">實戰 SOP</button>
+  <button class="tab-btn" data-tab="tab5">多時框衝突</button>
+  <button class="tab-btn" data-tab="tab6">互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1: ST 原理與計算 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2>SuperTrend 原理與計算</h2>
+
+<div class="card">
+<h3>什麼是 SuperTrend？</h3>
+<p>SuperTrend 是一個基於 ATR（Average True Range）的趨勢追蹤指標。它在價格上方或下方畫出一條動態線：</p>
+<ul>
+  <li><strong>綠色線在價格下方</strong> = 多頭趨勢（做多方向）</li>
+  <li><strong>紅色線在價格上方</strong> = 空頭趨勢（做空方向）</li>
+</ul>
+<p>當價格穿越 SuperTrend 線時，指標「翻轉」（flip），代表趨勢方向改變。</p>
+</div>
+
+<div class="card">
+<h3>核心公式</h3>
+<div class="st-formula">
+<strong>// 基本帶計算</strong><br>
+Upper Band = (High + Low) / 2 + Multiplier * ATR(Period)<br>
+Lower Band = (High + Low) / 2 - Multiplier * ATR(Period)<br>
+<br>
+<strong>// 我們的參數</strong><br>
+Period = 300（計算 ATR 的回顧期間）<br>
+Multiplier = 3（ATR 的倍數）<br>
+<br>
+<strong>// ATR 使用 RMA（遞迴移動平均）平滑</strong><br>
+RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
+<br>
+<strong>// 翻轉邏輯</strong><br>
+若 Close &gt; Upper Band → 翻多（ST = Lower Band）<br>
+若 Close &lt; Lower Band → 翻空（ST = Upper Band）<br>
+</div>
+<div class="highlight-box">
+<strong>為什麼用 RMA 而不是 SMA？</strong> RMA（也叫 Wilder's Smoothing）對新數據的反應比 EMA 更慢、比 SMA 更平滑。這讓 SuperTrend 不會因為單根大K線就劇烈跳動，減少假翻轉。
+</div>
+</div>
+
+<div class="card">
+<h3>為什麼選 300 / 3 參數？</h3>
+<table>
+  <tr><th>參數</th><th>含義</th><th>效果</th></tr>
+  <tr><td><code>Period = 300</code></td><td>回顧 300 根 K 線計算 ATR</td><td>極度平滑，過濾掉短期噪音。在 1h 圖上 = 300 小時 ≈ 12.5 天的波動範圍</td></tr>
+  <tr><td><code>Multiplier = 3</code></td><td>ST 線距離中軸的 ATR 倍數</td><td>翻轉門檻高，不會被小波動觸發。需要實質性的趨勢改變才會 flip</td></tr>
+</table>
+<div class="insight-box">
+<strong>參數設計哲學：</strong>300/3 組合刻意犧牲靈敏度換取可靠度。它不適合抓短線波段的頂底，而是告訴你「大方向是什麼」。當 ST(300,3) 翻轉時，這代表市場結構已經發生根本性改變，而非只是短期回調。
+</div>
+</div>
+
+<div class="card">
+<h3>翻轉信號的物理意義</h3>
+<p>SuperTrend 翻轉不是隨意發生的。以多翻空為例：</p>
+<ol>
+  <li>價格必須從 ST 線上方跌到 ST 線下方</li>
+  <li>由於 ST 線在多頭時 = Lower Band = 中軸 - 3*ATR(300)</li>
+  <li>這代表價格從均值位置<strong>下跌了超過 3 倍的長期波動幅度</strong></li>
+  <li>這是一個統計上極不尋常的事件，暗示趨勢已改變</li>
+</ol>
+<div class="warning-box">
+<strong>翻轉延遲：</strong>正因為 300/3 參數很鈍，翻轉時通常已經走了一段行情。不要期望買在最低、賣在最高。ST 的價值在於方向正確性，而非精確的轉折點。
+</div>
+</div>
+
+<div class="card">
+<h3>不同時框的 ST(300,3) 覆蓋範圍</h3>
+<table>
+  <tr><th>時框</th><th>300 根 K 線 = ?</th><th>適合判斷</th></tr>
+  <tr><td>日線 (D)</td><td>~300 個交易日 ≈ 14 個月</td><td>中長期大趨勢方向</td></tr>
+  <tr><td>4 小時 (4H)</td><td>~300*4h ≈ 50 天</td><td>波段趨勢方向</td></tr>
+  <tr><td>1 小時 (1H)</td><td>~300h ≈ 12.5 天</td><td>短波段 / 當週方向</td></tr>
+</table>
+<p>三個時框共同使用時，你可以看到從「本週方向」到「本季方向」的完整趨勢層級。</p>
+</div>
+
+<div style="padding:16px 20px; background:var(--green-l); border-radius:var(--r); border:1px solid #bbf7d0; margin-top:20px;">
+  <h3 style="color:var(--green); margin-top:0;">ST(300,3) 核心認知</h3>
+  <ul style="font-size:14px; line-height:2;">
+    <li>ST 不預測未來，它描述「現在的趨勢方向」</li>
+    <li>翻轉是低頻事件 — 日線上一年可能只翻 2-4 次</li>
+    <li>ST 線本身就是動態支撐/壓力位</li>
+    <li>價格離 ST 線越遠，回踔到 ST 線的機率越高（均值回歸）</li>
+    <li>ST 翻轉後的第一次回測 ST 線，通常是最好的進場點</li>
+  </ul>
+</div>
+</div><!-- tab1 -->
+
+<!-- ==================== TAB 2: 三時框共振 ==================== -->
+<div class="tab-content" id="tab2">
+<h2>三時框共振分析</h2>
+
+<div class="card">
+<h3>時框層級定義</h3>
+<table>
+  <tr><th>層級</th><th>時框</th><th>角色</th><th>權重</th></tr>
+  <tr><td>戰略層</td><td>日線 (D)</td><td>決定大方向，不輕易逆勢</td><td>50%</td></tr>
+  <tr><td>戰術層</td><td>4 小時 (4H)</td><td>確認波段趨勢，決定是否入場</td><td>30%</td></tr>
+  <tr><td>執行層</td><td>1 小時 (1H)</td><td>精確入場時機，設定止損位</td><td>20%</td></tr>
+</table>
+</div>
+
+<h3>八種組合情境</h3>
+
+<div class="tf-grid">
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bull">全多</span>
+    <strong>日多 + 4H多 + 1H多</strong>
+  </div>
+  <p><strong>含義：</strong>所有時框一致看多，趨勢極度明確。</p>
+  <p><strong>操作：</strong>只做多，不做空。回踔到 1H ST 線附近 = 進場機會。可以用較大倉位。</p>
+  <p><strong>心態：</strong>這是最舒服的狀態，順勢持有即可。不要因為短期獲利就急著平倉。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bear">全空</span>
+    <strong>日空 + 4H空 + 1H空</strong>
+  </div>
+  <p><strong>含義：</strong>所有時框一致看空，趨勢極度明確。</p>
+  <p><strong>操作：</strong>只做空或空手。反彈到 1H ST 線附近 = 做空機會。永續合約可放空。</p>
+  <p><strong>心態：</strong>不要試圖抄底。「跌夠了」是散戶的錯覺，ST 全空代表結構性下跌未結束。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bull">強多回踔</span>
+    <strong>日多 + 4H多 + 1H空</strong>
+  </div>
+  <p><strong>含義：</strong>大趨勢多頭，但短期回調中。1H 翻空 = 短期修正。</p>
+  <p><strong>操作：</strong>等待 1H 翻回多再進場（最安全）。或在 4H ST 線附近掛限價單做多（較激進）。</p>
+  <p><strong>關鍵：</strong>只要 4H 不翻空，回調就是機會而非危險。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bear">強空反彈</span>
+    <strong>日空 + 4H空 + 1H多</strong>
+  </div>
+  <p><strong>含義：</strong>大趨勢空頭，但短期有反彈。1H 翻多 = 短暫喘息。</p>
+  <p><strong>操作：</strong>不追多。等 1H 翻回空再做空。或在 4H ST 線附近掛限價單做空。</p>
+  <p><strong>關鍵：</strong>空頭趨勢中的 1H 翻多通常持續不久，是做空的好時機而非追多時機。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-mixed">趨勢轉折初期（多轉空）</span>
+    <strong>日多 + 4H空 + 1H空</strong>
+  </div>
+  <p><strong>含義：</strong>日線仍多但中短期已轉空。可能是趨勢反轉的早期信號。</p>
+  <p><strong>操作：</strong>減倉，不加多。觀望為主。若日線也翻空 = 確認反轉，全面做空。</p>
+  <p><strong>關鍵判斷：</strong>觀察 4H 翻空後的第一次反彈能否超越前高。若不能 = 反轉機率大。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-mixed">趨勢轉折初期（空轉多）</span>
+    <strong>日空 + 4H多 + 1H多</strong>
+  </div>
+  <p><strong>含義：</strong>日線仍空但中短期已轉多。可能是底部翻轉的早期信號。</p>
+  <p><strong>操作：</strong>小倉位試多。止損放在 4H ST 線下方。若日線也翻多 = 確認翻轉，加碼。</p>
+  <p><strong>關鍵判斷：</strong>4H 翻多後能否守住？若第一次回測 4H ST 線能撐住 = 底部確認機率增大。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-mixed">短期強勢不確認</span>
+    <strong>日多 + 4H空 + 1H多</strong>
+  </div>
+  <p><strong>含義：</strong>日線多但 4H 空、1H 多。中層斷裂，短線有反彈但未突破 4H。</p>
+  <p><strong>操作：</strong>觀望。等 4H 翻回多（全面共振）再進場。若 1H 再翻空 = 下跌延續。</p>
+  <p><strong>風險：</strong>這是最容易被來回打臉的狀態，倉位要輕。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-mixed">短期弱勢不確認</span>
+    <strong>日空 + 4H多 + 1H空</strong>
+  </div>
+  <p><strong>含義：</strong>日線空但 4H 多、1H 空。中層有反彈但短線又轉弱。</p>
+  <p><strong>操作：</strong>偏空操作。若 4H 也翻空 = 回歸日線空頭，加碼空。若 1H 翻回多 = 4H 反彈延續。</p>
+  <p><strong>風險：</strong>4H 多在日空環境中可能是熊市反彈，隨時可能結束。</p>
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--purple);">
+<h3 style="color:var(--purple);">共振強度評分</h3>
+<table>
+  <tr><th>組合</th><th>共振分</th><th>建議倉位</th><th>操作方向</th></tr>
+  <tr><td>日多+4H多+1H多</td><td style="color:var(--green);font-weight:700;">+100</td><td>80-100%</td><td>只做多</td></tr>
+  <tr><td>日多+4H多+1H空</td><td style="color:var(--green);">+60</td><td>50-70%</td><td>等 1H 翻多再做多</td></tr>
+  <tr><td>日多+4H空+1H多</td><td style="color:var(--yellow);">+20</td><td>20-30%</td><td>觀望/輕倉試多</td></tr>
+  <tr><td>日多+4H空+1H空</td><td style="color:var(--yellow);">-10</td><td>0-10%</td><td>觀望/準備反向</td></tr>
+  <tr><td>日空+4H多+1H多</td><td style="color:var(--yellow);">-20</td><td>20-30%</td><td>輕倉試多/觀望</td></tr>
+  <tr><td>日空+4H多+1H空</td><td style="color:var(--orange);">-40</td><td>0-20%</td><td>觀望偏空</td></tr>
+  <tr><td>日空+4H空+1H多</td><td style="color:var(--red);">-60</td><td>50-70%空</td><td>等 1H 翻空再做空</td></tr>
+  <tr><td>日空+4H空+1H空</td><td style="color:var(--red);font-weight:700;">-100</td><td>80-100%空</td><td>只做空</td></tr>
+</table>
+</div>
+</div><!-- tab2 -->
+
+<!-- ==================== TAB 3: ST 可信 vs 失靈 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>ST 可信 vs 失靈</h2>
+
+<div class="card">
+<h3>ST 最有效的環境</h3>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--green);">
+  <h4 style="color:var(--green);">趨勢市場</h4>
+  <ul>
+    <li>價格沿一個方向持續運動</li>
+    <li>高點不斷創新高（或低點不斷創新低）</li>
+    <li>ATR 穩定或擴大</li>
+    <li>例：BTC 2024 Q4 從 60K 漲到 100K</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--green);">
+  <h4 style="color:var(--green);">高 ATR 環境</h4>
+  <ul>
+    <li>波動劇烈但有方向</li>
+    <li>ST 線與價格之間距離大 = 不容易被觸發</li>
+    <li>一旦翻轉，代表真正的結構性改變</li>
+    <li>例：重大突破後的加速走勢</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--green);">
+  <h4 style="color:var(--green);">翻轉後第一次回測</h4>
+  <ul>
+    <li>ST 剛翻多/翻空後的第一次回測 ST 線</li>
+    <li>統計上回測後繼續原方向的機率 > 65%</li>
+    <li>是最佳的順勢進場點</li>
+    <li>止損明確 = ST 線另一側</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>ST 失靈的環境</h3>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4 style="color:var(--red);">震盪盤整市場</h4>
+  <ul>
+    <li>價格在一個範圍內來回波動</li>
+    <li>沒有明確的方向性</li>
+    <li>ST 會頻繁翻轉（一週翻 2-3 次）</li>
+    <li><strong>辨識：</strong>看 ST 翻轉頻率。若一個月翻 > 4 次 = 盤整</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4 style="color:var(--red);">重大事件前後</h4>
+  <ul>
+    <li>CPI、FOMC、非農等數據公布</li>
+    <li>事件導致的瞬間巨幅波動可能觸發假翻轉</li>
+    <li>事件後 4-6 小時的走勢才是真實方向</li>
+    <li><strong>規則：</strong>事件前 2h 內的翻轉不跟單</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4 style="color:var(--red);">低 ATR 壓縮期</h4>
+  <ul>
+    <li>波動率極低，價格幾乎不動</li>
+    <li>ST 線非常靠近價格</li>
+    <li>微小波動就可能觸發翻轉</li>
+    <li><strong>辨識：</strong>ATR(14) 低於過去 60 日 ATR 的 50%</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4 style="color:var(--red);">流動性真空時段</h4>
+  <ul>
+    <li>亞洲清晨（美股已收、歐洲未開）</li>
+    <li>假日薄盤</li>
+    <li>少量大單就能推動價格穿越 ST 線</li>
+    <li><strong>規則：</strong>低流動性時段的翻轉等高流動性時段確認</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>辨識假翻轉的實戰技巧</h3>
+<table>
+  <tr><th>假翻轉特徵</th><th>真翻轉特徵</th></tr>
+  <tr><td>翻轉後價格立即回到 ST 線附近（距離 < 0.3%）</td><td>翻轉後價格快速遠離 ST 線（距離 > 1%）</td></tr>
+  <tr><td>翻轉發生在重大事件公布的瞬間</td><td>翻轉發生在正常交易時段，有量能配合</td></tr>
+  <tr><td>僅 1H 翻轉，4H 和日線方向不變</td><td>多個時框在短時間內陸續翻轉</td></tr>
+  <tr><td>最近一週已翻轉 > 2 次（來回打臉）</td><td>翻轉前已有 2 週以上未翻轉</td></tr>
+  <tr><td>翻轉 K 線有極長影線（長釘）</td><td>翻轉 K 線實體大、影線短</td></tr>
+  <tr><td>ATR(14) 處於歷史低位</td><td>ATR(14) 處於正常或偏高水準</td></tr>
+</table>
+</div>
+
+<div class="card" style="border-left:4px solid var(--orange);">
+<h3 style="color:var(--orange);">假翻轉應對 SOP</h3>
+<ol style="line-height:2.2;">
+  <li>ST 翻轉後，<strong>不立即入場</strong>。等待 2-4 根 K 線確認。</li>
+  <li>確認標準：價格收盤在 ST 線正確一側 + 距離 > 0.5%。</li>
+  <li>若翻轉 2 根 K 線內即翻回 = 假翻轉，此次不交易。</li>
+  <li>假翻轉後的真翻轉通常更有力 — 記錄方向，等下次。</li>
+  <li>連續假翻轉 3 次以上 = 市場在盤整，暫停使用 ST 做決策。</li>
+</ol>
+</div>
+
+<div class="highlight-box">
+<strong>個人經驗法則：</strong>如果你發現自己一週內被 ST 翻轉打臉超過 2 次，這不是你的問題，是市場不適合 ST。正確做法是暫停交易 2-3 天，等市場重新出現方向性。記住：不交易也是一種交易決策。
+</div>
+</div><!-- tab3 -->
+
+<!-- ==================== TAB 4: 實戰 SOP ==================== -->
+<div class="tab-content" id="tab4">
+<h2>實戰交易 SOP</h2>
+
+<div class="card">
+<h3>進場 SOP：Maker 限價單策略</h3>
+<div class="sop-step">
+  <div class="sop-num">1</div>
+  <div class="sop-body">
+    <strong>確認三時框方向</strong><br>
+    檢查日線、4H、1H 的 ST 狀態。至少需要兩個時框同向才考慮入場。全部同向 = 最佳狀態。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">2</div>
+  <div class="sop-body">
+    <strong>計算 ST 線位置</strong><br>
+    以做多為例：找到 1H ST 線的精確價位。這就是你的限價買單（Maker Order）掛單位置。<br>
+    掛單價 = 1H ST 線 + 小幅 buffer（0.1-0.2%），確保成交但不過度追價。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">3</div>
+  <div class="sop-body">
+    <strong>設定止損</strong><br>
+    止損 = ST 線另一側 + ATR(14) * 0.5 的 buffer。<br>
+    例：1H ST 在 $30,000 做多，ATR(14) = $200，止損設在 $30,000 - $200*0.5 = $29,900。<br>
+    <em>止損必須是機械式的，不可事後移動放寬。</em>
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">4</div>
+  <div class="sop-body">
+    <strong>設定目標</strong><br>
+    最低目標 = 風報比 2:1（風險 $100 → 目標獲利 $200）。<br>
+    理想目標 = 下一個時框的 ST 線或重要壓力位。<br>
+    部分止盈：50% 倉位在 1.5:1 止盈，剩餘追蹤止損。
+  </div>
+</div>
+<div class="sop-step">
+  <div class="sop-num">5</div>
+  <div class="sop-body">
+    <strong>掛 Maker 單等待成交</strong><br>
+    使用限價單（Maker）而非市價單（Taker），節省手續費並獲得更好的成交價。<br>
+    耐心等待價格回到 ST 線附近。如果不回來 = 這波不做，等下一次。<br>
+    <em>寧可錯過也不追價。</em>
+  </div>
+</div>
+</div>
+
+<div class="card">
+<h3>出場 SOP</h3>
+<table>
+  <tr><th>出場條件</th><th>動作</th><th>備註</th></tr>
+  <tr><td>1H ST 翻轉</td><td>平 50% 倉位</td><td>可能是短期修正，留一半觀察</td></tr>
+  <tr><td>4H ST 翻轉</td><td>平全部倉位</td><td>中期趨勢改變，必須離場</td></tr>
+  <tr><td>達到目標價</td><td>依計畫平倉</td><td>紀律執行，不貪心</td></tr>
+  <tr><td>持倉虧損達止損</td><td>立即平倉</td><td>機械執行，不猶豫</td></tr>
+  <tr><td>重大事件即將公布（< 2h）</td><td>平倉或縮小倉位至 25%</td><td>事件風險無法預測</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>倉位管理：依時框配置</h3>
+<table>
+  <tr><th>交易類型</th><th>依據時框</th><th>倉位大小</th><th>持倉時間</th><th>止損幅度</th></tr>
+  <tr><td>US 股票（5 股）</td><td>日線 ST 方向</td><td>5 股固定</td><td>數週至數月</td><td>日線 ST 翻轉</td></tr>
+  <tr><td>永續合約 - 大波段</td><td>4H ST 方向</td><td>30-50% 可用資金</td><td>數天至數週</td><td>4H ST 翻轉</td></tr>
+  <tr><td>永續合約 - 短波段</td><td>1H ST 方向</td><td>10-20% 可用資金</td><td>數小時至數天</td><td>1H ST 翻轉</td></tr>
+  <tr><td>磨利潤期小單</td><td>1H ST 方向</td><td>5-10% 可用資金</td><td>數小時</td><td>0.5-1% 固定</td></tr>
+</table>
+<div class="insight-box">
+<strong>「磨利潤」模式：</strong>當你已經賺了一筆大的（例如一波趨勢行情賺了月薪等級），接下來的小交易是在「消磨」利潤感。此時用極小倉位（5-10%），嚴格跟 ST 方向，目的是保持交易手感而非追求高報酬。虧了不心疼，賺了是紅利。
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--orange);">
+<h3 style="color:var(--orange);">睡眠 SOP</h3>
+<p><strong>核心原則：睡前必須設好止損，沒有例外。</strong></p>
+<div class="sop-step" style="border-left-color:var(--orange);">
+  <div class="sop-num" style="background:var(--orange);">1</div>
+  <div class="sop-body">
+    <strong>睡前檢查清單</strong><br>
+    1. 確認所有持倉的止損單已掛好<br>
+    2. 止損位 = 當前時框 ST 線 + buffer<br>
+    3. 若 1H ST 非常接近現價（< 0.5%），考慮直接平倉
+  </div>
+</div>
+<div class="sop-step" style="border-left-color:var(--orange);">
+  <div class="sop-num" style="background:var(--orange);">2</div>
+  <div class="sop-body">
+    <strong>睡眠期間 ST 翻轉的處理</strong><br>
+    - 止損單已經保護你了 = 翻轉會自動觸發止損<br>
+    - 醒來後若 ST 已翻轉但止損未觸發（快速翻回）= 觀察，不急操作<br>
+    - 醒來後若止損已觸發 = 不追單，等新機會
+  </div>
+</div>
+<div class="sop-step" style="border-left-color:var(--orange);">
+  <div class="sop-num" style="background:var(--orange);">3</div>
+  <div class="sop-body">
+    <strong>重大事件隔夜風險</strong><br>
+    - 若睡眠時段有重大數據公布（如美國 CPI 在台灣時間 20:30）<br>
+    - 選項 A：事件前平倉，醒來再重新評估<br>
+    - 選項 B：將止損收窄到 ST 線 + 極小 buffer，接受可能被掃<br>
+    - <strong>絕對禁止：</strong>不設止損就睡覺
+  </div>
+</div>
+<div class="warning-box">
+<strong>血淚教訓：</strong>「想說早上起來再處理」是最危險的想法。加密市場 24/7 運作，一個 flash crash 可能在你睡覺時讓倉位爆掉。永遠設好止損再睡覺。最壞的結果是被掃止損然後市場回來 — 這比被爆倉好 100 倍。
+</div>
+</div>
+
+<div class="card">
+<h3>US 股票 5 股策略 + ST 方向</h3>
+<p>對於美股持倉（如 NVDA），使用日線 ST(300,3) 作為方向判斷：</p>
+<ul style="line-height:2.2;">
+  <li><strong>日線 ST 多</strong> → 持有 5 股。回踔到日線 ST 附近可加碼（但維持小倉位紀律）</li>
+  <li><strong>日線 ST 翻空</strong> → 賣出全部。不留倉位「等反彈」</li>
+  <li><strong>為什麼 5 股？</strong>小倉位讓你能承受波動而不焦慮。5 股 NVDA ≈ $600-700，這個虧損你睡得著覺</li>
+  <li><strong>不設止損單？</strong>因為 5 股虧損有限，用日線 ST 翻轉作為出場。每日收盤後檢查一次即可</li>
+  <li><strong>目標：</strong>跟隨趨勢吃大波段。一年做 2-3 次交易，每次跟著 ST 方向持有數月</li>
+</ul>
+</div>
+</div><!-- tab4 -->
+
+<!-- ==================== TAB 5: 多時框衝突 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>多時框衝突處理</h2>
+
+<div class="card">
+<h3>核心原則：時框優先級</h3>
+<div class="highlight-box">
+<strong>金字塔法則：</strong>高時框 > 低時框。當衝突發生時，永遠以最高時框的方向為「大方向」，低時框提供進場時機。<br><br>
+<strong>唯一例外：</strong>當所有低時框都已翻轉且持續超過一週，高時框可能即將翻轉。此時應減倉而非加倉。
+</div>
+</div>
+
+<div class="card">
+<h3>衝突情境 1：日多 + 4H空</h3>
+<p><strong>情境：</strong>日線 ST 看多，但 4H ST 剛翻空。</p>
+<table>
+  <tr><th>判斷因素</th><th>4H 翻空是「回調」</th><th>4H 翻空是「反轉預兆」</th></tr>
+  <tr><td>4H 翻空後走勢</td><td>小幅下跌後止穩，不破前低</td><td>快速大幅下跌，破前低</td></tr>
+  <tr><td>成交量</td><td>翻空後量能萎縮（賣壓不大）</td><td>翻空時量能放大（恐慌賣壓）</td></tr>
+  <tr><td>距離日線 ST</td><td>價格仍遠高於日線 ST（> 3%）</td><td>價格已接近日線 ST（< 1.5%）</td></tr>
+  <tr><td>翻空持續時間</td><td>< 3 天</td><td>> 5 天且未翻回</td></tr>
+  <tr><td>對應操作</td><td>等 4H 翻回多 → 加碼做多</td><td>減碼 50%，設緊止損</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>衝突情境 2：日空 + 4H多</h3>
+<p><strong>情境：</strong>日線 ST 看空，但 4H ST 翻多（熊市反彈）。</p>
+<table>
+  <tr><th>判斷因素</th><th>4H 翻多是「反彈」（短命）</th><th>4H 翻多是「觸底」（持久）</th></tr>
+  <tr><td>反彈幅度</td><td>未突破前一波下跌的 38.2% 回撤</td><td>突破 50% 回撤甚至 61.8%</td></tr>
+  <tr><td>反彈結構</td><td>V 型快速拉升，沒有回測</td><td>有回測 4H ST 並守住</td></tr>
+  <tr><td>日線 ST 距離</td><td>價格離日線 ST 仍很遠（> 5%）</td><td>價格已接近日線 ST（< 2%）</td></tr>
+  <tr><td>持續天數</td><td>< 5 天</td><td>> 7 天且 ST 未翻回空</td></tr>
+  <tr><td>對應操作</td><td>不追多，等翻回空再做空</td><td>輕倉試多，止損在 4H ST 下</td></tr>
+</table>
+<div class="warning-box">
+<strong>熊市反彈的陷阱：</strong>空頭趨勢中的反彈往往又急又猛，容易讓人誤以為「底部到了」。但統計上，日線 ST 仍空時的 4H 翻多，有 60% 的機率在 2 週內翻回空。不要因為反彈猛就以為趨勢結束。
+</div>
+</div>
+
+<div class="card">
+<h3>衝突情境 3：低時框翻轉是「早期預警」還是「噪音」？</h3>
+<p>當 1H ST 翻轉但 4H/日線未動：</p>
+<div class="tf-grid">
+<div class="tf-card" style="border-left:4px solid var(--green);">
+  <h4>是早期預警的條件</h4>
+  <ul style="font-size:13px; line-height:2;">
+    <li>1H 翻轉後持續 > 24 小時未翻回</li>
+    <li>翻轉方向與某個重大技術位突破一致</li>
+    <li>伴隨成交量明顯變化</li>
+    <li>之前 1H 已經嘗試翻轉 2-3 次（蓄力突破）</li>
+    <li>4H ST 線也正在接近價格（即將翻轉）</li>
+  </ul>
+</div>
+<div class="tf-card" style="border-left:4px solid var(--red);">
+  <h4>只是噪音的條件</h4>
+  <ul style="font-size:13px; line-height:2;">
+    <li>1H 翻轉 < 4 小時就翻回</li>
+    <li>翻轉發生在低流動性時段（亞洲清晨）</li>
+    <li>無量配合，只是長針觸發</li>
+    <li>最近一週 1H 已翻轉 > 3 次（盤整期）</li>
+    <li>4H ST 線離價格仍很遠（> 2%）</li>
+  </ul>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h3>衝突處理決策流程</h3>
+<div class="st-formula">
+1. 時框衝突發生<br>
+   ↓<br>
+2. 問自己：我有持倉嗎？<br>
+   ├─ 有持倉 → 高時框方向 = 持倉方向嗎？<br>
+   │   ├─ 是 → 維持持倉，收緊止損到低時框 ST<br>
+   │   └─ 否 → 減倉 50%，等待高時框確認方向<br>
+   └─ 無持倉 → 等衝突解決再入場<br>
+      ↓<br>
+3. 衝突如何解決？<br>
+   ├─ 低時框翻回與高時框同向 → 入場（共振恢復）<br>
+   └─ 高時框也翻轉與低時框同向 → 趨勢反轉確認，新方向入場<br>
+</div>
+</div>
+
+<div class="card">
+<h3>實際案例：何時 Override 低時框</h3>
+<div class="scenario-card" style="margin:12px 0;">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bull">案例 A：忽略 1H 翻空</span>
+  </div>
+  <p><strong>情境：</strong>XAG 日線多、4H多，1H 在亞洲清晨翻空（3:00 AM 一根長針打下去觸發）。</p>
+  <p><strong>判斷：</strong>流動性真空 + 長針 + 高時框都多 = 噪音。忽略 1H 信號。</p>
+  <p><strong>結果：</strong>歐洲開盤後 1H 翻回多，繼續上漲。</p>
+</div>
+<div class="scenario-card" style="margin:12px 0;">
+  <div class="scenario-header">
+    <span class="scenario-badge badge-bear">案例 B：尊重 1H 翻空</span>
+  </div>
+  <p><strong>情境：</strong>BTC 日線多、4H多，但 1H 在紐約午盤翻空，伴隨大量成交。</p>
+  <p><strong>判斷：</strong>高流動性時段 + 放量 + 價格快速遠離 ST 線 = 可能是真信號。</p>
+  <p><strong>操作：</strong>減倉 50%，設止損在 4H ST。3 天後 4H 也翻空 → 平剩餘倉位。</p>
+</div>
+</div>
+
+<div class="card" style="border-left:4px solid var(--purple);">
+<h3 style="color:var(--purple);">衝突處理金句</h3>
+<ul style="line-height:2.5; font-size:14px;">
+  <li><strong>「日線不翻，大方向不變」</strong> — 日線 ST 是最終裁判</li>
+  <li><strong>「4H 翻了要減倉，日線翻了要清倉」</strong> — 層級決定動作力度</li>
+  <li><strong>「1H 的噪音用 4H 過濾，4H 的噪音用日線過濾」</strong></li>
+  <li><strong>「衝突 = 不交易」</strong> — 不確定時最好的操作是不操作</li>
+  <li><strong>「等共振恢復再打」</strong> — 永遠有下一次機會</li>
+</ul>
+</div>
+</div><!-- tab5 -->
+
+<!-- ==================== TAB 6: 互動測驗 ==================== -->
+<div class="tab-content" id="tab6">
+<h2>互動情境測驗（50 題）</h2>
+<p style="margin-bottom:16px; color:var(--text3);">測試你對 SuperTrend(300,3) 多時框實戰的理解。每題選擇後會顯示解析。</p>
+
+<div class="quiz-progress">
+  <span id="quiz-progress-text">0 / 50</span>
+  <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+  <span id="quiz-score-text">正確：0</span>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="quiz-nav">
+  <button id="quiz-prev" onclick="quizNav(-1)">上一題</button>
+  <button id="quiz-next" class="primary" onclick="quizNav(1)">下一題</button>
+  <button id="quiz-reset" onclick="quizReset()">重新開始</button>
+</div>
+</div><!-- tab6 -->
+
+<footer style="margin-top:40px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
+  <p>SuperTrend(300,3) 實戰指南 | 內容僅供學習參考，不構成投資建議</p>
+  <p style="margin-top:4px;">交易有風險，所有策略需配合個人風險承受度與資金管理</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// Tab navigation
+document.addEventListener('DOMContentLoaded', function() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      if (!targetTab) return;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+
+  initQuiz();
+});
+
+// Quiz data - 50 questions
+const quizData = [
+  {
+    q: "日線多、4H多、1H多 — 你應該怎麼做？",
+    opts: ["觀望等回調", "只做多，回踔到 1H ST 附近進場", "做空逆勢操作", "減倉等待衝突"],
+    ans: 1,
+    explain: "全部時框共振看多是最強的做多環境。在 1H ST 線附近掛限價買單是最佳策略。不需要等回調到 4H 或日線 ST 才進場。"
+  },
+  {
+    q: "ST 剛翻多，但 2 小時後有 CPI 數據公布 — 你跟單嗎？",
+    opts: ["立即跟單，ST 翻了就是信號", "不跟單，等 CPI 公布後 4-6 小時觀察", "反向做空，因為事件前通常會翻回", "跟單但減半倉位"],
+    ans: 1,
+    explain: "重大事件前 2 小時內的翻轉不可信。CPI 等數據可能造成瞬間巨幅波動觸發假翻轉。正確做法是等事件後 4-6 小時，看市場消化完數據後 ST 的真實方向。"
+  },
+  {
+    q: "價格在 1H ST 線上方 0.5% — 這是好的做多進場點嗎？",
+    opts: ["不是，已經太遠了，等回踔", "是的，0.5% 在合理範圍內", "取決於其他時框是否共振", "只有在 ATR 很大時才是"],
+    ans: 2,
+    explain: "0.5% 的距離是否合理取決於更多因素。最關鍵的是三時框是否共振。若全部時框同向，0.5% 是可以接受的進場距離。若有衝突，即使在 ST 線上也不該進場。"
+  },
+  {
+    q: "ST 在一週內翻多了 3 次又翻回空 — 這代表什麼？",
+    opts: ["多頭力量很強，快突破了", "市場在盤整，ST 失靈中", "空頭陷阱，下次翻多會是真的", "需要換更大的時框看"],
+    ans: 1,
+    explain: "一週翻轉 3 次以上 = 經典的盤整期特徵。此時 ST 會頻繁產生假信號。正確做法是暫停使用 ST 做交易決策，等市場重新出現方向性（翻轉後能持續 > 1 週）。"
+  },
+  {
+    q: "你持有 BTC 多單，4H ST 快要翻空但日線仍然多。你該怎麼辦？",
+    opts: ["等日線翻空再平倉", "4H 翻空時立即平全部", "4H 翻空時平 50%，剩餘設日線 ST 止損", "加碼做多攤平成本"],
+    ans: 2,
+    explain: "4H 翻空代表中期趨勢改變，應立即減倉。但日線仍多代表大方向未變，所以平 50% 是合理折衷。剩餘倉位止損設在日線 ST，若日線也翻空就全部出場。絕對不要加碼攤平。"
+  },
+  {
+    q: "XAG(白銀) 日線 ST 在 $29.50 做多方向，當前價格 $31.20。你想進場做多，掛單價應該是？",
+    opts: ["$31.20 市價買入", "$29.50 掛限價單", "$30.80 掛限價單（靠近 1H ST）", "$31.50 追突破"],
+    ans: 2,
+    explain: "Maker 限價策略要求在 ST 線附近掛單。日線 ST 在 $29.50 但距離太遠不現實。應找 1H ST 線位置（假設在 $30.80 附近）掛限價買單。既節省手續費（Maker），又能在回踔時拿到更好的價格。"
+  },
+  {
+    q: "你準備睡覺，持有 NVDA 5 股（日線多）和 BTC 永續多單。睡前應該做什麼？",
+    opts: ["兩個都設止損", "只有 BTC 設止損，NVDA 不用", "都平倉明天再說", "設鬧鐘半夜起來看一次"],
+    ans: 1,
+    explain: "BTC 必須設止損（24/7 市場 + 永續合約有爆倉風險）。NVDA 5 股因為倉位極小且非槓桿，用日線 ST 翻轉出場即可，不需要每天設止損。但若遇隔夜重大事件（如財報），NVDA 也應考慮設止損。正確答案是 BTC 必設、NVDA 通常不用但特殊情況除外。選 B 最接近但不完美。"
+  },
+  {
+    q: "日線空、4H空、1H剛翻多 — 你想做多搶反彈，可以嗎？",
+    opts: ["可以，1H 翻多就是信號", "不可以，永遠不逆大趨勢", "可以但極輕倉且止損必須極嚴", "等 4H 也翻多再做"],
+    ans: 3,
+    explain: "日空+4H空環境下，1H 翻多只是短暫反彈的可能性極高。最佳策略是等 4H 也翻多再考慮。如果非要操作，必須用極輕倉（5-10%）且止損在 1H ST 下方。但整體而言這不是好的交易環境。"
+  },
+  {
+    q: "BTC 日線 ST 翻多了，但你看到翻轉的那根 K 線有極長的下影線（長針）。你怎麼判斷？",
+    opts: ["正常，長針代表強支撐", "可疑，可能是假翻轉", "確認有效，立即做多", "需要等 2-4 根 K 線確認"],
+    ans: 3,
+    explain: "翻轉 K 線有極長影線是假翻轉的特徵之一。長針可能是瞬間的流動性缺口或大單砸盤後快速回復。正確做法是等待 2-4 根 K 線確認：價格持續在 ST 線正確一側且距離 > 0.5%。不要因為日線級別就盲目相信。"
+  },
+  {
+    q: "你的 XAG 多單已經盈利 3%，但 1H ST 翻空了。日線和 4H 仍然多。你該怎麼做？",
+    opts: ["立即全部平倉鎖利", "平 50%，剩餘設 4H ST 止損", "不管 1H，繼續持有", "加碼做多，因為大方向沒變"],
+    ans: 1,
+    explain: "1H 翻空但高時框仍多 = 短期回調。最佳策略是平 50% 鎖住部分利潤，剩餘倉位止損上移到 4H ST 線。若 1H 翻回多可再加回。不要完全忽略 1H 的信號，也不要過度反應。"
+  },
+  {
+    q: "你在「磨利潤」階段（本週已賺月薪等級的利潤）。ST 出現一個新信號。你該用多大倉位？",
+    opts: ["趁熱打鐵，全倉梭哈", "正常倉位 50%", "極小倉位 5-10%", "完全不交易，休息"],
+    ans: 2,
+    explain: "磨利潤階段的目的是保持手感而非追求高報酬。使用 5-10% 的極小倉位，嚴格跟 ST 方向。虧了不心疼（只虧一點），賺了是額外紅利。絕對不能因為之前賺了大的就放大倉位冒險。"
+  },
+  {
+    q: "NVDA 日線 ST 翻空。你持有 5 股。正確操作是？",
+    opts: ["加碼到 10 股攤平", "賣出全部 5 股", "賣 3 股留 2 股觀察", "不動，等週線 ST 確認"],
+    ans: 1,
+    explain: "策略規則明確：日線 ST 翻空 = 賣出全部。不留倉位等反彈。這是機械式的紀律。也不需要等週線確認 — 日線就是我們對股票操作的最高時框判斷依據。"
+  },
+  {
+    q: "4H ST 在 $95,000（BTC 做多方向），當前價格 $96,200。你想做多，止損應該設在哪？",
+    opts: ["$95,000（ST 線上）", "$94,900（ST 線下 $100）", "$94,750（ST 線 - ATR*0.5 buffer）", "$93,000（隨意設遠一點）"],
+    ans: 2,
+    explain: "止損 = ST 線另一側 + ATR(14)*0.5 buffer。假設 ATR(14) = $500，buffer = $250。止損 = $95,000 - $250 = $94,750。這確保如果只是觸碰 ST 線但未真正跌破，不會被假突破掃掉。設太遠會浪費風險空間。"
+  },
+  {
+    q: "你注意到最近 3 天 1H ST 已經翻轉了 4 次。接下來的交易策略是？",
+    opts: ["每次翻轉都跟單", "暫停 1H 級別的交易，只看 4H 和日線", "用更小的時框（15分）來操作", "加大倉位因為波動大機會多"],
+    ans: 1,
+    explain: "頻繁翻轉 = 盤整期 = ST 失靈。正確做法是暫停 1H 級別的操作，退一步看 4H 和日線。只有當 1H 能持續在同一方向 > 24 小時時才重新使用。用更小時框只會更頻繁被打臉。"
+  },
+  {
+    q: "日線多、4H多，但你發現價格離日線 ST 已經有 8% 的距離。這代表什麼？",
+    opts: ["趨勢很強，繼續追多", "可能過度延伸，注意回踔風險", "日線 ST 失效了", "需要切換到週線判斷"],
+    ans: 1,
+    explain: "價格離 ST 線很遠代表可能過度延伸（均值回歸壓力增大）。雖然趨勢仍多，但此時追多的風報比不佳。應等回踔到 4H ST 附近再進場，或至少減小倉位。不代表 ST 失效，只代表不是好的新進場點。"
+  },
+  {
+    q: "CPI 公布後 BTC 瞬間下跌 3% 觸發 1H ST 翻空，但 5 分鐘後反彈回來。你怎麼處理？",
+    opts: ["1H 翻空了就做空", "忽略，這是事件造成的假信號", "等 4-6 小時觀察穩定後的 ST 狀態", "翻回來代表超強多頭，加碼做多"],
+    ans: 2,
+    explain: "重大事件造成的瞬間波動觸發的翻轉高機率是假信號。正確做法是等事件影響消化完畢（4-6 小時後），觀察 ST 的穩態方向。不要在事件瞬間做任何決策。"
+  },
+  {
+    q: "你的做多止損被觸發了（1H ST 翻空掃止損）。15 分鐘後 1H ST 又翻回多。你該？",
+    opts: ["立即重新做多", "等待本次翻多持續 > 4 小時再進", "今天不交易了", "在更高的價位做多追回"],
+    ans: 1,
+    explain: "被掃止損後又翻回 = 之前是假翻轉。但不要立即衝動重新入場。等待確認（4小時不翻回或價格穩定在 ST 上方 > 0.5%）再進場。這是紀律：每次入場都要有確認，不管之前發生什麼。"
+  },
+  {
+    q: "BTC 永續合約，你在 $97,000 做多，止損 $96,500。現在 $96,700 在靠近止損。你的想法是？",
+    opts: ["下移止損到 $96,000 給更多空間", "維持止損不動，機械執行", "先手動平倉不等止損", "加碼在 $96,700 做多攤平"],
+    ans: 1,
+    explain: "止損設了就不能往後移動放寬。這是鐵律。移動止損 = 放大風險 = 潛在災難。讓市場來決定：觸發就觸發，之後再找新機會。絕對不要加碼攤平虧損頭寸。"
+  },
+  {
+    q: "你發現 ATR(14) 目前只有過去 60 天平均的 40%（波動率極低壓縮期）。ST 翻轉的可信度？",
+    opts: ["更可信，因為翻轉更不容易", "更不可信，微小波動就能觸發", "不受影響", "需要調整參數"],
+    ans: 1,
+    explain: "低 ATR 壓縮期 ST 線非常靠近價格，微小波動就可能觸發翻轉。此時翻轉信號的可信度降低。應等 ATR 恢復正常水準後的翻轉才更有意義。或暫時切換到更高時框避免噪音。"
+  },
+  {
+    q: "一個月內日線 ST 只翻轉了 1 次（從空翻多）。這次翻轉的可信度？",
+    opts: ["低，可能是假信號", "高，低頻翻轉通常是真實的趨勢改變", "需要等月線確認", "跟頻率無關"],
+    ans: 1,
+    explain: "日線 ST(300,3) 翻轉是低頻事件（一年可能只 2-4 次）。低頻 = 門檻高 = 真正結構性改變才會觸發。一個月只翻 1 次代表這次翻轉是經過長期蓄力的，可信度高。"
+  },
+  {
+    q: "NVDA 日線 ST 翻多已經 3 個月了。你一直持有 5 股。最近獲利 25%。你該？",
+    opts: ["止盈平倉鎖利", "繼續持有直到日線 ST 翻空", "賣 3 股鎖利，留 2 股", "全部賣掉買更多股"],
+    ans: 1,
+    explain: "策略規則：日線 ST 多就持有，日線 ST 翻空就賣。25% 的獲利不是出場的理由，趨勢改變才是。繼續機械執行策略。如果每次賺了一點就想跑，永遠抓不到大波段。"
+  },
+  {
+    q: "你同時交易 XAG 和 BTC。XAG 日線多 4H多 1H多，BTC 日線多 4H空 1H空。資金如何分配？",
+    opts: ["各 50%", "XAG 80%，BTC 20%", "XAG 70-80%，BTC 暫不操作", "全部放 BTC 因為波動大"],
+    ans: 2,
+    explain: "XAG 全部共振 = 高信心環境，應分配較多資金。BTC 有衝突（4H 和 1H 都空）= 不確定環境，應減少或不分配資金。跟共振強度成正比地分配倉位。"
+  },
+  {
+    q: "亞洲清晨 3:00 AM（你在睡覺），BTC 1H ST 翻空了。你醒來（7:00 AM）看到這個信號。該怎麼處理？",
+    opts: ["立即做空", "檢查翻空是否仍維持（4小時後仍在空方）再決定", "忽略因為是低流動性時段", "看 4H 和日線有沒有也翻"],
+    ans: 1,
+    explain: "亞洲清晨是低流動性時段，但翻轉已經持續了 4 小時（3AM 到 7AM）。需要檢查：翻空是否仍維持？4H 和日線方向如何？如果 4 小時後仍在空方且歐洲開盤沒翻回 = 較可信。綜合所有因素再決定。"
+  },
+  {
+    q: "你連續 3 筆交易被 ST 假翻轉打臉虧損。心理上你該怎麼調適？",
+    opts: ["加大倉位下一筆贏回來", "懷疑 ST 無效，換指標", "暫停交易 2-3 天，承認市場在盤整", "減小參數讓 ST 更靈敏"],
+    ans: 2,
+    explain: "連續被打臉 = 市場不適合 ST（盤整期）。正確做法是暫停交易，等方向性恢復。不是 ST 的問題，是市場環境的問題。加大倉位報復性交易是最大的錯誤。休息是最好的策略。"
+  },
+  {
+    q: "日線 ST 多、4H ST 多。你在 4H ST 線上方 0.2% 掛了限價買單。成交了。這是好的進場嗎？",
+    opts: ["是的，靠近 ST 線 + 高時框共振 = 教科書式進場", "不好，0.2% 太近了容易被掃", "需要看 1H 的 ST 狀態", "太冒險了，應該等更多確認"],
+    ans: 0,
+    explain: "高時框共振（日多+4H多）+ 在 4H ST 線附近進場 = 符合策略 SOP。0.2% buffer 確保成交但離 ST 線很近。止損明確（ST 線另一側）。唯一需要確認的是 1H 是否也在多方。但即使 1H 暫時翻空，高時框共振也提供足夠支持。"
+  },
+  {
+    q: "BTC 日線 ST 在 $88,000（多方向），當前價 $99,500。你沒有持倉。該怎麼做？",
+    opts: ["在 $99,500 追多", "等回踔到 $88,000 日線 ST 線", "等回踔到 4H ST 線（可能在 $95,000 附近）", "做空因為太高了"],
+    ans: 2,
+    explain: "離日線 ST 太遠（超過 12%）= 過度延伸，追多風報比差。等回踔到日線 ST 又太遠不現實。最佳策略是在 4H ST 線附近等限價單機會。4H ST 通常距離適中，提供較好的進場價格。做空逆日線大趨勢更是大忌。"
+  },
+  {
+    q: "你發現 4H ST 和日線 ST 在同一天翻轉方向（都從多翻空）。這代表什麼？",
+    opts: ["普通事件", "極強的趨勢反轉信號", "可能是假信號因為太巧了", "需要等 1H 確認"],
+    ans: 1,
+    explain: "多個時框同時翻轉是極強的趨勢反轉信號。這代表結構性改變在多個級別同時被確認。此時應果斷行動：平掉所有同方向持倉，考慮反向操作。猶豫不決的成本極高。"
+  },
+  {
+    q: "你持有 BTC 永續多單過夜。睡前價格在 1H ST 上方 2%。你需要設止損嗎？",
+    opts: ["不用，2% 空間夠安全", "絕對要設，永續合約過夜必設止損", "設在 1H ST 線下方", "設在爆倉價上方 10%"],
+    ans: 1,
+    explain: "永續合約過夜必設止損，沒有例外。即使距離 ST 線有 2% 也可能在睡眠時被 flash crash 打穿。止損設在 ST 線下方 + buffer。保護本金永遠是第一優先。"
+  },
+  {
+    q: "XAG 1H ST 翻多、4H ST 翻多，但日線 ST 仍空。你想做多。最大允許倉位？",
+    opts: ["80-100%（兩個時框共振了）", "50-60%", "20-30%（逆日線需要輕倉）", "0%（永遠不逆日線）"],
+    ans: 2,
+    explain: "日線仍空代表大方向仍是空頭。4H+1H 翻多可能是觸底早期信號，但也可能是熊市反彈。允許輕倉試多（20-30%）但必須嚴格止損在 4H ST 下方。不能用大倉位對抗日線方向。"
+  },
+  {
+    q: "FOMC 會議結果即將公布（2 小時後）。你持有基於 4H ST 做多的 BTC 倉位。該怎麼處理？",
+    opts: ["維持不動，相信 ST", "平倉或縮小至 25%", "加碼因為波動大有機會", "翻倍止損距離"],
+    ans: 1,
+    explain: "重大事件前 2 小時應減倉或平倉。FOMC 結果可能讓市場瞬間劇烈波動，不可預測方向。正確做法是平倉或縮小到 25%，保留少量「彩票倉」。事件後觀察市場反應再重新建倉。"
+  },
+  {
+    q: "你的策略本月勝率是 40%（10 筆中 4 筆盈利）。但本月整體盈利。為什麼？",
+    opts: ["運氣好", "因為風報比 > 2:1，贏的時候賺得比虧的多", "計算錯誤", "因為倉位管理好"],
+    ans: 1,
+    explain: "ST 趨勢策略的特性就是勝率不高（40-50%）但盈虧比高（2:1 甚至更高）。虧的時候嚴格止損（虧小），贏的時候跟著趨勢走（賺大）。4 筆盈利 * 風報比 2 > 6 筆虧損 * 1 = 整體盈利。"
+  },
+  {
+    q: "BTC 在 $100,000 整數關口附近。1H ST 多，但價格一直在 $99,500-$100,500 之間震盪不過。你怎麼看？",
+    opts: ["ST 多就繼續做多，不管整數關口", "整數關口是心理壓力位，注意假突破風險", "在 $100,500 追突破", "做空因為壓力位打不破"],
+    ans: 1,
+    explain: "整數關口是強心理壓力位，通常需要多次嘗試才能突破。ST 多代表方向正確，但在壓力位附近不宜追多。最好的策略是等突破確認（收盤站穩上方 1%）或回踔到 1H ST 再進場。"
+  },
+  {
+    q: "你用 5 股策略買了 NVDA。買入後第二天就跌了 5%。日線 ST 仍然多。你該？",
+    opts: ["止損出場，明天再看", "持有不動，日線 ST 多就不賣", "加碼到 10 股攤平", "看 4H ST 是否翻空決定"],
+    ans: 1,
+    explain: "5 股策略的規則：日線 ST 多就持有，日線 ST 翻空就賣。一天跌 5% 很正常（特別是 NVDA 這種高波動股）。只要日線 ST 未翻空就繼續持有。不加碼、不減碼，機械執行。這就是小倉位的好處 — 5 股虧 5% = 幾十美金，你不會焦慮。"
+  },
+  {
+    q: "日線 ST 翻多已經 2 個月了。你一直觀望沒進場。現在還能進嗎？",
+    opts: ["太晚了，錯過就算了", "可以，在 4H ST 回踔時進場仍然有效", "要等日線 ST 翻空再翻多才能進", "只能用最小倉位"],
+    ans: 1,
+    explain: "只要日線 ST 仍多，做多就是順勢。不存在「太晚」的問題。趨勢可以持續很久（半年甚至更長）。在 4H ST 回踔時進場是任何時候都適用的策略。不要因為錯過開頭就不敢中途上車。"
+  },
+  {
+    q: "你同時在 Binance 和 IBKR 操作。Binance 上 BTC 的 1H ST 翻空了但 IBKR 上 XAG 的 1H ST 仍多。你的 XAG 倉位需要調整嗎？",
+    opts: ["需要，BTC 翻空會拖累 XAG", "不需要，各資產獨立判斷 ST", "要看兩者的相關性再決定", "全部平倉避風險"],
+    ans: 1,
+    explain: "每個資產獨立使用自己的 ST 判斷。BTC 和 XAG 雖然有時相關，但 ST 是基於各自的價格計算的。XAG 的交易決策只看 XAG 的 ST，不受其他資產 ST 影響。除非你有特別的相關性交易策略。"
+  },
+  {
+    q: "4H ST 翻多後，第一次回測 4H ST 線。價格觸碰 ST 線後彈開上漲。你該怎麼定義這次回測成功？",
+    opts: ["觸碰就算成功", "需要收盤在 ST 線上方", "需要收盤在 ST 線上方 + 距離 > 0.3%", "需要連續 2 根 K 線都在 ST 上方"],
+    ans: 2,
+    explain: "回測成功的定義要嚴格：不只是觸碰後彈開（可能是盤中假動作），而是收盤確認在 ST 線正確一側且有足夠距離（> 0.3%）。這樣才能確認 ST 線確實構成有效支撐。"
+  },
+  {
+    q: "你注意到 BTC 的 ATR(300) 在最近一個月增加了 50%。這對 ST 有什麼影響？",
+    opts: ["ST 線會離價格更遠，翻轉更不容易", "ST 線會更靠近價格", "沒有影響", "需要換更大的 Period"],
+    ans: 0,
+    explain: "ATR 增加 = ST 線的帶寬增加 = ST 線離中軸更遠 = 翻轉需要更大的價格移動才能觸發。在高 ATR 環境下 ST 更不容易翻轉，但一旦翻轉就代表真正的大趨勢改變。這是 ST 在趨勢市場中更可靠的原因。"
+  },
+  {
+    q: "你的交易日誌顯示：最近 20 筆 ST 交易中，跟日線方向同向的 12 筆盈利 9 筆，逆日線方向的 8 筆盈利 2 筆。結論？",
+    opts: ["需要更多樣本才能判斷", "證實「永遠跟日線方向」的重要性", "逆日線方向也有 25% 勝率，可以嘗試", "ST 整體表現不好"],
+    ans: 1,
+    explain: "數據清楚說明：順日線方向勝率 75%，逆日線方向勝率 25%。這強烈支持「日線不翻，大方向不變」的核心原則。逆日線操作的 25% 勝率扣掉手續費後可能趨近零或負。結論：嚴格遵守高時框方向。"
+  },
+  {
+    q: "BTC 4H ST 翻多已 5 天。此期間沒有回測過 4H ST 線（一直往上衝）。你想進場但找不到回踔機會。怎麼辦？",
+    opts: ["市價追多", "在 1H ST 線附近掛限價單", "放棄這波，等下次", "在當前價格的 -1% 掛限價"],
+    ans: 1,
+    explain: "當高時框 ST 不給回踔機會時，退到低一級時框找進場點。1H ST 線是次優的進場位置 — 比追高好，又不用等到 4H ST 那麼遠。如果 1H ST 也不給機會，那就接受這波不做。寧可錯過也不追價。"
+  },
+  {
+    q: "你在 $30.50 做多 XAG（1H ST 在 $30.30）。價格漲到 $31.80 後開始回落。你該如何管理止損？",
+    opts: ["止損保持在 $30.30 不動", "上移止損到 $30.50（保本）", "上移止損到 1H ST 最新位置（ST 會隨趨勢上移）", "平倉鎖利不管止損"],
+    ans: 2,
+    explain: "隨著趨勢發展，1H ST 線會逐漸上移（因為它是動態的）。止損應該跟著 ST 線上移。這就是「追蹤止損」（trailing stop）的概念。讓利潤奔跑，但用不斷上移的 ST 線保護已有利潤。"
+  },
+  {
+    q: "日線多、4H空、1H多。這是什麼狀態？適合交易嗎？",
+    opts: ["中層斷裂，是最容易被打臉的狀態", "很好的做多機會", "應該做空", "等 4H 翻回多再說"],
+    ans: 0,
+    explain: "日多+4H空+1H多 = 中層斷裂。4H 的空插在日線和 1H 之間，代表結構不完整。1H 的多可能只是反彈而非真正的恢復。這是最容易被來回打臉的狀態。正確做法是觀望或極輕倉（共振分 +20），等 4H 翻回多恢復共振。"
+  },
+  {
+    q: "你做了一筆交易：在 4H ST 線附近做多，止損設好，目標 2:1 風報比。3 天後目標達成。下一步？",
+    opts: ["按計畫平倉，紀律執行", "貪心加碼想賺更多", "移動目標到 3:1 繼續持有", "平一半留一半追蹤"],
+    ans: 0,
+    explain: "達到預設目標 = 按計畫執行平倉。紀律是長期盈利的關鍵。「平一半留一半」是進階操作，可以考慮，但前提是有明確的追蹤止損計畫。最安全的做法就是計畫怎麼說就怎麼做。"
+  },
+  {
+    q: "你發現每次 BTC 日線 ST 翻轉前，4H ST 都會提前 3-5 天翻轉。這個觀察有什麼用？",
+    opts: ["沒什麼用，每次都不一樣", "可以用 4H 翻轉作為日線即將翻轉的預警", "應該只看日線不看 4H", "代表 4H 參數需要調整"],
+    ans: 1,
+    explain: "低時框翻轉是高時框翻轉的「早期預警」。如果歷史上 4H 翻轉後 3-5 天日線也翻，你可以提前減倉備戰。但記住這不是 100% — 有時 4H 翻後又翻回，日線不受影響。用作預警但不作為唯一決策依據。"
+  },
+  {
+    q: "BTC 價格從 $95,000 快速跌到 $90,000（5% 跌幅），1H ST 翻空。但 4H ST 在 $89,500 做多方向。你預期什麼？",
+    opts: ["會繼續跌破 4H ST", "可能在 4H ST ($89,500) 附近獲得支撐反彈", "無法預測", "1H 翻空已經夠了，做空"],
+    ans: 1,
+    explain: "4H ST 線是動態支撐位。快速下跌到 4H ST 附近時，大概率會獲得支撐（至少短期）。這是一個觀察點：如果 4H ST 守住 = 回調結束，可做多。如果 4H ST 被跌破 = 更大級別的趨勢改變。"
+  },
+  {
+    q: "你使用 ST(300,3) 交易了 6 個月。回顧發現最大的虧損都來自逆勢交易和移動止損。改進方案？",
+    opts: ["換一個指標", "強化兩條鐵律：不逆日線 + 不移動止損", "加入更多指標作為過濾", "減少交易頻率"],
+    ans: 1,
+    explain: "大部分虧損來源已經識別清楚：逆勢交易（逆日線方向）和移動止損（擴大虧損）。最有效的改進是把這兩條作為絕對鐵律寫在交易日誌上每天看。簡單的規則嚴格執行 > 複雜的系統隨意執行。"
+  },
+  {
+    q: "你想在 BTC 做一筆永續合約交易。日線多、4H多、1H多。4H ST 在 $96,000，1H ST 在 $97,500。當前價 $98,000。你在哪裡掛限價買單？",
+    opts: ["$98,000 市價", "$97,500（1H ST 線附近）", "$96,000（4H ST 線附近）", "$97,550（1H ST + 0.05% buffer）"],
+    ans: 3,
+    explain: "全部共振 = 高信心做多。限價單掛在 1H ST 線附近（$97,500）+ 小幅 buffer = $97,550。這確保價格回踔到 ST 線時你能成交，同時 buffer 避免掛單無法成交。不需要等到 4H ST（$96,000）那麼遠，因為全面共振環境下 1H 回踔就夠了。"
+  },
+  {
+    q: "你的朋友說「ST(300,3) 反應太慢了，我用 ST(10,1) 更靈敏」。你怎麼回應？",
+    opts: ["他說得對，更靈敏更好", "ST(10,1) 會產生大量假信號，勝率極低", "各有優劣看交易風格", "應該兩個一起用"],
+    ans: 1,
+    explain: "ST(10,1) 回顧只有 10 根 K 線，乘數只有 1 倍 ATR = 極度靈敏 = 頻繁翻轉。在盤整中會被反覆打臉。300/3 犧牲靈敏度換可靠度：翻轉少但每次翻轉都代表真正的趨勢改變。對於方向判斷和中長期持有，300/3 遠優於 10/1。"
+  },
+  {
+    q: "週五下午 4:00 PM，美股收盤。你持有 NVDA 5 股（日線多）。需要做任何特別的事嗎？",
+    opts: ["需要，設止損因為週末有風險", "不需要，5 股美股沒有週末風險需要擔心", "賣掉，週一再買回", "需要看下週有無重大事件"],
+    ans: 1,
+    explain: "5 股策略的小倉位設計就是為了不用擔心週末 gap risk。5 股 NVDA 即使週一 gap down 10% 也只虧 $60-70。日線 ST 週一開盤後檢查即可。不需要每週五特別處理。這就是小倉位帶來的心理自由。"
+  },
+  {
+    q: "BTC 從 $85,000 一路漲到 $105,000（+23%），日線 ST 一直是多。你從 $90,000 就開始持有。現在你的 unrealized PnL 讓你很興奮。你該？",
+    opts: ["趕快獲利了結", "保持冷靜，繼續跟隨 ST 直到翻空", "加倍倉位乘勝追擊", "至少賣一半"],
+    ans: 1,
+    explain: "情緒（興奮）不是交易決策的依據。ST 多就持有，ST 翻空就平。大波段利潤就是靠忍住不動賺來的。每次因為「賺夠了」就平倉，你永遠吃不到 20%+ 的大趨勢。管理好情緒，讓系統做決策。"
+  },
+  {
+    q: "你在交易 XAG。注意到歐洲開盤（15:00 台灣時間）前 30 分鐘經常有假突破。這對 ST 使用有什麼啟示？",
+    opts: ["開盤前 30 分鐘的 ST 翻轉需要額外確認", "ST 不受影響因為用 300 期", "應該在這段時間加倍操作", "避免看盤這段時間"],
+    ans: 0,
+    explain: "即使 ST(300,3) 參數很鈍，開盤前的假突破如果幅度夠大仍可能觸發 1H ST 翻轉。規則：在主要市場開盤前 30 分鐘到開盤後 30 分鐘的翻轉，等待 1 小時確認再行動。"
+  },
+  {
+    q: "你追蹤了 3 個月的數據發現：1H ST 翻轉後持續超過 24 小時不翻回的，有 70% 最終 4H 也跟著翻。這個發現怎麼用？",
+    opts: ["1H 翻轉後等 24 小時，若不翻回就預判 4H 將翻", "不可靠不能用", "直接在 1H 翻轉時全倉操作", "用這個做為減倉的早期信號"],
+    ans: 3,
+    explain: "這是你自己的統計發現（70% 機率），非常有用。最佳應用：1H 翻轉且持續 24 小時 = 4H 可能將翻的早期預警 = 開始減少順 4H 方向的倉位。不用全倉反向，但做好防禦準備。自我統計是最好的交易優化工具。"
+  },
+  {
+    q: "BTC 日線 ST 翻空後的第三天，你發現鏈上數據顯示大量買入。你該信 ST 還是信鏈上數據？",
+    opts: ["信鏈上數據，做多", "信 ST，保持空頭思維", "兩者結合：ST 空 = 不做多，但鏈上買入 = 不做空", "等更多數據"],
+    ans: 2,
+    explain: "ST 是你的主指標，給出方向。鏈上數據是輔助。當兩者矛盾時：ST 空 = 不做多（因為趨勢向下）。但鏈上大量買入 = 可能有大資金在抄底 = 不做空（可能很快反轉）。結論：觀望。等 ST 方向和鏈上數據一致時再操作。"
+  },
+  {
+    q: "你在看 NVDA。日線 ST 三天前翻多。但同期 SPY 日線 ST 仍空。NVDA 的做多信號可信嗎？",
+    opts: ["不可信，大盤空不宜做多個股", "可信，個股有自己的趨勢", "半信半疑，減半倉位", "等 SPY 也翻多再做"],
+    ans: 1,
+    explain: "NVDA 這種龍頭股經常領先大盤。如果 NVDA 日線 ST 翻多而 SPY 仍空，可能是 NVDA 在引領市場。用 5 股策略操作 NVDA 本身就是小倉位，風險可控。每個資產獨立判斷 ST。但如果你擔心，降到 3 股也是合理的保守做法。"
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = new Array(quizData.length).fill(false);
+let userAnswers = new Array(quizData.length).fill(-1);
+
+function initQuiz() {
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizData[currentQuestion];
+  const container = document.getElementById('quiz-container');
+
+  let optionsHtml = '';
+  q.opts.forEach((opt, i) => {
+    let cls = '';
+    if (answered[currentQuestion]) {
+      if (i === q.ans) cls = 'correct';
+      else if (i === userAnswers[currentQuestion] && i !== q.ans) cls = 'wrong';
+    }
+    optionsHtml += `<li class="${cls}" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</li>`;
+  });
+
+  container.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-question">Q${currentQuestion+1}. ${q.q}</div>
+      <ul class="quiz-options">${optionsHtml}</ul>
+      <div class="quiz-explanation ${answered[currentQuestion] ? 'show' : ''}" id="quiz-explain">
+        ${answered[currentQuestion] ? q.explain : ''}
+      </div>
+    </div>
+  `;
+
+  // Update progress
+  const answeredCount = answered.filter(a => a).length;
+  document.getElementById('quiz-progress-text').textContent = `${answeredCount} / ${quizData.length}`;
+  document.getElementById('quiz-progress-fill').style.width = (answeredCount / quizData.length * 100) + '%';
+  document.getElementById('quiz-score-text').textContent = `正確：${score}`;
+}
+
+function selectAnswer(idx) {
+  if (answered[currentQuestion]) return;
+
+  answered[currentQuestion] = true;
+  userAnswers[currentQuestion] = idx;
+
+  if (idx === quizData[currentQuestion].ans) {
+    score++;
+  }
+
+  renderQuestion();
+}
+
+function quizNav(dir) {
+  currentQuestion += dir;
+  if (currentQuestion < 0) currentQuestion = 0;
+  if (currentQuestion >= quizData.length) currentQuestion = quizData.length - 1;
+  renderQuestion();
+}
+
+function quizReset() {
+  currentQuestion = 0;
+  score = 0;
+  answered = new Array(quizData.length).fill(false);
+  userAnswers = new Array(quizData.length).fill(-1);
+  renderQuestion();
+}
+</script>
+
+</body>
+</html>
