@@ -95,12 +95,12 @@ YFINANCE_TICKERS = {
 COT_CONTRACTS = [
     ("088691", "Gold (COMEX)", "Precious Metals"),
     ("084691", "Silver (COMEX)", "Precious Metals"),
-    ("099741", "Crude Oil (NYMEX)", "Energy"),
-    ("096742", "Natural Gas (NYMEX)", "Energy"),
-    ("098662", "Copper (COMEX)", "Industrial Metals"),
-    ("099741", "S&P 500 (CME)", "Equity Index"),
-    ("232741", "US Dollar Index (ICE)", "Currency"),
-    ("099741", "10-Year Treasury Note", "Bonds"),
+    ("067651", "Crude Oil (NYMEX)", "Energy"),
+    ("023651", "Natural Gas (NYMEX)", "Energy"),
+    ("085692", "Copper (COMEX)", "Industrial Metals"),
+    ("138741", "E-mini S&P 500 (CME)", "Equity Index"),
+    ("098662", "US Dollar Index (ICE)", "Currency"),
+    ("043602", "10-Year Treasury Note (CBOT)", "Bonds"),
 ]
 
 # ============================================================
