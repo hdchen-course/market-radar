@@ -3,79 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>交易認知陷阱 — 52 個大腦 Bug 中最致命的 15 個 + 情境訓練</title>
+<title>交易認知陷阱 — 15 個致命偏誤 + 30 題情境訓練</title>
+<link rel="stylesheet" href="common.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f8fafc; --bg2: #fff; --bg3: #f1f5f9; --border: #cbd5e1;
-  --text: #0f172a; --text2: #334155; --text3: #64748b;
-  --blue: #2563eb; --blue-l: #dbeafe; --green: #16a34a; --green-l: #dcfce7;
-  --red: #dc2626; --red-l: #fee2e2; --yellow: #d97706; --yellow-l: #fef3c7;
-  --purple: #7c3aed; --purple-l: #ede9fe; --orange: #ea580c; --orange-l: #fff7ed;
-  --r: 12px; --shadow: 0 4px 20px rgba(0,0,0,0.06);
+/* Supplemental styles for this page */
+.trap-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--red);
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 16px 0;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh; padding: 20px; }
-.back-link { display: inline-block; margin-bottom: 16px; color: var(--blue); text-decoration: none; font-size: 14px; }
-.back-link:hover { text-decoration: underline; }
-.container { max-width: 880px; margin: 0 auto; }
-h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-.subtitle { font-size: 15px; color: var(--text3); margin-bottom: 32px; }
-.section-title { font-size: 22px; font-weight: 700; color: var(--red); margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--red); }
-h3 { font-size: 17px; font-weight: 700; color: var(--text); margin: 28px 0 12px; }
-p { margin-bottom: 12px; color: var(--text2); }
-ul, ol { margin: 8px 0 16px 20px; color: var(--text2); }
-li { margin-bottom: 6px; }
-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
-th, td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
-th { background: var(--bg3); font-weight: 600; }
-.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; margin: 16px 0; box-shadow: var(--shadow); }
-.trap-card { background: var(--bg2); border: 2px solid var(--red); border-radius: var(--r); padding: 20px; margin: 20px 0; }
-.trap-card h3 { color: var(--red); margin-top: 0; }
-.antidote { background: var(--green-l); border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 12px 0; }
-.your-case { background: var(--orange-l); border-left: 4px solid var(--orange); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 12px 0; }
-.quiz { background: var(--purple-l); border: 2px solid var(--purple); border-radius: var(--r); padding: 20px; margin: 20px 0; }
-.quiz h3 { color: var(--purple); margin-top: 0; }
-.quiz-q { font-weight: 600; margin: 16px 0 8px; }
-.quiz-options { margin: 8px 0 8px 20px; }
-.quiz-options li { cursor: pointer; padding: 6px 12px; border-radius: 6px; margin: 4px 0; }
-.quiz-options li:hover { background: var(--bg3); }
-.answer { display: none; background: var(--green-l); padding: 12px 16px; border-radius: var(--r); margin: 8px 0; }
-.answer.show { display: block; }
-.insight { background: var(--blue-l); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
-.warning { background: var(--red-l); border-left: 4px solid var(--red); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
-.score-box { background: var(--bg3); border: 2px solid var(--blue); border-radius: var(--r); padding: 20px; margin: 20px 0; text-align: center; }
-.btn { display: inline-block; padding: 8px 20px; background: var(--blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; margin: 4px; }
-.btn:hover { opacity: 0.9; }
-.btn-red { background: var(--red); }
-.btn-green { background: var(--green); }
+.trap-card h3 { color: var(--red); margin-top: 0; font-size: 16px; }
+.trap-card p { font-size: 14px; }
+.antidote {
+  background: var(--green-l);
+  border-left: 4px solid var(--green);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 14px;
+}
+.antidote ul { margin: 8px 0 4px 18px; font-size: 13px; }
+.antidote li { margin-bottom: 4px; }
+.common-case {
+  background: var(--orange-l);
+  border-left: 4px solid var(--orange);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+/* Quiz styles */
+.quiz-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 16px 0;
+}
+.quiz-card h4 { color: var(--purple); margin-bottom: 10px; }
+.quiz-card .scenario { font-size: 14px; color: var(--text2); margin-bottom: 14px; line-height: 1.7; }
+.quiz-card .options { list-style: none; padding: 0; margin: 0; }
+.quiz-card .options li {
+  padding: 10px 14px;
+  margin: 6px 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .15s;
+}
+.quiz-card .options li:hover { background: var(--bg4, #e2e8f0); }
+.quiz-card .options li.correct { background: var(--green-l); border-color: var(--green); color: var(--green); font-weight: 600; }
+.quiz-card .options li.wrong { background: var(--red-l); border-color: var(--red); color: var(--red); }
+.quiz-card .options li.disabled { pointer-events: none; opacity: 0.7; }
+.quiz-card .explanation {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--blue-l);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.quiz-card .explanation.show { display: block; }
+
+.score-panel {
+  background: var(--purple-l);
+  border: 2px solid var(--purple);
+  border-radius: var(--r);
+  padding: 24px;
+  text-align: center;
+  margin: 20px 0;
+}
+.score-panel .score-num { font-size: 48px; font-weight: 800; color: var(--purple); }
+.score-panel .score-label { font-size: 14px; color: var(--text3); margin-top: 4px; }
+.score-panel .score-msg { margin-top: 12px; font-size: 14px; color: var(--text2); }
+
+.reset-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+.reset-btn:hover { opacity: 0.9; }
+
+/* Checklist cards */
+.checklist-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  margin: 16px 0;
+}
+.checklist-card h3 { margin-bottom: 12px; }
+.checklist-card ol { margin-left: 20px; font-size: 14px; line-height: 2; }
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 28px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+  color: var(--text);
+}
 </style>
 </head>
 <body>
-<div class="container">
 
 <a href="trade_home.html" class="back-link">&larr; 回首頁</a>
 
 <h1>交易認知陷阱 — 你的大腦在騙你</h1>
-<p class="subtitle">15 個最致命的決策偏誤 + 30 題情境訓練 — 每次虧損背後都有一個認知 Bug</p>
+<p style="font-size:14px; color:var(--text3); margin-bottom:24px;">15 個最致命的決策偏誤 + 30 題情境訓練 — 每次虧損背後都有一個認知 Bug</p>
 
-<div class="warning">
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">持倉陷阱</button>
+  <button class="tab-btn" data-tab="tab2">連勝陷阱</button>
+  <button class="tab-btn" data-tab="tab3">出場陷阱</button>
+  <button class="tab-btn" data-tab="tab4">互動測驗</button>
+  <button class="tab-btn" data-tab="tab5">防火牆</button>
+</nav>
+
+<div class="warning-box" style="margin-bottom:20px;">
 <strong>為什麼需要這篇：</strong>交易者虧的錢往往不是因為「不會賺」，而是來自「大腦的系統性判斷錯誤」— 不是情緒失控，而是思考本身有 Bug。這些 Bug 是人類演化留下的，每個人都有，但可以透過覺察和訓練來規避。
 </div>
 
-<!-- ===== TRAP 1 ===== -->
-<h2 class="section-title">致命陷阱 #1 ~ #5：持倉時的判斷扭曲</h2>
+<!-- ==================== TAB 1: 持倉陷阱 #1-5 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2 class="section-title" style="color:var(--red); border-color:var(--red);">致命陷阱 #1 ~ #5：持倉時的判斷扭曲</h2>
 
 <div class="trap-card">
-<h3>🧠 陷阱 #1：處置效應（Disposition Effect）</h3>
+<h3>#1 處置效應（Disposition Effect）</h3>
 <p><strong>定義：</strong>急著賣贏的、死抱虧的。賺一點就跑，虧很多才走。</p>
 <p><strong>原因：</strong>人對「確定的小收益」的快樂 > 「可能的大收益」的期望。但對虧損，人寧可賭一把「可能回本」也不願接受「確定的小虧損」。</p>
-
-<div class="your-case">
-<strong>常見案例：</strong>做多白銀在 $72 附近 → 跌到 $67（設好的止損線）→ 不執行（不想確認虧損）→ 最終跌到 $61 爆倉。同時之前賺的單子都是「小賺就跑」。<br>
-= 典型處置效應：贏的跑太快，虧的扛太久。
+<div class="common-case">
+<strong>常見案例：</strong>做多白銀在 $72 附近 → 跌到 $67（設好的止損線）→ 不執行（不想確認虧損）→ 最終跌到 $61 爆倉。同時之前賺的單子都是「小賺就跑」。= 典型處置效應：贏的跑太快，虧的扛太久。
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -87,15 +161,13 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 
 <div class="trap-card">
-<h3>🧠 陷阱 #2：沉沒成本謬誤（Sunk Cost Fallacy）</h3>
+<h3>#2 沉沒成本謬誤（Sunk Cost Fallacy）</h3>
 <p><strong>定義：</strong>「已經虧這麼多了，不甘心現在走」— 用過去的投入來合理化繼續持有。</p>
 <p><strong>原因：</strong>大腦不想承認之前的決定是錯的。平倉 = 承認失敗。所以繼續抱 = 「還沒失敗」的幻覺。</p>
-
-<div class="your-case">
-<strong>常見案例：</strong>成本 $72，跌到 $67（止損線）時心想：「已經虧了 $5/oz，如果現在走就確定虧了。萬一明天漲回來呢？」→ 結果繼續跌到 $61。<br><br>
+<div class="common-case">
+<strong>常見案例：</strong>成本 $72，跌到 $67（止損線）時心想：「已經虧了 $5/oz，如果現在走就確定虧了。萬一明天漲回來呢？」→ 結果繼續跌到 $61。<br>
 <strong>正確思考：</strong>「虧了 $5 是已經發生的事實，跟未來方向無關。唯一的問題是：從 $67 開始，更可能漲還是跌？」
 </div>
-
 <div class="antidote">
 <strong>解藥 — 「Clean Sheet」思維：</strong>
 <ul>
@@ -107,19 +179,17 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 
 <div class="trap-card">
-<h3>🧠 陷阱 #3：錨定效應（Anchoring）</h3>
+<h3>#3 錨定效應（Anchoring）</h3>
 <p><strong>定義：</strong>被一個「參考數字」綁住判斷。例如被自己的成本價、前高、或目標價錨定。</p>
 <p><strong>原因：</strong>大腦需要一個「定錨」來做判斷。一旦設定，很難擺脫。</p>
-
-<div class="your-case">
-<strong>常見模式（多次出現）：</strong>
+<div class="common-case">
+<strong>常見模式：</strong>
 <ul>
 <li>錨定成本：「$72 進的，至少等到 $70 才平」→ 結果 $70 到不了，一路跌到爆倉</li>
 <li>錨定目標：設目標 $70 → 到 $68.5 時「再等一下就到了」→ 結果反轉暴跌</li>
-<li>錨定前高：「上週還 $75，現在才 $67，太便宜了」→ 但市場不在乎交易者的「太便宜」</li>
+<li>錨定前高：「上週還 $75，現在才 $67，太便宜了」→ 但市場不在乎你的「太便宜」</li>
 </ul>
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -131,15 +201,12 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 
 <div class="trap-card">
-<h3>🧠 陷阱 #4：確認偏誤（Confirmation Bias）</h3>
+<h3>#4 確認偏誤（Confirmation Bias）</h3>
 <p><strong>定義：</strong>只看支持自己方向的資訊，忽略反面證據。</p>
 <p><strong>原因：</strong>持有多單時，大腦會自動過濾掉「看空」的資訊，放大「看多」的資訊。</p>
-
-<div class="your-case">
-<strong>常見案例：</strong>白銀三框全多時 → 只看到「趨勢向上、金銀比收斂」→ 忽略了「CPI 超預期、Fed 升息、30Y 破 5%」這些巨大利空。<br>
-結果：SuperTrend 在 6 小時內從三框全多 → 雙空。選擇性忽略宏觀面惡化是確認偏誤的典型表現。
+<div class="common-case">
+<strong>常見案例：</strong>三框全多時 → 只看到「趨勢向上、金銀比收斂」→ 忽略了「CPI 超預期、Fed 升息、30Y 破 5%」這些巨大利空。結果：SuperTrend 在 6 小時內從三框全多 → 雙空。選擇性忽略宏觀面惡化是確認偏誤的典型表現。
 </div>
-
 <div class="antidote">
 <strong>解藥 — 「魔鬼代言人」練習：</strong>
 <ul>
@@ -151,15 +218,12 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 
 <div class="trap-card">
-<h3>🧠 陷阱 #5：損失厭惡（Loss Aversion）</h3>
+<h3>#5 損失厭惡（Loss Aversion）</h3>
 <p><strong>定義：</strong>虧 $1 的痛苦是賺 $1 快樂的 2-2.5 倍。所以人會冒更大風險去「避免確認虧損」。</p>
 <p><strong>原因：</strong>演化設計 — 在野外，失去食物（餓死）比得到額外食物更重要。但在交易中這個本能是有害的。</p>
-
-<div class="your-case">
-<strong>常見案例：</strong>「不想讓今天變成虧損日」→ 浮虧的單子不平 → 小虧變大虧。<br>
-解法：目標從「每天獲利」改為「每週獲利」— 允許虧損日存在。
+<div class="common-case">
+<strong>常見案例：</strong>「不想讓今天變成虧損日」→ 浮虧的單子不平 → 小虧變大虧。解法：目標從「每天獲利」改為「每週獲利」— 允許虧損日存在。
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -170,19 +234,23 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<!-- ===== TRAP 6-10 ===== -->
-<h2 class="section-title">致命陷阱 #6 ~ #10：連勝後的判斷失靈</h2>
+<div class="highlight-box" style="margin-top:24px;">
+<strong>持倉陷阱核心總結：</strong>這五個陷阱的共同根源是「不願確認虧損」。大腦把「未實現虧損」當作「還沒虧」，只有平倉才算「真的虧了」。但事實是：浮虧就是虧。你帳戶裡的錢已經少了。越早面對，損失越小。
+</div>
+</div><!-- tab1 -->
 
-<div class="trap-card">
-<h3>🧠 陷阱 #6：熱手謬誤（Hot Hand Fallacy）</h3>
+<!-- ==================== TAB 2: 連勝陷阱 #6-10 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title" style="color:var(--orange); border-color:var(--orange);">致命陷阱 #6 ~ #10：連勝後的判斷失靈</h2>
+
+<div class="trap-card" style="border-left-color:var(--orange);">
+<h3 style="color:var(--orange);">#6 熱手謬誤（Hot Hand Fallacy）</h3>
 <p><strong>定義：</strong>連贏幾次後以為自己「手感好」「看盤很準」，開始放鬆紀律、加大倉位。</p>
 <p><strong>原因：</strong>大腦把隨機的連勝解讀為「我的技術變好了」。實際上市場的隨機性不會因為你之前贏了就減少。</p>
-
-<div class="your-case">
-<strong>常見案例：</strong>連續四天每天 +3% → 第五天覺得「手感好」→ 加大倉位 → 遇到 CPI 衝擊 → 爆倉。<br><br>
+<div class="common-case">
+<strong>常見案例：</strong>連續四天每天 +3% → 第五天覺得「手感好」→ 加大倉位 → 遇到 CPI 衝擊 → 爆倉。<br>
 連勝造成的三重危險：(1) 放鬆止損 (2) 加大倉位 (3) 覺得「看懂了」。三者合一 = 災難。
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -193,16 +261,13 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #7：過度自信（Overconfidence）</h3>
+<div class="trap-card" style="border-left-color:var(--orange);">
+<h3 style="color:var(--orange);">#7 過度自信（Overconfidence）</h3>
 <p><strong>定義：</strong>高估自己預測市場方向的能力。「我看得很準」「我理解市場了」。</p>
 <p><strong>原因：</strong>賺錢時歸功於自己（技術好）。虧錢時歸咎於外部（市場不正常）。這叫「自利歸因偏誤」。</p>
-
-<div class="your-case">
-<strong>常見模式：</strong>連續幾個月獲利 → 覺得自己已經「懂了」→ 放鬆風控 → 幾週內虧回去甚至更多。<br>
-事實：獲利期間標的恰好在明確趨勢中。任何人在那個趨勢中順勢操作都會賺。不全是「個人技術」。
+<div class="common-case">
+<strong>常見案例：</strong>連續幾個月獲利 → 覺得自己已經「懂了」→ 放鬆風控 → 幾週內虧回去甚至更多。事實：獲利期間標的恰好在明確趨勢中。任何人在那個趨勢中順勢操作都會賺。不全是「個人技術」。
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -213,12 +278,11 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #8：目標漂移（Goal Creep）</h3>
+<div class="trap-card" style="border-left-color:var(--orange);">
+<h3 style="color:var(--orange);">#8 目標漂移（Goal Creep）</h3>
 <p><strong>定義：</strong>原本設好目標，到了之後改成更高的目標。「已經到 $68 了，再等等看能不能到 $70」。</p>
-<p><strong>原因：</strong>當目標接近時，大腦開始計算「如果繼續走會賺更多」。放棄「確定的利潤」讓人痛苦（跟處置效應相反但同源）。</p>
-
-<div class="your-case">
+<p><strong>原因：</strong>當目標接近時，大腦開始計算「如果繼續走會賺更多」。放棄「確定的利潤」讓人痛苦。</p>
+<div class="common-case">
 <strong>常見模式（反覆出現）：</strong>
 <ul>
 <li>持有加密貨幣有賺沒跑 → 改更高目標 → 最後大虧</li>
@@ -227,26 +291,23 @@ th { background: var(--bg3); font-weight: 600; }
 </ul>
 <strong>多數虧損都有「到了沒跑」的影子。</strong>
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
-<li><strong>到了就走。不改目標。永遠。</strong>這是你最需要內化的一條規則。</li>
+<li><strong>到了就走。不改目標。永遠。</strong>這是最需要內化的一條規則。</li>
 <li>到目標先平一半（鎖利潤）。剩一半設 trailing stop。這樣「繼續漲」你也有，「反轉」你也不虧。</li>
 <li>開倉時把目標寫在紙上。到了的時候不看盤，直接按照紙上寫的執行。</li>
 </ul>
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #9：賭徒謬誤 / 均值回歸幻覺</h3>
+<div class="trap-card" style="border-left-color:var(--orange);">
+<h3 style="color:var(--orange);">#9 賭徒謬誤 / 均值回歸幻覺</h3>
 <p><strong>定義：</strong>「已經連跌5天了，今天應該要漲了吧？」— 把隨機事件當作有「欠債」要還。</p>
 <p><strong>原因：</strong>大腦不理解「趨勢」。在趨勢中，連跌 5 天之後連跌第 6 天的機率跟前5天無關。</p>
-
-<div class="your-case">
+<div class="common-case">
 <strong>常見案例：</strong>白銀從 $75 連跌到 $65 → 「跌這麼多了應該反彈了吧」→ 加倉 → 繼續跌到 $61。趨勢不會因為「已經跌很多」就停止。
 </div>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -257,11 +318,10 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #10：資訊過載 → 分析癱瘓 or 過度交易</h3>
+<div class="trap-card" style="border-left-color:var(--orange);">
+<h3 style="color:var(--orange);">#10 資訊過載 → 分析癱瘓 or 過度交易</h3>
 <p><strong>定義：</strong>看太多資訊反而無法做決定，或者每個資訊都想反應（頻繁進出）。</p>
 <p><strong>原因：</strong>現代交易者有無限資訊。每一條新聞都感覺「重要」。大腦無法區分噪音和信號。</p>
-
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -272,31 +332,43 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<!-- ===== TRAP 11-15 ===== -->
-<h2 class="section-title">致命陷阱 #11 ~ #15：出場與風控的判斷錯誤</h2>
+<div class="highlight-box" style="margin-top:24px;">
+<strong>連勝陷阱核心總結：</strong>連勝最危險的不是「下一筆會虧」，而是連勝改變了你的行為模式：倉位變大、止損變鬆、標準變低。這三個改變加起來，讓「一次普通的虧損」變成「毀滅性的打擊」。
+</div>
+</div><!-- tab2 -->
 
-<div class="trap-card">
-<h3>🧠 陷阱 #11：稟賦效應（Endowment Effect）</h3>
+<!-- ==================== TAB 3: 出場陷阱 #11-15 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title" style="color:var(--purple); border-color:var(--purple);">致命陷阱 #11 ~ #15：出場與風控的判斷錯誤</h2>
+
+<div class="trap-card" style="border-left-color:var(--purple);">
+<h3 style="color:var(--purple);">#11 稟賦效應（Endowment Effect）</h3>
 <p><strong>定義：</strong>你擁有的東西比實際更值錢。持有的倉位比實際更「捨不得」。</p>
-<p><strong>案例：</strong>白銀多單持有多天 → 開始對它有「感情」→ 變成「我的白銀」→ 更不願意平掉。</p>
+<div class="common-case">
+<strong>常見案例：</strong>白銀多單持有多天 → 開始對它有「感情」→ 變成「我的白銀」→ 更不願意平掉。
+</div>
 <div class="antidote">
 <strong>解藥：</strong>倉位只是數字。不是「你的」。它不認識你。每天問：「如果我現在是空手，我會不會在這個價格建立這個倉位？」
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #12：近因偏誤（Recency Bias）</h3>
+<div class="trap-card" style="border-left-color:var(--purple);">
+<h3 style="color:var(--purple);">#12 近因偏誤（Recency Bias）</h3>
 <p><strong>定義：</strong>過度看重最近發生的事。「昨天反轉搶單賺了 → 今天再搶一次」。</p>
-<p><strong>案例：</strong>「反轉搶單第一次有效，第二次出問題」— 第一次成功讓大腦覺得「這招有效」，忽略了第二次環境已不同。</p>
+<div class="common-case">
+<strong>常見案例：</strong>「反轉搶單第一次有效，第二次出問題」— 第一次成功讓大腦覺得「這招有效」，忽略了第二次環境已不同。
+</div>
 <div class="antidote">
 <strong>解藥：</strong>看長期統計，不看最近幾次。「反轉搶單」的長期勝率可能只有40% — 第一次贏只是運氣。規則：每天只做一次。
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #13：控制錯覺（Illusion of Control）</h3>
+<div class="trap-card" style="border-left-color:var(--purple);">
+<h3 style="color:var(--purple);">#13 控制錯覺（Illusion of Control）</h3>
 <p><strong>定義：</strong>以為自己能控制結果。「我看著盤就不會虧」「我手動比止損單好」。</p>
-<p><strong>案例：</strong>不設止損單（「我會自己手動停損」）→ 凌晨睡著 → 醒來已經崩了。你覺得你能控制，但你控制不了自己會睡著。</p>
+<div class="common-case">
+<strong>常見案例：</strong>不設止損單（「我會自己手動停損」）→ 凌晨睡著 → 醒來已經崩了。你覺得你能控制，但你控制不了自己會睡著。
+</div>
 <div class="antidote">
 <strong>解藥：</strong>
 <ul>
@@ -306,272 +378,587 @@ th { background: var(--bg3); font-weight: 600; }
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #14：結果偏誤（Outcome Bias）</h3>
+<div class="trap-card" style="border-left-color:var(--purple);">
+<h3 style="color:var(--purple);">#14 結果偏誤（Outcome Bias）</h3>
 <p><strong>定義：</strong>用結果來判斷決策品質。「攤平最後賺了 → 所以攤平是對的」。</p>
-<p><strong>案例：</strong>「昨天攤平賺了算運氣」— 當下知道是運氣。但如果不提醒自己，下次攤平時大腦會說：「上次攤平也成功了啊」。</p>
+<div class="common-case">
+<strong>常見案例：</strong>「上次攤平也成功了」— 下次攤平時大腦會用這個記憶來合理化錯誤操作。
+</div>
 <div class="antidote">
 <strong>解藥：</strong>判斷決策品質要看「過程」不是「結果」。
 <ul>
-<li>好決策+壞結果：設了止損被打到（然後市場真的反轉了）→ 這仍然是好決策。</li>
-<li>壞決策+好結果：攤平扛單最後回本 → 這仍然是壞決策（下次可能爆倉）。</li>
+<li>好決策+壞結果：設了止損被打到（然後市場反轉了）→ 仍然是好決策。</li>
+<li>壞決策+好結果：攤平扛單最後回本 → 仍然是壞決策（下次可能爆倉）。</li>
 <li>只獎勵自己「好過程」，不獎勵「好結果」。</li>
 </ul>
 </div>
 </div>
 
-<div class="trap-card">
-<h3>🧠 陷阱 #15：現狀偏誤（Status Quo Bias）</h3>
+<div class="trap-card" style="border-left-color:var(--purple);">
+<h3 style="color:var(--purple);">#15 現狀偏誤（Status Quo Bias）</h3>
 <p><strong>定義：</strong>維持現狀感覺比改變安全。「已經持有了，就繼續持有吧」— 即使該平倉。</p>
-<p><strong>案例：</strong>白銀浮虧 → 「維持現狀（不動）比做一個動作（平倉）容易」→ 不動 = 繼續持有 = 虧更多。不做決定本身就是一個決定（決定繼續承擔風險）。</p>
+<div class="common-case">
+<strong>常見案例：</strong>白銀浮虧 → 「維持現狀（不動）比做一個動作（平倉）容易」→ 不動 = 繼續持有 = 虧更多。不做決定本身就是一個決定（決定繼續承擔風險）。
+</div>
 <div class="antidote">
 <strong>解藥：</strong>把「不動」也視為一個主動選擇。每天問：「我今天是 <em>選擇</em> 繼續持有，還是 <em>懶得</em> 做決定？」如果是後者 → 立刻行動。
 </div>
 </div>
 
-<!-- ===== QUIZ SECTION ===== -->
-<h2 class="section-title" style="border-color: var(--purple); color: var(--purple);">情境訓練 — 30 題（反覆練習直到成為反射）</h2>
+<div class="highlight-box" style="margin-top:24px;">
+<strong>出場陷阱核心總結：</strong>出場比進場難十倍，因為出場意味著「確認結果」。大腦會用各種方式迴避這個確認：對倉位有感情（#11）、用過去合理化現在（#12）、覺得自己能控制（#13）、用好運合理化壞策略（#14）、不想做任何改變（#15）。解法都一樣：用系統規則代替人工判斷。
+</div>
+</div><!-- tab3 -->
 
-<div class="insight">
-<strong>使用方式：</strong>每題是一個交易情境。先想你的直覺答案，再看正確答案。如果直覺錯了，找到對應的陷阱編號。每週做一次，直到所有直覺都正確。
+<!-- ==================== TAB 4: 互動測驗 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title" style="color:var(--purple); border-color:var(--purple);">情境訓練 — 30 題互動測驗</h2>
+
+<div class="insight-box" style="margin-bottom:20px;">
+<strong>使用方式：</strong>每題是一個交易情境，選出正確的行動。點選選項後會即時顯示對錯與解說。完成 30 題後顯示總分。每週做一次，直到所有直覺都正確。
 </div>
 
-<div class="quiz" id="q1">
-<h3>情境 1</h3>
-<p class="quiz-q">你白銀多單成本 $72，現在跌到 $67。你設的止損是 $67。價格剛碰到 $67，你在想：「$67 好像是支撐位，也許會彈回來，我先取消止損看看。」</p>
-<p><strong>你應該怎麼做？</strong></p>
-<p><button class="btn" onclick="document.getElementById('a1').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a1">
-<strong>正確：讓止損執行，不取消。</strong><br>
-觸發陷阱：#1 處置效應（不想確認虧損）+ #5 損失厭惡 + #13 控制錯覺（以為手動比系統好）<br>
+<div class="score-panel" id="scorePanelTop" style="display:none;">
+  <div class="score-num" id="scoreNumTop">0</div>
+  <div class="score-label">/ 30 正確</div>
+  <div class="score-msg" id="scoreMsgTop"></div>
+  <button class="reset-btn" onclick="resetQuiz()">重新測驗</button>
+</div>
+
+<div id="quizContainer">
+<!-- Q1 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 1</h4>
+<p class="scenario">你白銀多單成本 $72，現在跌到 $67。你設的止損是 $67。價格剛碰到 $67，你在想：「$67 好像是支撐位，也許會彈回來，我先取消止損看看。」你應該怎麼做？</p>
+<ul class="options">
+<li data-value="A">A. 取消止損，觀察支撐位是否有效</li>
+<li data-value="B">B. 讓止損執行，不取消</li>
+<li data-value="C">C. 取消止損並加倉攤平成本</li>
+<li data-value="D">D. 把止損下移到 $65 給更多空間</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 讓止損執行，不取消。</strong><br>
+觸發陷阱：#1 處置效應（不想確認虧損）+ #5 損失厭惡 + #13 控制錯覺<br>
 「也許會彈回來」= 確認偏誤（#4），只看到支持自己想法的理由。<br>
 <strong>規則：止損觸發就走。不思考。不分析。走。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q2">
-<h3>情境 2</h3>
-<p class="quiz-q">你連續三天每天賺 3%。今天第四天，你想：「手感好，今天可以加大倉位試試看。」</p>
-<p><button class="btn" onclick="document.getElementById('a2').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a2">
-<strong>正確：不加倉。維持原本倉位甚至減半。</strong><br>
+<!-- Q2 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 2</h4>
+<p class="scenario">你連續三天每天賺 3%。今天第四天，你想：「手感好，今天可以加大倉位試試看。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 加大倉位，趁勝追擊</li>
+<li data-value="B">B. 維持倉位不變</li>
+<li data-value="C">C. 維持原本倉位甚至減半</li>
+<li data-value="D">D. 全倉操作，把握連勝勢頭</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 維持原本倉位甚至減半。</strong><br>
 觸發陷阱：#6 熱手謬誤 + #7 過度自信<br>
-連贏三天不代表第四天也會贏。「手感」不是真的。市場不會因為前三天贏就今天也讓你贏。<br>
+連贏三天不代表第四天也會贏。「手感」不是真的。市場不會因為你前三天贏就今天也讓你贏。<br>
 <strong>規則：連贏3天 → 第4天倉位不變或減半。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q3">
-<h3>情境 3</h3>
-<p class="quiz-q">白銀到了 $69.5，目標是 $70。心想：「這麼接近了，不差 $0.5，等到 $70 再說。」結果開始回落到 $68。又想：「剛才 $69.5 沒跑，現在 $68 更不想跑。等回到 $69.5 再說。」</p>
-<p><button class="btn" onclick="document.getElementById('a3').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a3">
-<strong>正確：$69.5 就應該平一半。沒到 $70 沒關係。</strong><br>
-觸發陷阱：#3 錨定效應（被 $70 目標錨定）+ #8 目標漂移（到了附近卻不走）<br>
-然後回落到 $68 不走 = #3 又被 $69.5 錨定（「等回到剛才的價」）。<br>
+<!-- Q3 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 3</h4>
+<p class="scenario">白銀到了 $69.5，目標是 $70。心想：「這麼接近了，不差 $0.5，等到 $70 再說。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. $69.5 就平一半，不等精確命中 $70</li>
+<li data-value="B">B. 等到 $70 精確命中再全部出場</li>
+<li data-value="C">C. 把目標改成 $72，趨勢還在</li>
+<li data-value="D">D. 設 $70 限價單等待成交</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. $69.5 就平一半。</strong><br>
+觸發陷阱：#3 錨定效應（被 $70 目標錨定）+ #8 目標漂移<br>
+等精確命中 → 常常差一點就反轉。然後又被新價格錨定（「等回到 $69.5」）。<br>
 <strong>規則：目標附近（±2%）就開始減倉。不等精確命中。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q4">
-<h3>情境 4</h3>
-<p class="quiz-q">CPI 今晚公布。你持有多單浮盈 +2%。你想：「如果 CPI 低，可能再漲 3%。賭一把。」</p>
-<p><button class="btn" onclick="document.getElementById('a4').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a4">
-<strong>正確：CPI 前至少平一半，鎖利潤。</strong><br>
+<!-- Q4 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 4</h4>
+<p class="scenario">CPI 今晚公布。你持有多單浮盈 +2%。你想：「如果 CPI 低，可能再漲 3%。賭一把。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 全部持有，賭 CPI 結果</li>
+<li data-value="B">B. CPI 前至少平一半，鎖利潤</li>
+<li data-value="C">C. 加倉，因為有信心 CPI 會低</li>
+<li data-value="D">D. 全部平倉，完全避險</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. CPI 前至少平一半，鎖利潤。</strong><br>
 觸發陷阱：#7 過度自信（以為能預測CPI結果）+ #8 目標漂移（+2%不夠，想要+5%）<br>
 CPI 結果是 50/50 賭博。你有 +2% 的確定利潤 vs「可能+5%也可能-5%」的賭博。<br>
 <strong>規則：重大事件前鎖利潤。不賭。已經有的利潤 > 可能的利潤。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q5">
-<h3>情境 5</h3>
-<p class="quiz-q">反轉搶單第一次賺了 $200。市場又到了一個你覺得「過度」的位置。你想再搶一次反轉。</p>
-<p><button class="btn" onclick="document.getElementById('a5').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a5">
-<strong>正確：不做第二次。收工或改用其他模式。</strong><br>
+<!-- Q5 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 5</h4>
+<p class="scenario">反轉搶單第一次賺了 $200。市場又到了一個你覺得「過度」的位置。你想再搶一次反轉。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 再搶一次，剛才的分析邏輯一樣適用</li>
+<li data-value="B">B. 不做第二次，收工或改用其他模式</li>
+<li data-value="C">C. 用更大倉位搶，因為第一次驗證了方向</li>
+<li data-value="D">D. 等跌更多再搶，加大勝率</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 不做第二次。收工或改用其他模式。</strong><br>
 觸發陷阱：#6 熱手謬誤 + #12 近因偏誤（剛才成功 → 以為下次也會）<br>
-常見規律：反轉搶單只有第一次準。第二次通常出問題。<br>
+反轉搶單只有第一次準。第二次通常出問題。<br>
 <strong>規則：反轉搶單每天只做一次。做完收工。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q6">
-<h3>情境 6</h3>
-<p class="quiz-q">你今天早上虧了 $400。現在看到一個「很好的機會」，想把虧損賺回來。</p>
-<p><button class="btn" onclick="document.getElementById('a6').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a6">
-<strong>正確：今天不做了。明天再來。</strong><br>
-觸發陷阱：#5 損失厭惡（急於把虧損「修復」）+ #7 過度自信（以為這個機會一定會賺）<br>
+<!-- Q6 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 6</h4>
+<p class="scenario">你今天早上虧了 $400。現在看到一個「很好的機會」，想把虧損賺回來。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 進場，這個機會確實很好</li>
+<li data-value="B">B. 用加大倉位進場，一筆賺回來</li>
+<li data-value="C">C. 用小倉位試試看</li>
+<li data-value="D">D. 今天不做了，明天再來</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 今天不做了。明天再來。</strong><br>
+觸發陷阱：#5 損失厭惡（急於把虧損「修復」）+ #7 過度自信<br>
 虧損後的「好機會」通常是大腦在急於報復（revenge trading）。判斷力在虧損後是降低的。<br>
 <strong>規則：日初虧損 → 當天停止交易。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q7">
-<h3>情境 7</h3>
-<p class="quiz-q">白銀已經從 $75 跌到 $65（-13%）。你想：「跌這麼多了，肯定快反彈了，我來接。」</p>
-<p><button class="btn" onclick="document.getElementById('a7').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a7">
-<strong>正確：不接。等 SuperTrend 翻多再進場。</strong><br>
-觸發陷阱：#9 賭徒謬誤（跌多了≠會漲）+ #3 錨定（被$75錨定覺得$65「很便宜」）<br>
-趨勢可以比你想的持續更久。白銀從 $75 → $65 → $61.53 → 可能更低。<br>
+<!-- Q7 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 7</h4>
+<p class="scenario">白銀已經從 $75 跌到 $65（-13%）。你想：「跌這麼多了，肯定快反彈了，我來接。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 進場做多，跌幅已經夠大</li>
+<li data-value="B">B. 分批接，每跌 $2 接一批</li>
+<li data-value="C">C. 不接。等 SuperTrend 翻多再進場</li>
+<li data-value="D">D. 觀望但設好限價單在 $63</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 不接。等 SuperTrend 翻多再進場。</strong><br>
+觸發陷阱：#9 賭徒謬誤（跌多了 ≠ 會漲）+ #3 錨定（被 $75 錨定覺得 $65「很便宜」）<br>
+趨勢可以比你想的持續更久。白銀從 $75 → $65 → $61 → 可能更低。<br>
 <strong>規則：不抄底。只在趨勢確認翻轉後跟隨。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q8">
-<h3>情境 8</h3>
-<p class="quiz-q">白銀倉位浮虧 $1000。心想：「加倉攤平，只要漲回一點就回本。」</p>
-<p><button class="btn" onclick="document.getElementById('a8').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a8">
-<strong>正確：不攤平。只能減倉或平倉。</strong><br>
-觸發陷阱：#2 沉沒成本（已虧$1000→想用更多資金「修復」）+ #13 控制錯覺<br>
+<!-- Q8 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 8</h4>
+<p class="scenario">白銀倉位浮虧 $1000。心想：「加倉攤平，只要漲回一點就回本。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 加倉攤平，降低成本</li>
+<li data-value="B">B. 不攤平。只能減倉或平倉</li>
+<li data-value="C">C. 等到支撐位再加倉攤平</li>
+<li data-value="D">D. 維持現狀，不加不減</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 不攤平。只能減倉或平倉。</strong><br>
+觸發陷阱：#2 沉沒成本（已虧 $1000 → 想用更多資金「修復」）+ #13 控制錯覺<br>
 攤平 = 在錯誤的方向上加注。如果方向是錯的，加倉只會虧更多更快。<br>
 <strong>規則：浮虧中永遠不加倉。只能減或平。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q9">
-<h3>情境 9</h3>
-<p class="quiz-q">你看到報告說「三時框全多，計分5/5全多，強烈偏多」。你想全倉做多。</p>
-<p><button class="btn" onclick="document.getElementById('a9').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a9">
-<strong>正確：最多用30%倉位。不全倉。</strong><br>
+<!-- Q9 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 9</h4>
+<p class="scenario">你看到報告說「三時框全多，計分5/5全多，強烈偏多」。你想全倉做多。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 全倉做多，信號這麼強</li>
+<li data-value="B">B. 最多用 30% 倉位，不全倉</li>
+<li data-value="C">C. 用 50% 倉位，算是折衷</li>
+<li data-value="D">D. 不做，報告不可靠</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 最多用 30% 倉位。不全倉。</strong><br>
 觸發陷阱：#4 確認偏誤（只看到利多忽略風險）+ #7 過度自信<br>
-報告再怎麼看多，明天可能出一個 CPI/伊朗/黑天鵝把一切打翻。6/9 白銀就是從「三框全多」6小時內翻空的。<br>
-<strong>規則：再好的信號，倉位也不超過帳戶30%。因為意外永遠存在。</strong>
+報告再怎麼看多，明天可能出一個黑天鵝把一切打翻。三框全多也可能 6 小時內翻空。<br>
+<strong>規則：再好的信號，倉位也不超過帳戶 30%。因為意外永遠存在。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q10">
-<h3>情境 10</h3>
-<p class="quiz-q">凌晨3點，多單還有浮盈 +1.5%。很累想睡了。心想：「應該沒事吧，明天再看。」</p>
-<p><button class="btn" onclick="document.getElementById('a10').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a10">
-<strong>正確：設止損單 or 直接平倉。不帶倉位睡覺。</strong><br>
+<!-- Q10 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 10</h4>
+<p class="scenario">凌晨3點，多單還有浮盈 +1.5%。很累想睡了。心想：「應該沒事吧，明天再看。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 設止損單 or 直接平倉，不帶倉位睡覺</li>
+<li data-value="B">B. 繼續持有，趨勢方向對的應該沒事</li>
+<li data-value="C">C. 設一個很寬的止損，給空間</li>
+<li data-value="D">D. 設鬧鐘 3 小時後起來看</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. 設止損單 or 直接平倉。不帶倉位睡覺。</strong><br>
 觸發陷阱：#13 控制錯覺（以為「應該沒事」）+ #15 現狀偏誤（不想動）<br>
 很多爆倉案例都是睡著造成的（凌晨突然暴跌，醒來已經爆了）。<br>
 <strong>規則：睡覺前必須設止損或平倉。無例外。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q11">
-<h3>情境 11</h3>
-<p class="quiz-q">上次攤平最後賺了。這次又浮虧了，你想：「上次攤平也成功了，這次再試一次。」</p>
-<p><button class="btn" onclick="document.getElementById('a11').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a11">
-<strong>正確：不攤平。上次成功是運氣。</strong><br>
+<!-- Q11 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 11</h4>
+<p class="scenario">上次攤平最後賺了。這次又浮虧了，你想：「上次攤平也成功了，這次再試一次。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 攤平，上次驗證了這招有效</li>
+<li data-value="B">B. 不攤平。上次成功是運氣</li>
+<li data-value="C">C. 用更小倉位攤平試試</li>
+<li data-value="D">D. 看情況，如果趨勢還在就攤平</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 不攤平。上次成功是運氣。</strong><br>
 觸發陷阱：#14 結果偏誤（用好結果判斷壞決策是好的）+ #12 近因偏誤<br>
-上次成功不代表這次也會成功。10次攤平可能7次讓你爆倉，3次讓你回本。期望值是負的。<br>
+10次攤平可能7次讓你爆倉，3次讓你回本。期望值是負的。<br>
 <strong>規則：攤平永遠是錯的。句號。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q12">
-<h3>情境 12</h3>
-<p class="quiz-q">你想清倉（直覺告訴你該走了），但看了一下價格：「現在跌了 2%，等回到平盤再走。」</p>
-<p><button class="btn" onclick="document.getElementById('a12').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a12">
-<strong>正確：想清倉的那一刻，立刻平一半。不等好價格。</strong><br>
-觸發陷阱：#3 錨定（被「平盤」這個價格錨定）+ #15 現狀偏誤（不想在虧損時行動）<br>
+<!-- Q12 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 12</h4>
+<p class="scenario">你想清倉（直覺告訴你該走了），但看了一下價格：「現在跌了 2%，等回到平盤再走。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 想清倉的那一刻，立刻平一半。不等好價格</li>
+<li data-value="B">B. 設限價單在成本價等待成交</li>
+<li data-value="C">C. 等反彈到成本價再走</li>
+<li data-value="D">D. 分析一下再決定走不走</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. 想清倉的那一刻，立刻平一半。不等好價格。</strong><br>
+觸發陷阱：#3 錨定（被「平盤」價格錨定）+ #15 現狀偏誤（不想在虧損時行動）<br>
 你的直覺「該走了」通常是對的。問題是你想「走得漂亮」→ 結果走不了。<br>
 <strong>規則：直覺說走 → 市價平一半。不等。不挑價。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q13">
-<h3>情境 13</h3>
-<p class="quiz-q">你持有BTC多單，有浮盈。Trump 突然發了一條推文利多 BTC。你想加倉。</p>
-<p><button class="btn" onclick="document.getElementById('a13').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a13">
-<strong>正確：不加倉。有浮盈 → 設 trailing stop 保護利潤。</strong><br>
+<!-- Q13 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 13</h4>
+<p class="scenario">你持有 BTC 多單有浮盈。突然看到一條利多推文。你想加倉。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 加倉追漲，消息面配合</li>
+<li data-value="B">B. 全倉加滿</li>
+<li data-value="C">C. 不加倉。設 trailing stop 保護利潤</li>
+<li data-value="D">D. 加一點點試試</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 不加倉。設 trailing stop 保護利潤。</strong><br>
 觸發陷阱：#10 資訊過載（一條推文就改變操作）+ #8 目標漂移（有賺想賺更多）<br>
 一條推文的影響可能只有5分鐘。加倉追漲 → 推文效應消退 → 回落 → 新加的倉位變虧。<br>
 <strong>規則：盤中突發消息不加倉。只用來設 trailing stop 保護利潤。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q14">
-<h3>情境 14</h3>
-<p class="quiz-q">月底了，你這個月虧 $2000。還有2個交易日。你想拼命做交易把月報酬拉正。</p>
-<p><button class="btn" onclick="document.getElementById('a14').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a14">
-<strong>正確：接受這個月是虧損月。正常操作，不加大。</strong><br>
+<!-- Q14 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 14</h4>
+<p class="scenario">月底了，你這個月虧 $2000。還有2個交易日。你想拼命做交易把月報酬拉正。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 加大倉位搏一搏</li>
+<li data-value="B">B. 多做幾筆交易增加機會</li>
+<li data-value="C">C. 找高勝率機會重倉一次</li>
+<li data-value="D">D. 接受虧損月，正常操作不加大</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 接受這個月是虧損月。正常操作，不加大。</strong><br>
 觸發陷阱：#5 損失厭惡（月報酬不想是負）+ #7 過度自信（以為兩天能翻盤）<br>
-「拼命」= 加大倉位 + 降低標準 + 放鬆止損。= 虧更多的完美配方。<br>
-<strong>規則：接受有虧損月。一個月虧$2000 << 一天因為「拼」而虧$5000。</strong>
+「拼命」= 加大倉位 + 降低標準 + 放鬆止損 = 虧更多的完美配方。<br>
+<strong>規則：接受有虧損月。一個月虧 $2000 &lt;&lt; 一天因為「拼」而虧 $5000。</strong>
 </div>
 </div>
 
-<div class="quiz" id="q15">
-<h3>情境 15</h3>
-<p class="quiz-q">你已經達成今天 +3% 目標。但你看到一個「超好的機會」就在眼前。你想再做一筆。</p>
-<p><button class="btn" onclick="document.getElementById('a15').classList.toggle('show')">顯示答案</button></p>
-<div class="answer" id="a15">
-<strong>正確：收工。不做。明天還有。</strong><br>
+<!-- Q15 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 15</h4>
+<p class="scenario">你已經達成今天 +3% 目標。但你看到一個「超好的機會」就在眼前。你想再做一筆。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 做，這個機會太好了</li>
+<li data-value="B">B. 收工。不做。明天還有</li>
+<li data-value="C">C. 用小倉位試試</li>
+<li data-value="D">D. 做，但設好止損</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 收工。不做。明天還有。</strong><br>
 觸發陷阱：#6 熱手謬誤（今天賺了覺得手感好）+ #8 目標漂移（3%不夠想要4%）<br>
 你設了 3% 就收工的規則。規則就是規則。打破一次 → 以後每次都會找理由打破。<br>
 <strong>規則：+3% = 關電腦。不看。不碰。去做其他事。</strong>
 </div>
 </div>
 
-<!-- Remaining 15 questions in compact format -->
-<div class="card">
-<h3>更多情境（16-30）— 快速練習</h3>
-
-<p><strong>16.</strong> 你聽到一個 KOL 說「白銀要漲到$100」。你很興奮想重倉做多。<br>
-<em>→ 陷阱 #4 確認偏誤 + #10 資訊過載。KOL 說的不是交易信號。只看 ST + 計分。</em></p>
-
-<p><strong>17.</strong> 你虧了 $500 後，下一筆想加大倉位「贏一筆大的」回來。<br>
-<em>→ 陷阱 #5 損失厭惡（revenge trading）。虧損後縮小倉位而非加大。</em></p>
-
-<p><strong>18.</strong> SuperTrend 翻空了，但你覺得「它會翻回來的，之前也翻回來過」。<br>
-<em>→ 陷阱 #4 確認偏誤 + #12 近因偏誤。ST翻空 = 出場信號。不分析、不預測、執行。</em></p>
-
-<p><strong>19.</strong> 你持有5筆單，其中3筆賺1筆虧1筆平。你只想平賺的留虧的。<br>
-<em>→ 陷阱 #1 處置效應。正確：平虧的留賺的。Cut losers, let winners run.</em></p>
-
-<p><strong>20.</strong> 大家（社群/新聞）都在恐慌賣出。你也想跟著賣。<br>
-<em>→ 可能是對的（趨勢跟隨），也可能是 #9 的反面。判斷標準：ST方向。如果 ST 空 → 跟著賣是對的。如果 ST 多 → 恐慌是噪音。</em></p>
-
-<p><strong>21.</strong> 你上個月靠白銀賺了$30K。這個月白銀趨勢不明，但你堅持只做白銀。<br>
-<em>→ 陷阱 #12 近因偏誤 + #11 稟賦效應（對白銀有「感情」）。正確：趨勢不明就不做。換品種或空手。</em></p>
-
-<p><strong>22.</strong> 你設了止損 $300，被打到了。你馬上同方向再進場（因為覺得「止損打到就會反彈」）。<br>
-<em>→ 陷阱 #9 賭徒謬誤。止損被打 = 方向錯了。再進場同方向 = 再錯一次。等新信號。</em></p>
-
-<p><strong>23.</strong> 市場已經漲了兩天，你還沒進場。你焦慮：「再不進就來不及了。」<br>
-<em>→ FOMO（Fear Of Missing Out）= #5 損失厭惡的變體。沒賺到不是虧。追高才是虧。等回調再進。</em></p>
-
-<p><strong>24.</strong> 你的系統（ST）說做多，但你「感覺」今天會跌。你選擇不進場。<br>
-<em>→ 可以的。但如果你的系統長期有正期望值，持續override它會降低整體報酬。定規則：系統信號 > 感覺，除非有明確的新資訊（如CPI即將公布）。</em></p>
-
-<p><strong>25.</strong> 你用 $20K 帳戶做了一筆 $15K 的倉位（75% 倉位）。「這次很有把握。」<br>
-<em>→ 陷阱 #7 過度自信 + #13 控制錯覺。沒有任何一筆交易值得用75%倉位。最大30%。</em></p>
-
-<p><strong>26.</strong> 你虧了很多之後，開始覺得「市場在針對我」「莊家在看我止損」。<br>
-<em>→ 陷阱：自我中心偏誤。市場不認識你。你的止損位置恰好在很多人的止損區（因為大家用一樣的技術分析）。解法：止損設寬一點或用 ST 而非固定價格。</em></p>
-
-<p><strong>27.</strong> 上個月賺了不少，覺得應該犒賞自己 → 放鬆了下個月的紀律。<br>
-<em>→ 陷阱 #6 熱手謬誤 + 道德許可效應（moral licensing）。「我已經夠好了，可以放鬆一下」。= 你的三週虧損的起點。紀律沒有假期。</em></p>
-
-<p><strong>28.</strong> 報告說「偏空觀望」但價格在上漲。你想：「報告錯了，我要做多。」<br>
-<em>→ 如果你有自己的判斷系統且信號明確 → 可以。但如果只是「看到漲就想追」→ 陷阱 #23 FOMO。判斷標準：你的ST方向是什麼？</em></p>
-
-<p><strong>29.</strong> 你決定7月開始嚴格執行紀律。但「今天先不用，明天再開始。」<br>
-<em>→ 陷阱 #15 現狀偏誤 + 拖延。「明天開始」= 永遠不開始。紀律從現在這一秒開始。</em></p>
-
-<p><strong>30.</strong> 你讀完這30題，覺得「我現在都懂了，不會再犯了。」<br>
-<em>→ 陷阱 #7 過度自信。知道 ≠ 做到。這些陷阱是大腦結構性的bug，不是「知道就能避免」的。需要反覆練習+設系統性規則。下週再做一次這30題，看直覺答案是否改變。</em></p>
+<!-- Q16 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 16</h4>
+<p class="scenario">你聽到一個 KOL 說「白銀要漲到 $100」。你很興奮想重倉做多。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 跟著 KOL 做，他有很多粉絲</li>
+<li data-value="B">B. 做一半倉位試試</li>
+<li data-value="C">C. 忽略 KOL 言論，只看 ST + 計分系統</li>
+<li data-value="D">D. 等確認後全倉跟進</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 忽略 KOL 言論，只看 ST + 計分系統。</strong><br>
+觸發陷阱：#4 確認偏誤 + #10 資訊過載。KOL 說的不是交易信號。只看 ST + 計分。
+</div>
 </div>
 
-<!-- ===== SUMMARY ===== -->
-<h2 class="section-title" style="border-color: var(--green); color: var(--green);">總結：你的防火牆系統</h2>
+<!-- Q17 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 17</h4>
+<p class="scenario">你虧了 $500 後，下一筆想加大倉位「贏一筆大的」回來。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 加大倉位，快速回本</li>
+<li data-value="B">B. 維持正常倉位</li>
+<li data-value="C">C. 不做了今天</li>
+<li data-value="D">D. 縮小倉位</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 縮小倉位。</strong><br>
+觸發陷阱：#5 損失厭惡（revenge trading）。虧損後應縮小倉位而非加大。判斷力在虧損後下降。
+</div>
+</div>
 
-<div class="card">
-<h3>每次交易前的 5 秒鐘檢查（背下來）</h3>
+<!-- Q18 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 18</h4>
+<p class="scenario">SuperTrend 翻空了，但你覺得「它會翻回來的，之前也翻回來過」。你持有多單。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. ST 翻空 = 出場。執行</li>
+<li data-value="B">B. 等一根 K 線確認再說</li>
+<li data-value="C">C. 忽略 ST，自己分析</li>
+<li data-value="D">D. 減一半倉位觀望</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. ST 翻空 = 出場信號。不分析、不預測、執行。</strong><br>
+觸發陷阱：#4 確認偏誤 + #12 近因偏誤（「之前翻回來過」）。系統信號要尊重。
+</div>
+</div>
+
+<!-- Q19 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 19</h4>
+<p class="scenario">你持有5筆單，其中3筆賺1筆虧1筆平。你想先平賺的鎖利潤，留虧的等反彈。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 先平賺的，留虧的</li>
+<li data-value="B">B. 全部一起平</li>
+<li data-value="C">C. 平虧的，留賺的繼續跑</li>
+<li data-value="D">D. 什麼都不動</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 平虧的留賺的。Cut losers, let winners run.</strong><br>
+觸發陷阱：#1 處置效應。正確做法永遠是砍虧損、留利潤。
+</div>
+</div>
+
+<!-- Q20 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 20</h4>
+<p class="scenario">大家（社群/新聞）都在恐慌賣出。你也想跟著賣。你的 SuperTrend 顯示多頭方向。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 跟著賣，大家都在賣肯定有原因</li>
+<li data-value="B">B. ST 多頭 → 恐慌是噪音，維持持有</li>
+<li data-value="C">C. 賣一半避險</li>
+<li data-value="D">D. 反向加倉做多</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. ST 多頭 → 恐慌是噪音，維持持有。</strong><br>
+判斷標準：ST 方向。如果 ST 空 → 跟著賣是對的。如果 ST 多 → 社群恐慌是噪音。不被群體情緒帶著走。
+</div>
+</div>
+
+<!-- Q21 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 21</h4>
+<p class="scenario">你上個月靠白銀賺了不少。這個月白銀趨勢不明，但你堅持只做白銀。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 繼續做白銀，熟悉的品種勝率高</li>
+<li data-value="B">B. 加大白銀倉位等趨勢出現</li>
+<li data-value="C">C. 趨勢不明就不做。換品種或空手</li>
+<li data-value="D">D. 小倉位在白銀區間操作</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 趨勢不明就不做。換品種或空手。</strong><br>
+觸發陷阱：#12 近因偏誤 + #11 稟賦效應（對白銀有「感情」）。不要對品種忠誠，要對趨勢忠誠。
+</div>
+</div>
+
+<!-- Q22 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 22</h4>
+<p class="scenario">你設了止損 $300，被打到了。你馬上想同方向再進場，因為覺得「止損打到就會反彈」。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 馬上再進場同方向</li>
+<li data-value="B">B. 反向操作</li>
+<li data-value="C">C. 加大倉位重新進場</li>
+<li data-value="D">D. 等新信號再決定</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 等新信號。</strong><br>
+觸發陷阱：#9 賭徒謬誤。止損被打 = 方向錯了。再進場同方向 = 再錯一次。冷靜等待新的系統信號。
+</div>
+</div>
+
+<!-- Q23 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 23</h4>
+<p class="scenario">市場已經漲了兩天，你還沒進場。你焦慮：「再不進就來不及了。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 趕快進場，不能再等了</li>
+<li data-value="B">B. 市價全倉追進</li>
+<li data-value="C">C. 等回調再進。沒賺到不是虧</li>
+<li data-value="D">D. 用小倉位追一下</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 等回調再進。沒賺到不是虧。</strong><br>
+觸發陷阱：FOMO（Fear Of Missing Out）= #5 損失厭惡的變體。沒賺到不是虧。追高才是虧。
+</div>
+</div>
+
+<!-- Q24 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 24</h4>
+<p class="scenario">你的系統（ST）說做多，但你「感覺」今天會跌。沒有新的基本面資訊。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 跟系統走，系統信號 > 感覺</li>
+<li data-value="B">B. 跟感覺走，不做多</li>
+<li data-value="C">C. 反向做空</li>
+<li data-value="D">D. 完全不做</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. 跟系統走。</strong><br>
+如果你的系統長期有正期望值，持續 override 它會降低整體報酬。規則：系統信號 > 感覺，除非有明確的新資訊（如 CPI 即將公布）。
+</div>
+</div>
+
+<!-- Q25 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 25</h4>
+<p class="scenario">你用 $20K 帳戶做了一筆 $15K 的倉位（75% 倉位）。「這次很有把握。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 沒問題，有把握就該重倉</li>
+<li data-value="B">B. 可以接受，設好止損就行</li>
+<li data-value="C">C. 稍微減到 50%</li>
+<li data-value="D">D. 立刻減到 30% 以下</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 立刻減到 30% 以下。</strong><br>
+觸發陷阱：#7 過度自信 + #13 控制錯覺。沒有任何一筆交易值得用 75% 倉位。最大 30%。
+</div>
+</div>
+
+<!-- Q26 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 26</h4>
+<p class="scenario">你虧了很多之後，開始覺得「市場在針對我」「莊家在看我止損」。正確認知是？</p>
+<ul class="options">
+<li data-value="A">A. 確實有人在獵你的止損</li>
+<li data-value="B">B. 市場不認識你。止損區是大家共同的位置</li>
+<li data-value="C">C. 以後不設止損就不會被針對</li>
+<li data-value="D">D. 換一個平台就好</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. 市場不認識你。</strong><br>
+你的止損位置恰好在很多人的止損區（因為大家用一樣的技術分析）。解法：止損設寬一點或用 ST 而非固定價格。
+</div>
+</div>
+
+<!-- Q27 -->
+<div class="quiz-card" data-correct="C">
+<h4>情境 27</h4>
+<p class="scenario">上個月賺了不少，覺得應該犒賞自己 → 放鬆了下個月的紀律。這是什麼問題？</p>
+<ul class="options">
+<li data-value="A">A. 正常的，賺了就該享受</li>
+<li data-value="B">B. 稍微放鬆沒關係</li>
+<li data-value="C">C. 紀律沒有假期。連贏後更要嚴格執行</li>
+<li data-value="D">D. 下個月少做幾筆就好</li>
+</ul>
+<div class="explanation">
+<strong>正確：C. 紀律沒有假期。</strong><br>
+觸發陷阱：#6 熱手謬誤 + 道德許可效應（moral licensing）。「我已經夠好了，可以放鬆一下」= 三週虧損的起點。
+</div>
+</div>
+
+<!-- Q28 -->
+<div class="quiz-card" data-correct="B">
+<h4>情境 28</h4>
+<p class="scenario">報告說「偏空觀望」但價格在上漲。你想：「報告錯了，我要追多。」你的 ST 方向是空。正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 追多，價格在漲就是漲</li>
+<li data-value="B">B. ST 空 + 報告空 → 不追多，等確認</li>
+<li data-value="C">C. 小倉位試多</li>
+<li data-value="D">D. 做空</li>
+</ul>
+<div class="explanation">
+<strong>正確：B. ST 空 + 報告空 → 不追多。</strong><br>
+看到漲就想追 = FOMO。判斷標準：你的 ST 方向是什麼？ST 空就不做多。等 ST 翻多再說。
+</div>
+</div>
+
+<!-- Q29 -->
+<div class="quiz-card" data-correct="A">
+<h4>情境 29</h4>
+<p class="scenario">你決定從明天開始嚴格執行紀律。但「今天先不用，明天再開始。」正確做法是？</p>
+<ul class="options">
+<li data-value="A">A. 紀律從現在這一秒開始。不是明天</li>
+<li data-value="B">B. 明天開始合理，給自己緩衝</li>
+<li data-value="C">C. 下週一開始比較有儀式感</li>
+<li data-value="D">D. 等下次虧損後再嚴格</li>
+</ul>
+<div class="explanation">
+<strong>正確：A. 紀律從現在這一秒開始。</strong><br>
+觸發陷阱：#15 現狀偏誤 + 拖延。「明天開始」= 永遠不開始。
+</div>
+</div>
+
+<!-- Q30 -->
+<div class="quiz-card" data-correct="D">
+<h4>情境 30</h4>
+<p class="scenario">你讀完這30題，覺得「我現在都懂了，不會再犯了。」這個想法本身是？</p>
+<ul class="options">
+<li data-value="A">A. 正確的，學習就是力量</li>
+<li data-value="B">B. 大致正確，知道就能避免大部分</li>
+<li data-value="C">C. 有點過度但方向對的</li>
+<li data-value="D">D. 這本身就是過度自信陷阱 #7</li>
+</ul>
+<div class="explanation">
+<strong>正確：D. 這本身就是 #7 過度自信。</strong><br>
+知道 ≠ 做到。這些陷阱是大腦結構性的 bug，不是「知道就能避免」的。需要反覆練習 + 設系統性規則。下週再做一次這 30 題，看直覺答案是否改變。
+</div>
+</div>
+</div><!-- quizContainer -->
+
+<div class="score-panel" id="scorePanelBottom" style="display:none;">
+  <div class="score-num" id="scoreNumBottom">0</div>
+  <div class="score-label">/ 30 正確</div>
+  <div class="score-msg" id="scoreMsgBottom"></div>
+  <button class="reset-btn" onclick="resetQuiz()">重新測驗</button>
+</div>
+
+<div style="margin-top:20px; padding:16px; background:var(--bg3); border-radius:var(--r); text-align:center; font-size:13px; color:var(--text3);">
+<strong>每週日重做一次。追蹤分數變化。目標：連續3週 25+ 分才允許自己加大倉位。</strong>
+</div>
+</div><!-- tab4 -->
+
+<!-- ==================== TAB 5: 防火牆 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title" style="color:var(--green); border-color:var(--green);">你的防火牆系統</h2>
+
+<div class="highlight-box" style="margin-bottom:20px;">
+<strong>核心理念：</strong>不靠意志力對抗認知偏誤 — 用系統規則繞過大腦。把下面的清單背下來，在每次交易的關鍵時刻啟動。
+</div>
+
+<div class="checklist-card">
+<h3 style="color:var(--green);">每次交易前的 5 秒鐘檢查（背下來）</h3>
 <ol>
 <li><strong>我的止損在哪？</strong>（如果答不出來 → 不做）</li>
 <li><strong>倉位超過 30% 嗎？</strong>（超過 → 減到 30%）</li>
@@ -581,8 +968,8 @@ CPI 結果是 50/50 賭博。你有 +2% 的確定利潤 vs「可能+5%也可能-
 </ol>
 </div>
 
-<div class="card">
-<h3>每次想「不止損」時的 3 秒鐘自問</h3>
+<div class="checklist-card">
+<h3 style="color:var(--red);">每次想「不止損」時的 3 秒鐘自問</h3>
 <ol>
 <li><strong>如果我現在是空手，會在這個價位開這個方向嗎？</strong>（No → 平）</li>
 <li><strong>我不走是因為「分析」還是因為「不甘心」？</strong>（不甘心 → 平）</li>
@@ -590,18 +977,176 @@ CPI 結果是 50/50 賭博。你有 +2% 的確定利潤 vs「可能+5%也可能-
 </ol>
 </div>
 
-<div class="score-box">
-<h3>自我評分</h3>
-<p>30題中，你的直覺答案有幾題是「正確」的？</p>
-<table>
-<tr><th>分數</th><th>評級</th><th>建議</th></tr>
-<tr><td>25-30 正確</td><td>優秀</td><td>你知道該怎麼做。問題只在執行。設系統規則。</td></tr>
-<tr><td>18-24 正確</td><td>尚可</td><td>部分陷阱你仍會落入。標記錯的題，每天看一次。</td></tr>
-<tr><td>< 18 正確</td><td>危險</td><td>直覺會讓你虧錢。暫停交易，先把這30題練到25+再回來。</td></tr>
-</table>
-<p style="margin-top: 12px; color: var(--text3);"><strong>每週日重做一次。追蹤分數變化。目標：連續3週 25+ 分才允許自己加大倉位。</strong></p>
+<div class="checklist-card">
+<h3 style="color:var(--blue);">連贏後的自我降溫清單</h3>
+<ol>
+<li><strong>連贏 3 天 → 第 4 天倉位減半</strong></li>
+<li><strong>連贏 5 天 → 休息一天不做</strong></li>
+<li><strong>月報酬 > 15% → 剩餘交易日倉位減至 20%</strong></li>
+<li><strong>問自己：如果明天虧 3 天利潤，能接受嗎？</strong>（不能 → 倉位太大）</li>
+</ol>
 </div>
 
+<div class="checklist-card">
+<h3 style="color:var(--orange);">虧損後的行為規範</h3>
+<ol>
+<li><strong>單筆虧損 > 帳戶 3% → 當天停止交易</strong></li>
+<li><strong>連虧 2 筆 → 當天停止交易</strong></li>
+<li><strong>虧損後想加大倉位 → 這是 revenge trading → 縮小倉位</strong></li>
+<li><strong>虧損後看到「好機會」→ 90% 是大腦在騙你 → 不做</strong></li>
+</ol>
 </div>
+
+<div class="checklist-card">
+<h3 style="color:var(--purple);">重大事件日規範</h3>
+<ol>
+<li><strong>CPI / FOMC / NFP 前 → 至少平一半倉位</strong></li>
+<li><strong>有浮盈 → 設 trailing stop 保護利潤</strong></li>
+<li><strong>不在事件前 30 分鐘開新倉</strong></li>
+<li><strong>事件後等 15 分鐘波動消化再決策</strong></li>
+</ol>
+</div>
+
+<div class="checklist-card">
+<h3>15 個陷阱速查表</h3>
+<table>
+<tr><th>#</th><th>陷阱名稱</th><th>一句話描述</th><th>解藥口訣</th></tr>
+<tr><td>1</td><td>處置效應</td><td>贏的跑太快，虧的扛太久</td><td>止損到了就走，不想</td></tr>
+<tr><td>2</td><td>沉沒成本</td><td>已虧很多不甘心走</td><td>成本是歷史，方向是未來</td></tr>
+<tr><td>3</td><td>錨定效應</td><td>被某個數字綁住</td><td>忘掉數字，看 ST 方向</td></tr>
+<tr><td>4</td><td>確認偏誤</td><td>只看有利資訊</td><td>先看反面理由再決定</td></tr>
+<tr><td>5</td><td>損失厭惡</td><td>虧 $1 痛苦是賺 $1 的 2.5 倍</td><td>執行止損 = 贏在紀律</td></tr>
+<tr><td>6</td><td>熱手謬誤</td><td>連贏覺得手感好</td><td>連贏 3 天 → 倉位減半</td></tr>
+<tr><td>7</td><td>過度自信</td><td>高估預測能力</td><td>50% 是環境，不是你</td></tr>
+<tr><td>8</td><td>目標漂移</td><td>到了不走想賺更多</td><td>到了就走，不改目標</td></tr>
+<tr><td>9</td><td>賭徒謬誤</td><td>跌多了以為會漲</td><td>趨勢比你以為的長</td></tr>
+<tr><td>10</td><td>資訊過載</td><td>看太多做太多</td><td>只看 ST + 計分 + 事件</td></tr>
+<tr><td>11</td><td>稟賦效應</td><td>對倉位有感情</td><td>倉位是數字，不認識你</td></tr>
+<tr><td>12</td><td>近因偏誤</td><td>過度參考最近經驗</td><td>看長期統計，不看上次</td></tr>
+<tr><td>13</td><td>控制錯覺</td><td>以為手動比系統好</td><td>永遠掛止損單</td></tr>
+<tr><td>14</td><td>結果偏誤</td><td>用結果評價決策</td><td>好過程 > 好結果</td></tr>
+<tr><td>15</td><td>現狀偏誤</td><td>不想動就是不動</td><td>不動也是選擇</td></tr>
+</table>
+</div>
+
+<div class="success-box" style="margin-top:24px;">
+<strong>最終提醒：</strong>這些規則不是「知道就好」，是要「做到才算」。建議：把 5 秒鐘檢查列印出來貼在螢幕旁邊。每次開倉前用手指一條一條指過去確認。當它變成反射動作，你就贏了。
+</div>
+</div><!-- tab5 -->
+
+<footer style="margin-top:32px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
+  <p>交易認知陷阱 — 15 個致命偏誤 + 30 題情境訓練 | 內容僅供學習參考，不構成投資建議</p>
+  <p style="margin-top:4px;">認知偏誤是人類天性，需要系統性規則與反覆練習才能有效規避</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Tab switching
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+
+  // Quiz logic
+  let score = 0;
+  let answered = 0;
+  const totalQuestions = 30;
+  const quizCards = document.querySelectorAll('.quiz-card');
+
+  quizCards.forEach(card => {
+    const correctAnswer = card.getAttribute('data-correct');
+    const options = card.querySelectorAll('.options li');
+    const explanation = card.querySelector('.explanation');
+
+    options.forEach(option => {
+      option.addEventListener('click', function() {
+        // Prevent double answering
+        if (card.classList.contains('answered')) return;
+        card.classList.add('answered');
+        answered++;
+
+        const selected = this.getAttribute('data-value');
+
+        // Mark all options as disabled
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        if (selected === correctAnswer) {
+          this.classList.add('correct');
+          score++;
+        } else {
+          this.classList.add('wrong');
+          // Highlight correct answer
+          options.forEach(opt => {
+            if (opt.getAttribute('data-value') === correctAnswer) {
+              opt.classList.add('correct');
+            }
+          });
+        }
+
+        // Show explanation
+        explanation.classList.add('show');
+
+        // Check if all answered
+        if (answered === totalQuestions) {
+          showFinalScore();
+        }
+      });
+    });
+  });
+
+  function showFinalScore() {
+    const panels = [document.getElementById('scorePanelTop'), document.getElementById('scorePanelBottom')];
+    const nums = [document.getElementById('scoreNumTop'), document.getElementById('scoreNumBottom')];
+    const msgs = [document.getElementById('scoreMsgTop'), document.getElementById('scoreMsgBottom')];
+
+    let message = '';
+    if (score >= 25) {
+      message = '優秀！你知道該怎麼做。問題只在執行。設系統規則強制自己遵守。';
+    } else if (score >= 18) {
+      message = '尚可。部分陷阱你仍會落入。標記錯的題，每天看一次。';
+    } else {
+      message = '危險！直覺會讓你虧錢。暫停交易，先把這 30 題練到 25+ 再回來。';
+    }
+
+    panels.forEach(panel => { panel.style.display = 'block'; });
+    nums.forEach(num => { num.textContent = score; });
+    msgs.forEach(msg => { msg.textContent = message; });
+  }
+
+  // Make resetQuiz global
+  window.resetQuiz = function() {
+    score = 0;
+    answered = 0;
+
+    quizCards.forEach(card => {
+      card.classList.remove('answered');
+      const options = card.querySelectorAll('.options li');
+      options.forEach(opt => {
+        opt.classList.remove('correct', 'wrong', 'disabled');
+      });
+      const explanation = card.querySelector('.explanation');
+      explanation.classList.remove('show');
+    });
+
+    document.getElementById('scorePanelTop').style.display = 'none';
+    document.getElementById('scorePanelBottom').style.display = 'none';
+
+    // Scroll to top of quiz
+    document.getElementById('tab4').scrollIntoView({ behavior: 'smooth' });
+  };
+});
+</script>
+
 </body>
 </html>
