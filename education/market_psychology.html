@@ -1518,7 +1518,7 @@ code {
 <!-- ==================== TAB 6: 互動測驗 ==================== -->
 <div class="tab-content" id="tab6">
 <h2 class="section-title">互動測驗</h2>
-<p style="color:var(--text2); margin-bottom:20px;">測試你對市場心理學和主力行為的理解。共 25 題，涵蓋所有章節。</p>
+<p style="color:var(--text2); margin-bottom:20px;">測試你對市場心理學和主力行為的理解。共 60 題，涵蓋所有章節。選擇答案後點擊「提交答案」查看結果。</p>
 
 <div class="quiz-section" id="quizContainer">
 
@@ -1795,6 +1795,391 @@ code {
     <label><input type="radio" name="q25" value="d"> D. 設極緊密的止損，被掃了再進</label>
   </div>
   <div class="explanation">最明顯的位置（整數關口、前低/前高正下/上方）是止損密集區 = 主力獵殺的目標。偏移策略: 如果明顯止損位在 $60,000 → 放在 $59,200。或用時間止損: X 小時內沒按預期走就退出。不設止損（C）是最危險的，極緊止損（D）則保證被掃。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q26. 某日 CPI 數據公布前 30 分鐘，市場突然大幅下殺 1.5%，成交量暴增。最可能的解讀是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q26" value="a"> A. 有人提前知道 CPI 會超預期，正在做空</label>
+    <label><input type="radio" name="q26" value="b"> B. 純粹的技術面崩潰，與 CPI 無關</label>
+    <label><input type="radio" name="q26" value="c"> C. 主力在數據公布前清洗槓桿多頭，製造流動性以便在數據後佈局</label>
+    <label><input type="radio" name="q26" value="d"> D. 散戶恐慌性提前出場，應該跟隨賣出</label>
+  </div>
+  <div class="explanation">重大數據公布前的異常波動通常是主力在清洗槓桿倉位。目的：觸發多頭止損、獲取流動性、在數據公布後以更好的價位建倉。提前洩露雖然存在但較少見，更常見的是流動性獵殺。正確反應：不追跌，等數據公布後觀察真正方向。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q27. FOMC 利率決議公布，降息 25bp 完全符合市場預期（CME FedWatch 97%），但 SPY 仍然跌了 2%。最可能原因是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q27" value="a"> A. 點陣圖或記者會中暗示未來路徑比預期更鷹派</label>
+    <label><input type="radio" name="q27" value="b"> B. 市場對降息不滿意，想要降 50bp</label>
+    <label><input type="radio" name="q27" value="c"> C. 純粹的「sell the news」效應</label>
+    <label><input type="radio" name="q27" value="d"> D. 做市商的隨機操作</label>
+  </div>
+  <div class="explanation">單次降息已 priced in（97%），市場不會因為「符合預期」而大幅波動。真正驅動市場的是「未來路徑的改變」——點陣圖顯示的未來降息次數或記者會中 Powell 的措辭暗示。「路徑比決議更重要」是 FOMC 交易的核心原則。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q28. 某知名 KOL 在 Twitter 上喊單「NVDA 下週一定漲到 $200！全力做多！」他的粉絲有 50 萬人。你的正確反應是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q28" value="a"> A. 立即跟單，50 萬粉絲代表他一定很準</label>
+    <label><input type="radio" name="q28" value="b"> B. 立即做空，因為 KOL 一定是錯的</label>
+    <label><input type="radio" name="q28" value="c"> C. 等他公開持倉證據後再決定</label>
+    <label><input type="radio" name="q28" value="d"> D. 看他的邏輯而非結論，並考慮他可能已經建倉需要你當接盤者</label>
+  </div>
+  <div class="explanation">KOL 喊單的利益衝突：他可能已經有倉位，需要追隨者的買入來推動價格。正確做法：看邏輯不看結論、考慮利益衝突、量化追蹤其歷史勝率。50 萬粉絲不代表準確率，只代表行銷能力。有倉位的人不會叫你賣。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q29. 連續三天的新聞標題都是「AI 泡沫即將破裂」，但 NVDA 價格並沒有跌、反而小幅上漲。這代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q29" value="a"> A. 新聞是對的，只是時間還沒到，應該做空</label>
+    <label><input type="radio" name="q29" value="b"> B. 利空不跌 = 強勢信號，市場已消化負面情緒，可能續漲</label>
+    <label><input type="radio" name="q29" value="c"> C. 新聞和價格完全無關</label>
+    <label><input type="radio" name="q29" value="d"> D. 是主力在製造假象，實際上即將暴跌</label>
+  </div>
+  <div class="explanation">「利空不跌」是市場語言中最有力的信號之一。當負面消息已經充分曝光但價格拒絕下跌，代表賣壓已經被吸收、持有者堅定不動搖。同理，「利多不漲」代表買盤枯竭。價格對消息的反應比消息本身更重要。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q30. SPY 連漲 8 天創歷史新高，AAII 看多比例達到 65%，Fear & Greed 指數 88。CNN 報導「永遠的牛市」。同時你注意到成交量逐日遞減。最適合的操作是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q30" value="a"> A. 加碼做多，趨勢是你的朋友</label>
+    <label><input type="radio" name="q30" value="b"> B. 立即全部做空</label>
+    <label><input type="radio" name="q30" value="c"> C. 逐步減倉、收緊止損、不再加碼。等待明確反轉信號再考慮做空</label>
+    <label><input type="radio" name="q30" value="d"> D. 維持倉位不動，因為歷史新高後通常會續創新高</label>
+  </div>
+  <div class="explanation">多個頂部信號共振：AAII 看多 >60%、Fear & Greed 極貪婪、媒體「永遠的牛市」敘事、量價背離（價漲量縮）。但「牛市可以貪婪更久」，不應貿然做空。正確做法：減倉保護利潤、收緊止損、等待明確反轉信號（K 線形態 + 放量下跌）再考慮反向。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q31. 某幣種在 Discord 群組中被瘋狂討論，社群新增會員數 24 小時內增長 300%，Google Trends 搜尋量暴增。同時你發現這個幣的市值只有 $50M 且只上了一家小交易所。這最可能是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q31" value="a"> A. Pump & Dump 的拉升階段，你很可能是被設計好的出貨對象</label>
+    <label><input type="radio" name="q31" value="b"> B. 被低估的優質項目終於被發現</label>
+    <label><input type="radio" name="q31" value="c"> C. 正常的市場發現過程</label>
+    <label><input type="radio" name="q31" value="d"> D. 機構在大量買入的信號</label>
+  </div>
+  <div class="explanation">所有 Pump & Dump 特徵都符合：小幣（市值小容易操控）+ 突然的社群炒作 + 無基本面支撐 + 只在小交易所（流動性差更容易操縱）。社群的「瘋狂討論」是人為製造的 FOMO，目的是吸引散戶在高位接盤。當你在社群「發現」它時，操縱者已經準備出貨了。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q32. 川普突然在 Truth Social 發文讚揚比特幣：「比特幣是偉大的美國創新！」BTC 在 10 分鐘內漲了 5%。你在這之前沒有倉位。正確反應是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q32" value="a"> A. 立即市價追多，政治支持是長期利好</label>
+    <label><input type="radio" name="q32" value="b"> B. 立即做空，因為第一反應一定會回撤</label>
+    <label><input type="radio" name="q32" value="c"> C. 忽略，因為政治人物的話沒有影響</label>
+    <label><input type="radio" name="q32" value="d"> D. 不追漲。等回調後在支撐位附近評估是否入場，判斷是否有後續政策跟進</label>
+  </div>
+  <div class="explanation">Rule 1：第一反應通常過度。5% 的即時漲幅已經消化了大部分短期利好。追漲的風險報酬比極差。正確做法：不追漲、等回調、評估是否只是口頭言論還是有實質政策（如加密友好立法）。如果只是嘴巴說說沒有政策跟進，漲幅會逐漸回吐。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q33. 一個股票連跌 5 天共跌 15%，今天突然反彈 4%，成交量是平均的 0.6 倍。這個反彈是否可靠？</h4>
+  <div class="options">
+    <label><input type="radio" name="q33" value="a"> A. 可靠，反彈代表底部確認</label>
+    <label><input type="radio" name="q33" value="b"> B. 高度可疑——量縮反彈是 Dead Cat Bounce 的典型特徵，很可能續跌</label>
+    <label><input type="radio" name="q33" value="c"> C. 需要看基本面才能判斷</label>
+    <label><input type="radio" name="q33" value="d"> D. 4% 反彈幅度太小，不值得關注</label>
+  </div>
+  <div class="explanation">Dead Cat Bounce 的典型特徵：大跌後的技術性反彈 + 成交量萎縮（0.6 倍均量 = 沒有真實買盤支撐）。真正的底部反轉需要：放量反彈 + 守住前低 + 後續價格不再創新低。量縮反彈大概率是空頭回補的技術性反彈，不是趨勢反轉。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q34. 泡沫的「狂熱階段」(Mania Phase) 中，群眾最典型的特徵是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q34" value="a"> A. 大量討論風險管理和止損設置</label>
+    <label><input type="radio" name="q34" value="b"> B. 投資者之間激烈辯論多空</label>
+    <label><input type="radio" name="q34" value="c"> C. 「這次不一樣」的信念、無視所有風險指標、用借貸和槓桿 all-in</label>
+    <label><input type="radio" name="q34" value="d"> D. 成交量逐漸萎縮，市場參與者減少</label>
+  </div>
+  <div class="explanation">泡沫狂熱階段的群眾特徵：「這次不一樣」（否認歷史規律）、風險被視為不存在、借錢/加槓桿買入、嘲笑看空者。這正是派發期聰明錢利用來出貨的環境。當市場參與者不再討論風險，風險就是最大的。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q35. 泡沫的「否認階段」(Denial Phase) 發生在什麼時候？群眾的行為是什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q35" value="a"> A. 價格已經從高點下跌 20-30%，但群眾認為「只是健康回調」、「逢低加碼」</label>
+    <label><input type="radio" name="q35" value="b"> B. 泡沫正在形成初期，人們否認它是泡沫</label>
+    <label><input type="radio" name="q35" value="c"> C. 價格接近底部，人們否認市場會反彈</label>
+    <label><input type="radio" name="q35" value="d"> D. 群眾否認基本面數據，只看技術面</label>
+  </div>
+  <div class="explanation">泡沫破裂後的「否認」是價格已經開始下跌但群眾拒絕承認趨勢反轉。典型行為：「這只是回調」「逢低加碼」「長期看好」。他們會用各種理由合理化持倉不動。這個階段是散戶從「狂熱」走向「恐慌」的過渡期。承認錯誤的心理門檻極高。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q36. FOMC 會議前一天，市場窄幅震盪，成交量極低。這代表什麼？你應該怎麼做？</h4>
+  <div class="options">
+    <label><input type="radio" name="q36" value="a"> A. 市場很平靜，適合做區間交易</label>
+    <label><input type="radio" name="q36" value="b"> B. 代表市場認為 FOMC 不重要</label>
+    <label><input type="radio" name="q36" value="c"> C. 應該在這個低波動時建立大倉位等結果</label>
+    <label><input type="radio" name="q36" value="d"> D. 群眾在觀望，流動性被撤走。不宜建立新方向性倉位，等結果出來再行動</label>
+  </div>
+  <div class="explanation">重大事件前的低波動低量 = 做市商和機構撤回流動性等待結果。這個環境下：spread 加大（交易成本高）、容易被掃止損（流動性薄）、方向不明確。正確做法：不建新倉、等結果公布後觀察反應方向再入場。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q37. 市場敘事從「AI 革命」突然轉為「AI 泡沫」，NVDA 一週跌 12%。但你觀察到大型機構的 13F 報告顯示他們並沒有減持 AI 股。正確的解讀是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q37" value="a"> A. 機構反應遲鈍，他們很快也會拋售</label>
+    <label><input type="radio" name="q37" value="b"> B. 敘事轉變可能是短期散戶恐慌，機構仍看好中長期。可能是洗盤階段</label>
+    <label><input type="radio" name="q37" value="c"> C. 13F 報告滯後太久沒有參考價值</label>
+    <label><input type="radio" name="q37" value="d"> D. 機構被套牢了不敢賣</label>
+  </div>
+  <div class="explanation">敘事轉變的速度往往快於基本面變化。當媒體敘事突然轉空但機構倉位不動，更可能是：短期情緒過度反應 + 散戶恐慌拋售 + 主力洗盤吸籌。13F 雖有滯後（45天）但結合其他信號（期權流、暗池交易）可以判斷機構是否真的在出場。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q38. 成交量突然放大 3 倍但價格幾乎沒動（漲跌不到 0.5%）。這種「天量滯漲/滯跌」通常代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q38" value="a"> A. 有大量換手正在發生——可能是主力在出貨給散戶，或散戶在割肉給主力</label>
+    <label><input type="radio" name="q38" value="b"> B. 市場平衡，多空力量均等，趨勢將持續</label>
+    <label><input type="radio" name="q38" value="c"> C. 做市商在做正常的流動性操作</label>
+    <label><input type="radio" name="q38" value="d"> D. Wash Trading，完全忽略</label>
+  </div>
+  <div class="explanation">量價背離（量放大但價不動）= 大量籌碼在轉手但買賣力量暫時平衡。若出現在高位 = 主力出貨（派發期特徵：天量但價格滯漲）。若出現在低位 = 可能是底部換手（累積期）。需要結合位置判斷是出貨還是吸籌。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q39. 社群中某知名交易員公開他的持倉：「我 3 倍槓桿做多 QQQ，目標 $500！」。兩天後 QQQ 果然上漲 2%。但你注意到他沒有更新持倉狀態。你應該想到什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q39" value="a"> A. 他判斷正確，可以信任跟單</label>
+    <label><input type="radio" name="q39" value="b"> B. 2% 漲幅太小，等漲更多再跟</label>
+    <label><input type="radio" name="q39" value="c"> C. 他可能已經在這 2% 漲幅中出場了，公開喊單是為了製造買盤讓自己出貨</label>
+    <label><input type="radio" name="q39" value="d"> D. 他一定還持有，因為目標是 $500</label>
+  </div>
+  <div class="explanation">KOL 公開持倉的利益衝突：公開喊多 → 追隨者買入推動價格 → 他在追隨者的買入中出貨。不更新持倉 = 可能已經出場但不想告訴你（怕被質疑）。有倉位的人不會叫你賣。這就是為什麼要「看邏輯不看結論」，並且永遠假設公開喊單者有利益衝突。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q40. 市場大跌 5%，你打開新聞看到標題「全球金融危機重演！」。你查看 VIX 發現是 28，AAII 看空比例 45%。你的判斷是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q40" value="a"> A. 確實是危機開始，立即清倉</label>
+    <label><input type="radio" name="q40" value="b"> B. 新聞標題是噪音。VIX 28 和 AAII 看空 45% 雖偏恐慌但未達極端，還不是恐慌性底部的信號</label>
+    <label><input type="radio" name="q40" value="c"> C. 立即抄底，因為新聞總是錯的</label>
+    <label><input type="radio" name="q40" value="d"> D. VIX 28 就是極端恐慌了，應該全力做多</label>
+  </div>
+  <div class="explanation">噪音 vs 信號的判斷：新聞標題是為了吸引點擊（恐慌標題 = 更多點擊）。量化數據：VIX 28 是「緊張」但非「恐慌」（>30 才算恐慌，歷史極端 >40）；AAII 看空 45% 偏悲觀但未到極端（需要 >50-55%）。結論：不是噪音也不是信號，處於「關注但不行動」的灰色地帶。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q41. CPI 數據公布：核心 CPI 年率 3.8%，低於預期的 3.9%。市場第一反應漲 1%，但 30 分鐘後全部回吐並開始下跌。這個「二次反應」告訴你什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q41" value="a"> A. 市場在消化數據，稍後會繼續漲</label>
+    <label><input type="radio" name="q41" value="b"> B. 演算法出了問題，不用理會</label>
+    <label><input type="radio" name="q41" value="c"> C. CPI 數據被市場認為不重要</label>
+    <label><input type="radio" name="q41" value="d"> D. 機構在理性評估後認為這個數據不足以改變趨勢。二次反應方向（下跌）是真正的市場共識</label>
+  </div>
+  <div class="explanation">Rule 2 的實踐：第一波反應（漲 1%）= 演算法 + 散戶情緒反應（數據 beat = 買）。第二波反應（回吐下跌）= 機構深入分析後的動作（可能認為 3.8% 仍然太高、或者 beat 幅度太小）。永遠相信二次反應的方向。第一反應是噪音，第二反應是信號。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q42. 你觀察到一個「明牌」：某大型投資機構公開宣布買入 5% 的某公司股份。散戶紛紛跟買。但你知道 13F 報告有 45 天延遲。正確的思考方式是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q42" value="a"> A. 機構建倉已經完成，公開消息時他們的平均成本遠低於現價。散戶跟買是在幫他們抬轎</label>
+    <label><input type="radio" name="q42" value="b"> B. 機構看好就跟買，他們的研究能力比散戶強</label>
+    <label><input type="radio" name="q42" value="c"> C. 5% 持股量代表長期看好，可以安心跟進</label>
+    <label><input type="radio" name="q42" value="d"> D. 消息是假的，不可能公開</label>
+  </div>
+  <div class="explanation">機構 vs 散戶的信息不對稱：當你「看到」機構持倉時，他們的建倉已經完成（45天前甚至更早）。他們的平均成本遠低於你的買入價。更重要的是：當機構「讓你知道」他們的持倉，可能已經準備利用你的跟買來出貨了。「明牌」往往是派發的開始。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q43. Polymarket 上「美國 2025 年會進入經濟衰退」的機率為 35%。同時 SPY 在歷史高點附近。這個不一致代表什麼交易機會？</h4>
+  <div class="options">
+    <label><input type="radio" name="q43" value="a"> A. 沒有不一致，市場永遠是對的</label>
+    <label><input type="radio" name="q43" value="b"> B. 應該立即做空 SPY，因為衰退機率太高</label>
+    <label><input type="radio" name="q43" value="c"> C. 股市可能還沒有完全定價 35% 的衰退風險。若衰退真的發生，下跌空間大於目前價格反映的</label>
+    <label><input type="radio" name="q43" value="d"> D. Polymarket 一定是錯的，SPY 在高點代表不會衰退</label>
+  </div>
+  <div class="explanation">預測市場和金融市場的「定價不一致」= 潛在套利機會。如果衰退機率真的是 35% 但 SPY 在歷史高點（幾乎沒有定價衰退風險），那麼買入 Put（看跌期權）的預期回報可能是正的——因為一旦衰退成真，跌幅將遠大於 Put 的成本。這是找 mispricing 的實例。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q44. 某政治人物（非川普）在國會聽證會上突然抨擊某大型科技公司，股價即時跌 3%。你查看 Polymarket，「該公司被反壟斷拆分」的機率只有 8%。你的判斷是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q44" value="a"> A. 3% 跌幅還不夠，會繼續跌</label>
+    <label><input type="radio" name="q44" value="b"> B. 市場第一反應過度。Polymarket 顯示實質風險很低（8%），跌幅大概率會回復</label>
+    <label><input type="radio" name="q44" value="c"> C. 政治風險不可預測，應該清倉觀望</label>
+    <label><input type="radio" name="q44" value="d"> D. Polymarket 機率這麼低代表不用關注</label>
+  </div>
+  <div class="explanation">用 Polymarket 區分「口頭威脅」vs「實質政策風險」：拆分機率只有 8% 代表市場共識認為這只是政治表態。3% 跌幅 = 第一反應過度（演算法 + 散戶恐慌）。歷史模式：政治聽證會抨擊 → 股價短期下跌 → 沒有後續立法行動 → 價格回復。但仍需監控機率是否上升。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q45. 大盤持續上漲中，你發現「利多消息公布後股價反而下跌」的現象越來越多。這暗示什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q45" value="a"> A. 市場正從上升期進入派發期。好消息已被充分定價，買盤枯竭</label>
+    <label><input type="radio" name="q45" value="b"> B. 隨機現象，與大盤趨勢無關</label>
+    <label><input type="radio" name="q45" value="c"> C. 消息品質不夠好，不算真正利多</label>
+    <label><input type="radio" name="q45" value="d"> D. 做市商在打壓價格</label>
+  </div>
+  <div class="explanation">「利多不漲」是市場結構轉弱的核心信號。在上升趨勢尾聲，所有看多的人已經買入了（沒有新買家），所以好消息無法推動進一步上漲。當這個現象頻繁出現，代表市場可能正從 Markup 進入 Distribution。這是減倉的信號而非做空的信號（需要更多確認）。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q46. Trump 在社群媒體連發三條推文攻擊 Fed 主席，語氣一次比一次激烈。市場已經跌了 1%。根據他的歷史模式，你如何判斷這是「真威脅」還是「施壓工具」？</h4>
+  <div class="options">
+    <label><input type="radio" name="q46" value="a"> A. 三連發代表他很認真，會真的行動</label>
+    <label><input type="radio" name="q46" value="b"> B. 看他的措辭是否提到具體行動（如「開除」）</label>
+    <label><input type="radio" name="q46" value="c"> C. 看 Polymarket 上「Fed Chair 被開除」的機率</label>
+    <label><input type="radio" name="q46" value="d"> D. B 和 C 都需要檢查。具體行動的措辭 + 預測市場機率上升 = 真威脅；純粹情緒發洩 + 機率不動 = 施壓工具</label>
+  </div>
+  <div class="explanation">區分「真政策」vs「談判姿態」需要多重確認：1) 措辭是否包含具體可執行的行動；2) 是否有法律路徑（總統能否直接開除 Fed Chair？實際上不能）；3) Polymarket 機率是否跟隨上升。如果只是情緒發洩且機率不動，大概率是施壓工具，48h 內會軟化。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q47. 你觀察到過去一個月，每次 VIX 跌到 12 以下就會有一波快速的市場回調。現在 VIX 又來到 11.5。這代表什麼市場心理？</h4>
+  <div class="options">
+    <label><input type="radio" name="q47" value="a"> A. 市場非常健康，波動率低代表穩定</label>
+    <label><input type="radio" name="q47" value="b"> B. 極度自滿。VIX < 12 代表市場沒有在定價任何風險，一旦意外出現，反應會特別劇烈</label>
+    <label><input type="radio" name="q47" value="c"> C. 應該立即做空 SPY</label>
+    <label><input type="radio" name="q47" value="d"> D. 低 VIX 會永遠持續下去</label>
+  </div>
+  <div class="explanation">VIX < 15 = 自滿，VIX < 12 = 極度自滿。當市場完全沒有在定價風險時，任何小的意外都會造成過度反應（因為沒有人做了對沖）。這不代表要立即做空（低 VIX 可以維持很久），但代表「保護性期權」非常便宜——是買入 Put 對沖的好時機。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q48. 在恐慌性拋售中，你如何判斷「抄底時機」已經接近？以下哪個組合最可靠？</h4>
+  <div class="options">
+    <label><input type="radio" name="q48" value="a"> A. 新聞開始出現正面報導</label>
+    <label><input type="radio" name="q48" value="b"> B. KOL 開始喊抄底</label>
+    <label><input type="radio" name="q48" value="c"> C. VIX 飆升到 40+ 後開始下降 + 放量長下影線 + 壞消息出來但價格不再創新低</label>
+    <label><input type="radio" name="q48" value="d"> D. 股價跌到你覺得「很便宜」的價位</label>
+  </div>
+  <div class="explanation">恐慌底部的技術確認需要多重信號共振：1) VIX spike 後開始回落（恐慌情緒見頂）；2) 放量長下影線（有人在底部大量承接）；3) 利空不跌（壞消息已被完全消化）。正面新聞（A）通常出現得太晚；KOL 喊抄底（B）可能太早；「感覺便宜」（D）是主觀偏見，沒有量化依據。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q49. 某加密貨幣在 24 小時內暴跌 40%，Twitter 上全是「這個項目已死」的貼文。但你查看鏈上數據發現：大型錢包（鯨魚）在暴跌期間淨買入。正確的解讀是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q49" value="a"> A. 散戶恐慌拋售正好提供了聰明錢需要的流動性。鯨魚在底部吸籌是看好信號</label>
+    <label><input type="radio" name="q49" value="b"> B. 鯨魚也會錯，不能作為判斷依據</label>
+    <label><input type="radio" name="q49" value="c"> C. 40% 跌幅太大，任何買入都是接刀</label>
+    <label><input type="radio" name="q49" value="d"> D. 鏈上數據可以造假</label>
+  </div>
+  <div class="explanation">鏈上數據的優勢：資金流向不會說謊（區塊鏈是公開透明的）。當散戶恐慌拋售（社群全面看空）但鯨魚在淨買入 = 典型的「累積期」開始。鯨魚用散戶的恐慌作為流動性來建倉。但這不代表底部已確認——需要觀察後續價格是否守住，鯨魚的建倉可能需要數週。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q50. 你在一個交易 Discord 群中，管理員宣布：「我們將在今晚 8 點統一買入 XXX 幣，大家一起拉盤！」。你應該？</h4>
+  <div class="options">
+    <label><input type="radio" name="q50" value="a"> A. 提前買入等待拉盤</label>
+    <label><input type="radio" name="q50" value="b"> B. 準時 8 點跟買</label>
+    <label><input type="radio" name="q50" value="c"> C. 8 點後看看漲多少再決定</label>
+    <label><input type="radio" name="q50" value="d"> D. 不參與。管理員和內圈人已經提前建倉，「統一買入」是讓你當出貨對象</label>
+  </div>
+  <div class="explanation">這是典型的 Pump & Dump 組織模式：內圈人提前建倉 → 公告「統一拉盤」時間 → 散戶跟買推高價格 → 內圈人在高位出貨。無論你提前買（A）、準時買（B）、還是晚買（C），你都是被設計好的出貨對象。唯一正確選擇是不參與。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q51. 你注意到近一個月來，市場的主要敘事從「通膨失控」轉為「軟著陸」。但數據面並沒有顯著變化（CPI 只微幅下降）。這種「敘事轉變」告訴你什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q51" value="a"> A. 數據一定在改善，只是你沒注意到</label>
+    <label><input type="radio" name="q51" value="b"> B. 敘事轉變往往先於數據轉變。市場在「選擇」看好的故事來解讀中性數據，代表風險偏好在上升</label>
+    <label><input type="radio" name="q51" value="c"> C. 敘事隨機變化，沒有交易意義</label>
+    <label><input type="radio" name="q51" value="d"> D. 代表通膨問題已經完全解決</label>
+  </div>
+  <div class="explanation">市場敘事（narrative）的轉變是情緒的領先指標。當同樣的數據開始被「正面解讀」（之前 CPI 3.8% = 通膨失控，現在 CPI 3.7% = 軟著陸），代表市場的risk appetite在上升。敘事轉變 → 資金流向改變 → 價格跟隨。識別敘事轉變比分析數據本身更重要。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q52. Polymarket 上「Trump 會在任期內簽署加密友好法案」的機率從上週的 45% 跳升到 72%。同時 BTC 只漲了 2%。這代表？</h4>
+  <div class="options">
+    <label><input type="radio" name="q52" value="a"> A. BTC 已經充分反映了這個利好</label>
+    <label><input type="radio" name="q52" value="b"> B. Polymarket 被操縱了，忽略它</label>
+    <label><input type="radio" name="q52" value="c"> C. BTC 可能還沒有完全定價這個機率變化，存在做多的 edge</label>
+    <label><input type="radio" name="q52" value="d"> D. 加密法案對 BTC 價格沒有影響</label>
+  </div>
+  <div class="explanation">預測市場機率大幅上升（+27%）但金融市場反應微弱（+2%）= 定價不一致 = 潛在套利機會。如果法案真的通過，BTC 的反應應該遠大於 2%。這個不一致可能是因為：1) 金融市場還沒有注意到這個變化；2) 市場需要時間消化。利用這個 gap 建倉是找 edge 的方式。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q53. 在一次大跌中，你觀察到 Put/Call Ratio 飆升到 1.8（歷史極值），但 VIX 只有 25（偏高但不極端）。這種「分歧」代表什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q53" value="a"> A. 散戶在瘋狂買 Put 做保護（PCR 高），但機構認為波動不會持續太久（VIX 不極端）。散戶可能過度恐慌</label>
+    <label><input type="radio" name="q53" value="b"> B. 兩個指標矛盾，無法使用</label>
+    <label><input type="radio" name="q53" value="c"> C. VIX 壞了，應該看 PCR</label>
+    <label><input type="radio" name="q53" value="d"> D. 即將出現更大的暴跌</label>
+  </div>
+  <div class="explanation">PCR 和 VIX 的分歧提供額外信息：PCR 高 = 散戶在恐慌買 Put（情緒極端）；VIX 相對克制 = 機構/做市商沒有大幅推高隱含波動率（他們不認為會持續下跌）。這種分歧往往暗示散戶過度恐慌，是逆向做多的支持信號（但仍需技術面確認）。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q54. 你朋友告訴你：「我聽說某大佬已經進場了，這是明牌，趕快跟！」在決定跟不跟之前，你最應該問的問題是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q54" value="a"> A. 大佬是誰？名氣越大越可信</label>
+    <label><input type="radio" name="q54" value="b"> B. 什麼時候進場的？最近進的就跟</label>
+    <label><input type="radio" name="q54" value="c"> C. 投了多少錢？大注就跟</label>
+    <label><input type="radio" name="q54" value="d"> D. 這個消息到達我時已經過了幾手？當我聽到時，市場可能已經定價了。我是接盤者還是跟隨者？</label>
+  </div>
+  <div class="explanation">信息傳遞鏈：大佬進場 → 內圈知道 → 外圈知道 → 你朋友知道 → 你知道。每傳遞一層，市場已經被推高一些。當消息到達你的時候，你的買入成本遠高於源頭的成本。「明牌」到你手上時，你很可能已經是最後一棒。機構 vs 散戶的信息不對稱是永恆的。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q55. Dead Cat Bounce 和真正的底部反轉，最關鍵的區別是什麼？</h4>
+  <div class="options">
+    <label><input type="radio" name="q55" value="a"> A. 反彈幅度——超過 10% 就是真反轉</label>
+    <label><input type="radio" name="q55" value="b"> B. 成交量和後續行為——真反轉放量且回測不破前低；Dead Cat Bounce 量縮且很快創新低</label>
+    <label><input type="radio" name="q55" value="c"> C. 新聞報導的語氣</label>
+    <label><input type="radio" name="q55" value="d"> D. 反彈的速度——越快越假</label>
+  </div>
+  <div class="explanation">區分 Dead Cat Bounce vs 真反轉的核心：1) 成交量——真反轉必須放量（代表真實買盤進入），DCB 通常量縮（只是空頭回補）；2) 後續行為——真反轉回測前低時守住不破，DCB 會很快創出新低。反彈幅度本身不是可靠指標（有些 DCB 可以反彈 15-20%）。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q56. 泡沫的「恐慌階段」(Panic Phase) 中，以下哪個現象最能確認你正處於此階段？</h4>
+  <div class="options">
+    <label><input type="radio" name="q56" value="a"> A. 分析師開始下調目標價</label>
+    <label><input type="radio" name="q56" value="b"> B. 一些投資者開始虧損</label>
+    <label><input type="radio" name="q56" value="c"> C. 不計價格的拋售（市價單暴增）、「永遠不碰了」的宣言、交易所出現硬體問題（流量過大）</label>
+    <label><input type="radio" name="q56" value="d"> D. 價格跌了 20%</label>
+  </div>
+  <div class="explanation">恐慌階段的終極特徵是「投降性拋售」(Capitulation)：不計價格地賣出（只想離開市場）、社群中「永遠不碰了」的宣言爆發、交易量大到交易所 crash。這代表最後一批持有者正在離場——也就是說，賣壓即將枯竭。分析師下調目標價（A）和 20% 跌幅（D）可以出現在任何階段。</div>
+</div>
+
+<div class="quiz-q" data-correct="a">
+  <h4>Q57. 你的交易計劃是在 SPY $420 做多。但在你下單前，一個你信任的 KOL 發文說「SPY 要跌到 $380」。你應該怎麼做？</h4>
+  <div class="options">
+    <label><input type="radio" name="q57" value="a"> A. 回顧自己的分析邏輯是否還成立。如果你的系統信號沒變，按原計畫執行</label>
+    <label><input type="radio" name="q57" value="b"> B. 聽從 KOL 放棄計畫</label>
+    <label><input type="radio" name="q57" value="c"> C. 改為在 $380 做多</label>
+    <label><input type="radio" name="q57" value="d"> D. 同時做多和做空對沖</label>
+  </div>
+  <div class="explanation">交易紀律的核心：你的計畫基於你的系統和邏輯。KOL 的觀點是「參考」而非「指令」。如果你的分析邏輯沒有被 KOL 的論點推翻，就按原計畫執行。頻繁因為外部噪音改變計畫 = 沒有系統 = 情緒化交易。唯一讓你改變計畫的應該是「新的數據推翻了你的邏輯」。</div>
+</div>
+
+<div class="quiz-q" data-correct="d">
+  <h4>Q58. 一個政治人物在選舉前 3 個月發表對市場不利的政策聲明。根據選舉週期心理學，最可能的結局是？</h4>
+  <div class="options">
+    <label><input type="radio" name="q58" value="a"> A. 政策會立即執行，市場會持續下跌</label>
+    <label><input type="radio" name="q58" value="b"> B. 政策力度會逐步升級</label>
+    <label><input type="radio" name="q58" value="c"> C. 與選舉無關，純看政策內容</label>
+    <label><input type="radio" name="q58" value="d"> D. 選前傾向釋放利好維持市場。不利聲明大概率是姿態，真正的負面政策不太可能在選前執行</label>
+  </div>
+  <div class="explanation">選舉週期心理學：政治人物需要經濟表現好來贏得選舉。選前 6 個月更少推出真正的負面政策，更多釋放利好。即使有不利聲明，也大概率是「對外施壓的姿態」而非「真正會執行的政策」。市場的短期恐慌往往是多餘的。</div>
+</div>
+
+<div class="quiz-q" data-correct="b">
+  <h4>Q59. 你使用 Polymarket 做交易決策時，以下哪個做法是錯誤的？</h4>
+  <div class="options">
+    <label><input type="radio" name="q59" value="a"> A. 用機率快速變化作為「有人知道什麼」的信號</label>
+    <label><input type="radio" name="q59" value="b"> B. 把 60% 的機率當作「一定會發生」來全倉押注</label>
+    <label><input type="radio" name="q59" value="c"> C. 比較預測市場定價和金融市場定價之間的差異</label>
+    <label><input type="radio" name="q59" value="d"> D. 在機率處於 30-70% 區間時關注，因為不確定性最大</label>
+  </div>
+  <div class="explanation">60% 的機率意味著 40% 的機率不會發生——這接近拋硬幣。把它當作「一定會發生」全倉押注是嚴重的概率思維錯誤。正確使用 Polymarket：把機率當作下注大小的參考（機率越高 → 已 priced in → edge 越小）、找不一致、追蹤變化方向。永遠用部位管理反映不確定性。</div>
+</div>
+
+<div class="quiz-q" data-correct="c">
+  <h4>Q60. 綜合本章所有知識，作為散戶最核心的「生存法則」是哪一條？</h4>
+  <div class="options">
+    <label><input type="radio" name="q60" value="a"> A. 找到最準的 KOL 跟單</label>
+    <label><input type="radio" name="q60" value="b"> B. 使用最高倍槓桿追求最大利潤</label>
+    <label><input type="radio" name="q60" value="c"> C. 永遠問自己：「我是在提供流動性嗎？我的情緒是不是被製造出來的？」</label>
+    <label><input type="radio" name="q60" value="d"> D. 對所有消息立即反應，速度決定一切</label>
+  </div>
+  <div class="explanation">散戶虧損的根本原因是成為了「流動性提供者」——在主力需要你買的時候買（高位），在主力需要你賣的時候賣（低位）。你的恐慌和貪婪被市場結構利用。每次交易前問自己這個問題，就能避開 80% 的虧損陷阱。這不是技術分析，是生存智慧。</div>
 </div>
 
 </div>
