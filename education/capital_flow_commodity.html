@@ -4,55 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>跨資產資金流與商品供需分析 — 判斷錢流去哪裡、商品在囤積嗎？</title>
+<link rel="stylesheet" href="common.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f8fafc; --bg2: #fff; --bg3: #f1f5f9; --border: #cbd5e1;
-  --text: #0f172a; --text2: #334155; --text3: #64748b;
-  --blue: #2563eb; --blue-l: #dbeafe; --green: #16a34a; --green-l: #dcfce7;
-  --red: #dc2626; --red-l: #fee2e2; --yellow: #d97706; --yellow-l: #fef3c7;
-  --purple: #7c3aed; --purple-l: #ede9fe; --orange: #ea580c; --orange-l: #fff7ed;
-  --r: 12px; --shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh; padding: 20px; }
-.back-link { display: inline-block; margin-bottom: 16px; color: var(--blue); text-decoration: none; font-size: 14px; }
-.back-link:hover { text-decoration: underline; }
-.container { max-width: 880px; margin: 0 auto; }
-h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
-.subtitle { font-size: 15px; color: var(--text3); margin-bottom: 32px; }
-.section-title { font-size: 22px; font-weight: 700; color: var(--blue); margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--blue); }
-h3 { font-size: 17px; font-weight: 700; color: var(--text); margin: 28px 0 12px; }
-p { margin-bottom: 12px; color: var(--text2); }
-ul, ol { margin: 8px 0 16px 20px; color: var(--text2); }
-li { margin-bottom: 6px; }
-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
-th, td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
-th { background: var(--bg3); font-weight: 600; color: var(--text); }
-.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; margin: 16px 0; box-shadow: var(--shadow); }
-.insight { background: var(--blue-l); border-left: 4px solid var(--blue); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
-.warning { background: var(--red-l); border-left: 4px solid var(--red); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
-.example { background: var(--green-l); border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
-.formula { background: var(--purple-l); border: 1px solid #c4b5fd; border-radius: var(--r); padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
-.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-.tag-bull { background: var(--green-l); color: var(--green); }
-.tag-bear { background: var(--red-l); color: var(--red); }
-code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+/* Supplemental styles for this page */
+.subtitle { font-size: 15px; color: var(--text3); margin-bottom: 24px; }
+.section-title { font-size: 22px; font-weight: 700; color: var(--blue); margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--blue); }
+.formula { background: var(--purple-l); border: 1px solid #c4b5fd; border-radius: var(--r); padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.8; }
 .data-source { background: var(--orange-l); border: 1px solid #fed7aa; border-radius: var(--r); padding: 12px 16px; margin: 12px 0; font-size: 13px; }
+.example { background: var(--green-l); border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+.tag-bull { background: var(--green-l); color: var(--green); }
+.tag-bear { background: var(--red-l); color: var(--red); }
 </style>
 </head>
 <body>
-<div class="container">
 
 <a href="trade_home.html" class="back-link">&larr; 回首頁</a>
 
 <h1>跨資產資金流與商品供需分析</h1>
 <p class="subtitle">判斷錢流去哪裡？商品在囤積嗎？市場泡沫有多大？— 從資金流、情緒指標到實物供需的完整框架</p>
 
-<!-- ===== PART 1: CROSS-ASSET FLOW ===== -->
-<h2 class="section-title">Part 1：跨資產資金流 — 錢在哪裡？</h2>
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">資金輪動</button>
+  <button class="tab-btn" data-tab="tab2">泡沫指標</button>
+  <button class="tab-btn" data-tab="tab3">商品囤積</button>
+  <button class="tab-btn" data-tab="tab4">供需斷裂</button>
+  <button class="tab-btn" data-tab="tab5">互動測驗</button>
+  <button class="tab-btn" data-tab="tab6">速查表</button>
+</nav>
+
+<!-- ==================== TAB 1: 資金輪動 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2 class="section-title">資金輪動 — 錢在哪裡？</h2>
 
 <h3>資金輪動的四大池子</h3>
 <p>全球資金永遠在四個主要池子之間輪動。判斷「錢在流向哪裡」是所有交易決策的起點。</p>
@@ -65,7 +50,7 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 <tr><td><strong>現金（貨幣基金）</strong></td><td>MMF, USDT/USDC, 活存</td><td>不確定性極高、利率高</td><td>Money Market Fund AUM</td></tr>
 </table>
 
-<div class="insight">
+<div class="highlight-box">
 <strong>核心原則：</strong>資金是零和遊戲。流入一個池子 = 流出另一個池子。如果你看到 Money Market Fund AUM 創新高 → 代表錢在場外觀望 → 這些是未來反彈的「彈藥庫」。
 </div>
 
@@ -122,13 +107,15 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 <tr><td>金漲+銅跌+股跌</td><td>滯脹：只有避險需求，工業需求崩盤</td></tr>
 </table>
 
-<div class="warning">
+<div class="warning-box">
 <strong>2026年6月的 Regime（滯脹信號）：</strong>金漲但銅跌+股跌+30Y飆升 = 典型滯脹。資金不知道去哪 → 同時流入 MMF（高利息）和黃金（避險）。BTC 出現新的「滯脹避險」角色。
 </div>
 </div>
+</div><!-- tab1 -->
 
-<!-- ===== PART 2: EQUITY BUBBLE ===== -->
-<h2 class="section-title">Part 2：股市泡沫判斷 — 大家把多少錢拿去投資？</h2>
+<!-- ==================== TAB 2: 泡沫指標 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">股市泡沫判斷 — 大家把多少錢拿去投資？</h2>
 
 <h3>家庭股票配置比例（Household Equity Allocation）</h3>
 
@@ -139,11 +126,11 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 家庭股票配置 = 股票市值 / (股票 + 債券 + 現金 + 其他金融資產)<br>
 <br>
 歷史高點對照：<br>
-• 2000年（.com泡沫峰值）：~52%<br>
-• 2007年（金融海嘯前）：~42%<br>
-• 2021年（疫情牛市峰值）：~51%<br>
-• 若 > 45% → 警戒區<br>
-• 若 > 50% → 極度泡沫區
+&bull; 2000年（.com泡沫峰值）：~52%<br>
+&bull; 2007年（金融海嘯前）：~42%<br>
+&bull; 2021年（疫情牛市峰值）：~51%<br>
+&bull; 若 > 45% → 警戒區<br>
+&bull; 若 > 50% → 極度泡沫區
 </div>
 
 <div class="data-source">
@@ -152,7 +139,7 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 
 <p><strong>為什麼有效：</strong>當家庭把太多比例放在股票 → 代表所有人都已經 All-in → 沒有新的邊際買家 → 任何負面催化都會引發拋售。</p>
 
-<div class="insight">
+<div class="highlight-box">
 <strong>如何使用：</strong>這不是 timing 工具（不能告訴你「明天跌」），而是「環境判斷」— 告訴你現在是在泡沫區還是價值區。在泡沫區應該降低倉位；在低配置區應該大膽加倉。
 </div>
 </div>
@@ -174,7 +161,7 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 <strong>每週四公布：</strong>aaii.com/sentimentsurvey — 免費查看
 </div>
 
-<div class="warning">
+<div class="warning-box">
 <strong>AAII 的局限性：</strong>
 <ul>
 <li>單獨使用不夠 — 需要搭配其他指標（VIX, 資金流, 技術面）</li>
@@ -203,15 +190,17 @@ code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding
 <tr><td>Crypto Fear & Greed</td><td>alternative.me</td><td>< 10 = 極度恐懼（底）</td><td>加密市場情緒（逆向指標）</td></tr>
 </table>
 
-<div class="insight">
+<div class="highlight-box">
 <strong>最強組合（泡沫頂部預警）：</strong><br>
 AAII Bull > 50% + Margin Debt YoY > +30% + CAPE > 35 + IPO爆量 + Household Equity > 48%<br>
 = 五重泡沫信號 → 歷史上只在2000年和2021年出現 → 之後都是大修正。
 </div>
 </div>
+</div><!-- tab2 -->
 
-<!-- ===== PART 3: COMMODITY INVENTORY ===== -->
-<h2 class="section-title">Part 3：商品囤積信號 — 有人在搶貨嗎？</h2>
+<!-- ==================== TAB 3: 商品囤積 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">商品囤積信號 — 有人在搶貨嗎？</h2>
 
 <h3>商品定價的核心邏輯</h3>
 <p>商品（金銀銅油）的定價不像股票看盈利，而是看：</p>
@@ -219,9 +208,9 @@ AAII Bull > 50% + Margin Debt YoY > +30% + CAPE > 35 + IPO爆量 + Household Equ
 <div class="formula">
 商品價格 = f(庫存水位, 供給成本, 需求預期, 投機倉位, 美元)<br>
 <br>
-• 庫存低 + 需求強 → 漲<br>
-• 庫存高 + 需求弱 → 跌<br>
-• 庫存低 + 現貨溢價 + 空頭擁擠 → 暴漲（軋空+搶貨）
+&bull; 庫存低 + 需求強 → 漲<br>
+&bull; 庫存高 + 需求弱 → 跌<br>
+&bull; 庫存低 + 現貨溢價 + 空頭擁擠 → 暴漲（軋空+搶貨）
 </div>
 
 <h3>庫存數據 — 最核心的供需指標</h3>
@@ -238,10 +227,10 @@ AAII Bull > 50% + Margin Debt YoY > +30% + CAPE > 35 + IPO爆量 + Household Equ
 <h3>庫存判讀規則</h3>
 <table>
 <tr><th>庫存趨勢</th><th>價格趨勢</th><th>含義</th></tr>
-<tr><td>庫存下降 + 價格上漲</td><td>↓ 庫 + ↑ 價</td><td><span class="tag tag-bull">健康牛市</span> — 真實需求在消耗庫存</td></tr>
-<tr><td>庫存下降 + 價格下跌</td><td>↓ 庫 + ↓ 價</td><td>供給減少但需求更弱 → 觀望</td></tr>
-<tr><td>庫存上升 + 價格上漲</td><td>↑ 庫 + ↑ 價</td><td><span class="tag tag-bear">投機推動</span> — 囤貨但非真實需求，謹慎</td></tr>
-<tr><td>庫存上升 + 價格下跌</td><td>↑ 庫 + ↓ 價</td><td><span class="tag tag-bear">供過於求</span> — 最弱信號</td></tr>
+<tr><td>庫存下降 + 價格上漲</td><td>&darr; 庫 + &uarr; 價</td><td><span class="tag tag-bull">健康牛市</span> — 真實需求在消耗庫存</td></tr>
+<tr><td>庫存下降 + 價格下跌</td><td>&darr; 庫 + &darr; 價</td><td>供給減少但需求更弱 → 觀望</td></tr>
+<tr><td>庫存上升 + 價格上漲</td><td>&uarr; 庫 + &uarr; 價</td><td><span class="tag tag-bear">投機推動</span> — 囤貨但非真實需求，謹慎</td></tr>
+<tr><td>庫存上升 + 價格下跌</td><td>&uarr; 庫 + &darr; 價</td><td><span class="tag tag-bear">供過於求</span> — 最弱信號</td></tr>
 <tr><td>庫存驟降（單週>10%）</td><td>急速下降</td><td><span class="tag tag-bull">搶貨信號！</span>注意可能暴漲</td></tr>
 </table>
 </div>
@@ -282,8 +271,8 @@ AAII Bull > 50% + Margin Debt YoY > +30% + CAPE > 35 + IPO爆量 + Household Equ
 <div class="card">
 <div class="formula">
 期貨曲線形狀：<br>
-• Contango（正常）：遠月 > 近月 > 現貨 → 供給充足，持有成本正常<br>
-• Backwardation（搶貨！）：現貨 > 近月 > 遠月 → 市場急需現貨，願意付溢價取得<br>
+&bull; Contango（正常）：遠月 > 近月 > 現貨 → 供給充足，持有成本正常<br>
+&bull; Backwardation（搶貨！）：現貨 > 近月 > 遠月 → 市場急需現貨，願意付溢價取得<br>
 <br>
 Backwardation 出現 = 有人在搶實物 → 價格通常會漲
 </div>
@@ -303,9 +292,11 @@ COMEX白銀庫存從3億盎司降至1.5億盎司 + Shanghai現貨溢價$2+/oz + 
 <strong>判斷搶貨結束：</strong>庫存止跌回升 + 現貨溢價消失 + Contango回歸 → 搶貨完成 → 1-2個月需求真空 → 價格可能回落。
 </div>
 </div>
+</div><!-- tab3 -->
 
-<!-- ===== PART 4: SUPPLY DISRUPTION ===== -->
-<h2 class="section-title">Part 4：供需斷裂分析 — 從關稅到地緣的搶購邏輯</h2>
+<!-- ==================== TAB 4: 供需斷裂 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">供需斷裂分析 — 從關稅到地緣的搶購邏輯</h2>
 
 <h3>供應斷裂的類型與判斷</h3>
 
@@ -343,7 +334,7 @@ COMEX白銀庫存從3億盎司降至1.5億盎司 + Shanghai現貨溢價$2+/oz + 
 <tr><td>期貨曲線</td><td>CME/LME</td><td>Backwardation=現貨供不應求</td></tr>
 </table>
 
-<div class="warning">
+<div class="warning-box">
 <strong>「Buy the rumor, sell the news」陷阱：</strong><br>
 關稅搶購的典型節奏：<br>
 1. 消息傳出 → 搶購開始 → 價格漲（做多窗口）<br>
@@ -361,14 +352,291 @@ COMEX白銀庫存從3億盎司降至1.5億盎司 + Shanghai現貨溢價$2+/oz + 
 <table>
 <tr><th>階段</th><th>庫存</th><th>價格</th><th>操作</th></tr>
 <tr><td>1. 搶貨期（消息到實施前）</td><td>快速增加</td><td>上漲</td><td>順勢做多（但注意出場時機）</td></tr>
-<tr><td>2. 搶貨完成（關稅實施日）</td><td>停止增加</td><td>見頂</td><td>⚠️ 開始減倉/平倉</td></tr>
+<tr><td>2. 搶貨完成（關稅實施日）</td><td>停止增加</td><td>見頂</td><td>開始減倉/平倉</td></tr>
 <tr><td>3. 需求真空（實施後1-2月）</td><td>緩慢消耗</td><td>下跌/盤整</td><td>偏空或觀望</td></tr>
 <tr><td>4. 新均衡（2-3月後）</td><td>正常化</td><td>新趨勢開始</td><td>看新的供需格局判斷</td></tr>
 </table>
 </div>
+</div><!-- tab4 -->
 
-<!-- ===== PART 5: PRACTICAL FRAMEWORK ===== -->
-<h2 class="section-title">Part 5：實戰整合 — 每日判斷流程</h2>
+<!-- ==================== TAB 5: 互動測驗 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">互動測驗</h2>
+
+<div style="max-width:720px; margin:0 auto;">
+  <!-- Score Display -->
+  <div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+
+  <!-- Question Area -->
+  <div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; margin-bottom:20px;">
+    <div id="quiz-question-num" style="font-size:12px; color:var(--text3); margin-bottom:8px;"></div>
+    <div id="quiz-question-text" style="font-size:16px; font-weight:600; margin-bottom:20px; color:var(--text);"></div>
+    <div id="quiz-options" style="display:grid; gap:10px;"></div>
+  </div>
+
+  <!-- Result Area (hidden) -->
+  <div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px;">
+    <div id="quiz-result-icon" style="font-size:28px; text-align:center; margin-bottom:8px;"></div>
+    <div id="quiz-result-answer" style="font-size:14px; font-weight:600; text-align:center; margin-bottom:12px;"></div>
+    <div id="quiz-result-explanation" style="font-size:13px; line-height:1.8; color:var(--text2); background:var(--bg3); padding:14px; border-radius:8px;"></div>
+  </div>
+
+  <!-- Next Button -->
+  <div style="text-align:center;">
+    <button id="quiz-next-btn" style="padding:12px 32px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; transition:background .15s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='var(--blue)'">下一題</button>
+  </div>
+
+  <!-- Final Score (hidden) -->
+  <div id="quiz-final" style="display:none; text-align:center; padding:40px 20px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); margin-top:20px;">
+    <p style="font-size:22px; font-weight:700; margin-bottom:8px;" id="quiz-final-text"></p>
+    <p style="font-size:14px; color:var(--text3);" id="quiz-final-sub"></p>
+    <button id="quiz-restart-btn" style="margin-top:16px; padding:10px 24px; background:var(--green); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;">重新測驗</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const questions = [
+    {
+      question: 'COMEX 銅庫存連續三週暴增 30%，同時 COMEX vs LME 價差擴大到 $500/噸。這代表什麼？',
+      options: ['美國在搶購銅（可能因關稅預期）', '全球銅供過於求', '銅需求正在崩潰', '中國在大量出口銅'],
+      correct: 0,
+      explanation: 'COMEX庫存暴增 + COMEX溢價擴大 = 美國進口商在搶購銅，通常是因關稅預期。短期看漲但要注意搶貨結束後的需求真空。COMEX溢價代表只有美國端在搶，不是全球需求增長。'
+    },
+    {
+      question: 'AAII Bearish 達到 55%，同時 VIX 25，MMF AUM 創新高。應該怎麼做？',
+      options: ['繼續觀望不操作', '三重底部信號，逆向建立小倉位多頭', '做空追跌', '全倉做多'],
+      correct: 1,
+      explanation: 'AAII極度悲觀 + VIX升高 + MMF AUM新高（大量場外資金）= 三重底部信號。歷史上這種組合後12個月勝率超過80%。但不應重倉，而是開始小倉位逆向建倉，等待確認信號（如VIX回落）再加碼。'
+    },
+    {
+      question: '白銀 COT 顯示 Commercial 大幅增加淨多，同時 COMEX 庫存加速下降，期貨曲線出現 Backwardation。這是什麼信號？',
+      options: ['過熱警告，準備回調', '搶貨信號：聰明錢在囤積，強烈看多', '市場失去興趣的盤整信號', '空頭趨勢確認'],
+      correct: 1,
+      explanation: 'Commercial（生產商/用戶）增加淨多 = 聰明錢在鎖定供應。庫存下降 = 實物被消耗。Backwardation = 現貨供不應求。三者同時出現是最強的看多組合。'
+    },
+    {
+      question: 'CPI 4.2%（通膨飆升），但金價反而暴跌4%。為什麼？',
+      options: ['黃金已經不是避險資產了', '市場在交易「Fed必須升息」壓過通膨利多', '金礦公司大量拋售', '技術面超買回調'],
+      correct: 1,
+      explanation: '短期內，實際利率上升預期（Fed升息）對黃金的壓力可能超過通膨利多。市場邏輯：CPI高→Fed更鷹→實際利率升→持有黃金機會成本增加→金價短期承壓。但長期（滯脹延續）金仍受益。'
+    },
+    {
+      question: 'Money Market Fund AUM 連續三個月創新高。這代表什麼？',
+      options: ['股市即將崩盤', '大量資金在場外觀望，是未來反彈的彈藥庫', '投資人已經放棄股市', '經濟已經進入衰退'],
+      correct: 1,
+      explanation: 'MMF AUM創新高 = 資金選擇留在場外賺利息。這些是「未來的買盤」— 一旦信心恢復或Fed轉鴿，會爆發性流入風險資產。不代表崩盤，而是「潛在上漲動能在累積」。'
+    },
+    {
+      question: '股跌+債跌+金跌+美元漲，這是什麼 Regime？',
+      options: ['Risk-On 模式', '滯脹', '流動性危機（所有人搶美元現金）', '再通膨交易'],
+      correct: 2,
+      explanation: '所有資產都在跌，只有美元在漲 = 典型的流動性危機（Liquidity Crisis）。2020年3月就是這種模式：所有人恐慌性拋售一切資產換取美元現金。通常持續時間短但極為劇烈。'
+    },
+    {
+      question: '期貨曲線從 Contango 轉為 Backwardation，同時庫存加速下降。應該怎麼操作？',
+      options: ['做空近月期貨', '強烈做多，搶貨信號', '觀望等待確認', '做多遠月做空近月'],
+      correct: 1,
+      explanation: 'Contango→Backwardation = 供需格局從過剩轉為短缺。加上庫存加速下降 = 實物真的供不應求。這是最強的商品做多信號之一。做多近月合約效果最好（近月溢價最大）。'
+    },
+    {
+      question: 'Non-Commercial（對沖基金）淨多倉位創歷史新高。這代表什麼？',
+      options: ['趨勢將繼續加速', '過熱警告，投機過度，準備回調', '基本面支持繼續上漲', '應該跟隨做多'],
+      correct: 1,
+      explanation: 'Non-Commercial淨多極端 = 投機過度擁擠。當所有投機者都已經做多，就沒有新的邊際買家，任何負面催化都會觸發獲利了結的連鎖反應。這是逆向信號，應該開始減倉或收緊止損。'
+    },
+    {
+      question: 'Household Equity Allocation 達到 50%，同時 Margin Debt YoY +35%。處於什麼狀態？',
+      options: ['健康牛市中期', '極度泡沫區，應降低倉位', '市場低估區', '中性，可以繼續持有'],
+      correct: 1,
+      explanation: '家庭配置50%（接近2000年和2021年峰值）+ 保證金借款暴增 = 散戶All-in + 借錢買股。歷史上這種組合後都是大修正。不代表明天就崩，但環境極度危險，應該主動降低倉位。'
+    },
+    {
+      question: '關稅正式實施的那天，持有因關稅預期而上漲的商品多單，你應該？',
+      options: ['加碼做多，利多確認', '開始減倉或平倉', '做空', '無需改變持倉'],
+      correct: 1,
+      explanation: '「Buy the rumor, sell the news」— 關稅正式實施 = 搶貨結束的信號。之前的上漲是因為「預期搶購」，實施後進入「需求真空」期（已經搶完了，短期不需要再買）。應在實施日前後開始減倉。'
+    },
+    {
+      question: '金漲+銅跌+股跌+30Y國債殖利率飆升。這是什麼宏觀環境？',
+      options: ['經濟擴張期', '典型衰退', '滯脹（Stagflation）', '流動性危機'],
+      correct: 2,
+      explanation: '金漲（避險）+ 銅跌（工業需求弱）+ 股跌（風險資產承壓）+ 30Y飆升（通膨預期強）= 典型滯脹。經濟停滯但通膨高企。資金流向MMF和黃金。這是最難操作的宏觀環境。'
+    },
+    {
+      question: 'Put/Call Ratio 降到 0.4，代表什麼？',
+      options: ['市場極度看空（底部信號）', '市場極度看多（散戶只買Call不避險，危險信號）', '市場中性', '機構在積極做空'],
+      correct: 1,
+      explanation: 'Put/Call < 0.5 = 散戶瘋狂買Call不買Put避險 = 極度樂觀。這是逆向指標：當所有人都極度看多且不做任何保護，市場最容易出現回調。不代表立刻做空，但代表「不要再追高」。'
+    },
+    {
+      question: '銅冶煉加工費(TC/RC)暴跌至接近零，這代表什麼？',
+      options: ['銅礦供給充足', '冶煉廠利潤壓縮，可能減產，精煉銅供應將下降', '銅需求崩潰', '冶煉產能過剩'],
+      correct: 1,
+      explanation: 'TC/RC是冶煉廠從礦商處收取的加工費。暴跌代表：礦商議價力強（礦供應緊張）或冶煉成本上升（如硫酸短缺）。冶煉廠無利可圖→減產→精煉銅供應下降→最終推升銅價。'
+    },
+    {
+      question: '深度 Contango + 庫存持續累積。應該怎麼操作商品？',
+      options: ['做多近月合約', '偏空，供過於求的最弱信號', '做多遠月合約', '加大多頭倉位'],
+      correct: 1,
+      explanation: '深度Contango = 遠月遠高於近月 = 供過於求，市場不急需現貨。加上庫存累積 = 需求不振。這是商品最弱的信號組合，偏空或觀望。如果做空可以利用Calendar Spread（空近月買遠月）。'
+    },
+    {
+      question: 'AAII Bullish 55% + CAPE 38 + IPO數量創紀錄。這組合代表什麼？',
+      options: ['牛市將繼續加速', '多重泡沫信號，歷史上預示大修正', '健康的牛市情緒', '應該加碼做多'],
+      correct: 1,
+      explanation: '散戶極度樂觀 + 估值極貴 + 垃圾公司都能上市 = 多重泡沫信號。歷史上只在2000年和2021年出現類似組合，之後都是大修正。不代表「明天崩」，但代表風險報酬比極差，應大幅降低倉位。'
+    },
+    {
+      question: 'ETF Fund Flow 顯示：股票基金連續4週大量流出，債券基金大量流入。代表什麼？',
+      options: ['Risk-On：資金進入風險資產', 'Risk-Off：機構和散戶逃離股市躲入債券', '再通膨交易', '流動性危機'],
+      correct: 1,
+      explanation: '股票基金流出 + 債券基金流入 = 典型Risk-Off。投資人在降低風險敞口，尋求安全資產保護。通常出現在經濟數據惡化或地緣風險上升時期。如果持續多週，代表趨勢性資金轉移而非短期波動。'
+    },
+    {
+      question: 'Commercial（商業）在某商品的淨倉位突然從淨空轉為大量淨多，這是？',
+      options: ['正常的季節性調整', '極強的看多信號：實體需求者在搶貨鎖定供應', '技術面信號', '投機炒作'],
+      correct: 1,
+      explanation: 'Commercial是真正有實物需求的人（生產商/進口商/使用者）。他們從淨空（賣出對沖）突然轉為大量淨多（買入鎖定）= 他們認為價格將大幅上漲，搶先鎖定未來供應。這是最強的基本面看多信號。'
+    },
+    {
+      question: 'COMEX白銀庫存止跌回升 + 現貨溢價消失 + 期貨曲線回歸Contango。這代表？',
+      options: ['搶貨信號，應該追多', '搶貨完成，1-2個月需求真空，價格可能回落', '新一輪牛市開始', '供應危機加劇'],
+      correct: 1,
+      explanation: '庫存止跌 + 溢價消失 + Contango回歸 = 搶貨周期結束的三重確認。之前的價格上漲是搶購推動的，搶完後短期內沒有新買盤，容易出現1-2個月的回調或盤整。應減倉觀望等新趨勢出現。'
+    }
+  ];
+
+  let shuffled = [];
+  let currentIndex = 0;
+  let score = 0;
+  let total = 0;
+  let answered = false;
+
+  const scoreEl = document.getElementById('quiz-score');
+  const questionNum = document.getElementById('quiz-question-num');
+  const questionText = document.getElementById('quiz-question-text');
+  const optionsEl = document.getElementById('quiz-options');
+  const resultEl = document.getElementById('quiz-result');
+  const resultIcon = document.getElementById('quiz-result-icon');
+  const resultAnswer = document.getElementById('quiz-result-answer');
+  const resultExplanation = document.getElementById('quiz-result-explanation');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  const finalEl = document.getElementById('quiz-final');
+  const finalText = document.getElementById('quiz-final-text');
+  const finalSub = document.getElementById('quiz-final-sub');
+  const restartBtn = document.getElementById('quiz-restart-btn');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startQuiz() {
+    shuffled = shuffle(questions);
+    currentIndex = 0;
+    score = 0;
+    total = 0;
+    answered = false;
+    finalEl.style.display = 'none';
+    document.getElementById('quiz-question-area').style.display = 'block';
+    nextBtn.style.display = 'inline-block';
+    updateScore();
+    showQuestion();
+  }
+
+  function updateScore() {
+    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+  }
+
+  function showQuestion() {
+    if (currentIndex >= shuffled.length) {
+      showFinal();
+      return;
+    }
+    answered = false;
+    resultEl.style.display = 'none';
+    const q = shuffled[currentIndex];
+    questionNum.textContent = '第 ' + (currentIndex + 1) + ' / ' + shuffled.length + ' 題';
+    questionText.textContent = q.question;
+    optionsEl.innerHTML = '';
+    q.options.forEach(function(opt, idx) {
+      const btn = document.createElement('button');
+      btn.textContent = String.fromCharCode(65 + idx) + ') ' + opt;
+      btn.style.cssText = 'padding:12px 16px; border:1px solid var(--border); border-radius:8px; background:var(--bg2); font-size:13px; font-weight:500; cursor:pointer; text-align:left; transition:all .15s; font-family:inherit; color:var(--text); width:100%;';
+      btn.onmouseover = function() { if (!answered) this.style.background = 'var(--bg3)'; };
+      btn.onmouseout = function() { if (!answered) this.style.background = 'var(--bg2)'; };
+      btn.onclick = function() { selectAnswer(idx, btn); };
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(idx, btn) {
+    if (answered) return;
+    answered = true;
+    total++;
+    const q = shuffled[currentIndex];
+    const buttons = optionsEl.querySelectorAll('button');
+
+    if (idx === q.correct) {
+      score++;
+      btn.style.background = 'var(--green-l)';
+      btn.style.borderColor = 'var(--green)';
+      btn.style.color = 'var(--green)';
+      resultIcon.textContent = String.fromCharCode(0x2705);
+      resultAnswer.style.color = 'var(--green)';
+      resultAnswer.textContent = '正確！';
+    } else {
+      btn.style.background = 'var(--red-l)';
+      btn.style.borderColor = 'var(--red)';
+      btn.style.color = 'var(--red)';
+      buttons[q.correct].style.background = 'var(--green-l)';
+      buttons[q.correct].style.borderColor = 'var(--green)';
+      buttons[q.correct].style.color = 'var(--green)';
+      resultIcon.textContent = String.fromCharCode(0x274C);
+      resultAnswer.style.color = 'var(--red)';
+      resultAnswer.textContent = '錯誤！正確答案：' + String.fromCharCode(65 + q.correct) + ') ' + q.options[q.correct];
+    }
+
+    buttons.forEach(function(b) { b.style.cursor = 'default'; });
+    resultExplanation.innerHTML = q.explanation;
+    resultEl.style.display = 'block';
+    updateScore();
+  }
+
+  function showFinal() {
+    document.getElementById('quiz-question-area').style.display = 'none';
+    resultEl.style.display = 'none';
+    nextBtn.style.display = 'none';
+    finalEl.style.display = 'block';
+    const pct = Math.round((score / total) * 100);
+    finalText.textContent = '最終得分：' + score + ' / ' + total + ' (' + pct + '%)';
+    if (pct >= 90) finalSub.textContent = '優秀！你對資金流與商品供需的判斷非常到位！';
+    else if (pct >= 70) finalSub.textContent = '不錯！大部分概念掌握良好，可以再複習弱項。';
+    else if (pct >= 50) finalSub.textContent = '及格，建議回去重新看 Tab 1-4 的內容加強理解。';
+    else finalSub.textContent = '需要加強！建議仔細閱讀每個 Tab 的內容後再次測驗。';
+  }
+
+  nextBtn.addEventListener('click', function() {
+    currentIndex++;
+    showQuestion();
+  });
+
+  restartBtn.addEventListener('click', startQuiz);
+
+  // Initialize
+  startQuiz();
+})();
+</script>
+</div><!-- tab5 -->
+
+<!-- ==================== TAB 6: 速查表 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">速查表</h2>
 
 <div class="card">
 <h3>每日資金流判斷 Checklist</h3>
@@ -385,26 +653,106 @@ COMEX白銀庫存從3億盎司降至1.5億盎司 + Shanghai現貨溢價$2+/oz + 
 <h3>資金流 Regime 速查表</h3>
 <table>
 <tr><th>Regime</th><th>股票</th><th>債券</th><th>商品</th><th>現金</th><th>BTC</th></tr>
-<tr><td><strong>擴張（Risk-On）</strong></td><td class="up">↑↑</td><td>↓</td><td>↑</td><td>↓</td><td>↑</td></tr>
-<tr><td><strong>衰退（Risk-Off）</strong></td><td class="dn">↓↓</td><td>↑↑</td><td>↓</td><td>↑</td><td>↓</td></tr>
-<tr><td><strong>通膨（再通膨）</strong></td><td>→</td><td>↓</td><td>↑↑</td><td>↓</td><td>↑</td></tr>
-<tr><td><strong>滯脹（2026現況）</strong></td><td class="dn">↓</td><td>↓</td><td>分歧（金↑銅↓）</td><td>↑↑</td><td>↑?</td></tr>
-<tr><td><strong>流動性危機</strong></td><td class="dn">↓↓</td><td>↓</td><td>↓</td><td>USD ↑↑↑</td><td>↓→↑</td></tr>
+<tr><td><strong>擴張（Risk-On）</strong></td><td style="color:var(--green);font-weight:600;">&uarr;&uarr;</td><td>&darr;</td><td>&uarr;</td><td>&darr;</td><td>&uarr;</td></tr>
+<tr><td><strong>衰退（Risk-Off）</strong></td><td style="color:var(--red);font-weight:600;">&darr;&darr;</td><td>&uarr;&uarr;</td><td>&darr;</td><td>&uarr;</td><td>&darr;</td></tr>
+<tr><td><strong>通膨（再通膨）</strong></td><td>&rarr;</td><td>&darr;</td><td style="color:var(--green);font-weight:600;">&uarr;&uarr;</td><td>&darr;</td><td>&uarr;</td></tr>
+<tr><td><strong>滯脹（2026現況）</strong></td><td style="color:var(--red);font-weight:600;">&darr;</td><td>&darr;</td><td>分歧（金&uarr;銅&darr;）</td><td style="color:var(--green);font-weight:600;">&uarr;&uarr;</td><td>&uarr;?</td></tr>
+<tr><td><strong>流動性危機</strong></td><td style="color:var(--red);font-weight:600;">&darr;&darr;</td><td>&darr;</td><td>&darr;</td><td>USD &uarr;&uarr;&uarr;</td><td>&darr;&rarr;&uarr;</td></tr>
 </table>
 </div>
 
-<h2 class="section-title">互動測驗</h2>
 <div class="card">
-<p><strong>Q1：COMEX 銅庫存連續三週暴增 30%，同時 COMEX vs LME 價差擴大到 $500/噸。這代表什麼？</strong></p>
-<p>A) 美國在搶購銅（可能因關稅預期）→ 短期看漲但注意搶貨結束後的真空</p>
-<p><strong>Q2：AAII Bearish 達到 55%，同時 VIX 25，MMF AUM 創新高。應該怎麼做？</strong></p>
-<p>A) 三重底部信號。開始逆向建立小倉位多頭。但不重倉（等確認信號如VIX回落）。</p>
-<p><strong>Q3：白銀 COT 顯示 Commercial 大幅增加淨多，同時 COMEX 庫存加速下降，期貨曲線出現 Backwardation。這是什麼？</strong></p>
-<p>A) 搶貨信號：聰明錢（生產商/用戶）在囤積 + 庫存被消耗 + 現貨供不應求。強烈看多做多。</p>
-<p><strong>Q4：CPI 4.2%（通膨飆升），但金價反而暴跌4%。為什麼？</strong></p>
-<p>A) 市場在交易「Fed必須升息」而非「通膨利多黃金」。短期利率衝擊壓過通膨避險。但長期（滯脹延續）金最終仍受益。</p>
+<h3>泡沫指標閾值速查</h3>
+<table>
+<tr><th>指標</th><th>安全區</th><th>警戒區</th><th>泡沫區</th></tr>
+<tr><td>Household Equity Allocation</td><td>&lt; 35%</td><td>35-45%</td><td style="color:var(--red);font-weight:600;">&gt; 45%</td></tr>
+<tr><td>AAII Bull-Bear Spread</td><td>-10% ~ +10%</td><td>+10% ~ +30%</td><td style="color:var(--red);font-weight:600;">&gt; +30%</td></tr>
+<tr><td>Margin Debt YoY</td><td>&lt; 10%</td><td>10-30%</td><td style="color:var(--red);font-weight:600;">&gt; +30%</td></tr>
+<tr><td>Shiller CAPE</td><td>&lt; 20</td><td>20-35</td><td style="color:var(--red);font-weight:600;">&gt; 35</td></tr>
+<tr><td>Buffett Indicator</td><td>&lt; 100%</td><td>100-180%</td><td style="color:var(--red);font-weight:600;">&gt; 180%</td></tr>
+<tr><td>Put/Call Ratio</td><td>0.7-1.0</td><td>0.5-0.7</td><td style="color:var(--red);font-weight:600;">&lt; 0.5（看多過度）</td></tr>
+</table>
 </div>
 
+<div class="card">
+<h3>商品搶貨信號組合</h3>
+<table>
+<tr><th>信號</th><th>觀察指標</th><th>數據源</th><th>操作</th></tr>
+<tr><td><span class="tag tag-bull">搶貨進行中</span></td><td>庫存急降 + Backwardation + Commercial淨多增</td><td>CME/LME + COT</td><td>做多近月</td></tr>
+<tr><td><span class="tag tag-bull">軋空潛力</span></td><td>Non-Comm大量淨空 + 庫存低 + Backwardation</td><td>COT + 交易所庫存</td><td>做多等待軋空</td></tr>
+<tr><td><span class="tag tag-bear">搶貨結束</span></td><td>庫存止跌 + 溢價消失 + Contango回歸</td><td>CME/LME + 期貨曲線</td><td>減倉/觀望</td></tr>
+<tr><td><span class="tag tag-bear">投機過熱</span></td><td>Non-Comm淨多極端 + 庫存反升</td><td>COT + 交易所庫存</td><td>準備獲利了結</td></tr>
+</table>
 </div>
+
+<div class="card">
+<h3>關稅搶購節奏速查</h3>
+<table>
+<tr><th>階段</th><th>時間點</th><th>庫存</th><th>價格</th><th>操作</th></tr>
+<tr><td>1. 搶貨期</td><td>消息傳出到實施前</td><td>快速增加</td><td style="color:var(--green);">上漲</td><td>順勢做多</td></tr>
+<tr><td>2. 搶貨結束</td><td>關稅正式實施日</td><td>停止增加</td><td>見頂</td><td style="color:var(--red);font-weight:600;">開始減倉</td></tr>
+<tr><td>3. 需求真空</td><td>實施後1-2月</td><td>緩慢消耗</td><td style="color:var(--red);">下跌/盤整</td><td>偏空或觀望</td></tr>
+<tr><td>4. 新均衡</td><td>2-3月後</td><td>正常化</td><td>新趨勢</td><td>重新評估供需</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>數據來源彙整</h3>
+<table>
+<tr><th>數據</th><th>頻率</th><th>免費來源</th></tr>
+<tr><td>ETF Fund Flows</td><td>日/週</td><td>etf.com, Yahoo Finance</td></tr>
+<tr><td>MMF AUM</td><td>週</td><td>fred.stlouisfed.org (MMMFFAQ027S)</td></tr>
+<tr><td>AAII 情緒</td><td>週四</td><td>aaii.com/sentimentsurvey</td></tr>
+<tr><td>COT 報告</td><td>週五</td><td>tradingster.com, barchart.com</td></tr>
+<tr><td>COMEX 庫存</td><td>每日</td><td>cmegroup.com</td></tr>
+<tr><td>LME 庫存</td><td>每日</td><td>lme.com</td></tr>
+<tr><td>EIA 原油庫存</td><td>週三</td><td>eia.gov</td></tr>
+<tr><td>Shiller CAPE</td><td>月</td><td>multpl.com</td></tr>
+<tr><td>Buffett Indicator</td><td>季</td><td>currentmarketvaluation.com</td></tr>
+<tr><td>Put/Call Ratio</td><td>每日</td><td>CBOE</td></tr>
+<tr><td>BTC ETF Flows</td><td>每日</td><td>theblock.co, coinglass.com</td></tr>
+</table>
+</div>
+
+<div style="margin-top:24px; padding:20px 24px; background:var(--purple-l); border-radius:var(--r); border:1px solid #c4b5fd;">
+  <h3 style="font-size:15px; font-weight:700; margin-bottom:10px; color:var(--purple);">使用速查表的正確方式</h3>
+  <ul style="font-size:13px; color:var(--text2); line-height:2; padding-left:20px;">
+    <li>速查表用於<strong>快速回憶</strong>各項指標的閾值和含義，不能替代對底層邏輯的深入理解</li>
+    <li>永遠使用<strong>多重確認</strong> — 單一指標可能誤判，至少2-3個指標同向才構成有效信號</li>
+    <li>指標有<strong>滯後性</strong> — 特別是週報和月報數據，不要用於短線進出場</li>
+    <li>資金流數據適合判斷<strong>中長期方向</strong>，不適合日內交易的精確時機選擇</li>
+    <li>搶貨信號是<strong>持續性過程</strong>，不是一次性事件。確認後應持有直到結束信號出現</li>
+  </ul>
+</div>
+</div><!-- tab6 -->
+
+<footer style="margin-top:40px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
+  <p>跨資產資金流與商品供需分析 | 內容僅供學習參考，不構成投資建議</p>
+  <p style="margin-top:4px;">所有指標需搭配宏觀環境、技術面與風險管理綜合判斷，切勿僅憑單一數據操作</p>
+</footer>
+
+<!-- ==================== JAVASCRIPT: TAB SWITCHING ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      if (!targetTab) return;
+
+      // Remove active from all buttons and contents
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+
+      // Add active to clicked button and corresponding content
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+});
+</script>
+
 </body>
 </html>
