@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>事件交易 SOP — CPI/NFP/FOMC 前中後操作流程</title>
+<link rel="stylesheet" href="common.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.subtitle{font-size:14px;color:var(--text3);margin-bottom:24px}
+.section-title{font-size:20px;font-weight:700;color:var(--blue);margin:24px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.sop-step{background:var(--bg2);border:2px solid var(--blue);border-radius:var(--r);padding:16px;margin:12px 0;position:relative;padding-left:50px}
+.sop-step::before{content:attr(data-step);position:absolute;left:12px;top:16px;background:var(--blue);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.time-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--yellow-l);color:var(--yellow);margin-right:6px}
+.danger-tag{background:var(--red-l);color:var(--red)}
+.safe-tag{background:var(--green-l);color:var(--green)}
+.flowchart{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2}
+.quiz-option-btn{display:block;width:100%;padding:12px 16px;margin:8px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg2);font-size:14px;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit;color:var(--text)}
+.quiz-option-btn:hover{background:var(--bg3)}
+.quiz-option-btn.correct{background:var(--green-l);border-color:var(--green);color:var(--green)}
+.quiz-option-btn.wrong{background:var(--red-l);border-color:var(--red);color:var(--red)}
+.quiz-option-btn.disabled{cursor:default}
+.quiz-result-box{display:none;margin-top:12px;padding:14px;border-radius:8px;background:var(--bg3);font-size:13px;line-height:1.8}
+.quiz-result-box.show{display:block}
+#quiz-score-bar{margin:16px 0;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;text-align:center;font-weight:600}
+#quiz-final{display:none;text-align:center;padding:40px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-top:20px}
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+
+<h1>事件交易 SOP</h1>
+<p class="subtitle">CPI / NFP / FOMC 前中後的標準操作流程 — 不要再因為持倉過事件而爆倉</p>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">事件分類</button>
+  <button class="tab-btn" data-tab="tab2">事件前 SOP</button>
+  <button class="tab-btn" data-tab="tab3">事件中反應</button>
+  <button class="tab-btn" data-tab="tab4">事件後操作</button>
+  <button class="tab-btn" data-tab="tab5">資產敏感度</button>
+  <button class="tab-btn" data-tab="tab6">互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2 class="section-title">事件分類與時區對照</h2>
+
+<div class="card">
+<h3>Tier 1 — 必須減倉/空手（單日可造成 2-5% 以上波動）</h3>
+<table>
+<tr><th>事件</th><th>美東時間</th><th>台灣時間</th><th>頻率</th><th>最敏感資產</th></tr>
+<tr><td><strong>CPI（消費者物價）</strong></td><td>8:30 AM</td><td><span class="time-tag danger-tag">20:30</span></td><td>每月</td><td>XAU, XAG, DXY, 30Y, 半導體</td></tr>
+<tr><td><strong>NFP（非農就業）</strong></td><td>8:30 AM</td><td><span class="time-tag danger-tag">20:30</span></td><td>每月第一週五</td><td>DXY, 股市, 黃金, BTC</td></tr>
+<tr><td><strong>FOMC 利率決議</strong></td><td>2:00 PM</td><td><span class="time-tag danger-tag">隔天 02:00</span></td><td>~6週一次</td><td>所有資產</td></tr>
+<tr><td><strong>Powell 記者會</strong></td><td>2:30 PM</td><td><span class="time-tag danger-tag">隔天 02:30</span></td><td>跟隨FOMC</td><td>所有資產（措辭影響）</td></tr>
+<tr><td><strong>地緣軍事突發</strong></td><td>無固定</td><td><span class="time-tag danger-tag">隨時</span></td><td>不定期</td><td>油, 黃金, VIX</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>Tier 2 — 建議減倉（單日 1-2% 波動）</h3>
+<table>
+<tr><th>事件</th><th>台灣時間</th><th>頻率</th><th>敏感資產</th></tr>
+<tr><td>PPI（生產者物價）</td><td>20:30</td><td>每月</td><td>商品、通膨預期</td></tr>
+<tr><td>Core PCE</td><td>20:30</td><td>每月</td><td>Fed最看重的通膨指標</td></tr>
+<tr><td>ISM 製造業/服務業</td><td>22:00</td><td>每月</td><td>銅、工業金屬、小型股</td></tr>
+<tr><td>Initial Jobless Claims</td><td>20:30</td><td>每週四</td><td>就業趨勢、Fed預期</td></tr>
+<tr><td>ECB/BOJ 利率決議</td><td>各異</td><td>~6週</td><td>EUR, JPY, carry trade</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>Tier 3 — 注意但不需特別操作</h3>
+<table>
+<tr><th>事件</th><th>影響</th></tr>
+<tr><td>消費者信心（UMich/Conference Board）</td><td>低，除非極端偏離</td></tr>
+<tr><td>新屋開工/成屋銷售</td><td>影響房地產股，整體市場小</td></tr>
+<tr><td>工廠訂單/耐久財</td><td>影響工業股，整體市場小</td></tr>
+<tr><td>Fed 官員個別發言</td><td>中低，除非是 Powell 或有投票權的鴿/鷹派</td></tr>
+</table>
+</div>
+
+<div class="warning-box">
+<strong>核心規則：Tier 1 事件前不持有大倉位過夜。違反這條 = 賭博而非交易。</strong><br>
+你的白銀爆倉就是持倉過 CPI 的結果。這不是技術問題，是紀律問題。
+</div>
+</div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">事件前 SOP — 分階段減倉</h2>
+
+<div class="sop-step" data-step="1">
+<strong>T-24h（事件前24小時）：確認事件存在</strong>
+<ul>
+<li>查經濟日曆（investing.com/economic-calendar）確認明天有什麼事件</li>
+<li>判定 Tier 1/2/3</li>
+<li>如果是 Tier 1 → 開始計劃減倉</li>
+</ul>
+</div>
+
+<div class="sop-step" data-step="2">
+<strong>T-4h（事件前4小時）：執行減倉</strong>
+<ul>
+<li>Tier 1 事件：倉位減至 <strong>25% 或更少</strong></li>
+<li>Tier 2 事件：倉位減至 <strong>50%</strong></li>
+<li>確認止損單已設（在 ST level 或更寬的位置）</li>
+<li>如果當前有浮盈 → <strong>先鎖利潤再說</strong></li>
+</ul>
+</div>
+
+<div class="sop-step" data-step="3">
+<strong>T-30min（事件前30分鐘）：最終確認</strong>
+<ul>
+<li>確認市場共識是什麼（Bloomberg/Investing.com forecast）</li>
+<li>如果倉位仍大 → <strong>市價平一半，不等好價格</strong></li>
+<li>不要在這時候開新倉！</li>
+</ul>
+</div>
+
+<div class="sop-step" data-step="4">
+<strong>T-0（事件公布瞬間）：不動</strong>
+<ul>
+<li>不操作。看數據。看市場反應。</li>
+<li>前 5 分鐘的波動 90% 是噪音</li>
+<li>等 15-30 分鐘方向明確再行動</li>
+</ul>
+</div>
+
+<div class="flowchart">
+決策流程：<br>
+┌─ 我有倉位嗎？<br>
+│&nbsp;&nbsp; ├─ No → 不做任何事，等事件後再進場<br>
+│&nbsp;&nbsp; └─ Yes → 24小時內有 Tier 1 事件嗎？<br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ├─ Yes → 減至 25% 或空手。設止損。<br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; └─ No → Tier 2？<br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ├─ Yes → 減至 50%。設止損。<br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; └─ No → 正常操作<br>
+└─ 我有浮盈嗎？<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ├─ Yes → 先平一半鎖利潤。剩下設trailing stop。<br>
+&nbsp;&nbsp;&nbsp;&nbsp; └─ No (浮虧) → 考慮全平。不要帶虧損倉位過事件。
+</div>
+
+<div class="highlight-box">
+<strong>睡覺前的鐵律：</strong><br>
+如果明天有 Tier 1 事件且你的時區會在睡覺時公布（FOMC 凌晨2:00）→ <strong>睡前必須空手或設好止損</strong>。你醒來時可能已經爆倉了。（白銀 $65→$61.53 就是睡著時發生的）
+</div>
+</div>
+
+<!-- ==================== TAB 3 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">事件中反應 — 前5分鐘是噪音</h2>
+
+<div class="card">
+<h3>數據公布後的市場節奏</h3>
+<table>
+<tr><th>時間</th><th>發生什麼</th><th>你該做什麼</th></tr>
+<tr><td><span class="time-tag danger-tag">0-5 分鐘</span></td><td>演算法交易主導。巨幅波動。假突破。插針。</td><td><strong>不動。不追。不搶。</strong></td></tr>
+<tr><td><span class="time-tag">5-15 分鐘</span></td><td>第一波方向初步形成。但可能反轉。</td><td>觀察方向。不進場。</td></tr>
+<tr><td><span class="time-tag safe-tag">15-30 分鐘</span></td><td>真正的方向開始確認。成交量歸位。</td><td>如果 ST 1h 翻轉確認方向 → 可以進場小倉</td></tr>
+<tr><td><span class="time-tag safe-tag">30-60 分鐘</span></td><td>「第二波」movement 通常更可靠</td><td>加倉或確認方向正確</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>如何解讀「符合預期但仍暴跌」</h3>
+<table>
+<tr><th>情境</th><th>解讀</th><th>操作</th></tr>
+<tr><td>數據好 + 資產漲</td><td>正常反應。跟隨。</td><td>順勢做多</td></tr>
+<tr><td>數據好 + 資產跌</td><td>「Buy the rumor, sell the news」已 price in</td><td>做空或觀望</td></tr>
+<tr><td>數據差 + 資產跌</td><td>正常反應。跟隨。</td><td>順勢做空</td></tr>
+<tr><td>數據差 + 資產漲</td><td>超賣反彈 or 市場認為Fed會因此轉鴿</td><td>觀望→確認後跟多</td></tr>
+<tr><td>符合預期 + 暴跌</td><td>預期本身就很糟（如CPI 4.2%「符合」但太高）</td><td>跟跌方向。「符合壞預期」≠ 好事</td></tr>
+<tr><td>符合預期 + 暴漲</td><td>市場之前過度恐慌，relief rally</td><td>跟漲但設緊止損（可能是死貓跳）</td></tr>
+</table>
+</div>
+
+<div class="warning-box">
+<strong>絕對不要做的事：</strong>
+<ul>
+<li>不要在數據公布的前5秒下單（滑點巨大）</li>
+<li>不要追第一根大K線（90%會回調）</li>
+<li>不要因為「判斷正確」就重倉（方向對但入場太早=被洗出去）</li>
+<li>不要移動止損（事件波動大，止損被掃是正常的，但沒止損是災難）</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== TAB 4 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">事件後操作 — 等「第二波」</h2>
+
+<div class="card">
+<h3>「第二波」比「第一波」更可靠</h3>
+<p>事件後的第一波反應往往過度（演算法驅動）。真正有方向性的是 30 分鐘後到收盤前的「第二波」。</p>
+
+<table>
+<tr><th>第一波 vs 第二波</th><th>第一波（0-15min）</th><th>第二波（30min-收盤）</th></tr>
+<tr><td>驅動者</td><td>演算法、止損觸發、恐慌</td><td>機構決策、真實資金流</td></tr>
+<tr><td>可靠度</td><td>低（常被反轉）</td><td>高（通常持續到收盤）</td></tr>
+<tr><td>入場風險</td><td>高滑點、假突破多</td><td>滑點正常、方向較確定</td></tr>
+<tr><td>適合操作</td><td>不適合</td><td>適合小倉位跟隨</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>事件後的進場 SOP</h3>
+<div class="sop-step" data-step="1">
+<strong>等 15-30 分鐘</strong> — 讓噪音消退
+</div>
+<div class="sop-step" data-step="2">
+<strong>確認 1h SuperTrend 方向</strong> — 如果跟數據暗示的方向一致 → 信號可靠
+</div>
+<div class="sop-step" data-step="3">
+<strong>小倉位入場（最多 20%）</strong>— 事件後波動仍大，不重倉
+</div>
+<div class="sop-step" data-step="4">
+<strong>止損設在事件後的極值</strong> — 例如 CPI 後最低點（多單）或最高點（空單）
+</div>
+<div class="sop-step" data-step="5">
+<strong>確認 4h ST 後加倉</strong> — 如果 4h 也翻轉同方向 → 倉位加到 30-40%
+</div>
+</div>
+
+<div class="card">
+<h3>「Sell the News」模式識別</h3>
+<p>當市場在事件前已經大幅反應（price in），事件公布後反而反方向走。</p>
+<table>
+<tr><th>識別信號</th><th>案例</th></tr>
+<tr><td>事件前連續上漲 + 事件後公布利多</td><td>NFP超強→本應利多美元→但美元反跌（已price in）</td></tr>
+<tr><td>事件前VIX持續升高 + 結果符合預期</td><td>CPI 4.2%符合→恐慌已消化→反彈（relief rally）</td></tr>
+<tr><td>大量 OTM Call/Put 在事件前被買入</td><td>期權市場已經定位→事件後gamma收斂→方向反轉</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ==================== TAB 5 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">資產敏感度矩陣</h2>
+
+<div class="card">
+<h3>哪個事件影響哪個資產最大？</h3>
+<table>
+<tr><th>事件</th><th>XAU</th><th>XAG</th><th>BTC</th><th>DXY</th><th>SPX</th><th>半導體</th><th>Oil</th><th>30Y</th></tr>
+<tr><td><strong>CPI</strong></td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐</td><td>⭐⭐⭐</td></tr>
+<tr><td><strong>NFP</strong></td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐</td></tr>
+<tr><td><strong>FOMC</strong></td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐</td></tr>
+<tr><td><strong>伊朗/戰爭</strong></td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐⭐</td><td>⭐</td></tr>
+<tr><td><strong>PPI</strong></td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐</td><td>⭐</td><td>⭐⭐</td></tr>
+<tr><td><strong>PCE</strong></td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>⭐⭐</td></tr>
+<tr><td><strong>財報(NVDA等)</strong></td><td>⭐</td><td>⭐</td><td>⭐</td><td>⭐</td><td>⭐⭐</td><td>⭐⭐⭐</td><td>⭐</td><td>⭐</td></tr>
+<tr><td><strong>Trump推文</strong></td><td>⭐</td><td>⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐</td></tr>
+</table>
+<p class="dim">⭐ = 低影響 | ⭐⭐ = 中影響 | ⭐⭐⭐ = 高影響（可造成 2%+ 波動）</p>
+</div>
+
+<div class="card">
+<h3>歷史平均波動幅度（事件公布後 1 小時）</h3>
+<table>
+<tr><th>事件</th><th>XAU 平均</th><th>XAG 平均</th><th>BTC 平均</th><th>SPX 平均</th></tr>
+<tr><td>CPI（超預期時）</td><td>±$80-150</td><td>±$2-4</td><td>±$2000-3000</td><td>±1.5-3%</td></tr>
+<tr><td>NFP（超預期時）</td><td>±$40-80</td><td>±$1-2</td><td>±$1500-2500</td><td>±1-2%</td></tr>
+<tr><td>FOMC（升/降息時）</td><td>±$50-120</td><td>±$1.5-3</td><td>±$2000-4000</td><td>±1.5-3%</td></tr>
+<tr><td>地緣軍事突發</td><td>±$30-80</td><td>±$1-2</td><td>±$1000-3000</td><td>±1-3%</td></tr>
+</table>
+<div class="highlight-box">
+<strong>用法：</strong>如果你做白銀而 CPI 即將公布 → 平均波動 ±$2-4 → 你的止損如果只設 $1 = 100% 會被打到。<br>
+事件交易的止損必須設得比平時寬（≥ 1.5x ATR 或 ≥ 歷史平均波動）。或者更好的做法：<strong>不帶倉位過事件。</strong>
+</div>
+</div>
+
+<div class="card">
+<h3>台灣時區完整對照表</h3>
+<table>
+<tr><th>美東時間</th><th>台灣時間</th><th>典型事件</th></tr>
+<tr><td>8:30 AM ET</td><td><strong>20:30 (當天)</strong></td><td>CPI, NFP, PPI, PCE, Jobless Claims</td></tr>
+<tr><td>9:30 AM ET</td><td><strong>21:30 (當天)</strong></td><td>美股開盤</td></tr>
+<tr><td>10:00 AM ET</td><td><strong>22:00 (當天)</strong></td><td>ISM, JOLTS, Consumer Confidence</td></tr>
+<tr><td>2:00 PM ET</td><td><strong>02:00 (隔天凌晨)</strong></td><td>FOMC 利率決議</td></tr>
+<tr><td>2:30 PM ET</td><td><strong>02:30 (隔天凌晨)</strong></td><td>Powell 記者會</td></tr>
+<tr><td>4:00 PM ET</td><td><strong>04:00 (隔天凌晨)</strong></td><td>美股收盤</td></tr>
+<tr><td>4:15 PM ET</td><td><strong>04:15 (隔天凌晨)</strong></td><td>重大財報發布</td></tr>
+</table>
+<div class="warning-box">
+<strong>注意：</strong>FOMC 是凌晨 2:00 公布 → 你會在睡覺或想睡時遇到。<strong>永遠不要帶大倉位睡過 FOMC。</strong>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 6 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">互動測驗 — 50 題事件交易情境</h2>
+
+<div id="quiz-score-bar">正確：<span id="score-display">0</span> / 50</div>
+<div id="quiz-container"></div>
+<div id="quiz-final">
+  <h2 id="quiz-final-text"></h2>
+  <p id="quiz-final-sub"></p>
+  <button class="quiz-option-btn" style="max-width:200px;margin:16px auto" onclick="restartQuiz()">重新測驗</button>
+</div>
+</div>
+
+<footer style="margin-top:32px;padding:20px 0;border-top:1px solid var(--border);text-align:center;color:var(--text3);font-size:12px">
+<p>事件交易 SOP — 不再因持倉過事件而爆倉 | 內容僅供學習參考，不構成投資建議</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const targetTab = this.getAttribute('data-tab');
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabContents.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById(targetTab).classList.add('active');
+    });
+  });
+
+  // Quiz
+  const quizData = [
+    {q:"CPI 3小時後公布，你持有白銀多單浮盈 +2%。該怎麼做？",options:["繼續持有等CPI利多推升","平掉一半鎖利潤，剩下設止損","全部平倉","加倉因為趨勢向上"],correct:1,explanation:"Tier 1 事件前必須減倉。有浮盈更要先鎖。平一半+設止損是最佳平衡。"},
+    {q:"NFP 剛公布，數字遠超預期（172K vs 130K）。黃金在5秒內跌了$30。你該？",options:["立刻做空黃金追跌","等15-30分鐘看方向確認再決定","做多黃金搶反彈","不管數據，看SuperTrend方向"],correct:1,explanation:"前5分鐘是噪音。追跌可能遇到反彈。等15-30分鐘讓真正方向顯現。"},
+    {q:"FOMC 今晚凌晨2:00。你有BTC多單浮虧$500。你想：「FOMC如果不升息就會漲回來。」",options:["留著賭FOMC鴿派","設止損在4h ST然後睡覺","現在平倉認虧","加倉攤平等FOMC"],correct:2,explanation:"帶虧損倉位過Tier 1事件=賭博。FOMC任何結果都可能讓虧損翻倍。平倉是唯一正確選擇。"},
+    {q:"CPI 公布：4.2% YoY，完全符合預期。但黃金瞬間跌$100。為什麼？",options:["數據造假","符合一個很糟的預期≠好事","市場延遲反應","技術性回調"],correct:1,explanation:"4.2%雖然「符合預期」但數字本身是3年新高。市場恐慌的是通膨水平太高，不是意外。"},
+    {q:"你忘了今天有CPI。倉位突然-3%。你醒來看到。該怎麼辦？",options:["等等看會不會反彈","立刻市價平倉","加倉攤平","設一個很遠的止損"],correct:1,explanation:"已經錯過了最佳行動時機。現在唯一能做的是止血。不要期望反彈。"},
+    {q:"FOMC 維持利率不變但措辭鷹派。SPX 先跌1%然後反彈收平。這代表？",options:["純粹看多","利空出盡（bad news priced in）","明天會崩","跟Fed作對"],correct:1,explanation:"FOMC不升息=relief。雖然鷹派但已price in。跌後收復=利空出盡。但不代表一定續漲。"},
+    {q:"NFP 前一天你白銀+1.5%。你想等NFP後如果大漲可以+3%。正確嗎？",options:["正確，趨勢向上值得賭","不正確，應該先鎖利潤","看SuperTrend決定","看金銀比決定"],correct:1,explanation:"事件前有利潤=先鎖。+1.5%確定的 >> 可能+3%也可能-5%的賭博。"},
+    {q:"PPI（Tier 2）明天公布。你有30%倉位。該怎麼做？",options:["全平","減至15%","維持不動","加倉"],correct:1,explanation:"Tier 2建議減至50%。30%×50%=15%左右是合理水平。或者設好止損也行。"},
+    {q:"Trump 凌晨3點發推說要對中國加關稅。你睡著了。醒來BTC -4%。",options:["追空","等等看白天反應","這種突發事件不可預測，不怪自己","加倉抄底"],correct:2,explanation:"地緣突發無法預測。但可以事先做好：(1)不帶大倉位過夜 (2)有止損單保護。不怪自己但改進流程。"},
+    {q:"CPI後15分鐘，1h SuperTrend翻空。你該？",options:["立刻做空","等4h確認再做空","不做（事件日波動太大）","做多搶反彈"],correct:0,explanation:"CPI後15分鐘+1h ST翻空=方向確認。可以小倉位做空。但止損要設在事件後的高點。"},
+    {q:"市場在CPI前3天連續上漲。CPI公布利多。但SPX反而跌。這是什麼模式？",options:["技術故障","Sell the news","熊市","操縱"],correct:1,explanation:"典型 Buy the rumor, sell the news。事件前已price in利多。公布後反向=已經沒有新買家。"},
+    {q:"FOMC後Powell說「我們需要看到更多數據」。這是鴿派還是鷹派？",options:["鴿派（不急著升息）","鷹派（暗示可能升息）","中性（什麼都沒說）","超鴿（暗示降息）"],correct:2,explanation:"「需要更多數據」= 不急著行動 = 中性。但市場可能解讀為偏鴿（沒有鷹派信號=relief）。"},
+    {q:"ISM製造業低於50（萎縮）。銅和半導體該怎麼看？",options:["利多（Fed會降息）","利空（需求萎縮）","先跌後漲","不影響"],correct:1,explanation:"ISM<50=製造業萎縮=工業需求弱=銅和半導體直接受損。雖然長線可能因降息反彈，但短線偏空。"},
+    {q:"你在等CPI結果。數據出來符合預期。你之前空手。現在該進場嗎？",options:["立刻做多（符合預期=利多）","等15分鐘看市場反應","不做（沒有方向優勢）","做空"],correct:1,explanation:"符合預期不代表方向明確。等市場消化+看ST方向再決定。急著進場=50/50賭博。"},
+    {q:"Jobless Claims比預期高（就業惡化）。黃金漲、美元跌。你該？",options:["做多黃金","做多美元","觀望","做空黃金"],correct:0,explanation:"就業惡化→Fed可能暫停升息/轉鴿→美元跌+黃金漲。這是合理反應。可以順勢小倉位做多黃金。"},
+    {q:"BOJ突然宣布加息。USD/JPY暴跌。你持有美股多單。該擔心嗎？",options:["不用，跟美股無關","要擔心，日圓Carry Trade unwind可能衝擊全球股市","只影響日本股市","利多美股"],correct:1,explanation:"BOJ加息→日圓升值→Carry Trade平倉→全球資金回流日本→美股可能被拋售（流動性收縮）。2024年8月就因此暴跌。"},
+    {q:"CPI前2小時你開了一個新的多單。這對嗎？",options:["對，趨勢向上","不對，Tier 1事件前不開新倉","看情況","如果倉位小可以"],correct:1,explanation:"SOP規定：Tier 1事件前不開新倉。方向再好也不做。等事件後確認再進場。"},
+    {q:"FOMC結果出來後BTC漲了5%。你想追多。但已經凌晨3:00了。",options:["追多然後設止損睡覺","不追，明天早上再看","追多不設止損（方向明確）","做空逆勢"],correct:1,explanation:"凌晨3點判斷力下降。FOMC後的第一波可能在開盤後反轉。明天再看是最安全的選擇。而且你會睡著=不設止損的風險。"},
+    {q:"你的止損在事件中被掃到了（虧$300），但之後市場往你原來的方向走了。你覺得很虧。下次該不設止損嗎？",options:["對，下次不設","不對，止損被掃是正常的。不設止損可能虧$3000","下次設更遠的止損","下次用心理止損（手動）"],correct:1,explanation:"結果偏誤(#14)。止損被掃+之後反彈≠止損是錯的。不設止損的風險是爆倉。正確做法：接受偶爾被掃，長期保護資本。"},
+    {q:"ECB降息。你做EUR/USD空單。但歐元反而漲了。為什麼？",options:["市場已完全price in降息","ECB暗示之後不再降","歐元操縱","技術反彈"],correct:0,explanation:"降息已被預期→公布時資金反而覺得「利空出盡」→歐元反彈。典型 sell the news 的反面。"},
+    {q:"明天有PPI和Jobless Claims同時公布（20:30台灣）。你有三個倉位（BTC/白銀/NVDA）。該怎麼辦？",options:["全平","每個減倉50%然後設止損","只減白銀（最敏感）","維持不動"],correct:1,explanation:"PPI+Claims是Tier 2。建議每個倉位減50%+設止損。白銀最敏感可以多減一些。"},
+    {q:"CPI後市場大漲（+2%），你做多賺了。第二天又有PPI。你想：「昨天賺了，今天繼續。」",options:["正確，昨天驗證了方向","不正確，每個事件是獨立的。PPI前仍需減倉","不用減因為PPI影響較小","加倉"],correct:1,explanation:"每個事件都是獨立風險。CPI後漲不代表PPI後也漲。Tier 2仍需減倉。不能用昨天的結果預測今天。"},
+    {q:"Powell記者會中說了一個字（hawkish word），市場瞬間跌1%。但他接著說了平衡的話。你持有空單。",options:["立刻平空獲利","等記者會結束再決定","加空"],correct:1,explanation:"記者會進行中的波動是逐句反應。一個字的跌可能被下一句話反轉。等全部結束再做決定。"},
+    {q:"你預測CPI會低於預期所以提前做多。結果CPI高於預期。你虧$500。",options:["正常，預測錯了就認虧","下次要分析更仔細就能預測對","不應該在CPI前預測方向並建倉","市場不公平"],correct:2,explanation:"事件結果不可預測（機率50/50）。在事件前賭方向=賭博。正確做法：事件後看結果再行動。"},
+    {q:"連續兩次CPI後黃金都暴跌。你在第三次CPI前做空黃金「因為每次都跌」。",options:["合理，有統計依據","不合理，這是賭徒謬誤","可以但要設止損","應該做多（逆向）"],correct:1,explanation:"過去兩次跌≠這次也跌。每次CPI結果不同，市場環境不同。這是賭徒謬誤（#9）。"},
+    {q:"你查了經濟日曆發現本週沒有任何Tier 1事件。這代表可以放心重倉嗎？",options:["可以","不行，還有地緣突發/企業黑天鵝風險","看SuperTrend","看VIX"],correct:1,explanation:"即使沒有計劃中的事件，Trump推文/伊朗突發/企業暴雷隨時可能發生。永遠保持風控，不因為「沒事件」就放鬆。"},
+    {q:"事件後30分鐘，1h ST翻多，但4h ST仍是空。你想做多。倉位該多大？",options:["全倉（1h確認了）","最多20%（時框衝突，只有1h確認）","不做（4h空優先）","50%"],correct:1,explanation:"多時框衝突時用較小倉位。1h確認但4h未確認=信號強度中等。最多20%，等4h也翻多再加倉。"},
+    {q:"FOMC在凌晨2:00。你計劃設好止損然後睡覺。止損設在哪裡比較好？",options:["日線ST level","1h ST level","比平時寬1.5x的位置","比平時緊的位置"],correct:2,explanation:"FOMC波動比平時大。設太緊=100%被掃。設在比平時寬1.5x的位置，能承受事件波動但仍保護資本。或最好：直接平倉睡覺。"},
+    {q:"NFP後美元暴漲，黃金暴跌。但1小時後黃金開始收復失地。你判斷這是什麼？",options:["趨勢反轉，做多","Dead cat bounce，繼續空","等4h收盤確認","不確定"],correct:2,explanation:"事件後1小時的回調可能是：(1)真正反轉 (2)技術性回調後續跌。4h收盤能給更清楚的答案。急著判斷=猜測。"},
+    {q:"今天是月初，NFP在週五。現在是週三。你應該什麼時候開始準備？",options:["週五早上","週四晚上（T-24h）","現在就知道=好，但操作改變從T-24h開始","不需要準備"],correct:2,explanation:"週三就知道=好。但不需要提前3天就減倉。操作從T-24h（週四）開始執行減倉流程。"},
+    {q:"CPI超預期→黃金暴跌$100→你在跌了$50時做空→又跌了$50→你浮盈。但現在價格在反彈。你設了多少止損？",options:["盈虧平衡點","最高點（事件前）","今天低點上方$10（鎖住大部分利潤）","不設（趨勢明確）"],correct:2,explanation:"有浮盈時保護利潤最重要。設在低點上方$10=如果反彈你仍鎖住大部分盈利。不設止損=可能全部吐回去。"},
+    {q:"你做了一個完美的事件交易：CPI前空手→CPI後15分鐘確認方向→小倉入場→賺2%。你的感受是？",options:["開心，加倉","平靜，按SOP執行。到目標就平。","興奮，明天再做同樣的","覺得倉位太小，下次重倉"],correct:1,explanation:"完美交易=按SOP執行的交易，不是賺最多的交易。平靜+按計劃=正確心態。興奮/想加倉=過度自信(#7)開始出現。"},
+    {q:"FOMC結果：升息25bp（市場預期中有30%機率）。SPX瞬間-2%。這是做空的機會嗎？",options:["是，趨勢確認做空","不一定，升息已有30%定價，可能利空出盡反彈","做多搶反彈","觀望"],correct:1,explanation:"30%的機率已被部分price in。初始-2%可能過度反應。等15-30分鐘看是否回穩。如果持續跌→做空。如果回穩→利空出盡。"},
+    {q:"你在CPI前平了倉（按SOP）。結果CPI後你原本的方向大漲3%。你後悔嗎？",options:["是，下次不平了","不該後悔，按SOP操作永遠是對的。結果不改變過程品質","有點後悔但不會改變策略","非常後悔，SOP太保守"],correct:1,explanation:"結果偏誤(#14)。好結果不代表「不平倉」是好決策。10次有7次你會因為持倉過事件而虧。按SOP是長期正期望值。"},
+    {q:"ISM服務業數據大幅超預期。半導體股先漲後跌。為什麼？",options:["操縱","ISM好=經濟強=Fed可能繼續升息=利空科技估值","技術賣壓","跟ISM無關"],correct:1,explanation:"經濟強→Fed不需要降息→利率維持高位→高PE科技股估值壓縮。「好消息是壞消息」在升息環境中很常見。"},
+    {q:"你預計下週有FOMC。這週你想做一個5天的波段交易。該注意什麼？",options:["正常做，FOMC是下週的事","計劃在FOMC前一天平倉，不管盈虧","不做波段（本週就有事件風險）","做完5天不管FOMC"],correct:1,explanation:"如果波段跨越到FOMC前→必須計劃在那之前出場。不能假設「到時候會賺」就忽略事件風險。"},
+    {q:"Fed票委之一（非Powell）說「我認為需要升息」。這有多重要？",options:["非常重要，立刻操作","中等，一個票委不代表共識","不重要","比FOMC重要"],correct:1,explanation:"個別票委發言是Tier 3事件。代表個人觀點不是Fed整體決策。需要多個票委同方向發言才有意義。不要單一發言就改變操作。"},
+    {q:"CPI高於預期+30Y殖利率飆升。黃金反而在跌。你之前認為「通膨利多黃金」。怎麼回事？",options:["黃金壞了","CPI高→Fed必升息→實質利率飆→短期壓制黃金（利率衝擊>通膨避險）","金價被操縱","不可能"],correct:1,explanation:"短期：CPI高→Fed鷹→實質利率升→壓金。長期：若通膨持續→最終利多金。但交易要跟短期走，不跟長期邏輯。"},
+    {q:"你在事件後成功做對方向賺了+2%。你想繼續做到+3%。但已經到了你的日目標。",options:["繼續，事件日波動大有機會","停，+3%日目標到了就收工","平一半繼續一半","看ST方向決定"],correct:1,explanation:"日目標達成就收工。事件日波動大=賺得快也吐得快。你的規則：+3%收工。不改目標。(認知陷阱#8目標漂移)"},
+    {q:"你手上沒有倉位。突然看到新聞說伊朗攻擊以色列。油漲3%。你想？",options:["追多油","追多黃金","等15分鐘看整體反應","做空股市"],correct:2,explanation:"地緣突發的第一波反應往往過度。等15分鐘讓市場消化。然後判斷是否持續or回穩。不追第一波。"},
+    {q:"NVDA財報今晚公布。你持有NVDA CFD多單。但你只做日內，從不持倉過夜。該怎麼辦？",options:["今天收盤前平倉（日內原則）","留著，NVDA財報通常利多","減半持有","看盤後決定"],correct:0,explanation:"你的規則是日內不過夜。財報在盤後=你必須在收盤前平倉。規則就是規則，不因為「這次可能會賺」而破壞。"},
+    {q:"你今天已經被CPI打了一次止損（虧$300）。現在30分鐘後方向確認了。你想重新進場。但你怕再被打止損。",options:["不進場（今天已虧不做了）","進場但用更小的倉位（原本的50%）","進場用原本倉位","進場用更大倉位把虧損賺回來"],correct:1,explanation:"方向確認=可以進。但今天已虧=心理狀態受影響。用更小倉位(50%)降低心理壓力。不因為虧了就不敢做對的事，但也不報復交易。"},
+    {q:"連續三個月CPI都在升。下個月CPI你打算怎麼定位？",options:["做空所有資產（CPI一定又升）","不預測方向，只按SOP減倉等結果","做多美元（CPI高=美元強）","做空黃金（CPI高=黃金跌）"],correct:1,explanation:"過去3個月升≠下個月也升。趨勢可能轉變。正確做法永遠是：不預測事件結果，等結果出來再跟隨方向。"},
+    {q:"你在FOMC前全平了。結果FOMC超級鴿派，市場暴漲4%。你朋友沒平，賺了很多。他說你太保守。",options:["他說得對，下次不平了","他運氣好。10次FOMC有3次暴跌。你的SOP長期保護你。","折衷，下次留一半","改變策略"],correct:1,explanation:"結果偏誤(#14)+社交壓力。朋友這次賺不代表他的方法長期有效。你的SOP在10次中保護你7次。1次錯過≠策略錯誤。"},
+    {q:"事件後你觀察到：成交量暴增+價格方向明確+1h ST確認。這三個信號同時出現代表？",options:["可以用正常倉位（最多30%）進場","仍然不做（事件日太危險）","全倉做","做反方向"],correct:0,explanation:"三重確認（量+價+ST）是事件後最強的入場信號。可以用正常倉位(30%)進場。但仍設止損在事件後極值。"},
+    {q:"你打算今晚不做交易因為明天有CPI。但你看到BTC在漲，很想做一筆。",options:["做一筆小的沒關係","不做。SOP說事件前一天晚上不開新倉","看漲幅多大再決定","做一筆但設很緊止損"],correct:1,explanation:"SOP > 衝動。「很想做」就是FOMO(認知陷阱)。CPI前一天的上漲可能是「事件前最後的pump」→事件後暴跌。不做。"},
+    {q:"你研究了過去20次CPI發現：符合預期時黃金平均漲0.3%，超預期時平均跌2%。這資訊怎麼用？",options:["CPI前做多黃金（大多時候漲）","用來設止損寬度（超預期時會跌2%所以止損設≥2%）","不用，每次都不一樣","預測這次也會符合預期"],correct:1,explanation:"歷史統計不能預測下次結果，但能告訴你波動幅度。用來設止損寬度（≥歷史平均）是正確用法。不是用來猜方向。"},
+    {q:"市場在等FOMC期間VIX從15升到22。FOMC結果出來後VIX跌回18。這代表？",options:["市場安心了（不確定性消除）","明天會崩","VIX無用","牛市"],correct:0,explanation:"VIX升=市場在等待中焦慮。FOMC出結果→不確定性消除→VIX回落=正常。代表事件風險暫時過去。但不代表方向（可能漲也可能穩）。"},
+    {q:"你做的品種是白銀。發現白銀對CPI的敏感度是⭐⭐⭐（最高）。這意味著？",options:["CPI前白銀倉位應該比BTC減更多","CPI前所有品種減一樣","白銀不受CPI影響","只減BTC"],correct:0,explanation:"敏感度越高=事件波動越大=需要減更多或完全空手。白銀⭐⭐⭐=CPI前最好空手。BTC⭐⭐可以留小部分。"},
+    {q:"事件後第二天，市場平靜了。你想重新建立倉位。從哪個時框開始看？",options:["1h（最快反應）","日線（最可靠）","4h（平衡速度和可靠性）","全部同時看"],correct:2,explanation:"事件後重建倉位：4h是最佳平衡。1h可能仍有餘震波動。日線可能還沒反映新方向。4h通常在事件後6-12小時穩定下來。"},
+    {q:"你在CPI後做多黃金（方向正確）。但24小時後FOMC也要公布。你該？",options:["繼續持有到FOMC","FOMC前平倉（按SOP）","加倉因為方向正確","不管FOMC"],correct:1,explanation:"每個Tier 1事件都獨立。CPI後賺了≠FOMC後也賺。FOMC前仍需按SOP減倉。先鎖利潤再說。"},
+  ];
+
+  let score = 0;
+  let answered = 0;
+  const container = document.getElementById('quiz-container');
+
+  quizData.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `<h3 style="margin-top:0">Q${idx+1}/${quizData.length}</h3><p><strong>${q.q}</strong></p>
+      <div class="quiz-options" id="opts-${idx}">${q.options.map((o,i) => `<button class="quiz-option-btn" data-idx="${i}" onclick="checkAnswer(${idx},${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}</div>
+      <div class="quiz-result-box" id="result-${idx}"></div>`;
+    container.appendChild(div);
+  });
+
+  window.checkAnswer = function(qIdx, selected) {
+    const opts = document.querySelectorAll(`#opts-${qIdx} .quiz-option-btn`);
+    if (opts[0].classList.contains('disabled')) return;
+    opts.forEach(o => { o.classList.add('disabled'); o.style.cursor='default'; });
+    const q = quizData[qIdx];
+    if (selected === q.correct) {
+      opts[selected].classList.add('correct');
+      score++;
+    } else {
+      opts[selected].classList.add('wrong');
+      opts[q.correct].classList.add('correct');
+    }
+    answered++;
+    document.getElementById('score-display').textContent = score;
+    const resultBox = document.getElementById(`result-${qIdx}`);
+    resultBox.innerHTML = `<strong>${selected===q.correct?'✓ 正確！':'✗ 錯誤'}</strong><br>${q.explanation}`;
+    resultBox.classList.add('show');
+    if (answered === quizData.length) {
+      const final = document.getElementById('quiz-final');
+      final.style.display = 'block';
+      const pct = Math.round(score/quizData.length*100);
+      document.getElementById('quiz-final-text').textContent = `得分：${score}/${quizData.length} (${pct}%)`;
+      document.getElementById('quiz-final-sub').textContent = pct>=80?'優秀！你理解事件交易的SOP。':pct>=60?'不錯，但有些觀念需要加強。':'需要重新複習事件交易規則。';
+    }
+  };
+
+  window.restartQuiz = function() {
+    score = 0; answered = 0;
+    document.getElementById('score-display').textContent = '0';
+    document.getElementById('quiz-final').style.display = 'none';
+    document.querySelectorAll('.quiz-option-btn').forEach(b => { b.classList.remove('correct','wrong','disabled'); b.style.cursor='pointer'; });
+    document.querySelectorAll('.quiz-result-box').forEach(r => r.classList.remove('show'));
+  };
+});
+</script>
+
+</body>
+</html>
