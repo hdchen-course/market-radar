@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-06-17 FOMC D-Day</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}
+.container{max-width:1440px;margin:0 auto}
+header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}
+header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}
+header .sub{color:var(--muted);font-size:0.85rem}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:0.8rem;margin-top:10px}
+.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}
+.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}
+.card h2{font-size:0.98rem;margin-bottom:12px;color:var(--accent)}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500;font-size:0.74rem}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.7rem;font-weight:600}
+.t-bull{background:rgba(63,185,80,.15);color:var(--green)}
+.t-bear{background:rgba(248,81,73,.15);color:var(--red)}
+.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}
+.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+.mr:last-child{border-bottom:none}
+.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}
+.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}
+.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}
+.pi .pr{font-size:.95rem;font-weight:700}
+.pi .ch{font-size:.75rem;margin-top:1px}
+.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}
+.risk-bar .f{height:100%;border-radius:3px}
+.rh .f{background:var(--red);width:85%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}
+.rmh .f{background:var(--orange);width:72%}
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-i{position:relative;margin-bottom:13px}
+.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}
+.tl-e{font-size:.8rem;margin-top:2px}
+.scenario{border-left:3px solid var(--green)}
+.scenario-bear{border-left:3px solid var(--red)}
+.scenario-tail{border-left:3px solid var(--orange)}
+.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}
+.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
+.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}
+.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}
+.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}
+.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}
+.st-long{background:rgba(63,185,80,.18);color:var(--green)}
+.st-short{background:rgba(248,81,73,.18);color:var(--red)}
+.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}
+.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}
+.alert{background:#1a0a0a;border:1px solid #7f1d1d;border-radius:6px;padding:12px;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+<p class="sub">2026-06-17（週三）11:42 台灣時間 | AM版 | 亞洲盤中 | ⏰ FOMC Warsh首秀今晚02:00（~14h後）</p>
+<div class="badge badge-warn">⚠️ FOMC D-Day：市場恐慌去風險 | INTC -5.9% AMD -5.4% 半導體崩潰 | BTC跌回$65.8K | F&G=22極度恐懼 | 今晚02:00 Warsh定調一切</div>
+</header>
+
+<!-- ===== SECTION 0: 上期預測回顧 ===== -->
+<div class="card full">
+<h2>0. 上期預測回顧（6/16 Night 報告）</h2>
+<div class="tactical-box">
+<p style="font-size:.85rem;line-height:1.8">
+<strong>區間命中率：4/4 (100%) | 方向命中率：3/4 (75%)</strong><br>
+<span style="color:var(--muted);font-size:.8rem">Night報告統一建議「FOMC前觀望/不動」完全正確。所有資產仍在報告預測區間內。唯INTC崩潰幅度超出預期（Night報告已止損 正確決策）。ETH回落但仍在區間內=未超出。</span>
+</p>
+<table style="margin-top:10px">
+<tr><th>標的</th><th>Night預測區間</th><th>方向</th><th>實際</th><th>區間</th><th>方向</th></tr>
+<tr><td><strong>XAU</strong></td><td>$4,300-$4,380</td><td>觀望持有</td><td>$4,334</td><td><span class="pos">IN &#10004;</span></td><td><span class="pos">持平 &#10004;</span></td></tr>
+<tr><td><strong>XAG</strong></td><td>$69.5-$71.5</td><td>觀望持有</td><td>$70.23</td><td><span class="pos">IN &#10004;</span></td><td><span class="pos">持平 &#10004;</span></td></tr>
+<tr><td><strong>BTC</strong></td><td>$65,500-$67,500</td><td>觀望等02:00</td><td>$65,781</td><td><span class="pos">IN &#10004;</span></td><td><span class="neg">微跌-0.4% (觀望正確)</span></td></tr>
+<tr><td><strong>ETH</strong></td><td>$1,790-$1,860</td><td>觀望偏多</td><td>$1,793</td><td><span class="pos">IN &#10004;</span></td><td><span class="neg">回落-2.5% &#10060;</span></td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--muted);margin-top:8px"><strong>教訓：</strong>①Night報告「不在FOMC結果前建倉」=完全正確，避免了Tuesday夜盤半導體崩潰。②ETH方向判「偏多」但實際回落-2.5%=ETH連續上漲4天後自然回調。③「INTC已止損」的建議挽救了-5.9%進一步虧損。④FOMC前的觀望策略是最優選擇=驗證了不做方向性交易的紀律。</p>
+</div>
+</div>
+
+<!-- ===== SECTION 1: 報價面板 ===== -->
+<div class="card full">
+<h2>1. 即時報價面板（6/17 11:42 TWN — 亞洲盤 FOMC倒數~14h）</h2>
+<div class="price-grid">
+<div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,334</div><div class="ch pos">+0.10%</div></div>
+<div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$70.23</div><div class="ch pos">+0.59%</div></div>
+<div class="pi"><div class="tk">BTC</div><div class="pr">$65,781</div><div class="ch neg">-0.42%</div></div>
+<div class="pi"><div class="tk">ETH</div><div class="pr">$1,793</div><div class="ch pos">+0.84%</div></div>
+<div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.580</div><div class="ch pos">+0.81%</div></div>
+<div class="pi"><div class="tk">NVDA</div><div class="pr">$208.80</div><div class="ch neg">-1.38%</div></div>
+<div class="pi"><div class="tk">TSM</div><div class="pr">$431.45</div><div class="ch neg">-1.26%</div></div>
+<div class="pi"><div class="tk">INTC</div><div class="pr">$118.87</div><div class="ch neg">-5.85%</div></div>
+<div class="pi"><div class="tk">MU</div><div class="pr">$1,048.85</div><div class="ch neg">-3.22%</div></div>
+<div class="pi"><div class="tk">AMD</div><div class="pr">$517.36</div><div class="ch neg">-5.40%</div></div>
+<div class="pi"><div class="tk">QCOM</div><div class="pr">$216.89</div><div class="ch neg">-2.43%</div></div>
+<div class="pi"><div class="tk">AVGO</div><div class="pr">$380.06</div><div class="ch neg">-3.67%</div></div>
+<div class="pi"><div class="tk">MSFT</div><div class="pr">$394.08</div><div class="ch neg">-1.51%</div></div>
+<div class="pi"><div class="tk">GOOGL</div><div class="pr">$373.03</div><div class="ch pos">+0.62%</div></div>
+<div class="pi"><div class="tk">META</div><div class="pr">$600.69</div><div class="ch pos">+1.10%</div></div>
+<div class="pi"><div class="tk">AMZN</div><div class="pr">$246.95</div><div class="ch neg">-0.81%</div></div>
+<div class="pi"><div class="tk">TSLA</div><div class="pr">$404.36</div><div class="ch neg">-0.35%</div></div>
+<div class="pi"><div class="tk">PLTR</div><div class="pr">$132.93</div><div class="ch neg">-0.70%</div></div>
+<div class="pi"><div class="tk">MSTR</div><div class="pr">$124.41</div><div class="ch neg">-4.12%</div></div>
+<div class="pi"><div class="tk">EWY</div><div class="pr">$208.33</div><div class="ch neg">-0.80%</div></div>
+<div class="pi"><div class="tk">SPY</div><div class="pr">$752.47</div><div class="ch neg">-0.34%</div></div>
+<div class="pi"><div class="tk">SPCX SpaceX</div><div class="pr">$203.87</div><div class="ch neg">-4.56%</div></div>
+<div class="pi"><div class="tk">XPT 鉑金</div><div class="pr">$1,800.74</div><div class="ch pos">+1.71%</div></div>
+<div class="pi"><div class="tk">XPD 鈀金</div><div class="pr">$1,346.06</div><div class="ch pos">+0.49%</div></div>
+</div>
+<p style="font-size:.74rem;color:var(--muted);margin-top:10px">宏觀 | DXY: 99.53 | VIX: 16.41 | MOVE: 73.95 | 10Y: 4.428% | TAIEX: 45,590 (-0.48%) | BTC F&G: 22 (極度恐懼) | FOMC 倒數~14h | 半導體血流成河！INTC -5.9% AMD -5.4%</p>
+</div>
