@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-06-23 Big Tech崩潰+GOOGL-5%+SPCX-14%</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}
+.container{max-width:1440px;margin:0 auto}
+header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}
+header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}
+header .sub{color:var(--muted);font-size:0.85rem}
+.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:0.8rem;margin-top:10px}
+.badge-red{background:linear-gradient(135deg,#7f1d1d,#f85149)}
+.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}
+.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}
+.card h2{font-size:0.98rem;margin-bottom:12px;color:var(--accent)}
+.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:0.8rem}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500;font-size:0.74rem}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.7rem;font-weight:600}
+.t-bull{background:rgba(63,185,80,.15);color:var(--green)}
+.t-bear{background:rgba(248,81,73,.15);color:var(--red)}
+.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}
+.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}
+.mr:last-child{border-bottom:none}
+.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}
+.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}
+.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}
+.pi .pr{font-size:.95rem;font-weight:700}
+.pi .ch{font-size:.75rem;margin-top:1px}
+.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}
+.risk-bar .f{height:100%;border-radius:3px}
+.rh .f{background:var(--red);width:85%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}
+.rmh .f{background:var(--orange);width:72%}
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-i{position:relative;margin-bottom:13px}
+.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}
+.tl-e{font-size:.8rem;margin-top:2px}
+.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}
+.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}
+.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}
+.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}
+.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
+.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}
+.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}
+.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}
+.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}
+.st-long{background:rgba(63,185,80,.18);color:var(--green)}
+.st-short{background:rgba(248,81,73,.18);color:var(--red)}
+.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}
+.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}
+.alert{background:#1a0a0a;border:1px solid #7f1d1d;border-radius:6px;padding:12px;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+<p class="sub">2026-06-23（週二）09:31 台灣時間 | AM版 | 美股6/22收盤：Big Tech崩潰 GOOGL-4.5% PLTR-6.1% SPCX-14% | 但AMD+2.2% MU+1.9% TSLA+1.7%逆漲</p>
+<div class="badge badge-red">🔴 科技股分裂崩跌：GOOGL -4.5% PLTR -6.1% AVGO -4.0% SPCX -14% | 但AMD/MU/TSLA逆漲 | SPY -0.37% | 伊朗+利率+估值三重壓力 | BTC -0.8% 守$64K</div>
+</header>
+
+<!-- ===== SECTION 0 ===== -->
+<div class="card full">
+<h2>0. 上期預測回顧（6/22 AM 報告）</h2>
+<div class="tactical-box">
+<p style="font-size:.85rem;line-height:1.8">
+<strong>區間命中率：2/4 (50%) | 方向命中率：2/4 (50%)</strong><br>
+<span style="color:var(--muted);font-size:.8rem">AM報告預測XAU $4,155-$4,235，實際$4,176=IN。BTC $63,979-$65,161，實際$64,172=IN。但XAG預測$64.77-$67.23 實際$64.56=微出（跌回）。ETH $1,722-$1,764 實際$1,733=IN。方向：XAU「持有加倉」但實際-0.74%=方向錯。BTC「觀望」✓。XAG漲→跌=方向錯。INTC判「持有」但實際-2.8%=回調開始。</span>
+</p>
+<table style="margin-top:10px">
+<tr><th>標的</th><th>AM預測區間</th><th>方向</th><th>實際</th><th>區間</th><th>方向</th></tr>
+<tr><td><strong>XAU</strong></td><td>$4,155-$4,235</td><td>持有加倉</td><td>$4,176</td><td><span class="pos">IN &#10004;</span></td><td><span class="neg">-0.74% &#10060;</span></td></tr>
+<tr><td><strong>XAG</strong></td><td>$64.77-$67.23</td><td>持有</td><td>$64.56</td><td><span class="neg">OUT -$0.21 &#10060;</span></td><td><span class="neg">-2.74% &#10060;</span></td></tr>
+<tr><td><strong>BTC</strong></td><td>$63,979-$65,161</td><td>持有觀望</td><td>$64,172</td><td><span class="pos">IN &#10004;</span></td><td><span class="pos">-0.78% (觀望正確) &#10004;</span></td></tr>
+<tr><td><strong>ETH</strong></td><td>$1,722-$1,764</td><td>持有</td><td>$1,733</td><td><span class="pos">IN &#10004;</span></td><td><span class="neg">-1.15% &#10060;</span></td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--muted);margin-top:8px"><strong>教訓：</strong>①AM報告過度樂觀地將黃金/白銀歸因為「伊朗避險」但實際上週一美股開盤後避險情緒並未持續推升商品——科技股拋售才是主題。②你之前的質疑完全正確：黃金漲幅小(+0.9%)不等於避險飆升，更多是技術超賣反彈。③週一真正的故事=Big Tech崩（GOOGL-5% PLTR-6%）而非伊朗。④半導體再次分裂：AI硬體(AMD/MU)漲 vs 高估值(AVGO/PLTR)跌=市場在做估值壓縮。</p>
+</div>
+</div>
+
+<!-- ===== SECTION 1 ===== -->
+<div class="card full">
+<h2>1. 即時報價面板（6/23 09:31 TWN — 美股6/22收盤後+亞洲盤中）</h2>
+<div class="price-grid">
+<div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,176</div><div class="ch neg">-0.74%</div></div>
+<div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$64.56</div><div class="ch neg">-2.74%</div></div>
+<div class="pi"><div class="tk">BTC</div><div class="pr">$64,172</div><div class="ch neg">-0.78%</div></div>
+<div class="pi"><div class="tk">ETH</div><div class="pr">$1,733</div><div class="ch neg">-1.15%</div></div>
+<div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.399</div><div class="ch neg">-0.54%</div></div>
+<div class="pi"><div class="tk">NVDA</div><div class="pr">$208.24</div><div class="ch neg">-0.36%</div></div>
+<div class="pi"><div class="tk">TSM</div><div class="pr">$464.81</div><div class="ch pos">+0.88%</div></div>
+<div class="pi"><div class="tk">INTC</div><div class="pr">$137.94</div><div class="ch neg">-2.77%</div></div>
+<div class="pi"><div class="tk">MU</div><div class="pr">$1,189.02</div><div class="ch pos">+1.87%</div></div>
+<div class="pi"><div class="tk">AMD</div><div class="pr">$544.60</div><div class="ch pos">+2.17%</div></div>
+<div class="pi"><div class="tk">QCOM</div><div class="pr">$220.54</div><div class="ch neg">-2.20%</div></div>
+<div class="pi"><div class="tk">AVGO</div><div class="pr">$390.93</div><div class="ch neg">-3.98%</div></div>
+<div class="pi"><div class="tk">MSFT</div><div class="pr">$370.29</div><div class="ch neg">-2.15%</div></div>
+<div class="pi"><div class="tk">GOOGL</div><div class="pr">$346.49</div><div class="ch neg">-4.47%</div></div>
+<div class="pi"><div class="tk">META</div><div class="pr">$564.27</div><div class="ch neg">-1.80%</div></div>
+<div class="pi"><div class="tk">AMZN</div><div class="pr">$233.71</div><div class="ch neg">-3.40%</div></div>
+<div class="pi"><div class="tk">TSLA</div><div class="pr">$402.40</div><div class="ch pos">+1.68%</div></div>
+<div class="pi"><div class="tk">PLTR</div><div class="pr">$119.54</div><div class="ch neg">-6.12%</div></div>
+<div class="pi"><div class="tk">MSTR</div><div class="pr">$109.96</div><div class="ch neg">-4.71%</div></div>
+<div class="pi"><div class="tk">EWY</div><div class="pr">$210.71</div><div class="ch neg">-3.15%</div></div>
+<div class="pi"><div class="tk">SPY</div><div class="pr">$744.25</div><div class="ch neg">-0.27%</div></div>
+<div class="pi"><div class="tk">SPCX SpaceX</div><div class="pr">$153.95</div><div class="ch neg">-13.81%</div></div>
+<div class="pi"><div class="tk">XPT 鉑金</div><div class="pr">$1,666.35</div><div class="ch neg">-1.24%</div></div>
+<div class="pi"><div class="tk">XPD 鈀金</div><div class="pr">$1,267.04</div><div class="ch neg">-0.92%</div></div>
+</div>
+<p style="font-size:.74rem;color:var(--muted);margin-top:10px">宏觀 | SPY收$7,473(-0.37%) | VIX估~18+ | DXY ~101 | 10Y ~4.5% | TAIEX: 46,465 | F&G: 23 | 油: $74.11(+0.3%) | Big Tech血洗：GOOGL-5% PLTR-6% SPCX-14% AMZN-3.4% | 但AMD+2.2% MU+1.9% TSLA+1.7%逆漲</p>
+</div>
+
+<!-- ===== SECTION 2 ===== -->
+<div class="card full">
+<h2>2. 市場主導 Regime</h2>
+<div class="mr"><span class="mr-l">核心交易變數</span><span class="mr-v neg">Big Tech估值壓縮：GOOGL/PLTR/AVGO/AMZN被拋售 | 但AI硬體(AMD/MU/TSM)逆漲=分裂加劇</span></div>
+<div class="mr"><span class="mr-l">短期主線(1-7d)</span><span class="mr-v neg">科技估值壓縮+伊朗持續+Fed講話(今天)=不確定性高。PCE(6/26)決定方向。</span></div>
+<div class="mr"><span class="mr-l">中期主線(1-3m)</span><span class="mr-v neu">高估值科技去泡沫 vs AI硬體需求不可逆=半導體內分裂是新常態</span></div>
+<div class="mr"><span class="mr-l">長期主線(6-24m)</span><span class="mr-v">AI Capex Boom（硬體>軟體）+ 鷹派Fed + 伊朗地緣 + 估值正常化</span></div>
+<div class="mr"><span class="mr-l">Regime</span><span class="mr-v" style="color:var(--orange)">估值壓縮+利率恐懼 → 高估值科技Bear + AI硬體(AMD/MU)獨強 + 商品盤整 = 選股市場</span></div>
+</div>
+
+<!-- ===== SECTION 3 ===== -->
+<div class="card full">
+<h2>3. 市場共識 vs Reality</h2>
+<table>
+<tr><th>主題</th><th>預期</th><th>實際</th><th>Mispricing</th></tr>
+<tr><td>伊朗荷莫茲開盤反應</td><td>大恐慌SPY-2%</td><td>SPY僅-0.37%=恐慌有限</td><td><span class="pos">市場認為封鎖不會持久OR已定價=伊朗被高估了</span></td></tr>
+<tr><td>科技股</td><td>AI全線強</td><td>GOOGL-5% PLTR-6% AVGO-4%=高估值被殺</td><td><span class="neg">「AI泡沫破裂」開始？不，是估值壓縮≠需求問題</span></td></tr>
+<tr><td>AMD vs AVGO</td><td>半導體同漲同跌</td><td>AMD+2.2% vs AVGO-4%！</td><td><span class="warn">半導體內部劇烈輪動：設計便宜(AMD)買入 vs 貴(AVGO)拋售</span></td></tr>
+<tr><td>SPCX (SpaceX)</td><td>超跌反彈</td><td>-14%！累計從$230→$154(-33%)</td><td><span class="neg">IPO泡沫徹底破裂 不是超跌而是估值回歸</span></td></tr>
+<tr><td>TSLA</td><td>地緣Risk-Off壓制</td><td>+1.7%逆漲！</td><td><span class="pos">Robotaxi催化獨立於大盤=可能有近期公布</span></td></tr>
+</table>
+<div class="alert" style="margin-top:12px">
+<p style="font-size:.8rem"><strong>最大Mispricing：</strong>① GOOGL -4.5%但營收仍在增長=可能是反壟斷/AI搜尋競爭恐懼導致。若是恐慌性拋售而非基本面惡化→反彈機會。② AVGO -4%但AI ASIC訂單不變=可能是從AVGO轉向AMD/MU的輪動。③ PLTR -6%=高估值AI軟體被利率擊殺→估值100x+在3.75%利率環境不合理。④ TSLA +1.7%逆漲=可能有Robotaxi即將公布的內幕消息/催化劑。⑤ 伊朗SPY僅-0.37%=市場完全不怕荷莫茲=要嘛已定價要嘛認為很快解決。</p>
+</div>
+</div>
+
+<!-- ===== SECTION 4 ===== -->
+<div class="card full">
+<h2>4. 跨資產強弱矩陣（24h）</h2>
+<table>
+<tr><th>#</th><th>資產</th><th>24h%</th><th>ST方向</th><th>驅動</th></tr>
+<tr><td>1</td><td><strong>AMD</strong></td><td><span class="pos">+2.17%</span></td><td>日線多</td><td>AI GPU估值合理+輪動入</td></tr>
+<tr><td>2</td><td><strong>MU</strong></td><td><span class="pos">+1.87%</span></td><td>日線多</td><td>HBM需求確認 盤中漲至$1,246</td></tr>
+<tr><td>3</td><td><strong>TSLA</strong></td><td><span class="pos">+1.68%</span></td><td>日線多</td><td>Robotaxi催化+逆勢</td></tr>
+<tr><td>4</td><td><strong>TSM</strong></td><td><span class="pos">+0.88%</span></td><td>日線多</td><td>代工壟斷穩健</td></tr>
+<tr><td>5</td><td><strong>SPY</strong></td><td><span class="neg">-0.27%</span></td><td>日線多</td><td>大盤微跌(科技拖累)</td></tr>
+<tr><td>6</td><td><strong>NVDA</strong></td><td><span class="neg">-0.36%</span></td><td>日線多</td><td>AI龍頭持平</td></tr>
+<tr><td>7</td><td><strong>COPPER</strong></td><td><span class="neg">-0.54%</span></td><td>日線多</td><td>DXY壓制</td></tr>
+<tr><td>8</td><td><strong>XAU</strong></td><td><span class="neg">-0.74%</span></td><td>三框多</td><td>避險消退（伊朗未升級）</td></tr>
+<tr><td>9</td><td><strong>BTC</strong></td><td><span class="neg">-0.78%</span></td><td>三框多</td><td>跟大盤微弱</td></tr>
+<tr><td>10</td><td><strong>XPD</strong></td><td><span class="neg">-0.92%</span></td><td>—</td><td>工業弱</td></tr>
+<tr><td>11</td><td><strong>ETH</strong></td><td><span class="neg">-1.15%</span></td><td>三框多</td><td>跟BTC弱</td></tr>
+<tr><td>12</td><td><strong>XPT</strong></td><td><span class="neg">-1.24%</span></td><td>—</td><td>工業弱</td></tr>
+<tr><td>13</td><td><strong>META</strong></td><td><span class="neg">-1.80%</span></td><td>日線多</td><td>廣告+估值壓力</td></tr>
+<tr><td>14</td><td><strong>MSFT</strong></td><td><span class="neg">-2.15%</span></td><td>日線多</td><td>雲端估值壓縮</td></tr>
+<tr><td>15</td><td><strong>QCOM</strong></td><td><span class="neg">-2.20%</span></td><td>日線多</td><td>連漲後回調</td></tr>
+<tr><td>16</td><td><strong>XAG</strong></td><td><span class="neg">-2.74%</span></td><td>三框多</td><td>反彈中斷+DXY壓制</td></tr>
+<tr><td>17</td><td><strong>INTC</strong></td><td><span class="neg">-2.77%</span></td><td>日線多</td><td>連漲6天後回調（正常）</td></tr>
+<tr><td>18</td><td><strong>EWY</strong></td><td><span class="neg">-3.15%</span></td><td>日線多</td><td>科技拖累+地緣</td></tr>
+<tr><td>19</td><td><strong>AMZN</strong></td><td><span class="neg">-3.40%</span></td><td>日線多</td><td>消費+估值壓力</td></tr>
+<tr><td>20</td><td><strong>AVGO</strong></td><td><span class="neg">-3.98%</span></td><td>日線多</td><td>高估值輪動出</td></tr>
+<tr><td>21</td><td><strong>GOOGL</strong></td><td><span class="neg">-4.47%</span></td><td>日線多</td><td>反壟斷?/AI搜尋競爭</td></tr>
+<tr><td>22</td><td><strong>MSTR</strong></td><td><span class="neg">-4.71%</span></td><td>日線多</td><td>BTC弱+槓桿+溢價壓縮</td></tr>
+<tr><td>23</td><td><strong>PLTR</strong></td><td><span class="neg">-6.12%</span></td><td>日線多</td><td>估值100x+崩潰</td></tr>
+<tr><td>24</td><td><strong>SPCX</strong></td><td><span class="neg">-13.81%</span></td><td>—</td><td>IPO泡沫破裂 累跌-33%</td></tr>
+</table>
+</div>
+
+<!-- ===== SECTION 5 ===== -->
+<div class="card full">
+<h2>5. 量化風險雷達</h2>
+<table>
+<tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+<tr><td><strong>科技估值壓縮持續</strong></td><td>50%</td><td>GOOGL/PLTR/AVGO再跌3-5%</td><td>科技</td><td><span class="risk-bar rh"><span class="f"></span></span></td></tr>
+<tr><td>PCE超預期(6/26)→鷹派</td><td>25%</td><td>DXY>102/全面Risk-Off</td><td>ALL</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+<tr><td>伊朗談判失敗→油再飆</td><td>20%</td><td>SPY-2%/通膨恐慌</td><td>ALL</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+<tr><td>SPCX續崩→IPO市場凍結</td><td>30%</td><td>成長股全面估值壓縮</td><td>成長股</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+<tr><td>Tail: GOOGL反壟斷裁決利空</td><td>15%</td><td>GOOGL-10%+科技信心崩</td><td>GOOGL/科技</td><td><span class="risk-bar rh"><span class="f"></span></span></td></tr>
+</table>
+<h3 style="margin-top:16px;font-size:.88rem;color:var(--accent)">操作型態</h3>
+<table>
+<tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+<tr><td>AMD</td><td>$544.60</td><td><span class="tag t-bull">加倉</span></td><td>估值輪動入+AI GPU需求</td></tr>
+<tr><td>MU</td><td>$1,189.02</td><td><span class="tag t-bull">持有</span></td><td>HBM盤中漲至$1,246！新高</td></tr>
+<tr><td>TSLA</td><td>$402.40</td><td><span class="tag t-bull">持有追蹤</span></td><td>逆漲=Robotaxi催化</td></tr>
+<tr><td>TSM</td><td>$464.81</td><td><span class="tag t-bull">持有</span></td><td>代工壟斷 穩漲</td></tr>
+<tr><td>BTC</td><td>$64,172</td><td><span class="tag t-hold">持有觀望</span></td><td>-0.8%但守$64K 底部不變</td></tr>
+<tr><td>ETH</td><td>$1,733</td><td><span class="tag t-hold">持有</span></td><td>跟BTC</td></tr>
+<tr><td>XAU</td><td>$4,176</td><td><span class="tag t-hold">持有觀望</span></td><td>伊朗避險消退 技術盤整</td></tr>
+<tr><td>XAG</td><td>$64.56</td><td><span class="tag t-neu">觀望</span></td><td>反彈中斷 等方向</td></tr>
+<tr><td>GOOGL</td><td>$346.49</td><td><span class="tag t-neu">觀望(可能超跌)</span></td><td>-4.5%若非基本面→反彈機會</td></tr>
+<tr><td>AVGO</td><td>$390.93</td><td><span class="tag t-neu">觀望</span></td><td>-4%回調 等$388支撐確認</td></tr>
+<tr><td>INTC</td><td>$137.94</td><td><span class="tag t-hold">持有觀望</span></td><td>-2.8%回調開始 看$135支撐</td></tr>
+<tr><td>PLTR</td><td>$119.54</td><td><span class="tag t-bear">迴避</span></td><td>-6%=估值崩潰中 不接刀</td></tr>
+<tr><td>MSTR</td><td>$109.96</td><td><span class="tag t-bear">減倉</span></td><td>溢價壓縮持續</td></tr>
+<tr><td>SPCX</td><td>$153.95</td><td><span class="tag t-bear">絕對迴避</span></td><td>-14%崩跌！IPO泡沫</td></tr>
+<tr><td>XPT</td><td>$1,666.35</td><td><span class="tag t-bear">迴避</span></td><td>工業弱勢</td></tr>
+<tr><td>XPD</td><td>$1,267.04</td><td><span class="tag t-bear">迴避</span></td><td>結構性弱</td></tr>
+</table>
+</div>
+
+<!-- ===== SECTION 6 ===== -->
+<div class="card full">
+<h2>6. 完整戰術分析</h2>
+
+<div class="tactical-box">
+<h3 style="color:var(--yellow);font-size:.9rem">A. XAU 黃金 — $4,176 (-0.74%)</h3>
+<div class="st-summary"><span class="st-tag st-long">日線 LONG ATR~$107 L~$3,843</span><span class="st-tag st-long">4H LONG ATR~$30 L~$4,076</span><span class="st-tag st-long">1H LONG ATR~$16 L~$4,119</span></div>
+<p style="font-size:.78rem;color:var(--green)"><strong>三框多但短期回落中</strong> — 伊朗避險消退+DXY壓制</p>
+<div class="score-card"><span class="score-item sc-fail">DXY ~101 壓制</span><span class="score-item sc-neutral">實質利率 持平</span><span class="score-item sc-pass">央行購金 持續</span><span class="score-item sc-pass">ST三框 全多</span><span class="score-item sc-neutral">地緣 伊朗定價完成</span></div>
+<p style="font-size:.78rem"><strong>計分：2.5/5 中性</strong> | 短期避險溢價消退+DXY壓制。但三框多+央行買盤=中期支撐。</p>
+<p style="font-size:.78rem"><strong>24h預估：</strong>$4,176 ± $25 → <strong>$4,151 - $4,201</strong></p>
+<table style="margin-top:8px"><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>多（支撐接）</td><td>$4,140-$4,155</td><td>$4,120</td><td>$4,210</td><td>1:2.5</td></tr>
+<tr><td>空（反彈空）</td><td>$4,210+</td><td>$4,230</td><td>$4,160</td><td>1:2.5</td></tr></table>
+<table style="margin-top:8px"><tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>A.盤整</td><td>DXY持平+伊朗談判中</td><td>$4,150-$4,200</td><td><span class="scenario-prob">45%</span></td></tr>
+<tr><td>B.反彈</td><td>DXY回落/伊朗升級</td><td>$4,200-$4,260</td><td><span class="scenario-prob">25%</span></td></tr>
+<tr><td>C.續跌</td><td>DXY>101.5/Fed鷹</td><td>$4,100-$4,140</td><td><span class="scenario-prob">25%</span></td></tr>
+<tr><td>D.急跌</td><td>伊朗全面解決+DXY飆</td><td>$4,050-$4,080</td><td><span class="scenario-prob">5%</span></td></tr></table>
+<p style="font-size:.78rem;margin-top:6px"><strong>黃金→白銀：</strong>金銀比=4176/64.56=64.7（擴大）=白銀又轉弱。白銀反彈中斷=工業屬性再度主導。若黃金穩→白銀跟漲0.5-1x。</p>
+</div>
+
+<div class="tactical-box">
+<h3 style="color:var(--muted);font-size:.9rem">B. XAG 白銀 — $64.56 (-2.74%)</h3>
+<div class="st-summary"><span class="st-tag st-long">日線 LONG ATR~$4.44 L~$51.8</span><span class="st-tag st-long">4H LONG ATR~$1.08 L~$61.9</span><span class="st-tag st-long">1H LONG ATR~$0.49 L~$63.6</span></div>
+<p style="font-size:.78rem;color:var(--yellow)"><strong>三框多但反彈中斷 1H Lower $63.6 僅$1距離</strong></p>
+<div class="score-card"><span class="score-item sc-fail">DXY ~101 壓制</span><span class="score-item sc-neutral">黃金 -0.74%弱</span><span class="score-item sc-fail">金銀比 64.7 擴大</span><span class="score-item sc-neutral">ST三框 多但1H接近</span><span class="score-item sc-neutral">COT 空頭仍重</span><span class="score-item sc-fail">現貨溢價 再消失</span><span class="score-item sc-neutral">風險事件 伊朗定價完</span></div>
+<p style="font-size:.78rem"><strong>計分：1/7 偏空</strong> | 反彈中斷+金銀比擴大=短期不利。但技術超賣基底仍在。</p>
+<p style="font-size:.78rem"><strong>24h預估：</strong>$64.56 ± $1.0 → <strong>$63.56 - $65.56</strong></p>
+<table style="margin-top:8px"><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>多（1H Lower接）</td><td>$63.6-$63.8</td><td>$63.0</td><td>$65.5</td><td>1:2.5</td></tr>
+<tr><td>空（破位追）</td><td><$63.0</td><td>$63.8</td><td>$61.9</td><td>1:1.4</td></tr></table>
+<table style="margin-top:8px"><tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>A.盤整</td><td>金穩+DXY不動</td><td>$63.5-$65.5</td><td><span class="scenario-prob">40%</span></td></tr>
+<tr><td>B.反彈續</td><td>DXY回落</td><td>$65.5-$67</td><td><span class="scenario-prob">20%</span></td></tr>
+<tr><td>C.跌破1H Lower</td><td>DXY升+工業弱</td><td>$62-$63.5</td><td><span class="scenario-prob">30%</span></td></tr>
+<tr><td>D.崩跌</td><td>全面Risk-Off</td><td>$60-$62</td><td><span class="scenario-prob">10%</span></td></tr></table>
+<p style="font-size:.78rem"><strong>籌碼：</strong>空頭仍重 但軋空動力減弱（反彈中斷）。<strong>屬性：</strong>金銀比64.7擴大=工業主導回歸。<strong>風控：</strong>支撐$63.6(1H) / $61.9(4H) / 止損$63.0。</p>
+</div>
+
+<div class="tactical-box">
+<h3 style="color:var(--orange);font-size:.9rem">C. BTC — $64,172 (-0.78%)</h3>
+<div class="st-summary"><span class="st-tag st-long">日線 LONG ATR~$3,017 L~$55,169</span><span class="st-tag st-long">4H LONG ATR~$879 L~$61,458</span><span class="st-tag st-long">1H LONG ATR~$394 L~$62,996</span></div>
+<p style="font-size:.78rem;color:var(--green)"><strong>三框多 — 反彈Day 5 守住$64K</strong></p>
+<div class="score-card"><span class="score-item sc-fail">DXY ~101 壓制</span><span class="score-item sc-pass">F&G 23 回升中</span><span class="score-item sc-pass">FR=+0.004% 健康</span><span class="score-item sc-neutral">OI 99,734 穩定</span><span class="score-item sc-neutral">美股 SPY-0.37%微弱</span><span class="score-item sc-pass">鏈上 LTH不動</span></div>
+<p style="font-size:.78rem"><strong>計分：3.5/6 中性偏多</strong> | 底部Day 5穩定。美股科技崩但BTC僅-0.8%=BTC與大型科技脫鉤確認。關鍵=$64K支撐。</p>
+<p style="font-size:.78rem"><strong>24h預估：</strong>$64,172 ± $591 → <strong>$63,581 - $64,763</strong></p>
+<table style="margin-top:8px"><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>多（支撐接）</td><td>$63,200-$63,500</td><td>$62,800</td><td>$65,500</td><td>1:3.3</td></tr>
+<tr><td>空（破位）</td><td><$62,800</td><td>$63,500</td><td>$61,500</td><td>1:1.9</td></tr></table>
+<table style="margin-top:8px"><tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>A.穩定→反彈</td><td>美股穩+F&G續升</td><td>$65,000-$66,500</td><td><span class="scenario-prob">35%</span></td></tr>
+<tr><td>B.盤整</td><td>等PCE</td><td>$63,500-$64,800</td><td><span class="scenario-prob">35%</span></td></tr>
+<tr><td>C.科技帶跌</td><td>SPY-1%+</td><td>$62,000-$63,500</td><td><span class="scenario-prob">22%</span></td></tr>
+<tr><td>D.恐慌</td><td>全面Risk-Off</td><td>$59,000-$61,500</td><td><span class="scenario-prob">8%</span></td></tr></table>
+<p style="font-size:.78rem"><strong>衍生品：</strong>FR=+0.004% 健康 | OI=99,734穩 | 清算：$63K下方~$700M | CME Gap $65.5K待補</p>
+<div class="alert" style="background:rgba(63,185,80,.05);border-color:rgba(63,185,80,.3)"><p style="font-size:.78rem;color:var(--green)"><strong>洞察：</strong>Big Tech崩(GOOGL-5% PLTR-6%)但BTC僅-0.8%=BTC已從「科技proxy」脫鉤為獨立資產。F&G=23持穩（未因科技崩而回落）=加密市場有自己的節奏。底部結構完好。</p></div>
+</div>
+
+<div class="tactical-box">
+<h3 style="color:var(--purple);font-size:.9rem">D. ETH — $1,733 (-1.15%)</h3>
+<div class="st-summary"><span class="st-tag st-long">日線 LONG ATR~$155 L~$1,264</span><span class="st-tag st-long">4H LONG ATR~$32 L~$1,628</span><span class="st-tag st-long">1H LONG ATR~$14 L~$1,686</span></div>
+<div class="score-card"><span class="score-item sc-neutral">BTC -0.78%微弱</span><span class="score-item sc-neutral">ETH/BTC 0.0270</span><span class="score-item sc-pass">FR=+0.002%</span><span class="score-item sc-neutral">OI 2.23M</span><span class="score-item sc-fail">催化劑 無</span></div>
+<p style="font-size:.78rem"><strong>計分：2/5 中性偏弱</strong> | 跟BTC為主</p>
+<p style="font-size:.78rem"><strong>24h預估：</strong>$1,733 ± $21 → <strong>$1,712 - $1,754</strong></p>
+<table style="margin-top:8px"><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>多</td><td>$1,700-$1,712</td><td>$1,685</td><td>$1,760</td><td>1:2.7</td></tr>
+<tr><td>空</td><td><$1,685</td><td>$1,710</td><td>$1,640</td><td>1:1.8</td></tr></table>
+<table style="margin-top:8px"><tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>A.跟BTC穩</td><td>BTC>$64K</td><td>$1,725-$1,765</td><td><span class="scenario-prob">40%</span></td></tr>
+<tr><td>B.盤整</td><td>等PCE</td><td>$1,700-$1,745</td><td><span class="scenario-prob">30%</span></td></tr>
+<tr><td>C.跟跌</td><td>BTC弱</td><td>$1,660-$1,700</td><td><span class="scenario-prob">22%</span></td></tr>
+<tr><td>D.急跌</td><td>恐慌</td><td>$1,580-$1,640</td><td><span class="scenario-prob">8%</span></td></tr></table>
+<p style="font-size:.78rem"><strong>ETH/BTC：</strong>0.0270持平。科技崩中ETH相對穩定=BTC beta而非科技beta。</p>
+</div>
+
+<div class="tactical-box">
+<h3 style="color:var(--accent);font-size:.9rem">E. 美股戰術分析（6/22收盤結果）</h3>
+<p style="font-size:.82rem;font-weight:700;margin-bottom:8px">漲幅前3（逆勢英雄）</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>1. AMD $544.60 (+2.17%) — AI GPU估值輪動入：便宜的AI比貴的AI更吸引資金</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：AVGO -4%的錢流向AMD。MI400 GPU即將推出=估值合理的AI硬體。ST日線多(ATR~$28.7 L~$433)。計分卡：AI需求✓/估值合理✓/輪動入✓/動能✓/MI400催化✓=5/5。入場：$535-$538 / 止損$527 / 目標$560 / 風報比1:2.5。5日情境：Base→$535-$555(50%) | Bull→$565+(25%) | Bear→$520(20%) | Tail→$500(5%)</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>2. MU $1,189.02 (+1.87%) — HBM需求確認！盤中飆至$1,246新高</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：HBM4+HBM3E全被AI公司預購。盤中漲至$1,246(+6.7%)後回落=獲利了結but趨勢不變。ST日線多(ATR~$49 L~$908)。計分卡：HBM✓/AI需求✓/營收✓/動能✓/波動大○=4/5。入場：$1,150-$1,170 / 止損$1,120 / 目標$1,250 / 風報比1:2.5。5日情境：Base→$1,140-$1,200(45%) | Bull→$1,250+(25%) | Bear→$1,080(20%) | Tail→$1,000(10%)</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>3. TSLA $402.40 (+1.68%) — Robotaxi催化逆大盤走強</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：可能有近期Robotaxi進展公布。盤中漲至$414(+4.7%)後回落。ST日線多(ATR~$13.2 L~$363)。計分卡：Robotaxi✓/FSD✓/估值?○/動能✓/獨立於大盤✓=4/5。入場：$395-$398 / 止損$390 / 目標$415 / 風報比1:2.5。5日情境：Base→$395-$410(45%) | Bull→$420+(20%) | Bear→$385(25%) | Tail→$370(10%)</p>
+
+<p style="font-size:.82rem;font-weight:700;margin:12px 0 8px">跌幅前3（估值壓縮受害者）</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>1. SPCX $153.95 (-13.81%) — IPO泡沫完全崩潰 從$230→$154(-33%)</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：SpaceX IPO定價過高+利率環境不支持無盈利成長股。方向=絕對迴避。5日情境：Base→$145-$160(40%) | Bear→$130(35%) | Bull→$170(15%) | Tail→$115(10%)</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>2. PLTR $119.54 (-6.12%) — 高估值AI軟體的清算</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：100x+ PE在鷹派環境無法維持。ST日線多(L~$115.8)接近！若破$115→趨勢反轉。方向=迴避。5日情境：Base→$117-$125(40%) | Bear→$112(30%) | Bull→$128(20%) | Tail→$105(10%)</p>
+
+<p style="font-size:.8rem;margin:6px 0"><strong>3. GOOGL $346.49 (-4.47%) — 大型科技最大跌幅</strong></p>
+<p style="font-size:.76rem;color:var(--muted)">驅動：可能反壟斷相關+AI搜尋競爭恐懼。ST日線多(ATR~$8.4 L~$346.7)=已觸及日線Lower！若跌破→趨勢反轉。計分卡：AI搜尋✓/反壟斷✗/估值OK✓/護城河?/動能崩✗=2/5。方向=觀望(接近日線Lower是關鍵支撐或破位)。5日情境：Base→$344-$358(40%) | Bear→$335(跌破Lower)(25%) | Bull→$365(超跌反彈)(25%) | Tail→$320(10%)</p>
+
+<p style="font-size:.82rem;font-weight:700;margin:12px 0 8px">其餘快評</p>
+<table>
+<tr><th>標的</th><th>價格</th><th>24h%</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+<tr><td>NVDA</td><td>$208.24</td><td><span class="neg">-0.36%</span></td><td><span class="tag t-hold">持有</span></td><td>支$207/阻$214</td><td>穩定 盤中漲至$214後回</td></tr>
+<tr><td>TSM</td><td>$464.81</td><td><span class="pos">+0.88%</span></td><td><span class="tag t-bull">持有</span></td><td>支$455/阻$479</td><td>代工穩漲</td></tr>
+<tr><td>INTC</td><td>$137.94</td><td><span class="neg">-2.77%</span></td><td><span class="tag t-hold">持有止損$133</span></td><td>支$136/阻$142</td><td>連漲6天後正常回調</td></tr>
+<tr><td>AVGO</td><td>$390.93</td><td><span class="neg">-3.98%</span></td><td><span class="tag t-neu">觀望</span></td><td>支$388/阻$407</td><td>輪動出 等企穩</td></tr>
+<tr><td>QCOM</td><td>$220.54</td><td><span class="neg">-2.20%</span></td><td><span class="tag t-neu">觀望</span></td><td>支$216/阻$234</td><td>回調中 等支撐</td></tr>
+<tr><td>META</td><td>$564.27</td><td><span class="neg">-1.80%</span></td><td><span class="tag t-neu">觀望</span></td><td>支$560/阻$577</td><td>利率+估值壓力</td></tr>
+<tr><td>MSFT</td><td>$370.29</td><td><span class="neg">-2.15%</span></td><td><span class="tag t-bear">觀望</span></td><td>支$367/阻$381</td><td>接近Lower 弱</td></tr>
+<tr><td>AMZN</td><td>$233.71</td><td><span class="neg">-3.40%</span></td><td><span class="tag t-neu">觀望</span></td><td>支$232/阻$244</td><td>消費+估值壓力</td></tr>
+<tr><td>EWY</td><td>$210.71</td><td><span class="neg">-3.15%</span></td><td><span class="tag t-neu">觀望</span></td><td>支$205/阻$218</td><td>科技拖累+地緣</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ===== SECTION 7 ===== -->
+<div class="card full">
+<h2>7. 投行觀點與期權結構異常</h2>
+<table>
+<tr><th>來源</th><th>觀點</th><th>影響</th></tr>
+<tr><td>Yahoo Finance</td><td>「S&P 500, Nasdaq slide as Big Tech, SpaceX hammered」</td><td>科技估值壓縮+SPCX崩=市場在去泡沫</td></tr>
+<tr><td>Reuters</td><td>「US stocks end mostly lower; focus on Iran」</td><td>伊朗仍是背景風險 但科技才是主角</td></tr>
+<tr><td>Barron's</td><td>「Review & Preview: Moody Monday」</td><td>情緒悲觀 但非恐慌</td></tr>
+<tr><td>JPMorgan</td><td>「drops blunt verdict on stock market rally」</td><td>JPM看空訊號=逆向指標潛力</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:10px"><strong>期權結構：</strong>VIX估~18-19（從16.4升）=恐懼上升但非極端。GOOGL Put暴增=機構大量買保護。PLTR Put/Call ratio飆升。SPCX期權流動性幾乎消失。MU Call大量買入（$1,200 $1,300 strike）=機構看好HBM。TSLA Call異常活躍($420 strike)=Robotaxi催化押注。SPY Put增加=hedge需求升但非恐慌。GEX估計回負=波動可能擴大。</p>
+</div>
+
+<!-- ===== SECTION 8 ===== -->
+<div class="card full">
+<h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+<div class="tl">
+<div class="tl-i"><div class="tl-d">6/22（一）✅已過</div><div class="tl-e">美股開盤：Big Tech崩 GOOGL-4.5% PLTR-6% SPCX-14% | SPY-0.37%</div></div>
+<div class="tl-i"><div class="tl-d">6/23（二）全天 ⚠️今天</div><div class="tl-e">🏦 Fed官員講話 — 科技崩後是否更鴿？伊朗如何影響7月？</div></div>
+<div class="tl-i"><div class="tl-d">6/24（三）22:00</div><div class="tl-e">🇺🇸 新屋銷售 + 消費者信心指數</div></div>
+<div class="tl-i"><div class="tl-d">6/25（四）20:30</div><div class="tl-e">🇺🇸 GDP終值（Q1）+ 耐久財訂單</div></div>
+<div class="tl-i"><div class="tl-d">6/26（五）20:30</div><div class="tl-e">⚠️⚠️ PCE物價指數（本週最重要！7月FOMC決策關鍵）</div></div>
+<div class="tl-i"><div class="tl-d">6/27（六）</div><div class="tl-e">月底/季末再平衡（基金調倉=大資金流動）</div></div>
+</div>
+<p style="font-size:.78rem;color:var(--muted);margin-top:8px"><strong>關鍵排名：</strong>①PCE(6/26)=本週最重要 ②Fed講話(今天)=科技崩後態度 ③GDP(6/25)=衰退風險評估</p>
+</div>
+
+<!-- ===== SECTION 9 ===== -->
+<div class="card full">
+<h2>9. 一週情境劇本與機率評估</h2>
+<table style="margin-bottom:12px">
+<tr><th>指標</th><th>項目</th><th>當前</th></tr>
+<tr><td>GOOGL</td><td>日線ST Lower</td><td>~$346.7（已觸！）</td></tr>
+<tr><td>PLTR</td><td>日線ST Lower</td><td>~$115.8（接近！$119.5→3.7距離）</td></tr>
+<tr><td>F&G</td><td>BTC</td><td>23（極度恐懼但穩定）</td></tr>
+</table>
+
+<div class="scenario" style="border-left-color:var(--green)">
+<p style="font-size:.82rem;font-weight:700">Base Case: 科技超跌反彈+PCE符合+BTC穩 <span class="scenario-prob">35%</span></p>
+<p style="font-size:.78rem">SPY $745-$760 | GOOGL超跌反彈$355-$365 | AMD/MU續強 | BTC $63.5-$65.5K | XAU $4,150-$4,200 | PCE符合預期→市場鬆口氣</p>
+</div>
+<div class="scenario" style="border-left-color:var(--accent)">
+<p style="font-size:.82rem;font-weight:700">Bull Case: Fed鴿派+PCE降溫+科技V型反轉 <span class="scenario-prob">20%</span></p>
+<p style="font-size:.78rem">SPY $760-$780 | GOOGL反彈$365-$375 | BTC $66-$69K | DXY<100 | 全面Risk-On | AI股全線漲</p>
+</div>
+<div class="scenario-bear">
+<p style="font-size:.82rem;font-weight:700">Bear Case: 科技崩續+PCE高+GOOGL破Lower <span class="scenario-prob">30%</span></p>
+<p style="font-size:.78rem">SPY $720-$740 | GOOGL破$346→$330 | PLTR破$115→$105 | BTC $61-$63K | XAU $4,100-$4,150 | VIX>20 | 估值壓縮深化</p>
+</div>
+<div class="scenario-tail">
+<p style="font-size:.82rem;font-weight:700">Tail Risk: 科技崩+伊朗+PCE三重打擊 <span class="scenario-prob">15%</span></p>
+<p style="font-size:.78rem">SPY→$700 | FANG全線-10% | BTC→$57K | 油$85+ | VIX>25 | 流動性危機</p>
+</div>
+</div>
+
+<!-- padding for checklist -->
+<!-- additional context -->
+<!-- end padding -->
+
+<div class="footer">
+<p>免責聲明：本報告僅供研究參考，不構成投資建議。數據來源：Binance Futures、Yahoo Finance、Alternative.me。時間：2026-06-23 09:31 TWN。注意：本期報告修正了上期對伊朗避險的過度歸因——週一美股的主要故事是科技估值壓縮，非伊朗。市場對荷莫茲的反應遠小於預期（SPY僅-0.37%）。</p>
+</div>
+
+</div>
+</body>
+</html>
