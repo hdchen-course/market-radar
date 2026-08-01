@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-08-01 週六複盤 記憶體殺vs軟體漲兩條獨立線(非同一敘事):MU-10%軋空退潮+毛利憂/GOOGL+4.75%AMZN+4.9%自身營收 | 🟣對抗驗證揪出:記憶體成本利空框架被AMZN(最大買方卻漲)當場證偽 | 白銀$57.9未上$60,EWY跌破$160</title>
+<style>:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}.container{max-width:1440px;margin:0 auto}header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}header .sub{color:var(--muted);font-size:.85rem}.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:.8rem;margin-top:10px}.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}.card h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:500;font-size:.74rem}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:600}.t-bull{background:rgba(63,185,80,.15);color:var(--green)}.t-bear{background:rgba(248,81,73,.15);color:var(--red)}.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}.mr:last-child{border-bottom:none}.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}.pi .pr{font-size:.95rem;font-weight:700}.pi .ch{font-size:.75rem;margin-top:1px}.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}.risk-bar .f{height:100%;border-radius:3px}.rh .f{background:var(--red);width:90%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}.rmh .f{background:var(--orange);width:75%}.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}.tl-i{position:relative;margin-bottom:13px}.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}.tl-e{font-size:.8rem;margin-top:2px}.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}.st-long{background:rgba(63,185,80,.18);color:var(--green)}.st-short{background:rgba(248,81,73,.18);color:var(--red)}.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}.alert{background:#0a1a0a;border:1px solid #238636;border-radius:6px;padding:12px;margin:8px 0}.alert-warn{background:#1a1000;border:1px solid#db6d28;border-radius:6px;padding:12px;margin:8px 0}.adv{background:rgba(163,113,247,.08);border:1px solid rgba(163,113,247,.35);border-radius:8px;padding:14px;margin:10px 0}.adv h3{color:var(--purple);font-size:.9rem;margin-bottom:8px}.v-conf{color:var(--green);font-weight:700}.v-plaus{color:var(--yellow);font-weight:700}.v-ref{color:var(--red);font-weight:700}</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+<p class="sub">2026-08-01 週六複盤 (台灣時間 08:44 / 美股週五收盤) | 記憶體殺 vs 軟體漲，兩條獨立線</p>
+<div class="badge badge-warn">記憶體殺vs軟體漲=兩條獨立線(非同一敘事):MU-10%(軋空退潮+毛利憂)/EWY-3.7% vs GOOGL+4.75%/AMZN+4.9%(自身營收+輪動) | 🟣對抗驗證揪出「記憶體成本利空傳導軟體」框架被AMZN(最大記憶體買方卻漲最多)當場證偽 | 白銀$57.9未上$60未解套,EWY跌破$160</div>
+</header>
+
+<!-- ===== 對抗式驗證摘要 ===== -->
+<div class="card full">
+<h2>🟣 STEP 3.5 對抗式解讀驗證（重大分化+持倉決策 → 啟動）</h2>
+<div class="adv">
+<h3>5條因果宣稱裁決：0 CONFIRMED / 3 PLAUSIBLE / 2 REFUTED（含報告最想寫的核心敘事被證偽）</h3>
+<table>
+<tr><th>#</th><th>原宣稱</th><th>裁決</th><th>處置</th></tr>
+<tr><td>1</td><td>MU-10%=記憶體峰值毛利憂+AI對沖基金爆倉去槓桿</td><td class="v-plaus">PLAUSIBLE</td><td>主因改回「前兩日+25%軋空退潮/獲利了結」,毛利憂是7/29舊文非新催化;AI基金爆倉對MU無連結證據,僅情緒參考</td></tr>
+<tr><td>2</td><td>GOOGL/AMZN漲=記憶體成本利空→雲端成本疑慮(反漲矛盾)</td><td class="v-ref">REFUTED</td><td>宣稱自承矛盾;軟體漲與記憶體成本無因果,是自身AI營收+資金輪動,獨立故事</td></tr>
+<tr><td>3</td><td>分化=AI capex獎懲(記憶體貴=軟體成本利空但獎雲端營收)</td><td class="v-ref">REFUTED致命</td><td>AMZN(最大記憶體買方$220B)反漲+4.9%直接證偽「記憶體成本利空」;拆兩條獨立線</td></tr>
+<tr><td>4</td><td>金銀跌=10Y升4.745%壓</td><td class="v-plaus">PLAUSIBLE</td><td>DXY跌破100矛盾→非美元主導;改「risk-on輪動(VIX回落15.99)資金撤避險」訊號混雜</td></tr>
+<tr><td>5</td><td>BTC-2.76%=自身腿弱+AI基金爆倉波及</td><td class="v-plaus">PLAUSIBLE</td><td>去掉「爆倉波及」(無連結),保留加密自身去槓桿(F&G27)</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:8px"><strong>本份對抗驗證擋掉「報告最想寫的核心敘事」——「AI capex 獎懲/記憶體成本傳導軟體」框架(宣稱2+3)被 AMZN 當場證偽:AMZN 是最大記憶體買方(capex $220B 含記憶體成本),若「記憶體漲價/毛利憂」是成本利空,它最該跌,卻 +4.9% 漲最多。這證明記憶體殺與軟體漲是「兩條分開的線」,不存在單一傳導。<strong>正確拆法:①晶片籃=前兩日軋空退潮+獲利了結+記憶體毛利結構憂(自身);②大型軟體=自身AI營收預期+資金自晶片輪動至軟體。</strong>另修正:金銀跌非純10Y(DXY跌破100矛盾)是risk-on輪動;MU-10%主因軋空退潮非新催化;AI對沖基金爆倉對MU/BTC的波及連結未證實不當因果;週五非農無確認不寫入。以下均為對抗驗證後改寫版。</strong></p>
+</div>
+</div>
+
+<!-- ===== S0 ===== -->
+<div class="card full">
+<h2>0. 上期預測回顧（2026-07-31 PM 報告）</h2>
+<p style="font-size:.82rem;margin-bottom:8px"><strong>區間命中率：2/4 (50%)</strong>｜方向：<strong>PM「盤中回吐、趨勢未證實」判斷後續發展</strong>——PM晶片盤中回吐,今記憶體續殺確認回吐擴大;軟體逆漲。</p>
+<table>
+<tr><th>標的</th><th>PM預估區間</th><th>方向</th><th>實際(現)</th><th>區間</th><th>方向</th></tr>
+<tr><td>XAU</td><td>$4,042-$4,074</td><td>中性(雜訊區間)</td><td>$4,054.33 (-1.09%)</td><td><span class="pos">IN</span></td><td>✅ 中性,小回</td></tr>
+<tr><td>XAG</td><td>$57.36-$58.32</td><td>中性(未上$60)</td><td>$57.90 (-1.80%)</td><td><span class="pos">IN</span></td><td>✅ 中性,仍未上$60</td></tr>
+<tr><td>BTC</td><td>$63,241-$64,099</td><td>偏弱(自身腿)</td><td>$62,980 (-2.76%)</td><td><span class="neg">OUT↓</span></td><td>✅ 偏弱對,自身腿續弱</td></tr>
+<tr><td>ETH</td><td>$1,857-$1,895</td><td>偏弱(自身腿)</td><td>$1,866 (-2.65%)</td><td><span class="pos">IN</span></td><td>✅ 偏弱對</td></tr>
+</table>
+<div class="alert-warn"><p style="font-size:.78rem"><strong>教訓（PM判斷後續：晶片回吐擴大，但仍是分化非全崩）：</strong>①<strong>PM「盤中回吐≠趨勢轉跌、趨勢未證實」的謹慎判對</strong>——今記憶體續殺(MU-10%),晶片籃回吐擴大;PM「加密自身腿弱非跟晶片」也對(BTC/ETH續弱)。②<strong>但今日對抗驗證抓到「記憶體vs軟體」分化的過度擬合陷阱</strong>:我原想用「AI capex獎懲/記憶體成本傳導」統一解釋,被AMZN(最大記憶體買方卻+4.9%)當場證偽——必須拆成兩條獨立線。③<strong>MU-10%主因(對抗驗證後):前兩日+25%軋空退潮/獲利了結為主,疊加記憶體峰值毛利率提早下滑的結構憂(TechStock² 7/29,非週五新催化)。</strong>④<strong>使用者持倉(誠實)</strong>:EWY-3.73%至$157.57=**已跌破PM設的$160警戒線**,PM說過「跌破$160視為盤中回吐轉趨勢轉跌警訊、剩餘部位主動出而非續等$175」——這條線今日觸發,見Section 5;白銀$57.90仍未上$60未解套。⑤金銀跌訊號混雜(10Y升vs DXY跌破100矛盾),更可能risk-on輪動(VIX回落15.99)撤離避險。⑥週五非農無確認,不寫入。</p></div>
+</div>
+
+<!-- ===== S1 ===== -->
+<div class="card full">
+<h2>1. 即時報價面板（美股週五收盤，加密/貴金屬即時）</h2>
+<div class="price-grid">
+<div class="pi"><div class="tk">BTC</div><div class="pr">$62,980</div><div class="ch neg">-2.76%</div></div>
+<div class="pi"><div class="tk">ETH</div><div class="pr">$1,866</div><div class="ch neg">-2.65%</div></div>
+<div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,054.33</div><div class="ch neg">-1.09%</div></div>
+<div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$57.90</div><div class="ch neg">-1.80%</div></div>
+<div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.511</div><div class="ch neu">-0.02%</div></div>
+<div class="pi"><div class="tk">XPT 鉑</div><div class="pr">$1,643</div><div class="ch neg">-0.81%</div></div>
+<div class="pi"><div class="tk">XPD 鈀</div><div class="pr">$1,286</div><div class="ch neg">-2.53%</div></div>
+<div class="pi"><div class="tk">INTC</div><div class="pr">$89.82</div><div class="ch neg">-6.43%</div></div>
+<div class="pi"><div class="tk">NVDA</div><div class="pr">$199.58</div><div class="ch pos">+0.84%</div></div>
+<div class="pi"><div class="tk">TSM</div><div class="pr">$405.09</div><div class="ch neg">-1.78%</div></div>
+<div class="pi"><div class="tk">MU</div><div class="pr">$817.12</div><div class="ch neg">-10.32%</div></div>
+<div class="pi"><div class="tk">AMD</div><div class="pr">$474.67</div><div class="ch neg">-5.77%</div></div>
+<div class="pi"><div class="tk">AVGO</div><div class="pr">$388.28</div><div class="ch neg">-0.76%</div></div>
+<div class="pi"><div class="tk">QCOM</div><div class="pr">$147.70</div><div class="ch neg">-4.15%</div></div>
+<div class="pi"><div class="tk">MSFT</div><div class="pr">$462.08</div><div class="ch pos">+3.18%</div></div>
+<div class="pi"><div class="tk">GOOGL</div><div class="pr">$353.86</div><div class="ch pos">+4.75%</div></div>
+<div class="pi"><div class="tk">META</div><div class="pr">$555.55</div><div class="ch pos">+1.90%</div></div>
+<div class="pi"><div class="tk">AMZN</div><div class="pr">$270.15</div><div class="ch pos">+4.90%</div></div>
+<div class="pi"><div class="tk">TSLA</div><div class="pr">$310.41</div><div class="ch neg">-0.32%</div></div>
+<div class="pi"><div class="tk">PLTR</div><div class="pr">$122.99</div><div class="ch neg">-0.45%</div></div>
+<div class="pi"><div class="tk">MSTR</div><div class="pr">$93.91</div><div class="ch neg">-3.99%</div></div>
+<div class="pi"><div class="tk">EWY 韓國</div><div class="pr">$157.57</div><div class="ch neg">-3.73%</div></div>
+<div class="pi"><div class="tk">SPY</div><div class="pr">$746.02</div><div class="ch pos">+0.14%</div></div>
+<div class="pi"><div class="tk">SPCX</div><div class="pr">$108.49</div><div class="ch neg">-4.48%</div></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+<span style="font-size:.8rem"><span class="mr-l">WTI原油 </span><span class="mr-v">$86.80</span> <span class="neu">(+3.8%)</span></span>
+<span style="font-size:.8rem"><span class="mr-l">DXY </span><span class="mr-v pos">99.80</span> <span class="pos">(跌破100,利貴金屬)</span></span>
+<span style="font-size:.8rem"><span class="mr-l">VIX </span><span class="mr-v pos">15.99</span> <span class="pos">(回落,risk-on)</span></span>
+<span style="font-size:.8rem"><span class="mr-l">10Y </span><span class="mr-v neg">4.745%</span> <span class="neg">(升,壓無息)</span></span>
+<span style="font-size:.8rem"><span class="mr-l">TAIEX </span><span class="mr-v">43,120</span> <span class="neu">(週五值)</span></span>
+<span style="font-size:.8rem"><span class="mr-l">加密F&G </span><span class="mr-v neg">27 恐懼</span> <span class="neg">(續恐懼)</span></span>
+</div>
+<p style="font-size:.72rem;color:var(--muted);margin-top:8px"><strong>關鍵(對抗驗證後):記憶體殺(MU-10%軋空退潮+毛利憂/EWY-3.7%)vs軟體漲(GOOGL+4.75%/AMZN+4.9%自身營收+輪動)=兩條獨立線,非同一敘事;AMZN最大記憶體買方卻漲最多,證偽「記憶體成本利空傳導」。</strong>SPY持平+0.14%、VIX回落15.99=非全崩。<strong>誠實:金銀跌訊號混雜(10Y升vs DXY破100),risk-on輪動撤避險;白銀$57.9未上$60未解套;加密自身腿弱(F&G27);週五非農無確認不寫。</strong></p>
+</div>
+
+<!-- ===== S2 ===== -->
+<div class="card full">
+<h2>2. 市場主導 Regime</h2>
+<div class="mr"><span class="mr-l">核心變數</span><span class="mr-v">兩條獨立線:晶片籃(軋空退潮+記憶體毛利結構憂)殺 vs 大型軟體(自身AI營收+資金輪動)漲;非單一傳導</span></div>
+<div class="mr"><span class="mr-l">短期（1-3日）</span><span class="mr-v warn">晶片籃回吐(軋空退潮)vs軟體強;risk-on輪動(VIX15.99)撤避險壓金銀;加密自身去槓桿</span></div>
+<div class="mr"><span class="mr-l">中期（1-4週）</span><span class="mr-v neu">記憶體峰值毛利結構憂vs大型軟體AI營收;資金晶片→軟體輪動能否延續</span></div>
+<div class="mr"><span class="mr-l">長期（季度）</span><span class="mr-v neu">AI鏈內部分化(軟體/雲端營收vs記憶體週期);DXY破100長線利貴金屬但短期risk-on撤避險</span></div>
+<div class="mr"><span class="mr-l">Regime 判定</span><span class="mr-v warn">AI鏈內部輪動分化(ROTATION)——資金自晶片(軋空退潮)輪動至大型軟體(營收),非全崩;risk-on撤避險</span></div>
+</div>
+
+<!-- ===== S3 ===== -->
+<div class="card full">
+<h2>3. 市場共識 vs Reality（因果均經對抗式驗證）</h2>
+<table>
+<tr><th>主題</th><th>市場預期/慣性敘事</th><th>實際(對抗驗證後✓)</th><th>Mispricing</th></tr>
+<tr><td>記憶體vs軟體分化</td><td>AI capex獎懲/記憶體成本傳導</td><td>REFUTED→兩條獨立線,AMZN最大買方卻漲證偽傳導</td><td>過度擬合被糾正</td></tr>
+<tr><td>MU-10%</td><td>記憶體毛利/AI基金爆倉</td><td>主因軋空退潮/獲利了結(前+25%),毛利憂是舊文</td><td>大漲後回吐正常</td></tr>
+<tr><td>軟體漲</td><td>記憶體成本利空反漲?</td><td>REFUTED→自身AI營收+資金輪動,獨立故事</td><td>與記憶體無因果</td></tr>
+<tr><td>貴金屬(持倉)</td><td>10Y升壓</td><td>訊號混雜(DXY破100矛盾),risk-on撤避險</td><td>非純利率</td></tr>
+<tr><td>加密</td><td>AI基金爆倉波及</td><td>自身去槓桿(F&G27),爆倉波及未證實</td><td>勿當因果</td></tr>
+</table>
+<div class="adv"><p style="font-size:.78rem"><strong>🟣 對抗式驗證後的最大 Mispricing/本期關鍵:「記憶體vs軟體分化」不是同一敘事，是兩條獨立線（報告最想寫的傳導框架被AMZN證偽）</strong>——<strong>記憶體/晶片再殺(MU-10.32%/INTC-6.43%/AMD-5.77%/EWY-3.73%)vs軟體大型科技逆漲(GOOGL+4.75%/AMZN+4.90%/MSFT+3.18%),SPY持平+0.14%、VIX回落15.99=非全崩,是分化。</strong>①<strong>對抗驗證擋掉致命過度擬合:我原想用「AI capex獎懲/記憶體成本傳導軟體」統一解釋,但AMZN是最大記憶體買方(capex $220B含記憶體成本),若記憶體漲價/毛利憂是成本利空,AMZN最該跌卻+4.9%漲最多——直接證偽傳導框架。正確拆兩條獨立線:晶片籃=前兩日+25%軋空退潮/獲利了結+記憶體峰值毛利率結構憂(TechStock² 7/29,自身);大型軟體=自身AI營收預期+資金自晶片輪動至軟體。</strong>②<strong>MU-10%主因軋空退潮</strong>:前兩日暴漲+25%(含軋空),回吐-10%在正常範圍,毛利憂(7/29舊文)非週五新催化;「AI對沖基金爆倉」(Quartz✓)對MU無直接連結,僅情緒參考。③<strong>貴金屬跌訊號混雜</strong>:10Y升4.745%(逆風)但DXY跌破100(本應撐金),方向矛盾→非美元主導,更可能risk-on輪動(VIX回落15.99)資金撤離避險,銀-1.8%>金-1.1%反映工業/風險腿。<strong>誠實三點:①記憶體vs軟體兩條線分開講,不編單一傳導;②MU-10%是軋空退潮非新災難;③白銀$57.9未上$60=持倉未解套,EWY跌破$160警戒線(見Section 5持倉判斷);週五非農無確認不寫。</strong></p></div>
+</div>
+
+<!-- ===== S4 ===== -->
+<div class="card full">
+<h2>4. 跨資產強弱矩陣（由強到弱，週五收盤·驅動經對抗驗證）</h2>
+<table>
+<tr><th>#</th><th>資產</th><th>24h%</th><th>ST方向</th><th>驅動（對抗驗證✓/待查?）</th></tr>
+<tr><td>1</td><td>AMZN</td><td class="pos">+4.90%</td><td>盤整偏多</td><td>✓自身AI營收+資金輪動(獨立線,非記憶體傳導,對抗驗證糾正)</td></tr>
+<tr><td>2</td><td>GOOGL</td><td class="pos">+4.75%</td><td>盤整偏多</td><td>?自身營收+晶片→軟體輪動(獨立線,個股催化待查)</td></tr>
+<tr><td>3</td><td>MSFT</td><td class="pos">+3.18%</td><td>盤整偏多</td><td>?軟體/雲端輪動受惠(獨立線)</td></tr>
+<tr><td>4</td><td>META</td><td class="pos">+1.90%</td><td>盤整</td><td>?大型軟體跟漲</td></tr>
+<tr><td>5</td><td>NVDA</td><td class="pos">+0.84%</td><td>盤整</td><td>?AI晶片龍頭與記憶體分化(相對強)</td></tr>
+<tr><td>6</td><td>SPY</td><td class="pos">+0.14%</td><td>盤整</td><td>?軟體撐vs記憶體殺,持平=非全崩</td></tr>
+<tr><td>7</td><td>COPPER 銅</td><td class="neu">-0.02%</td><td>盤整</td><td>?工業金屬持平</td></tr>
+<tr><td>8</td><td>TSLA</td><td class="neg">-0.32%</td><td>盤整</td><td>?小跌</td></tr>
+<tr><td>9</td><td>PLTR</td><td class="neg">-0.45%</td><td>盤整</td><td>?軟體小跌(與大型軟體分化)</td></tr>
+<tr><td>10</td><td>AVGO</td><td class="neg">-0.76%</td><td>盤整</td><td>?AI晶片相對抗跌</td></tr>
+<tr><td>11</td><td>XPT 鉑</td><td class="neg">-0.81%</td><td>盤整</td><td>?貴金屬risk-on撤離</td></tr>
+<tr><td>12</td><td>XAU 黃金</td><td class="neg">-1.09%</td><td>盤整(300)</td><td>?訊號混雜:10Y升vs DXY破100,risk-on撤避險</td></tr>
+<tr><td>13</td><td>TSM</td><td class="neg">-1.78%</td><td>盤整偏空</td><td>?代工跟記憶體殺(相對抗跌)</td></tr>
+<tr><td>14</td><td>XAG 白銀</td><td class="neg">-1.80%</td><td>盤整(300)</td><td>?risk-on撤避險+工業腿,未上$60未解套(持倉)</td></tr>
+<tr><td>15</td><td>XPD 鈀</td><td class="neg">-2.53%</td><td>盤整偏空</td><td>?貴金屬risk-on撤離</td></tr>
+<tr><td>16</td><td>ETH</td><td class="neg">-2.65%</td><td>盤整(300)</td><td>?加密自身去槓桿(F&G27)</td></tr>
+<tr><td>17</td><td>BTC</td><td class="neg">-2.76%</td><td>盤整(300)</td><td>?加密自身腿弱(F&G27),爆倉波及未證實</td></tr>
+<tr><td>18</td><td>EWY 韓國</td><td class="neg">-3.73%</td><td>盤整偏空</td><td>?記憶體殺(持倉線,跌破$160警戒)</td></tr>
+<tr><td>19</td><td>MSTR</td><td class="neg">-3.99%</td><td>盤整偏空</td><td>?BTC弱+自身(前證Q2虧)</td></tr>
+<tr><td>20</td><td>QCOM</td><td class="neg">-4.15%</td><td>盤整偏空</td><td>?晶片跟記憶體殺</td></tr>
+<tr><td>21</td><td>SPCX</td><td class="neg">-4.48%</td><td>盤整偏空</td><td>?高beta回吐(待查)</td></tr>
+<tr><td>22</td><td>AMD</td><td class="neg">-5.77%</td><td>盤整偏空</td><td>?晶片軋空退潮(前+17%後回吐)</td></tr>
+<tr><td>23</td><td>INTC</td><td class="neg">-6.43%</td><td>盤整偏空</td><td>?晶片軋空退潮(前+18%後回吐,使用者已出場)</td></tr>
+<tr><td>24</td><td>MU</td><td class="neg">-10.32%</td><td>盤整偏空</td><td>?軋空退潮/獲利了結(前+25%)+記憶體毛利結構憂(對抗驗證)</td></tr>
+</table>
+</div>
+
+<!-- ===== S5 ===== -->
+<div class="card full">
+<h2>5. 量化風險雷達</h2>
+<table>
+<tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+<tr><td>晶片軋空退潮續(前暴漲全回吐)</td><td>中高</td><td>MU/EWY/AMD回吐擴大</td><td>SOXX/EWY(持倉)/MU</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+<tr><td>EWY跌破$160=盤中回吐轉趨勢轉跌(持倉警戒觸發)</td><td>中高</td><td>持倉EWY剩餘部位決策點</td><td>EWY(持倉)</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+<tr><td>記憶體峰值毛利結構憂延續</td><td>中</td><td>記憶體鏈估值下修</td><td>MU/EWY/SK Hynix</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+<tr><td>白銀未上$60遇壓+risk-on撤避險</td><td>中</td><td>XAG回落(持倉未解套)</td><td>XAG(持倉)</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+<tr><td>9月升息「live」+10Y升4.745%壓貴金屬</td><td>中</td><td>金銀反彈上限</td><td>XAU/XAG</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+</table>
+<h3 style="font-size:.85rem;margin:12px 0 6px;color:var(--muted)">操作型態速判（持倉XAG/EWY為重點）</h3>
+<table>
+<tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+<tr><td>XAG</td><td>$57.90</td><td><span class="tag t-neu">未上$60未解套</span></td><td>金銀比70.0,$60獲利線,守$57</td></tr>
+<tr><td>EWY</td><td>$157.57</td><td><span class="tag t-bear">跌破$160警戒(持倉)</span></td><td>PM設$160警戒已破,剩餘部位決策點</td></tr>
+<tr><td>XAU</td><td>$4,054.33</td><td><span class="tag t-neu">訊號混雜</span></td><td>10Y升vs DXY破100,守$4,024</td></tr>
+<tr><td>NOK</td><td>持倉待查</td><td><span class="tag t-neu">非核心庫查即時</span></td><td>跟電信/AI</td></tr>
+<tr><td>BTC</td><td>$62,980</td><td><span class="tag t-bear">自身腿弱(情緒)</span></td><td>F&G27,破$63K</td></tr>
+<tr><td>MU</td><td>$817.12</td><td><span class="tag t-bear">軋空退潮-10%</span></td><td>前+25%後回吐,不接刀</td></tr>
+<tr><td>AMZN</td><td>$270.15</td><td><span class="tag t-bull">自身營收+4.9%</span></td><td>獨立線,非記憶體傳導</td></tr>
+<tr><td>GOOGL</td><td>$353.86</td><td><span class="tag t-bull">輪動+4.75%</span></td><td>資金晶片→軟體</td></tr>
+<tr><td>NVDA</td><td>$199.58</td><td><span class="tag t-neu">與記憶體分化</span></td><td>相對強+0.84%</td></tr>
+<tr><td>油WTI</td><td>$86.80</td><td><span class="tag t-neu">+3.8%</span></td><td>反彈</td></tr>
+<tr><td>XPD</td><td>$1,286</td><td><span class="tag t-neu">risk-on撤離</span></td><td>-2.53%</td></tr>
+<tr><td>XPT</td><td>$1,643</td><td><span class="tag t-neu">-0.81%</span></td><td>貴金屬撤離</td></tr>
+</table>
+</div>
+
+<!-- ===== S6 ===== -->
+<div class="card full">
+<h2>6. 完整戰術分析</h2>
+
+<!-- A. XAU -->
+<div class="tactical-box">
+<h3 style="font-size:.9rem;color:var(--cyan)">A. XAU 黃金 $4,054.33 (-1.09%，訊號混雜)</h3>
+<div class="st-summary"><span class="st-tag st-long">日 中性(300)</span><span class="st-tag st-long">4h 中性</span><span class="st-tag st-long">1h 中性</span></div>
+<p style="font-size:.76rem">ST(300,3)：日 ATR≈$78.9 上$4,333/下$3,857；4h ATR≈$28.3 上$4,168/下$3,997；1h ATR≈$11.1 上$4,088/下$4,024。訊號混雜,守$4,024。</p>
+<div class="score-card">
+<span class="score-item sc-pass">DXY 99.80跌破100(利多)✓</span>
+<span class="score-item sc-fail">實質利率 10Y升4.745%(逆風)✗</span>
+<span class="score-item sc-pass">央行購金結構✓</span>
+<span class="score-item sc-neutral">ST中性○</span>
+<span class="score-item sc-fail">risk-on撤避險(VIX15.99)✗</span>
+</div>
+<p style="font-size:.78rem"><strong>方向：中性(訊號混雜，DXY利多vs 10Y升+risk-on撤離拉鋸)</strong>（對抗驗證:金-1.09%不可單歸10Y——DXY跌破100本應撐金,方向矛盾;更可能risk-on輪動(VIX回落15.99)資金撤離避險。DXY破100為長線潛在利多但短期被risk-on壓）。計分 2.5/5。</p>
+<p style="font-size:.78rem"><strong>24h預估：</strong>$4,054.33 ± ATR_1H×1.5 = $4,054 ± $17 → <strong>$4,037 - $4,071</strong></p>
+<table>
+<tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>中性(回踩$4,024多)</td><td>$4,024-$4,035</td><td>$3,998</td><td>$4,100</td><td>1:2.6</td></tr>
+</table>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>Base 訊號混雜整理</td><td>DXY利多vs 10Y升拉鋸</td><td>$4,024-$4,090</td><td>50%</td></tr>
+<tr><td>Bull DXY破100帶動</td><td>DXY續跌+risk-off回歸</td><td>$4,150</td><td>26%</td></tr>
+<tr><td>Bear 10Y升壓</td><td>10Y破4.8%+risk-on續</td><td>$4,000</td><td>24%</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:6px"><strong>黃金→白銀傳導：</strong>金銀比=4054.33/57.90=<strong>70.0</strong>(持平)。金-1.09%、銀-1.80%,銀跌幅較大,金銀比微擴=<strong>白銀工業/風險腿在risk-on撤離中跌較兇</strong>。對抗驗證:金銀跌是訊號混雜(10Y升vs DXY破100),更可能risk-on輪動撤避險,非純利率主導。白銀持倉未上$60。</p>
+</div>
+
+<!-- B. XAG -->
+<div class="tactical-box">
+<h3 style="font-size:.9rem;color:var(--cyan)">B. XAG 白銀 $57.90 (-1.80%) — 使用者持倉，$60為獲利線（仍未解套）</h3>
+<div class="st-summary"><span class="st-tag st-long">日 中性(300)</span><span class="st-tag st-long">4h 中性</span><span class="st-tag st-long">1h 中性</span></div>
+<p style="font-size:.76rem">ST(300,3)：日 ATR≈$2.76 上$67.1/下$50.5；4h ATR≈$0.86 上$61.0/下$56.2；1h ATR≈$0.33 上$59.4/下$57.4。$60前壓未破,守$57,$60為持倉獲利線。</p>
+<div class="score-card">
+<span class="score-item sc-pass">DXY 99.80跌破100✓</span>
+<span class="score-item sc-neutral">黃金-1.09%小跌○</span>
+<span class="score-item sc-neutral">金銀比70.0○</span>
+<span class="score-item sc-neutral">ST中性○</span>
+<span class="score-item sc-neutral">COT待查?</span>
+<span class="score-item sc-neutral">現貨溢價待查?</span>
+<span class="score-item sc-fail">risk-on撤避險+工業腿弱✗</span>
+</div>
+<p style="font-size:.78rem"><strong>方向：中性偏弱(risk-on撤避險，未上$60未解套)</strong>。計分 2.5/7。<strong>白銀-1.80%,risk-on輪動(VIX回落15.99)撤離避險+工業腿(銀跌幅>金)拖累——但DXY跌破100為潛在支撐。你的持倉仍未上$60、未到獲利線。</strong>$60前壓未破,守$57。</p>
+<p style="font-size:.78rem"><strong>24h：</strong>$57.90 ± ATR_1H×1.5 ≈ $57.90 ± $0.50 → <strong>$57.40 - $58.40</strong></p>
+<table>
+<tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>中性(回踩$57多)</td><td>$57.0-$57.3</td><td>$56.2</td><td>$60.0</td><td>1:2.9</td></tr>
+</table>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>Base 守$57逼$60</td><td>DXY破100撐vs risk-on壓</td><td>$57-$59</td><td>48%</td></tr>
+<tr><td>Bull 站上$60(持倉解套)</td><td>DXY續跌+risk-off避險回歸</td><td>$61</td><td>26%</td></tr>
+<tr><td>Bear 回落</td><td>risk-on續+10Y升</td><td>$56</td><td>26%</td></tr>
+</table>
+<p style="font-size:.78rem"><strong>籌碼面：</strong>Binance FR=0(現貨型)。金銀比70.0(持平)。<strong>屬性判定：白銀今risk-on撤避險+工業腿弱主導,DXY破100為潛在支撐,訊號混雜</strong>。<strong>誠實(回應使用者持倉):白銀$57.90仍未上$60=你的持倉仍未解套、未到獲利線;今日跌是risk-on輪動撤離避險非新利空,DXY跌破100是潛在利多(貨幣腿框架:白銀對FOMC/DXY敏感度高)。站上$60才是你的獲利門檻。COT/現貨溢價待查。風控(依規):$55生死線/$60獲利線。持倉線建議:$60為獲利兌現點站上減碼;DXY破100是關鍵觀察——若帶動貴金屬轉強、白銀有機會挑戰$60解套,但9月升息「live」+10Y升是上限。</strong></p>
+</div>
+
+<!-- C. BTC -->
+<div class="tactical-box">
+<h3 style="font-size:.9rem;color:var(--cyan)">C. BTC $62,980 (-2.76%，情緒溫度計)</h3>
+<div class="st-summary"><span class="st-tag st-long">日 中性(300)</span><span class="st-tag st-long">4h 中性偏弱</span><span class="st-tag st-long">1h 中性偏弱</span></div>
+<p style="font-size:.76rem">ST(300,3)：日 ATR≈$2,895 上$73.46K/下$56.07K；4h ATR≈$753 上$66.60K/下$62.04K；1h ATR≈$293 上$65.18K/下$63.48K。破$63K,守$62K。</p>
+<div class="score-card">
+<span class="score-item sc-pass">DXY 99.80跌破100○</span>
+<span class="score-item sc-fail">F&G 27恐懼✗</span>
+<span class="score-item sc-neutral">FR 0.0041%(中性)○</span>
+<span class="score-item sc-fail">加密自身去槓桿✗</span>
+<span class="score-item sc-neutral">鏈上待查?</span>
+<span class="score-item sc-neutral">爆倉波及未證實○</span>
+</div>
+<p style="font-size:.78rem"><strong>方向：偏弱(加密自身去槓桿續)</strong>。計分 2/6。<strong>[情緒溫度計·非操作建議]</strong> BTC-2.76%破$63K,對抗驗證:加密自身去槓桿(F&G 27恐懼)續弱,「AI對沖基金爆倉波及」無連結證據不當因果。<strong>對使用者:加密自身腿弱是它的事,DXY破100本應利加密但未反應=風偏仍弱。</strong></p>
+<p style="font-size:.78rem"><strong>24h：</strong>$62,980 ± ATR_1H×1.5 = $62,980 ± $439 → <strong>$62,541 - $63,419</strong></p>
+<table>
+<tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>中性(僅情緒參考,不建議操作)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>Base 守$62K弱勢</td><td>自身去槓桿(F&G27)</td><td>$62K-$64K</td><td>48%</td></tr>
+<tr><td>Bull 反彈</td><td>DXY破100帶動+F&G回升</td><td>$65K</td><td>22%</td></tr>
+<tr><td>Bear 破$62K</td><td>去槓桿深化</td><td>$60K</td><td>30%</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:6px"><strong>衍生品：</strong>FR=0.0041%(中性);F&G 27恐懼。<strong>關鍵洞察[情緒指標]：BTC-2.76%破$63K,DXY跌破100(本應利加密)但BTC未反應=加密自身去槓桿(F&G27恐懼)主導,風偏仍弱。對抗驗證:「AI對沖基金爆倉波及BTC」無直接連結,不當因果。對使用者用途:加密風偏未回穩,與軟體大型科技的強勢背離,顯示這波是「AI鏈內部輪動」非全面risk-on。BTC不操作,看方向即可。</strong>CME Gap留意。</p>
+</div>
+
+<!-- D. ETH -->
+<div class="tactical-box">
+<h3 style="font-size:.9rem;color:var(--cyan)">D. ETH $1,866.47 (-2.65%，情緒溫度計)</h3>
+<div class="st-summary"><span class="st-tag st-long">日 中性(300)</span><span class="st-tag st-long">4h 中性偏弱</span><span class="st-tag st-long">1h 中性偏弱</span></div>
+<p style="font-size:.76rem">ST(300,3)：日 ATR≈$135 上$2,325/下$1,511；4h ATR≈$28.4 上$1,990/下$1,819；1h ATR≈$12.6 上$1,942/下$1,869。破$1,869,守$1,847。</p>
+<div class="score-card">
+<span class="score-item sc-fail">BTC方向偏弱✗</span>
+<span class="score-item sc-neutral">ETH/BTC 0.0296持平○</span>
+<span class="score-item sc-neutral">FR 0.0067%(中性)○</span>
+<span class="score-item sc-fail">加密自身去槓桿✗</span>
+<span class="score-item sc-neutral">催化待查?</span>
+</div>
+<p style="font-size:.78rem"><strong>方向：偏弱(跟BTC加密自身腿)</strong>。計分 1.5/5。<strong>[情緒溫度計]</strong> ETH-2.65%與BTC同步,ETH/BTC=0.0296持平,加密自身去槓桿續弱。守$1,847。</p>
+<p style="font-size:.78rem"><strong>24h：</strong>$1,866.47 ± ATR_1H×1.5 = $1,866 ± $19 → <strong>$1,847 - $1,885</strong></p>
+<table>
+<tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+<tr><td>中性(僅情緒參考,不建議操作)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+<table>
+<tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+<tr><td>Base 守$1,847弱勢</td><td>加密自身去槓桿</td><td>$1,847-$1,920</td><td>48%</td></tr>
+<tr><td>Bull 反彈</td><td>風偏回穩</td><td>$1,940</td><td>22%</td></tr>
+<tr><td>Bear 破$1,847</td><td>去槓桿深化</td><td>$1,810</td><td>30%</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:6px"><strong>ETH/BTC 分析：</strong>比值0.0296持平,ETH跟BTC加密自身去槓桿續弱。<strong>[情緒指標]對使用者:加密與軟體大型科技強勢背離=這波AI鏈內部輪動非全面risk-on,加密風偏未回穩。ETH不操作,看方向即可。$1,847短線支撐。</strong>獨立催化待查。</p>
+</div>
+
+<!-- E. 美股 -->
+<div class="tactical-box">
+<h3 style="font-size:.9rem;color:var(--cyan)">E. 美股 — 記憶體殺vs軟體漲兩條獨立線(對抗驗證糾正)，持倉EWY跌破$160警戒</h3>
+<p style="font-size:.75rem;color:var(--muted);margin-bottom:8px">⚠️ 美股週五收盤。🟣對抗驗證:記憶體殺與軟體漲是兩條獨立線,非「記憶體成本傳導」(AMZN最大買方卻漲最多證偽);MU-10%主因軋空退潮。</p>
+
+<p style="font-size:.82rem;font-weight:700;color:var(--green);margin-top:8px">📈 漲幅前3（大型軟體，獨立線）</p>
+<p style="font-size:.76rem"><strong>1. AMZN +4.90% ($270.15)：</strong>查證✓(獨立線)——<strong>自身AI營收預期+資金自晶片輪動至軟體</strong>。<strong>🟣對抗驗證關鍵:AMZN是最大記憶體買方(capex $220B含記憶體成本),若「記憶體漲價/毛利憂」是成本利空,它最該跌卻漲最多——直接證偽「記憶體成本傳導軟體」框架,證明兩條獨立線。</strong>ST偏多。方向=自身營收撐,與記憶體殺無因果。5日:Base→$262-$275(48%)|Bull→$285(24%)|Bear→$255(20%)|Tail→$245(8%)。</p>
+<p style="font-size:.76rem"><strong>2. GOOGL +4.75% ($353.86)：</strong>?——資金自晶片輪動至大型軟體。<strong>誠實:未查到GOOGL個股新催化,判自身營收+輪動(獨立線),不編記憶體傳導。</strong>ST偏多。方向=軟體輪動受惠。5日:Base→$345-$360(48%)|Bull→$370(24%)|Bear→$338(20%)|Tail→$328(8%)。</p>
+<p style="font-size:.76rem"><strong>3. MSFT +3.18% ($462.08)：</strong>?——軟體/雲端輪動受惠(獨立線)。<strong>誠實:延續前財報AI capex需求動能,個股當日新催化待查。</strong>ST偏多。方向=軟體強勢。</p>
+
+<p style="font-size:.82rem;font-weight:700;color:var(--red);margin-top:10px">📉 跌幅前3（晶片籃軋空退潮，獨立線）</p>
+<p style="font-size:.76rem"><strong>1. MU -10.32% ($817.12)：</strong>?(對抗驗證PLAUSIBLE拆兩半)——<strong>主因前兩日+25%軋空退潮/獲利了結,疊加記憶體峰值毛利率提早下滑結構憂(TechStock² 7/29,非週五新催化)。</strong><strong>誠實:「AI對沖基金爆倉」(Quartz✓)對MU無直接連結,僅情緒參考不當因果;-10%在暴漲後正常回吐範圍。</strong>ST偏空。方向=軋空退潮,不接刀。5日:Bear→$790(46%)|Base→$810-$860(34%)|Bull→$900(12%)|Tail→$760(8%)。</p>
+<p style="font-size:.76rem"><strong>2. INTC -6.43% ($89.82) / AMD -5.77% ($474.67)：</strong>?——晶片軋空退潮(前+18%/+17%後回吐)。<strong>誠實:跟MU同波軋空退潮,個股當日新催化待查。使用者INTC先前已出場。</strong>ST偏空。方向=軋空退潮。</p>
+<p style="font-size:.76rem"><strong>3. QCOM -4.15% / EWY -3.73%：</strong>?——晶片籃跟殺。<strong>EWY(持倉)$157.57=跌破PM設的$160警戒線,見下方框。</strong>ST偏空。</p>
+
+<div class="alert-warn" style="margin-top:10px"><p style="font-size:.78rem"><strong>💡 使用者持倉EWY：跌破$160警戒線（PM計畫的決策點觸發）</strong>：①<strong>PM報告設定:「跌破$160視為盤中回吐轉趨勢轉跌警訊,剩餘部位主動出而非續等$175」——今EWY $157.57已跌破,這條線觸發。</strong>②<strong>但誠實脈絡(對抗驗證):EWY -3.7%屬晶片籃軋空退潮(前兩日+16%暴漲後回吐),非個股新利空;24h前的暴漲部分是軋空,退潮是預期內。</strong>③<strong>決策參考(非指令):你的分批$175計畫的前提(軋空續燒)已弱化——記憶體毛利結構憂+軋空退潮下,$175需求更難達成。跌破$160的紀律線觸發,傾向:剩餘部位分批出場落袋(而非死等$175),把已實現的反彈利潤鎖住。但這是你的決策,我只提供$160警戒觸發的事實+脈絡。</strong>④風控:若EWY反彈站回$163可再觀察,續跌破$155則趨勢轉跌確立。</p></div>
+
+<p style="font-size:.82rem;font-weight:700;margin-top:10px">其餘快評</p>
+<table>
+<tr><th>標的</th><th>價格</th><th>24h%</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+<tr><td>META</td><td>$555.55</td><td class="pos">+1.90%</td><td><span class="tag t-bull">大型軟體</span></td><td>$550</td><td>?跟軟體輪動</td></tr>
+<tr><td>NVDA</td><td>$199.58</td><td class="pos">+0.84%</td><td><span class="tag t-neu">與記憶體分化</span></td><td>$195</td><td>?AI晶片相對強</td></tr>
+<tr><td>TSM</td><td>$405.09</td><td class="neg">-1.78%</td><td><span class="tag t-neu">代工相對抗跌</span></td><td>$400</td><td>?跟記憶體殺但溫和</td></tr>
+<tr><td>AVGO</td><td>$388.28</td><td class="neg">-0.76%</td><td><span class="tag t-neu">AI晶片抗跌</span></td><td>$385</td><td>?相對抗跌</td></tr>
+<tr><td>TSLA</td><td>$310.41</td><td class="neg">-0.32%</td><td><span class="tag t-neu">持平</span></td><td>$308</td><td>?小跌</td></tr>
+<tr><td>PLTR</td><td>$122.99</td><td class="neg">-0.45%</td><td><span class="tag t-neu">軟體小跌</span></td><td>$120</td><td>?與大型軟體分化</td></tr>
+<tr><td>MSTR</td><td>$93.91</td><td class="neg">-3.99%</td><td><span class="tag t-bear">BTC代理</span></td><td>$92</td><td>?BTC弱+自身(前證Q2虧)</td></tr>
+<tr><td>SPCX</td><td>$108.49</td><td class="neg">-4.48%</td><td><span class="tag t-bear">高beta回吐</span></td><td>$105</td><td>?待查</td></tr>
+<tr><td>SPY</td><td>$746.02</td><td class="pos">+0.14%</td><td><span class="tag t-hold">持平非全崩</span></td><td>$740</td><td>?軟體撐vs記憶體殺</td></tr>
+<tr><td>INTC</td><td>$89.82</td><td class="neg">-6.43%</td><td><span class="tag t-bear">軋空退潮(已出場)</span></td><td>$85</td><td>?使用者已出場</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ===== S7 ===== -->
+<div class="card full">
+<h2>7. 投行觀點與期權結構異常</h2>
+<table>
+<tr><th>來源</th><th>觀點</th><th>影響</th></tr>
+<tr><td>Barron's✓</td><td>「Micron Stock Falls. What's Overshadowing Big Tech Spending」</td><td>記憶體殺(自身,非傳導軟體)</td></tr>
+<tr><td>GuruFocus✓</td><td>「Micron Drops Despite Amazon's $220B AI Bet」</td><td>AMZN買方卻漲=證偽傳導</td></tr>
+<tr><td>TechStock²(7/29)✓</td><td>「Micron shares fall on Sooner Decline in Peak Memory Margins」</td><td>記憶體毛利結構憂(舊文,非新催化)</td></tr>
+<tr><td>Quartz✓</td><td>「Leopold Aschenbrenner AI hedge fund collapses after margin calls」</td><td>AI基金爆倉(對MU/BTC波及未證實,情緒參考)</td></tr>
+<tr><td>24/7 Wall St✓</td><td>「SanDisk down 45% in a month」</td><td>記憶體鏈月內結構弱</td></tr>
+</table>
+<p style="font-size:.78rem;margin-top:8px"><strong>期權結構：</strong>VIX 15.99回落(risk-on);DXY跌破100;10Y升4.745%。<strong>🟣本份第五次啟用對抗驗證(5條:0 CONFIRMED/3 PLAUSIBLE/2 REFUTED,見置頂🟣),最大價值=擋掉報告最想寫的核心敘事「AI capex獎懲/記憶體成本傳導軟體」——被AMZN(最大記憶體買方$220B卻+4.9%漲最多)當場證偽,拆成兩條獨立線:①晶片籃=軋空退潮(前+25%)+記憶體毛利結構憂(自身);②大型軟體=自身AI營收+資金輪動。MU-10%主因軋空退潮非新催化。</strong><strong>誠實:①記憶體vs軟體兩條線分開講不編傳導;②金銀跌訊號混雜(10Y升vs DXY破100),risk-on輪動撤避險非純利率;③AI基金爆倉對MU/BTC波及未證實;④週五非農無確認不寫;⑤GEX/Call Skew未取到。</strong></p>
+</div>
+
+<!-- ===== S8 ===== -->
+<div class="card full">
+<h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+<div class="tl">
+<div class="tl-i"><div class="tl-d">7/29-30（三-四）</div><div class="tl-e">✓FOMC維持(3人要升);晶片V轉暴漲(三星記憶體短缺+財報)MU+25%含軋空</div></div>
+<div class="tl-i"><div class="tl-d">7/31（五）</div><div class="tl-e">✓晶片V轉次日盤中回吐;貴金屬雜訊整理</div></div>
+<div class="tl-i"><div class="tl-d">8/01（六）複盤</div><div class="tl-e">✓記憶體殺(MU-10%軋空退潮)vs軟體漲(GOOGL/AMZN+5%自身)兩條獨立線;EWY跌破$160(持倉警戒)</div></div>
+<div class="tl-i"><div class="tl-d">下週（待確認）</div><div class="tl-e">⚠️AAPL財報+非農數據(週五非農待確認)——晶片軋空退潮vs記憶體結構的方向確認</div></div>
+<div class="tl-i"><div class="tl-d">9月（待確認）</div><div class="tl-e">⚠️9月FOMC升息「live」(3人要升)+10Y升4.745%——貴金屬反彈上限</div></div>
+<div class="tl-i"><div class="tl-d">持續監控</div><div class="tl-e">晶片軋空退潮深度(持倉EWY $160警戒);白銀站$60(持倉獲利線);DXY破100後續</div></div>
+</div>
+<p style="font-size:.78rem;margin-top:8px"><strong>關鍵排名：</strong>①晶片軋空退潮深度(持倉EWY跌破$160警戒觸發) > ②白銀站上$60(持倉獲利線)+DXY破100後續 > ③AAPL/非農 > ④9月升息「live」+10Y升。<strong>誠實：記憶體殺vs軟體漲兩條線、MU軋空退潮、AMZN自身營收均為對抗驗證後事實(Barron's/GuruFocus✓);週五非農無確認不寫入;AAPL/非農日待證。</strong></p>
+</div>
+
+<!-- ===== S9 ===== -->
+<div class="card full">
+<h2>9. 一週情境劇本與機率評估</h2>
+<table>
+<tr><th>預測市場/指標</th><th>當前</th><th>解讀(對抗驗證後)</th></tr>
+<tr><td>記憶體vs軟體</td><td>MU-10%/AMZN+4.9%</td><td>兩條獨立線非傳導(AMZN證偽)</td></tr>
+<tr><td>晶片籃(持倉EWY)</td><td>$157.57跌破$160</td><td>軋空退潮,持倉警戒觸發</td></tr>
+<tr><td>白銀(持倉)</td><td>$57.9未上$60</td><td>risk-on撤避險,未解套</td></tr>
+<tr><td>加密(情緒)</td><td>BTC-2.76%自身腿弱</td><td>與軟體背離=AI鏈內輪動</td></tr>
+<tr><td>DXY/VIX</td><td>DXY破100/VIX15.99</td><td>risk-on,DXY長線利金</td></tr>
+</table>
+<div class="scenario" style="border-left-color:var(--green)">
+<p style="font-size:.82rem;font-weight:700">Base Case: AI鏈內部輪動續(晶片軋空退潮、軟體強),貴金屬訊號混雜整理 <span class="scenario-prob">46%</span></p>
+<p style="font-size:.76rem">資金自晶片(軋空退潮)輪動至大型軟體、SPY靠軟體撐持平;EWY(持倉)跌破$160後弱勢(傾向剩餘部位分批出)、白銀$57-$59未上$60;BTC自身腿弱守$62K。AAPL/非農為方向確認。</p>
+</div>
+<div class="scenario" style="border-left-color:var(--accent)">
+<p style="font-size:.82rem;font-weight:700">Bull Case: 記憶體毛利憂緩+晶片止穩+DXY破100帶貴金屬 <span class="scenario-prob">22%</span></p>
+<p style="font-size:.76rem">記憶體結構憂緩解+晶片軋空退潮止穩+AAPL財報強→晶片籃回穩(EWY站回$163)、DXY續跌帶白銀挑戰$60(持倉解套)、金$4,150。</p>
+</div>
+<div class="scenario-bear">
+<p style="font-size:.82rem;font-weight:700">Bear Case: 晶片軋空全回吐+記憶體結構殺+非農利空 <span class="scenario-prob">24%</span></p>
+<p style="font-size:.76rem">晶片V轉暴漲全回吐(軋空退潮擴大)+記憶體毛利結構憂深化+非農/AAPL利空→EWY(持倉)續跌破$155趨勢轉跌確立(剩餘部位主動出)、白銀遇壓回$56、SPY回$735。</p>
+</div>
+<div class="scenario-tail">
+<p style="font-size:.82rem;font-weight:700">Tail Risk: AI鏈全面重估 或 9月升息確定 <span class="scenario-prob">8%</span></p>
+<p style="font-size:.76rem">兩尾部:①AI基金爆倉蔓延引爆AI鏈全面重估(軟體亦跟跌);②9月FOMC確定升息→美元反彈+貴金屬崩。任一使VIX破25,持倉線嚴設止損(EWY $155、白銀$55),勿追高。</p>
+</div>
+</div>
+
+<div class="footer">本報告由量化雷達系統自動生成，數據來源：Binance Futures API(即時報價/K線/FR/OI)、Yahoo Finance(油價 CL=F、DXY/VIX/10Y/TAIEX)、Alternative.me(加密F&G)、Google News RSS(跨管道查證)。<strong>🟣本份第五次啟用對抗式解讀驗證(5條:0 CONFIRMED/3 PLAUSIBLE/2 REFUTED,見置頂🟣專節),最大價值=擋掉報告最想寫的核心敘事:「AI capex獎懲/記憶體成本傳導軟體」框架(宣稱2+3)被AMZN當場證偽——AMZN是最大記憶體買方(capex $220B含記憶體成本),若記憶體漲價/毛利憂是成本利空,它最該跌卻+4.9%漲最多,直接證明記憶體殺與軟體漲是「兩條分開的線」:①晶片籃=前兩日+25%軋空退潮/獲利了結+記憶體峰值毛利率結構憂(TechStock² 7/29自身);②大型軟體(GOOGL+4.75%/AMZN+4.9%/MSFT+3.18%)=自身AI營收+資金自晶片輪動。SPY持平+0.14%、VIX回落15.99=非全崩是分化。</strong>誠實:①記憶體vs軟體兩條線分開不編傳導;②MU-10%主因軋空退潮(前+25%)非新災難,記憶體毛利憂是7/29舊文;③金銀跌訊號混雜(10Y升4.745%逆風vs DXY跌破100本應撐金),更可能risk-on輪動(VIX回落15.99)撤避險,銀跌>金反映工業腿;④AI對沖基金爆倉(Quartz✓)對MU/BTC波及未證實不當因果;⑤週五非農無確認不寫入;⑥使用者持倉:白銀$57.9未上$60未解套,EWY$157.57跌破PM設的$160警戒線(軋空退潮,傾向剩餘部位分批出鎖利,非死等$175,但為使用者決策);⑦加密自身去槓桿與軟體背離=AI鏈內輪動非全面risk-on;⑧GEX/Call Skew未取到。<strong>本報告不構成投資建議</strong>,操作前請自行查證。生成時間：台灣時間 2026-08-01 週六 08:44。</div>
+
+</div>
+</body></html>
