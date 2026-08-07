@@ -1,0 +1,118 @@
+{
+  "_meta": {
+    "title": "白銀(XAG)每日傾向工具 — 規則書(凍結常數)",
+    "built": "2026-08-07",
+    "team": "data/driver/signal/macro/reviewer + lead",
+    "note": "本檔為研究定案後凍結的規則常數。回測已完成(20年日線+40年CFTC+262日LBMA),每日工具不重跑回測,只抓當日數據比對本表。命中率/US分數/門檻皆為 signal(US v3)與 driver(三年代穩健檢定)的定版數字,勿手改。要更新須重跑 backtest 並做樣本外驗證。",
+    "data_sources_free": {
+      "yfinance_T0": ["SI=F 銀", "GC=F 金", "^VIX", "CL=F 油"],
+      "cftc_free_weekly": "https://publicreporting.cftc.gov/resource/6dca-aqww.json  合約碼 084691 (週五更新)",
+      "fred_csv_backup_T1": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10|DGS2|DGS3MO|DFII10|DEXJPUS"
+    }
+  },
+
+  "signals": [
+    {
+      "key": "S3H", "leg": "貨幣", "dir": "多", "US": 77.8, "verdict": "可獨立進場",
+      "rule": "金銀比(GC/SI) 5日變動 >= +2  且  金銀比 > 81.6",
+      "H_days": 20, "hit": 60.4, "N": 48, "base": 52.0,
+      "when_wrong_med": -2.9, "when_wrong_worst": -16.8,
+      "caveat": "分層界 81.6 = 全樣本 p75,屬資料窺探,實盤須打折;三年窗口掉到不可用。當前金銀比~68,遠未達 81.6,不適用。",
+      "weight": 3
+    },
+    {
+      "key": "S3", "leg": "貨幣", "dir": "多", "US": 68.4, "verdict": "僅輔助",
+      "rule": "金銀比(GC/SI) 5日變動 >= +2  (不分層母版)",
+      "H_days": 20, "hit": 55.9, "N": 127, "base": 52.0,
+      "when_wrong_med": -4.6, "when_wrong_worst": -21.6,
+      "caveat": "S3H 的乾淨母版,無資料窺探、N 更紮實,是可外推的底線。但 edge 僅 +3.9pp、勝率不顯著(靠報酬幅度取勝 p_t=0.006)。金銀齊跌時失效。",
+      "weight": 2
+    }
+  ],
+
+  "environment_lights": [
+    {
+      "key": "OIL_STRONG_GREEN", "leg": "地緣", "type": "狀態燈(非進場訊號)", "dir_bias": "多",
+      "rule": "油(CL=F) 20日變動 < -20%",
+      "hit_fwd20": 70, "N": 141, "avg_fwd20": 5.66,
+      "robust": "三年代同向 64/89/64%,driver 全因子中最強",
+      "weight": 3
+    },
+    {
+      "key": "OIL_WEAK_GREEN", "leg": "地緣", "type": "狀態燈", "dir_bias": "多",
+      "rule": "油(CL=F) 20日變動 介於 -20% ~ -10%",
+      "hit_fwd20": 56, "N": 647, "avg_fwd20": 0.92,
+      "robust": "三年代同向,弱但穩健", "weight": 1
+    },
+    {
+      "key": "GEO_RED_REFUTED", "leg": "地緣", "type": "已證偽,不給分", "dir_bias": "無",
+      "rule": "油 20日 > +10% (原假說:油飆->殺銀)",
+      "note": "REFUTED:油飆本身不看空銀(+0.80%/51%,無邊際);分年代符號翻轉。殺銀的是殖利率腿不是油。強制中性 0 分。",
+      "weight": 0
+    },
+    {
+      "key": "REALRATE_GREEN", "leg": "貨幣", "type": "背景色(慢變量,T-1)", "dir_bias": "多",
+      "rule": "實質利率(FRED DFII10) 20日變動 < -20bp",
+      "hit_fwd20": 58, "N": 678, "avg_fwd20": 2.62,
+      "robust": "三年代同向。但日頻相關僅 -0.11=慢變量,只定背景色不定進場。FRED 落後1-2天,屬 T-1。",
+      "weight": 2
+    },
+    {
+      "key": "REALRATE_RED_REFUTED", "leg": "貨幣", "type": "已證偽,不給分", "dir_bias": "無",
+      "rule": "實質利率 20日 > +20bp (原假說:實質利率升->殺銀)",
+      "note": "REFUTED:2020-2026 為 +1.1%/51% 當代失效。加200MA濾網反而 +3.5%/65%。強制中性 0 分。",
+      "weight": 0
+    },
+    {
+      "key": "GSR_CHEAP_GREEN", "leg": "相對價值", "type": "背景色(慢變量)", "dir_bias": "多",
+      "rule": "金銀比 250日 z-score > +1 (銀相對金便宜)",
+      "hit_fwd20": 59, "N": null, "avg_fwd20": 2.33,
+      "robust": "三年代同向 +3.5/+1.2/+3.5", "weight": 2
+    },
+    {
+      "key": "VIX_FILTER", "leg": "環境過濾器", "type": "調權重(非進場訊號)", "dir_bias": "條件式",
+      "rule": "VIX(^VIX) >= 15 = 訊號有效環境; VIX < 15 = 訊號鈍化環境",
+      "pooled_hit_active": 62.8, "pooled_hit_dull": 42.4, "pooled_p": 0.0058,
+      "note": "VIX 單獨當訊號無效(全砍)。它決定既有均值回歸訊號還靈不靈。VIX<15 時把貨幣腿/均值回歸訊號權重打折或不進場。誠實:池化 p 有膨脹(三條訊號重疊136天),單條都不顯著。",
+      "weight": 0
+    }
+  ],
+
+  "geo_state_machine": {
+    "_note": "macro 零落後版:全部輸入 T-0 可得(CL=F + GC/SI)。狀態描述非進場訊號。post-hoc 挑選,半樣本一致是唯一支撐。",
+    "inputs": {"oil_20d": "CL=F 20日%變動", "gsr_20d": "金銀比(GC/SI) 20日變動"},
+    "states": [
+      {"light": "🟠 警示", "cond": "oil_20d >= +10% 且 gsr_20d < 0", "up_rate_fwd20": 44.6, "avg": 0.03, "note": "唯一低於基準(55.5%)的狀態,減碼/不加碼警示燈,最壞 -28.1%"},
+      {"light": "🟢 偏多", "cond": "oil_20d >= +10% 且 gsr_20d >= 0", "up_rate_fwd20": 62.7, "avg": 1.87},
+      {"light": "🟢 中性偏多", "cond": "oil_20d < +10% (其他)", "up_rate_fwd20": 55.5, "avg": 1.31}
+    ]
+  },
+
+  "scoring": {
+    "_note": "signal US v3 評分引擎:每條規則的 US 分數已凍結在上表。每日工具用 US 分數對應判定,不重算。",
+    "verdict_thresholds": {"可獨立進場": ">=70", "僅輔助": "50-69", "不可用": "<50"},
+    "us_formula": "US = 100 x (0.85 x (0.30*edge + 0.25*sig + 0.20*sample + 0.15*tail + 0.10*stability) + 0.15*robustness)",
+    "hard_caps_49": ["avg<=0", "N_indep<8", "edge<+2pp", "跨H穩健性<0.6", "門檻鄰域穩健性<0.5", "p_ttest>0.10(報酬不顯著)"],
+    "embedded_fixes": ["零敗場 worst 代入-30%", "t檢定單尾(avg<0取1-p/2)"]
+  },
+
+  "composite": {
+    "_note": "driver 加權骨架。綜合傾向 = 觸發的訊號/燈號權重加總(帶方向:多為正、空為負)。",
+    "tilt_thresholds": {"偏多_高信心": ">=+5", "偏多_低信心": "+2~+4", "觀望": "-1~+1", "偏空": "<=-2"},
+    "structural_limit": "所有穩健訊號都在偏多側;偏空側結構性失效(銀基準報酬分年代劇變,做空訊號在多頭年代必然失靈)。工具結構上無法產生高信心偏空。想做空只能靠機制證據(籌碼/實體),不能靠回測。",
+    "confidence_levels": {"高": "三年代全同向", "中": "兩年代同向", "低": "單年代或未回測(僅參考不加權)"}
+  },
+
+  "refuted_do_not_use": [
+    {"rule": "金銀比5日+2 -> 銀『弱』(做空)", "why": "方向反了,實為均值回歸向上,做空20日avg -2.18%", "note": "這是原任務出的範例規則"},
+    {"rule": "弱美元 -> 買銀", "why": "edge -1.3pp,20年無前導性"},
+    {"rule": "S1/S2 COT淨多 -> 空銀", "why": "門檻脆弱(挪±25%就崩)+軋空全程從未觸發+賺小賠大(最壞-38.3%)"},
+    {"rule": "破底追空", "why": "白銀破底是洗盤,負期望值"},
+    {"rule": "乖離過熱 -> 空銀", "why": "81%命中是重疊樣本假象,去重後僅4事件25%"},
+    {"rule": "日幣carry unwind -> 殺銀", "why": "方向反了(edge -5.8~-10.1);且免費源無日更JGB"},
+    {"rule": "油飆 -> 殺銀", "why": "分年代符號翻轉;殺銀的是殖利率腿不是油"},
+    {"rule": "新興市場(EEM/EWY) -> 銀", "why": "有同步性無前導性;EWY與銀是同步共同敞口不能互相預警"},
+    {"rule": "殖利率曲線/VIX 當進場訊號", "why": "42條宏觀規則0條顯著(隨機期望2.1條)"},
+    {"rule": "期限結構backwardation當籌碼腿代理", "why": "503日0%命中,2025-10實體逼倉期反而顯示+4.7%contango,管道錯(逼倉在倫敦EFP不在COMEX跨月)"}
+  ]
+}
