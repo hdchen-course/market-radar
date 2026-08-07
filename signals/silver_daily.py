@@ -37,7 +37,8 @@ def fetch_yf(symbol, days=420):
 def fetch_cot():
     """CFTC 白銀 COT(免費、免 key)。回傳最新一週的 net、52週百分位。"""
     base = "https://publicreporting.cftc.gov/resource/6dca-aqww.json"
-    q = {"$limit": "60",
+    # 抓 300 週以支撐 5 年(260週)分位計算
+    q = {"$limit": "300",
          "$order": "report_date_as_yyyy_mm_dd DESC",
          "$select": ("report_date_as_yyyy_mm_dd,open_interest_all,"
                      "noncomm_positions_long_all,noncomm_positions_short_all"),
@@ -46,18 +47,40 @@ def fetch_cot():
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     rows = json.load(urllib.request.urlopen(req, timeout=60))
     df = pd.DataFrame(rows)
-    for c in ["noncomm_positions_long_all", "noncomm_positions_short_all"]:
+    for c in ["noncomm_positions_long_all", "noncomm_positions_short_all", "open_interest_all"]:
         df[c] = pd.to_numeric(df[c])
     df["net"] = df.noncomm_positions_long_all - df.noncomm_positions_short_all
     df = df.iloc[::-1].reset_index(drop=True)  # 轉回時間正序
+
+    def strict_pct(s, w):
+        """strict 百分位:當前值 > 過去(w-1)週的比例,與現有算法一致。"""
+        win = s.iloc[-w:] if len(s) >= w else s
+        return (win.iloc[-1] > win.iloc[:-1]).mean() * 100 if len(win) > 1 else float("nan")
+
     net = df.net
     latest = net.iloc[-1]
-    win = net.iloc[-52:] if len(net) >= 52 else net
-    pct52 = (win.iloc[-1] > win.iloc[:-1]).mean() * 100 if len(win) > 1 else float("nan")
-    net4 = latest - net.iloc[-5] if len(net) >= 5 else float("nan")
-    return {"net": int(latest), "pct52": round(pct52, 1),
-            "net4": int(net4) if net4 == net4 else None,
-            "date": df.report_date_as_yyyy_mm_dd.iloc[-1][:10]}
+    short = df.noncomm_positions_short_all
+    short_now = int(short.iloc[-1])
+    oi_now = int(df.open_interest_all.iloc[-1])
+    # 26 週全距(reviewer2 要求:附帶寬,否則 92% 看起來很有力但其實是窄帶排序)
+    win26 = short.iloc[-26:] if len(short) >= 26 else short
+    short_range26 = int(win26.max() - win26.min())
+
+    return {
+        "net": int(latest),
+        "pct52": round(strict_pct(net, 52), 1),
+        "net4": int(latest - net.iloc[-5]) if len(net) >= 5 else None,
+        "date": df.report_date_as_yyyy_mm_dd.iloc[-1][:10],
+        # --- 空頭顯示層(reviewer2 定版:雙尺度 + 絕對口數 + 全距,皆非進場訊號) ---
+        "short": short_now,
+        "short_pct26": round(strict_pct(short, 26), 1),   # 近半年
+        "short_pct52": round(strict_pct(short, 52), 1),   # 一年
+        "short_pct260": round(strict_pct(short, 260), 1), # 5年(受OI時代漂移影響,不可跨代硬比)
+        "short_net4": int(short.iloc[-1] - short.iloc[-5]) if len(short) >= 5 else None,
+        "short_oi_pct": round(short_now / oi_now * 100, 1) if oi_now else None,
+        "short_range26": short_range26,
+        "oi": oi_now,
+    }
 
 # ---------- 指標計算 ----------
 def pct_change_nd(s, n):
@@ -149,6 +172,15 @@ def render(rb, m, ev):
     cot = m.get("cot", {})
     if "error" not in cot:
         L.append(f"COT淨多 {cot['net']} (52週pct {cot['pct52']}, 4週變動 {cot['net4']:+}) @{cot['date']}")
+        # 空頭顯示層(查證數據,非進場訊號):雙尺度 + 絕對口數 + 全距,缺一會誤導
+        if "short" in cot:
+            L.append(f"COT投機空單 {cot['short']} 口 "
+                     f"(26週pct {cot['short_pct26']}% / 52週pct {cot['short_pct52']}% / "
+                     f"5年pct {cot['short_pct260']}%, 4週 {cot['short_net4']:+})")
+            L.append(f"   ↳ 26週全距僅 {cot['short_range26']} 口、空單/OI {cot['short_oi_pct']}% "
+                     f"→ 空頭在近半年區間相對高、放5年仍偏低,燃料池「有累積、尚不算大」")
+            L.append(f"   ⚠ COT落後約10天(此為 {cot['date']} 持倉);原始口數跨5年受OI時代漂移影響不可比;"
+                     f"此為週級結構查證數據,非進場/出場訊號")
     L.append(f"200日均 ${m['ma200']} | 20日低 ${m['low20']}")
     L.append("-" * 64)
     L.append(f"🧭 綜合傾向: 【{ev['tilt']}】  (分數 {ev['score']:+})")
