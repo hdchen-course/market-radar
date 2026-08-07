@@ -1,0 +1,7 @@
+# 白銀每日傾向工具依賴
+# 主工具 silver_daily.py 只需 pandas(抓 Yahoo/CFTC 用內建 urllib,不需 yfinance)
+pandas>=2.0
+
+# 以下僅 backtest/ 回測腳本需要;跑每日工具用不到,但一併裝好方便重跑回測
+yfinance>=0.2
+scipy>=1.10
