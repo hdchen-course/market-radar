@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-08-11 週二晨報</title>
+<style>:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}.container{max-width:1440px;margin:0 auto}header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}header .sub{color:var(--muted);font-size:.85rem}.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:.8rem;margin-top:10px}.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}.card h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:500;font-size:.74rem}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:600}.t-bull{background:rgba(63,185,80,.15);color:var(--green)}.t-bear{background:rgba(248,81,73,.15);color:var(--red)}.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}.mr:last-child{border-bottom:none}.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}.pi .pr{font-size:.95rem;font-weight:700}.pi .ch{font-size:.75rem;margin-top:1px}.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}.risk-bar .f{height:100%;border-radius:3px}.rh .f{background:var(--red);width:90%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}.rmh .f{background:var(--orange);width:75%}.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}.tl-i{position:relative;margin-bottom:13px}.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}.tl-e{font-size:.8rem;margin-top:2px}.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}.tool-box{background:rgba(163,113,247,.06);border:1px dashed rgba(163,113,247,.4);border-radius:8px;padding:12px;margin:10px 0}.tool-box h4{color:var(--purple);font-size:.85rem;margin-bottom:6px}.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}.st-long{background:rgba(63,185,80,.18);color:var(--green)}.st-short{background:rgba(248,81,73,.18);color:var(--red)}.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}.alert{background:#0a1a0a;border:1px solid #238636;border-radius:6px;padding:12px;margin:8px 0}.alert-warn{background:#1a1000;border:1px solid#db6d28;border-radius:6px;padding:12px;margin:8px 0}</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>終極宏觀流動性 &amp; AI Capex 量化籌碼雷達 V4.5</h1>
+  <p class="sub">2026-08-11（週二）08:54 台灣時間 · V4.5 · 亞洲盤晨報｜白銀帶量突破$65三度天花板($65.99 +3.7%)、金$4,416 +1.8% 齊漲、加密轉弱</p>
+  <div class="badge badge-warn">REGIME：白銀突破$65（軋空+CPI前避險+China買盤+技術動能疊加，無實體硬底）· 金銀齊漲金銀比收斂66.9 · 加密risk-off · CPI 明晚20:30</div>
+</header>
+
+<!-- ===== SECTION 0: 上期預測回顧 ===== -->
+<div class="card full">
+  <h2>0. 上期預測回顧（2026-08-10 週一美股實盤夜報）</h2>
+  <div class="alert-warn">⚠️ 白銀突破 $65 是本期最大事件——夜報把 $65 列為「三度遇阻天花板、破則軋空再起」的關鍵位，本期實際帶量突破至 $65.99。方向框架對，但白銀彈幅超出夜報區間上緣。</div>
+  <table>
+    <tr><th>標的</th><th>夜報預估區間</th><th>夜報方向</th><th>現價</th><th>區間</th><th>方向</th></tr>
+    <tr><td>XAG 白銀</td><td>$63.47–$64.49</td><td>觀望(抗跌，$65減碼)</td><td class="pos">$65.99 (+3.7%)</td><td>OUT↑ ❌</td><td>突破$65 ⚠️(框架命中、幅度超出)</td></tr>
+    <tr><td>XAU 黃金</td><td>$4,311–$4,349</td><td>中性(守$4,256)</td><td class="pos">$4,416 (+1.8%)</td><td>OUT↑ ❌</td><td>反彈 ⚠️</td></tr>
+    <tr><td>BTC</td><td>$64,282–$65,046</td><td>中性偏弱(守$63.8K)</td><td class="neg">$63,980 (-1.5%)</td><td>OUT↓ ❌</td><td>轉弱 ✅(守$63.8K邊緣)</td></tr>
+    <tr><td>ETH</td><td>$1,883–$1,915</td><td>中性偏弱</td><td class="neg">$1,873 (-2.1%)</td><td>OUT↓ ❌</td><td>轉弱 ✅</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.82rem;color:var(--muted)"><strong>命中率：</strong>區間 0/4 IN（貴金屬向上噴、加密向下破，波動放大全部出界）；<strong>方向框架命中</strong>：白銀「$65 是關鍵、破則軋空再起」精準（今日帶量破至$65.99）、加密「偏弱轉弱」對、金反彈。<strong>教訓：貴金屬與加密今日反向裂口——金銀齊漲(金銀比收斂66.9)、加密 risk-off 下殺。這是「貴金屬避險腿 vs 加密風險資產」分道，不是同一個 risk-on/off。夜報的白銀 $65 減碼線今日被觸發（詳見持倉紀律段）。</strong></p>
+</div>
+
+<!-- ===== SECTION 1: 報價面板 ===== -->
+<div class="card full">
+  <h2>1. 即時報價面板（加密/貴金屬即時；美股為週一收盤/合成盤）</h2>
+  <div class="price-grid">
+    <div class="pi"><div class="tk">BTC</div><div class="pr">$63,980</div><div class="ch neg">-1.52%</div></div>
+    <div class="pi"><div class="tk">ETH</div><div class="pr">$1,873</div><div class="ch neg">-2.11%</div></div>
+    <div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,417</div><div class="ch pos">+1.77%</div></div>
+    <div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$65.99</div><div class="ch pos">+3.73%</div></div>
+    <div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.693</div><div class="ch pos">+0.95%</div></div>
+    <div class="pi"><div class="tk">XPD 鈀</div><div class="pr">$1,394</div><div class="ch pos">+1.43%</div></div>
+    <div class="pi"><div class="tk">XPT 鉑</div><div class="pr">$1,765</div><div class="ch pos">+0.80%</div></div>
+    <div class="pi"><div class="tk">INTC</div><div class="pr">$98.14</div><div class="ch neg">-4.06%*</div></div>
+    <div class="pi"><div class="tk">NVDA</div><div class="pr">$218.94</div><div class="ch neg">-2.48%*</div></div>
+    <div class="pi"><div class="tk">TSM</div><div class="pr">$421.33</div><div class="ch neu">+0.06%*</div></div>
+    <div class="pi"><div class="tk">MU</div><div class="pr">$867.91</div><div class="ch neg">-1.22%*</div></div>
+    <div class="pi"><div class="tk">AMD</div><div class="pr">$472.73</div><div class="ch neg">-2.05%*</div></div>
+    <div class="pi"><div class="tk">AVGO</div><div class="pr">$424.29</div><div class="ch neg">-0.67%*</div></div>
+    <div class="pi"><div class="tk">QCOM</div><div class="pr">$163.36</div><div class="ch neg">-3.03%*</div></div>
+    <div class="pi"><div class="tk">MSFT</div><div class="pr">$506.79</div><div class="ch pos">+1.59%*</div></div>
+    <div class="pi"><div class="tk">GOOGL</div><div class="pr">$357.59</div><div class="ch pos">+0.44%*</div></div>
+    <div class="pi"><div class="tk">META</div><div class="pr">$596.75</div><div class="ch pos">+0.51%*</div></div>
+    <div class="pi"><div class="tk">AMZN</div><div class="pr">$277.36</div><div class="ch pos">+1.14%*</div></div>
+    <div class="pi"><div class="tk">TSLA</div><div class="pr">$331.60</div><div class="ch pos">+0.47%*</div></div>
+    <div class="pi"><div class="tk">PLTR</div><div class="pr">$174.29</div><div class="ch pos">+1.26%*</div></div>
+    <div class="pi"><div class="tk">MSTR</div><div class="pr">$97.55</div><div class="ch neg">-3.48%*</div></div>
+    <div class="pi"><div class="tk">EWY 南韓</div><div class="pr">$164.26</div><div class="ch neg">-1.02%*</div></div>
+    <div class="pi"><div class="tk">SPY</div><div class="pr">$774.16</div><div class="ch pos">+0.21%*</div></div>
+    <div class="pi"><div class="tk">SPCX</div><div class="pr">$137.01</div><div class="ch pos">+2.09%*</div></div>
+  </div>
+  <p style="margin-top:6px;font-size:.72rem;color:var(--muted)">* = 美股週一收盤/盤後合成盤。加密與貴金屬為即時 24h。晶片續弱（INTC增發-4%、NVDA-2.5%、QCOM-3%）vs MSFT/AMZN 逆漲=分化延續。</p>
+  <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+    <strong style="font-size:.82rem;color:var(--muted)">宏觀指標（Yahoo chart API）：</strong>
+    <div class="price-grid" style="margin-top:6px">
+      <div class="pi"><div class="tk">DXY 美元</div><div class="pr">99.74</div><div class="ch neu">持平(未弱)</div></div>
+      <div class="pi"><div class="tk">VIX</div><div class="pr">15.46</div><div class="ch warn">升破15有效區</div></div>
+      <div class="pi"><div class="tk">US 10Y</div><div class="pr">4.70%</div><div class="ch warn">自4.63升</div></div>
+      <div class="pi"><div class="tk">US 30Y</div><div class="pr">5.24%</div><div class="ch warn">自5.19升</div></div>
+      <div class="pi"><div class="tk">TAIEX 台股</div><div class="pr">44,929</div><div class="ch pos">+3.6%</div></div>
+      <div class="pi"><div class="tk">USD/JPY</div><div class="pr">159.07</div><div class="ch warn">破159(carry高危)</div></div>
+      <div class="pi"><div class="tk">加密 F&amp;G</div><div class="pr">29</div><div class="ch neg">恐懼 Fear</div></div>
+      <div class="pi"><div class="tk">金銀比 GSR</div><div class="pr">66.93</div><div class="ch pos">收斂(金銀齊漲)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: Regime ===== -->
+<div class="card full">
+  <h2>2. 市場主導 Regime</h2>
+  <div class="mr"><span class="mr-l">核心變數</span><span class="mr-v">白銀帶量突破$65($65.99)、金$4,416齊漲；催化=CPI前定位+China買盤+技術動能(indexbox/vietnam.vn✓)，但DXY持平殖利率升=非貨幣腿主導</span></div>
+  <div class="mr"><span class="mr-l">短期（本週）</span><span class="mr-v">貴金屬避險腿 vs 加密risk-off 分道；晶片續弱(INTC增發拖累)；殖利率升(10Y4.70)；CPI(明晚20:30)定調</span></div>
+  <div class="mr"><span class="mr-l">中期（1-3月）</span><span class="mr-v">Warsh 鷹派，9月升息押在CPI；金銀技術突破動能 vs 殖利率升的拉鋸</span></div>
+  <div class="mr"><span class="mr-l">長期</span><span class="mr-v">央行購金/China買盤結構撐金；白銀6年結構赤字(慢變量非本週催化)；AI Capex續行估值敏感</span></div>
+  <div class="mr"><span class="mr-l">Regime 判定</span><span class="mr-v" style="color:var(--orange)">貴金屬技術突破(無實體硬底) vs CPI前risk-off · 金銀避險腿與加密風險腿分道 · CPI前觀望</span></div>
+</div>
+
+<!-- ===== SECTION 3: 共識 vs Reality ===== -->
+<div class="card full">
+  <h2>3. 市場共識 vs Reality</h2>
+  <table>
+    <tr><th>主題</th><th>市場預期</th><th>實際/查證</th><th>Mispricing</th></tr>
+    <tr><td>白銀突破$65原因</td><td>「實體軋空/斷貨」</td><td>獨立調查(多管道):COMEX庫存反升+14~16%、租賃利率已回落=無急性實體短缺；本波=軋空+CPI前避險+China買盤+技術動能疊加，無實體硬底</td><td class="warn">高：別把技術突破當實體斷貨，衝勁靠動能非硬缺貨</td></tr>
+    <tr><td>金銀齊漲原因</td><td>「弱美元推升」</td><td>DXY 99.74持平未弱、10Y升4.70——非美元非降息；indexbox「CPI前定位+China買盤」、vietnam.vn「China增購」</td><td class="warn">中：不能歸因弱美元(量級方向皆不符)；CPI前避險+China買盤</td></tr>
+    <tr><td>加密下殺</td><td>「幣圈利空」</td><td>BTC-1.5%/ETH-2.1% 跟殖利率升+VIX升15.46 risk-off；與貴金屬避險腿分道，非幣圈獨立事件</td><td class="neu">低：跟宏觀risk-off，貴金屬避險/加密風險分流</td></tr>
+    <tr><td>INTC/晶片續弱</td><td>「AI泡沫破」</td><td>INTC-4%(增發稀釋續壓)、NVDA-2.5%；但MSFT+1.6%/AMZN+1.1%逆漲=risk-off下的高估值輪動，非AI崩</td><td class="neu">低：殖利率升壓高估值晶片，非板塊崩</td></tr>
+  </table>
+  <div class="alert">🎯 <strong>最大 Mispricing：</strong>把白銀突破 $65 讀成「實體軋空/斷貨」。<strong>獨立調查多管道查證：COMEX 庫存反而 +14~16%、倫敦租賃利率已從高點回落=無急性實體短缺硬數據。</strong>本波突破是「籌碼軋空 + CPI 前避險定位 + China 買盤 + 技術動能」四個偏情緒/技術的層疊起來的，<strong>底下沒有實體硬底</strong>——特性是衝得急、但動能衰竭或 CPI 引爆時回吐也快。金銀比收斂 66.9=這次是金銀齊漲(避險腿共振)，與前幾日「金領跌銀抗跌」不同。（對抗第4問：DXY 持平未弱、殖利率升，「弱美元/降息推金銀」歸因量級方向皆不符，打回。）</div>
+</div>
+
+<!-- ===== SECTION 4: 強弱矩陣 ===== -->
+<div class="card full">
+  <h2>4. 跨資產強弱矩陣（加密/貴金屬即時，*美股週一收盤/合成盤）</h2>
+  <table>
+    <tr><th>#</th><th>資產</th><th>24h%</th><th>ST方向</th><th>驅動</th></tr>
+    <tr><td>1</td><td>XAG 白銀</td><td class="pos">+3.73%</td><td>中性</td><td>帶量突破$65，軋空+避險+China+技術(無實體硬底) <span class="tag t-neu">軋空+避險腿</span></td></tr>
+    <tr><td>2</td><td>SPCX</td><td class="pos">+2.09%*</td><td>—</td><td>合成盤失真，驅動不採信</td></tr>
+    <tr><td>3</td><td>XAU 黃金</td><td class="pos">+1.77%</td><td>中性</td><td>CPI前避險+China買盤，金銀比收斂 <span class="tag t-hold">貨幣+避險腿</span></td></tr>
+    <tr><td>4</td><td>MSFT</td><td class="pos">+1.59%*</td><td>中性</td><td>逆risk-off大型科技輪動（驅動待查）</td></tr>
+    <tr><td>5</td><td>XPD 鈀</td><td class="pos">+1.43%</td><td>中性</td><td>貴金屬齊漲帶動 <span class="tag t-bear">工業</span></td></tr>
+    <tr><td>6</td><td>PLTR</td><td class="pos">+1.26%*</td><td>中性</td><td>合成盤（驅動待查）</td></tr>
+    <tr><td>7</td><td>AMZN</td><td class="pos">+1.14%*</td><td>中性</td><td>逆risk-off（驅動待查）</td></tr>
+    <tr><td>8</td><td>COPPER 銅</td><td class="pos">+0.95%</td><td>中性</td><td>工業金屬小漲 <span class="tag t-bear">工業腿</span></td></tr>
+    <tr><td>9</td><td>XPT 鉑</td><td class="pos">+0.80%</td><td>中性</td><td>貴金屬齊漲 <span class="tag t-neu">工業/貴金屬</span></td></tr>
+    <tr><td>10</td><td>META</td><td class="pos">+0.51%*</td><td>中性</td><td>合成盤持平偏強</td></tr>
+    <tr><td>11</td><td>TSLA</td><td class="pos">+0.47%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>12</td><td>GOOGL</td><td class="pos">+0.44%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>13</td><td>SPY</td><td class="pos">+0.21%*</td><td>中性</td><td>大盤持平，個股分化</td></tr>
+    <tr><td>14</td><td>TSM</td><td class="neu">+0.06%*</td><td>中性</td><td>逆晶片跌（驅動待查）</td></tr>
+    <tr><td>15</td><td>EWY 南韓</td><td class="neg">-1.02%*</td><td>中性</td><td>半導體+risk-off（驅動待查）</td></tr>
+    <tr><td>16</td><td>MU</td><td class="neg">-1.22%*</td><td>中性</td><td>晶片跟跌（驅動待查）</td></tr>
+    <tr><td>17</td><td>BTC</td><td class="neg">-1.52%</td><td>中性</td><td>殖利率升+VIX升risk-off，F&amp;G 29恐懼</td></tr>
+    <tr><td>18</td><td>AMD</td><td class="neg">-2.05%*</td><td>中性</td><td>晶片跟跌（驅動待查）</td></tr>
+    <tr><td>19</td><td>ETH</td><td class="neg">-2.11%</td><td>中性</td><td>跟BTC risk-off，跌幅大於BTC</td></tr>
+    <tr><td>20</td><td>NVDA</td><td class="neg">-2.48%*</td><td>中性</td><td>AI核心跟risk-off+殖利率升壓估值（驅動待查）</td></tr>
+    <tr><td>21</td><td>QCOM</td><td class="neg">-3.03%*</td><td>中性</td><td>晶片跟跌（驅動待查）</td></tr>
+    <tr><td>22</td><td>MSTR</td><td class="neg">-3.48%*</td><td>中性</td><td>BTC跌×槓桿代理+STRC（延續昨日）</td></tr>
+    <tr><td>23</td><td>INTC</td><td class="neg">-4.06%*</td><td>中性</td><td>$15B增發稀釋續壓(CNBC/Bloomberg✓)個股事件</td></tr>
+    <tr><td>24</td><td>MOVE/其他</td><td class="neu">—</td><td>—</td><td>暫缺</td></tr>
+    <tr><td>25</td><td>—</td><td class="neu">—</td><td>—</td><td>—</td></tr>
+  </table>
+  <p style="margin-top:6px;font-size:.74rem;color:var(--muted)">腿別 tag 僅標貴金屬+銅。<strong>今日圖像轉變：金銀齊漲(金銀比收斂66.9)、銅+鈀+鉑也漲=貴金屬全面避險腿共振</strong>，與前幾日「金領跌銀抗跌」的分化不同。但這是 CPI 前避險+技術動能(無實體硬底)，非結構轉多。加密逆貴金屬下殺=避險腿與風險腿分道。個股合成盤驅動多「待查」。</p>
+</div>
+
+<!-- ===== SECTION 5: 風險雷達 ===== -->
+<div class="card full">
+  <h2>5. 量化風險雷達</h2>
+  <table>
+    <tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+    <tr><td>8/12 CPI 熱 → 升息押注回、Warsh 9月升息</td><td>中</td><td>金銀技術突破回吐(無實體硬底、回落快)、加密續殺</td><td>XAU/XAG/加密</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+    <tr><td>白銀突破$65假突破回落（無實體支撐）</td><td>中</td><td>4h未站穩$65或CPI熱→快速回$62-64</td><td>XAG</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>USD/JPY 破159 → 日圓 carry unwind</td><td>中</td><td>升太快恐觸發平倉、波及風險資產+加密</td><td>股/加密</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+    <tr><td>殖利率續升(10Y4.70/30Y5.24)壓高估值</td><td>中</td><td>晶片/成長股/加密續壓</td><td>NVDA/BTC</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>晶片集中度風險(EWY/INTC增發擴散情緒)</td><td>低中</td><td>CPI熱殺估值時集中受創</td><td>持倉籃</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+  </table>
+  <table style="margin-top:12px">
+    <tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+    <tr><td>XAU 黃金</td><td>$4,417</td><td><span class="tag t-bull">反彈突破</span></td><td>4h上軌$4,490，守$4,335</td></tr>
+    <tr><td>XAG 白銀</td><td>$65.99</td><td><span class="tag t-bull">突破$65</span></td><td>4h上軌$68.40，回測$65守則多</td></tr>
+    <tr><td>BTC</td><td>$63,980</td><td><span class="tag t-bear">轉弱</span></td><td>失守$64K，守$63.2K/日下軌$55K遠</td></tr>
+    <tr><td>ETH</td><td>$1,873</td><td><span class="tag t-bear">轉弱</span></td><td>破$1,900，守4h下軌$1,794</td></tr>
+    <tr><td>COPPER 銅</td><td>$6.693</td><td><span class="tag t-neu">小漲</span></td><td>工業腿</td></tr>
+    <tr><td>XPD 鈀</td><td>$1,394</td><td><span class="tag t-neu">齊漲</span></td><td>貴金屬帶動</td></tr>
+    <tr><td>XPT 鉑</td><td>$1,765</td><td><span class="tag t-neu">齊漲</span></td><td>貴金屬帶動</td></tr>
+    <tr><td>INTC</td><td>$98.14</td><td><span class="tag t-bear">增發-4%</span></td><td>$15B稀釋，個股</td></tr>
+    <tr><td>NVDA</td><td>$218.94</td><td><span class="tag t-bear">-2.5%</span></td><td>殖利率壓估值</td></tr>
+    <tr><td>EWY 南韓</td><td>$164.26</td><td><span class="tag t-neu">-1%</span></td><td>守$160</td></tr>
+    <tr><td>MSTR</td><td>$97.55</td><td><span class="tag t-bear">-3.5%</span></td><td>BTC跌×槓桿</td></tr>
+    <tr><td>MU</td><td>$867.91</td><td><span class="tag t-neu">-1.2%</span></td><td>晶片跟跌</td></tr>
+  </table>
+</div>
+
+<!-- ===== SECTION 6: 完整戰術分析 ===== -->
+<div class="card full">
+  <h2>6. 完整戰術分析</h2>
+
+  <!-- A. XAU -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">A. XAU 黃金 $4,416.60（+1.77%，CPI前避險+China買盤反彈）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$81.38 上$4,656.81/下$4,168.53；4h ATR≈$25.74 上$4,489.89/下$4,335.45；1h ATR≈$12.69 上$4,450.74/下$4,374.60。<strong>反彈至4h上軌$4,490下方，守$4,335；前高$4,410已收復。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-neutral">DXY 99.74持平 ○</span>
+      <span class="score-item sc-fail">實質利率 10Y 4.70升 ✗(逆風)</span>
+      <span class="score-item sc-pass">央行購金/China買盤 ✓</span>
+      <span class="score-item sc-neutral">ST 中性 ○</span>
+      <span class="score-item sc-pass">地緣/CPI前避險 ✓</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性偏多（CPI前避險+China買盤，但殖利率升是逆風）</strong>。查證：vietnam.vn「China增購」、indexbox「CPI前定位」。<strong>注意：殖利率升(10Y4.70)理論上壓金，金卻漲=避險/China買盤蓋過利率逆風，屬事件性非結構</strong>。計分回升 3/5。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h 預估：</strong>$4,417 ± ATR_1H×1.5 = $4,417 ± $19 → <strong>$4,398 – $4,436</strong>（CPI前，明晚放大）</p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性偏多(回測$4,335多，勿追高)</td><td>$4,335–$4,350</td><td>$4,300</td><td>$4,490</td><td>1:3.2</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 高檔整理</td><td>CPI前避險撐、守$4,335</td><td>$4,335–$4,490</td><td>47%</td></tr>
+      <tr><td>Bull 續衝</td><td>CPI弱→殖利率回落+避險</td><td>$4,560</td><td>28%</td></tr>
+      <tr><td>Bear 回吐</td><td>CPI熱→殖利率飆+避險退</td><td>$4,300</td><td>25%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>黃金→白銀傳導：</strong>金銀比=4416.6/65.99=<strong>66.93</strong>（自67.68續收斂）。<strong>金銀齊漲、金銀比連三期收斂</strong>——從前幾日「金領跌銀抗跌」轉為「銀漲更兇拉收斂」。收斂通常指工業或軋空主導（非純貨幣腿），呼應白銀軋空腿發力。</p>
+  </div>
+
+  <!-- B. XAG -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">B. XAG 白銀 $65.99（+3.73%，帶量突破$65三度天花板）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$2.83 上$74.59/下$57.62；4h ATR≈$0.76 上$68.40/下$63.81；1h ATR≈$0.34 上$67.13/下$65.08。<strong>突破$65至$65.99，4h上軌升$68.40，$65成回測支撐、1h下軌$65.08是短線多空線。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-neutral">DXY 99.74持平 ○</span>
+      <span class="score-item sc-pass">黃金+1.77%漲 ✓</span>
+      <span class="score-item sc-pass">金銀比66.93收斂(銀強) ✓</span>
+      <span class="score-item sc-neutral">ST 中性(突破待確認) ○</span>
+      <span class="score-item sc-fail">COT空單5年10.4%燃料池不大 ✗</span>
+      <span class="score-item sc-fail">實體短缺(調查:庫存反升租賃回落) ✗</span>
+      <span class="score-item sc-neutral">工業(銅+0.95%小漲) ○</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：帶量突破$65但無實體硬底</strong>。計分 3.5/7。<strong>獨立調查(多管道)確認:COMEX庫存反升+14~16%、倫敦租賃利率回落=非實體斷貨；本波=軋空+CPI前避險+China買盤+技術動能疊加。</strong>特性:衝勁靠動能，動能衰竭或CPI引爆易快速回吐。前高後突破屬「突破」非「創新高」需觀察站穩。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$65.99 ± ATR_1H×1.5 ≈ $65.99 ± $0.51 → <strong>$65.48 – $66.50</strong>（CPI前）</p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>空單(使用者持有)：已突破$65=軋空再起訊號，按紀律減碼(見持倉段)；不新開多不追</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 突破後高檔震盪</td><td>站穩$65+CPI溫和</td><td>$65–$68.4</td><td>45%</td></tr>
+      <tr><td>Bull 續軋</td><td>4h站穩$65+CPI弱+動能延續</td><td>$68.4</td><td>30%</td></tr>
+      <tr><td>Bear 假突破回落</td><td>4h跌回$65下+CPI熱</td><td>$62–$63</td><td>25%</td></tr>
+    </table>
+
+    <div class="tool-box">
+      <h4>🔧 signals 工具參考欄（實驗性，僅參考非進場依據）</h4>
+      <p style="font-size:.78rem"><strong>工具傾向：【觀望】0 分</strong>｜觸發訊號：<strong>無</strong>｜VIX環境：<strong>有效環境(VIX 15.46≥15)</strong>｜地緣：🟢中性偏多</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>COT 投機空單 14,174 口</strong>（多尺度，@2026-08-04，未更新，8/15更新）：<br>26週pct <strong>100.0%</strong> / 52週pct <strong>51.0%</strong> / 5年pct <strong>10.4%</strong>；26週全距僅 <strong>7,020 口</strong>、空單/OI 12.7%。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>判讀（三尺度並陳，防帶寬假象）：</strong>26週分位100%=帶寬假象(全距僅7,020口)；5年僅10.4%=空頭絕對量偏低。<strong>燃料池不大→這波軋空的續航力有限，突破$65後若無新空頭補、易衰竭。</strong></p>
+      <p style="font-size:.76rem;margin-top:6px;color:var(--muted)"><strong>⚠ 限制：</strong>①COT 8/4數據落後、8/15才更新(看不到本週軋空後段清倉)；②工具實驗性、樣本外未驗證、非進場訊號；③工具偏空側結構性失效；④白銀已突破$65，工具仍判觀望0分=工具沒追突破(它保守，不硬追動能)。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>工具 vs 主觀並陳（不強行統一）：</strong>工具判「觀望0分、無訊號」(它不追突破)；主線程判「帶量突破$65=軋空再起、但無實體硬底+燃料池不大=續航存疑、CPI是總開關」。<strong>分歧點:工具保守觀望，主觀認為突破需嚴肅對待(空單該減碼)</strong>——並陳讓使用者看到:工具不幫追多，但突破對空單是實質威脅。</p>
+    </div>
+
+    <p style="font-size:.8rem;margin:6px 0"><strong>籌碼面：</strong>Binance FR≈0。金銀比66.93(連三期收斂=銀強)。COT空單8/4數據、8/15更新。三份獨立調查結論:軋空+避險+China+技術,無實體硬底。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>屬性判定：</strong>白銀軋空腿+CPI前避險腿雙發力(銅僅小漲=非工業腿主導)，突破$65。地緣油腿昨日助攻今日淡化。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>風控（依規）：</strong>支撐$60/極端$55/爆倉&lt;$50(不成立)。突破後$65為多空回測線、4h上軌$68.40。現貨溢價待查。</p>
+  </div>
+
+  <!-- C. BTC -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">C. BTC $63,980（-1.52%，殖利率升risk-off失守$64K）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$2,854 上$72,505/下$55,383；4h ATR≈$679 上$65,982/下$61,907；1h ATR≈$250 上$64,695/下$63,193。<strong>失守$64K，守4h下軌$61,907。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-fail">DXY 99.74/殖利率升 ✗</span>
+      <span class="score-item sc-fail">F&amp;G 29恐懼 ✗</span>
+      <span class="score-item sc-neutral">FR≈0中性 ○</span>
+      <span class="score-item sc-neutral">OI持平 ○</span>
+      <span class="score-item sc-fail">美股risk-off ✗</span>
+      <span class="score-item sc-neutral">鏈上待查 ?</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性偏弱</strong>（殖利率升+VIX升risk-off，失守$64K；與貴金屬避險腿分道）。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$63,980 ± ATR_1H×1.5 ≈ $63,980 ± $376 → <strong>$63,604 – $64,356</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性偏弱(守$63.2K，破則看$61.9K)</td><td>觀望，勿追空</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 區間偏弱</td><td>risk-off緩+守$63.2K</td><td>$63.2K–$64.7K</td><td>50%</td></tr>
+      <tr><td>Bull 反彈</td><td>CPI弱+風偏回</td><td>$65.9K</td><td>20%</td></tr>
+      <tr><td>Bear 破位</td><td>失守$63.2K+CPI熱+carry unwind</td><td>$61.9K</td><td>30%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>衍生品：</strong>FR≈0（中性）。OI持平。清算：$63.2K下方多單清算密集。<strong>關鍵洞察：BTC/ETH 逆貴金屬下殺=「貴金屬避險腿 vs 加密風險腿」分道，非同一 risk-on/off；USD/JPY 破159 carry unwind 是加密額外下行風險。</strong></p>
+  </div>
+
+  <!-- D. ETH -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">D. ETH $1,873（-2.11%，跟BTC轉弱破$1,900）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$130.99 上$2,266/下$1,480；4h ATR≈$26.10 上$1,951/下$1,794；1h ATR≈$10.37 上$1,904/下$1,842。<strong>破$1,900，守4h下軌$1,794。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-fail">BTC方向 轉弱 ✗</span>
+      <span class="score-item sc-neutral">ETH/BTC ratio 0.0293 ○</span>
+      <span class="score-item sc-neutral">FR≈0 ○</span>
+      <span class="score-item sc-neutral">OI持平 ○</span>
+      <span class="score-item sc-fail">催化劑無 ✗</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性偏弱</strong>（跟BTC risk-off，跌幅大於BTC=相對弱）。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$1,873 ± ATR_1H×1.5 ≈ $1,873 ± $16 → <strong>$1,857 – $1,889</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性偏弱(守$1,794)</td><td>觀望，勿追空</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 區間偏弱</td><td>跟BTC守$1,794</td><td>$1,794–$1,904</td><td>50%</td></tr>
+      <tr><td>Bull 反彈</td><td>BTC破$65.9K帶動</td><td>$1,951</td><td>20%</td></tr>
+      <tr><td>Bear 破位</td><td>BTC失守$63.2K</td><td>$1,794</td><td>30%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>ETH/BTC 分析：</strong>ratio≈0.0293（自0.0294續降），ETH 跌幅大於 BTC=相對弱勢延續。</p>
+  </div>
+
+  <!-- E. 美股 -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">E. 美股（週一收盤/合成盤，晶片續弱分化）</h3>
+    <table style="margin-top:8px">
+      <tr><th>跌幅前3</th><th>價格/24h%</th><th>驅動（查證）</th><th>方向/關鍵價位</th></tr>
+      <tr><td>INTC</td><td>$98.14 / -4.06%</td><td><strong>$15B增發稀釋續壓(CNBC/Bloomberg✓)</strong>，個股事件非板塊</td><td>偏弱；$100心理關失守</td></tr>
+      <tr><td>MSTR</td><td>$97.55 / -3.48%</td><td>BTC跌×槓桿代理+STRC(延續，量化催化待查)</td><td>偏弱；破$100隨BTC</td></tr>
+      <tr><td>QCOM</td><td>$163.36 / -3.03%</td><td>殖利率升壓晶片估值（個股驅動待查）</td><td>偏弱；守$160</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>漲幅前3</th><th>價格/24h%</th><th>驅動（查證）</th><th>方向/關鍵價位</th></tr>
+      <tr><td>MSFT</td><td>$506.79 / +1.59%</td><td>逆risk-off大型科技輪動（驅動待查，防禦性?）</td><td>偏強；創高後高檔</td></tr>
+      <tr><td>AMZN</td><td>$277.36 / +1.14%</td><td>逆risk-off（驅動待查）</td><td>偏強</td></tr>
+      <tr><td>PLTR</td><td>$174.29 / +1.26%</td><td>合成盤逆勢紅（驅動待查）</td><td>中性偏強</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>標的</th><th>價格</th><th>24h%</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+      <tr><td>EWY</td><td>$164.26</td><td class="neg">-1.02%</td><td><span class="tag t-neu">偏弱</span></td><td>守$160</td><td>持倉，半導體+risk-off</td></tr>
+      <tr><td>NVDA</td><td>$218.94</td><td class="neg">-2.48%</td><td><span class="tag t-bear">偏弱</span></td><td>—</td><td>殖利率壓估值</td></tr>
+      <tr><td>TSM</td><td>$421.33</td><td class="neu">+0.06%</td><td><span class="tag t-hold">持平</span></td><td>—</td><td>逆晶片跌</td></tr>
+      <tr><td>MU</td><td>$867.91</td><td class="neg">-1.22%</td><td><span class="tag t-neu">跟跌</span></td><td>—</td><td>記憶體</td></tr>
+      <tr><td>SPY</td><td>$774.16</td><td class="pos">+0.21%</td><td><span class="tag t-hold">持平</span></td><td>創高後高檔</td><td>大盤穩、個股分化</td></tr>
+    </table>
+  </div>
+
+  <!-- F. 持倉紀律提醒 -->
+  <div class="tactical-box" style="border-color:rgba(219,109,40,.4);background:rgba(219,109,40,.05)">
+    <h3 style="font-size:.92rem;color:var(--orange)">🎯 F. 持倉紀律提醒（實操收尾——使用者唯一直接下單依據）</h3>
+    <div class="alert-warn" style="font-size:.8rem;margin-bottom:8px">⚠️ <strong>白銀空單今日觸發減碼決策點</strong>：夜報訂的規則「4h 收破 $65 站穩 → 減碼」，白銀已到 $65.99。但要分清「4h 收盤站穩 $65」vs「盤中衝高」——下方規則。</div>
+    <table>
+      <tr><th>標的</th><th>現價</th><th>關鍵價位（進場·止損·目標）</th><th>紀律警語</th></tr>
+      <tr><td>白銀 XAG（空單）</td><td>$65.99</td><td>爆倉 $84.47(遠)｜減碼觸發線 4h收盤&gt;$65｜衰竭反轉線 4h跌回$65下</td><td><strong>已突破$65=軋空再起訊號。若4h確認收盤站穩$65上→按夜報規則減碼1/3~1/2(承認軋空、降風險)，別凹。</strong>但若是盤中衝高、4h又跌回$65下=假突破，反而是衰竭訊號可留倉。爆倉$84遠、不急，但別因「等60.28」死扛動能還在的軋空。<strong>調查:無實體硬底+燃料池不大→CPI是總開關,別在CPI前重壓</strong></td></tr>
+      <tr><td>黃金 XAU</td><td>$4,417</td><td>回測 $4,335 多｜止損$4,300</td><td>CPI前避險反彈(殖利率升是逆風)，勿追高；回測$4,335支撐再考慮</td></tr>
+      <tr><td>EWY 南韓（持倉）</td><td>$164.26</td><td>守 $160｜跌破減碼</td><td>今日-1%(半導體+risk-off)；晶片籃集中度風險，CPI熱殺估值時集中受創，別加碼</td></tr>
+      <tr><td>NOK（持倉）</td><td>實盤查</td><td>依個股支撐</td><td>非核心波動品種</td></tr>
+      <tr><td>KORU（空單，3x韓國多頭ETF）</td><td>實盤查</td><td>與EWY同向反做</td><td>EWY今日-1%=此空單短線有利；3x每日重置耗損+別硬扛過CPI</td></tr>
+    </table>
+    <p style="font-size:.78rem;margin-top:8px;color:var(--muted)"><strong>共通紀律：</strong>①白銀突破$65,你的減碼線到了——但用「4h收盤站穩」判定,別被盤中插針騙(調查證這波無實體硬底、易假突破);②<strong>8/12(明晚台灣20:30)CPI 是總開關</strong>,決定金銀突破能否延續/加密止跌/晶片估值,數據前一律別重壓、別在突破當下追高追空;③贏的部位移動停利,別預設頂底;④集中度風險——晶片籃今日續弱,別加碼;⑤USD/JPY 破159,日圓carry unwind 是加密+風險資產額外下行風險。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: 投行+期權 ===== -->
+<div class="card full">
+  <h2>7. 投行觀點與期權結構異常</h2>
+  <table>
+    <tr><th>來源</th><th>觀點</th><th>影響/時間戳</th></tr>
+    <tr><td>indexbox.io (8/10)</td><td>「金銀漲，油/殖利率/Fed升息押注從非農衝擊回穩；CPI/PPI/零售在焦點」</td><td>當前立場：CPI前定位是主驅動</td></tr>
+    <tr><td>vietnam.vn (8/10)</td><td>「金漲近8%(越南零售價)，China 增購步伐」</td><td>當前立場：China買盤結構撐金(越南零售價含稅非國際盤)</td></tr>
+    <tr><td>FOREX.com (8/10)</td><td>「BTC/金展望:CPI & 超買風險在焦點」</td><td>當前立場:金超買、CPI前謹慎</td></tr>
+    <tr><td>獨立調查(本團隊,多管道)</td><td>「白銀無急性實體短缺:COMEX庫存反升、租賃利率回落」</td><td>當前結論:突破靠軋空+動能非斷貨,無實體硬底</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.8rem"><strong>期權結構：</strong><strong>VIX 15.46（升破鈍化區15、自16.5回落但仍偏高）</strong>→ 波動定價回升，CPI前避險。10Y升4.70、30Y升5.24=殖利率回升壓高估值成長股與加密。<strong>FOREX.com 標金「超買風險」——賣方也提醒追高風險，別單邊看多。</strong>散戶vs機構:F&amp;G恐懼29、VIX升，加密risk-off vs 貴金屬避險分流。CPI(明晚)前波動壓縮後恐擴張。</p>
+</div>
+
+<!-- ===== SECTION 8: Calendar ===== -->
+<div class="card full">
+  <h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+  <div class="tl">
+    <div class="tl-i"><div class="tl-d">8/12（週三）20:30 ⭐最關鍵（倒數約36小時）</div><div class="tl-e">美國 7月 CPI——決定 Warsh 9月升息、金銀突破能否延續、加密止跌、晶片估值。白銀突破$65 的真偽也靠這關定調</div></div>
+    <div class="tl-i"><div class="tl-d">8/13（週四）20:30</div><div class="tl-e">美國 7月 PPI（生產者物價）——CPI 交叉驗證</div></div>
+    <div class="tl-i"><div class="tl-d">8/14（週五）</div><div class="tl-e">初領失業金人數；美國零售銷售（消費動能）</div></div>
+    <div class="tl-i"><div class="tl-d">8/15（週六）凌晨</div><div class="tl-e">新一期 COT 報告（含 8/11 持倉）——白銀 signals 工具空單分位更新，才看得到突破當週空頭清倉</div></div>
+    <div class="tl-i"><div class="tl-d">持續追蹤</div><div class="tl-e">USD/JPY 破159 carry unwind；白銀 4h 是否站穩 $65；INTC 增發消化</div></div>
+  </div>
+  <p style="margin-top:8px;font-size:.82rem"><strong>關鍵排名：</strong>①8/12 CPI（本週唯一 tier-1，決定金銀突破真偽+殖利率+升息路徑）≫ ②白銀$65站穩確認 ＞ ③8/13 PPI ＞ ④8/15 COT ＞ ⑤USD/JPY carry。</p>
+</div>
+
+<!-- ===== SECTION 9: 情境劇本 ===== -->
+<div class="card full">
+  <h2>9. 一週情境劇本與機率評估</h2>
+  <table>
+    <tr><th>預測市場/指標</th><th>當前定價</th><th>解讀</th></tr>
+    <tr><td>Fed 9月升息押注</td><td>殖利率回升(10Y4.70)暗示部分回吐降息預期（實際機率未抓到，不編）</td><td>CPI前拉鋸，殖利率升</td></tr>
+    <tr><td>加密 F&amp;G</td><td>29（恐懼）</td><td>加密情緒偏弱，跟risk-off</td></tr>
+    <tr><td>VIX</td><td>15.46（升破鈍化區）</td><td>波動回升，CPI前避險</td></tr>
+  </table>
+  <div class="scenario"><strong>Base Case（機率 47%）：</strong>白銀突破後高檔震盪、8/12 CPI 溫和 → 金 $4,335–$4,490、銀站穩 $65 於 $65–$68 區間、加密守 $63.2K、晶片消化 INTC 事件。殖利率回穩。</div>
+  <div class="scenario" style="border-left-color:var(--accent)"><strong>Bull Case（機率 28%）：</strong>8/12 CPI 偏弱 → 殖利率回落、降息押注起 → 金衝 $4,560、銀軋空續攻 $68.4、加密反彈 $65.9K。<strong>需 CPI 實際偏弱才成立。</strong></div>
+  <div class="scenario-bear"><strong>Bear Case（機率 25%）：</strong>8/12 CPI 熱 → 殖利率飆、Warsh 9月升息 → 金回 $4,300、<strong>銀假突破快速回落 $62–$63（無實體硬底、回吐快）</strong>、加密破 $63.2K 奔 $61.9K、晶片估值殺。<strong>白銀空單此情境獲利——這正是「突破無硬底」的下行劇本。</strong></div>
+  <div class="scenario-tail"><strong>Tail Risk（機率 3%）：</strong>USD/JPY 破159後日圓 carry unwind 加劇 → 加密+風險資產急殺、避險資金續湧金銀。低機率但 159 已破需留意。</div>
+</div>
+
+<div class="footer">
+  本報告 2026-08-11（週二）08:54 台灣時間產出，亞洲盤。<strong>本期觸發 STEP 3.5 對抗式驗證（白銀突破$65重大轉折+持倉決策，主線程對抗四問+三份獨立調查）：①白銀突破$65 因果=「軋空+CPI前避險+China買盤+技術動能」疊加，實體短缺經多管道調查證偽(COMEX庫存反升+14~16%、租賃利率回落)，故標「無實體硬底、易在衰竭/CPI引爆時快速回吐」；②金銀齊漲因果=CPI前避險+China買盤(vietnam.vn/indexbox✓)，「弱美元/降息推升」經對抗第4問打回(DXY持平、殖利率升，量級方向皆不符)；③加密下殺=殖利率升+VIX升risk-off，與貴金屬避險腿分道；④INTC-4%=增發稀釋個股事件(非板塊崩,MSFT/AMZN逆漲為證)。金銀比連三期收斂66.93=軋空/避險腿主導。白銀工具仍判觀望0分(不追突破)，與主觀「突破需嚴肅對待、空單減碼」並陳分歧。CPI(明晚20:30)是總開關。工具實驗性、僅參考非進場依據。本報告為量化分析與紀律提醒，非投資建議，交易風險自負。
+</div>
+
+</div>
+</body></html>
