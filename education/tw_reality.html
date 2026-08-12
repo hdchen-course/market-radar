@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣散戶實戰基建 — 開戶・稅務・PDT・時區・匯率</title>
+<link rel="stylesheet" href="common.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.subtitle{font-size:14px;color:var(--text3);margin-bottom:24px}
+.section-title{font-size:20px;font-weight:700;color:var(--blue);margin:24px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+.tab-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:12px;}
+.pill{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:var(--bg4);color:var(--text2);margin-right:4px}
+.pill-red{background:var(--red-l);color:var(--red)}
+.pill-green{background:var(--green-l);color:var(--green)}
+.pill-blue{background:var(--blue-l);color:var(--blue)}
+.pill-yellow{background:var(--yellow-l);color:var(--yellow)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--text3);text-transform:uppercase;margin-bottom:4px}
+.mono{font-family:'JetBrains Mono',monospace}
+.step0-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;background:var(--blue);color:#fff;margin-bottom:12px}
+.qz-opts{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.qz-opt{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font:inherit;color:var(--text2);transition:all .15s;}
+.qz-opt:hover:not(:disabled){background:var(--bg4);}
+.qz-opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.qz-opt.ok{background:var(--green-l);border-color:var(--green);color:var(--text);}
+.qz-opt.ok::before{content:"\2713 ";font-weight:700;color:var(--green);}
+.qz-opt.no{background:var(--red-l);border-color:var(--red);color:var(--text);}
+.qz-opt.no::before{content:"\2717 ";font-weight:700;color:var(--red);}
+.qz-exp{margin-top:10px;padding:12px;background:var(--bg3);border-radius:8px;font-size:13px;}
+.qz-next{margin-top:12px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font:inherit;}
+.qz-prog{font-size:13px;font-weight:600;color:var(--text3);margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
+
+<span class="step0-badge">新手路線圖 · Step 0</span>
+<h1>台灣散戶實戰基建</h1>
+<p class="subtitle">開戶・稅務・PDT・時區・匯率 — 決定「策略能不能執行、副業能不能成立」的落地現實。先把地基打好，再談技術分析。</p>
+
+<div class="warning-box">
+<strong>重要聲明（請先讀）：</strong>本頁僅供<strong>一般教育資訊</strong>，<strong>不構成投資、稅務或法律建議</strong>。文中所有稅率、免稅額、規則門檻（如預扣 30%、遺產稅免稅額約 6 萬美元、PDT 2.5 萬美元）都是<strong>會隨時間、法規修訂與你個人身分而改變</strong>的資訊；跨境稅務更牽涉個人具體情況。<strong>實際開戶、下單與報稅前，務必向你的券商、國稅局／IRS 官方資料，以及合格的會計師、稅務顧問或律師確認最新規定。</strong>本頁數字僅供你「知道有這件事、該去問誰」，不可當作報稅或法律依據。
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">1 · 券商選擇</button>
+  <button class="tab-btn" data-tab="tab2">2 · 股利與所得稅</button>
+  <button class="tab-btn" data-tab="tab3">3 · 美股遺產稅</button>
+  <button class="tab-btn" data-tab="tab4">4 · PDT 當沖規則</button>
+  <button class="tab-btn" data-tab="tab5">5 · 時區與作息</button>
+  <button class="tab-btn" data-tab="tab6">6 · 換匯與成本</button>
+  <button class="tab-btn" data-tab="tab7">7 · 貴金屬載具</button>
+  <button class="tab-btn" data-tab="tab8">8 · 互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2 class="section-title">券商選擇：複委託 vs 海外券商</h2>
+
+<div class="card">
+<p>台灣人買美股與美國掛牌 ETF，主要有兩條路：</p>
+<ul>
+<li><strong>國內券商「複委託」（受託買賣外國有價證券）</strong>：透過你熟悉的本土券商（元大、富邦、國泰、永豐等）下單，資金與帳戶都在台灣、以新台幣或外幣交割，介面中文、客服在地。</li>
+<li><strong>海外券商（直接開美國帳戶）</strong>：最常見的是 <strong>Interactive Brokers（IBKR，盈透）</strong> 與 <strong>Firstrade（第一證券）</strong>。你把錢電匯到美國券商，帳戶與資產都在美國。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>比較表</h3>
+<table>
+<tr><th>項目</th><th>國內複委託</th><th>海外券商（IBKR / Firstrade）</th></tr>
+<tr><td>手續費</td><td>較高，且多有<strong>「低消」</strong>（每筆最低收費，常見約數美元～數十美元不等，各券商不同）</td><td>普遍較低；Firstrade 主打美股 0 手續費、IBKR 費率極低（惟 IBKR 可能有其他費用結構）</td></tr>
+<tr><td>低消門檻</td><td><strong>有</strong>，小額單筆特別吃虧</td><td>多半<strong>無低消</strong>，適合小額分批</td></tr>
+<tr><td>入金流程</td><td>台灣帳戶內交割，較單純；外幣需先換匯</td><td>需<strong>國際電匯</strong>到美國，手續費與作業時間較高，退匯／出金亦需電匯</td></tr>
+<tr><td>開戶門檻</td><td>臨櫃或線上，中文流程，門檻低</td><td>線上英文（Firstrade 有中文介面）；需填 <strong>W-8BEN</strong> 等文件</td></tr>
+<tr><td>資產保障</td><td>受台灣法規與券商機制規範</td><td>多受美國 <strong>SIPC</strong> 保障（證券最高 50 萬美元、其中現金上限 25 萬美元；<strong>非保證獲利、僅防券商倒閉時的資產返還</strong>）</td></tr>
+<tr><td>下單介面／便利性</td><td>中文、與台股同平台、客服在地、時區內服務</td><td>功能強（IBKR 尤其專業），但英文為主、客服時差、學習曲線較高</td></tr>
+<tr><td>繼承／資金安全</td><td>資產在台灣，<strong>繼承程序相對單純</strong></td><td>資產在美國，牽涉<strong>美國遺產稅與跨境繼承程序（見第 3 分頁）</strong>，較複雜</td></tr>
+<tr><td>適合對象</td><td>怕麻煩、重視在地客服、金額較大單筆、長期持有少交易</td><td>成本敏感、會分批進出、能處理英文與電匯、資金規模已成形</td></tr>
+</table>
+<p class="pill pill-yellow">提醒</p> 上述費率、低消、保障金額為概念性描述，各券商方案時常調整，<strong>請以券商官網最新公告為準</strong>。
+</div>
+
+<div class="highlight-box">
+<strong>散戶實務結論：</strong>沒有「哪個一定好」，只有「哪個配合你的交易頻率與金額」。單筆金額大、交易少 → 複委託的低消影響小、又省事；金額小、會分批 → 海外券商省成本。但選海外券商前，<strong>務必先把第 3 分頁的「美股遺產稅」看完再決定資產放哪、用什麼標的</strong>。
+</div>
+</div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div class="tab-content" id="tab2">
+<h2 class="section-title">股利與所得稅</h2>
+
+<div class="warning-box">
+<strong>本分頁為教育資訊、非稅務建議。</strong>稅法與稅率會變動、且因個人身分（居住者判定、是否美國稅務居民等）而不同。<strong>報稅前務必諮詢合格會計師／稅務顧問，並以財政部、國稅局及 IRS 官方最新規定為準。</strong>
+</div>
+
+<div class="card">
+<h3>美國端：股利預扣 30%</h3>
+<ul>
+<li>台灣人（<strong>非美國稅務居民 / Non-Resident Alien</strong>）領取<strong>美股股利</strong>時，美國會<strong>預扣 30%</strong>。</li>
+<li>券商會請你填 <strong>W-8BEN</strong>，用來<strong>確認你的外國人身分</strong>。但要注意：<strong>因為台美之間沒有租稅協定（Tax Treaty），填了 W-8BEN 也不會把股利稅率降到 30% 以下</strong>。（有租稅協定的國家，居民可能適用較低稅率，例如某些國家降到 10%–15%；台灣目前不適用。）</li>
+<li><strong>資本利得（買賣價差）：美國對非居民「不預扣」</strong>資本利得稅。也就是你賺價差在美國端一般不被扣稅。</li>
+</ul>
+<p class="pill pill-blue">白話</p> 領股利 = 先被美國吃掉 30%；賺價差 = 美國不扣。這也是為什麼許多長期投資人偏好<strong>低股利、靠價差成長</strong>的標的來降低股利稅拖累（但這是稅務考量，非投資建議）。
+</div>
+
+<div class="card">
+<h3>台灣端：海外所得與「最低稅負制」</h3>
+<p>你在海外（含美股）賺到的所得，在台灣屬於<strong>「海外所得」</strong>，會被納入<strong>「基本所得額」（最低稅負制 / 所得基本稅額條例）</strong>的計算，而不是併入一般綜合所得稅級距。重點概念：</p>
+<ul>
+<li>海外所得有一個<strong>「計入門檻」</strong>（單一申報戶全年海外所得達一定金額才須計入基本所得額）。</li>
+<li>基本所得額另有一個<strong>「扣除額 / 免稅額度」</strong>，超過部分才按基本稅率計算最低稅負。</li>
+<li><strong>這些門檻金額每隔幾年會依物價指數調整</strong>，本頁刻意不寫死具體數字，以免過期誤導 —— <strong>請查財政部／國稅局當年度公告，或問會計師。</strong></li>
+</ul>
+<p class="pill pill-yellow">重點</p> 對多數小資上班族，海外所得未必立刻要繳很多稅；但<strong>「未必要繳」不等於「不用申報 / 不用了解」</strong>。金額變大、或有其他海外所得（利息、基金）時，門檻很容易被觸及。</p>
+</div>
+
+<div class="insight-box">
+<strong>兩層稅要分清楚：</strong>美國端（預扣，發生在券商）與台灣端（申報，發生在你報稅）是<strong>兩個不同系統</strong>。美國預扣的股利稅，在台灣端是否能抵扣、如何申報，屬於個人稅務規劃範圍 —— <strong>這正是要找專業會計師的地方，不要憑網路文章 DIY。</strong>
+</div>
+</div>
+
+<!-- ==================== TAB 3 ==================== -->
+<div class="tab-content" id="tab3">
+<h2 class="section-title">美股遺產稅 — 最容易被忽略的一顆雷</h2>
+
+<div class="warning-box">
+<strong>本分頁為概念性資訊、非法律或稅務建議。</strong>遺產稅、免稅額與跨境繼承牽涉複雜的個人情況與最新法規，<strong>請務必諮詢熟悉美國稅務的會計師或律師後再做資產配置決定。</strong>
+</div>
+
+<div class="card">
+<h3>問題本身</h3>
+<ul>
+<li>美國對<strong>非居民外國人（NRA）持有的「美國境內資產」</strong>課徵<strong>遺產稅（Estate Tax）</strong>。</li>
+<li><strong>美國境內資產包含：美股個股、以及在美國註冊（美國掛牌）的 ETF。</strong>例如 SPY、VOO、QQQ、GLD、SLV 這類美國註冊標的。</li>
+<li>對非居民而言，遺產稅<strong>免稅額僅約 6 萬美元（US$60,000）</strong> —— 遠低於美國公民／居民的高額免稅額；超過部分累進，<strong>最高稅率可達 40%</strong>。</li>
+</ul>
+<p class="pill pill-red">意思是</p> 如果一位台灣人持有價值遠超 6 萬美元的美國掛牌股票 / ETF，在他過世後，超過免稅額的部分理論上可能面臨最高達 40% 的美國遺產稅，而且繼承人還得處理跨境申報與資產解凍程序。<strong>這常常被完全忽略，直到出事才發現。</strong>
+</div>
+
+<div class="card">
+<h3>常見的因應「概念」（非建議，僅供了解方向）</h3>
+<table>
+<tr><th>方向</th><th>概念說明</th></tr>
+<tr><td><strong>改持有愛爾蘭註冊 ETF</strong></td><td>用<strong>在愛爾蘭（Ireland）註冊</strong>的 UCITS ETF 取得類似的市場曝險。這類 ETF 的 <strong>ISIN 以「IE」開頭</strong>，常見如 <span class="mono">CSPX</span>（追蹤 S&amp;P 500）、<span class="mono">VWRA</span>（追蹤全球股市）。因為註冊地不在美國，一般<strong>不被視為美國境內資產</strong>，可降低美國遺產稅疑慮；且愛爾蘭與美國有租稅協定，其內部收到的美股股利預扣通常較低（概念上約 15%）。這類 ETF 多在<strong>倫敦等歐洲交易所掛牌</strong>，可透過 IBKR 等券商買到。</td></tr>
+<tr><td><strong>受益人 / 帳戶結構</strong></td><td>部分海外券商提供<strong>指定受益人（如 TOD, Transfer on Death）</strong>或<strong>聯名帳戶</strong>等機制，可能影響繼承流程；但這<strong>不等於免除遺產稅</strong>，且細節依券商與法律而定。</td></tr>
+<tr><td><strong>資產放在台灣端</strong></td><td>透過複委託持有，資產與帳戶在台灣，繼承走台灣程序，可避開美國遺產稅的直接適用（但仍要留意標的本身是否為美國境內資產的判定 —— 這點請問專業）。</td></tr>
+</table>
+</div>
+
+<div class="insight-box">
+<strong>給長期存股的上班族最實用的一句話：</strong>如果你打算<strong>長期、持續買進並累積到相當金額的美國市場曝險</strong>，那麼「用美國註冊 ETF（如 VOO/SPY）還是愛爾蘭註冊 ETF（如 CSPX/VWRA）」<strong>不是小事，而是會影響身後 40% 的大事</strong>。這是資本保全的一環，值得在開始定期投入<em>之前</em>就先諮詢專業、想清楚。
+</div>
+</div>
+
+<!-- ==================== TAB 4 ==================== -->
+<div class="tab-content" id="tab4">
+<h2 class="section-title">PDT 當沖規則 — 決定小資金能不能當沖</h2>
+
+<div class="card">
+<h3>Pattern Day Trader（PDT）規則是什麼</h3>
+<ul>
+<li>美國證券規則規定：使用<strong>融資帳戶（margin account）</strong>的投資人，若在<strong>連續 5 個交易日內</strong>，<strong>當沖（同一天買進又賣出同一標的）次數達 4 次或以上</strong>，就會被認定為 <strong>Pattern Day Trader</strong>。</li>
+<li>被認定為 PDT 後，帳戶<strong>淨值（equity）必須維持在 2.5 萬美元（US$25,000）以上</strong>。</li>
+<li>換個實用說法：<strong>當帳戶淨值低於 2.5 萬美元時，你在 5 個交易日內的當沖次數不得超過 3 次（即最多 3 次，第 4 次就違規）。</strong>違反會被券商<strong>限制交易（例如帳戶被凍結為只能平倉一段時間）</strong>。</li>
+</ul>
+</div>
+
+<div class="warning-box">
+<strong>對小資金的殘酷現實：</strong>如果你的美股帳戶不到 2.5 萬美元（對很多上班族起步階段就是如此），那麼<strong>「在美股當沖」實際上幾乎不可行</strong> —— 一週只能當沖 3 次，任何積極的日內策略都無法執行。<strong>不要拿一個「當沖策略」硬套在一個會被 PDT 卡死的帳戶上。</strong>先確認規則，再談策略。詳細的策略選擇請看 <a href="trading_strategy.html">波段與日內策略</a>。
+</div>
+
+<div class="card">
+<h3>因應方式</h3>
+<table>
+<tr><th>做法</th><th>說明</th><th>取捨</th></tr>
+<tr><td><strong>改走波段（隔日以上）</strong></td><td>只要<strong>不是同一天買進又賣出</strong>，就不算當沖，PDT 完全不適用。今天買、明天以後才賣 = 不受 3 次限制。</td><td><span class="pill pill-green">推薦給小資</span> 最單純、最符合上班族作息（見第 5 分頁）</td></tr>
+<tr><td><strong>用現金帳戶（cash account）</strong></td><td>現金帳戶不受 PDT 規則約束，但受<strong>交割（settlement，T+1 / T+2）</strong>限制 —— 賣出後資金要等交割完成才能再用，等於變相限制頻率，且不能融資。</td><td>可規避 PDT，但被交割時間綁住</td></tr>
+<tr><td><strong>把標的改成期貨</strong></td><td>期貨（futures）<strong>不適用股票的 PDT 規則</strong>，可較自由地日內進出。</td><td>但期貨<strong>槓桿高、風險放大</strong>，不適合新手，另有自己的保證金與風險規則</td></tr>
+<tr><td><strong>把帳戶做到 2.5 萬美元以上</strong></td><td>維持淨值 ≥ US$25,000 就能正常當沖。</td><td>對起步階段的小資金不現實，且<strong>不該為了「能當沖」而勉強放大部位</strong></td></tr>
+</table>
+</div>
+
+<div class="highlight-box">
+<strong>資本保全視角：</strong>PDT 規則某種程度上「保護」了小資金 —— 它逼你不要頻繁當沖。對絕大多數上班族副業型投資人，<strong>波段（隔日以上）本來就是更務實、更能兼顧本業與睡眠的路</strong>。把 PDT 當成「別當沖」的提醒，而不是要繞過的障礙。
+</div>
+</div>
+
+<!-- ==================== TAB 5 ==================== -->
+<div class="tab-content" id="tab5">
+<h2 class="section-title">時區與可持續作息</h2>
+
+<div class="card">
+<h3>美股常規盤對應的台灣時間</h3>
+<p>美國有<strong>日光節約時間（夏令時間）</strong>，所以對應的台灣時間一年會有兩套。台灣不實施夏令，因此美股「往前 / 往後」一小時的變動都由美國那邊造成。</p>
+<table>
+<tr><th>時段</th><th>夏令（約 3 月中～11 月初）台灣時間</th><th>冬令（約 11 月初～3 月中）台灣時間</th></tr>
+<tr><td>美股常規盤開盤（09:30 ET）</td><td><strong>21:30</strong></td><td><strong>22:30</strong></td></tr>
+<tr><td>美股常規盤收盤（16:00 ET）</td><td><strong>04:00（隔日）</strong></td><td><strong>05:00（隔日）</strong></td></tr>
+<tr><td>盤前（pre-market，約 04:00 ET 起）</td><td>約 16:00 起</td><td>約 17:00 起</td></tr>
+<tr><td>盤後（after-hours，至約 20:00 ET）</td><td>至約 08:00（隔日）</td><td>至約 09:00（隔日）</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>重要事件的台灣時間（概略）</h3>
+<table>
+<tr><th>事件</th><th>美東時間</th><th>夏令台灣時間</th><th>冬令台灣時間</th></tr>
+<tr><td><strong>CPI / NFP / PPI</strong></td><td>08:30 ET</td><td><span class="pill pill-red">20:30</span></td><td><span class="pill pill-red">21:30</span></td></tr>
+<tr><td><strong>FOMC 利率決議</strong></td><td>14:00 ET</td><td><span class="pill pill-red">隔日 02:00</span></td><td><span class="pill pill-red">隔日 03:00</span></td></tr>
+<tr><td>Powell 記者會</td><td>14:30 ET</td><td>隔日 02:30</td><td>隔日 03:30</td></tr>
+<tr><td>ISM / JOLTS 等</td><td>10:00 ET</td><td>22:00</td><td>23:00</td></tr>
+</table>
+<p class="pill pill-yellow">注意</p> 夏／冬令切換的日期美國與台灣認知不同步，換季前後那一兩週<strong>務必用經濟日曆（會自動換算）再確認一次</strong>，別靠記憶。事件操作細節見 <a href="event_trading_sop.html">事件交易 SOP</a>。
+</div>
+
+<div class="warning-box">
+<strong>上班族的核心生存法則：不熬夜盯盤。</strong>美股開盤在你的深夜、FOMC 在你的凌晨兩三點 —— 如果你靠熬夜盯盤做決策，<strong>本業會垮、身體會垮、交易也會垮</strong>。務實的做法是：<strong>盤前把單子掛好</strong> —— 用<strong>限價單（Limit）、GTC（掛到成交或取消）、OCO（二擇一，同時掛停利與停損）</strong>，讓系統在你睡覺時按你清醒時的計畫執行，然後<strong>去睡覺</strong>。
+</div>
+
+<div class="insight-box">
+<strong>睡眠不足會放大所有交易失誤。</strong>疲勞會直接削弱紀律、放大衝動與報復性交易 —— 熬夜盯盤看似「認真」，實際上是在用最差的認知狀態做最貴的決定。可持續的作息本身就是一種風控。這與交易心理高度相關，延伸閱讀 <a href="trading_psychology.html">交易心理學</a>。
+</div>
+</div>
+
+<!-- ==================== TAB 6 ==================== -->
+<div class="tab-content" id="tab6">
+<h2 class="section-title">換匯與交易成本</h2>
+
+<div class="card">
+<h3>新台幣換美元：點差與時機</h3>
+<ul>
+<li>換匯的成本藏在<strong>「買賣價差」（spread）</strong>裡 —— 銀行 / 券商買你美元的價、與賣你美元的價之間的差距，就是你的隱形成本。</li>
+<li><strong>臨櫃現鈔匯率最差、即期匯率較好、線上結匯 / 券商優惠匯率通常更好。</strong>同一天、同一筆錢，換匯管道不同成本差很多。</li>
+<li>換匯時機難以擇時，<strong>分批換匯</strong>可平滑匯率風險，勝過一次押注某個「好價位」。</li>
+<li>提醒：<strong>匯率本身也是一種波動</strong> —— 你美股賺了 5%，但美元對台幣貶值 5%，換回台幣可能接近白做。長期投資人要意識到報酬是「股價 × 匯率」兩層。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>複委託低消 vs 海外券商：小資金最怕的成本殺手</h3>
+<table>
+<tr><th>成本來源</th><th>複委託</th><th>海外券商</th></tr>
+<tr><td>單筆低消</td><td><strong>有</strong> —— 買 300 美元也可能被收固定低消，等於一進場就先虧一大截百分比</td><td>多半<strong>無低消</strong>，小額分批較友善</td></tr>
+<tr><td>國際電匯費</td><td>不需要（台灣內部交割）</td><td><strong>入金 / 出金各一筆電匯費</strong>，加上中轉行費用，金額小時佔比可觀</td></tr>
+<tr><td>換匯成本</td><td>券商 / 銀行點差</td><td>券商內建換匯（IBKR 換匯成本通常很低）</td></tr>
+</table>
+<p class="pill pill-red">小資陷阱</p> 資金小 + 頻繁小額進出 + 有低消 = <strong>成本吃掉報酬</strong>。例如單筆低消 5 美元、你只買 500 美元，光手續費就 1%，來回 2%，等於還沒開始就要先漲 2% 才回本。</p>
+</div>
+
+<div class="card">
+<h3>ADR 與原股</h3>
+<ul>
+<li><strong>ADR（美國存託憑證）</strong>：外國公司（如台積電 <span class="mono">TSM</span>、部分歐洲公司）在美國掛牌交易的憑證，讓你能用美元、在美股時段買到外國公司。</li>
+<li>ADR 可能有<strong>「存託費」（ADR fee / custody fee）</strong>等額外成本，且與原股（如台積電在台灣掛牌的 2330）之間有匯率與流動性差異。</li>
+<li>對台灣人來說，同一家台廠有「台股原股 2330」與「美股 ADR（TSM）」兩種買法 —— 各有稅務、時區、成本差異，<strong>不是隨便哪個都一樣</strong>。</li>
+</ul>
+</div>
+
+<div class="highlight-box">
+<strong>隱藏成本如何侵蝕小資金報酬（總結）：</strong>手續費、低消、換匯點差、電匯費、ADR 費 —— 每一項單看都不大，<strong>但對小資金、且相對報酬率而言，加總起來足以決定你「長期是正報酬還是被成本磨死」</strong>。務實做法：<strong>降低交易頻率、加大單筆、選對管道、選無低消券商</strong>，讓成本佔比壓到最低。這與資本保全同等重要。
+</div>
+</div>
+
+<!-- ==================== TAB 7 ==================== -->
+<div class="tab-content" id="tab7">
+<h2 class="section-title">貴金屬與商品的載具 / 稅務差異</h2>
+
+<div class="warning-box">
+<strong>本分頁為教育資訊、非稅務建議。</strong>各載具的稅務處理（尤其遺產稅、海外所得）依個人身分與最新法規而定，<strong>請諮詢專業並以官方規定為準。</strong>
+</div>
+
+<div class="card">
+<h3>取得黃金 / 白銀曝險的幾種載具</h3>
+<table>
+<tr><th>載具</th><th>是什麼</th><th>關鍵稅務 / 實務差異</th></tr>
+<tr><td><strong>GLD / SLV（美國註冊 ETF）</strong></td><td>美國掛牌、追蹤黃金 / 白銀現貨的 ETF</td><td><strong>屬於美國境內資產 → 適用美國遺產稅</strong>（免稅額約 6 萬美元、最高 40%，見第 3 分頁）；股利 / 配息預扣議題比照美股</td></tr>
+<tr><td><strong>期貨（黃金 / 白銀 futures）</strong></td><td>在交易所交易的標準化合約</td><td><strong>不適用股票 PDT 規則</strong>，但<strong>高槓桿、高風險、有保證金與到期 / 轉倉問題</strong>，不適合新手</td></tr>
+<tr><td><strong>台灣黃金存摺</strong></td><td>台灣銀行提供、以帳戶記錄持有克數，可買賣、部分可換實體</td><td>資產在台灣、以新台幣計價，<strong>不涉及美國遺產稅</strong>；有銀行買賣點差成本，稅務走台灣端規定</td></tr>
+<tr><td><strong>實體金條 / 金幣</strong></td><td>實際持有的貴金屬</td><td>需自行保管（保險箱成本、遺失 / 竊盜風險）、買賣有工繳與價差；繼承走台灣程序</td></tr>
+</table>
+</div>
+
+<div class="insight-box">
+<strong>同樣是「想抱點黃金」，載具選擇會牽動三件事：</strong>(1) <strong>PDT / 交易規則</strong>（GLD 是股票、期貨不是）、(2) <strong>美國遺產稅</strong>（GLD/SLV 適用、台灣黃金存摺不適用）、(3) <strong>成本與保管</strong>（實體 vs 帳戶）。先想清楚「我要的是長期資產配置，還是短線交易」，載具自然就選對了。貴金屬的交易與分析細節，延伸閱讀 <a href="precious_metals.html">貴金屬交易（黃金/白銀/礦股）</a>。
+</div>
+
+<div class="highlight-box">
+<strong>務實提醒：</strong>如果你是「長期存一點金當避險」的上班族，台灣黃金存摺或愛爾蘭註冊的黃金 ETF（避開美國遺產稅）在資產傳承上通常比 GLD 單純；如果你是要<strong>短線交易</strong>金銀，那要面對的是槓桿與波動風險，而不是稅務問題。<strong>先定位需求，再挑工具。</strong>
+</div>
+</div>
+
+<!-- ==================== TAB 8 ==================== -->
+<div class="tab-content" id="tab8">
+<h2 class="section-title">互動測驗 — 12 題實戰基建</h2>
+<p class="subtitle">涵蓋 PDT、股利預扣、遺產稅、時區換算、換匯與載具。答錯沒關係，看解析比拿分更重要。</p>
+<div id="tw-quiz"></div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var id=btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.toggle('active',c.id===id);});
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+(function(){
+  var QUESTIONS=[
+    {q:"你的美股融資帳戶淨值約 8,000 美元。這週你已經當沖（同日買進又賣出同一標的）3 次。想做第 4 次當沖，會發生什麼？",
+     options:["沒問題，PDT 只限制專業投資人","可能觸發 Pattern Day Trader 規則被限制交易，因為淨值未達 2.5 萬美元","第 4 次會被多收手續費而已","要先填 W-8BEN 才能繼續當沖"],
+     correct:1,
+     explain:"融資帳戶淨值低於 2.5 萬美元時，5 個交易日內當沖不得超過 3 次，第 4 次即違規，可能被券商限制交易。小資金當沖美股實際上不可行，改走波段最務實。"},
+    {q:"台灣人（非美國稅務居民）領取美股「股利」時，美國的處理方式是？",
+     options:["完全免稅","預扣 30%","預扣 15%，因為台美有租稅協定","要等報稅時才扣"],
+     correct:1,
+     explain:"美股股利對非美國稅務居民預扣 30%。台美之間沒有租稅協定，所以即使填了 W-8BEN 也無法把股利稅率降到 30% 以下。"},
+    {q:"填寫 W-8BEN 的主要作用是什麼？",
+     options:["把股利稅率從 30% 降到 10%","確認你的外國人（非美國稅務居民）身分","免除美國資本利得稅","申請 SIPC 保障"],
+     correct:1,
+     explain:"W-8BEN 是用來向美國確認你是外國人身分的文件。對台灣人而言，因無租稅協定，填了也不會降低 30% 的股利預扣稅率。"},
+    {q:"關於美股「資本利得（買賣價差）」，美國對台灣人（非居民）的預扣是？",
+     options:["預扣 30%","預扣 20%","一般「不預扣」資本利得稅","與股利一起扣"],
+     correct:2,
+     explain:"美國對非居民的資本利得一般不預扣。你賺價差在美國端通常不被扣稅（台灣端的海外所得申報是另一回事）。"},
+    {q:"一位台灣人持有價值 30 萬美元的美國掛牌 ETF（如 VOO）。關於美國遺產稅，下列敘述何者較正確？",
+     options:["ETF 不算美國資產，完全免遺產稅","美國掛牌 ETF 屬美國境內資產，非居民免稅額僅約 6 萬美元，超過部分最高稅率可達 40%","遺產稅只課美股個股，不課 ETF","只要有受益人就完全免遺產稅"],
+     correct:1,
+     explain:"美國註冊 / 掛牌的 ETF 屬美國境內資產，適用非居民遺產稅：免稅額僅約 6 萬美元、最高稅率達 40%。這是長期大額持有美國標的最容易被忽略的風險。"},
+    {q:"想長期累積美股大盤曝險、又想降低美國遺產稅疑慮，常見的概念性做法是？",
+     options:["改持有愛爾蘭註冊 ETF（ISIN 以 IE 開頭，如 CSPX、VWRA）","把 VOO 換成 SPY","多開幾個美國券商帳戶分散","改成當沖就不用管遺產稅"],
+     correct:0,
+     explain:"愛爾蘭註冊的 UCITS ETF（ISIN 以 IE 開頭，如 CSPX、VWRA）註冊地不在美國，一般不視為美國境內資產，可降低美國遺產稅疑慮。惟此為概念性資訊，實際規劃請諮詢專業。"},
+    {q:"夏令時間（美國實施日光節約）期間，美股常規盤開盤對應的台灣時間是？",
+     options:["20:30","21:30","22:30","23:30"],
+     correct:1,
+     explain:"夏令：美股 09:30 ET = 台灣 21:30 開盤、04:00 收盤。冬令則各往後一小時（22:30 開、05:00 收）。"},
+    {q:"FOMC 利率決議在美東 14:00 公布。冬令時間對應的台灣時間約為？",
+     options:["當天 20:00","當天 23:00","隔日凌晨 02:00","隔日凌晨 03:00"],
+     correct:3,
+     explain:"FOMC 14:00 ET，夏令約隔日台灣 02:00、冬令約隔日 03:00。這正好落在你的睡眠時段，所以更該「掛好單去睡」，別熬夜盯盤。"},
+    {q:"身為上班族，最能長期持續、又兼顧睡眠的美股操作方式是？",
+     options:["每晚熬夜盯盤到收盤","盤前用限價單 / GTC / OCO 掛好單，然後去睡覺","只在凌晨 FOMC 時起床操作","靠盤中頻繁當沖抓波動"],
+     correct:1,
+     explain:"用限價單、GTC、OCO 事先掛好，讓系統在你睡覺時按清醒時的計畫執行。睡眠不足會放大所有交易失誤，可持續作息本身就是風控。"},
+    {q:"你的美股帳戶只有幾千美元，卻頻繁地做「單筆 300～500 美元」的進出，且券商有單筆低消。最大的風險是？",
+     options:["會觸發遺產稅","手續費 / 低消佔比過高，成本吃掉報酬","匯率一定會貶值","被強制升級成融資帳戶"],
+     correct:1,
+     explain:"小資金 + 頻繁小額 + 有低消 = 成本殺手。單筆低消 5 美元、只買 500 美元，來回就約 2% 成本。務實做法是降低頻率、加大單筆、選無低消券商。"},
+    {q:"帳戶淨值不到 2.5 萬美元、又想做較高頻率的日內交易，下列何者「不受股票 PDT 規則約束」但風險更高、不建議新手？",
+     options:["買更多美國掛牌 ETF","改用期貨（futures）","多填幾份 W-8BEN","改用複委託"],
+     correct:1,
+     explain:"期貨不適用股票的 PDT 規則，可較自由日內進出；但期貨槓桿高、風險放大，不適合新手。對小資族，改走波段（隔日以上）通常才是務實解。"},
+    {q:"關於「用什麼載具持有黃金」，下列敘述何者正確？",
+     options:["GLD（美國掛牌 ETF）與台灣黃金存摺在美國遺產稅上完全相同","GLD 屬美國境內資產、適用美國遺產稅；台灣黃金存摺資產在台灣、不適用美國遺產稅","實體金條完全沒有任何持有成本","期貨黃金適用股票 PDT 規則"],
+     correct:1,
+     explain:"GLD/SLV 是美國掛牌 ETF，屬美國境內資產，適用美國遺產稅；台灣黃金存摺資產在台灣、不涉及美國遺產稅。載具選擇會牽動遺產稅、交易規則與保管成本，需先定位需求再挑工具。"}
+  ];
+  var el=document.getElementById('tw-quiz'); if(!el)return; var i=0,score=0,answered=false;
+  function render(){var it=QUESTIONS[i];
+    el.innerHTML='<div class="qz-prog">第 '+(i+1)+' / '+QUESTIONS.length+' 題　目前得分 '+score+'</div>'+
+      '<div style="font-weight:600;margin-bottom:6px;">'+it.q+'</div><div class="qz-opts">'+
+      it.options.map(function(o,idx){return '<button type="button" class="qz-opt" data-i="'+idx+'">'+o+'</button>';}).join('')+
+      '</div><div class="qz-exp" hidden></div><button type="button" class="qz-next" hidden>下一題 →</button>';
+    answered=false;
+    el.querySelectorAll('.qz-opt').forEach(function(b){b.addEventListener('click',function(){select(+b.dataset.i);});});
+    el.querySelector('.qz-next').addEventListener('click',next);}
+  function select(idx){if(answered)return;answered=true;var it=QUESTIONS[i];var opts=el.querySelectorAll('.qz-opt');
+    opts.forEach(function(b){b.disabled=true;});
+    if(idx===it.correct){opts[idx].classList.add('ok');score++;}else{opts[idx].classList.add('no');opts[it.correct].classList.add('ok');}
+    var exp=el.querySelector('.qz-exp');exp.innerHTML='<strong>解析：</strong>'+it.explain;exp.hidden=false;
+    el.querySelector('.qz-next').hidden=false;}
+  function next(){i++;if(i>=QUESTIONS.length){el.innerHTML='<div class="card" style="text-align:center;padding:24px;"><h3>測驗完成！</h3><p style="font-size:22px;font-weight:800;color:var(--blue);">'+score+' / '+QUESTIONS.length+'</p><p>正確率 '+Math.round(score/QUESTIONS.length*100)+'%</p><p style="font-size:13px;color:var(--text3);">記住：這些規則與數字會隨法規變動，實際開戶與報稅前務必向券商與合格專業人士確認最新規定。</p></div>';return;}render();}
+  render();
+})();
+</script>
+
+<script src="site.js"></script>
+</body>
+</html>

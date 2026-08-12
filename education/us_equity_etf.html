@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股與 ETF 核心持倉 — 我到底該買什麼、持有多久</title>
+<link rel="stylesheet" href="common.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* === 頁面專用樣式（沿用 common.css 變數，不覆蓋基礎樣式） === */
+.tab-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:12px;}
+.qz-opts{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.qz-opt{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font:inherit;color:var(--text2);transition:all .15s;}
+.qz-opt:hover:not(:disabled){background:var(--bg4);}
+.qz-opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.qz-opt.ok{background:var(--green-l);border-color:var(--green);color:var(--text);}
+.qz-opt.ok::before{content:"\2713 ";font-weight:700;color:var(--green);}
+.qz-opt.no{background:var(--red-l);border-color:var(--red);color:var(--text);}
+.qz-opt.no::before{content:"\2717 ";font-weight:700;color:var(--red);}
+.qz-exp{margin-top:10px;padding:12px;background:var(--bg3);border-radius:8px;font-size:13px;}
+.qz-next{margin-top:12px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font:inherit;}
+.qz-prog{font-size:13px;font-weight:600;color:var(--text3);margin-bottom:8px;}
+
+/* 風險階梯 */
+.ladder{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
+.ladder-step{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);}
+.ladder-step .rung{flex:0 0 90px;font-weight:800;font-size:12px;text-align:center;padding:6px 4px;border-radius:8px;color:#fff;line-height:1.3;}
+.ladder-1 .rung{background:var(--green);}
+.ladder-2 .rung{background:var(--blue);}
+.ladder-3 .rung{background:var(--orange);}
+.ladder-4 .rung{background:var(--red);}
+.ladder-step .body{font-size:13px;line-height:1.65;}
+.ladder-step .body strong{display:block;margin-bottom:2px;font-size:14px;}
+
+/* 配置示意條 */
+.alloc-bar{display:flex;height:42px;border-radius:8px;overflow:hidden;border:1px solid var(--border);margin:12px 0;}
+.alloc-seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;text-align:center;padding:0 4px;}
+
+/* 通用表格（沿用 regime 頁 playbook 風格） */
+.p-table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;}
+.p-table th{background:var(--bg3);padding:10px 8px;font-weight:600;text-align:left;border:1px solid var(--border);}
+.p-table td{padding:10px 8px;border:1px solid var(--border);vertical-align:top;}
+.p-table tr:hover td{background:var(--bg3);}
+
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;}
+.pill-core{background:var(--blue-l);color:var(--blue);}
+.pill-sat{background:var(--orange-l);color:var(--orange);}
+
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+.kv .box{background:var(--bg3);border-radius:8px;padding:12px 14px;font-size:13px;}
+.kv .box strong{color:var(--text);}
+
+.note{font-size:12px;color:var(--text3);margin-top:6px;}
+
+@media (max-width:600px){
+  .ladder-step{flex-direction:column;align-items:flex-start;}
+  .ladder-step .rung{flex:none;}
+  .kv{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
+
+<h1>美股與 ETF 核心持倉</h1>
+<p class="subtitle" style="color:var(--text3); margin-bottom:20px;">學完宏觀與技術指標後，回答最實際的問題：我到底該買什麼、放多少、持有多久 &mdash; 以資本保全為前提，走波段而非熬夜當沖。</p>
+
+<div class="warning-box">
+  <strong>先讀這段：</strong>本頁僅供<strong>教育用途，並非投資建議</strong>。股票與 ETF 都有<strong>虧損風險，可能損失部分或全部本金</strong>。文中所有報酬數字皆為<strong>長期歷史區間的示意，非未來保證</strong>，個別年度可能大幅虧損。請只用<strong>可承受損失的閒錢</strong>、在自身風險承受度內決策。開戶、稅務、PDT 規則與時區等台灣散戶實務細節，請見 <a href="tw_reality.html">台灣散戶實戰基建</a> 模組。
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">1. 先寬基再進階</button>
+  <button class="tab-btn" data-tab="tab2">2. 指數與類股輪動</button>
+  <button class="tab-btn" data-tab="tab3">3. 核心-衛星與再平衡</button>
+  <button class="tab-btn" data-tab="tab4">4. 財報季與評價</button>
+  <button class="tab-btn" data-tab="tab5">5. 定期定額與複利</button>
+  <button class="tab-btn" data-tab="tab6">6. 波段進出場</button>
+  <button class="tab-btn" data-tab="tab7">7. 互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2>先寬基，再進階</h2>
+<p>散戶最容易犯的錯，是還沒建立核心持倉，就先重倉自己「聽說會漲」的個股或熱門主題。正確的順序剛好相反：<strong>先用寬基指數 ETF 把長期正期望值鎖住，行有餘力再往上層加碼</strong>。這一頁先建立整個資產光譜的風險階梯。</p>
+
+<h3>風險與適合度階梯</h3>
+<p>由下而上，波動與需要投入的研究時間逐級升高，「單一標的把你整組拖垮」的風險也升高。新手應該<strong>從第 1 層開始，往上爬要有理由、要控制部位</strong>。</p>
+
+<div class="ladder">
+  <div class="ladder-step ladder-1">
+    <div class="rung">第 1 層<br>寬基指數</div>
+    <div class="body"><strong>全市場 / 大盤 ETF &mdash; VOO、VTI、SPY</strong>一次持有數百到數千家公司，單一公司出事幾乎不影響全局。波動來自整體經濟，長期向上的機率最高，是上班族的<strong>核心地基</strong>。</div>
+  </div>
+  <div class="ladder-step ladder-2">
+    <div class="rung">第 2 層<br>風格 / 科技寬基</div>
+    <div class="body"><strong>QQQ（那斯達克100）、IWM（小型股）</strong>仍是分散的一籃子，但集中在特定風格（科技成長、小型）。長期報酬可能更高，但<strong>回檔更深、波動更大</strong>，適合當核心的一部分或衛星。</div>
+  </div>
+  <div class="ladder-step ladder-3">
+    <div class="rung">第 3 層<br>類股 ETF</div>
+    <div class="body"><strong>XLK 科技、XLF 金融、XLE 能源、XLV 醫療…</strong>押注某個產業。分散程度再降一階，需要對景氣循環與輪動有判斷，屬於<strong>衛星部位</strong>，控制在小比例。</div>
+  </div>
+  <div class="ladder-step ladder-4">
+    <div class="rung">第 4 層<br>個股</div>
+    <div class="body"><strong>單一公司</strong>報酬與風險都最極端 &mdash; 財報、訴訟、經營層一個決策就能腰斬。需要最多研究，最容易讓散戶重傷。務必<strong>小部位、可承受歸零</strong>。</div>
+  </div>
+</div>
+
+<div class="highlight-box">
+  <strong>核心原則：</strong>爬得越高，單一標的能傷害你的程度越大，需要的功課越多。新手把 80% 以上放在第 1&ndash;2 層，用剩下的小部位去學習更上層，是「先活下來、再談報酬」的務實路徑。
+</div>
+
+<h3>為什麼寬基指數有長期正期望值？</h3>
+<p>寬基指數不是靠「猜對方向」賺錢，而是背後有真實的經濟引擎。散戶最可靠的長期優勢，就是<strong>耐心持有這台引擎</strong>：</p>
+<ul>
+  <li><strong>企業盈餘成長：</strong>指數成分是一整個經濟體最具規模的公司，它們的營收與獲利長期隨經濟擴張而成長，推升股價。</li>
+  <li><strong>股息與回購：</strong>公司把部分獲利以股息發放或回購股票，直接回饋股東。長期再投入股息是複利的重要來源。</li>
+  <li><strong>全球經濟與生產力成長：</strong>人口、技術進步與生產力提升，讓整體產出長期向上，通膨也讓名目價格自然墊高。</li>
+  <li><strong>指數自我汰換：</strong>成分股會定期換血，衰退的公司被剔除、成長的新公司納入，等於幫你自動「汰弱留強」。</li>
+</ul>
+
+<div class="insight-box">
+  <strong>這是散戶最公平的一場遊戲：</strong>你不需要比華爾街更聰明、更快，只要願意<strong>長期參與</strong>。過去約一世紀，美股大盤長期年化報酬落在<strong>約 7&ndash;10%（含股息、名目、長期區間，非保證，且個別年度可能大跌 30%＋）</strong>。你的優勢不是資訊，而是<strong>時間與紀律</strong>。
+</div>
+
+<h3>寬基 vs 類股 vs 個股：一眼對照</h3>
+<table class="p-table">
+  <tr><th>面向</th><th>寬基指數 ETF</th><th>類股 ETF</th><th>個股</th></tr>
+  <tr><td>分散程度</td><td>極高（數百至數千家）</td><td>中（單一產業數十家）</td><td>無（押身家在一家）</td></tr>
+  <tr><td>單一事件風險</td><td>很低</td><td>中</td><td>很高（可能歸零）</td></tr>
+  <tr><td>需要的研究時間</td><td>最少</td><td>中</td><td>最多且持續</td></tr>
+  <tr><td>適合角色</td><td>核心、長抱</td><td>衛星、輪動</td><td>小額衛星、學習</td></tr>
+  <tr><td>新手建議比例</td><td>大部位（多數）</td><td>小部位</td><td>很小或先不碰</td></tr>
+</table>
+
+<div class="warning-box">
+  <strong>常見誤區：</strong>「我只買我懂的公司」聽起來安全，實際上把全部資金壓在極少數個股，是把「不分散」誤當成「有把握」。在你還沒有穩定的核心持倉之前，個股都應該是小額的學費，不是主菜。
+</div>
+</div><!-- tab1 -->
+
+<!-- ==================== TAB 2 ==================== -->
+<div class="tab-content" id="tab2">
+<h2>指數與類股輪動</h2>
+<p>就算都在美股，不同指數與類股在不同市場環境下的表現天差地遠。認識它們的性格，才知道手上的部位在賭什麼。</p>
+
+<h3>四大指數 ETF 的性格</h3>
+<table class="p-table">
+  <tr><th>代號</th><th>追蹤</th><th>性格</th><th>波動 / 適合</th></tr>
+  <tr><td><strong>SPY / VOO</strong></td><td>S&amp;P 500 大型股</td><td>美國大型企業的縮影，最具代表性的「大盤」</td><td>中；核心首選</td></tr>
+  <tr><td><strong>QQQ</strong></td><td>那斯達克 100</td><td>集中科技與成長巨頭，攻擊性強</td><td>較高；牛市領漲、熊市領跌</td></tr>
+  <tr><td><strong>IWM</strong></td><td>Russell 2000 小型股</td><td>對景氣與利率最敏感，內需與循環色彩重</td><td>高；Reflation 常領先</td></tr>
+  <tr><td><strong>DIA</strong></td><td>道瓊 30 工業</td><td>老牌藍籌、價值偏重，防禦性較強</td><td>較低；相對穩健</td></tr>
+</table>
+
+<div class="kv">
+  <div class="box"><strong>牛市 / 風險偏好高：</strong>QQQ、IWM 通常領漲，成長與小型股彈性大。</div>
+  <div class="box"><strong>熊市 / 避險：</strong>DIA、SPY 相對抗跌，QQQ、IWM 回檔更深。</div>
+</div>
+
+<h3>主要類股 ETF（SPDR Select Sector）</h3>
+<table class="p-table">
+  <tr><th>代號</th><th>類股</th><th>循環定位</th><th>輪動傾向</th></tr>
+  <tr><td>XLK</td><td>科技</td><td>成長 / 早中循環</td><td>擴張期與降息預期時領先</td></tr>
+  <tr><td>XLF</td><td>金融</td><td>循環 / 早循環</td><td>殖利率曲線變陡、Reflation 時受惠</td></tr>
+  <tr><td>XLE</td><td>能源</td><td>循環 / 晚循環</td><td>通膨、油價上漲、Stagflation 時抗跌</td></tr>
+  <tr><td>XLV</td><td>醫療保健</td><td>防禦</td><td>衰退避險、需求剛性</td></tr>
+  <tr><td>XLU</td><td>公用事業</td><td>防禦 / 類債券</td><td>Risk-Off、利率下行時受青睞</td></tr>
+  <tr><td>XLP</td><td>必需消費</td><td>防禦</td><td>衰退、避險時相對抗跌</td></tr>
+  <tr><td>XLI</td><td>工業</td><td>循環</td><td>景氣復甦、資本支出擴張時領先</td></tr>
+  <tr><td>XLY</td><td>非必需消費</td><td>循環 / 早循環</td><td>就業強、消費旺時領先</td></tr>
+</table>
+
+<h3>景氣循環中的類股輪動</h3>
+<p>教科書的循環輪動大致是：<strong>復甦初期</strong>金融、非必需消費、科技領先 → <strong>擴張中期</strong>工業、科技延續 → <strong>擴張晚期 / 通膨升溫</strong>能源、原物料轉強 → <strong>衰退 / Risk-Off</strong>資金退向公用事業、必需消費、醫療等防禦類股。</p>
+
+<div class="insight-box">
+  <strong>把輪動接回市場環境：</strong>類股該偏哪一邊，本質上取決於當下是 Risk-On、Reflation、Stagflation 還是 Risk-Off。判定當前環境的方法，請搭配 <a href="regime_identification.html">Regime 快速判定</a> 模組 &mdash; 先判環境，再決定衛星部位往哪個類股偏。順序不可顛倒。
+</div>
+
+<div class="warning-box">
+  <strong>散戶做輪動的三個提醒：</strong>
+  <ul style="margin-top:8px;">
+    <li>輪動是<strong>衛星部位</strong>的事，別為了追類股把核心寬基砍掉。</li>
+    <li>你看到的輪動故事往往已經走了一段，追高風險高；寧可漏抓，不要住套房。</li>
+    <li>時間有限的上班族，長抱寬基＋少量類股微調，通常勝過頻繁猜輪動。</li>
+  </ul>
+</div>
+</div><!-- tab2 -->
+
+<!-- ==================== TAB 3 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>核心-衛星配置與再平衡</h2>
+<p>核心-衛星（Core-Satellite）是把「穩定的地基」和「彈性的進攻」分開管理的框架，讓你既能長期參與大盤，又保留一小塊去表達看法，而不會因為某個判斷失誤就傷到全局。</p>
+
+<div class="kv">
+  <div class="box"><span class="pill pill-core">核心 Core</span><br><strong>寬基指數 ETF，大部位、長抱</strong><br>目標是穩定參與市場長期報酬，盡量少動。這是你資產的引擎。</div>
+  <div class="box"><span class="pill pill-sat">衛星 Satellite</span><br><strong>主題 / 類股 / 個股，小部位</strong><br>用來表達看法、學習與爭取超額報酬。允許犯錯，因為部位小。</div>
+</div>
+
+<h3>一個示意配置（僅為教學示意，非建議比例）</h3>
+<div class="alloc-bar">
+  <div class="alloc-seg" style="width:60%;background:var(--blue);">核心 寬基 60%</div>
+  <div class="alloc-seg" style="width:15%;background:#4f46e5;">核心 科技寬基 15%</div>
+  <div class="alloc-seg" style="width:15%;background:var(--orange);">衛星 類股/主題 15%</div>
+  <div class="alloc-seg" style="width:10%;background:var(--text3);">現金/短債 10%</div>
+</div>
+<table class="p-table">
+  <tr><th>部位</th><th>示意標的</th><th>比例</th><th>角色</th></tr>
+  <tr><td><span class="pill pill-core">核心</span> 全市場</td><td>VTI / VOO</td><td>60%</td><td>長期地基，幾乎不動</td></tr>
+  <tr><td><span class="pill pill-core">核心</span> 成長</td><td>QQQ</td><td>15%</td><td>提高長期成長曝險</td></tr>
+  <tr><td><span class="pill pill-sat">衛星</span> 類股/主題</td><td>XLE / XLV / 少量個股</td><td>15%</td><td>表達看法、輪動</td></tr>
+  <tr><td>現金 / 短債</td><td>貨幣型 / 短債</td><td>10%</td><td>再平衡與逢低加碼的子彈</td></tr>
+</table>
+<p class="note">※ 上表僅示意核心大、衛星小的結構，實際比例應依個人年齡、風險承受度與目標調整；比例本身不是建議。</p>
+
+<h3>什麼是再平衡（Rebalancing）？</h3>
+<p>市場漲跌會讓你的配置慢慢偏離目標。假設科技衛星大漲，占比從 15% 膨脹到 25%，你的組合風險就在不知不覺間變高了。<strong>再平衡就是定期把比例調回目標</strong>：賣掉漲多、超配的部分，補回跌多、低配的部分。</p>
+
+<div class="success-box">
+  <strong>再平衡為什麼有用？</strong>
+  <ul style="margin-top:8px;">
+    <li><strong>強制低買高賣：</strong>它逼你賣出漲多的、買進跌多的，剛好和「追高殺低」的人性相反。</li>
+    <li><strong>控制風險：</strong>避免單一贏家部位無限膨脹，讓組合風險維持在你當初能接受的水準。</li>
+    <li><strong>紀律取代情緒：</strong>照規則做，不用每天猜高低點。</li>
+  </ul>
+</div>
+
+<h3>再平衡的頻率與紀律</h3>
+<table class="p-table">
+  <tr><th>方式</th><th>作法</th><th>優點 / 提醒</th></tr>
+  <tr><td>時間法</td><td>固定每半年或每年檢視一次</td><td>簡單、交易少；上班族友善</td></tr>
+  <tr><td>閾值法</td><td>某部位偏離目標超過 ±5% 才調整</td><td>更精準，但要偶爾盯一下</td></tr>
+  <tr><td>現金流法</td><td>用新投入的定期定額資金去補低配部位</td><td>不必賣出、稅務與成本最省，最推薦上班族</td></tr>
+</table>
+
+<div class="warning-box">
+  <strong>別把再平衡做成頻繁交易：</strong>再平衡是「一年幾次」的紀律動作，不是每週調來調去。過度交易會產生成本與稅務（細節見 <a href="tw_reality.html">台灣散戶實戰基建</a>），也違背長抱核心的初衷。資金與部位大小的通則，請對照 <a href="risk_management.html">資金管理與風險控制</a>。
+</div>
+</div><!-- tab3 -->
+
+<!-- ==================== TAB 4 ==================== -->
+<div class="tab-content" id="tab4">
+<h2>財報季與評價速讀</h2>
+<p>每季財報季（1、4、7、10 月為主）是個股波動的集中引爆點。你不需要成為分析師，但要看懂三個要素、避開兩個地雷。</p>
+
+<h3>財報三要素</h3>
+<table class="p-table">
+  <tr><th>要素</th><th>是什麼</th><th>重點</th></tr>
+  <tr><td><strong>EPS 每股盈餘</strong></td><td>公司獲利除以股數</td><td>看的是<strong>相對於市場預期</strong>是否超標，不是絕對數字</td></tr>
+  <tr><td><strong>營收 Revenue</strong></td><td>總銷售額</td><td>反映需求成長；營收超預期但獲利差，要問成本</td></tr>
+  <tr><td><strong>財測 Guidance</strong></td><td>公司對下一季/年的展望</td><td>常比當季數字更關鍵，股價常因財測而非當季結果暴動</td></tr>
+</table>
+
+<div class="highlight-box">
+  <strong>關鍵觀念 &mdash; 一切都是「相對預期」：</strong>股價反映的是<strong>已知的預期</strong>。一家公司 EPS 成長 40% 卻股價大跌，往往是因為市場原本預期成長 50%。所以「財報好不好」要問的永遠是：<strong>比市場已經 price in 的預期，更好還是更差？</strong>
+</div>
+
+<h3>評價：P/E 與 PEG 的基本概念與陷阱</h3>
+<div class="kv">
+  <div class="box"><strong>本益比 P/E</strong><br>股價 ÷ 每股盈餘。代表市場願意為「每 1 元獲利」付多少錢。P/E 高 = 市場對成長期望高。</div>
+  <div class="box"><strong>PEG</strong><br>P/E ÷ 盈餘成長率。試圖用成長修正 P/E。PEG 約 1 常被視為相對合理，但只是粗略參考。</div>
+</div>
+<div class="warning-box">
+  <strong>評價的陷阱：</strong>
+  <ul style="margin-top:8px;">
+    <li><strong>高 P/E 不必然貴：</strong>高成長公司理應享有較高 P/E；用 P/E 高就放空成長股常被軋。</li>
+    <li><strong>低 P/E 不必然便宜：</strong>景氣循環股在獲利高峰時 P/E 最低，反而是循環見頂的警訊（本益比陷阱）。</li>
+    <li><strong>PEG 依賴成長預估：</strong>成長率一旦下修，PEG 立刻失真。</li>
+    <li>評價是<strong>相對、動態</strong>的工具，不是精準的買賣訊號。</li>
+  </ul>
+</div>
+
+<h3>財報前後的兩個地雷</h3>
+<div class="kv">
+  <div class="box"><strong>跳空風險（Gap）</strong><br>財報通常在盤後或盤前公布，隔日開盤直接跳空。停損單在跳空時<strong>無法在你設定的價位成交</strong>，可能以更差的價格成交。</div>
+  <div class="box"><strong>IV Crush</strong><br>財報前選擇權隱含波動率（IV）被墊高，財報後不確定性消失，IV 暴跌，就算方向猜對，選擇權也可能因 IV Crush 而虧損。</div>
+</div>
+<p class="note">選擇權與 IV 的完整機制，見 <a href="options_volatility.html">期權與波動率</a>；停損、部位大小如何面對跳空，見 <a href="risk_management.html">資金管理與風險控制</a>。</p>
+
+<div class="warning-box">
+  <strong>散戶的「送分題」：財報前重倉單一股。</strong>財報前壓大注在單一個股，等於把資金押在一個近似擲硬幣的事件上，還要同時面對跳空與 IV Crush。這是最常見、最不必要的重傷來源。務實作法：<strong>核心寬基本來就分散、不怕單一財報；衛星個股則減碼或維持小部位過財報，不要為了賭財報而放大部位。</strong>
+</div>
+
+<h3>除息日與股利</h3>
+<p>除息日（Ex-dividend date）當天，股價會約略扣掉股利金額，這是正常機制，<strong>不是下跌訊號</strong>。要領到股利，必須在除息日前持有。ETF 也會配息。台股與美股的股利<strong>稅務處理不同</strong>（美股股利對外國人通常有預扣稅），細節請見 <a href="tw_reality.html">台灣散戶實戰基建</a>。長期投資人真正該在意的是股利<strong>再投入</strong>對複利的貢獻（見下一頁）。</p>
+</div><!-- tab4 -->
+
+<!-- ==================== TAB 5 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>定期定額（DCA）與長期複利數學</h2>
+<p>對時間有限、無法盯盤的上班族，定期定額（Dollar-Cost Averaging）＋長期複利，是最務實、也最不需要天賦的路徑。這一頁用數學說明為什麼。</p>
+
+<h3>72 法則 &mdash; 心算翻倍時間</h3>
+<div class="highlight-box">
+  <strong>72 ÷ 年化報酬率(%) ≈ 本金翻倍所需年數</strong>
+  <ul style="margin-top:8px;">
+    <li>年化 6% → 72 / 6 = <strong>約 12 年</strong>翻倍</li>
+    <li>年化 8% → 72 / 8 = <strong>約 9 年</strong>翻倍</li>
+    <li>年化 10% → 72 / 10 = <strong>約 7.2 年</strong>翻倍</li>
+  </ul>
+  <p class="note">這只是快速心算工具，且假設報酬穩定；真實市場逐年高低起伏，數字僅供概念參考。</p>
+</div>
+
+<h3>複利成長示意表（單筆本金，非保證）</h3>
+<p>以下用 <strong>7% 與 10%</strong> 兩個年化情境，展示 1 元本金在不同年數後的概略倍數。<strong>7&ndash;10% 是美股大盤的長期歷史區間，不是未來保證，個別年度可能大幅虧損。</strong></p>
+<table class="p-table">
+  <tr><th>年數</th><th>年化 7% 約成長為</th><th>年化 10% 約成長為</th></tr>
+  <tr><td>5 年</td><td>約 1.40 倍</td><td>約 1.61 倍</td></tr>
+  <tr><td>10 年</td><td>約 1.97 倍</td><td>約 2.59 倍</td></tr>
+  <tr><td>20 年</td><td>約 3.87 倍</td><td>約 6.73 倍</td></tr>
+  <tr><td>30 年</td><td>約 7.61 倍</td><td>約 17.4 倍</td></tr>
+</table>
+<p class="note">※ 為理想化複利示意（未計費用、稅、通膨，且假設報酬平滑）。真實路徑會震盪，中途可能出現數年帳面虧損。重點在感受「時間 × 複利」的量級，而非精確數字。</p>
+
+<div class="insight-box">
+  <strong>複利的引擎是時間：</strong>看上表，30 年那一列成長遠比 5 年那一列誇張 &mdash; 因為複利是指數成長，越後段越陡。這也是為什麼「早開始、長期持有」比「挑到完美時機」更重要。
+</div>
+
+<h3>時間在市場 &gt; 擇時進出</h3>
+<p>「在市場裡的時間（time in the market）」通常勝過「進出市場的時機（timing the market）」。原因：</p>
+<ul>
+  <li>市場長期上漲的日子多於下跌，長期空手就是放棄正期望值。</li>
+  <li>大漲往往<strong>集中在少數幾天</strong>，且常緊接在大跌之後；一旦為了避開下跌而離場，很容易連反彈最猛的幾天一起錯過，長期報酬顯著縮水。</li>
+  <li>擇時要「賣對」又要「買回對」，兩次都要對，成功率遠低於直覺。</li>
+</ul>
+
+<h3>空頭是低成本累積期，不是災難</h3>
+<p>對還在<strong>累積階段、持續定期定額</strong>的人，下跌其實是好消息：同樣的錢買到更多單位，攤低平均成本。真正的風險是<strong>在低點因恐慌停扣或賣出</strong>，把帳面虧損變成永久虧損。</p>
+<div class="success-box">
+  <strong>DCA 的紀律價值：</strong>固定金額、固定時間投入，讓你在高點少買、低點多買，同時把「要不要進場」的情緒決策自動化 &mdash; 這正是上班族最缺的東西：一個不需要盯盤、不靠意志力的機制。
+</div>
+<div class="warning-box">
+  <strong>但 DCA 不是免死金牌：</strong>它降低擇時風險，不消除市場風險。標的必須是<strong>長期正期望值的寬基指數</strong>才成立 &mdash; 對單一個股或會歸零的標的做 DCA，只是持續買進一個可能崩壞的東西。務必只用閒錢、保留緊急預備金，才能在空頭中撐住不停扣。
+</div>
+</div><!-- tab5 -->
+
+<!-- ==================== TAB 6 ==================== -->
+<div class="tab-content" id="tab6">
+<h2>波段進出場框架</h2>
+<p>本站主線是<strong>波段，不是熬夜當沖</strong>。對上班族而言，波段的優勢就是不必盯盤：用日線、週線做判斷，把單掛好，讓市場來成交你。</p>
+
+<h3>用日線 / 週線，不看分鐘線</h3>
+<p>時間框架越短，雜訊越多、越需要盯盤、越容易被情緒左右。波段操作以<strong>日線與週線</strong>為主：一天看一次盤即可，週末做一次功課。這能大幅降低過度交易與情緒交易。</p>
+
+<h3>200 日均線 &mdash; 最簡單的長期趨勢濾網</h3>
+<div class="highlight-box">
+  <strong>價格在 200 日均線之上 → 偏多頭，順勢做多、逢回買進較安全。<br>價格在 200 日均線之下 → 偏空頭，減少做多、提高現金與防禦。</strong>
+  <p class="note">200 日均線是判斷「大方向」的粗濾網，不是精準買賣點。它幫你避免在明顯的長期下降趨勢裡一路接刀。均線與更多趨勢工具細節，見 <a href="regime_identification.html">Regime 快速判定</a> 與站內技術分析模組。</p>
+</div>
+
+<h3>簡單趨勢跟隨 + 分批建倉</h3>
+<ul>
+  <li><strong>順勢，不猜頭摸底：</strong>在 200 日均線之上、趨勢向上時做多；不去接明顯下降趨勢的刀。</li>
+  <li><strong>分批建倉：</strong>把預定部位拆成 2&ndash;4 批，分不同時間或價位進場，降低「一次全押在最差點」的風險，心理上也更能抱得住。</li>
+  <li><strong>分批出場：</strong>同理，可在目標區間分批獲利了結，不必追求賣在最高點。</li>
+</ul>
+
+<h3>上班族的「掛好單、不盯盤」工具</h3>
+<table class="p-table">
+  <tr><th>單別</th><th>作用</th><th>波段用法</th></tr>
+  <tr><td><strong>限價單 Limit</strong></td><td>只在指定價或更好價成交</td><td>設定你願意買進 / 賣出的價位，讓市場來找你，不追高殺低</td></tr>
+  <tr><td><strong>GTC（長效單）</strong></td><td>掛單持續有效直到成交或取消</td><td>把限價單掛著，不必每天重下，適合上班無法盯盤</td></tr>
+  <tr><td><strong>OCO 括號單</strong></td><td>停利與停損二擇一，一邊成交另一邊自動取消</td><td>進場同時把「獲利了結」與「停損」都掛好，之後不必盯盤</td></tr>
+</table>
+<div class="success-box">
+  <strong>核心心法：</strong>進場的同時就決定好出場 &mdash; 停損在哪、停利在哪，用 OCO / GTC 一次掛好。這樣你在上班、睡覺時，交易紀律都替你執行，情緒沒有介入的空間。
+</div>
+
+<h3>兩條不可退讓的紀律</h3>
+<div class="kv">
+  <div class="box"><strong>每筆風險固定 1&ndash;2%</strong><br>單筆交易若觸及停損，損失控制在總帳戶的 1&ndash;2% 以內。部位大小由「進場價到停損價的距離」反推，而不是憑感覺下注。詳見 <a href="risk_management.html">資金管理與風險控制</a>。</div>
+  <div class="box"><strong>預設不使用槓桿</strong><br>核心持倉不用槓桿。槓桿放大虧損、在波動中會被強制平倉，且槓桿型 ETF 有<strong>波動耗損</strong>，長期偏離標的、不適合長抱。</div>
+</div>
+
+<div class="warning-box">
+  <strong>一切連回資本保全：</strong>波段框架的目的不是「賺最多」，而是<strong>在活得夠久的前提下，穩定參與長期趨勢</strong>。只用閒錢、每筆風險 1&ndash;2%、不熬夜盯盤、不上槓桿 &mdash; 這些限制不是綁手綁腳，而是讓你能撐過空頭、等到複利發酵的護城河。
+</div>
+</div><!-- tab6 -->
+
+<!-- ==================== TAB 7 ==================== -->
+<div class="tab-content" id="tab7">
+<h2>互動測驗（15 題）</h2>
+<p>檢驗你對美股 / ETF 核心持倉的理解。每題作答後會顯示解析，全部一切以資本保全與長期紀律為前提。</p>
+<div id="us-quiz"></div>
+</div><!-- tab7 -->
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var id=btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.toggle('active',c.id===id);});
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+(function(){
+  var QUESTIONS=[
+    {q:'一位剛開始投資美股的上班族，還沒有任何核心持倉。他的第一步最務實的做法是？',
+     options:['把大部分資金押在一檔他很看好的個股','先用寬基指數 ETF（如 VOO / VTI）建立分散的核心地基','先重倉一檔熱門主題 ETF 賭趨勢','借槓桿買 QQQ 加速累積'],
+     correct:1,
+     explain:'先寬基再進階。寬基指數 ETF 一次持有數百到數千家公司，單一公司出事幾乎不影響全局，且有長期正期望值，是新手最該先建立的核心地基。重倉個股、賭主題或上槓桿都把風險集中在還沒站穩腳步時。'},
+    {q:'寬基指數長期正期望值的來源，最主要是下列何者？',
+     options:['分析師的準確預測','企業盈餘成長、股息與回購、以及整體經濟與生產力的長期成長','散戶集體看好','政府保證不會下跌'],
+     correct:1,
+     explain:'指數不是靠猜方向賺錢，而是背後有真實經濟引擎：企業獲利長期成長、股息與回購回饋股東、全球經濟與生產力提升，加上指數會自動汰弱留強。散戶最可靠的長期優勢是耐心持有這台引擎，而非資訊或預測。'},
+    {q:'關於 QQQ 相對於 SPY / VOO 的敘述，何者正確？',
+     options:['QQQ 比大盤更分散、波動更低','QQQ 集中在科技與成長巨頭，攻擊性強，牛市常領漲、熊市常領跌','QQQ 沒有下跌風險','QQQ 是債券 ETF'],
+     correct:1,
+     explain:'QQQ 追蹤那斯達克 100，集中在科技與成長股，波動比 S&P 500 大：牛市領漲、熊市回檔也更深。它適合當核心的一部分或衛星，但不能誤以為它比大盤更安全。'},
+    {q:'在核心-衛星框架中，「核心」部位應該是？',
+     options:['頻繁進出的當沖部位','小部位的主題賭注','寬基指數 ETF，大部位、長期持有','槓桿型 ETF'],
+     correct:2,
+     explain:'核心是寬基指數 ETF，大部位、盡量少動，目標是穩定參與市場長期報酬，是資產的引擎。衛星才是小部位的主題 / 類股 / 個股，用來表達看法與學習，允許犯錯因為部位小。'},
+    {q:'再平衡（rebalancing）為什麼能幫助投資人？',
+     options:['因為它能準確預測高低點','因為它強制賣出漲多、買進跌多，等於紀律化的低買高賣並控制風險','因為它保證更高報酬','因為它能避免所有虧損'],
+     correct:1,
+     explain:'再平衡把偏離目標的比例調回原點：賣掉超配（漲多）的、補回低配（跌多）的，剛好和追高殺低的人性相反，並防止單一部位無限膨脹、把組合風險維持在可接受水準。它靠的是紀律，不是預測，也不保證獲利。'},
+    {q:'判斷一家公司財報「好不好」，最關鍵的比較基準是？',
+     options:['和去年同期比絕對成長多少','相對於市場原本已經 price in 的預期','股價當天漲跌','公司規模大小'],
+     correct:1,
+     explain:'股價反映的是已知的預期。一家 EPS 成長 40% 的公司若市場原本預期 50%，股價仍可能大跌。財報好不好，永遠要問：比市場已經反映的預期更好還是更差。'},
+    {q:'關於「財報前重倉單一個股」，最正確的認知是？',
+     options:['這是穩賺的機會，應該加大部位','這等於把資金押在近似擲硬幣的事件，還要面對跳空與 IV Crush，是常見的送分題','只要基本面好就沒有風險','用槓桿放大更好'],
+     correct:1,
+     explain:'財報通常盤後/盤前公布，隔日跳空會讓停損無法在設定價成交；選擇權還有 IV Crush（方向對也可能虧）。財報前壓大注在單一股是最常見、最不必要的重傷來源。核心寬基本就分散不怕單一財報，衛星個股則應減碼或維持小部位過財報。'},
+    {q:'關於本益比 P/E 的陷阱，何者正確？',
+     options:['P/E 高一定貴，應該放空','P/E 低一定便宜，應該買進','景氣循環股在獲利高峰時 P/E 最低，反而可能是循環見頂的警訊','P/E 是精準的買賣訊號'],
+     correct:2,
+     explain:'低 P/E 不必然便宜：景氣循環股在獲利高峰時 P/E 最低，反而是見頂警訊（本益比陷阱）。同理高成長股理應享有較高 P/E，用高 P/E 放空常被軋。評價是相對、動態的參考工具，不是精準買賣訊號。'},
+    {q:'年化報酬約 8% 時，用 72 法則估算本金翻倍大約需要幾年？',
+     options:['約 3 年','約 9 年','約 20 年','約 40 年'],
+     correct:1,
+     explain:'72 法則：72 ÷ 年化報酬(%) ≈ 翻倍年數。72 / 8 = 9，約 9 年。這只是假設報酬穩定的快速心算工具，真實市場逐年起伏，數字僅供概念參考。'},
+    {q:'對長期投資人而言，「時間在市場」通常勝過「擇時進出」，主要原因是？',
+     options:['市場永遠只漲不跌','大漲常集中在少數幾天且緊接大跌之後，離場容易錯過反彈，且擇時要買賣兩次都對','擇時完全沒有風險','短線交易稅務較低'],
+     correct:1,
+     explain:'市場長期上漲的日子多於下跌，且最猛的反彈常集中在少數幾天、緊接大跌之後。為避開下跌離場，很容易連反彈也錯過，長期報酬顯著縮水。擇時要「賣對」又要「買回對」，兩次都要對，成功率遠低於直覺。'},
+    {q:'對還在累積階段、持續定期定額的人，市場空頭（大跌）應該如何看待？',
+     options:['災難，應立即停扣並賣出','低成本累積期：同樣的錢買到更多單位，攤低平均成本','和自己無關','應該改用槓桿抄底'],
+     correct:1,
+     explain:'對持續定期定額的累積者，下跌讓同樣的錢買到更多單位、攤低成本，反而有利。真正的風險是在低點因恐慌停扣或賣出，把帳面虧損變成永久虧損。前提是標的為長期正期望值的寬基指數，且只用閒錢才撐得住不停扣。'},
+    {q:'在波段框架中，200 日均線最主要的用途是？',
+     options:['提供精準的當日買賣點','判斷長期趨勢大方向：價格在其上偏多、在其下偏空','預測明天的漲跌幅','計算股利金額'],
+     correct:1,
+     explain:'200 日均線是判斷大方向的粗濾網：價格在其上偏多頭、順勢做多較安全；在其下偏空頭、應提高現金與防禦。它幫你避免在明顯的長期下降趨勢裡一路接刀，但不是精準買賣點。'},
+    {q:'一位無法盯盤的上班族想做波段，最適合他的下單方式是？',
+     options:['整天盯著分鐘線手動進出','用限價單 / GTC / OCO 括號單事先掛好進出場，讓市場來成交','只用市價單追高','把資金全押後不設任何出場'],
+     correct:1,
+     explain:'波段的優勢就是不必盯盤。用限價單設定願意成交的價位、GTC 讓單持續有效、OCO 括號單在進場同時把停利與停損都掛好。進場時就決定好出場，紀律在你上班、睡覺時自動執行，情緒沒有介入空間。'},
+    {q:'本站建議每一筆交易觸及停損時，損失應控制在總帳戶的多少？',
+     options:['10~20%','1~2%','50%','不需要設上限'],
+     correct:1,
+     explain:'每筆交易的風險固定在總帳戶 1~2% 以內，部位大小由「進場價到停損價的距離」反推，而非憑感覺下注。這樣即使連續看錯，也不會傷及本金根基，是資本保全的核心。'},
+    {q:'關於槓桿型 ETF 當作長期核心持倉，正確的認知是？',
+     options:['報酬加倍，最適合長抱','有波動耗損、長期會偏離標的，且放大虧損、易被強平，不適合長抱核心','完全沒有額外風險','是最安全的核心資產'],
+     correct:1,
+     explain:'槓桿型 ETF 每日重設槓桿，在震盪行情中會產生波動耗損，長期報酬顯著偏離標的數倍表現，同時放大虧損。核心持倉預設不使用槓桿，這是資本保全的一部分。'}
+  ];
+  var el=document.getElementById('us-quiz'); if(!el)return; var i=0,score=0,answered=false;
+  function render(){var it=QUESTIONS[i];
+    el.innerHTML='<div class="qz-prog">第 '+(i+1)+' / '+QUESTIONS.length+' 題　目前得分 '+score+'</div>'+
+      '<div style="font-weight:600;margin-bottom:6px;">'+it.q+'</div><div class="qz-opts">'+
+      it.options.map(function(o,idx){return '<button type="button" class="qz-opt" data-i="'+idx+'">'+o+'</button>';}).join('')+
+      '</div><div class="qz-exp" hidden></div><button type="button" class="qz-next" hidden>下一題 →</button>';
+    answered=false;
+    el.querySelectorAll('.qz-opt').forEach(function(b){b.addEventListener('click',function(){select(+b.dataset.i);});});
+    el.querySelector('.qz-next').addEventListener('click',next);}
+  function select(idx){if(answered)return;answered=true;var it=QUESTIONS[i];var opts=el.querySelectorAll('.qz-opt');
+    opts.forEach(function(b){b.disabled=true;});
+    if(idx===it.correct){opts[idx].classList.add('ok');score++;}else{opts[idx].classList.add('no');opts[it.correct].classList.add('ok');}
+    var exp=el.querySelector('.qz-exp');exp.innerHTML='<strong>解析：</strong>'+it.explain;exp.hidden=false;
+    el.querySelector('.qz-next').hidden=false;}
+  function next(){i++;if(i>=QUESTIONS.length){el.innerHTML='<div class="card" style="text-align:center;padding:24px;"><h3>測驗完成！</h3><p style="font-size:22px;font-weight:800;color:var(--blue);">'+score+' / '+QUESTIONS.length+'</p><p>正確率 '+Math.round(score/QUESTIONS.length*100)+'%</p></div>';return;}render();}
+  render();
+})();
+</script>
+
+<script src="site.js"></script>
+</body>
+</html>

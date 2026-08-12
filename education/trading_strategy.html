@@ -119,6 +119,21 @@ tr:hover { background: var(--bg3); }
   background: var(--purple-l); border-left-color: var(--purple);
 }
 
+/* Callout boxes (頁首導引) */
+.highlight-box {
+  background: var(--green-l); border: 1px solid var(--green);
+  border-left: 4px solid var(--green);
+  padding: 18px 22px; border-radius: 0 10px 10px 0; margin: 0 0 20px;
+}
+.highlight-box h3 { margin: 0 0 8px; color: var(--green); font-size: 17px; }
+.warning-box {
+  background: var(--red-l); border: 1px solid var(--red);
+  border-left: 4px solid var(--red);
+  padding: 18px 22px; border-radius: 0 10px 10px 0; margin: 0 0 20px;
+}
+.warning-box h3 { margin: 0 0 8px; color: var(--red); font-size: 17px; }
+.warning-box a, .highlight-box a { color: var(--blue); font-weight: 600; }
+
 /* Timeline */
 .timeline-item {
   display: flex; gap: 16px; margin-bottom: 16px; padding: 12px 16px;
@@ -181,17 +196,29 @@ tr:hover { background: var(--bg3); }
 <a href="trade_home.html" class="back-link">&larr; 回首頁</a>
 <header>
   <h1>交易策略與日常作業流程</h1>
-  <div class="sub">系統化交易 SOP — 從台灣時區出發的美股/加密/期貨交易框架</div>
+  <div class="sub">系統化交易 SOP — 以美股/ETF 與黃金白銀波段為主線，日內當沖為進階選修</div>
 </header>
 
 <div class="nav">
   <button class="nav-btn active" data-tab="schedule">交易日程與時區</button>
   <button class="nav-btn" data-tab="prep">行前準備 SOP</button>
-  <button class="nav-btn" data-tab="tactics">日內交易戰術</button>
+  <button class="nav-btn" data-tab="tactics">日內戰術（進階選修）</button>
   <button class="nav-btn" data-tab="weekly">五日交易週期</button>
   <button class="nav-btn" data-tab="risk">風險管理</button>
   <button class="nav-btn" data-tab="review">交易復盤框架</button>
   <button class="nav-btn" data-tab="quiz">互動測驗</button>
+</div>
+
+<div class="highlight-box">
+<h3>本站預設：走波段／部位交易</h3>
+<p style="margin-bottom:8px;">給白天要上班的散戶，我們的主線是 <strong>波段／部位交易（Swing / Position）</strong>：持有數日到數週，順著日線與週線的大方向操作。下班後花 10-20 分鐘做功課、把 <strong>GTC/OCO 括號單（進場 + 止損 + 目標一次掛好）</strong>掛上去，隔日或隔幾日再檢視，<strong>不需要熬夜盯盤</strong>。資本保全優先，長期穩定獲利當副業，才是可持續的節奏。</p>
+<p style="margin-bottom:0;"><strong>日內當沖（Day Trading）是進階選修</strong>，只適合同時滿足以下條件的人：符合 PDT 規則（帳戶 ≥ 2.5 萬美元）、作息能配合美股時段熬夜、且已用模擬盤／小額驗證出正期望值。若你還沒到這個階段，請專注在波段主線，把當沖章節（本頁「日內戰術」與 ORB/VWAP）當成日後參考。</p>
+</div>
+
+<div class="warning-box">
+<h3>⚠️ 進場前必看：PDT $25,000 規則</h3>
+<p style="margin-bottom:8px;">美國證券的 <strong>Pattern Day Trader（PDT）</strong>規定：在美股保證金帳戶中，若 5 個交易日內做 4 筆以上的當日沖銷（同日買進又賣出），帳戶淨值必須維持在 <strong>25,000 美元（約新台幣 80 萬）以上</strong>，否則帳戶會被限制交易。這正是我們把當沖列為進階選修、預設走波段的關鍵原因之一 — 波段交易通常隔日以上才出場，不受 PDT 約束，小資金也能執行。</p>
+<p style="margin-bottom:0;">開戶、券商選擇、匯款與稅務等台灣散戶實戰基建，請見 <a href="tw_reality.html">台灣散戶實戰基建模組</a>；美股時段與台灣作息、夏令／冬令時差如何安排，也一併整理在 <a href="tw_reality.html">台灣散戶實戰基建模組</a>，先把時區作息排好再談策略。</p>
 </div>
 
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
@@ -208,6 +235,23 @@ tr:hover { background: var(--bg3); }
 
 <div class="principle-box">
   <strong>核心原則：計劃交易，交易計劃</strong> — 沒有計劃 = 不交易。每個時段都有特定的任務，不要在觀察時段下單。
+</div>
+
+<div class="principle-box warning">
+  <strong>夏令／冬令時差（很重要）：</strong>美股採美東時間，隨美國夏令時間切換，對應的台灣時間會差一小時。以下對照表以此為準：
+  <table style="margin-top:10px;">
+  <thead>
+  <tr><th>事件（美東時間）</th><th>夏令（約 3-11 月，台灣時間）</th><th>冬令（約 11-3 月，台灣時間）</th></tr>
+  </thead>
+  <tbody>
+  <tr><td>美股開盤</td><td>21:30</td><td>22:30</td></tr>
+  <tr><td>美股收盤</td><td>04:00</td><td>05:00</td></tr>
+  <tr><td>NFP / CPI / PPI（08:30 ET）</td><td>20:30</td><td>21:30</td></tr>
+  <tr><td>ISM / JOLTS（10:00 ET）</td><td>22:00</td><td>23:00</td></tr>
+  <tr><td>FOMC 利率決議（14:00 ET）</td><td>約 02:00</td><td>約 03:00</td></tr>
+  </tbody>
+  </table>
+  <span style="font-size:13px;color:var(--text3);">下方 SVG 與時間軸以「夏令」為預設；冬令請整體往後推一小時。走波段者主要用日線／週線，時差影響小，掛好 GTC/OCO 即可，不必為開盤時間熬夜。</span>
 </div>
 
 <div class="card">
@@ -649,8 +693,11 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <!-- TAB 3: 日內交易戰術 -->
 <!-- ============================================================ -->
 <div id="tactics" class="tab-content">
-<h2>日內交易戰術</h2>
-<p>以下是適合你時段（21:30-23:30）的五種核心日內策略，以及最重要的第六種：不交易。</p>
+<h2>日內交易戰術 <span class="tag tag-red">進階／選修（日內當沖）</span></h2>
+<div class="warning-box">
+  <strong>本章屬進階選修（日內當沖）。</strong>下列 ORB、VWAP 等戰術都是<strong>當日沖銷</strong>技巧，需要在美股時段（夏令 21:30-04:00／冬令 22:30-05:00）盯盤，並受 PDT $25,000 規則約束。若你是走波段的上班族，這裡當作日後升級的參考即可，不必現在照做；波段主線請以行前準備、風險管理與五日週期為核心。
+</div>
+<p>以下是適合美股時段的五種核心日內策略，以及最重要的第六種：不交易。</p>
 
 <div class="principle-box">
   <strong>核心原則：少即是多</strong> — 一週做 3-5 筆精選交易 > 每天 20 筆亂做。每種策略都有特定的適用環境。
@@ -660,6 +707,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <div class="card-header" onclick="toggleCard(this)">
   <span class="arrow">&#9654;</span>
   <h3>1. Opening Range Breakout (ORB)</h3>
+  <span class="tag tag-red">進階／選修（日內當沖）</span>
   <span class="tag tag-green">趨勢日</span>
 </div>
 <div class="card-body">
@@ -726,6 +774,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <div class="card-header" onclick="toggleCard(this)">
   <span class="arrow">&#9654;</span>
   <h3>2. VWAP 策略</h3>
+  <span class="tag tag-red">進階／選修（日內當沖）</span>
   <span class="tag tag-blue">趨勢回調</span>
 </div>
 <div class="card-body">
@@ -881,19 +930,19 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <strong>關鍵認知：</strong>數據公布瞬間的第一個方向常常是假的（stop hunt）。不要在數據出來的那一秒就追。等 15 分鐘，讓市場告訴你真正的方向。
 </div>
 
-<h4>重要經濟數據時刻表（台灣時間）</h4>
+<h4>重要經濟數據時刻表（台灣時間，含夏令／冬令）</h4>
 <table>
 <thead>
-<tr><th>數據</th><th>公布時間</th><th>影響等級</th></tr>
+<tr><th>數據</th><th>夏令（台灣時間）</th><th>冬令（台灣時間）</th><th>影響等級</th></tr>
 </thead>
 <tbody>
-<tr><td>NFP 非農就業</td><td>20:30（每月第一週五）</td><td>最高</td></tr>
-<tr><td>CPI 消費者物價</td><td>20:30</td><td>最高</td></tr>
-<tr><td>FOMC 利率決議</td><td>02:00</td><td>最高</td></tr>
-<tr><td>PPI 生產者物價</td><td>20:30</td><td>高</td></tr>
-<tr><td>初請失業金</td><td>20:30（每週四）</td><td>中</td></tr>
-<tr><td>ISM 製造業/服務業</td><td>22:00</td><td>高</td></tr>
-<tr><td>JOLTS 職位空缺</td><td>22:00</td><td>中高</td></tr>
+<tr><td>NFP 非農就業（每月第一週五）</td><td>20:30</td><td>21:30</td><td>最高</td></tr>
+<tr><td>CPI 消費者物價</td><td>20:30</td><td>21:30</td><td>最高</td></tr>
+<tr><td>FOMC 利率決議</td><td>約 02:00</td><td>約 03:00</td><td>最高</td></tr>
+<tr><td>PPI 生產者物價</td><td>20:30</td><td>21:30</td><td>高</td></tr>
+<tr><td>初請失業金（每週四）</td><td>20:30</td><td>21:30</td><td>中</td></tr>
+<tr><td>ISM 製造業/服務業</td><td>22:00</td><td>23:00</td><td>高</td></tr>
+<tr><td>JOLTS 職位空缺</td><td>22:00</td><td>23:00</td><td>中高</td></tr>
 </tbody>
 </table>
 </div>
@@ -960,7 +1009,10 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <!-- TAB 4: 五日交易週期 -->
 <!-- ============================================================ -->
 <div id="weekly" class="tab-content">
-<h2>五日交易週期</h2>
+<h2>五日交易週期 <span class="tag tag-red">進階／選修（日內當沖）</span></h2>
+<div class="warning-box">
+  <strong>本章的「每日倉位百分比」節奏是為日內當沖／高頻主動交易設計的。</strong>走波段的上班族不必逐日調倉 — 你的部位通常橫跨數日到數週，重點是進場時就掛好 GTC/OCO 括號單並在週末復盤，而不是週一週五各做一套。可把下方的每週事件與能量分布當成「哪幾天波動較大、留倉要更小心」的參考。
+</div>
 <p>每一週都有其固有的節奏。理解這個節奏可以幫助你在對的日子用力、錯的日子休息。</p>
 
 <div class="principle-box">
@@ -1170,18 +1222,23 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <span class="tag tag-green">核心公式</span>
 </div>
 <div class="card-body">
-<h4>固定風險法（推薦）</h4>
-<p>每筆交易最多虧損帳戶的 1-2%。不管多有信心，都不超過 2%。</p>
+<h4>固定風險法（主公式，無槓桿現貨）</h4>
+<p>本站主線是無槓桿的美股／ETF／GLD 現貨波段。每筆交易最多虧損帳戶的 1-2%，不管多有信心都不超過 2%。先決定「這筆願意虧多少錢」，再由止損距離反推股數：</p>
 
 <div class="formula">
-倉位大小 = (帳戶資金 x 風險百分比) / (入場價 - 止損價)<br><br>
-範例：<br>
+帳戶風險金額 = 帳戶資金 x 風險百分比<br>
+股數 = 帳戶風險金額 ÷ (進場價 − 止損價)<br><br>
+範例（以 GLD 黃金 ETF 為例，價格示意）：<br>
 帳戶 = $10,000<br>
-風險 = 1% = $100<br>
-入場價 = $50<br>
-止損價 = $48<br>
-止損距離 = $2<br>
-倉位大小 = $100 / $2 = 50 股
+風險 = 1% = $100（帳戶風險金額）<br>
+進場價 = $250<br>
+止損價 = $242<br>
+止損距離 = $8<br>
+股數 = $100 ÷ $8 ≈ 12 股（約投入 $3,000 現金，無槓桿）
+</div>
+
+<div class="principle-box">
+  <strong>換標的一樣算：</strong>SPY（大盤）、QQQ（科技）、GLD（黃金）都套同一條公式。無槓桿現貨最壞情況就是股價歸零，不會被強制平倉，最適合資本保全優先的波段散戶。掛單時把進場、止損、目標一次用 <strong>OCO 括號單</strong>設好，隔日再檢視即可。
 </div>
 
 <div class="svg-container">
@@ -1197,15 +1254,15 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <text x="220" y="92" font-size="20" fill="#64748b">&rarr;</text>
   <!-- Calculation -->
   <rect x="250" y="50" width="200" height="80" rx="8" fill="#f1f5f9" stroke="#cbd5e1"/>
-  <text x="350" y="75" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0f172a">$100 / $2(止損距離)</text>
-  <text x="350" y="100" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#0f172a">= 50 股</text>
-  <text x="350" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">總投入 $2,500</text>
+  <text x="350" y="75" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="#0f172a">$100 / $8(止損距離)</text>
+  <text x="350" y="100" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#0f172a">≈ 12 股</text>
+  <text x="350" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">總投入 ≈ $3,000（現貨）</text>
   <!-- Arrow -->
   <text x="470" y="92" font-size="20" fill="#64748b">&rarr;</text>
   <!-- Result -->
   <rect x="500" y="50" width="160" height="80" rx="8" fill="#dcfce7" stroke="#16a34a"/>
   <text x="580" y="75" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#16a34a">結果</text>
-  <text x="580" y="100" text-anchor="middle" font-family="Inter" font-size="11" fill="#0f172a">買入 50 股 @ $50</text>
+  <text x="580" y="100" text-anchor="middle" font-family="Inter" font-size="11" fill="#0f172a">買入 12 股 GLD @ $250</text>
   <text x="580" y="118" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">風險 = 帳戶 1%</text>
   <!-- Note -->
   <text x="350" y="160" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#dc2626">止損越遠 → 倉位越小 | 止損越近 → 倉位越大</text>
@@ -1213,13 +1270,14 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </svg>
 </div>
 
-<h4>加密合約計算（含槓桿）</h4>
+<h4>選讀附註：槓桿／合約的保證金換算 <span class="tag tag-red">進階／選修</span></h4>
+<p style="font-size:13px;color:var(--text3);">以下僅供已有正期望值、確實需要用到槓桿（如期貨或差價合約）的進階者參考。<strong>波段主線不需要用到這條</strong> — 無槓桿現貨用上面的股數公式即可。槓桿放大的不只是獲利，更是虧損與強制平倉風險，資本保全優先者請避開。</p>
 <div class="formula">
-保證金 = (帳戶 x 風險%) / (止損% x 槓桿倍數)<br><br>
+保證金 = (帳戶 x 風險%) ÷ (止損% x 槓桿倍數)<br><br>
 範例：<br>
 帳戶 = $10,000 | 風險 = 1% = $100<br>
 止損距離 = 2% | 槓桿 = 5x<br>
-保證金 = $100 / (2% x 5) = $100 / 10% = $1,000<br>
+保證金 = $100 ÷ (2% x 5) = $100 ÷ 10% = $1,000<br>
 實際倉位 = $1,000 x 5 = $5,000
 </div>
 </div>
@@ -1469,14 +1527,14 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <tr><th>欄位</th><th>說明</th><th>範例</th></tr>
 </thead>
 <tbody>
-<tr><td>日期時間</td><td>入場和出場時間</td><td>2024/03/15 22:15 - 23:40</td></tr>
-<tr><td>標的</td><td>交易的資產</td><td>BTC/USDT Perpetual</td></tr>
+<tr><td>日期時間</td><td>入場和出場日期（波段常持有數日）</td><td>2024/03/15 進場 - 2024/03/20 出場</td></tr>
+<tr><td>標的</td><td>交易的資產</td><td>SPY（標普 500 ETF）</td></tr>
 <tr><td>方向</td><td>做多或做空</td><td>做多</td></tr>
-<tr><td>入場價</td><td>實際成交價</td><td>$67,200</td></tr>
-<tr><td>止損價</td><td>設定的止損位</td><td>$66,400</td></tr>
-<tr><td>目標價</td><td>預設的止盈位</td><td>$68,800</td></tr>
-<tr><td>出場價</td><td>實際出場價</td><td>$68,500</td></tr>
-<tr><td>倉位大小</td><td>金額 + 槓桿</td><td>$2,000 x 5x</td></tr>
+<tr><td>進場價</td><td>實際成交價</td><td>$548</td></tr>
+<tr><td>止損價</td><td>設定的止損位</td><td>$540</td></tr>
+<tr><td>目標價</td><td>預設的止盈位</td><td>$562</td></tr>
+<tr><td>出場價</td><td>實際出場價</td><td>$561</td></tr>
+<tr><td>倉位大小</td><td>股數（無槓桿現貨）</td><td>12 股（約 $6,570）</td></tr>
 <tr><td>R 值</td><td>盈虧 / 計劃風險</td><td>+1.6R</td></tr>
 </tbody>
 </table>
@@ -1908,5 +1966,6 @@ function resetQuiz() {
 // Initialize
 renderQuiz();
 </script>
+<script src="site.js"></script>
 </body>
 </html>

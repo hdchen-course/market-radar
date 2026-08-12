@@ -33,6 +33,17 @@
 <h1>事件交易 SOP</h1>
 <p class="subtitle">CPI / NFP / FOMC 前中後的標準操作流程 — 不要再因為持倉過事件而爆倉</p>
 
+<div class="highlight-box">
+<h3 style="margin-top:0">上班族專用車道（預設走這條）</h3>
+<p>你是白天要上班、晚上要睡覺的散戶，不是全職交易員。對 CPI / NFP / FOMC 這類 <strong>Tier 1 事件，預設做法只有一個</strong>：</p>
+<ul>
+<li><strong>事前減倉或直接空手</strong> — 睡前把 Tier 1 事件當成「今晚不留大倉位」的訊號。</li>
+<li><strong>掛好止損</strong> — 若真的要留倉，止損必須事先掛在系統上（不是心裡想），且放寬到能吃下事件波動（見下方規則）。</li>
+<li><strong>正常睡覺</strong> — 不熬夜守數據、不搶第一波。FOMC 台灣時間凌晨才公布（見<a href="tw_reality.html">台灣時區的現實</a>），熬夜搶單只會賠上隔天的工作與判斷力。</li>
+</ul>
+<p>「<strong>交易事件後的第二波</strong>」（等噪音消退、方向確認再進場）屬於 <span class="time-tag danger-tag">選配／進階</span>：只有在你當晚清醒、有時間、且已按 SOP 空手的前提下才考慮。做不到就跳過 — 空手過事件本身就是滿分答案。</p>
+</div>
+
 <nav class="tab-nav">
   <button class="tab-btn active" data-tab="tab1">事件分類</button>
   <button class="tab-btn" data-tab="tab2">事件前 SOP</button>
@@ -79,6 +90,19 @@
 <tr><td>工廠訂單/耐久財</td><td>影響工業股，整體市場小</td></tr>
 <tr><td>Fed 官員個別發言</td><td>中低，除非是 Powell 或有投票權的鴿/鷹派</td></tr>
 </table>
+</div>
+
+<div class="card">
+<h3>美股個股事件 — 財報與除息</h3>
+<p>總經事件（CPI/NFP/FOMC）影響整個市場；個股事件只打單一標的，但對「集中持有某檔股票」的散戶一樣可能一夜爆倉。做美股個股波段，這兩個日期一定要先查。</p>
+<table>
+<tr><th>事件</th><th>時點</th><th>敏感度</th><th>你要做的事</th></tr>
+<tr><td><strong>財報（Earnings）</strong></td><td>多在<strong>盤後</strong>或盤前公布，隔日開盤跳空</td><td><span class="time-tag danger-tag">極高</span>單日常見 ±5-15%，甚至 ±20%+</td><td>財報是「個股版的 Tier 1」。<strong>財報前不重倉</strong>，日內原則者收盤前平倉。</td></tr>
+<tr><td><strong>除息（Ex-Dividend）</strong></td><td>除息日開盤股價機械性扣掉股息</td><td><span class="time-tag">中低</span>跌幅≈每股股息，非壞消息</td><td>別把除息當「暴跌」而恐慌砍在最低。CFD／槓桿要留意股息調整與融資成本。</td></tr>
+</table>
+<div class="warning-box">
+<strong>財報前不重倉：</strong>財報結果無法預測（跟賭 CPI 方向一樣是 50/50），而且波動比總經事件更兇。原則同 Tier 1：<strong>財報前減倉或空手 + 掛好止損</strong>。想參與就等財報後方向確認、用小倉位跟第二波。查財報日：券商行事曆或 investing.com / earningswhispers。
+</div>
 </div>
 
 <div class="warning-box">
@@ -268,20 +292,27 @@
 <strong>用法：</strong>如果你做白銀而 CPI 即將公布 → 平均波動 ±$2-4 → 你的止損如果只設 $1 = 100% 會被打到。<br>
 事件交易的止損必須設得比平時寬（≥ 1.5x ATR 或 ≥ 歷史平均波動）。或者更好的做法：<strong>不帶倉位過事件。</strong>
 </div>
+<div class="warning-box">
+<strong>鐵律：止損放寬時，必須等比縮小張數。</strong><br>
+每筆交易的風險金額（每筆 R）永遠固定，例如帳戶的 1%。止損放寬 = 每張的虧損距離變大 = 你必須<strong>等比例減少張數</strong>，才能讓「止損距離 × 張數 = 固定 R」不變。<br>
+公式：<code>張數 = 每筆風險金額 ÷ (止損距離 × 每點價值)</code>。<br>
+範例：平時止損 $1、做 4 張；事件前止損放寬到 $2（2 倍）→ 張數必須砍半到 2 張，金額風險才不變。<span class="danger-tag time-tag">最常見的爆倉錯誤</span>就是「止損放寬了、張數卻沒減」，等於偷偷把單筆風險放大成 2-4 倍。
+</div>
 </div>
 
 <div class="card">
-<h3>台灣時區完整對照表</h3>
+<h3>台灣時區完整對照表（夏令／冬令）</h3>
 <table>
-<tr><th>美東時間</th><th>台灣時間</th><th>典型事件</th></tr>
-<tr><td>8:30 AM ET</td><td><strong>20:30 (當天)</strong></td><td>CPI, NFP, PPI, PCE, Jobless Claims</td></tr>
-<tr><td>9:30 AM ET</td><td><strong>21:30 (當天)</strong></td><td>美股開盤</td></tr>
-<tr><td>10:00 AM ET</td><td><strong>22:00 (當天)</strong></td><td>ISM, JOLTS, Consumer Confidence</td></tr>
-<tr><td>2:00 PM ET</td><td><strong>02:00 (隔天凌晨)</strong></td><td>FOMC 利率決議</td></tr>
-<tr><td>2:30 PM ET</td><td><strong>02:30 (隔天凌晨)</strong></td><td>Powell 記者會</td></tr>
-<tr><td>4:00 PM ET</td><td><strong>04:00 (隔天凌晨)</strong></td><td>美股收盤</td></tr>
-<tr><td>4:15 PM ET</td><td><strong>04:15 (隔天凌晨)</strong></td><td>重大財報發布</td></tr>
+<tr><th>美東時間</th><th>台灣時間（夏令）</th><th>台灣時間（冬令）</th><th>典型事件</th></tr>
+<tr><td>8:30 AM ET</td><td><strong>20:30 (當天)</strong></td><td><strong>21:30 (當天)</strong></td><td>CPI, NFP, PPI, PCE, Jobless Claims</td></tr>
+<tr><td>9:30 AM ET</td><td><strong>21:30 (當天)</strong></td><td><strong>22:30 (當天)</strong></td><td>美股開盤</td></tr>
+<tr><td>10:00 AM ET</td><td><strong>22:00 (當天)</strong></td><td><strong>23:00 (當天)</strong></td><td>ISM, JOLTS, Consumer Confidence</td></tr>
+<tr><td>2:00 PM ET</td><td><strong>02:00 (隔天凌晨)</strong></td><td><strong>03:00 (隔天凌晨)</strong></td><td>FOMC 利率決議</td></tr>
+<tr><td>2:30 PM ET</td><td><strong>02:30 (隔天凌晨)</strong></td><td><strong>03:30 (隔天凌晨)</strong></td><td>Powell 記者會</td></tr>
+<tr><td>4:00 PM ET</td><td><strong>04:00 (隔天凌晨)</strong></td><td><strong>05:00 (隔天凌晨)</strong></td><td>美股收盤</td></tr>
+<tr><td>4:15 PM ET</td><td><strong>04:15 (隔天凌晨)</strong></td><td><strong>05:15 (隔天凌晨)</strong></td><td>重大財報發布</td></tr>
 </table>
+<p class="dim">夏令時間（EDT，美東 UTC-4）約 3 月第二個週日～11 月第一個週日，台灣 = 美東 +12h；其餘為冬令時間（EST，UTC-5），台灣 = 美東 +13h。換季當週美股時間會整體晚 1 小時，務必重查一次。</p>
 <div class="warning-box">
 <strong>注意：</strong>FOMC 是凌晨 2:00 公布 → 你會在睡覺或想睡時遇到。<strong>永遠不要帶大倉位睡過 FOMC。</strong>
 </div>
@@ -423,5 +454,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script src="site.js"></script>
 </body>
 </html>

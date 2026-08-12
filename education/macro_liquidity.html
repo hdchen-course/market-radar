@@ -368,11 +368,12 @@ code {
 
 <div class="card">
 <h3>為什麼這個公式有效 — 相關性數據</h3>
-<p>淨流動性與風險資產的相關性在 2020-2024 年間極為顯著：</p>
+<p>淨流動性與風險資產的相關性在 2020-2024 年間極為顯著（以美股為主要觀察對象）：</p>
 <ul>
-<li><strong>Net Liquidity vs BTC：</strong>相關性 ~0.85（極高正相關）</li>
-<li><strong>Net Liquidity vs S&P 500：</strong>相關性 ~0.70</li>
-<li><strong>Net Liquidity vs NASDAQ：</strong>相關性 ~0.75</li>
+<li><strong>Net Liquidity vs S&P 500 (SPX)：</strong>相關性 ~0.70（上班族做波段的主戰場）</li>
+<li><strong>Net Liquidity vs NASDAQ 100 (NDX)：</strong>相關性 ~0.75（成長股對流動性更敏感）</li>
+<li><strong>Net Liquidity vs 黃金：</strong>中長期同向，但黃金另有「實質利率」這條更關鍵的主線（見 DXY 分頁）</li>
+<li><strong>Net Liquidity vs BTC（僅供對照）：</strong>相關性 ~0.85，波動最大、最不適合資本保全優先的散戶重壓</li>
 </ul>
 
 <div class="highlight-box">
@@ -391,15 +392,15 @@ code {
   <text x="470" y="218" font-size="10" fill="#64748b">2023</text>
   <!-- Net Liquidity line (blue) -->
   <polyline points="80,180 120,140 160,90 200,70 240,60 280,55 320,80 360,110 400,130 440,120 480,100 520,90 540,85" fill="none" stroke="#2563eb" stroke-width="2.5"/>
-  <!-- BTC line (orange) -->
+  <!-- S&P 500 line (orange) -->
   <polyline points="80,185 120,155 160,100 200,75 240,50 280,45 320,95 360,140 400,150 440,130 480,80 520,60 540,55" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
   <!-- Legend -->
-  <line x1="350" y1="22" x2="380" y2="22" stroke="#2563eb" stroke-width="2.5"/>
-  <text x="385" y="26" font-size="11" fill="#2563eb">Net Liquidity</text>
-  <line x1="470" y1="22" x2="500" y2="22" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
-  <text x="505" y="26" font-size="11" fill="#ea580c">BTC</text>
+  <line x1="330" y1="22" x2="360" y2="22" stroke="#2563eb" stroke-width="2.5"/>
+  <text x="365" y="26" font-size="11" fill="#2563eb">Net Liquidity</text>
+  <line x1="455" y1="22" x2="485" y2="22" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
+  <text x="490" y="26" font-size="11" fill="#ea580c">S&P 500</text>
   <!-- Correlation label -->
-  <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">相關性 r = 0.85 (2020-2024)</text>
+  <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">相關性 r ≈ 0.70（S&P 500, 2020-2024；BTC 同期 ~0.85 但波動更大）</text>
 </svg>
 </div>
 </div>
@@ -570,8 +571,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>QT 的運作方式</h4>
 <ul>
 <li>到期國債不再續買 → 資金回到 Fed → 銀行準備金減少</li>
-<li>2022-2023 QT 速度：國債 $60B/月 + MBS $35B/月 = $95B/月</li>
-<li>2024 起放慢至 $60B/月，後進一步降至 $25B/月</li>
+<li>2022-2023 QT 速度：公債贖回<strong>上限</strong>約 $60B/月 + MBS 上限約 $35B/月 = 每月最多縮表約 $95B</li>
+<li>2024 起放慢：公債贖回上限先降到約 $60B/月，之後再降到約 $25B/月（這是「每月縮表<strong>上限</strong>」，不是整張資產負債表只剩 $25B）</li>
 </ul>
 
 <h4>為什麼 QT 速度很重要</h4>
@@ -795,7 +796,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <li><strong>對資產的影響：</strong>成長股壓力增大（DCF 折現率升高）</li>
 </ul>
 
-<h4>2024-2026 的 Term Premium 故事</h4>
+<h4>近年的 Term Premium 故事</h4>
 <ul>
 <li>Term Premium 從長期負值轉為正值</li>
 <li>驅動因子：財政赤字持續擴大 + 供給增加 + 海外買家退縮</li>
@@ -1087,6 +1088,37 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <div class="purple-box">
 <strong>協同效應：</strong>當多數央行同時擴張（如 2020-2021），全球流動性海嘯推動所有資產暴漲。當多數央行同時收縮（如 2022），全球流動性枯竭導致全面 risk-off。目前處於「分化期」——不同央行走不同方向，需要逐一追蹤加總。
+</div>
+</div>
+
+<div class="card">
+<h3>實質利率與黃金定價（Real Yield &amp; Gold）</h3>
+<p>把美元框架再延伸一步：<strong>黃金真正的第一驅動不是通膨本身，而是「實質利率」。</strong>因為黃金不孳息（沒有利息、沒有配息），實質利率越高，持有黃金的機會成本越大 → 金價越受壓；實質利率越低甚至為負，金價越有支撐。</p>
+
+<div class="formula-box">實質利率(Real Yield) = 名目 10Y 殖利率 − 通膨預期(Breakeven Inflation)</div>
+
+<h4>用 FRED 直接追蹤（真實代碼）</h4>
+<table class="data-table">
+<tr><th>指標</th><th>FRED 代碼</th><th>說明</th></tr>
+<tr><td>10Y 實質利率（TIPS）</td><td><code>DFII10</code></td><td>可直接讀取，等於下方名目殖利率減去通膨預期的市場結果</td></tr>
+<tr><td>10Y 名目殖利率</td><td><code>DGS10</code></td><td>一般 10 年期公債殖利率</td></tr>
+<tr><td>10Y 通膨預期（Breakeven）</td><td><code>T10YIE</code></td><td>= DGS10 − DFII10，市場隱含的 10 年通膨預期</td></tr>
+</table>
+
+<div class="highlight-box">
+<strong>核心關係：金價與實質利率呈反向。</strong>實質利率下降（例如降息預期升溫、或通膨預期上升快過名目殖利率）→ 持有黃金的機會成本降低 → 金價傾向上漲；實質利率上升 → 金價傾向承壓。對走波段的散戶而言，這是判讀黃金中長期方向最重要的單一變數，重要性通常優先於「美元強弱」。
+</div>
+
+<h4>2022–2024 的「脫鉤」：實質利率上升，黃金卻沒跌</h4>
+<p>按傳統關係，實質利率大幅走高時黃金應該重挫；但 2022–2024 年間出現明顯背離——實質利率明顯上行，金價卻相對抗跌、甚至走強。主要解釋是<strong>結構性買盤蓋過了利率訊號</strong>：</p>
+<ul>
+<li><strong>央行購金：</strong>多國央行持續增持實體黃金以分散外匯儲備，形成一股與利率高低「無關」的長期買盤。</li>
+<li><strong>去美元化(De-dollarization)：</strong>部分國家降低對美元資產的依賴、提高黃金配置，改變了黃金的邊際定價力量。</li>
+</ul>
+<p>換句話說，實質利率仍是黃金的「第一驅動」；但當央行購金與去美元化這類結構性力量夠強時，短中期可以壓過利率訊號，造成脫鉤。因此判讀黃金時要「同時」看 <code>DFII10</code> 的方向，以及這股結構性買盤是否延續，不要只用實質利率一個變數下結論。</p>
+
+<div class="orange-box">
+<strong>延伸閱讀：</strong>黃金與白銀的完整定價、實體 vs 紙黃金、金銀比與資本保全配置，請見 <a href="precious_metals.html">貴金屬完全教學</a>。把本節的「實質利率方向」搭配該頁的操作框架一起使用，效果最好。
 </div>
 </div>
 </div>
@@ -1513,8 +1545,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><td>VIX < 15</td><td>短線自滿</td><td>時機信號</td></tr>
 </table>
 
-<div class="insight-box">
-<strong>實戰應用：</strong>Household Equity Allocation > 50% + VIX < 15 + 30Y 突破關鍵位 = 這就是 2026/6 這週發生的事。長期泡沫 + 短線自滿 + 利率衝擊 = 暴跌的完美條件。這個指標不會告訴你「哪一天」跌，但會告訴你「跌的時候會很慘」。
+<div class="warning-box">
+<strong>實戰應用（假設情境）：</strong>當 Household Equity Allocation > 50% + VIX < 15 + 30Y 殖利率突破關鍵位「同時」出現時 = 長期泡沫 + 短線自滿 + 利率衝擊三者疊加，這就是「暴跌的完美條件」。這個指標不會告訴你「哪一天」跌，但會告訴你「一旦跌起來會很慘」。務必把它當成長期風險溫度計，而不是精準的擇時工具。
 </div>
 </div>
 </div>
@@ -1867,5 +1899,6 @@ function switchTab(idx) {
   window.scrollTo(0, 0);
 }
 </script>
+<script src="site.js"></script>
 </body>
 </html>

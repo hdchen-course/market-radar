@@ -182,6 +182,29 @@
 <h1>流動性結構與網格交易</h1>
 <p style="color:var(--text3); margin-bottom:24px;">主力獵殺邏輯 &times; 低波動辨識 &times; 網格策略 SOP &times; 風控殺手開關 &times; 50 題情境測驗</p>
 
+<div class="warning-box" style="margin-bottom:24px;">
+<strong>先看這裡：本模組是「加密專用的選修進階內容」，不是本站主線。</strong>
+<ul style="margin:8px 0; line-height:1.9;">
+  <li>本站的核心是<strong>上班族散戶用美股 + 黃金白銀走波段、資本保全優先、長期穩定當副業</strong>。網格交易（Grid Trading）<strong>不適用於美股與貴金屬的核心波段策略</strong>。</li>
+  <li>網格假設市場在區間內來回震盪；<strong>一旦走出單邊趨勢行情，網格會在錯的方向不斷加碼、容易受重傷</strong>。美股與貴金屬長線本來就是有方向的資產，硬套網格與「資本保全優先」的原則相衝突。</li>
+  <li>本模組保留下來只當作<strong>理解主力流動性邏輯的選修教材</strong>。若你只想走美股 + 貴金屬波段，看完下一段「通用觀念」即可，網格 SOP（分頁 4、5）可以略過。</li>
+</ul>
+</div>
+
+<div class="card" style="border-left:4px solid var(--green);">
+<h3 style="color:var(--green);">通用觀念：哪些概念可以帶進美股 / 黃金白銀波段（其餘皆為 crypto 選修）</h3>
+<p>下面三個概念是<strong>跨市場通用</strong>的，可以有限度地用在美股與貴金屬的波段操作上；至於整套網格 SOP 本身，請當成 crypto 選修，不要套到美股與貴金屬。</p>
+<table>
+  <tr><th>通用觀念</th><th>在美股 / 黃金白銀的有限適用方式</th></tr>
+  <tr><td><strong>流動性池</strong>（停損聚集地）</td><td>理解「前高、前低、整數關口、明顯均線」附近會堆積大量停損，可以幫你<strong>解讀為什麼價格常常先假突破再反轉</strong>，避免在最擁擠的位置追單。僅作為觀察輔助，不用來預測主力精確路徑。</td></tr>
+  <tr><td><strong>停損聚集區</strong></td><td>設停損時<strong>避免掛在最明顯的整數關口或前高前低正上方 / 正下方</strong>（那裡最容易被掃）。改掛在這些位置外側一點，降低被雜訊掃出場的機率。</td></tr>
+  <tr><td><strong>ATR 緩衝止損</strong></td><td>這是最實用的一項：停損位 = 關鍵價位 &plusmn; 1&ndash;2 倍 ATR，讓正常波動掃不到你，是<strong>資本保全的好工具</strong>。美股與黃金白銀的波段停損都適用。</td></tr>
+</table>
+<div class="highlight-box">
+<strong>一句話：</strong>把「流動性 / 停損聚集 / ATR 緩衝」當成<strong>設更合理止損位置</strong>的觀念工具即可；網格 SOP（分頁 4「網格策略」、分頁 5「網格風控」）是 crypto 選修，不是美股與貴金屬的做法。
+</div>
+</div>
+
 <nav class="tab-nav">
   <button class="tab-btn active" data-tab="tab1">流動性結構</button>
   <button class="tab-btn" data-tab="tab2">主力獵殺</button>
@@ -598,7 +621,8 @@ ATR(300) 壓縮到 $800 → ST 線離價格僅 $2,400<br>
 
 <!-- ==================== TAB 4: 網格策略 ==================== -->
 <div class="tab-content" id="tab4">
-<h2>網格交易策略 SOP</h2>
+<h2>網格交易策略 SOP <span style="font-size:13px; font-weight:600; color:var(--orange); background:var(--orange-l); padding:3px 10px; border-radius:6px; vertical-align:middle;">crypto 選修</span></h2>
+<div class="warning-box" style="margin-bottom:16px;">以下網格 SOP 為<strong>加密專用的選修進階內容</strong>，<strong>不適用於美股與貴金屬的核心波段策略</strong>。網格在單邊趨勢行情容易受重傷，非本站主線。</div>
 
 <div class="card">
 <h3>什麼是網格交易？</h3>
@@ -687,10 +711,15 @@ ATR(300) 壓縮到 $800 → ST 線離價格僅 $2,400<br>
 每格資金: $10,000 / 10 = $1,000<br>
 每格 BTC: $1,000 / ~$62,000 ≈ 0.016 BTC<br>
 <br>
-<strong>// 預期收益（假設每日觸發 4-6 格）</strong><br>
-每格利潤: $320 * 0.016 BTC ≈ $5.12<br>
-每日: $5.12 * 5 ≈ $25.60<br>
-月化: $25.60 * 30 ≈ $768 (7.68% 月化 on $10,000)
+<strong>// 收益只是「某段區間」的示意，不是可外推的報酬</strong><br>
+每格利潤: $320 * 0.016 BTC ≈ $5.12（單格、單次填充的示意值）<br>
+<br>
+這個數字只成立於「價格剛好持續在區間內來回震盪」的那段時間。<br>
+盤整能維持多久無法預測，把單日示意值乘以 30 天推成「月化報酬」是<br>
+錯誤的線性外推 — 一旦走出單邊趨勢行情，網格會在錯的方向持續持倉、<br>
+產生虧損，實際結果可能是負的。<br>
+<br>
+<strong>結論：以上僅為過去某段區間的示意，不代表未來，趨勢行情下會虧損。</strong>
 </div>
 </div>
 
@@ -747,7 +776,7 @@ ATR(300) 壓縮到 $800 → ST 線離價格僅 $2,400<br>
   <tr><td>OKX</td><td>0.02%</td><td>0.05%</td><td>省 0.03%</td></tr>
 </table>
 <div class="insight-box">
-<strong>網格 + Maker = 印鈔機：</strong>當你的格子間距是 $320（≈ 0.5%），而 Maker 費率是 0%，那麼每次填充的 $320 就是<strong>純利潤</strong>。不需要像 Taker 一樣扣手續費。這就是網格在低波動中仍能獲利的核心原因 — 成本趨近於零。
+<strong>網格 + Maker 的成本優勢：</strong>當你的格子間距是 $320（≈ 0.5%），而 Maker 費率是 0%，那麼每次填充的 $320 幾乎不被手續費侵蝕。這是網格在<strong>盤整區間</strong>中還能有正報酬的原因 — 成本趨近於零。但這只是「降低成本」，不是穩賺：只要價格走出單邊趨勢，一側持倉被套的虧損會遠大於這些格子價差。低成本不等於低風險。
 </div>
 </div>
 
@@ -765,7 +794,8 @@ ATR(300) 壓縮到 $800 → ST 線離價格僅 $2,400<br>
 
 <!-- ==================== TAB 5: 網格風控 ==================== -->
 <div class="tab-content" id="tab5">
-<h2>網格風險管理</h2>
+<h2>網格風險管理 <span style="font-size:13px; font-weight:600; color:var(--orange); background:var(--orange-l); padding:3px 10px; border-radius:6px; vertical-align:middle;">crypto 選修</span></h2>
+<div class="warning-box" style="margin-bottom:16px;">本頁風控規則是為<strong>加密網格</strong>設計的選修內容，<strong>不套用於美股與貴金屬波段</strong>。美股與貴金屬的資本保全，請以部位控管與 ATR 緩衝止損為主。</div>
 
 <div class="card">
 <h3>每日審查清單</h3>
@@ -1222,7 +1252,7 @@ const quizData = [
     q: "價格在你的網格上半部和下半部之間來回震盪了一整天，觸發了 12 次格子。你的淨利潤是正還是負？",
     opts: ["正的 — 每次觸發都是利潤", "負的 — 來回交易有摩擦成本", "零 — 買賣抵消", "取決於最終價格位置"],
     ans: 0,
-    explain: "網格的核心優勢：只要價格在區間內波動，每次「低買高賣」的循環都產生一個格子的利潤。12 次觸發 ≈ 6 個完整循環 = 6 格利潤。加上 Maker 費率優勢（零或負手續費），淨利潤確定為正。這就是網格在盤整中「印鈔」的原理。"
+    explain: "網格的核心優勢：只要價格在區間內波動，每次「低買高賣」的循環都產生一個格子的利潤。12 次觸發 ≈ 6 個完整循環 = 6 格利潤。加上 Maker 費率優勢（零或負手續費），這段時間的淨利潤為正。但要注意：這只在「價格持續留在區間內」時成立，一旦走出趨勢，一側被套的虧損會蓋過這些格子價差。"
   },
   {
     q: "BB 帶寬突然從歷史低位急速擴張，上下軌快速分離。4H K 線出現一根實體超過前 10 根平均 3 倍的大陽線。你的網格該怎麼辦？",
@@ -1349,5 +1379,6 @@ function quizReset() {
 }
 </script>
 
+<script src="site.js"></script>
 </body>
 </html>

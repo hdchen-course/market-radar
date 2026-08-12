@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>貴金屬交易完全教學 — 黃金 / 白銀 / 礦股</title>
+<link rel="stylesheet" href="common.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* === 本頁專用樣式（沿用 common.css 變數） === */
+.tab-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:12px;}
+
+.driver-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-left:4px solid var(--blue);
+  border-radius:var(--r);
+  padding:18px 20px;
+  margin:14px 0;
+}
+.driver-card h3{margin-top:0;font-size:16px;}
+.driver-card.d-real{border-left-color:var(--blue);}
+.driver-card.d-real h3{color:var(--blue);}
+.driver-card.d-dxy{border-left-color:var(--purple);}
+.driver-card.d-dxy h3{color:var(--purple);}
+.driver-card.d-fear{border-left-color:var(--orange);}
+.driver-card.d-fear h3{color:var(--orange);}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+.pill{display:inline-block;padding:4px 12px;border-radius:14px;font-size:12px;font-weight:600;background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.mini-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;}
+.mini-box h4{margin-top:0;color:var(--text);}
+.mini-box.good{background:var(--green-l);border-color:var(--green);}
+.mini-box.good h4{color:var(--green);}
+.mini-box.bad{background:var(--red-l);border-color:var(--red);}
+.mini-box.bad h4{color:var(--red);}
+
+.svg-container{margin:16px 0;overflow-x:auto;}
+.svg-container svg{max-width:100%;height:auto;}
+
+.formula{
+  background:linear-gradient(135deg,#1e293b 0%,#334155 100%);
+  color:#f1f5f9;border-radius:var(--r);padding:18px 22px;margin:14px 0;
+  font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.9;
+}
+.formula .hl{color:#fbbf24;font-weight:700;}
+.formula .src{display:block;margin-top:8px;font-family:'Inter',sans-serif;font-size:12px;color:#93c5fd;}
+
+.stat-row{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;}
+.stat{flex:1;min-width:130px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.stat .big{font-size:22px;font-weight:800;color:var(--blue);}
+.stat .lbl{font-size:12px;color:var(--text3);margin-top:4px;}
+
+/* 測驗樣式（統一樣板） */
+.qz-opts{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.qz-opt{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font:inherit;color:var(--text2);transition:all .15s;}
+.qz-opt:hover:not(:disabled){background:var(--bg4);}
+.qz-opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.qz-opt.ok{background:var(--green-l);border-color:var(--green);color:var(--text);}
+.qz-opt.ok::before{content:"\2713 ";font-weight:700;color:var(--green);}
+.qz-opt.no{background:var(--red-l);border-color:var(--red);color:var(--text);}
+.qz-opt.no::before{content:"\2717 ";font-weight:700;color:var(--red);}
+.qz-exp{margin-top:10px;padding:12px;background:var(--bg3);border-radius:8px;font-size:13px;}
+.qz-next{margin-top:12px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font:inherit;}
+.qz-prog{font-size:13px;font-weight:600;color:var(--text3);margin-bottom:8px;}
+
+@media (max-width:600px){
+  .two-col{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
+
+<h1>貴金屬交易完全教學 — 黃金 / 白銀 / 礦股</h1>
+<p class="subtitle" style="color:var(--text3);margin-bottom:20px;">三大驅動力 &times; 金銀比 &times; 央行購金與 ETF 資金流 &times; 礦股 vs 實體 &times; 交易載具 &times; 季節性 &times; 長期保值配置 &times; 16 題測驗</p>
+
+<div class="warning-box">
+  <strong>重要聲明：</strong>本模組僅供<strong>教育與研究用途，不構成任何投資建議</strong>。貴金屬價格波動劇烈，白銀與槓桿型商品（期貨、礦股、槓桿 ETF）可能造成<strong>重大甚至全部本金的虧損</strong>。文中所有數字、區間與情境皆為<strong>教學示意</strong>，非預測、非保證。任何操作都必須回到全站核心框架：<strong>每筆風險僅 1–2%、資本保全優先、只用可承受損失的閒錢</strong>。
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab1">三大驅動力</button>
+  <button class="tab-btn" data-tab="tab2">金銀比</button>
+  <button class="tab-btn" data-tab="tab3">央行購金與 ETF 流</button>
+  <button class="tab-btn" data-tab="tab4">礦股 vs 實體</button>
+  <button class="tab-btn" data-tab="tab5">交易載具選擇</button>
+  <button class="tab-btn" data-tab="tab6">季節性</button>
+  <button class="tab-btn" data-tab="tab7">長期保值配置</button>
+  <button class="tab-btn" data-tab="tab8">互動測驗</button>
+</nav>
+
+<!-- ==================== TAB 1: 三大驅動力 ==================== -->
+<div class="tab-content active" id="tab1">
+<h2>黃金的三大驅動力</h2>
+<p>要理解黃金，第一件事就是先搞清楚它的<strong>本質</strong>：黃金是一種<strong>貨幣性資產（monetary asset）</strong>，不是工業金屬。它幾乎不會被「消耗掉」，全球歷史上開採出來的黃金絕大部分都還存在（做成金條、金幣、首飾、央行儲備）。因此，用看待銅、原油那套「當期供需 / 庫存去化」的邏輯來分析黃金，會系統性地誤判。</p>
+
+<div class="insight-box">
+  <strong>心智模型：</strong>黃金不生息、也沒有現金流。它的價格主要不是由「工廠今年要用多少」決定，而是由<strong>「持有黃金相對於持有生息資產（現金、公債）的機會成本」</strong>與<strong>「對法幣體系的信任程度」</strong>共同決定。這正是下面三大驅動力的核心。
+</div>
+
+<!-- 驅動力 1 -->
+<div class="driver-card d-real">
+  <h3>驅動力 1：實質利率（第一驅動，呈負相關）</h3>
+  <p>這是黃金<strong>最重要</strong>的長期驅動因子。持有黃金的機會成本，就是你放棄的「無風險實質報酬」。當實質利率高，抱著不生息的黃金很吃虧；當實質利率低甚至為負，黃金的相對吸引力大增。</p>
+  <div class="formula">
+實質利率 = <span class="hl">名目 10 年期公債殖利率</span> &minus; <span class="hl">10 年期通膨預期（breakeven）</span>
+<span class="src">資料來源：FRED — 名目殖利率 DGS10、通膨預期可用 10Y breakeven（T10YIE）；或直接看 TIPS 10 年期實質殖利率 DFII10。</span>
+  </div>
+  <p><strong>方向：實質利率與黃金大致呈負相關。</strong>實質利率下行 &rarr; 黃金傾向走強；實質利率上行 &rarr; 黃金傾向承壓。這是分析黃金時要優先盯住的變數。</p>
+  <div class="pill-row">
+    <span class="pill">FRED: DFII10（TIPS 實質殖利率）</span>
+    <span class="pill">FRED: T10YIE（通膨預期）</span>
+    <span class="pill">FRED: DGS10（名目 10Y）</span>
+  </div>
+</div>
+
+<!-- 驅動力 2 -->
+<div class="driver-card d-dxy">
+  <h3>驅動力 2：美元指數 DXY</h3>
+  <p>黃金以美元計價，因此美元強弱會直接反映在金價上。<strong>美元走強，通常對金價形成逆風；美元走弱，通常對金價有利。</strong>不過要注意，美元和實質利率往往同向變動（升息循環中兩者常一起走強），所以實務上不要把 DXY 和實質利率當成兩個完全獨立的訊號，它們高度相關。</p>
+  <p>當 DXY 的走向與實質利率<strong>脫節</strong>時（例如美元走弱、但實質利率沒明顯下降），往往代表市場正在反映其他力量，例如避險或去美元化需求。</p>
+  <div class="pill-row">
+    <span class="pill">觀察：DXY 方向</span>
+    <span class="pill">觀察：DXY 是否與實質利率脫節</span>
+  </div>
+</div>
+
+<!-- 驅動力 3 -->
+<div class="driver-card d-fear">
+  <h3>驅動力 3：避險 / 地緣需求</h3>
+  <p>當市場出現戰爭、金融系統壓力、政治不確定性時，資金會湧入黃金這種「無交易對手風險」的資產避險。這股力量通常是<strong>脈衝式、事件驅動</strong>的——來得快、去得也快，不像實質利率那樣是慢變量。</p>
+  <div class="warning-box" style="margin-top:10px;">
+    <strong>陷阱：</strong>單一地緣事件造成的跳空常常「見光死」——利多事件真正發生後，避險溢價反而回吐。不要在事件驅動的急漲末段追高。事件交易的完整流程請見 <a href="event_trading_sop.html">事件交易 SOP</a>。
+  </div>
+</div>
+
+<h3 style="margin-top:24px;">實質利率與黃金的負相關（示意）</h3>
+<div class="svg-container">
+<svg viewBox="0 0 720 320" role="img" aria-label="實質利率與黃金負相關示意圖">
+  <rect x="0" y="0" width="720" height="320" fill="var(--bg2)"/>
+  <!-- 軸 -->
+  <line x1="60" y1="40" x2="60" y2="270" stroke="var(--border)" stroke-width="1.5"/>
+  <line x1="660" y1="40" x2="660" y2="270" stroke="var(--border)" stroke-width="1.5"/>
+  <line x1="60" y1="270" x2="660" y2="270" stroke="var(--border)" stroke-width="1.5"/>
+  <!-- 實質利率（藍，上升） -->
+  <polyline fill="none" stroke="#2563eb" stroke-width="3"
+    points="60,230 160,215 260,180 360,150 460,120 560,95 660,80"/>
+  <!-- 黃金（橘，鏡像下降再回升） -->
+  <polyline fill="none" stroke="#ea580c" stroke-width="3"
+    points="60,90 160,105 260,140 360,170 460,195 560,215 660,150"/>
+  <!-- 圖例 -->
+  <rect x="90" y="285" width="16" height="4" fill="#2563eb"/>
+  <text x="112" y="290" font-size="12" fill="var(--text2)">實質利率（左升 = 黃金逆風）</text>
+  <rect x="360" y="285" width="16" height="4" fill="#ea580c"/>
+  <text x="382" y="290" font-size="12" fill="var(--text2)">黃金價格</text>
+  <text x="60" y="30" font-size="12" fill="var(--text3)">兩線大致反向 &rarr; 負相關</text>
+  <!-- 脫鉤區塊標示 -->
+  <rect x="560" y="40" width="100" height="230" fill="#fde68a" opacity="0.25"/>
+  <text x="565" y="55" font-size="11" fill="var(--yellow)">脫鉤區間</text>
+</svg>
+</div>
+<p style="font-size:12px;color:var(--text3);">＊示意圖，非真實數據。左側可見實質利率上行、黃金承壓的典型負相關；右側黃色區塊代表「脫鉤」——利率仍高但黃金不跌反漲。</p>
+
+<h3 style="margin-top:24px;">為什麼 2022–2024 出現「脫鉤」？</h3>
+<p>教科書說實質利率上升黃金應該跌，但 2022–2024 年間，即使美國實質利率明顯上行，黃金卻相對抗跌甚至走高，與傳統負相關關係<strong>脫鉤</strong>。市場普遍歸因於兩股結構性力量：</p>
+<div class="two-col">
+  <div class="mini-box good">
+    <h4>央行購金</h4>
+    <p>多國央行（尤其新興市場）持續、結構性地增持黃金，作為外匯儲備多元化的一部分。這是價格敏感度低的長期買盤，會在傳統模型之外提供支撐。（概念性引用 WGC 世界黃金協會的央行購金統計。）</p>
+  </div>
+  <div class="mini-box good">
+    <h4>去美元化</h4>
+    <p>地緣衝突與制裁使部分國家降低對美元資產的依賴，轉向黃金這種無交易對手風險的儲備。這是慢速、多年的結構性趨勢。</p>
+  </div>
+</div>
+<div class="insight-box">
+  <strong>務實結論：</strong>實質利率仍是黃金的<strong>第一驅動與預設起點</strong>，但當你看到「利率漲、黃金卻不跌」時，別急著說模型壞了——先問是不是<strong>央行購金 / 去美元化</strong>這類結構性買盤正在壓過利率因子。多因子並存、而非單一公式，才是務實的分析態度。
+</div>
+</div><!-- tab1 -->
+
+<!-- ==================== TAB 2: 金銀比 ==================== -->
+<div class="tab-content" id="tab2">
+<h2>金銀比（Gold / Silver Ratio）</h2>
+<p><strong>金銀比＝黃金每盎司價格 &divide; 白銀每盎司價格。</strong>它告訴你「一盎司黃金可以換到幾盎司白銀」，是判斷兩者<strong>相對</strong>貴賤與市場環境的常用工具。</p>
+
+<div class="formula">
+金銀比 = <span class="hl">黃金價格（USD/oz）</span> &divide; <span class="hl">白銀價格（USD/oz）</span>
+<span class="src">比值越高 = 白銀相對黃金越便宜；比值越低 = 白銀相對黃金越貴。</span>
+</div>
+
+<h3>如何解讀（用區間思維，不要記死數字）</h3>
+<p>金銀比在歷史上有很寬的波動區間，長期而言常在<strong>數十倍</strong>的範圍內來回，並曾在極端行情（如嚴重衰退恐慌）中一度衝到<strong>很高的水準</strong>，也曾在白銀狂熱時壓到<strong>相對低位</strong>。這裡刻意<strong>不給精確數字</strong>——因為區間會隨時代改變，記死一個「回歸目標」是危險的。</p>
+<div class="two-col">
+  <div class="mini-box">
+    <h4>金銀比偏高（白銀相對便宜）</h4>
+    <p>常見於<strong>避險情緒濃、經濟放緩</strong>的環境：黃金的貨幣避險屬性受追捧，白銀因工業需求疲弱而落後。這時「白銀相對便宜」是結果，不必然代表白銀馬上會補漲。</p>
+  </div>
+  <div class="mini-box">
+    <h4>金銀比偏低（白銀相對昂貴）</h4>
+    <p>常見於<strong>再通膨、景氣擴張</strong>環境：工業需求回溫加上投機資金，白銀漲勢往往比黃金更兇，把比值壓低。</p>
+  </div>
+</div>
+
+<h3 style="margin-top:20px;">白銀的雙重身分：一半是工業金屬</h3>
+<p>這是散戶最容易忽略的關鍵：<strong>白銀約有一半（概略 50% 上下）的需求來自工業</strong>（太陽能、電子、電接點等），另一半才是投資與飾品。因此白銀同時具有「貴金屬避險」與「工業金屬景氣」兩種身分，這使它的<strong>波動遠大於黃金</strong>。</p>
+<div class="stat-row">
+  <div class="stat"><div class="big">≈ 50%</div><div class="lbl">白銀需求來自工業（概略）</div></div>
+  <div class="stat"><div class="big">遠大於</div><div class="lbl">白銀波動 vs 黃金波動</div></div>
+  <div class="stat"><div class="big">雙身分</div><div class="lbl">貴金屬 + 工業金屬</div></div>
+</div>
+
+<div class="warning-box">
+  <strong>散戶最常見的爆倉劇本：</strong>看到「金銀比很高、白銀好便宜」就重倉甚至用槓桿押白銀補漲。但白銀的波動可以輕易是黃金的兩三倍，一旦景氣預期轉弱或行情反向，白銀的跌幅會又快又深，槓桿部位很容易被清算。<strong>白銀是波動放大器，不是「便宜的黃金」。</strong>不懂它工業屬性就重倉，是典型的爆倉前奏。
+</div>
+
+<div class="insight-box">
+  <strong>務實用法：</strong>把金銀比當成<strong>環境溫度計</strong>與<strong>相對價值參考</strong>，而不是精準的擇時工具。若真要參與白銀，也應在全站風控框架內——<strong>每筆風險 1–2%、部位大小按波動縮小</strong>（白銀波動大，部位就要更小），並優先用不會被強制平倉的現貨型工具。部位計算請見 <a href="risk_management.html">資金管理與風險控制</a>。
+</div>
+</div><!-- tab2 -->
+
+<!-- ==================== TAB 3: 央行購金與 ETF 資金流 ==================== -->
+<div class="tab-content" id="tab3">
+<h2>央行購金與 ETF 資金流</h2>
+<p>黃金的買盤來自不同「時間尺度」的參與者。搞混這兩種資金流，是誤判金價的常見原因。</p>
+
+<div class="two-col">
+  <div class="mini-box good">
+    <h4>央行購金 — 慢變量、結構性</h4>
+    <p>各國央行基於外匯儲備多元化、去美元化與地緣考量而增持黃金。特徵：</p>
+    <ul style="margin:6px 0 0 18px;">
+      <li>時間尺度<strong>以季 / 年計</strong>，趨勢延續性強</li>
+      <li>對價格<strong>相對不敏感</strong>（不是為了短線價差）</li>
+      <li>提供價格<strong>底部支撐</strong>，但不會決定當週漲跌</li>
+      <li>概念性資料來源：<strong>WGC 世界黃金協會</strong>的央行購金統計</li>
+    </ul>
+  </div>
+  <div class="mini-box">
+    <h4>ETF 持倉 — 快變量、短線資金流</h4>
+    <p>GLD、SLV 等實體背書 ETF 的持倉量（tonnes / 盎司）變化，反映投資人的<strong>短中線</strong>情緒。特徵：</p>
+    <ul style="margin:6px 0 0 18px;">
+      <li>時間尺度<strong>以日 / 週計</strong>，可快速增減</li>
+      <li>對價格與利率<strong>敏感</strong>，追漲殺跌成分較高</li>
+      <li>持倉持續流入 / 流出，是投資性需求的即時溫度計</li>
+    </ul>
+  </div>
+</div>
+
+<div class="insight-box">
+  <strong>關鍵觀念：兩者時間尺度不同，不要混用。</strong>央行購金解釋的是「為什麼金價有一層越墊越高的地板」（多年結構）；ETF 資金流解釋的是「這幾週的漲跌動能來自哪裡」（短線情緒）。當<strong>央行結構性買盤</strong>與<strong>ETF 短線流出</strong>同時發生，金價可能在回檔中仍有支撐——這正是 2022–2024 脫鉤現象的一部分成因。
+</div>
+
+<h3 style="margin-top:20px;">觀察清單</h3>
+<table>
+  <tr><th>指標</th><th>反映什麼</th><th>時間尺度</th></tr>
+  <tr><td>WGC 央行購金報告</td><td>結構性儲備需求、去美元化進度</td><td>季 / 年</td></tr>
+  <tr><td>GLD 持倉（tonnes）</td><td>黃金投資性短中線資金流</td><td>日 / 週</td></tr>
+  <tr><td>SLV 持倉（盎司）</td><td>白銀投資 + 部分工業預期</td><td>日 / 週</td></tr>
+  <tr><td>實質利率（DFII10）</td><td>持有黃金的機會成本（第一驅動）</td><td>週 / 月</td></tr>
+</table>
+
+<div class="warning-box">
+  <strong>提醒：</strong>ETF 持倉是「跟隨」而非「領先」指標——大量流入常發生在價格已經漲一段之後。別把「ETF 大幅流入」當成保證續漲的訊號，那往往是情緒過熱的同步指標。
+</div>
+</div><!-- tab3 -->
+
+<!-- ==================== TAB 4: 礦股 vs 實體 ==================== -->
+<div class="tab-content" id="tab4">
+<h2>礦股 vs 實體金屬</h2>
+<p>買金礦股票和買實體黃金，是<strong>兩件不同的事</strong>。礦股是「對金價有槓桿的股票」，它同時承擔金價風險<strong>與</strong>股權風險。</p>
+
+<h3>主要礦業工具</h3>
+<table>
+  <tr><th>代號</th><th>內容</th><th>特性</th></tr>
+  <tr><td>GDX</td><td>大型金礦商 ETF</td><td>金礦股主流部位，波動大於金價</td></tr>
+  <tr><td>GDXJ</td><td>中小型（junior）金礦 ETF</td><td>波動又大於 GDX，風險更高</td></tr>
+  <tr><td>SIL</td><td>白銀礦商 ETF</td><td>疊加白銀波動 + 股權風險</td></tr>
+  <tr><td>SILJ</td><td>中小型銀礦 ETF</td><td>波動最劇烈的一類，散戶慎入</td></tr>
+</table>
+<p style="font-size:13px;color:var(--text3);">HUI（NYSE Arca 金蟲指數）常被用來看金礦股整體，<strong>HUI / 黃金</strong>比值可觀察礦股相對金價的強弱。</p>
+
+<h3 style="margin-top:20px;">營運槓桿：為什麼礦股漲跌都加倍</h3>
+<p>礦商的成本相對固定，金價變動幾乎直接放大到獲利。這叫<strong>營運槓桿</strong>。</p>
+<div class="formula">
+金價 &uarr; 10%　常見對應　礦股 <span class="hl">&uarr; 20–30%</span>（示意）
+金價 &darr; 10%　同樣　　　礦股 <span class="hl">&darr; 20–30%</span>（下跌也加倍）
+<span class="src">＊為教學示意的概念性倍數，實際因公司成本結構、避險、地緣而異。</span>
+</div>
+
+<h3 style="margin-top:16px;">AISC：看礦商體質的關鍵</h3>
+<p><strong>AISC（All-In Sustaining Cost，全維持成本）</strong>是把採礦、維持性資本支出、管理費用等全算進去的每盎司成本。金價與 AISC 的差距，就是礦商的獲利空間：</p>
+<ul>
+  <li>金價<strong>遠高於</strong> AISC &rarr; 礦商賺錢、營運槓桿向上放大</li>
+  <li>金價<strong>逼近</strong> AISC &rarr; 獲利被壓縮，礦股可能比金價跌得更兇</li>
+  <li>不同礦商 AISC 差異大，這也是為什麼個別礦股風險遠高於實體金屬</li>
+</ul>
+
+<h3 style="margin-top:20px;">礦股獨有的額外風險</h3>
+<div class="two-col">
+  <div class="mini-box bad">
+    <h4>地緣 / 單一國家風險</h4>
+    <p>礦場位於政局不穩的國家時，可能面臨課稅、國有化、罷工、環保停工。實體黃金沒有這種風險。</p>
+  </div>
+  <div class="mini-box bad">
+    <h4>股權稀釋 / 增資風險</h4>
+    <p>礦商（尤其 junior）常靠增發新股或發債融資，導致既有股東股權<strong>被稀釋</strong>。即使金價上漲，你的每股價值也可能被稀釋侵蝕。</p>
+  </div>
+</div>
+
+<div class="warning-box">
+  <strong>散戶最常見的錯誤：</strong>因為「礦股漲得比金價兇」就重倉礦股，把它當成「加強版黃金」。但這是雙面刃——上漲加倍的同時，<strong>下跌也加倍</strong>，還額外扛了營運槓桿、地緣、股權稀釋三重風險。礦股比較接近「高 Beta 的週期股」，不是避險資產。若真要配置，礦股應是投組中的<strong>小型衛星部位</strong>，且部位要比實體金屬更小。
+</div>
+</div><!-- tab4 -->
+
+<!-- ==================== TAB 5: 交易載具選擇 ==================== -->
+<div class="tab-content" id="tab5">
+<h2>交易載具選擇</h2>
+<p>同樣是「參與黃金 / 白銀」，載具不同，成本、流動性、稅務、槓桿與風險天差地遠。台灣散戶要按<strong>目的</strong>（長期保值 vs 短線波段）選對工具。</p>
+
+<table>
+  <tr>
+    <th>載具</th><th>槓桿</th><th>成本重點</th><th>流動性</th><th>適合對象</th>
+  </tr>
+  <tr>
+    <td>實體金條 / 金幣</td><td>無</td><td>買賣價差、保管、鑑定</td><td>低（變現慢）</td><td>純長期保值、末日避險</td>
+  </tr>
+  <tr>
+    <td>黃金存摺（銀行）</td><td>無</td><td>銀行買賣價差</td><td>中</td><td>台灣在地、小額定期定額</td>
+  </tr>
+  <tr>
+    <td>GLD（黃金 ETF）</td><td>無</td><td>內扣費用率較高</td><td>高</td><td>美股帳戶、交易靈活</td>
+  </tr>
+  <tr>
+    <td>IAU（黃金 ETF）</td><td>無</td><td><strong>費用率較 GLD 低</strong></td><td>高</td><td>長期持有、成本敏感者</td>
+  </tr>
+  <tr>
+    <td>SLV（白銀 ETF）</td><td>無</td><td>內扣費用率</td><td>高</td><td>參與白銀但不想碰期貨</td>
+  </tr>
+  <tr>
+    <td>期貨 GC（黃金）/ SI（白銀）</td><td><strong>高槓桿</strong></td><td>保證金、<strong>轉倉成本</strong></td><td>高</td><td>專業 / 進階，<strong>不適合新手</strong></td>
+  </tr>
+  <tr>
+    <td>礦股 / GDX / GDXJ</td><td>營運槓桿</td><td>券商手續、股權風險</td><td>高</td><td>能承受高波動的衛星部位</td>
+  </tr>
+</table>
+
+<div class="highlight-box">
+  <strong>長期持有的成本重點：IAU 通常比 GLD 費用率低。</strong>對「買著長期不動」的核心配置，年年內扣費用的差距會透過複利放大——長期持有者通常偏好費用較低的 IAU；GLD 則以最高的流動性與最活躍的選擇權市場見長，適合需要頻繁進出或做選擇權的交易者。
+</div>
+
+<div class="warning-box">
+  <strong>期貨 GC / SI 為何不適合新手：</strong>
+  <ul style="margin-top:8px;">
+    <li><strong>高槓桿</strong>：一口合約名目價值極大，小幅逆行就可能觸發追繳保證金甚至強制平倉。</li>
+    <li><strong>轉倉（roll）成本</strong>：期貨有到期日，長期持有必須不斷轉倉，在正價差（contango）下會持續磨損收益。</li>
+    <li>它是<strong>戰術短線工具</strong>，不是長期保值工具。用期貨做長期黃金配置是工具用錯地方。</li>
+  </ul>
+</div>
+
+<h3 style="margin-top:16px;">台灣散戶的取得方式與稅務</h3>
+<p>台灣散戶主要有兩條路：<strong>國內銀行黃金存摺 / 實體金</strong>（在地、無外匯與美股帳戶門檻，但價差與流動性較差），或<strong>透過複委託 / 海外券商買美股掛牌的 GLD / IAU / SLV / 礦股</strong>（費用低、流動性高，但涉及開戶、換匯成本、美股相關稅務與時區作息）。</p>
+<div class="insight-box">
+  開戶方式（複委託 vs 海外券商 IB）、換匯成本、股息預扣、W-8BEN、遺產稅、PDT $25k 與時區等台灣在地實務細節，<strong>詳見 <a href="tw_reality.html">台灣散戶實戰基建模組</a></strong>。選載具前，務必先把這些基建搞清楚，否則成本與稅務會吃掉你辛苦賺的價差。
+</div>
+</div><!-- tab5 -->
+
+<!-- ==================== TAB 6: 季節性 ==================== -->
+<div class="tab-content" id="tab6">
+<h2>季節性（統計傾向，非保證）</h2>
+<div class="warning-box">
+  <strong>先講最重要的一句：季節性是「統計傾向」，不是「保證」。</strong>它描述的是歷史上某些月份的<strong>平均</strong>表現偏強或偏弱，但任何單一年份都可能完全相反。季節性最務實的用途是<strong>優化定期定額的加碼時點</strong>，<strong>不是</strong>拿來重倉押注方向。
+</div>
+
+<h3>黃金常見的季節性傾向</h3>
+<ul>
+  <li><strong>印度實體需求旺季</strong>：印度是黃金消費大國，<strong>婚慶季與排燈節（Diwali，約秋季）</strong>前後的實體買盤，歷史上常為金價帶來季節性支撐。</li>
+  <li><strong>農曆年前買盤</strong>：華人地區（含台灣、中國）年前的送禮與收藏需求，是另一個常被提及的季節性買盤來源。</li>
+  <li>這些飾品 / 實體需求屬於<strong>季節性脈衝</strong>，力度通常不如實質利率等宏觀因子，只是「錦上添花」的邊際力量。</li>
+</ul>
+
+<h3 style="margin-top:16px;">白銀的季節性</h3>
+<p>白銀因為工業佔比高，其季節性更受<strong>工業景氣週期</strong>與製造業補庫存節奏影響，而不只是飾品需求。因此白銀的季節性訊號通常比黃金更雜、更不穩定，可靠度更低。</p>
+
+<div class="insight-box">
+  <strong>務實用法：把季節性當作「微調」而非「主張」。</strong>
+  <ul style="margin-top:8px;">
+    <li>你的主體部位應由<strong>長期配置</strong>與<strong>Regime 判定</strong>決定，不是由月份決定。</li>
+    <li>若你在做定期定額，可以在<strong>統計上偏弱的時段</strong>略微增加固定扣款額（逢弱多買一點），在偏強時段維持原額——這是低風險的微調。</li>
+    <li><strong>絕不</strong>因為「現在是黃金旺季」就重倉或加槓桿。單一年份違反季節性是家常便飯。</li>
+  </ul>
+</div>
+<p style="font-size:12px;color:var(--text3);">＊本頁不提供精確的「哪個月漲幾 %」數字——那類回測數字對未來沒有保證，且極易被過度解讀。想了解回測與過度擬合的陷阱，請見 <a href="backtesting.html">回測與績效統計</a>。</p>
+</div><!-- tab6 -->
+
+<!-- ==================== TAB 7: 長期保值配置 ==================== -->
+<div class="tab-content" id="tab7">
+<h2>長期保值配置</h2>
+<p>對台灣上班族散戶而言，貴金屬的核心角色是<strong>「保值 / 分散 / 對沖法幣風險」</strong>，而不是拿來快速致富。以下把配置分成兩層來想，觀念會清楚很多。</p>
+
+<h3>兩層配置：策略性核心 vs 戰術性加碼</h3>
+<div class="two-col">
+  <div class="mini-box good">
+    <h4>第一層：策略性長期核心配置</h4>
+    <p>不管市場如何，都<strong>長期持有</strong>的黃金部位，作用是分散與保值。特徵：</p>
+    <ul style="margin:6px 0 0 18px;">
+      <li>佔整體投組約 <strong>5–15%</strong>（依個人風險承受度）</li>
+      <li>以<strong>定期定額（DCA）</strong>建立，不擇時</li>
+      <li>優先用低成本現貨型工具（如 IAU）</li>
+      <li><strong>年度再平衡</strong>一次即可，不頻繁進出</li>
+    </ul>
+  </div>
+  <div class="mini-box">
+    <h4>第二層：戰術性 Regime 加碼</h4>
+    <p>在核心之上，依市場環境<strong>小幅</strong>加碼 / 減碼的機動部位。特徵：</p>
+    <ul style="margin:6px 0 0 18px;">
+      <li>依 Regime 判定（如 Stagflation、去美元化利多黃金）機動調整</li>
+      <li>受全站風控約束：<strong>每筆風險 1–2%</strong></li>
+      <li>加碼幅度有限，<strong>不動搖核心部位</strong></li>
+      <li>詳見 <a href="regime_identification.html">Regime 快速判定</a></li>
+    </ul>
+  </div>
+</div>
+<div class="highlight-box">
+  <strong>分層的意義：</strong>把「長期一定要有的保值部位」和「看環境機動的加碼」分開，你就不會因為一時看多而把核心部位重倉化，也不會因為短線恐慌而砍掉本該長抱的保值部位。<strong>核心不動，戰術靈活。</strong>
+</div>
+
+<h3 style="margin-top:20px;">永久組合（Permanent Portfolio）概念</h3>
+<p>Harry Browne 提出的永久組合是一個經典的「不預測市場」思路：把資金大致平均分散到<strong>股票、長期債券、現金、黃金</strong>四類，讓不同資產在不同 Regime 各自發揮，透過再平衡達到低波動的長期保值。它給散戶的啟示不是要你照抄比例，而是——<strong>黃金作為投組的一角，本來就是為了在股債同時受傷時提供分散效果</strong>，這正是把它當「保險」而非「賭注」的心態。</p>
+
+<h3 style="margin-top:16px;">跳空與週末風險</h3>
+<div class="warning-box">
+  貴金屬（尤其透過期貨或槓桿工具）會面臨<strong>跳空與週末風險</strong>：市場休市期間發生重大事件，開盤可能直接跳空，停損<strong>無法在你設定的價位成交</strong>。這是為什麼核心保值部位應避免槓桿、且部位大小要事先算好能承受最壞情況。完整的跳空 / 週末風險與部位控管請見 <a href="risk_management.html">資金管理與風險控制</a>。
+</div>
+
+<div class="success-box">
+  <strong>務實總結：</strong>貴金屬在你的投組裡是<strong>「保險與分散」</strong>，不是主引擎。用 5–15% 的核心配置、定期定額、年度再平衡把它放好，剩下的交給時間；戰術加碼只用小部位、受 1–2% 風險上限約束。<strong>活得夠久，才有複利。</strong>
+</div>
+</div><!-- tab7 -->
+
+<!-- ==================== TAB 8: 互動測驗 ==================== -->
+<div class="tab-content" id="tab8">
+<h2>互動測驗（16 題）</h2>
+<p>測試你對貴金屬三大驅動力、金銀比、資金流、礦股、載具、季節性與配置的理解。每題作答後會顯示解析。</p>
+<div id="pm-quiz"></div>
+</div><!-- tab8 -->
+
+<style>
+.tab-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;border-bottom:2px solid var(--border);padding-bottom:12px;}
+.qz-opts{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.qz-opt{text-align:left;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;font:inherit;color:var(--text2);transition:all .15s;}
+.qz-opt:hover:not(:disabled){background:var(--bg4);}
+.qz-opt:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.qz-opt.ok{background:var(--green-l);border-color:var(--green);color:var(--text);}
+.qz-opt.ok::before{content:"\2713 ";font-weight:700;color:var(--green);}
+.qz-opt.no{background:var(--red-l);border-color:var(--red);color:var(--text);}
+.qz-opt.no::before{content:"\2717 ";font-weight:700;color:var(--red);}
+.qz-exp{margin-top:10px;padding:12px;background:var(--bg3);border-radius:8px;font-size:13px;}
+.qz-next{margin-top:12px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font:inherit;}
+.qz-prog{font-size:13px;font-weight:600;color:var(--text3);margin-bottom:8px;}
+</style>
+<script>
+// tab switching
+document.querySelectorAll('.tab-btn[data-tab]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var id=btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-content').forEach(function(c){c.classList.toggle('active',c.id===id);});
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+// accessible quiz
+(function(){
+  var QUESTIONS=[
+    {q:'Q1. 分析黃金時，公認的「第一驅動力」是下列何者？',
+     options:['當期工業庫存去化速度','實質利率（名目殖利率 − 通膨預期）','白銀的採礦成本','原油價格'],
+     correct:1,
+     explain:'黃金是貨幣性資產，第一驅動是實質利率——它代表持有不生息黃金的機會成本。實質利率＝名目 10 年殖利率 − 通膨預期（breakeven）。工業庫存邏輯適用於銅、原油等工業金屬，用來看黃金會系統性誤判。'},
+    {q:'Q2. 實質利率與黃金價格的典型關係是？',
+     options:['正相關（利率漲、金價漲）','負相關（利率漲、金價傾向承壓）','完全無關','固定 1:1 反向'],
+     correct:1,
+     explain:'兩者大致呈負相關：實質利率上行使持有黃金的機會成本上升，金價傾向承壓；實質利率下行則對黃金有利。這是傾向而非精確的固定比例。'},
+    {q:'Q3. 下列哪一個 FRED 資料常被用來直接觀察美國 10 年期實質殖利率？',
+     options:['DFII10（TIPS 實質殖利率）','VIX','DXY','SLV 持倉'],
+     correct:0,
+     explain:'DFII10 是 FRED 上 10 年期 TIPS 的實質殖利率序列，可直接觀察實質利率。名目殖利率是 DGS10、通膨預期是 T10YIE。'},
+    {q:'Q4. 把黃金當成「工業金屬」用庫存去化邏輯分析，會有什麼問題？',
+     options:['沒問題，黃金就是工業金屬','會系統性誤判，因為黃金是貨幣性資產、幾乎不被消耗','只在牛市會誤判','只影響白銀'],
+     correct:1,
+     explain:'黃金是貨幣性資產，歷史上開採出來的黃金絕大多數仍然存在，不像工業金屬被消耗。它的價格主要由機會成本（實質利率）與對法幣的信任決定，用工業庫存邏輯會系統性誤判。'},
+    {q:'Q5. 2022–2024 出現「實質利率上升、黃金卻不跌」的脫鉤，市場普遍歸因於？',
+     options:['散戶瘋狂追高','央行結構性購金與去美元化','白銀工業需求暴增','原油崩跌'],
+     correct:1,
+     explain:'脫鉤主要來自央行長期、對價格不敏感的結構性購金，以及地緣驅動的去美元化需求。這兩股結構性買盤壓過了傳統的利率因子。'},
+    {q:'Q6. 金銀比（Gold/Silver Ratio）如何計算？',
+     options:['白銀價 ÷ 黃金價','黃金價 ÷ 白銀價','黃金產量 ÷ 白銀產量','黃金 ETF ÷ 白銀 ETF'],
+     correct:1,
+     explain:'金銀比＝黃金每盎司價 ÷ 白銀每盎司價，代表一盎司黃金可換幾盎司白銀。比值高＝白銀相對便宜；比值低＝白銀相對昂貴。'},
+    {q:'Q7. 關於白銀的需求結構，下列何者正確？',
+     options:['幾乎全是投資需求','約一半來自工業需求，因此波動遠大於黃金','完全是飾品需求','與黃金完全相同'],
+     correct:1,
+     explain:'白銀約有一半（概略 50% 上下）需求來自工業（太陽能、電子等），同時具貴金屬與工業金屬雙重身分，使其波動遠大於黃金。'},
+    {q:'Q8. 看到「金銀比很高、白銀好便宜」，散戶最危險的做法是？',
+     options:['小額定期定額參與','用槓桿重倉押白銀補漲','完全不動','先看整體風控'],
+     correct:1,
+     explain:'白銀波動可達黃金的兩三倍，用槓桿重倉押「補漲」一旦反向極易被強制平倉爆倉。白銀是波動放大器，不是「便宜的黃金」。金銀比應當環境溫度計，不是重倉訊號。'},
+    {q:'Q9. 央行購金與 GLD/SLV 的 ETF 持倉，最關鍵的差別是？',
+     options:['兩者完全相同','時間尺度不同：央行是以季/年計的結構性慢變量，ETF 是以日/週計的短線資金流','ETF 才是結構性','央行購金每天變動'],
+     correct:1,
+     explain:'央行購金是慢變量、對價格不敏感、提供多年結構性支撐（概念性引用 WGC）；ETF 持倉是快變量、反映短中線情緒。兩者時間尺度不同，不能混用。'},
+    {q:'Q10. 關於 GDX/GDXJ 這類金礦股 ETF，下列敘述何者正確？',
+     options:['波動比實體黃金小，較安全','具營運槓桿，金價漲跌都被放大，且有地緣與股權稀釋風險','等同實體黃金','沒有下跌風險'],
+     correct:1,
+     explain:'礦股具營運槓桿：金價漲 10% 礦股常漲 20–30%（示意），但下跌同樣加倍，還額外承擔單一國家地緣風險與增資造成的股權稀釋風險。它比較像高 Beta 週期股，不是避險資產。'},
+    {q:'Q11. AISC（全維持成本）逼近金價時，對礦股意味著什麼？',
+     options:['礦商獲利空間被壓縮，礦股可能比金價跌得更兇','礦商一定大賺','與礦股無關','金價一定上漲'],
+     correct:0,
+     explain:'AISC 是每盎司全維持成本。金價遠高於 AISC 時礦商獲利、槓桿向上；金價逼近 AISC 時獲利被壓縮，營運槓桿使礦股可能比金價跌得更兇。'},
+    {q:'Q12. 對「長期買著不動」的核心黃金配置，成本上通常較有利的是？',
+     options:['GLD（費用率較高）','IAU（費用率較 GLD 低）','黃金期貨','實體金條'],
+     correct:1,
+     explain:'IAU 的內扣費用率通常低於 GLD，對長期持有者而言年年的費用差會被複利放大，因此長期核心配置常偏好 IAU。GLD 則以最高流動性與活躍選擇權市場見長，適合頻繁交易者。'},
+    {q:'Q13. 為什麼黃金期貨（GC）不適合新手做長期黃金配置？',
+     options:['沒有槓桿','高槓桿易觸發追繳/強平，且有到期轉倉成本，是戰術短線工具','費用最低','不能交易'],
+     correct:1,
+     explain:'期貨具高槓桿，小幅逆行就可能追繳保證金甚至強制平倉；且有到期日，長期持有須不斷轉倉，在正價差下持續磨損。它是戰術短線工具，用來做長期配置是工具用錯地方。'},
+    {q:'Q14. 關於貴金屬的季節性，正確的態度是？',
+     options:['季節性是保證，可據此重倉','季節性是統計傾向、非保證，主要用來微調定期定額的加碼時點','季節性完全無用','只有白銀有季節性'],
+     correct:1,
+     explain:'季節性描述歷史平均傾向（如印度排燈節/婚慶、農曆年前買盤），但任何單一年份都可能相反。務實用途是微調 DCA 加碼時點，絕不拿來重倉或加槓桿賭方向。'},
+    {q:'Q15. 對台灣上班族散戶，黃金在投組中較合理的核心配置比重與方式是？',
+     options:['0%，完全不需要','約 5–15%、以定期定額建立、年度再平衡','50% 以上重倉','全部押白銀礦股'],
+     correct:1,
+     explain:'黃金的角色是保值與分散，較合理的策略性核心配置約佔投組 5–15%，以定期定額（DCA）建立、年度再平衡即可。戰術性 Regime 加碼另用小部位、受每筆 1–2% 風險上限約束。'},
+    {q:'Q16. 下列哪一項是貴金屬（尤其透過期貨/槓桿工具）特有、且核心保值部位應盡量避免的風險？',
+     options:['配息被扣稅','跳空與週末風險——停損可能無法在設定價位成交','ETF 除息','手續費太低'],
+     correct:1,
+     explain:'休市期間發生重大事件時，開盤可能直接跳空，停損無法在你設定的價位成交，槓桿部位風險尤大。因此核心保值部位應避免槓桿、事先算好能承受最壞情況的部位大小（詳見風險管理模組）。'}
+  ];
+  var el=document.getElementById('pm-quiz'); if(!el)return; var i=0,score=0,answered=false;
+  function render(){var it=QUESTIONS[i];
+    el.innerHTML='<div class="qz-prog">第 '+(i+1)+' / '+QUESTIONS.length+' 題　目前得分 '+score+'</div>'+
+      '<div style="font-weight:600;margin-bottom:6px;">'+it.q+'</div><div class="qz-opts">'+
+      it.options.map(function(o,idx){return '<button type="button" class="qz-opt" data-i="'+idx+'">'+o+'</button>';}).join('')+
+      '</div><div class="qz-exp" hidden></div><button type="button" class="qz-next" hidden>下一題 →</button>';
+    answered=false;
+    el.querySelectorAll('.qz-opt').forEach(function(b){b.addEventListener('click',function(){select(+b.dataset.i);});});
+    el.querySelector('.qz-next').addEventListener('click',next);
+  }
+  function select(idx){if(answered)return;answered=true;var it=QUESTIONS[i];var opts=el.querySelectorAll('.qz-opt');
+    opts.forEach(function(b){b.disabled=true;});
+    if(idx===it.correct){opts[idx].classList.add('ok');score++;}else{opts[idx].classList.add('no');opts[it.correct].classList.add('ok');}
+    var exp=el.querySelector('.qz-exp');exp.innerHTML='<strong>解析：</strong>'+it.explain;exp.hidden=false;
+    el.querySelector('.qz-next').hidden=false;}
+  function next(){i++;if(i>=QUESTIONS.length){el.innerHTML='<div class="card" style="text-align:center;padding:24px;"><h3>測驗完成！</h3><p style="font-size:22px;font-weight:800;color:var(--blue);">'+score+' / '+QUESTIONS.length+'</p><p>正確率 '+Math.round(score/QUESTIONS.length*100)+'%</p></div>';return;}render();}
+  render();
+})();
+</script>
+
+<script src="site.js"></script>
+</body>
+</html>

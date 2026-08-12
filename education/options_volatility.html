@@ -143,6 +143,31 @@ tr:nth-child(even) { background: var(--bg3); }
 .tag.bullish { background: var(--green-l); color: var(--green); }
 .tag.bearish { background: var(--red-l); color: var(--red); }
 .tag.neutral { background: var(--orange-l); color: var(--orange); }
+.tag.core { background: var(--blue-l); color: var(--blue); }
+.tag.advanced { background: var(--purple-l); color: var(--purple); }
+
+/* Warning box */
+.warning-box {
+  background: var(--red-l); border: 1px solid var(--red);
+  border-left: 4px solid var(--red); border-radius: 0 8px 8px 0;
+  padding: 14px 18px; margin: 16px 0; color: #991b1b;
+}
+.warning-box strong { color: var(--red); }
+.warning-box ul { color: #991b1b; }
+
+/* Positioning note */
+.positioning {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 20px 24px; margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.positioning h3 { font-size: 16px; font-weight: 700; margin: 0 0 8px; color: var(--text); }
+.positioning .layer { margin: 12px 0; }
+.positioning .layer-title { font-weight: 700; }
+.positioning .layer.core { border-left: 4px solid var(--blue); padding-left: 12px; }
+.positioning .layer.core .layer-title { color: var(--blue); }
+.positioning .layer.adv { border-left: 4px solid var(--purple); padding-left: 12px; }
+.positioning .layer.adv .layer-title { color: var(--purple); }
 </style>
 </head>
 <body>
@@ -153,12 +178,38 @@ tr:nth-child(even) { background: var(--bg3); }
 <header>
   <h1>期權與波動率交易</h1>
   <p class="sub">Options Greeks, Flow 解讀, IV Skew, GEX, 波動率策略 | 完整學習指南</p>
+  <p class="sub" style="margin-top:8px;"><span class="tag advanced">進階</span> 需先具備現貨紀律 —— 上班族散戶請把期權當作「保護核心持倉」的工具，不是投機捷徑</p>
 </header>
+
+<div class="positioning">
+  <h3>本模組怎麼讀？分兩層</h3>
+  <p>對走美股 + 黃金白銀波段、資本保全優先的上班族散戶來說，期權的正確定位是<strong>保護與增益你手上的現貨持倉</strong>，而不是拿權利金去賭方向。請依這個順序學：</p>
+  <div class="layer core">
+    <p class="layer-title"><span class="tag core">核心層</span>散戶該先學：用期權保護／增益現貨</p>
+    <ul>
+      <li><strong>Protective Put（保護性賣權）</strong>：替你長抱的美股／ETF 部位買下行保險，把黑天鵝的最大虧損鎖住 —— 資本保全的直接工具。</li>
+      <li><strong>Covered Call（掩護性買權）</strong>：對長抱、看法中性偏多的部位賣出遠 OTM Call，收權利金增益報酬。</li>
+      <li><strong>理解 IV Crush</strong>：搞懂財報／FOMC 前後隱含波動率膨脹與坍塌，才知道為什麼「事件前裸買期權」對散戶是陷阱。</li>
+    </ul>
+  </div>
+  <div class="layer adv">
+    <p class="layer-title"><span class="tag advanced">進階選修</span>GEX / MaxPain / IV Skew / 裸買期權投機</p>
+    <p>這些屬於<strong>進階選修</strong>，用來理解市場結構與做市商行為，不是給散戶當主力策略的。<strong>先把核心層的現貨紀律練好再碰。</strong></p>
+  </div>
+  <div class="warning-box">
+    <strong>風險警告：裸買／裸賣期權對散戶風險極高</strong>
+    <ul>
+      <li><strong>裸買期權（單腿 Long Call/Put）</strong>：時間價值每天流失（Theta decay），方向對了還可能因 IV Crush 虧損，多數部位到期歸零。</li>
+      <li><strong>裸賣期權（Naked Call/Put）</strong>：權利金收入有限、潛在虧損極大甚至無限，一次尾部事件可以毀掉整年獲利。</li>
+      <li><strong>先具備現貨紀律</strong>：沒有穩定的波段進出、停損與部位控管之前，不要用期權投機。期權放大的是你的紀律，也放大你的錯誤。</li>
+    </ul>
+  </div>
+</div>
 
 <div class="nav">
   <button class="nav-btn active" onclick="showTab(0)">期權基礎</button>
   <button class="nav-btn" onclick="showTab(1)">Options Flow 解讀</button>
-  <button class="nav-btn" onclick="showTab(2)">Max Pain + IV Skew + GEX</button>
+  <button class="nav-btn" onclick="showTab(2)">Max Pain + IV Skew + GEX（進階選修）</button>
   <button class="nav-btn" onclick="showTab(3)">波動率交易</button>
   <button class="nav-btn" onclick="showTab(4)">期權策略實戰</button>
   <button class="nav-btn" onclick="showTab(5)">互動測驗</button>
@@ -503,7 +554,15 @@ tr:nth-child(even) { background: var(--bg3); }
 
 <!-- ==================== TAB 3: Max Pain + IV Skew + GEX ==================== -->
 <div class="tab-content" id="tab2">
-<h2>Max Pain + IV Skew + GEX</h2>
+<h2>Max Pain + IV Skew + GEX <span class="tag advanced">進階選修</span></h2>
+<div class="warning-box">
+  <strong>進階選修 —— 需先具備現貨紀律</strong>
+  <ul>
+    <li>本頁的 GEX、Max Pain、IV Skew 是用來<strong>理解市場結構與做市商行為</strong>，屬於進階知識，不是散戶的主力策略。</li>
+    <li>用這些訊號去<strong>裸買／裸賣期權投機，對散戶風險極高</strong>：時間價值耗損、IV Crush、尾部風險都可能讓你快速虧損。</li>
+    <li>請先在「期權策略實戰」把 Protective Put、Covered Call 等保護核心持倉的用法練熟，並具備穩定的現貨波段紀律，再考慮這些進階題材。</li>
+  </ul>
+</div>
 
 <div class="card">
   <div class="card-header" onclick="toggleCard(this)">
@@ -1498,5 +1557,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script src="site.js"></script>
 </body>
 </html>

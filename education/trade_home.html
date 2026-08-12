@@ -38,6 +38,20 @@ header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
 .card:hover .arrow { color: var(--blue); right: 14px; }
 .section-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin: 28px 0 12px; padding-left: 4px; }
 .footer { text-align: center; margin-top: 36px; color: var(--text3); font-size: 11px; padding-top: 16px; border-top: 1px solid var(--border); }
+
+/* Getting-started / roadmap */
+.start-box { background: linear-gradient(135deg, var(--blue-l), #fff); border: 1px solid var(--blue); border-radius: 14px; padding: 22px 24px; margin-bottom: 12px; }
+.start-box h2 { font-size: 18px; margin-bottom: 4px; color: var(--text); }
+.start-box .lead { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.step { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; text-decoration: none; color: inherit; display: block; transition: all .15s; }
+.step:hover { border-color: var(--blue); transform: translateY(-2px); text-decoration: none; }
+.step .n { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.step h3 { font-size: 13px; font-weight: 700; margin: 2px 0 3px; color: var(--text); }
+.step p { font-size: 11px; color: var(--text3); line-height: 1.5; margin: 0; }
+.expect-note { font-size: 12px; color: var(--text2); background: var(--bg3); border-radius: 8px; padding: 12px 14px; margin-top: 14px; line-height: 1.7; }
+.expect-note strong { color: var(--text); }
+.opt-badge { font-size: 10px; font-weight: 700; color: var(--orange); background: var(--orange-l); padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
 @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -45,8 +59,43 @@ header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
 
 <header>
   <h1>交易技術分析學習中心</h1>
-  <p>18 個模組 · 430+ 互動測驗 · 從策略紀律到宏觀流動性、AI 泡沫的完整交易分析框架</p>
+  <p>給台灣上班族散戶：以<strong>美股 ETF／個股 + 黃金白銀</strong>為核心、走波段、把交易慢慢養成能養活自己的副業。<br>先學會活下來與紀律，再談獲利。學習不等於獲利，活得夠久才有複利。</p>
 </header>
+
+<div class="start-box">
+  <h2>🧭 新手從這裡開始 · 前 90 天路線圖</h2>
+  <p class="lead">別急著開真倉。照這個順序走，先把「不虧大錢」練成本能，再追求穩定獲利。</p>
+  <div class="steps">
+    <a class="step" href="tw_reality.html">
+      <span class="n">0</span>
+      <h3>搞懂現實 + 開模擬盤</h3>
+      <p>券商（複委託 vs IB）、稅務、PDT $25k、時區。先開模擬盤，別碰真錢。</p>
+    </a>
+    <a class="step" href="cognitive_traps.html">
+      <span class="n">1</span>
+      <h3>心理與風控地基</h3>
+      <p>認知陷阱 → 交易心理 → 資金管理。每筆風險固定 1–2%。</p>
+    </a>
+    <a class="step" href="us_equity_etf.html">
+      <span class="n">2</span>
+      <h3>兩大核心資產</h3>
+      <p>美股/ETF 長期持倉 + 貴金屬。先寬基波段，不追刺激。</p>
+    </a>
+    <a class="step" href="backtesting.html">
+      <span class="n">3</span>
+      <h3>模擬盤跑 30+ 筆</h3>
+      <p>用交易日誌記錄、復盤、算期望值。確認有正期望值再進場。</p>
+    </a>
+    <a class="step" href="trading_strategy.html">
+      <span class="n">4</span>
+      <h3>小額真倉起步</h3>
+      <p>用能承受全損的閒錢、最小部位。達穩定前不辭職、不加槓桿。</p>
+    </a>
+  </div>
+  <div class="expect-note">
+    <strong>務實期望：</strong>頂尖交易者長期月報酬約 5–10%，穩定者月 2–3%（複利年約 40%）就非常優秀。副業是<strong>多年複利</strong>的結果，不是快速致富；前一兩年很可能只是打平或小虧在繳學費。只用長期不動也不影響生活的閒錢，遇到連虧是常態而非異常。
+  </div>
+</div>
 
 <div class="section-label">策略與心理（最重要 — 先讀這裡）</div>
 <div class="grid">
@@ -108,6 +157,31 @@ header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
   <h2>回測與績效統計</h2>
   <p>Sharpe/Sortino → 期望值 → 交易日誌(localStorage) → Walk-Forward → Overfitting</p>
   <div class="tags"><span class="tag tag-green">互動日誌</span><span class="tag tag-orange">Monte Carlo</span><span class="tag tag-blue">16 題</span></div>
+  <span class="arrow">→</span>
+</a>
+</div>
+
+<div class="section-label">🎯 核心資產：美股與貴金屬（你的主戰場）</div>
+<div class="grid">
+<a class="card" href="us_equity_etf.html">
+  <span class="icon">🇺🇸</span>
+  <h2>美股與 ETF 核心持倉</h2>
+  <p>寬基 vs 類股 vs 個股 → SPY/QQQ 與類股輪動 → 核心-衛星配置 → 財報季 → 定期定額與長期複利</p>
+  <div class="tags"><span class="tag tag-blue">ETF</span><span class="tag tag-green">長期複利</span><span class="tag tag-purple">核心-衛星</span></div>
+  <span class="arrow">→</span>
+</a>
+<a class="card" href="precious_metals.html">
+  <span class="icon">🥇</span>
+  <h2>貴金屬交易（黃金／白銀／礦股）</h2>
+  <p>實質利率+DXY+避險三力量 → 央行購金/ETF流 → 金銀比 → 礦股 vs 金屬 → GLD/SLV/期貨載具 → 長期保值配置</p>
+  <div class="tags"><span class="tag tag-orange">黃金</span><span class="tag tag-purple">金銀比</span><span class="tag tag-green">保值配置</span></div>
+  <span class="arrow">→</span>
+</a>
+<a class="card" href="tw_reality.html">
+  <span class="icon">🧾</span>
+  <h2>台灣散戶實戰基建</h2>
+  <p>複委託 vs 海外券商(IB) → PDT $25k → 股息 30% 預扣/W-8BEN → 遺產稅 → 換匯成本 → 夏冬令時區</p>
+  <div class="tags"><span class="tag tag-red">開戶稅務</span><span class="tag tag-blue">時區</span><span class="tag tag-green">Step 0</span></div>
   <span class="arrow">→</span>
 </a>
 </div>
@@ -176,7 +250,7 @@ header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
 </a>
 </div>
 
-<div class="section-label">衍生品與鏈上</div>
+<div class="section-label">衍生品與鏈上<span class="opt-badge">加密選修 · 非核心</span></div>
 <div class="grid">
 <a class="card" href="futures_analytics.html">
   <span class="icon">📊</span>
@@ -195,9 +269,10 @@ header p { color: var(--text3); font-size: 14px; margin-top: 6px; }
 </div>
 
 <div class="footer">
-  18 modules · 430+ quiz questions · Zero dependencies<br>
+  21 modules · 500+ quiz questions · Zero dependencies · 僅供教育用途，非投資建議<br>
   <a href="https://hdchen-course.github.io/market-radar/education/" style="color:var(--text3);">GitHub Pages</a>
 </div>
 
+<script src="site.js"></script>
 </body>
 </html>

@@ -575,7 +575,7 @@ h1 {
   </div>
 
   <div class="card">
-    <div class="card-title">虧損原因分布</div>
+    <div class="card-title">虧損原因：常見程度排序（示意）</div>
     <div class="svg-container">
       <svg viewBox="0 0 500 320" width="100%" style="max-width:500px">
         <!-- Pie Chart -->
@@ -593,20 +593,20 @@ h1 {
           <!-- 剩餘部分回到起點 -->
           <path d="M-105.1,76.4 A130,130 0 0,1 0,-130 L0,0 Z" fill="#d97706" opacity="0.3"/>
         </g>
-        <!-- Labels -->
+        <!-- Labels：定性排序，非精確比例 -->
         <g font-family="Inter" font-size="13" font-weight="600">
           <rect x="320" y="30" width="14" height="14" rx="3" fill="#ea580c"/>
-          <text x="340" y="42" fill="#334155">過度交易 30%</text>
+          <text x="340" y="42" fill="#334155">1. 過度交易</text>
           <rect x="320" y="58" width="14" height="14" rx="3" fill="#dc2626"/>
-          <text x="340" y="70" fill="#334155">不停損 25%</text>
+          <text x="340" y="70" fill="#334155">2. 不停損</text>
           <rect x="320" y="86" width="14" height="14" rx="3" fill="#7c3aed"/>
-          <text x="340" y="98" fill="#334155">報復性交易 20%</text>
+          <text x="340" y="98" fill="#334155">3. 報復性交易</text>
           <rect x="320" y="114" width="14" height="14" rx="3" fill="#2563eb"/>
-          <text x="340" y="126" fill="#334155">倉位過大 15%</text>
+          <text x="340" y="126" fill="#334155">4. 倉位過大</text>
           <rect x="320" y="142" width="14" height="14" rx="3" fill="#16a34a"/>
-          <text x="340" y="154" fill="#334155">缺乏計劃 10%</text>
+          <text x="340" y="154" fill="#334155">5. 缺乏計劃</text>
         </g>
-        <text x="250" y="300" text-anchor="middle" font-family="Inter" font-size="12" fill="#64748b">* 基於多項散戶交易行為研究彙總</text>
+        <text x="250" y="300" text-anchor="middle" font-family="Inter" font-size="12" fill="#64748b">* 示意圖，依常見程度由高到低排序，非實證比例</text>
       </svg>
     </div>
     <div class="warning-box">
@@ -1163,17 +1163,80 @@ h1 {
     </div>
   </div>
 
+  <h2 class="section-title">為收入而交易的心理陷阱</h2>
+
+  <div class="card">
+    <div class="card-title">當你「需要用這筆錢」時，決策就已經被扭曲了<span class="card-title-en">Income Pressure</span></div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.8;margin:12px 0;">
+      這是副業交易者最致命、也最少被討論的風險。當這筆錢背負著「這個月的房貸」「小孩的補習費」「證明給家人看」的期待時，你的每一個決策都會被<strong>收入壓力（income pressure）</strong>悄悄扭曲。市場不知道你這個月需要多少錢，也不會配合你的財務時間表。
+    </div>
+    <div class="warning-box">
+      <strong>收入壓力如何扭曲你：</strong><br>
+      1. <strong>過度交易</strong>：這個月還沒達標 → 硬找機會下單，把「需要賺錢」誤當成「有交易信號」。<br>
+      2. <strong>不停損</strong>：這筆虧了這個月就開天窗 → 抗拒確認虧損，把止損越移越遠。<br>
+      3. <strong>報復性加碼</strong>：時間快到了、還差一大截 → 加大倉位想「一次補回來」，反而加速爆倉。
+    </div>
+    <div class="success-box">
+      <strong>具體防禦（副業交易者必守）：</strong><br>
+      1. <strong>只用閒錢原則</strong>：投入的每一塊錢，都是「就算全部歸零也不影響生活」的錢。<br>
+      2. <strong>帳戶完全隔離</strong>：交易帳戶與生活費、緊急預備金（至少 6 個月開銷）分屬不同帳戶，資金不互相流動。生活開銷永遠不從交易帳戶提領。<br>
+      3. <strong>只設過程目標，不設金額目標</strong>：把目標訂成「這週我有沒有 100% 遵守 SOP」而非「這個月要賺 X 元」。金額你控制不了，遵守紀律你可以。<br>
+      4. <strong>當月若需要動用這筆錢 → 部位減半或停手</strong>：一旦這筆錢從「閒錢」變成「等著要用的錢」，代表壓力已經進場，先把部位減半，壓力大就整個停手。
+    </div>
+    <div class="purple-box">
+      <strong>自我檢查：</strong>「如果這筆交易虧到最大止損，會不會影響我這個月的生活或家庭關係？」— 只要答案不是斬釘截鐵的「不會」，你的倉位就太大，或這筆錢根本不該進場。
+    </div>
+  </div>
+
+  <h2 class="section-title">時區與睡眠：台灣散戶的隱形殺手</h2>
+
+  <div class="card">
+    <div class="card-title">熬夜盯美股 → 睡眠剝奪 → 自控力生理性崩潰<span class="card-title-en">Sleep Deprivation</span></div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.8;margin:12px 0;">
+      美股台灣時間深夜開盤，白天要上班的你若熬夜盯盤，等於長期處在睡眠剝奪狀態。這不是「意志力」問題——睡眠不足會<strong>生理性地削弱前額葉皮質</strong>（負責理性與衝動控制），同時放大杏仁核的情緒反應。結果是：本頁講的每一種認知偏誤與虧損模式，在你睡不夠時全部被放大。你不是變笨了，是大腦的煞車系統暫時失靈了。
+    </div>
+    <div class="highlight-box">
+      台灣時區與交易節奏的細節（開盤時間、盤前盤後、值不值得熬夜），請見 <a href="tw_reality.html">台灣散戶的現實條件</a> 一頁。核心結論：<strong>用制度取代熬夜，而不是靠意志力硬撐</strong>。
+    </div>
+    <table class="ifthen-table">
+      <thead>
+        <tr><th width="45%">IF（觸發條件）</th><th width="55%">THEN（預設行動）</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="ifthen-if">IF</span> 昨晚睡不足 6 小時</td>
+          <td><span class="ifthen-then">THEN</span> 今天不開新倉，只管理既有部位</td>
+        </tr>
+        <tr>
+          <td><span class="ifthen-if">IF</span> 到了預設的硬性收盤時間</td>
+          <td><span class="ifthen-then">THEN</span> 無論賺賠都關螢幕睡覺，不追「最後一筆」</td>
+        </tr>
+        <tr>
+          <td><span class="ifthen-if">IF</span> 想守著看盤等某個價位</td>
+          <td><span class="ifthen-then">THEN</span> 改掛限價單／GTC 條件單，讓系統替你等，你去睡</td>
+        </tr>
+        <tr>
+          <td><span class="ifthen-if">IF</span> 已經很睏但捨不得離開</td>
+          <td><span class="ifthen-then">THEN</span> 這正是判斷力最差的時刻，立刻停手</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warning-box">
+      <strong>核心原則：</strong>睡眠是你最便宜的風險管理工具。用<strong>硬性收盤時間</strong>＋<strong>限價／GTC 掛單</strong>取代熬夜盯盤——好的交易系統應該讓你能安心睡覺，而不是把健康拿去換那幾個基點。
+    </div>
+  </div>
+
   <h2 class="section-title">設定合理期望</h2>
 
   <div class="card">
     <div class="stat-grid">
       <div class="stat-item" style="border-left:3px solid var(--green);">
         <div class="stat-number" style="color:var(--green);font-size:22px;">月 5-10%</div>
-        <div class="stat-label">頂尖交易者水準</div>
+        <div class="stat-label">頂尖交易者長期水準</div>
       </div>
       <div class="stat-item" style="border-left:3px solid var(--blue);">
         <div class="stat-number" style="color:var(--blue);font-size:22px;">月 2-3%</div>
-        <div class="stat-label">穩定獲利者</div>
+        <div class="stat-label">穩定者（複利年約 40%）</div>
       </div>
       <div class="stat-item" style="border-left:3px solid var(--orange);">
         <div class="stat-number" style="color:var(--orange);font-size:22px;">月翻倍</div>
@@ -1185,7 +1248,10 @@ h1 {
       </div>
     </div>
     <div class="highlight-box">
-      <strong>複利的力量：</strong>月穩定 3% = 年 42.6%。這已經打敗 99% 的基金經理了。不需要月翻倍，穩定複利才是真正的聖杯。急躁是散戶的墳墓。
+      <strong>務實期望：</strong>頂尖交易者長期月報酬約 <strong>5-10%</strong>，能穩定的人做到月 <strong>2-3%</strong>（複利年約 40%）就已經非常優秀，打敗絕大多數基金經理。副業交易靠的是<strong>多年複利，不是快速致富</strong>；用週／月的節奏衡量自己，而不是盯著每日盈虧。急躁是散戶的墳墓。
+    </div>
+    <div class="success-box">
+      <strong>沒有交易的日子，也可以是成功的一天。</strong>沒有 A+ 設定就不進場、守住本金、按時睡覺——這些都是勝利。你的績效用月來結算，不是用「今天有沒有賺到」來評分。
     </div>
   </div>
 </div>
@@ -1278,11 +1344,12 @@ h1 {
   <div class="card">
     <div class="card-title">不追求暴利，追求穩定小贏</div>
     <div class="formula-box">
-      每天 +0.5% × 20 交易日 = 月 +10.5%（複利）<br>
-      <span style="font-size:12px;color:var(--text3);">但前提是：控制 drawdown，永不爆倉</span>
+      穩定月 +2~3% × 長期複利 = 年約 +40%<br>
+      <span style="font-size:12px;color:var(--text3);">用週／月節奏衡量，不盯每日盈虧；前提是控制 drawdown、永不爆倉</span>
     </div>
     <div style="font-size:14px;color:var(--text2);line-height:1.8;margin:12px 0;">
-      最大的敵人不是虧損，是<strong>「不一致」</strong>。一天嚴守紀律賺 1%，下一天衝動交易虧 3%。結果一個月下來不但沒賺還虧了。<br><br>
+      別替自己訂「每日 +X%」的日報酬目標——那會逼你在沒機會的日子硬做。用<strong>週／月的節奏</strong>來看成績：<strong>沒有交易的日子也可以是成功的一天</strong>。<br><br>
+      最大的敵人不是虧損，是<strong>「不一致」</strong>。一週嚴守紀律賺 2%，下一週衝動交易虧 3%，結果一個月下來不但沒賺還虧了。<br><br>
       一致性意味著：
     </div>
     <ul class="rule-list">
@@ -2290,5 +2357,6 @@ function submitQuiz() {
 generateQuiz();
 </script>
 
+<script src="site.js"></script>
 </body>
 </html>

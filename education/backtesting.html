@@ -608,7 +608,16 @@ button.calc-btn:hover { opacity: 0.85; }
       <label>報酬率 Std (%)</label>
       <input type="number" id="calc-std" value="15" min="0.1" step="0.5">
     </div>
+    <div class="calc-group">
+      <label>無風險利率 (%)</label>
+      <input type="number" id="calc-rf" value="4" min="0" step="0.1">
+    </div>
+    <div class="calc-group">
+      <label>下行 Std (%，可留空)</label>
+      <input type="number" id="calc-downstd" placeholder="實際下行離差" min="0.1" step="0.5">
+    </div>
   </div>
+  <p style="font-size:12px; color:var(--text3); margin:4px 0 0;">無風險利率為<strong>可調假設值</strong>（預設 4%）。「下行 Std」若留空，Sortino 只能用粗略近似估計；填入你實際計算的下行離差（只納入低於門檻的報酬）才會精確。</p>
   <button class="calc-btn" onclick="calculateMetrics()">計算</button>
   <div class="calc-result" id="calc-output">
     點擊「計算」查看結果...
@@ -935,11 +944,23 @@ if ta.crossunder(fast, slow)
     </tbody>
   </table>
 </div>
+
+<h2>台灣散戶的落地現實</h2>
+<div class="card card-orange">
+  <p>上面的成本假設（單程 0.05-0.2%）對台灣散戶用<strong>複委託</strong>買美股常常太樂觀。回測若不計入真實成本，正期望值可能是假象：</p>
+  <ul>
+    <li><strong>複委託手續費：</strong>多數券商每筆有最低收費（常見 US$15-40 或按比例），小額波段會被手續費吃掉一大塊 edge。</li>
+    <li><strong>買賣價差（spread）：</strong>非熱門標的、盤前盤後或黃金白銀 ETF 的價差可能明顯，回測用中間價會高估成交品質。</li>
+    <li><strong>稅：</strong>美股股利預扣 30%、國內最低稅負制對海外所得的門檻，都會影響實際到手報酬。</li>
+    <li><strong>PDT 規則：</strong>若改用美國券商且帳戶未達 US$25,000，五個交易日內當沖超過 3 次會被限制，波段策略要留意這條。</li>
+  </ul>
+  <p>把這些成本誠實地灌進回測，再看期望值信賴區間是否還站得住。詳細的台灣散戶成本與稅務整理見 <a href="tw_reality.html">台灣散戶落地現實</a>。</p>
+</div>
 </div>
 
 <!-- ==================== Tab 5: 從回測到實盤 ==================== -->
 <div class="tab-panel" id="panel-live">
-<h2>Paper Trading 階段（至少 30 筆）</h2>
+<h2>Paper Trading 階段（依策略頻率決定筆數）</h2>
 <div class="card card-blue">
   <p>回測通過後，進入模擬交易。用即時市場數據，假裝真的在交易（但不下單）。</p>
   <h3>Paper Trading 的目的</h3>
@@ -947,8 +968,9 @@ if ta.crossunder(fast, slow)
     <li>驗證策略在「當前」市場也能運作（不只是歷史數據）</li>
     <li>熟悉執行流程：觀察 → 判斷 → 進場 → 管理 → 出場</li>
     <li>發現回測沒考慮到的問題（盤中波動、假信號等）</li>
-    <li><strong>最低標準：</strong>至少 30 筆交易，期望值為正才能進入下一階段</li>
+    <li><strong>樣本門檻要分層：</strong>不要迷信「30 筆就夠」。低頻波段策略常要累積<strong>數十到數百筆</strong>才有統計意義；高頻策略則筆數多、但每筆 edge 小。真正的通過標準不是「湊到 N 筆」，而是<strong>期望值的信賴區間下界仍為正</strong>。</li>
   </ul>
+  <p style="font-size:13px; color:var(--text3);">為什麼不能只看 30 筆？交易報酬通常厚尾、偏態且有自相關，中央極限定理的「n≥30」經驗值在這種分布下並不成立。用 <strong>bootstrap 重抽樣</strong>（把已實現交易重抽數千次）估計期望值與最大回撤的 95% 信賴區間，比死守某個筆數可靠得多。</p>
 </div>
 
 <h2>Paper Trading 常見錯誤</h2>
@@ -973,9 +995,9 @@ if ta.crossunder(fast, slow)
   </ul>
   <h3>小資金階段的評估標準</h3>
   <div class="formula">
-合格標準（至少 30 筆）：
-- 期望值為正
-- 最大回撤在 Monte Carlo 95% CI 以內
+合格標準（筆數依策略頻率而定，低頻波段策略需數十筆以上）：
+- 期望值為正，且 bootstrap 後期望值的 95% 信賴區間下界仍 > 0
+- 最大回撤與連虧在 Monte Carlo 95% CI 以內
 - 規則遵守率 > 80%
 - 情緒管理評分穩定
   </div>
@@ -996,13 +1018,13 @@ if ta.crossunder(fast, slow)
 
       <rect x="155" y="100" width="90" height="60" fill="#dbeafe" stroke="#2563eb" rx="6"/>
       <text x="200" y="125" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">1/5 倉位</text>
-      <text x="200" y="145" text-anchor="middle" font-size="8" fill="#64748b">連續 2 週正 EV</text>
+      <text x="200" y="145" text-anchor="middle" font-size="8" fill="#64748b">足夠筆數+CI下界正</text>
 
       <text x="260" y="130" font-size="14" fill="#64748b">→</text>
 
       <rect x="280" y="80" width="90" height="80" fill="#dcfce7" stroke="#16a34a" rx="6"/>
       <text x="325" y="115" text-anchor="middle" font-size="9" font-weight="600" fill="#16a34a">1/2 倉位</text>
-      <text x="325" y="135" text-anchor="middle" font-size="8" fill="#64748b">再 2 週正 EV</text>
+      <text x="325" y="135" text-anchor="middle" font-size="8" fill="#64748b">回撤仍在 95% CI 內</text>
 
       <text x="385" y="120" font-size="14" fill="#64748b">→</text>
 
@@ -1018,9 +1040,10 @@ if ta.crossunder(fast, slow)
     </svg>
   </div>
   <ul>
-    <li>連續 2 週正期望值 → 倉位加倍</li>
-    <li>如果在某級別出現超出預期的虧損 → 降回上一級</li>
-    <li>永遠不要在虧損時加大倉位（那是賭徒的行為）</li>
+    <li><strong>放大條件（不是看「連續幾週賺」）：</strong>該級別已累積<strong>足夠的已實現交易筆數</strong>（低頻波段策略至少數十筆），且用這些交易做 bootstrap / 蒙地卡羅後，<strong>期望值的 95% 信賴區間下界仍為正</strong>、實際回撤與連虧仍落在 95% CI 以內，才升一級。</li>
+    <li>「連續 2 週正 EV」是雜訊陷阱——兩週在低頻策略下可能只有 2-3 筆交易，完全不足以判斷，容易把運氣當成 edge。</li>
+    <li>如果在某級別出現超出 95% CI 的虧損或連虧 → 降回上一級並重新評估。</li>
+    <li>永遠不要在虧損時加大倉位（那是賭徒的行為）。</li>
   </ul>
 </div>
 
@@ -1181,14 +1204,14 @@ if ta.crossunder(fast, slow)
 </div>
 
 <div class="quiz-question" data-correct="2">
-  <h4>Q9. Paper Trading 通過的最低標準是什麼？</h4>
+  <h4>Q9. 關於評估策略所需的交易筆數，下列哪個說法最正確？</h4>
   <div class="quiz-options">
-    <div class="quiz-option" data-idx="0">A. 連續 5 筆獲利</div>
-    <div class="quiz-option" data-idx="1">B. 勝率超過 70%</div>
-    <div class="quiz-option" data-idx="2">C. 至少 30 筆交易且期望值為正</div>
-    <div class="quiz-option" data-idx="3">D. 一週沒有虧損</div>
+    <div class="quiz-option" data-idx="0">A. 只要 30 筆就足夠，因為中央極限定理保證樣本平均接近常態</div>
+    <div class="quiz-option" data-idx="1">B. 連續 5 筆獲利就能證明策略有效</div>
+    <div class="quiz-option" data-idx="2">C. 門檻要看策略頻率與報酬分布——低頻波段策略常需數十到數百筆，並用信賴區間 / bootstrap 評估不確定性</div>
+    <div class="quiz-option" data-idx="3">D. 交易筆數不重要，只要期望值為正即可</div>
   </div>
-  <div class="quiz-explanation">統計上需要至少 30 筆交易才有最基本的樣本量（中央極限定理）。期望值為正代表長期下來策略能盈利。少於 30 筆可能只是運氣。</div>
+  <div class="quiz-explanation">「30 筆就夠」是常見謬誤。中央極限定理談的是<strong>樣本平均的分布</strong>，n=30 只是教科書的粗略經驗值，且前提是報酬近似獨立、變異數有限；交易報酬往往厚尾、偏態又自相關，30 筆遠遠不夠。正確做法是<strong>依策略頻率分層</strong>：低頻波段策略單一標的一年可能才數十筆，要累積數十到數百筆才有統計意義；並用<strong>期望值的信賴區間或 bootstrap 重抽樣</strong>來量化不確定性——重點不是「湊到某個筆數」，而是「期望值的信賴區間下界是否仍為正」。</div>
 </div>
 
 <div class="quiz-question" data-correct="1">
@@ -1287,8 +1310,8 @@ if ta.crossunder(fast, slow)
     <li>保留 30% 數據作為 out-of-sample</li>
     <li>執行回測，記錄所有指標（勝率、期望值、Sharpe、Max DD）</li>
     <li>進行 Walk-Forward 驗證</li>
-    <li>執行 Monte Carlo 模擬，確定 95% CI</li>
-    <li>Paper Trading 至少 30 筆</li>
+    <li>執行 Monte Carlo / bootstrap 模擬，確定期望值與回撤的 95% CI</li>
+    <li>Paper Trading 累積足夠筆數（低頻波段策略需數十筆以上，看 CI 下界而非固定筆數）</li>
     <li>小倉位實盤測試</li>
     <li>漸進放大至正常倉位</li>
     <li>持續記錄交易日誌，定期回顧</li>
@@ -1321,15 +1344,20 @@ function calculateMetrics() {
   const trades = parseInt(document.getElementById('calc-trades').value);
   const annual = parseFloat(document.getElementById('calc-annual').value);
   const std = parseFloat(document.getElementById('calc-std').value);
+  const rfInput = parseFloat(document.getElementById('calc-rf').value);
+  const rf = isNaN(rfInput) ? 4 : rfInput; // 無風險利率：可調假設值，預設 4%
+  const downInput = parseFloat(document.getElementById('calc-downstd').value);
 
   const expectancy = (wr * avgWin) - ((1 - wr) * avgLoss);
   const profitFactor = (wr * avgWin) / ((1 - wr) * avgLoss);
-  const sharpe = (annual - 4) / std; // Assuming 4% risk-free rate
+  const sharpe = (annual - rf) / std;
   const totalProfit = expectancy * trades;
 
-  // Sortino approximation (assuming downside std is ~70% of total std for losing trades)
-  const downsideStd = std * 0.7;
-  const sortino = (annual - 4) / downsideStd;
+  // Sortino：正確做法是只用「低於門檻的報酬」計算下行離差。
+  // 若使用者填入實際下行 Std 就精確計算；否則退回粗略近似並明確標示。
+  const sortinoIsExact = !isNaN(downInput) && downInput > 0;
+  const downsideStd = sortinoIsExact ? downInput : std * 0.7; // 0.7 僅為缺乏實際資料時的粗略佔位
+  const sortino = (annual - rf) / downsideStd;
 
   const output = document.getElementById('calc-output');
   const cls = expectancy >= 0 ? 'positive' : 'negative';
@@ -1339,13 +1367,15 @@ function calculateMetrics() {
       <div><strong>期望值：</strong><span class="${cls}">$${expectancy.toFixed(2)} / 筆</span></div>
       <div><strong>Profit Factor：</strong><span class="${profitFactor >= 1 ? 'positive' : 'negative'}">${profitFactor.toFixed(2)}</span></div>
       <div><strong>Sharpe Ratio：</strong><span class="${sharpe >= 1 ? 'positive' : 'negative'}">${sharpe.toFixed(2)}</span></div>
-      <div><strong>Sortino Ratio：</strong><span class="${sortino >= 1 ? 'positive' : 'negative'}">${sortino.toFixed(2)}</span></div>
+      <div><strong>Sortino Ratio：</strong><span class="${sortino >= 1 ? 'positive' : 'negative'}">${sortino.toFixed(2)}</span>${sortinoIsExact ? '' : ' <span style="color:var(--text3); font-size:11px;">(粗略近似)</span>'}</div>
       <div><strong>${trades} 筆總利潤：</strong><span class="${cls}">$${totalProfit.toFixed(0)}</span></div>
       <div><strong>盈虧比：</strong>${(avgWin / avgLoss).toFixed(2)} : 1</div>
     </div>
     <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:12px; color:var(--text3);">
-      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數）' : '✗ 負期望值系統 — 長期必定虧損，需要調整策略'}
+      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數，且期望值的信賴區間下界仍為正）' : '✗ 負期望值系統 — 長期必定虧損，需要調整策略'}
       ${sharpe >= 2 ? ' | Sharpe 很好' : sharpe >= 1 ? ' | Sharpe 可接受' : ' | Sharpe 偏低，風險調整報酬需改善'}
+      ${sortinoIsExact ? '' : '<br>⚠ Sortino 為粗略近似（用總 Std 的 0.7 倍佔位）。請在「下行 Std」欄填入實際下行離差以精確計算。'}
+      <br>無風險利率採用 ${rf}%（可調假設值）。
     </div>
   `;
 }
@@ -1573,5 +1603,6 @@ function resetQuiz() {
   document.getElementById('quiz-reset-btn').style.display = 'none';
 }
 </script>
+<script src="site.js"></script>
 </body>
 </html>

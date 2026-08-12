@@ -277,9 +277,17 @@ code {
   <button class="tab-btn" onclick="switchTab(2)">USD/JPY 與日圓</button>
   <button class="tab-btn" onclick="switchTab(3)">台幣/亞洲貨幣</button>
   <button class="tab-btn" onclick="switchTab(4)">EUR, GBP, 商品貨幣</button>
-  <button class="tab-btn" onclick="switchTab(5)">外匯交易策略</button>
+  <button class="tab-btn" onclick="switchTab(5)">外匯交易策略（進階選讀）</button>
   <button class="tab-btn" onclick="switchTab(6)">宏觀傳導總結</button>
   <button class="tab-btn" onclick="switchTab(7)">互動測驗</button>
+</div>
+
+<div class="card" style="border-left:4px solid #2563eb;margin-bottom:20px;">
+<h3 style="color:#2563eb;">🧭 這個模組對散戶的定位（先讀這段）</h3>
+<p>本站的核心是<strong>用美股 + 黃金白銀走波段、資本保全優先、長期穩定獲利當副業</strong>。因此對上班族散戶來說，這個外匯模組的主要用途<strong>不是去做槓桿外匯交易</strong>，而是把 <strong>DXY（美元指數）、USD/JPY（日圓/Carry Trade）、各國利差</strong>當成一組<strong>宏觀儀表板</strong>，用來判讀<strong>美股與黃金白銀的方向與風險環境</strong>。</p>
+<div class="highlight-box">
+<strong>正確用法：</strong>看 DXY 判斷全球流動性是擴張還是收縮、看 USD/JPY 速度判斷 risk-on / risk-off、看利差判斷資金流向 → 再決定你手上的<strong>美股與貴金屬部位</strong>要進攻還是防禦。你<strong>不需要真的下單交易任何貨幣對</strong>，就能拿到這個模組 90% 的價值。
+</div>
 </div>
 
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
@@ -593,6 +601,9 @@ code {
 </table>
 <div class="green-box">
 <strong>交易含義：</strong>如果你主要做多 BTC 或 EM 股，DXY 趨勢判斷比個股分析更重要。DXY 下降趨勢中做多 → 順風；DXY 上升趨勢中做多 → 逆風。Beta 勝過 Alpha。
+</div>
+<div class="orange-box">
+<strong>黃金不是只有 DXY 一個驅動力：</strong>上表把黃金放在「DXY 反向」的欄位是方便對照，但別把黃金當成 DXY 的單純下游。黃金<strong>最核心的驅動力是實質利率（名目利率 − 通膨預期）</strong>：實質利率下降 → 持有無息黃金的機會成本降低 → 金價上漲，反之亦然。DXY 常常只是實質利率變化的「同向副產品」。因此有時 DXY 走強、金價卻不跌（例如避險或央行購金主導時），根源都要回到實質利率。想完整了解黃金與白銀的驅動框架，請參考 <a href="precious_metals.html">貴金屬分析模組</a>。
 </div>
 </div>
 
@@ -1064,7 +1075,11 @@ code {
 
 <!-- ==================== TAB 5: 外匯交易策略 ==================== -->
 <div class="tab-content" id="tab5">
-<h2 class="section-title">外匯交易策略 (FX Trading)</h2>
+<h2 class="section-title">外匯交易策略 (FX Trading) — 進階選讀</h2>
+
+<div class="warning-box">
+<strong>⚠️ 進階選讀，非本站核心：</strong>這一分頁介紹的是<strong>直接、且往往帶槓桿的外匯交易</strong>操作。對絕大多數上班族散戶，<strong>槓桿外匯交易風險極高</strong>——它是零和遊戲、24 小時波動、且槓桿會把小幅逆行放大成爆倉，並不符合本站「資本保全優先、走美股+黃金白銀波段、長期穩定獲利」的核心路線。<strong>你完全不需要親自交易任何貨幣對。</strong>本分頁請當成「了解機構怎麼想」的背景知識來讀；真正要拿來用的，是把這些外匯訊號拿去<strong>判讀你的美股與貴金屬部位</strong>（見下方第 3、7 節）。若你沒有明確理由要做槓桿外匯，請直接跳過買賣操作的部分。
+</div>
 
 <div class="card">
 <h3>1. Carry Trade 策略</h3>
@@ -1164,7 +1179,7 @@ code {
 <h3>6. 外匯交易的風險管理</h3>
 <h4>位置大小（Position Sizing）</h4>
 <ul>
-<li>外匯波動看起來小（日均 0.5-1%），但通常使用槓桿（10x-100x）</li>
+<li>外匯波動看起來小（日均 0.5-1%），但槓桿會把這個波動等比放大 — 這正是散戶做槓桿外匯最容易受傷的地方</li>
 <li>規則：單筆交易風險 不超過帳戶的 1-2%</li>
 <li>止損設定在技術位之外（如 ATR 的 1.5-2 倍）</li>
 </ul>
@@ -1206,7 +1221,7 @@ code {
 <tr><td>追逐 EM 高息貨幣</td><td>TRY -90% 但利率 40%+ 也補不回</td><td>只做 G10 Carry 或限制 EM 比例 < 20%</td></tr>
 <tr><td>不考慮時段</td><td>亞洲盤做 EUR/USD = 假突破機率高</td><td>在貨幣最活躍的時段交易該貨幣</td></tr>
 <tr><td>忽視 DXY 大方向</td><td>DXY 趨勢性上升時做多 EUR = 逆風</td><td>先判斷 DXY 大方向，再決定做哪個對</td></tr>
-<tr><td>過度槓桿</td><td>1:100 槓桿，1% 波動 = 爆倉</td><td>有效槓桿保持在 5-10 倍以下</td></tr>
+<tr><td>過度槓桿</td><td>槓桿越高，越小的逆向波動就足以爆倉</td><td>散戶應盡量避免槓桿外匯；若真要做，槓桿越低越好、寧可不用</td></tr>
 </table>
 <div class="warning-box">
 <strong>最大的錯誤：</strong>把外匯當股票做。股票有「長期上漲」的偏差（企業盈利增長）；外匯沒有——它是零和遊戲。一個貨幣漲，另一個就跌。在外匯中，方向判斷錯誤 + 負 carry + 槓桿 = 快速虧光。紀律和風控比在股票市場更重要 10 倍。
@@ -1807,5 +1822,6 @@ function switchTab(idx) {
   window.scrollTo(0, 0);
 }
 </script>
+<script src="site.js"></script>
 </body>
 </html>
