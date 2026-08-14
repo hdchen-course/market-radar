@@ -63,7 +63,9 @@ def lens_positioning(asset):
             "data": {"short_pct26": p26, "short_pct52": cot["short_pct52"],
                      "short_pct260": p260, "short_range26": cot["short_range26"], "date": cot["date"]},
             "flags": flags,
-            "caveat": "COT 落後約10天,只讀週級結構,不得宣稱抓即時軋空頂底"}
+            "caveat": "COT 落後約10天,只讀週級結構,不得宣稱抓即時軋空頂底。"
+                      "※商品籌碼只看 COMEX COT / LBMA(租賃利率·EFP·現貨溢價),"
+                      "幣安永續 funding/OI 只是價格影子、影響不了白銀本體,不可拿來推論商品多空(那套只適用 BTC/ETH)"}
 
 
 def lens_technical(asset):
