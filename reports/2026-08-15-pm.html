@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-08-15 週六夜報</title>
+<style>:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}.container{max-width:1440px;margin:0 auto}header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}header .sub{color:var(--muted);font-size:.85rem}.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:.8rem;margin-top:10px}.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}.card h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:500;font-size:.74rem}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:600}.t-bull{background:rgba(63,185,80,.15);color:var(--green)}.t-bear{background:rgba(248,81,73,.15);color:var(--red)}.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}.mr:last-child{border-bottom:none}.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}.pi .pr{font-size:.95rem;font-weight:700}.pi .ch{font-size:.75rem;margin-top:1px}.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}.risk-bar .f{height:100%;border-radius:3px}.rh .f{background:var(--red);width:90%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}.rmh .f{background:var(--orange);width:75%}.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}.tl-i{position:relative;margin-bottom:13px}.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}.tl-e{font-size:.8rem;margin-top:2px}.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}.tool-box{background:rgba(163,113,247,.06);border:1px dashed rgba(163,113,247,.4);border-radius:8px;padding:12px;margin:10px 0}.tool-box h4{color:var(--purple);font-size:.85rem;margin-bottom:6px}.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}.st-long{background:rgba(63,185,80,.18);color:var(--green)}.st-short{background:rgba(248,81,73,.18);color:var(--red)}.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}.alert{background:#0a1a0a;border:1px solid #238636;border-radius:6px;padding:12px;margin:8px 0}.alert-warn{background:#1a1000;border:1px solid#db6d28;border-radius:6px;padding:12px;margin:8px 0}</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>終極宏觀流動性 &amp; AI Capex 量化籌碼雷達 V4.5</h1>
+  <p class="sub">2026-08-15（週六）21:10 台灣時間 · V4.5 · 週六夜報（低資訊確認）｜美股休市價格定格、白銀$65磨、待下週NVDA+Jackson Hole</p>
+  <div class="badge badge-warn">REGIME：週末低量價格定格 · 白銀$63.6~$65.8磨、2h ST空65.5/4h ST多64.0=短空中多拉鋸 · COT空頭續押(8/11) · 待下週開盤+NVDA+Jackson Hole</div>
+</header>
+
+<!-- ===== SECTION 0: 上期預測回顧 ===== -->
+<div class="card full">
+  <h2>0. 上期預測回顧（2026-08-15 週六報 am）</h2>
+  <div class="alert-warn">⚠️ 距上一份 am 報告僅約 8 小時、同為週六美股休市——價格幾乎沒動(白銀$64.9→$65.0、金$4,387持平),此為<strong>低資訊確認型更新</strong>,COT 仍是 8/11 那期(無新)。</div>
+  <table>
+    <tr><th>標的</th><th>am預估</th><th>am方向</th><th>現價</th><th>區間</th><th>方向</th></tr>
+    <tr><td>XAG 白銀</td><td>$64.37–$65.45</td><td>週末低量反彈,2h ST空壓制</td><td class="neu">$64.99 (-0.3%)</td><td>IN ✅</td><td>磨 ✅</td></tr>
+    <tr><td>XAU 黃金</td><td>$4,367–$4,407</td><td>中性偏多(週末反彈)</td><td class="neu">$4,387 (+0.1%)</td><td>IN ✅</td><td>持平 ✅</td></tr>
+    <tr><td>BTC</td><td>守$62.4K</td><td>中性偏弱</td><td class="pos">$63,019 (+0.6%)</td><td>守住</td><td>持平 ✅</td></tr>
+    <tr><td>ETH</td><td>守$1,806</td><td>中性</td><td class="pos">$1,882 (+0.6%)</td><td>守住</td><td>持平 ✅</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.82rem;color:var(--muted)"><strong>命中率：</strong>區間 4/4 IN、方向對——週末低量、價格黏著如預期。<strong>教訓：①白銀維持 $63.6~$65.8 磨,2h ST(300,3)空(壓力65.5)/4h ST多(64.0)=短空中多拉鋸未解,週末低量沒給新方向;②COT 仍 8/11(空單反增15,629)那期,下期要下週五才更新;③週末合成盤失真依舊(AMD+5.7%/AVGO-6%反向跳),不採信。真方向等下週一開盤+NVDA財報+Jackson Hole。</strong></p>
+</div>
+
+<!-- ===== SECTION 1: 報價面板 ===== -->
+<div class="card full">
+  <h2>1. 即時報價面板（加密/貴金屬即時；美股週五收盤/週末合成盤）</h2>
+  <div class="price-grid">
+    <div class="pi"><div class="tk">BTC</div><div class="pr">$63,019</div><div class="ch pos">+0.61%</div></div>
+    <div class="pi"><div class="tk">ETH</div><div class="pr">$1,882</div><div class="ch pos">+0.62%</div></div>
+    <div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,387</div><div class="ch neu">+0.06%</div></div>
+    <div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$64.99</div><div class="ch neg">-0.31%</div></div>
+    <div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.777</div><div class="ch pos">+1.30%</div></div>
+    <div class="pi"><div class="tk">XPD 鈀</div><div class="pr">$1,324</div><div class="ch neu">-0.06%</div></div>
+    <div class="pi"><div class="tk">XPT 鉑</div><div class="pr">$1,747</div><div class="ch pos">+0.36%</div></div>
+    <div class="pi"><div class="tk">INTC</div><div class="pr">$102.92</div><div class="ch neg">-2.55%*</div></div>
+    <div class="pi"><div class="tk">NVDA</div><div class="pr">$225.21</div><div class="ch neg">-0.43%*</div></div>
+    <div class="pi"><div class="tk">TSM</div><div class="pr">$425.32</div><div class="ch neg">-1.33%*</div></div>
+    <div class="pi"><div class="tk">MU</div><div class="pr">$975.27</div><div class="ch neg">-0.98%*</div></div>
+    <div class="pi"><div class="tk">AMD</div><div class="pr">$515.34</div><div class="ch pos">+5.73%*</div></div>
+    <div class="pi"><div class="tk">AVGO</div><div class="pr">$394.25</div><div class="ch neg">-6.02%*</div></div>
+    <div class="pi"><div class="tk">QCOM</div><div class="pr">$165.14</div><div class="ch neg">-0.78%*</div></div>
+    <div class="pi"><div class="tk">MSFT</div><div class="pr">$496.60</div><div class="ch neu">-0.15%*</div></div>
+    <div class="pi"><div class="tk">GOOGL</div><div class="pr">$347.43</div><div class="ch pos">+0.18%*</div></div>
+    <div class="pi"><div class="tk">META</div><div class="pr">$591.44</div><div class="ch neg">-0.78%*</div></div>
+    <div class="pi"><div class="tk">AMZN</div><div class="pr">$263.96</div><div class="ch neg">-0.54%*</div></div>
+    <div class="pi"><div class="tk">TSLA</div><div class="pr">$342.33</div><div class="ch neg">-0.88%*</div></div>
+    <div class="pi"><div class="tk">PLTR</div><div class="pr">$174.59</div><div class="ch neg">-2.12%*</div></div>
+    <div class="pi"><div class="tk">MSTR</div><div class="pr">$93.61</div><div class="ch neg">-1.75%*</div></div>
+    <div class="pi"><div class="tk">EWY 南韓</div><div class="pr">$179.78</div><div class="ch neg">-1.49%*</div></div>
+    <div class="pi"><div class="tk">SPY</div><div class="pr">$777.58</div><div class="ch neg">-0.27%*</div></div>
+    <div class="pi"><div class="tk">SPCX</div><div class="pr">$139.73</div><div class="ch neg">-2.77%*</div></div>
+  </div>
+  <p style="margin-top:6px;font-size:.72rem;color:var(--muted)">* = 美股週五收盤/週末合成盤。<strong>AMD+5.7%/AVGO-6% 反向大跳=週末合成盤失真,不採信、不編理由(與 am 報告同,週末凍結)。</strong>加密週末小反彈、貴金屬持平、銅+1.3%。</p>
+  <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+    <strong style="font-size:.82rem;color:var(--muted)">宏觀指標(週五收盤,週末凍結):</strong>
+    <div class="price-grid" style="margin-top:6px">
+      <div class="pi"><div class="tk">DXY 美元</div><div class="pr">99.64</div><div class="ch neu">持平偏弱</div></div>
+      <div class="pi"><div class="tk">VIX</div><div class="pr">14.25</div><div class="ch pos">鈍化&lt;15</div></div>
+      <div class="pi"><div class="tk">US 10Y</div><div class="pr">4.70%</div><div class="ch neu">持平</div></div>
+      <div class="pi"><div class="tk">US 30Y</div><div class="pr">5.27%</div><div class="ch neu">持平</div></div>
+      <div class="pi"><div class="tk">TAIEX 台股</div><div class="pr">45,811</div><div class="ch pos">高檔(記憶體)</div></div>
+      <div class="pi"><div class="tk">USD/JPY</div><div class="pr">159.31</div><div class="ch warn">159上(carry留意)</div></div>
+      <div class="pi"><div class="tk">加密 F&amp;G</div><div class="pr">34</div><div class="ch neg">恐懼</div></div>
+      <div class="pi"><div class="tk">金銀比 GSR</div><div class="pr">67.50</div><div class="ch neu">67區</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: Regime ===== -->
+<div class="card full">
+  <h2>2. 市場主導 Regime</h2>
+  <div class="mr"><span class="mr-l">核心變數</span><span class="mr-v">週末低量、價格定格;白銀短空中多拉鋸(2h ST空/4h ST多);COT(8/11)空頭續押15,629口;待下週開盤定調</span></div>
+  <div class="mr"><span class="mr-l">短期（下週）</span><span class="mr-v">NVDA財報+Jackson Hole為關鍵變數;白銀看破$63.6 or 站上65.5;通膨落地risk-on未變</span></div>
+  <div class="mr"><span class="mr-l">中期（1-3月）</span><span class="mr-v">9月升息壓力緩、殖利率4.7持平;記憶體超級循環續行;Jackson Hole Warsh政策訊號</span></div>
+  <div class="mr"><span class="mr-l">長期</span><span class="mr-v">央行購金撐金;白銀6年結構赤字;HBM/AI記憶體超級循環;AI Capex boom</span></div>
+  <div class="mr"><span class="mr-l">Regime 判定</span><span class="mr-v" style="color:var(--orange)">週末低量待下週定調 · 白銀短空中多拉鋸 · 通膨落地risk-on · 加密獨弱</span></div>
+</div>
+
+<!-- ===== SECTION 3: 共識 vs Reality ===== -->
+<div class="card full">
+  <h2>3. 市場共識 vs Reality</h2>
+  <table>
+    <tr><th>主題</th><th>市場預期</th><th>實際/查證</th><th>Mispricing</th></tr>
+    <tr><td>白銀方向</td><td>「該選邊了」</td><td>2h ST空(65.5)/4h ST多(64.0)=短中線相反、拉鋸;$63.6~$65.8磨未破,週末低量無新方向</td><td class="warn">中:拉鋸未定,別預設方向</td></tr>
+    <tr><td>白銀軋空狀態</td><td>「跌了該熄」</td><td>COT(8/11)空單反增15,629=空頭續押、軋空未熄(硬數據,昨已詳述,本期無新COT)</td><td class="warn">中:未熄雙面,待下週價格定</td></tr>
+    <tr><td>AMD+5.7%/AVGO-6%</td><td>「晶片大分化」</td><td>週末合成盤反向大跳=流動性失真,非真實個股事件</td><td class="neg">高:週末合成盤別當真</td></tr>
+    <tr><td>加密週末小反彈</td><td>「回暖了」</td><td>BTC+0.6%/F&amp;G 34仍恐懼,週末低量小反彈參考性低;下週開盤才算數</td><td class="neu">低:週末低量,別過度解讀</td></tr>
+  </table>
+  <div class="alert">🎯 <strong>本期無新催化(週末低量、價格定格),最大 Mispricing 仍是「白銀該選邊」的錯誤預期。</strong>白銀 2h ST 空(壓力65.5)、4h ST 多($63.97)——**短中線方向相反,這叫拉鋸不叫盤整待突破**,在 $63.6~$65.8 之間磨是常態,週末低量更不會給方向。<strong>對抗四問(週末低量、主線程未開subagent):①無新事件,沿用昨日 CONFIRMED 的「COT空頭續押、軋空未熄雙面」;②別把週末合成盤(AMD/AVGO反向跳)或低量小反彈當真實訊號;③方向由下週一開盤+NVDA+Jackson Hole 決定,現在任何「要漲/要跌」都是週末低量的雜訊。</strong></div>
+</div>
+
+<!-- ===== SECTION 4: 強弱矩陣 ===== -->
+<div class="card full">
+  <h2>4. 跨資產強弱矩陣（加密/貴金屬即時，*美股週末合成盤）</h2>
+  <table>
+    <tr><th>#</th><th>資產</th><th>24h%</th><th>ST方向</th><th>驅動</th></tr>
+    <tr><td>1</td><td>AMD</td><td class="pos">+5.73%*</td><td>—</td><td>週末合成盤失真,驅動不採信</td></tr>
+    <tr><td>2</td><td>COPPER 銅</td><td class="pos">+1.30%</td><td>中性</td><td>工業金屬反彈 <span class="tag t-bear">工業腿</span></td></tr>
+    <tr><td>3</td><td>ETH</td><td class="pos">+0.62%</td><td>中性</td><td>加密週末低量小反彈,F&amp;G 34</td></tr>
+    <tr><td>4</td><td>BTC</td><td class="pos">+0.61%</td><td>中性</td><td>週末低量小反彈,守$62.4K</td></tr>
+    <tr><td>5</td><td>XPT 鉑</td><td class="pos">+0.36%</td><td>中性</td><td>貴金屬持平 <span class="tag t-neu">工業/貴金屬</span></td></tr>
+    <tr><td>6</td><td>GOOGL</td><td class="pos">+0.18%*</td><td>中性</td><td>合成盤持平</td></tr>
+    <tr><td>7</td><td>XAU 黃金</td><td class="neu">+0.06%</td><td>中性</td><td>週末持平 <span class="tag t-hold">貨幣腿</span></td></tr>
+    <tr><td>8</td><td>XPD 鈀</td><td class="neu">-0.06%</td><td>中性</td><td>工業金屬持平 <span class="tag t-bear">工業</span></td></tr>
+    <tr><td>9</td><td>MSFT</td><td class="neu">-0.15%*</td><td>中性</td><td>合成盤持平</td></tr>
+    <tr><td>10</td><td>XAG 白銀</td><td class="neg">-0.31%</td><td>中性</td><td>週末磨,2h ST空65.5壓制 <span class="tag t-neu">軋空腿</span></td></tr>
+    <tr><td>11</td><td>NVDA</td><td class="neg">-0.43%*</td><td>中性</td><td>合成盤,下週財報</td></tr>
+    <tr><td>12</td><td>AMZN</td><td class="neg">-0.54%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>13</td><td>QCOM</td><td class="neg">-0.78%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>14</td><td>META</td><td class="neg">-0.78%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>15</td><td>TSLA</td><td class="neg">-0.88%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>16</td><td>MU</td><td class="neg">-0.98%*</td><td>中性</td><td>合成盤(記憶體)</td></tr>
+    <tr><td>17</td><td>TSM</td><td class="neg">-1.33%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>18</td><td>EWY 南韓</td><td class="neg">-1.49%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>19</td><td>MSTR</td><td class="neg">-1.75%*</td><td>中性</td><td>BTC×槓桿,合成盤</td></tr>
+    <tr><td>20</td><td>PLTR</td><td class="neg">-2.12%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>21</td><td>INTC</td><td class="neg">-2.55%*</td><td>中性</td><td>合成盤</td></tr>
+    <tr><td>22</td><td>SPCX</td><td class="neg">-2.77%*</td><td>—</td><td>合成盤失真</td></tr>
+    <tr><td>23</td><td>AVGO</td><td class="neg">-6.02%*</td><td>—</td><td>週末合成盤失真,驅動不採信</td></tr>
+    <tr><td>24</td><td>MOVE/其他</td><td class="neu">—</td><td>—</td><td>暫缺</td></tr>
+    <tr><td>25</td><td>—</td><td class="neu">—</td><td>—</td><td>—</td></tr>
+  </table>
+  <p style="margin-top:6px;font-size:.74rem;color:var(--muted)">腿別 tag 僅標貴金屬+銅。<strong>週末低量、價格定格,美股合成盤失真(AMD/AVGO反向跳不採信)、加密低量小反彈參考低。</strong>白銀2h ST空、壓力65.5。</p>
+</div>
+
+<!-- ===== SECTION 5: 風險雷達 ===== -->
+<div class="card full">
+  <h2>5. 量化風險雷達</h2>
+  <table>
+    <tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+    <tr><td>下週NVDA財報不如預期</td><td>中</td><td>AI股/記憶體回吐、拖累SPY</td><td>晶片/持倉籃</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>Jackson Hole Warsh鷹派</td><td>中</td><td>殖利率反彈、壓貴金屬+成長股</td><td>XAU/晶片</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>白銀空單續增→反彈觸發逼空</td><td>中</td><td>白銀急彈掃空單(對你不利)</td><td>XAG</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>白銀破$63.6→衰竭續走(空頭同側助跌)</td><td>中</td><td>奔$62-63(你空單獲利點)</td><td>XAG</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>週一開盤跳空+USD/JPY 159上carry</td><td>低中</td><td>持倉早盤波動</td><td>全持倉</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+  </table>
+  <table style="margin-top:12px">
+    <tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+    <tr><td>XAU 黃金</td><td>$4,387</td><td><span class="tag t-hold">週末持平</span></td><td>4h上$4,464,守$4,307</td></tr>
+    <tr><td>XAG 白銀</td><td>$64.99</td><td><span class="tag t-neu">磨/短空中多</span></td><td>2h ST空65.5、4h ST多64.0;$63.6撐/$65.8頂</td></tr>
+    <tr><td>BTC</td><td>$63,019</td><td><span class="tag t-neu">低量小反彈</span></td><td>守$62.4K</td></tr>
+    <tr><td>ETH</td><td>$1,882</td><td><span class="tag t-neu">持平</span></td><td>守$1,804</td></tr>
+    <tr><td>COPPER 銅</td><td>$6.777</td><td><span class="tag t-neu">反彈</span></td><td>工業腿</td></tr>
+    <tr><td>XPD 鈀</td><td>$1,324</td><td><span class="tag t-neu">持平</span></td><td>工業金屬</td></tr>
+    <tr><td>XPT 鉑</td><td>$1,747</td><td><span class="tag t-neu">持平</span></td><td>貴金屬</td></tr>
+    <tr><td>MU</td><td>$975.27</td><td><span class="tag t-hold">合成盤</span></td><td>記憶體,下週財報季</td></tr>
+    <tr><td>NVDA</td><td>$225.21</td><td><span class="tag t-hold">合成盤</span></td><td>下週財報關鍵</td></tr>
+    <tr><td>EWY 南韓</td><td>$179.78</td><td><span class="tag t-hold">合成盤</span></td><td>守$166</td></tr>
+    <tr><td>SPY</td><td>$777.58</td><td><span class="tag t-hold">高檔</span></td><td>創高後,合成盤</td></tr>
+    <tr><td>SPCX</td><td>$139.73</td><td><span class="tag t-neu">失真</span></td><td>合成盤</td></tr>
+  </table>
+</div>
+
+<!-- ===== SECTION 6: 完整戰術分析 ===== -->
+<div class="card full">
+  <h2>6. 完整戰術分析</h2>
+
+  <!-- A. XAU -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">A. XAU 黃金 $4,386.80（+0.06%，週末低量持平）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$82.48 上$4,634.34/下$4,139.48；4h ATR≈$26.20 上$4,463.82/下$4,306.64；1h ATR≈$13.62 上$4,427.23/下$4,345.53。<strong>週末持平,守$4,307。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-pass">DXY 99.64偏弱 ✓</span>
+      <span class="score-item sc-neutral">實質利率 10Y 4.70持平 ○</span>
+      <span class="score-item sc-pass">央行購金結構 ✓</span>
+      <span class="score-item sc-neutral">ST 中性 ○</span>
+      <span class="score-item sc-neutral">週末低量 ○</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性（週末低量持平,等下週）</strong>。計分 3/5。無新催化,價格定格,參考下週開盤+Jackson Hole。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h 預估：</strong>$4,387 ± ATR_1H×1.5 = $4,387 ± $20 → <strong>$4,367 – $4,407</strong>（週末低量）</p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(回測$4,307多,勿追週末)</td><td>$4,307–$4,325</td><td>$4,275</td><td>$4,464</td><td>1:3.3</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 高檔整理</td><td>殖利率持平+央行購金</td><td>$4,307–$4,464</td><td>50%</td></tr>
+      <tr><td>Bull 反彈</td><td>Jackson Hole鴿+DXY弱</td><td>$4,500</td><td>25%</td></tr>
+      <tr><td>Bear 回落</td><td>Jackson Hole鷹+殖利率反彈</td><td>$4,307</td><td>25%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>黃金→白銀傳導：</strong>金銀比=4386.80/64.99=<strong>67.50</strong>（持平）。週末金銀齊平,無傳導訊號,等下週。</p>
+  </div>
+
+  <!-- B. XAG -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">B. XAG 白銀 $64.99（-0.31%，週末磨,短空中多拉鋸）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag st-short">2h ST 空(65.5)</span><span class="st-tag" style="background:rgba(63,185,80,.18);color:var(--green)">4h ST 多(64.0)</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：1h ST 多(64.45)/**2h ST 空(壓力65.48)/4h ST 多(64.0)**。日 ATR≈$2.86。<strong>短中線相反=拉鋸;$63.6撐/$65.8頂;2h壓力65.5、4h支撐64.0是關鍵夾板。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-pass">DXY 99.64偏弱 ✓</span>
+      <span class="score-item sc-neutral">黃金週末持平 ○</span>
+      <span class="score-item sc-neutral">金銀比67.50持平 ○</span>
+      <span class="score-item sc-fail">2h ST空65.5壓制 ✗</span>
+      <span class="score-item sc-neutral">4h ST多64.0(拉鋸) ○</span>
+      <span class="score-item sc-fail">COT空單反增15,629(軋空未熄) ✗</span>
+      <span class="score-item sc-neutral">工業(銅+1.3%反彈) ○</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：短空中多拉鋸、週末低量無方向</strong>。計分 2.5/7。<strong>2h ST空(壓力65.5)+4h ST多(64.0)夾住白銀在$64-65磨,短中線相反=拉鋸。週末低量不會解此僵局,方向等下週開盤。你空單在2h順勢、4h逆勢,所以「破$63.6(4h也翻空、你全順)」或「站上65.5(2h翻多、警訊)」才是解拉鋸的訊號。</strong></p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$64.99 ± ATR_1H×1.5 ≈ $64.99 ± $0.54 → <strong>$64.45 – $65.53</strong>（週末低量）</p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>空單(使用者唯一持倉)：週末拉鋸別動;破$63.6(4h也空、你全順續賺)/站上65.5(2h翻多警訊該認);詳見持倉段</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 拉鋸磨</td><td>$63.6~$65.8區間,2h空4h多夾</td><td>$63.6–$65.8</td><td>48%</td></tr>
+      <tr><td>Bear 破位</td><td>破$63.6+4h翻空+空頭助跌</td><td>$62–$63</td><td>28%</td></tr>
+      <tr><td>Bull 站穩</td><td>站上65.5+2h翻多+逼空</td><td>$67</td><td>24%</td></tr>
+    </table>
+
+    <div class="tool-box">
+      <h4>🔧 signals 工具參考欄（實驗性，僅參考非進場依據）</h4>
+      <p style="font-size:.78rem"><strong>工具傾向：【觀望】0 分</strong>｜觸發訊號：<strong>無</strong>｜VIX環境：鈍化(VIX 14.25&lt;15，均值回歸訊號打折)｜地緣：🟢中性偏多</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>COT 投機空單 15,629 口</strong>（8/11持倉,本期無新COT、下期週五更新）：<br>26週pct <strong>100.0%</strong> / 52週pct <strong>54.9%</strong> / 5年pct <strong>12.0%</strong>；淨多 23,646(52週pct 21.6)。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>判讀(三尺度並陳,防帶寬假象):</strong>26週100%帶寬假象;5年僅12%空頭絕對量仍偏低。<strong>突破週空單反增+1,455=空頭續押、軋空未熄雙面(專業空方同側 vs 逼空燃料更多)。此為8/11數據,本期週末無更新。</strong></p>
+      <p style="font-size:.76rem;margin-top:6px;color:var(--muted)"><strong>⚠ 限制：</strong>①COT 8/11數據、下期週五更新;②工具實驗性、非進場訊號;③工具偏空側結構性失效;④VIX 14.25鈍化;⑤<strong>商品籌碼看COMEX COT/LBMA本場,幣安永續funding影響不了白銀本體(那套只適用BTC/ETH)</strong>。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>🔬 對抗鏡頭層(週末低量,主線程對抗四問未開subagent):</strong>2h ST空65.5(順你空單)/4h ST多64.0(拉鋸)=方向未定;COT空頭續押雙面;週末合成盤/低量無效訊號。</p>
+    </div>
+
+    <p style="font-size:.8rem;margin:6px 0"><strong>籌碼面：</strong>Binance FR≈0(商品看COMEX非幣安)。金銀比67.50。COT(8/11)空單15,629、下期週五更新。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>屬性判定：</strong>白銀軋空腿,週末磨、2h空4h多拉鋸(銅反彈但非工業腿主導)。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>風控（依規）：</strong>支撐$60/極端$55/爆倉&lt;$50(不成立)。2h壓力65.5、4h撐64.0、$63.6破續賺、$65.8頂。現貨溢價待查。</p>
+  </div>
+
+  <!-- C. BTC -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">C. BTC $63,019（+0.61%，週末低量小反彈）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$2,842 上$71,558/下$54,503；4h ATR≈$656 上$64,958/下$61,021；1h ATR≈$222 上$63,690/下$62,360。<strong>低量小反彈,守$61.0K。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-neutral">DXY 99.64 ○</span>
+      <span class="score-item sc-fail">F&amp;G 34恐懼 ✗</span>
+      <span class="score-item sc-neutral">FR≈0中性 ○</span>
+      <span class="score-item sc-neutral">OI持平 ○</span>
+      <span class="score-item sc-neutral">週末低量 ○</span>
+      <span class="score-item sc-neutral">鏈上待查 ?</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性（週末低量小反彈,F&amp;G仍恐懼,等下週）</strong>。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$63,019 ± ATR_1H×1.5 ≈ $63,019 ± $333 → <strong>$62,686 – $63,352</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(守$62.4K)</td><td>觀望,勿追</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 區間</td><td>守$62.4K</td><td>$62.4K–$63.7K</td><td>52%</td></tr>
+      <tr><td>Bull 反彈</td><td>破$63.7K+風偏回</td><td>$65K</td><td>24%</td></tr>
+      <tr><td>Bear 破位</td><td>失守$62.4K</td><td>$61K</td><td>24%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>衍生品：</strong>FR≈0。OI持平。<strong>關鍵洞察：週末低量小反彈,F&amp;G 34仍恐懼,加密續弱格局未變,等下週開盤+風偏。</strong></p>
+  </div>
+
+  <!-- D. ETH -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">D. ETH $1,882（+0.62%，週末持平）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 ATR≈$129.63 上$2,269/下$1,491；4h ATR≈$25.46 上$1,957/下$1,804；1h ATR≈$8.89 上$1,910/下$1,856。<strong>守4h下$1,804。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-neutral">BTC方向 中性 ○</span>
+      <span class="score-item sc-neutral">ETH/BTC ratio 0.0299 ○</span>
+      <span class="score-item sc-neutral">FR≈0 ○</span>
+      <span class="score-item sc-neutral">OI持平 ○</span>
+      <span class="score-item sc-fail">催化劑無 ✗</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：中性</strong>（跟BTC,週末低量）。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$1,882 ± ATR_1H×1.5 ≈ $1,882 ± $13 → <strong>$1,869 – $1,895</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(守$1,804)</td><td>觀望,勿追</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 區間</td><td>跟BTC守$1,804</td><td>$1,804–$1,910</td><td>52%</td></tr>
+      <tr><td>Bull 反彈</td><td>BTC破$63.7K</td><td>$1,957</td><td>24%</td></tr>
+      <tr><td>Bear 破位</td><td>BTC失守$62.4K</td><td>$1,804</td><td>24%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>ETH/BTC 分析：</strong>ratio≈0.0299,ETH 跟BTC,無獨立敘事。</p>
+  </div>
+
+  <!-- E. 美股 -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">E. 美股（週末休市,合成盤失真,不做戰術判斷）</h3>
+    <div class="alert-warn" style="font-size:.8rem">⚠️ 美股週末休市,下列為週五收盤/週末合成盤。<strong>AMD+5.7%/AVGO-6% 反向大跳=合成盤流動性失真,不代表真實個股方向、不編驅動。</strong>下週開盤+NVDA財報+Jackson Hole才是真變數。</div>
+    <table style="margin-top:8px">
+      <tr><th>標的</th><th>價格</th><th>24h%*</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+      <tr><td>NVDA</td><td>$225.21</td><td class="neg">-0.43%</td><td><span class="tag t-hold">合成盤</span></td><td>下週財報⭐</td><td>AI核心,記憶體循環驗證</td></tr>
+      <tr><td>MU</td><td>$975.27</td><td class="neg">-0.98%</td><td><span class="tag t-hold">合成盤</span></td><td>—</td><td>記憶體,週末合成不採信</td></tr>
+      <tr><td>EWY</td><td>$179.78</td><td class="neg">-1.49%</td><td><span class="tag t-hold">合成盤</span></td><td>守$166</td><td>記憶體</td></tr>
+      <tr><td>SPY</td><td>$777.58</td><td class="neg">-0.27%</td><td><span class="tag t-hold">高檔</span></td><td>創高後</td><td>合成盤</td></tr>
+      <tr><td>AMD</td><td>$515.34</td><td class="pos">+5.73%</td><td><span class="tag t-neu">失真</span></td><td>—</td><td>合成盤反向跳,不採信</td></tr>
+      <tr><td>AVGO</td><td>$394.25</td><td class="neg">-6.02%</td><td><span class="tag t-neu">失真</span></td><td>—</td><td>合成盤反向跳,不採信</td></tr>
+    </table>
+    <p style="font-size:.78rem;margin-top:6px;color:var(--muted)">週末休市,美股不做漲跌前3完整戰術(合成盤無意義)。下週開盤實盤+NVDA財報(記憶體超級循環驗證)+Jackson Hole(Warsh政策)為關鍵變數。</p>
+  </div>
+
+  <!-- F. 持倉紀律提醒 -->
+  <div class="tactical-box" style="border-color:rgba(219,109,40,.4);background:rgba(219,109,40,.05)">
+    <h3 style="font-size:.92rem;color:var(--orange)">🎯 F. 持倉紀律提醒（實操收尾——使用者唯一直接下單依據）</h3>
+    <div class="alert-warn" style="font-size:.8rem;margin-bottom:8px">📌 <strong>使用者唯一持倉＝白銀空單一筆。爆倉$84.88(遠、本金安全,近日小賺墊高)。</strong>週末低量、價格定格,白銀短空中多拉鋸,別動。</div>
+    <table>
+      <tr><th>標的</th><th>現價</th><th>關鍵價位</th><th>紀律警語</th></tr>
+      <tr><td>白銀 XAG（空單，唯一持倉）</td><td>$64.99</td><td>爆倉 $84.88(遠)｜2h ST壓力65.5(站上警訊)｜4h ST撐64.0｜破$63.6續賺｜$65.8頂</td><td><strong>週末低量、拉鋸,別動作。你空單2h順勢(空65.5)、4h逆勢(多64.0)——解拉鋸看兩線:①破$63.6→4h也翻空、你全順、續賺奔$62-63;②站上65.5→2h翻多警訊、該認減。週末別被合成盤/低量小反彈騙進場或砍倉。爆倉$84.88極遠、buffer厚(近日小賺墊高)=等訊號不凪單。下週NVDA財報+Jackson Hole是真變數,別在數據前重壓。你這週守住紀律沒亂加碼、小賺墊爆倉,做得對</strong></td></tr>
+    </table>
+    <p style="font-size:.78rem;margin-top:8px;color:var(--muted)"><strong>共通紀律（僅白銀一筆）：</strong>①週末低量+合成盤失真,別被AMD/AVGO反向跳或加密低量小反彈誤導,週末不動作;②白銀短空中多拉鋸,看破$63.6(續賺、4h也翻空)/站上65.5(該認、2h翻多);③COT空頭續押雙面,別因「專業空方同側」重壓加碼(逼空風險)也別因怕逼空砍(結構未破);④下週NVDA財報+Jackson Hole前別重壓;⑤日內紀律:8:30輸面大不動、13:30有轉折可小跟(1-2h、破轉折低點停損、16:00前沒賺先出)、20:30後別追;⑥商品籌碼看COMEX/LBMA非幣安funding。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: 投行+期權 ===== -->
+<div class="card full">
+  <h2>7. 投行觀點與期權結構異常</h2>
+  <table>
+    <tr><th>來源</th><th>觀點</th><th>影響/時間戳</th></tr>
+    <tr><td>CFTC COT (8/11持倉)</td><td>「白銀投機空單反增15,629口、軋空未熄」</td><td>當前事實:昨已詳述,本期週末無新COT</td></tr>
+    <tr><td>—</td><td>週末美股休市,無新投行觀點更新</td><td>下週NVDA財報/Jackson Hole為變數</td></tr>
+    <tr><td>本團隊(白銀工具)</td><td>「短空中多拉鋸,方向由破$63.6或站上65.5決定」</td><td>當前結論:ST查證非猜測</td></tr>
+    <tr><td>提醒(修正記錄)</td><td>2h ST(300,3)=空、壓力65.5(此前臨時腳本誤算翻多已更正)</td><td>當前事實:白銀2h順你空單</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.8rem"><strong>期權結構：</strong>VIX 14.25(鈍化&lt;15無恐慌)。10Y 4.70持平。<strong>週末無即時盤,價格定格。白銀短空中多拉鋸($63.6~$65.8),待下週開盤+NVDA財報(記憶體超級循環)+Jackson Hole(Fed政策)定調。</strong>週末合成盤失真不採信。散戶vs機構:加密F&amp;G 34仍恐懼。</p>
+</div>
+
+<!-- ===== SECTION 8: Calendar ===== -->
+<div class="card full">
+  <h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+  <div class="tl">
+    <div class="tl-i"><div class="tl-d">8/16-17（週末）</div><div class="tl-e">美股休市低量;留意週一開盤跳空(週末合成盤與現貨落差)</div></div>
+    <div class="tl-i"><div class="tl-d">下週一 8/17 晚 美股開盤</div><div class="tl-e">週末後首個實盤,白銀短空中多拉鋸的方向檢驗</div></div>
+    <div class="tl-i"><div class="tl-d">下週 NVDA 財報(待確認日期)⭐</div><div class="tl-e">AI硬體/記憶體超級循環能否延續的關鍵驗證,牽動晶片籃</div></div>
+    <div class="tl-i"><div class="tl-d">下週 Jackson Hole(待確認)⭐</div><div class="tl-e">Fed 年會,Warsh 政策訊號,牽動殖利率+貴金屬</div></div>
+    <div class="tl-i"><div class="tl-d">8/22（週五）凌晨</div><div class="tl-e">新一期 COT——看白銀空頭本週(突破後段)清倉或續押</div></div>
+  </div>
+  <p style="margin-top:8px;font-size:.82rem"><strong>關鍵排名：</strong>①下週 NVDA財報+Jackson Hole(下週最大變數)≫ ②白銀$63.6/$65.5 兩線 ＞ ③週一開盤跳空 ＞ ④8/22 COT。</p>
+</div>
+
+<!-- ===== SECTION 9: 情境劇本 ===== -->
+<div class="card full">
+  <h2>9. 一週情境劇本與機率評估</h2>
+  <table>
+    <tr><th>預測市場/指標</th><th>當前定價</th><th>解讀</th></tr>
+    <tr><td>白銀COT空單</td><td>15,629口(反增)@8/11</td><td>軋空未熄、空頭續押,雙面</td></tr>
+    <tr><td>殖利率/美元</td><td>10Y 4.70持平、DXY 99.64偏弱</td><td>通膨落地後穩</td></tr>
+    <tr><td>加密 F&amp;G</td><td>34（恐懼）</td><td>加密獨弱但恐懼略退</td></tr>
+    <tr><td>VIX</td><td>14.25（鈍化）</td><td>無恐慌</td></tr>
+  </table>
+  <div class="scenario"><strong>Base Case（機率 48%）：</strong>下週白銀 $63.6~$65.8 續磨(2h空4h多拉鋸)、貴金屬高檔整理、美股risk-on待NVDA財報+Jackson Hole。方向未定。</div>
+  <div class="scenario" style="border-left-color:var(--accent)"><strong>Bull Case（機率 26%，對你空單不利）：</strong>白銀站上65.5(2h翻多)+空單堆積觸發逼空→彈向$67;或Jackson Hole鴿+NVDA財報強帶動risk-on。</div>
+  <div class="scenario-bear"><strong>Bear Case（機率 26%，你空單獲利點）：</strong>白銀破$63.6(4h也翻空)→空頭同側加碼助跌奔$62-63;或NVDA財報弱+Jackson Hole鷹殖利率反彈壓貴金屬。<strong>需破$63.6確認,週末低量別預設。</strong></div>
+  <div class="scenario-tail"><strong>Tail Risk（機率 3%）：</strong>週一跳空+USD/JPY 159上carry unwind;或Jackson Hole意外鷹。低機率但留意。</div>
+</div>
+
+<div class="footer">
+  本報告 2026-08-15（週六）21:10 台灣時間產出,週六夜報(低資訊確認,距 am 報告約8小時、美股休市價格定格)。<strong>本期無新催化,主線程對抗四問(有持倉但週末低量、無真事件,未開subagent):①沿用昨日 CONFIRMED 的「COT(8/11)空頭續押15,629口、軋空未熄雙面」,本期無新COT;②白銀2h ST(300,3)空(壓力65.5)/4h ST多(64.0)=短空中多拉鋸,週末低量無方向,別預設「該漲/該跌」;③週末合成盤失真(AMD+5.7%/AVGO-6%反向跳)、加密低量小反彈,皆不採信;④修正記錄:此前臨時ST腳本誤算2h翻多,已更正為空。使用者唯一持倉白銀空單:週末別動、看破$63.6(4h也翻空續賺)/站上65.5(2h翻多該認)、爆倉$84.88極遠buffer厚等訊號不凪、下週NVDA+Jackson Hole前別重壓。商品籌碼看COMEX/LBMA非幣安funding。工具實驗性、僅參考非投資建議,交易風險自負。</strong>
+</div>
+
+</div>
+</body></html>
