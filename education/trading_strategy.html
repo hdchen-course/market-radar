@@ -1,48 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>交易策略與日常作業流程</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --orange: #ea580c;
-  --orange-l: #ffedd5;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.8;
-}
+/* Page-specific token only; base tokens/body live in common.css */
+:root { --shadow: 0 4px 20px rgba(0,0,0,0.06); }
 .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
 header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
 header h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
 header .sub { color: var(--text3); font-size: 14px; }
-.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-size: 14px; font-weight: 500; }
-.back-link:hover { text-decoration: underline; }
+/* .back-link now inherited from common.css */
 
-/* Navigation Tabs */
+/* Navigation Tabs (page-specific: JS binds to .nav-btn / data-tab) */
 .nav { display: flex; justify-content: center; gap: 6px; margin-bottom: 40px; flex-wrap: wrap; }
 .nav-btn {
   padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
@@ -52,11 +25,9 @@ header .sub { color: var(--text3); font-size: 14px; }
 .nav-btn:hover { background: var(--bg3); color: var(--text); }
 .nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
 
-/* Sections */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* .tab-content inherited from common.css */
 
-/* Cards */
+/* Cards (page-specific: collapsible header/body pattern, overrides common .card) */
 .card {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
@@ -73,38 +44,11 @@ header .sub { color: var(--text3); font-size: 14px; }
 .card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
 .card-body.open { display: block; }
 
-/* Typography */
-h2 { font-size: 22px; font-weight: 700; margin: 28px 0 16px; color: var(--blue); }
-h3 { font-size: 17px; font-weight: 600; margin: 20px 0 10px; }
-h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text2); }
-p { margin-bottom: 12px; color: var(--text2); }
-ul, ol { margin: 8px 0 16px 24px; color: var(--text2); }
-li { margin-bottom: 6px; }
-strong { color: var(--text); }
-code { font-family: 'JetBrains Mono', monospace; background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+/* Typography, .tag/.tag-*, table, .svg-container now inherited from common.css.
+   Keep SVG centered on this page: */
+.svg-container { text-align: center; }
 
-/* Tags */
-.tag {
-  display: inline-block; padding: 3px 10px; border-radius: 20px;
-  font-size: 12px; font-weight: 600; margin-right: 6px; margin-bottom: 4px;
-}
-.tag-green { background: var(--green-l); color: var(--green); }
-.tag-red { background: var(--red-l); color: var(--red); }
-.tag-blue { background: var(--blue-l); color: var(--blue); }
-.tag-purple { background: var(--purple-l); color: var(--purple); }
-.tag-orange { background: var(--orange-l); color: var(--orange); }
-
-/* Tables */
-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
-th { background: var(--bg3); font-weight: 600; }
-tr:hover { background: var(--bg3); }
-
-/* SVG container */
-.svg-container { margin: 20px 0; text-align: center; overflow-x: auto; }
-.svg-container svg { max-width: 100%; height: auto; }
-
-/* Principle boxes */
+/* Principle boxes (page-specific) */
 .principle-box {
   background: var(--blue-l); border-left: 4px solid var(--blue);
   padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0;
@@ -193,7 +137,7 @@ tr:hover { background: var(--bg3); }
 </head>
 <body>
 <div class="container">
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 <header>
   <h1>交易策略與日常作業流程</h1>
   <div class="sub">系統化交易 SOP — 以美股/ETF 與黃金白銀波段為主線，日內當沖為進階選修</div>
@@ -261,7 +205,8 @@ tr:hover { background: var(--bg3); }
 </div>
 <div class="card-body">
 <div class="svg-container">
-<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-schedule-title">
+  <title id="svg-ts-schedule-title">台灣時間 24 小時全球市場活動時段示意：台股、歐洲盤、美股主力窗口、加密與貴金屬活躍時段對照</title>
   <!-- Background -->
   <rect width="900" height="420" fill="#f8fafc" rx="12"/>
   <!-- Title -->
@@ -499,7 +444,11 @@ tr:hover { background: var(--bg3); }
 <!-- ============================================================ -->
 <div id="prep" class="tab-content">
 <h2>行前準備 SOP</h2>
-<p>每日開盤前必做的準備清單，建議在 20:00-21:30 執行。總計約 27 分鐘。</p>
+<p>每日開盤前必做的準備清單，建議在 20:00-21:30 執行。總計約 27 分鐘（此節奏偏日內／主動盯盤者）。</p>
+
+<div class="principle-box success">
+  <strong>波段軌作業版（本站主線、上班族適用）：</strong>你不必每天執行完整的 27 分鐘盯盤 SOP。改用較輕的節奏——<strong>週末花 20-30 分鐘做功課</strong>（看週線大方向、標好關鍵價位、排下週事件曆），決定進場的那個晚上<strong>一次把 GTC/OCO 括號單（進場 + 止損 + 目標）掛好</strong>，之後<strong>隔數日再檢視</strong>即可，不需要熬夜盯每天開盤。下方的每日清單，波段者可挑「宏觀掃描 + 技術面 + 心態檢查」在進場當晚做一次即可。
+</div>
 
 <div class="principle-box">
   <strong>核心原則：保護本金第一，獲利第二</strong> — 準備工作的目的是確保你帶著清晰的頭腦和明確的計劃進入市場，而不是盲目開槍。
@@ -561,8 +510,12 @@ tr:hover { background: var(--bg3); }
   <span class="arrow">&#9654;</span>
   <h3>3. 籌碼面快掃（5 分鐘）</h3>
   <span class="tag tag-purple">加密專用</span>
+  <span class="tag tag-red">進階選修（暫不做）</span>
 </div>
 <div class="card-body">
+<div class="principle-box warning">
+  <strong>進階選修，暫不做：</strong>本段是加密永續合約的籌碼工具（Funding Rate／OI／清算）。走波段、以美股／ETF／黃金白銀為主線的人<strong>現階段可略過整段</strong>；BTC/ETH 只當市場情緒的參考指標，不建議實際下單。等你確定要做加密永續、且已用小額驗證出正期望值再回來看。
+</div>
 <ul>
   <li><strong>BTC/ETH Funding Rate</strong>
     <ul>
@@ -654,7 +607,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </div>
 
 <div class="svg-container">
-<svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-prepflow-title">
+  <title id="svg-ts-prepflow-title">行前準備流程圖：宏觀掃描→技術面準備→籌碼面快掃→制定計劃→心態檢查，全部通過才準備就緒</title>
   <rect width="800" height="180" fill="#f8fafc" rx="12"/>
   <text x="400" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">行前準備流程圖</text>
   <!-- Steps -->
@@ -730,7 +684,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </ol>
 
 <div class="svg-container">
-<svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-orb-title">
+  <title id="svg-ts-orb-title">Opening Range Breakout 示意圖：開盤區間高低點建立後，突破 OR 高點放量入場做多與目標位</title>
   <rect width="700" height="280" fill="#f8fafc" rx="12"/>
   <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">Opening Range Breakout 示意圖</text>
   <!-- Time axis -->
@@ -798,7 +753,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </ol>
 
 <div class="svg-container">
-<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-vwap-title">
+  <title id="svg-ts-vwap-title">VWAP 回測入場示意圖：價格在 VWAP 之上偏多，回測 VWAP 出現反轉 K 線時順勢做多入場</title>
   <rect width="700" height="250" fill="#f8fafc" rx="12"/>
   <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">VWAP 回測入場示意圖</text>
   <!-- VWAP line -->
@@ -816,8 +772,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </svg>
 </div>
 
-<div class="principle-box success">
-  <strong>VWAP 策略的優勢：</strong>風險小（止損近）、勝率高（順勢入場）、適合上班族（不用一直盯盤，設好條件單即可）。
+<div class="principle-box warning">
+  <strong>VWAP 策略的定位：</strong>止損近、順勢入場時勝率相對穩，但 VWAP 是<strong>日內即時指標</strong>，回測入場點只在盤中出現，仍需盯即時 VWAP 與 K 線，且屬<strong>當日沖銷</strong>、受 PDT $25,000 約束。因此它是<strong>進階選修</strong>，不是走波段上班族的主線；沒有到當沖階段的人當作日後升級參考即可，無保證，須自行回測。
 </div>
 </div>
 </div>
@@ -956,7 +912,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </div>
 <div class="card-body">
 <div class="principle-box warning">
-  <strong>市場永遠在 — 錯過不是虧損，衝動才是。</strong>
+  <strong>市場明天還在 — 錯過不是虧損，衝動才是。</strong>
 </div>
 
 <h4>強制停止交易的條件：</h4>
@@ -999,7 +955,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </table>
 
 <div class="principle-box success">
-  <strong>頂尖交易者的秘密：</strong>他們大部分時間都在等待。70% 的時間觀察，20% 準備，10% 執行。一年只需要抓住幾十個好機會就夠了。
+  <strong>成熟交易者的節奏：</strong>他們大部分時間都在等待——多數時間在觀察、其次是準備、只有少部分時間真正執行（比例為示意，非統計數字）。重點是耐心等到少數高勝算機會，而不是頻繁進場。
 </div>
 </div>
 </div>
@@ -1020,34 +976,35 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </div>
 
 <div class="svg-container">
-<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-weekly-title">
+  <title id="svg-ts-weekly-title">五日交易週期能量圖：週一定調、週二三主攻、週四延續、週五結算、週末復盤，各日建議倉位與市場能量曲線</title>
   <rect width="800" height="200" fill="#f8fafc" rx="12"/>
   <text x="400" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">五日交易週期能量圖</text>
   <!-- Week bars -->
   <rect x="60" y="80" width="100" height="70" rx="6" fill="#dbeafe" stroke="#2563eb"/>
   <text x="110" y="105" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#2563eb">週一</text>
   <text x="110" y="125" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">定調日</text>
-  <text x="110" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 30%</text>
+  <text x="110" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位：30%</text>
 
   <rect x="190" y="55" width="100" height="95" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
   <text x="240" y="85" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#16a34a">週二</text>
   <text x="240" y="105" text-anchor="middle" font-family="Inter" font-size="10" fill="#16a34a">主攻日</text>
-  <text x="240" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 100%</text>
+  <text x="240" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位：100%</text>
 
   <rect x="320" y="55" width="100" height="95" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
   <text x="370" y="85" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#16a34a">週三</text>
   <text x="370" y="105" text-anchor="middle" font-family="Inter" font-size="10" fill="#16a34a">主攻日</text>
-  <text x="370" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 100%</text>
+  <text x="370" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位：100%</text>
 
   <rect x="450" y="70" width="100" height="80" rx="6" fill="#ffedd5" stroke="#ea580c"/>
   <text x="500" y="100" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#ea580c">週四</text>
   <text x="500" y="120" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">延續/預備</text>
-  <text x="500" y="137" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 70%</text>
+  <text x="500" y="137" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位：70%</text>
 
   <rect x="580" y="85" width="100" height="65" rx="6" fill="#fee2e2" stroke="#dc2626"/>
   <text x="630" y="110" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#dc2626">週五</text>
   <text x="630" y="128" text-anchor="middle" font-family="Inter" font-size="10" fill="#64748b">結算日</text>
-  <text x="630" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位: 30%</text>
+  <text x="630" y="142" text-anchor="middle" font-family="Inter" font-size="9" fill="#64748b">倉位：30%</text>
 
   <rect x="710" y="90" width="70" height="60" rx="6" fill="#f1f5f9" stroke="#cbd5e1"/>
   <text x="745" y="115" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#64748b">週末</text>
@@ -1081,8 +1038,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <li>設定觀察清單（本週想交易的標的）</li>
 </ol>
 
-<h4>倉位建議</h4>
-<p>最大 30% 正常倉位。通常不重倉 — 等方向確認。</p>
+<h4>倉位建議 <span class="tag tag-red">僅日內選修適用</span></h4>
+<p>最大 30% 正常倉位。通常不重倉 — 等方向確認。（此逐日調倉百分比是日內／主動交易的節奏；走波段者不必逐日加減，掛好 GTC/OCO 後隔數日檢視即可。）</p>
 </div>
 </div>
 
@@ -1103,7 +1060,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <h4>策略</h4>
 <ol>
   <li>方向確認後建中期倉位</li>
-  <li>允許最大倉位（100%）</li>
+  <li>允許最大倉位（100%，此百分比僅日內選修節奏適用）</li>
   <li>趨勢明確 → ORB 或 Momentum 策略</li>
   <li>如果週一判斷正確，週二加碼</li>
 </ol>
@@ -1138,8 +1095,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <li>週五有重大事件嗎？（NFP/期權到期）→ 如果有，考慮減倉</li>
 </ol>
 
-<h4>倉位建議</h4>
-<p>最大 70% 正常倉位。如果持有隔夜倉，設好防守位。</p>
+<h4>倉位建議 <span class="tag tag-red">僅日內選修適用</span></h4>
+<p>最大 70% 正常倉位。如果持有隔夜倉，設好防守位。（逐日倉位百分比僅供日內選修者參考，非波段主線。）</p>
 </div>
 </div>
 
@@ -1212,7 +1169,7 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <p>風險管理不是可選的附加功能 — 它是交易的全部。沒有風險管理的交易就是賭博。</p>
 
 <div class="principle-box warning">
-  <strong>活著才能交易明天。</strong>一次爆倉可以毀掉一年的努力。保護本金永遠是第一優先。
+  <strong>活著才能交易明天。</strong>一次爆倉可以毀掉一年的努力。保護本金始終是第一優先。
 </div>
 
 <div class="card">
@@ -1242,7 +1199,8 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 </div>
 
 <div class="svg-container">
-<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ts-position-title">
+  <title id="svg-ts-position-title">倉位大小計算示意：以帳戶 1% 風險金額除以止損距離反推股數，止損越遠倉位越小、每筆虧損金額固定</title>
   <rect width="700" height="220" fill="#f8fafc" rx="12"/>
   <text x="350" y="25" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="#0f172a">倉位大小計算示意</text>
   <!-- Account box -->
@@ -1420,8 +1378,12 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   <span class="arrow">&#9654;</span>
   <h3>5. 槓桿管理（加密特別重要）</h3>
   <span class="tag tag-orange">高風險</span>
+  <span class="tag tag-red">進階選修（暫不做）</span>
 </div>
 <div class="card-body">
+<div class="principle-box warning">
+  <strong>進階選修，暫不做：</strong>整張 50x–100x 爆倉對照表是給已具正期望值、確實要做加密／合約槓桿的人參考。<strong>本站波段主線走的是無槓桿現貨</strong>（美股／ETF／GLD），最壞情況只是股價下跌、不會被強制平倉，最適合資本保全優先的上班族。沒到這個階段請直接跳過本段，槓桿放大的不只是獲利、更是虧損與爆倉風險。
+</div>
 <h4>建議槓桿上限</h4>
 <table>
 <thead>
@@ -1473,10 +1435,10 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <h4>為什麼 R:R 比勝率重要</h4>
 <div class="formula">
 期望值 = (勝率 x 平均獲利) - (敗率 x 平均虧損)<br><br>
-場景 A（高勝率低 R:R）:<br>
+場景 A（高勝率低 R:R）：<br>
 勝率 70%, 平均贏 $100, 平均虧 $200<br>
 期望值 = (0.7 x $100) - (0.3 x $200) = $70 - $60 = +$10 ← 勉強正<br><br>
-場景 B（低勝率高 R:R）:<br>
+場景 B（低勝率高 R:R）：<br>
 勝率 40%, 平均贏 $250, 平均虧 $100<br>
 期望值 = (0.4 x $250) - (0.6 x $100) = $100 - $60 = +$40 ← 優秀！<br><br>
 結論：40% 勝率 + 1:2.5 R:R > 70% 勝率 + 1:0.5 R:R
@@ -1561,10 +1523,14 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <div class="card-header" onclick="toggleCard(this)">
   <span class="arrow">&#9654;</span>
   <h3>2. 每日復盤（10 分鐘）</h3>
-  <span class="tag tag-green">每天</span>
+  <span class="tag tag-green">日內每天</span>
+  <span class="tag tag-blue">波段：每筆出場後＋每週末</span>
 </div>
 <div class="card-body">
-<h4>每日復盤檢查清單</h4>
+<div class="principle-box">
+  <strong>波段者的復盤節奏：</strong>你不需要「每天」復盤（那是日內／主動交易者的節奏）。改為<strong>每筆部位出場後做一次單筆復盤</strong>，再加上<strong>每週末做一次週復盤</strong>即可。下方清單照樣適用，只是把「今天」換成「這筆／本週」。
+</div>
+<h4>每日復盤檢查清單（日內；波段者於出場後套用）</h4>
 <ol>
   <li><strong>計劃 vs 實際執行</strong>
     <ul>
@@ -1580,16 +1546,16 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
   </li>
   <li><strong>數字記錄</strong>
     <ul>
-      <li>今日 P&L: +/- $___</li>
-      <li>今日交易筆數: ___</li>
-      <li>本週累計 P&L: +/- $___</li>
+      <li>今日 P&L：+/- $___</li>
+      <li>今日交易筆數：___</li>
+      <li>本週累計 P&L：+/- $___</li>
     </ul>
   </li>
   <li><strong>情緒記錄（1-10 分）</strong>
     <ul>
-      <li>交易前情緒: ___/10</li>
-      <li>交易中情緒: ___/10</li>
-      <li>交易後情緒: ___/10</li>
+      <li>交易前情緒：___/10</li>
+      <li>交易中情緒：___/10</li>
+      <li>交易後情緒：___/10</li>
       <li>有沒有情緒影響決策的時刻？</li>
     </ul>
   </li>
@@ -1612,18 +1578,18 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <ol>
   <li><strong>績效統計</strong>
     <ul>
-      <li>本週勝率: ___% （目標 > 40%）</li>
-      <li>總 R: +/- ___R</li>
-      <li>最大贏家: ___ (+___R)</li>
-      <li>最大輸家: ___ (-___R)</li>
-      <li>交易筆數: ___ （目標 3-8 筆/週）</li>
+      <li>本週勝率：___% （目標 > 40%）</li>
+      <li>總 R：+/- ___R</li>
+      <li>最大贏家：___ (+___R)</li>
+      <li>最大輸家：___ (-___R)</li>
+      <li>交易筆數：___ （目標 3-8 筆/週）</li>
     </ul>
   </li>
   <li><strong>策略分析</strong>
     <ul>
       <li>哪些策略有效？（繼續執行）</li>
       <li>哪些策略無效？（暫停或調整）</li>
-      <li>方向判斷準確率: ___%</li>
+      <li>方向判斷準確率：___%</li>
     </ul>
   </li>
   <li><strong>規則遵守檢查</strong>
@@ -1656,18 +1622,18 @@ THEN 我做 [具體動作：買入/賣出/加倉]<br>
 <ol>
   <li><strong>績效指標</strong>
     <ul>
-      <li>月報酬率: ___%</li>
-      <li>Sharpe Ratio（月化）: ___</li>
+      <li>月報酬率：___%</li>
+      <li>Sharpe Ratio（月化）：___</li>
       <li>Max Drawdown: ___%</li>
-      <li>最長連虧天數: ___</li>
+      <li>最長連虧天數：___</li>
     </ul>
   </li>
   <li><strong>交易品質</strong>
     <ul>
-      <li>總交易筆數: ___</li>
-      <li>最佳筆數估算: ___（是否過度交易？）</li>
-      <li>衝動交易次數: ___</li>
-      <li>規則違反次數: ___</li>
+      <li>總交易筆數：___</li>
+      <li>最佳筆數估算：___（是否過度交易？）</li>
+      <li>衝動交易次數：___</li>
+      <li>規則違反次數：___</li>
     </ul>
   </li>
   <li><strong>資產/策略分解</strong>
@@ -1808,7 +1774,7 @@ const quizData = [
     explain: "數據公布後的第一個反應常常是假的（stop hunt）。正確做法是等 15 分鐘，讓市場消化數據，然後判斷真實方向。不要在數據出來的瞬間做決策。"
   },
   {
-    q: "你使用 5x 槓桿做多 BTC，保證金 $2,000（倉位 $10,000）。BTC 下跌多少百分比你就爆倉？",
+    q: "（進階選修：加密／槓桿）你使用 5x 槓桿做多 BTC，保證金 $2,000（倉位 $10,000）。BTC 下跌多少百分比你就爆倉？",
     options: ["5%", "10%", "20%", "50%"],
     correct: 2,
     explain: "5x 槓桿的爆倉距離 = 100% / 5 = 20%。這代表 BTC 下跌 20% 你就虧光全部保證金。所以 5x 槓桿必須設在 20% 以內的止損。"
@@ -1844,7 +1810,7 @@ const quizData = [
     explain: "金字塔法：第一筆 50%，第二筆 30%，第三筆 20%。第二筆約為第一筆的 60%（30/50）。每次加倉量遞減，確保平均成本不會被拉高太多。"
   },
   {
-    q: "Funding Rate 為 +0.08%/8h（極正），同時 OI 創新高。這代表？",
+    q: "（進階選修：加密永續）Funding Rate 為 +0.08%/8h（極正），同時 OI 創新高。這代表？",
     options: ["繼續做多，動能很強", "多頭過於擁擠，注意回調風險", "做空的好時機", "跟資金費率無關，不用管"],
     correct: 1,
     explain: "極正的 Funding Rate（>0.05%/8h）代表多頭過擠。很多人做多且願意付費維持。這通常是回調的前兆（不是一定，但要警覺）。不是立刻做空的信號，但要注意風險。"
@@ -1915,7 +1881,7 @@ function renderQuiz() {
     div.id = 'q' + idx;
     let optionsHtml = '<ul class="quiz-options">';
     item.options.forEach((opt, oi) => {
-      optionsHtml += `<li onclick="selectAnswer(${idx}, ${oi})" data-idx="${oi}">${String.fromCharCode(65+oi)}. ${opt}</li>`;
+      optionsHtml += `<li onclick="selectAnswer(${idx}, ${oi})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" tabindex="0" role="button" data-idx="${oi}">${String.fromCharCode(65+oi)}. ${opt}</li>`;
     });
     optionsHtml += '</ul>';
     div.innerHTML = `<h4>Q${idx+1}. ${item.q}</h4>${optionsHtml}<div class="quiz-explanation" id="exp${idx}">${item.explain}</div>`;

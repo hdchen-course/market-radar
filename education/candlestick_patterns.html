@@ -4,59 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K線型態完全圖解 — 主力心理與實戰應用</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
+/* Page-specific shadow tokens (base tokens/colors inherited from common.css) */
 :root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --yellow: #d97706;
-  --yellow-l: #fef3c7;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --r: 12px;
   --shadow: 0 4px 20px rgba(0,0,0,0.06);
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.7;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 16px;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-.back-link:hover { text-decoration: underline; }
-
-h1 {
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: var(--text);
-}
 .subtitle {
   font-size: 14px;
   color: var(--text3);
@@ -94,9 +50,7 @@ h1 {
   font-weight: 600;
 }
 
-/* TAB CONTENT */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* TAB CONTENT (.tab-content display rules inherited from common.css) */
 
 /* PATTERN CARD */
 .pattern-grid {
@@ -219,7 +173,7 @@ h1 {
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>K線型態完全圖解</h1>
 <p class="subtitle">主力心理分析 &times; 實戰交易策略 &times; 散戶常見錯誤 &mdash; 21 種核心型態完整圖解</p>
@@ -251,7 +205,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>大陽線 示意圖</title>
         <line x1="60" y1="5" x2="60" y2="15" stroke="#16a34a" stroke-width="2"/>
         <rect x="45" y="15" width="30" height="70" fill="#16a34a" rx="2"/>
         <line x1="60" y1="85" x2="60" y2="95" stroke="#16a34a" stroke-width="2"/>
@@ -283,7 +238,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>大陰線 示意圖</title>
         <line x1="60" y1="5" x2="60" y2="15" stroke="#dc2626" stroke-width="2"/>
         <rect x="45" y="15" width="30" height="70" fill="#dc2626" rx="2"/>
         <line x1="60" y1="85" x2="60" y2="95" stroke="#dc2626" stroke-width="2"/>
@@ -315,7 +271,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>十字線 示意圖</title>
         <line x1="60" y1="10" x2="60" y2="45" stroke="#334155" stroke-width="2"/>
         <rect x="45" y="48" width="30" height="4" fill="#334155" rx="1"/>
         <line x1="60" y1="55" x2="60" y2="90" stroke="#334155" stroke-width="2"/>
@@ -347,7 +304,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>長上影線 示意圖</title>
         <line x1="60" y1="5" x2="60" y2="55" stroke="#dc2626" stroke-width="2"/>
         <rect x="45" y="55" width="30" height="20" fill="#dc2626" rx="2"/>
         <line x1="60" y1="75" x2="60" y2="85" stroke="#dc2626" stroke-width="2"/>
@@ -380,7 +338,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>長下影線 示意圖</title>
         <line x1="60" y1="15" x2="60" y2="25" stroke="#16a34a" stroke-width="2"/>
         <rect x="45" y="25" width="30" height="20" fill="#16a34a" rx="2"/>
         <line x1="60" y1="45" x2="60" y2="90" stroke="#16a34a" stroke-width="2"/>
@@ -413,7 +372,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>紡錘線 示意圖</title>
         <line x1="60" y1="15" x2="60" y2="38" stroke="#334155" stroke-width="2"/>
         <rect x="48" y="38" width="24" height="24" fill="#334155" rx="2"/>
         <line x1="60" y1="62" x2="60" y2="85" stroke="#334155" stroke-width="2"/>
@@ -445,7 +405,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>墓碑十字 示意圖</title>
         <line x1="60" y1="10" x2="60" y2="75" stroke="#dc2626" stroke-width="2"/>
         <rect x="45" y="75" width="30" height="4" fill="#dc2626" rx="1"/>
       </svg>
@@ -476,7 +437,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 120 100" width="120" height="100">
+      <svg role="img" viewBox="0 0 120 100" width="120" height="100">
+        <title>蜻蜓十字 示意圖</title>
         <rect x="45" y="20" width="30" height="4" fill="#16a34a" rx="1"/>
         <line x1="60" y1="24" x2="60" y2="90" stroke="#16a34a" stroke-width="2"/>
       </svg>
@@ -527,7 +489,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>多頭吞噬 示意圖</title>
         <!-- Day 1: small bearish -->
         <line x1="50" y1="25" x2="50" y2="35" stroke="#dc2626" stroke-width="2"/>
         <rect x="38" y="35" width="24" height="25" fill="#dc2626" rx="2"/>
@@ -564,7 +527,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>空頭吞噬 示意圖</title>
         <!-- Day 1: small bullish -->
         <line x1="50" y1="28" x2="50" y2="38" stroke="#16a34a" stroke-width="2"/>
         <rect x="38" y="38" width="24" height="25" fill="#16a34a" rx="2"/>
@@ -601,7 +565,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>烏雲蓋頂 示意圖</title>
         <!-- Day 1: bullish -->
         <line x1="50" y1="22" x2="50" y2="32" stroke="#16a34a" stroke-width="2"/>
         <rect x="38" y="32" width="24" height="45" fill="#16a34a" rx="2"/>
@@ -638,7 +603,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>刺穿線 示意圖</title>
         <!-- Day 1: bearish -->
         <line x1="50" y1="12" x2="50" y2="22" stroke="#dc2626" stroke-width="2"/>
         <rect x="38" y="22" width="24" height="45" fill="#dc2626" rx="2"/>
@@ -661,7 +627,7 @@ h1 {
     <div class="pattern-row"><span class="pattern-label">出現位置</span><span class="pattern-value">下降趨勢底部</span></div>
     <div class="pattern-row"><span class="pattern-label">市場含義</span><span class="pattern-value">第二根陽線低開後上漲，收盤價深入前一根陰線實體的50%以上。空方雖嘗試延續跌勢但失敗，多方反攻力道強勁。</span></div>
     <div class="pattern-row"><span class="pattern-label">可靠度</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
-    <div class="pattern-row"><span class="pattern-label">交易建議</span><span class="pattern-value">陽線必須深入前陰線50%以上才構成有效訊號。可在確認後的回踔低點進場，停損設在第二根K線低點下方。</span></div>
+    <div class="pattern-row"><span class="pattern-label">交易建議</span><span class="pattern-value">陽線必須深入前陰線50%以上才構成有效訊號。可在確認後的回踩低點進場，停損設在第二根K線低點下方。</span></div>
     <div class="highlight-box">
       <strong>主力心理分析：</strong>主力故意讓價格低開製造恐慌，散戶在低開時恐懼性拋售。主力趁機大量吃貨然後將價格拉回前陰線中點以上，展現做多決心。低開是為了在更低價位買到更多籌碼。
     </div>
@@ -675,7 +641,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>孕線 示意圖</title>
         <!-- Day 1: large bearish -->
         <line x1="50" y1="10" x2="50" y2="18" stroke="#dc2626" stroke-width="2"/>
         <rect x="35" y="18" width="30" height="60" fill="#dc2626" rx="2"/>
@@ -712,7 +679,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 180 100" width="180" height="100">
+      <svg role="img" viewBox="0 0 180 100" width="180" height="100">
+        <title>平頭頂部/底部 示意圖</title>
         <!-- Day 1: bullish with high at same level -->
         <line x1="50" y1="20" x2="50" y2="30" stroke="#16a34a" stroke-width="2"/>
         <rect x="38" y="30" width="24" height="35" fill="#16a34a" rx="2"/>
@@ -772,7 +740,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 240 100" width="240" height="100">
+      <svg role="img" viewBox="0 0 240 100" width="240" height="100">
+        <title>晨星 示意圖</title>
         <!-- Day 1: bearish -->
         <line x1="40" y1="10" x2="40" y2="18" stroke="#dc2626" stroke-width="2"/>
         <rect x="28" y="18" width="24" height="40" fill="#dc2626" rx="2"/>
@@ -813,7 +782,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 240 100" width="240" height="100">
+      <svg role="img" viewBox="0 0 240 100" width="240" height="100">
+        <title>暮星 示意圖</title>
         <!-- Day 1: bullish -->
         <line x1="40" y1="30" x2="40" y2="38" stroke="#16a34a" stroke-width="2"/>
         <rect x="28" y="38" width="24" height="40" fill="#16a34a" rx="2"/>
@@ -854,7 +824,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 240 100" width="240" height="100">
+      <svg role="img" viewBox="0 0 240 100" width="240" height="100">
+        <title>三白兵 示意圖</title>
         <!-- Day 1 -->
         <line x1="40" y1="55" x2="40" y2="62" stroke="#16a34a" stroke-width="2"/>
         <rect x="28" y="62" width="24" height="25" fill="#16a34a" rx="2"/>
@@ -895,7 +866,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 240 100" width="240" height="100">
+      <svg role="img" viewBox="0 0 240 100" width="240" height="100">
+        <title>三黑鴉 示意圖</title>
         <!-- Day 1 -->
         <line x1="40" y1="7" x2="40" y2="13" stroke="#dc2626" stroke-width="2"/>
         <rect x="28" y="13" width="24" height="25" fill="#dc2626" rx="2"/>
@@ -936,7 +908,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 300 100" width="240" height="80">
+      <svg role="img" viewBox="0 0 300 100" width="240" height="80">
+        <title>上升三法 示意圖</title>
         <!-- Day 1: large bullish -->
         <rect x="15" y="20" width="22" height="50" fill="#16a34a" rx="2"/>
         <line x1="26" y1="12" x2="26" y2="20" stroke="#16a34a" stroke-width="2"/>
@@ -983,7 +956,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 300 100" width="240" height="80">
+      <svg role="img" viewBox="0 0 300 100" width="240" height="80">
+        <title>下降三法 示意圖</title>
         <!-- Day 1: large bearish -->
         <rect x="15" y="20" width="22" height="50" fill="#dc2626" rx="2"/>
         <line x1="26" y1="12" x2="26" y2="20" stroke="#dc2626" stroke-width="2"/>
@@ -1030,7 +1004,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 240 100" width="240" height="100">
+      <svg role="img" viewBox="0 0 240 100" width="240" height="100">
+        <title>三內上漲/下跌 示意圖</title>
         <!-- Day 1: large bearish -->
         <line x1="40" y1="8" x2="40" y2="15" stroke="#dc2626" stroke-width="2"/>
         <rect x="28" y="15" width="24" height="50" fill="#dc2626" rx="2"/>
@@ -1063,7 +1038,7 @@ h1 {
       <strong>主力心理分析：</strong>第一根大K線代表原趨勢最後的推動力。第二根小K線（孕線）顯示主力開始反向布局但不張揚。第三根確認K線代表主力已完成佈局，公開展現新方向的意圖。三根K線完整呈現「趨勢終結→籌碼轉換→新方向確立」的過程。
     </div>
     <div class="warning-box">
-      <strong>散戶常見錯誤：</strong>只看到孕線就急於操作，沒有等待第三根確認K線。孕線僅代表趨勢暫停，沒有第三根確認不構成有效的交易訊號。耐心等待確認可大幅提高勝率。
+      <strong>散戶常見錯誤：</strong>只看到孕線就急於操作，沒有等待第三根確認K線。孕線僅代表趨勢暫停，沒有第三根確認不構成有效的交易訊號。耐心等待確認有助於過濾假訊號、傾向提高勝算，但無法保證成功，仍須搭配趨勢與量能並嚴設止損（結論須自行回測驗證）。
     </div>
   </div>
 </div>
@@ -1124,7 +1099,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>頭肩頂/底 示意圖</title>
         <!-- Left shoulder candles -->
         <rect x="8" y="70" width="6" height="20" fill="#16a34a" rx="1"/>
         <rect x="18" y="55" width="6" height="25" fill="#16a34a" rx="1"/>
@@ -1183,7 +1159,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>雙頂/雙底 (M頭/W底) 示意圖</title>
         <!-- First top -->
         <rect x="15" y="65" width="6" height="18" fill="#16a34a" rx="1"/>
         <rect x="25" y="50" width="6" height="22" fill="#16a34a" rx="1"/>
@@ -1239,7 +1216,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>上升/下降三角 示意圖</title>
         <!-- Horizontal resistance -->
         <line x1="15" y1="25" x2="170" y2="25" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
         <!-- Rising support line -->
@@ -1280,7 +1258,7 @@ h1 {
     <div class="pattern-row"><span class="pattern-label">入場方式</span><span class="pattern-value">突破水平線 + 收盤確認 + 放量。目標 = 三角形最寬處的高度。</span></div>
     <div class="pattern-row"><span class="pattern-label">可靠度</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></div>
     <div class="highlight-box">
-      <strong>量能確認：</strong>形態形成過程中成交量應逐漸萎縮（蓄力），突破時成交量應明顯放大（至少1.5倍以上均量）。縮量突破要小心假突破。三角形收斂到2/3-3/4處是最佳突破時機。
+      <strong>量能確認：</strong>形態形成過程中成交量應逐漸萎縮（蓄力），突破時成交量應明顯放大（至少1.5倍以上均量）。縮量突破要小心假突破。三角形收斂到2/3-3/4處是相對常見的突破時機（傾向而非必然，須自行回測）。
     </div>
     <div class="warning-box">
       <strong>容易混淆：</strong>對稱三角形（Symmetrical Triangle）同時有下降高點和上升低點，突破方向不確定，需等待突破確認。不要和上升/下降三角混為一談。
@@ -1292,7 +1270,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>旗形整理 示意圖</title>
         <!-- Flag pole (sharp rise) -->
         <rect x="15" y="90" width="6" height="20" fill="#16a34a" rx="1"/>
         <rect x="25" y="72" width="6" height="22" fill="#16a34a" rx="1"/>
@@ -1347,7 +1326,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>楔形 示意圖</title>
         <!-- Rising wedge (bearish) -->
         <!-- Upper trendline (steeper) -->
         <line x1="15" y1="80" x2="150" y2="15" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
@@ -1392,7 +1372,7 @@ h1 {
       <strong>量能特徵：</strong>形成過程中成交量持續萎縮（動能衰竭）。突破/跌破時量能放大確認。上升楔形中若出現長上影線連續出現，是加速崩潰的前兆。
     </div>
     <div class="warning-box">
-      <strong>容易混淆：</strong>上升通道（平行）vs 上升楔形（收斂）。平行通道中趨勢可以持續很久；楔形因為收斂必然會突破。另外，楔形需要至少5個觸及點（上軌3+下軌2 或反之）才算有效。
+      <strong>容易混淆：</strong>上升通道（平行）vs 上升楔形（收斂）。平行通道中趨勢可以持續很久；楔形因為收斂，價格空間受壓縮，傾向最終選擇方向突破，但突破的方向與時點並不確定，仍需等突破確認。另外，楔形需要至少5個觸及點（上軌3+下軌2 或反之）才算有效。
     </div>
   </div>
 </div>
@@ -1404,7 +1384,7 @@ h1 {
   <ul style="font-size:14px; color:var(--text2); line-height:2; padding-left:20px;">
     <li><strong>形態越大，效果越大</strong> — 週線級別的頭肩頂比日線級別的更可怕，目標距離也更大</li>
     <li><strong>頸線是生死線</strong> — 不破頸線一切都只是「可能」；破了才是「確認」</li>
-    <li><strong>回測頸線</strong> — 約60-70%的突破後會回測頸線，這是第二次入場機會</li>
+    <li><strong>回測頸線</strong> — 相當比例的突破後會回測頸線（確切比例因市場而異，須自行回測驗證），這往往是第二次入場機會</li>
     <li><strong>量能遞減 + 突破放量</strong> — 這是所有有效型態的共同特徵</li>
     <li><strong>時間與空間</strong> — 形態形成時間越長，突破後的目標越遠</li>
     <li><strong>假突破處理</strong> — 若突破後快速收回（1-2天內），立即止損，可能是陷阱</li>
@@ -1424,7 +1404,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>洗盤型態辨識 示意圖</title>
         <!-- Uptrend before shakeout -->
         <rect x="10" y="70" width="5" height="18" fill="#16a34a" rx="1"/>
         <rect x="20" y="60" width="5" height="16" fill="#16a34a" rx="1"/>
@@ -1479,7 +1460,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>出貨型態辨識 示意圖</title>
         <!-- High level distribution -->
         <rect x="10" y="28" width="6" height="22" fill="#16a34a" rx="1"/>
         <line x1="13" y1="25" x2="13" y2="28" stroke="#16a34a" stroke-width="1.5"/>
@@ -1542,7 +1524,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>假突破 示意圖</title>
         <!-- Resistance level -->
         <line x1="10" y1="35" x2="180" y2="35" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
         <text x="182" y="38" font-size="7" fill="#dc2626">壓力</text>
@@ -1580,7 +1563,7 @@ h1 {
     <div class="pattern-row"><span class="pattern-label">如何應對</span><span class="pattern-value">不追突破！等收盤確認後再入場。或等突破後的回測：如果回測時原壓力變支撐（不破回去）= 真突破；回測時直接跌回去 = 假突破。</span></div>
     <div class="pattern-row"><span class="pattern-label">可靠度</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
     <div class="highlight-box">
-      <strong>假突破後的操作策略：</strong>假突破確認後（收盤回到區間內），反向操作是高勝率交易。例如：向上假突破後做空，止損設在假突破高點上方，目標為區間另一側。假突破本身就是強烈的反向訊號。
+      <strong>假突破後的操作策略：</strong>假突破確認後（收盤回到區間內），反向操作是機率相對占優的交易做法，但沒有保證、仍可能失敗。例如：向上假突破後做空，止損設在假突破高點上方，目標為區間另一側，並須先設好止損。假突破本身是偏強的反向參考訊號，實際勝算須自行回測驗證。
     </div>
     <div class="warning-box">
       <strong>散戶典型錯誤：</strong>看到「突破」就無腦追入，沒有等收盤確認。被套後不願止損，期望價格「再次突破」。正確做法：突破當根K線收盤前不動作，收盤實體站穩才入場。
@@ -1592,7 +1575,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>量價配合判讀 示意圖</title>
         <!-- Price candles - uptrend -->
         <rect x="12" y="60" width="5" height="14" fill="#16a34a" rx="1"/>
         <rect x="24" y="52" width="5" height="12" fill="#16a34a" rx="1"/>
@@ -1641,7 +1625,7 @@ h1 {
     <div class="pattern-row"><span class="pattern-label">放量上漲</span><span class="pattern-value">真突破/真上漲。大量資金湧入推動價格，多頭氣勢強勁。後續看漲。</span></div>
     <div class="pattern-row"><span class="pattern-label">縮量上漲</span><span class="pattern-value">假突破/上漲乏力。沒有新資金進場，僅靠少量買盤推升。容易回落，不可追高。</span></div>
     <div class="pattern-row"><span class="pattern-label">放量下跌</span><span class="pattern-value">真崩盤/恐慌性賣壓。大量持倉者不計成本出逃。短期內不宜搶反彈。</span></div>
-    <div class="pattern-row"><span class="pattern-label">縮量下跌</span><span class="pattern-value">洗盤/下跌末段。只有少數散戶在賣，主力並未出貨。往往是底部將近的訊號。</span></div>
+    <div class="pattern-row"><span class="pattern-label">縮量下跌</span><span class="pattern-value">洗盤/下跌末段。可能是只有少數散戶在賣、大型資金並未出貨。有時是底部將近的跡象之一，但縮量也可能只是流動性枯竭、下跌未完，須配合其他訊號確認，不宜單獨當作抄底依據。</span></div>
     <div class="pattern-row"><span class="pattern-label">可靠度</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
     <div class="highlight-box">
       <strong>量價背離 — 最重要的警告信號：</strong>價格創新高但成交量未同步放大 = 頂部量價背離 = 上漲動能衰竭，即將反轉。價格創新低但成交量萎縮 = 底部量價背離 = 賣壓枯竭，即將止跌。
@@ -1656,7 +1640,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>K線型態示意圖</title>
         <!-- Phase A: Accumulation (flat with shakeout) -->
         <rect x="5" y="72" width="4" height="10" fill="#dc2626" rx="1"/>
         <rect x="12" y="70" width="4" height="12" fill="#16a34a" rx="1"/>
@@ -1725,7 +1710,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>支撐壓力位的 K 線確認 示意圖</title>
         <!-- Support level -->
         <line x1="10" y1="75" x2="190" y2="75" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,3"/>
         <text x="155" y="85" font-size="7" fill="#16a34a">支撐位</text>
@@ -1822,7 +1808,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>壓力與支撐判定方法 示意圖</title>
         <!-- Previous high/low -->
         <line x1="5" y1="20" x2="195" y2="20" stroke="#dc2626" stroke-width="1" stroke-dasharray="4,3"/>
         <text x="160" y="17" font-size="6" fill="#dc2626">前高壓力</text>
@@ -1878,7 +1865,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>布林通道實戰整合 示意圖</title>
         <!-- Middle band (MA20) -->
         <path d="M10,60 Q30,55 50,58 Q70,62 90,55 Q110,48 130,52 Q150,56 170,50 Q185,47 195,45" stroke="#2563eb" stroke-width="1.5" fill="none"/>
         <!-- Upper band -->
@@ -1937,7 +1925,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>SuperTrend 配合 K 線型態 示意圖</title>
         <!-- ST Lower Band (support in uptrend) - green -->
         <path d="M10,85 Q30,80 50,75 Q70,70 90,65 Q100,62 110,60" stroke="#16a34a" stroke-width="2" fill="none"/>
         <!-- ST Upper Band (resistance in downtrend) - red -->
@@ -1978,13 +1967,13 @@ h1 {
     </div>
   </div>
   <div class="pattern-body">
-    <div class="pattern-row"><span class="pattern-label">ST翻轉+K線確認</span><span class="pattern-value">ST翻多 + 出現多頭吞噬/晨星 = 最強做多信號。ST翻空 + 出現暮星/空頭吞噬 = 最強做空信號。雙重確認大幅提高勝率。</span></div>
+    <div class="pattern-row"><span class="pattern-label">ST翻轉+K線確認</span><span class="pattern-value">ST翻多 + 出現多頭吞噬/晨星 = 偏強的做多信號。ST翻空 + 出現暮星/空頭吞噬 = 偏強的做空信號。趨勢與型態雙重確認有助提高勝算、過濾部分假訊號，但無保證，仍須量能配合並嚴設止損（須自行回測）。</span></div>
     <div class="pattern-row"><span class="pattern-label">動態支撐壓力</span><span class="pattern-value">上升趨勢中 ST Lower Band = 動態支撐線（回調到此可接多）。下降趨勢中 ST Upper Band = 動態壓力線（反彈到此可做空）。</span></div>
     <div class="pattern-row"><span class="pattern-label">多時框共振</span><span class="pattern-value">日線ST多頭 + 4H回調到ST Lower Band + 1H出現反轉K線（Hammer/Engulfing）= 最佳入場時機。大時框定方向，小時框找入場點。</span></div>
     <div class="pattern-row"><span class="pattern-label">ST未翻轉</span><span class="pattern-value">若價格突破壓力但ST未翻轉 = 突破可能是假的。ST是趨勢的最後確認，未翻轉代表趨勢尚未真正改變。</span></div>
     <div class="pattern-row"><span class="pattern-label">可靠度</span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
     <div class="highlight-box">
-      <strong>SuperTrend 最佳參數設定：</strong>日線：ATR Period=10, Multiplier=3（標準設定）。4H：ATR=10, Mult=2.5（更靈敏）。1H：ATR=10, Mult=2（更快翻轉適合短線）。多時框一致看多/空時信心最強。
+      <strong>SuperTrend 常見參數設定：</strong>日線：ATR Period=10, Multiplier=3。4H：ATR=10, Mult=2.5（更靈敏）。1H：ATR=10, Mult=2（更快翻轉適合短線）。多時框一致看多/空時參考價值較高。<br><strong>參數選擇說明：</strong>多數平台預設的 ST(10,3) 較靈敏，適合日內至短波段（訊號多、翻轉快，但盤整時假訊號也多）；本站在大方向判斷上刻意採用超平滑的 ST(300,3)（過濾雜訊、只抓中長線趨勢，代價是轉折反應慢）。兩者適用情境不同：抓短波段進出用小參數，定大方向濾雜訊用大參數，並無單一「最佳」值，須依交易週期與標的自行回測。
     </div>
     <div class="warning-box">
       <strong>ST的局限性：</strong>盤整行情中ST會頻繁翻轉產生假信號（鞭子效應）。只在有明確趨勢的行情中使用ST。若連續3次翻轉都被止損 = 市場在盤整，應暫停使用ST策略。
@@ -1996,7 +1985,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>SuperTrend 偏離度反向交易 示意圖</title>
         <!-- ST lower band line -->
         <line x1="5" y1="40" x2="195" y2="40" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,2"/>
         <text x="5" y="35" font-size="6" fill="#2563eb">ST Lower Band</text>
@@ -2142,7 +2132,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>突破 vs 假突破確認清單 示意圖</title>
         <!-- Left: True breakout -->
         <line x1="5" y1="50" x2="90" y2="50" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2"/>
         <rect x="15" y="52" width="5" height="12" fill="#16a34a" rx="1"/>
@@ -2229,7 +2220,8 @@ h1 {
 <div class="pattern-card">
   <div class="pattern-header">
     <div class="pattern-svg">
-      <svg viewBox="0 0 200 120" width="200" height="120">
+      <svg role="img" viewBox="0 0 200 120" width="200" height="120">
+        <title>K線型態示意圖</title>
         <!-- Flow chart style -->
         <!-- Step boxes -->
         <rect x="5" y="5" width="55" height="18" fill="#2563eb" fill-opacity="0.1" stroke="#2563eb" stroke-width="1" rx="4"/>
@@ -2405,7 +2397,7 @@ h1 {
     // ===== 初級: identify single candle =====
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="20" x2="40" y2="35" stroke="#16a34a" stroke-width="2"/><rect x="30" y="35" width="20" height="12" fill="#16a34a" rx="2"/><line x1="40" y1="47" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="20" x2="40" y2="35" stroke="#16a34a" stroke-width="2"/><rect x="30" y="35" width="20" height="12" fill="#16a34a" rx="2"/><line x1="40" y1="47" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['錘子線 (Hammer)', '射擊之星 (Shooting Star)', '十字線 (Doji)', '紡錘線 (Spinning Top)'],
       correct: 0,
@@ -2413,7 +2405,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="15" x2="40" y2="55" stroke="#dc2626" stroke-width="2"/><rect x="30" y="55" width="20" height="12" fill="#dc2626" rx="2"/><line x1="40" y1="67" x2="40" y2="80" stroke="#dc2626" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="15" x2="40" y2="55" stroke="#dc2626" stroke-width="2"/><rect x="30" y="55" width="20" height="12" fill="#dc2626" rx="2"/><line x1="40" y1="67" x2="40" y2="80" stroke="#dc2626" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['錘子線 (Hammer)', '射擊之星 (Shooting Star)', '十字線 (Doji)', '墓碑十字 (Gravestone Doji)'],
       correct: 1,
@@ -2421,7 +2413,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="20" x2="40" y2="47" stroke="#334155" stroke-width="2"/><rect x="30" y="47" width="20" height="4" fill="#334155" rx="1"/><line x1="40" y1="51" x2="40" y2="80" stroke="#334155" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="20" x2="40" y2="47" stroke="#334155" stroke-width="2"/><rect x="30" y="47" width="20" height="4" fill="#334155" rx="1"/><line x1="40" y1="51" x2="40" y2="80" stroke="#334155" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['紡錘線 (Spinning Top)', '十字線 (Doji)', '墓碑十字 (Gravestone Doji)', '蜻蜓十字 (Dragonfly Doji)'],
       correct: 1,
@@ -2429,7 +2421,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="12" x2="40" y2="18" stroke="#16a34a" stroke-width="2"/><rect x="28" y="18" width="24" height="60" fill="#16a34a" rx="2"/><line x1="40" y1="78" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="12" x2="40" y2="18" stroke="#16a34a" stroke-width="2"/><rect x="28" y="18" width="24" height="60" fill="#16a34a" rx="2"/><line x1="40" y1="78" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['大陽線 (Marubozu Bullish)', '三白兵', '多頭吞噬', '錘子線 (Hammer)'],
       correct: 0,
@@ -2437,7 +2429,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="15" x2="40" y2="70" stroke="#dc2626" stroke-width="2"/><rect x="30" y="70" width="20" height="4" fill="#dc2626" rx="1"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="15" x2="40" y2="70" stroke="#dc2626" stroke-width="2"/><rect x="30" y="70" width="20" height="4" fill="#dc2626" rx="1"/></svg>',
       question: '這是什麼K線型態？',
       options: ['十字線 (Doji)', '射擊之星 (Shooting Star)', '墓碑十字 (Gravestone Doji)', '蜻蜓十字 (Dragonfly Doji)'],
       correct: 2,
@@ -2445,7 +2437,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><rect x="30" y="20" width="20" height="4" fill="#16a34a" rx="1"/><line x1="40" y1="24" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><rect x="30" y="20" width="20" height="4" fill="#16a34a" rx="1"/><line x1="40" y1="24" x2="40" y2="85" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['墓碑十字 (Gravestone Doji)', '十字線 (Doji)', '蜻蜓十字 (Dragonfly Doji)', '錘子線 (Hammer)'],
       correct: 2,
@@ -2453,7 +2445,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="20" x2="40" y2="38" stroke="#334155" stroke-width="2"/><rect x="32" y="38" width="16" height="16" fill="#334155" rx="2"/><line x1="40" y1="54" x2="40" y2="75" stroke="#334155" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="20" x2="40" y2="38" stroke="#334155" stroke-width="2"/><rect x="32" y="38" width="16" height="16" fill="#334155" rx="2"/><line x1="40" y1="54" x2="40" y2="75" stroke="#334155" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['十字線 (Doji)', '紡錘線 (Spinning Top)', '錘子線 (Hammer)', '孕線 (Harami)'],
       correct: 1,
@@ -2461,7 +2453,7 @@ h1 {
     },
     {
       difficulty: '初級',
-      svg: '<svg viewBox="0 0 80 100" width="100" height="125"><line x1="40" y1="25" x2="40" y2="32" stroke="#dc2626" stroke-width="2"/><rect x="30" y="32" width="20" height="12" fill="#dc2626" rx="2"/><line x1="40" y1="44" x2="40" y2="85" stroke="#dc2626" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 80 100" width="100" height="125"><title>待判讀的K線型態圖</title><line x1="40" y1="25" x2="40" y2="32" stroke="#dc2626" stroke-width="2"/><rect x="30" y="32" width="20" height="12" fill="#dc2626" rx="2"/><line x1="40" y1="44" x2="40" y2="85" stroke="#dc2626" stroke-width="2"/></svg>',
       question: '這是什麼K線型態？',
       options: ['錘子線 (Hammer)', '吊人線 (Hanging Man)', '蜻蜓十字 (Dragonfly Doji)', '射擊之星 (Shooting Star)'],
       correct: 1,
@@ -2470,7 +2462,7 @@ h1 {
     // ===== 中級: combo patterns + direction =====
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 140 100" width="160" height="115"><line x1="40" y1="30" x2="40" y2="38" stroke="#dc2626" stroke-width="2"/><rect x="30" y="38" width="20" height="20" fill="#dc2626" rx="2"/><line x1="40" y1="58" x2="40" y2="68" stroke="#dc2626" stroke-width="2"/><line x1="95" y1="22" x2="95" y2="30" stroke="#16a34a" stroke-width="2"/><rect x="83" y="30" width="24" height="40" fill="#16a34a" rx="2"/><line x1="95" y1="70" x2="95" y2="80" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 140 100" width="160" height="115"><title>待判讀的K線型態圖</title><line x1="40" y1="30" x2="40" y2="38" stroke="#dc2626" stroke-width="2"/><rect x="30" y="38" width="20" height="20" fill="#dc2626" rx="2"/><line x1="40" y1="58" x2="40" y2="68" stroke="#dc2626" stroke-width="2"/><line x1="95" y1="22" x2="95" y2="30" stroke="#16a34a" stroke-width="2"/><rect x="83" y="30" width="24" height="40" fill="#16a34a" rx="2"/><line x1="95" y1="70" x2="95" y2="80" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這個型態出現在底部，代表什麼信號？',
       options: ['反轉向上', '反轉向下', '持續下跌', '不確定'],
       correct: 0,
@@ -2478,7 +2470,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><line x1="30" y1="40" x2="30" y2="48" stroke="#16a34a" stroke-width="2"/><rect x="20" y="48" width="20" height="30" fill="#16a34a" rx="2"/><line x1="30" y1="78" x2="30" y2="85" stroke="#16a34a" stroke-width="2"/><line x1="100" y1="18" x2="100" y2="25" stroke="#334155" stroke-width="2"/><rect x="92" y="25" width="16" height="8" fill="#334155" rx="2"/><line x1="100" y1="33" x2="100" y2="40" stroke="#334155" stroke-width="2"/><line x1="165" y1="35" x2="165" y2="42" stroke="#dc2626" stroke-width="2"/><rect x="155" y="42" width="20" height="30" fill="#dc2626" rx="2"/><line x1="165" y1="72" x2="165" y2="82" stroke="#dc2626" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><line x1="30" y1="40" x2="30" y2="48" stroke="#16a34a" stroke-width="2"/><rect x="20" y="48" width="20" height="30" fill="#16a34a" rx="2"/><line x1="30" y1="78" x2="30" y2="85" stroke="#16a34a" stroke-width="2"/><line x1="100" y1="18" x2="100" y2="25" stroke="#334155" stroke-width="2"/><rect x="92" y="25" width="16" height="8" fill="#334155" rx="2"/><line x1="100" y1="33" x2="100" y2="40" stroke="#334155" stroke-width="2"/><line x1="165" y1="35" x2="165" y2="42" stroke="#dc2626" stroke-width="2"/><rect x="155" y="42" width="20" height="30" fill="#dc2626" rx="2"/><line x1="165" y1="72" x2="165" y2="82" stroke="#dc2626" stroke-width="2"/></svg>',
       question: '這個三K組合型態代表什麼？',
       options: ['反轉向上 (晨星)', '反轉向下 (暮星)', '持續上漲', '持續下跌'],
       correct: 1,
@@ -2486,7 +2478,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><line x1="30" y1="60" x2="30" y2="68" stroke="#dc2626" stroke-width="2"/><rect x="20" y="68" width="20" height="30" fill="#dc2626" rx="2"/><line x1="30" y1="68" x2="30" y2="60" stroke="#dc2626" stroke-width="2"/><line x1="100" y1="75" x2="100" y2="82" stroke="#334155" stroke-width="2"/><rect x="92" y="82" width="16" height="8" fill="#334155" rx="2"/><line x1="100" y1="90" x2="100" y2="95" stroke="#334155" stroke-width="2"/><line x1="165" y1="30" x2="165" y2="38" stroke="#16a34a" stroke-width="2"/><rect x="155" y="38" width="20" height="30" fill="#16a34a" rx="2"/><line x1="165" y1="68" x2="165" y2="75" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><line x1="30" y1="60" x2="30" y2="68" stroke="#dc2626" stroke-width="2"/><rect x="20" y="68" width="20" height="30" fill="#dc2626" rx="2"/><line x1="30" y1="68" x2="30" y2="60" stroke="#dc2626" stroke-width="2"/><line x1="100" y1="75" x2="100" y2="82" stroke="#334155" stroke-width="2"/><rect x="92" y="82" width="16" height="8" fill="#334155" rx="2"/><line x1="100" y1="90" x2="100" y2="95" stroke="#334155" stroke-width="2"/><line x1="165" y1="30" x2="165" y2="38" stroke="#16a34a" stroke-width="2"/><rect x="155" y="38" width="20" height="30" fill="#16a34a" rx="2"/><line x1="165" y1="68" x2="165" y2="75" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這個三K組合型態代表什麼？',
       options: ['反轉向下 (暮星)', '反轉向上 (晨星)', '持續下跌', '不確定'],
       correct: 1,
@@ -2494,7 +2486,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 140 100" width="160" height="115"><line x1="40" y1="25" x2="40" y2="32" stroke="#16a34a" stroke-width="2"/><rect x="30" y="32" width="20" height="35" fill="#16a34a" rx="2"/><line x1="40" y1="67" x2="40" y2="75" stroke="#16a34a" stroke-width="2"/><line x1="95" y1="18" x2="95" y2="25" stroke="#dc2626" stroke-width="2"/><rect x="83" y="25" width="24" height="30" fill="#dc2626" rx="2"/><line x1="95" y1="55" x2="95" y2="65" stroke="#dc2626" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 140 100" width="160" height="115"><title>待判讀的K線型態圖</title><line x1="40" y1="25" x2="40" y2="32" stroke="#16a34a" stroke-width="2"/><rect x="30" y="32" width="20" height="35" fill="#16a34a" rx="2"/><line x1="40" y1="67" x2="40" y2="75" stroke="#16a34a" stroke-width="2"/><line x1="95" y1="18" x2="95" y2="25" stroke="#dc2626" stroke-width="2"/><rect x="83" y="25" width="24" height="30" fill="#dc2626" rx="2"/><line x1="95" y1="55" x2="95" y2="65" stroke="#dc2626" stroke-width="2"/></svg>',
       question: '這是烏雲蓋頂（Dark Cloud Cover），它代表什麼信號？',
       options: ['反轉向上', '反轉向下', '持續上漲', '不確定'],
       correct: 1,
@@ -2502,7 +2494,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><line x1="30" y1="55" x2="30" y2="62" stroke="#16a34a" stroke-width="2"/><rect x="20" y="62" width="20" height="22" fill="#16a34a" rx="2"/><line x1="30" y1="84" x2="30" y2="90" stroke="#16a34a" stroke-width="2"/><line x1="100" y1="38" x2="100" y2="45" stroke="#16a34a" stroke-width="2"/><rect x="90" y="45" width="20" height="22" fill="#16a34a" rx="2"/><line x1="100" y1="67" x2="100" y2="73" stroke="#16a34a" stroke-width="2"/><line x1="165" y1="18" x2="165" y2="25" stroke="#16a34a" stroke-width="2"/><rect x="155" y="25" width="20" height="22" fill="#16a34a" rx="2"/><line x1="165" y1="47" x2="165" y2="53" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><line x1="30" y1="55" x2="30" y2="62" stroke="#16a34a" stroke-width="2"/><rect x="20" y="62" width="20" height="22" fill="#16a34a" rx="2"/><line x1="30" y1="84" x2="30" y2="90" stroke="#16a34a" stroke-width="2"/><line x1="100" y1="38" x2="100" y2="45" stroke="#16a34a" stroke-width="2"/><rect x="90" y="45" width="20" height="22" fill="#16a34a" rx="2"/><line x1="100" y1="67" x2="100" y2="73" stroke="#16a34a" stroke-width="2"/><line x1="165" y1="18" x2="165" y2="25" stroke="#16a34a" stroke-width="2"/><rect x="155" y="25" width="20" height="22" fill="#16a34a" rx="2"/><line x1="165" y1="47" x2="165" y2="53" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是三白兵（Three White Soldiers），它代表什麼？',
       options: ['趨勢持續上漲', '即將反轉向下', '盤整即將結束', '做空訊號'],
       correct: 0,
@@ -2510,7 +2502,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 140 100" width="160" height="115"><line x1="40" y1="25" x2="40" y2="32" stroke="#16a34a" stroke-width="2"/><rect x="30" y="32" width="20" height="18" fill="#16a34a" rx="2"/><line x1="40" y1="50" x2="40" y2="60" stroke="#16a34a" stroke-width="2"/><line x1="95" y1="18" x2="95" y2="25" stroke="#dc2626" stroke-width="2"/><rect x="83" y="25" width="24" height="42" fill="#dc2626" rx="2"/><line x1="95" y1="67" x2="95" y2="78" stroke="#dc2626" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 140 100" width="160" height="115"><title>待判讀的K線型態圖</title><line x1="40" y1="25" x2="40" y2="32" stroke="#16a34a" stroke-width="2"/><rect x="30" y="32" width="20" height="18" fill="#16a34a" rx="2"/><line x1="40" y1="50" x2="40" y2="60" stroke="#16a34a" stroke-width="2"/><line x1="95" y1="18" x2="95" y2="25" stroke="#dc2626" stroke-width="2"/><rect x="83" y="25" width="24" height="42" fill="#dc2626" rx="2"/><line x1="95" y1="67" x2="95" y2="78" stroke="#dc2626" stroke-width="2"/></svg>',
       question: '空頭吞噬出現在壓力位，你應該怎麼做？',
       options: ['做多', '做空', '觀望', '加倉做多'],
       correct: 1,
@@ -2518,7 +2510,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 140 100" width="160" height="115"><line x1="40" y1="10" x2="40" y2="18" stroke="#dc2626" stroke-width="2"/><rect x="28" y="18" width="24" height="45" fill="#dc2626" rx="2"/><line x1="40" y1="63" x2="40" y2="72" stroke="#dc2626" stroke-width="2"/><line x1="95" y1="30" x2="95" y2="36" stroke="#16a34a" stroke-width="2"/><rect x="85" y="36" width="20" height="16" fill="#16a34a" rx="2"/><line x1="95" y1="52" x2="95" y2="58" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 140 100" width="160" height="115"><title>待判讀的K線型態圖</title><line x1="40" y1="10" x2="40" y2="18" stroke="#dc2626" stroke-width="2"/><rect x="28" y="18" width="24" height="45" fill="#dc2626" rx="2"/><line x1="40" y1="63" x2="40" y2="72" stroke="#dc2626" stroke-width="2"/><line x1="95" y1="30" x2="95" y2="36" stroke="#16a34a" stroke-width="2"/><rect x="85" y="36" width="20" height="16" fill="#16a34a" rx="2"/><line x1="95" y1="52" x2="95" y2="58" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是孕線（Harami），出現在下跌趨勢末端代表？',
       options: ['確定反轉', '可能反轉，需等第三根確認', '持續下跌', '做空加碼'],
       correct: 1,
@@ -2526,7 +2518,7 @@ h1 {
     },
     {
       difficulty: '中級',
-      svg: '<svg viewBox="0 0 240 80" width="220" height="75"><rect x="10" y="18" width="16" height="38" fill="#16a34a" rx="2"/><line x1="18" y1="12" x2="18" y2="18" stroke="#16a34a" stroke-width="2"/><line x1="18" y1="56" x2="18" y2="62" stroke="#16a34a" stroke-width="2"/><rect x="38" y="25" width="12" height="14" fill="#dc2626" rx="1"/><line x1="44" y1="22" x2="44" y2="25" stroke="#dc2626" stroke-width="1.5"/><line x1="44" y1="39" x2="44" y2="45" stroke="#dc2626" stroke-width="1.5"/><rect x="58" y="30" width="12" height="12" fill="#dc2626" rx="1"/><line x1="64" y1="27" x2="64" y2="30" stroke="#dc2626" stroke-width="1.5"/><line x1="64" y1="42" x2="64" y2="48" stroke="#dc2626" stroke-width="1.5"/><rect x="78" y="33" width="12" height="14" fill="#dc2626" rx="1"/><line x1="84" y1="30" x2="84" y2="33" stroke="#dc2626" stroke-width="1.5"/><line x1="84" y1="47" x2="84" y2="52" stroke="#dc2626" stroke-width="1.5"/><rect x="100" y="8" width="16" height="42" fill="#16a34a" rx="2"/><line x1="108" y1="4" x2="108" y2="8" stroke="#16a34a" stroke-width="2"/><line x1="108" y1="50" x2="108" y2="56" stroke="#16a34a" stroke-width="2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 240 80" width="220" height="75"><title>待判讀的K線型態圖</title><rect x="10" y="18" width="16" height="38" fill="#16a34a" rx="2"/><line x1="18" y1="12" x2="18" y2="18" stroke="#16a34a" stroke-width="2"/><line x1="18" y1="56" x2="18" y2="62" stroke="#16a34a" stroke-width="2"/><rect x="38" y="25" width="12" height="14" fill="#dc2626" rx="1"/><line x1="44" y1="22" x2="44" y2="25" stroke="#dc2626" stroke-width="1.5"/><line x1="44" y1="39" x2="44" y2="45" stroke="#dc2626" stroke-width="1.5"/><rect x="58" y="30" width="12" height="12" fill="#dc2626" rx="1"/><line x1="64" y1="27" x2="64" y2="30" stroke="#dc2626" stroke-width="1.5"/><line x1="64" y1="42" x2="64" y2="48" stroke="#dc2626" stroke-width="1.5"/><rect x="78" y="33" width="12" height="14" fill="#dc2626" rx="1"/><line x1="84" y1="30" x2="84" y2="33" stroke="#dc2626" stroke-width="1.5"/><line x1="84" y1="47" x2="84" y2="52" stroke="#dc2626" stroke-width="1.5"/><rect x="100" y="8" width="16" height="42" fill="#16a34a" rx="2"/><line x1="108" y1="4" x2="108" y2="8" stroke="#16a34a" stroke-width="2"/><line x1="108" y1="50" x2="108" y2="56" stroke="#16a34a" stroke-width="2"/></svg>',
       question: '這是上升三法（Rising Three Methods），代表？',
       options: ['反轉向下', '持續上漲', '盤整結束方向不明', '做空訊號'],
       correct: 1,
@@ -2535,7 +2527,7 @@ h1 {
     // ===== 高級: smart money + indicator =====
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><rect x="20" y="42" width="14" height="8" fill="#16a34a" rx="1"/><line x1="27" y1="50" x2="27" y2="80" stroke="#16a34a" stroke-width="2"/><line x1="27" y1="40" x2="27" y2="42" stroke="#16a34a" stroke-width="1.5"/><rect x="45" y="40" width="14" height="10" fill="#dc2626" rx="1"/><line x1="52" y1="50" x2="52" y2="82" stroke="#dc2626" stroke-width="2"/><line x1="52" y1="38" x2="52" y2="40" stroke="#dc2626" stroke-width="1.5"/><rect x="70" y="38" width="14" height="10" fill="#16a34a" rx="1"/><line x1="77" y1="48" x2="77" y2="78" stroke="#16a34a" stroke-width="2"/><line x1="77" y1="36" x2="77" y2="38" stroke="#16a34a" stroke-width="1.5"/><rect x="95" y="36" width="14" height="12" fill="#16a34a" rx="1"/><line x1="102" y1="48" x2="102" y2="76" stroke="#16a34a" stroke-width="2"/><line x1="102" y1="34" x2="102" y2="36" stroke="#16a34a" stroke-width="1.5"/><line x1="15" y1="82" x2="120" y2="82" stroke="#16a34a" stroke-width="1" stroke-dasharray="3,2"/><text x="125" y="85" font-size="8" fill="#64748b">支撐區</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><rect x="20" y="42" width="14" height="8" fill="#16a34a" rx="1"/><line x1="27" y1="50" x2="27" y2="80" stroke="#16a34a" stroke-width="2"/><line x1="27" y1="40" x2="27" y2="42" stroke="#16a34a" stroke-width="1.5"/><rect x="45" y="40" width="14" height="10" fill="#dc2626" rx="1"/><line x1="52" y1="50" x2="52" y2="82" stroke="#dc2626" stroke-width="2"/><line x1="52" y1="38" x2="52" y2="40" stroke="#dc2626" stroke-width="1.5"/><rect x="70" y="38" width="14" height="10" fill="#16a34a" rx="1"/><line x1="77" y1="48" x2="77" y2="78" stroke="#16a34a" stroke-width="2"/><line x1="77" y1="36" x2="77" y2="38" stroke="#16a34a" stroke-width="1.5"/><rect x="95" y="36" width="14" height="12" fill="#16a34a" rx="1"/><line x1="102" y1="48" x2="102" y2="76" stroke="#16a34a" stroke-width="2"/><line x1="102" y1="34" x2="102" y2="36" stroke="#16a34a" stroke-width="1.5"/><line x1="15" y1="82" x2="120" y2="82" stroke="#16a34a" stroke-width="1" stroke-dasharray="3,2"/><text x="125" y="85" font-size="8" fill="#64748b">支撐區</text></svg>',
       question: '反覆出現長下影線（同一支撐區域），主力在做什麼？',
       options: ['出貨', '洗盤吸籌', '觀望', '軋空'],
       correct: 1,
@@ -2543,7 +2535,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><line x1="10" y1="50" x2="190" y2="50" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/><text x="155" y="45" font-size="8" fill="#dc2626">壓力位</text><rect x="30" y="52" width="12" height="14" fill="#16a34a" rx="1"/><rect x="50" y="48" width="12" height="12" fill="#16a34a" rx="1"/><rect x="75" y="45" width="14" height="16" fill="#dc2626" rx="1"/><line x1="82" y1="28" x2="82" y2="45" stroke="#dc2626" stroke-width="2"/><line x1="82" y1="61" x2="82" y2="66" stroke="#dc2626" stroke-width="2"/><rect x="100" y="55" width="12" height="18" fill="#dc2626" rx="1"/><rect x="120" y="62" width="12" height="20" fill="#dc2626" rx="1"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><line x1="10" y1="50" x2="190" y2="50" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/><text x="155" y="45" font-size="8" fill="#dc2626">壓力位</text><rect x="30" y="52" width="12" height="14" fill="#16a34a" rx="1"/><rect x="50" y="48" width="12" height="12" fill="#16a34a" rx="1"/><rect x="75" y="45" width="14" height="16" fill="#dc2626" rx="1"/><line x1="82" y1="28" x2="82" y2="45" stroke="#dc2626" stroke-width="2"/><line x1="82" y1="61" x2="82" y2="66" stroke="#dc2626" stroke-width="2"/><rect x="100" y="55" width="12" height="18" fill="#dc2626" rx="1"/><rect x="120" y="62" width="12" height="20" fill="#dc2626" rx="1"/></svg>',
       question: '突破壓力位後立即收盤回到下方（僅影線突破），這是？',
       options: ['真突破', '假突破', '持續上漲', '不確定'],
       correct: 1,
@@ -2551,7 +2543,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><rect x="15" y="28" width="14" height="10" fill="#dc2626" rx="1"/><line x1="22" y1="12" x2="22" y2="28" stroke="#dc2626" stroke-width="2"/><line x1="22" y1="38" x2="22" y2="44" stroke="#dc2626" stroke-width="2"/><rect x="38" y="26" width="14" height="12" fill="#16a34a" rx="1"/><line x1="45" y1="10" x2="45" y2="26" stroke="#16a34a" stroke-width="2"/><line x1="45" y1="38" x2="45" y2="42" stroke="#16a34a" stroke-width="2"/><rect x="61" y="30" width="14" height="8" fill="#dc2626" rx="1"/><line x1="68" y1="14" x2="68" y2="30" stroke="#dc2626" stroke-width="2"/><line x1="68" y1="38" x2="68" y2="45" stroke="#dc2626" stroke-width="2"/><rect x="84" y="28" width="14" height="14" fill="#dc2626" rx="1"/><line x1="91" y1="16" x2="91" y2="28" stroke="#dc2626" stroke-width="2"/><line x1="91" y1="42" x2="91" y2="48" stroke="#dc2626" stroke-width="2"/><rect x="115" y="92" width="70" height="6" fill="#dc2626" fill-opacity="0.3" rx="2"/><text x="125" y="88" font-size="7" fill="#dc2626">放量</text><text x="10" y="65" font-size="8" fill="#64748b">高位連續長上影+放量</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><rect x="15" y="28" width="14" height="10" fill="#dc2626" rx="1"/><line x1="22" y1="12" x2="22" y2="28" stroke="#dc2626" stroke-width="2"/><line x1="22" y1="38" x2="22" y2="44" stroke="#dc2626" stroke-width="2"/><rect x="38" y="26" width="14" height="12" fill="#16a34a" rx="1"/><line x1="45" y1="10" x2="45" y2="26" stroke="#16a34a" stroke-width="2"/><line x1="45" y1="38" x2="45" y2="42" stroke="#16a34a" stroke-width="2"/><rect x="61" y="30" width="14" height="8" fill="#dc2626" rx="1"/><line x1="68" y1="14" x2="68" y2="30" stroke="#dc2626" stroke-width="2"/><line x1="68" y1="38" x2="68" y2="45" stroke="#dc2626" stroke-width="2"/><rect x="84" y="28" width="14" height="14" fill="#dc2626" rx="1"/><line x1="91" y1="16" x2="91" y2="28" stroke="#dc2626" stroke-width="2"/><line x1="91" y1="42" x2="91" y2="48" stroke="#dc2626" stroke-width="2"/><rect x="115" y="92" width="70" height="6" fill="#dc2626" fill-opacity="0.3" rx="2"/><text x="125" y="88" font-size="7" fill="#dc2626">放量</text><text x="10" y="65" font-size="8" fill="#64748b">高位連續長上影+放量</text></svg>',
       question: '高位連續出現長上影線K線配合放量，主力在做什麼？',
       options: ['吸籌', '出貨', '洗盤', '軋空'],
       correct: 1,
@@ -2559,7 +2551,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><path d="M10,85 Q50,80 90,75 Q130,70 170,65 Q185,63 195,62" stroke="#16a34a" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/><text x="150" y="58" font-size="7" fill="#16a34a">BB下軌</text><rect x="80" y="58" width="14" height="8" fill="#16a34a" rx="1"/><line x1="87" y1="66" x2="87" y2="88" stroke="#16a34a" stroke-width="2"/><line x1="87" y1="56" x2="87" y2="58" stroke="#16a34a" stroke-width="1.5"/><text x="60" y="95" font-size="8" fill="#16a34a">Hammer</text><text x="10" y="20" font-size="9" fill="#2563eb">布林下軌 + 錘子線</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><path d="M10,85 Q50,80 90,75 Q130,70 170,65 Q185,63 195,62" stroke="#16a34a" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/><text x="150" y="58" font-size="7" fill="#16a34a">BB下軌</text><rect x="80" y="58" width="14" height="8" fill="#16a34a" rx="1"/><line x1="87" y1="66" x2="87" y2="88" stroke="#16a34a" stroke-width="2"/><line x1="87" y1="56" x2="87" y2="58" stroke="#16a34a" stroke-width="1.5"/><text x="60" y="95" font-size="8" fill="#16a34a">Hammer</text><text x="10" y="20" font-size="9" fill="#2563eb">布林下軌 + 錘子線</text></svg>',
       question: '價格觸及布林通道下軌 + 出現錘子線，應該怎麼操作？',
       options: ['做空', '做多', '觀望', '減倉'],
       correct: 1,
@@ -2567,15 +2559,15 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><path d="M10,60 Q40,58 70,60 Q100,62 130,60 Q155,58 180,60" stroke="#16a34a" stroke-width="2" fill="none"/><circle cx="130" cy="60" r="4" fill="#d97706" stroke="#d97706"/><text x="118" y="52" font-size="7" fill="#d97706">ST翻多</text><line x1="140" y1="35" x2="140" y2="42" stroke="#16a34a" stroke-width="2"/><rect x="133" y="42" width="14" height="28" fill="#16a34a" rx="2"/><line x1="140" y1="70" x2="140" y2="78" stroke="#16a34a" stroke-width="2"/><rect x="113" y="48" width="12" height="16" fill="#dc2626" rx="1"/><text x="10" y="20" font-size="9" fill="#2563eb">ST翻多 + 多頭吞噬</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><path d="M10,60 Q40,58 70,60 Q100,62 130,60 Q155,58 180,60" stroke="#16a34a" stroke-width="2" fill="none"/><circle cx="130" cy="60" r="4" fill="#d97706" stroke="#d97706"/><text x="118" y="52" font-size="7" fill="#d97706">ST翻多</text><line x1="140" y1="35" x2="140" y2="42" stroke="#16a34a" stroke-width="2"/><rect x="133" y="42" width="14" height="28" fill="#16a34a" rx="2"/><line x1="140" y1="70" x2="140" y2="78" stroke="#16a34a" stroke-width="2"/><rect x="113" y="48" width="12" height="16" fill="#dc2626" rx="1"/><text x="10" y="20" font-size="9" fill="#2563eb">ST翻多 + 多頭吞噬</text></svg>',
       question: 'SuperTrend翻多 + 出現多頭吞噬（Bullish Engulfing），該怎麼做？',
       options: ['強烈做多', '觀望', '做空', '減倉'],
       correct: 0,
-      explanation: '<strong>ST翻多 + Bullish Engulfing = 最強做多信號</strong>。<br><strong>邏輯：</strong>SuperTrend確認趨勢方向轉多，多頭吞噬確認買方力量爆發。雙重確認勝率極高。<br><strong>正確操作：</strong>積極做多，止損設在吞噬低點或ST翻轉線下方。目標看前高或1:2風報比。'
+      explanation: '<strong>ST翻多 + Bullish Engulfing = 最強做多信號</strong>。<br><strong>邏輯：</strong>SuperTrend確認趨勢方向轉多，多頭吞噬確認買方力量轉強。趨勢與型態雙重確認，勝算相對較高（非必勝，仍須量能配合、無保證）。<br><strong>正確操作：</strong>可考慮做多，先設好止損於吞噬低點或ST翻轉線下方，再進場。目標看前高或1:2風報比，並自行回測驗證。'
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><path d="M10,40 Q30,42 50,40 Q70,38 90,40 Q110,42 130,40 Q150,38 170,40 Q185,42 195,40" stroke="#dc2626" stroke-width="1" fill="none" stroke-dasharray="3,2"/><path d="M10,60 Q30,58 50,60 Q70,62 90,60 Q110,58 130,60 Q150,62 170,60 Q185,58 195,60" stroke="#16a34a" stroke-width="1" fill="none" stroke-dasharray="3,2"/><rect x="40" y="44" width="10" height="12" fill="#334155" rx="1"/><rect x="60" y="46" width="10" height="10" fill="#334155" rx="1"/><rect x="80" y="45" width="10" height="11" fill="#334155" rx="1"/><rect x="100" y="44" width="10" height="12" fill="#334155" rx="1"/><rect x="120" y="46" width="10" height="10" fill="#334155" rx="1"/><text x="30" y="20" font-size="9" fill="#2563eb">BB Squeeze + Inside Bars</text><text x="60" y="85" font-size="7" fill="#64748b">帶寬極窄+小實體K線</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><path d="M10,40 Q30,42 50,40 Q70,38 90,40 Q110,42 130,40 Q150,38 170,40 Q185,42 195,40" stroke="#dc2626" stroke-width="1" fill="none" stroke-dasharray="3,2"/><path d="M10,60 Q30,58 50,60 Q70,62 90,60 Q110,58 130,60 Q150,62 170,60 Q185,58 195,60" stroke="#16a34a" stroke-width="1" fill="none" stroke-dasharray="3,2"/><rect x="40" y="44" width="10" height="12" fill="#334155" rx="1"/><rect x="60" y="46" width="10" height="10" fill="#334155" rx="1"/><rect x="80" y="45" width="10" height="11" fill="#334155" rx="1"/><rect x="100" y="44" width="10" height="12" fill="#334155" rx="1"/><rect x="120" y="46" width="10" height="10" fill="#334155" rx="1"/><text x="30" y="20" font-size="9" fill="#2563eb">BB Squeeze + Inside Bars</text><text x="60" y="85" font-size="7" fill="#64748b">帶寬極窄+小實體K線</text></svg>',
       question: '布林通道極度收縮(Squeeze) + 連續小實體K線（Inside Bars），代表什麼？',
       options: ['即將大幅波動', '趨勢結束', '做多', '做空'],
       correct: 0,
@@ -2583,7 +2575,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><rect x="10" y="60" width="10" height="12" fill="#dc2626" rx="1"/><rect x="25" y="58" width="10" height="10" fill="#16a34a" rx="1"/><rect x="40" y="62" width="10" height="8" fill="#dc2626" rx="1"/><line x1="45" y1="70" x2="45" y2="82" stroke="#dc2626" stroke-width="1.5"/><rect x="55" y="56" width="10" height="12" fill="#16a34a" rx="1"/><rect x="70" y="54" width="10" height="10" fill="#16a34a" rx="1"/><rect x="90" y="28" width="12" height="8" fill="#dc2626" rx="1"/><line x1="96" y1="18" x2="96" y2="28" stroke="#dc2626" stroke-width="1.5"/><line x1="96" y1="36" x2="96" y2="40" stroke="#dc2626" stroke-width="1.5"/><rect x="108" y="30" width="12" height="10" fill="#16a34a" rx="1"/><rect x="126" y="32" width="12" height="8" fill="#dc2626" rx="1"/><rect x="144" y="28" width="12" height="14" fill="#dc2626" rx="1"/><rect x="162" y="35" width="12" height="16" fill="#dc2626" rx="1"/><text x="10" y="20" font-size="8" fill="#64748b">吸籌</text><text x="85" y="52" font-size="8" fill="#64748b">出貨</text><line x1="85" y1="10" x2="85" y2="95" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2"/></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><rect x="10" y="60" width="10" height="12" fill="#dc2626" rx="1"/><rect x="25" y="58" width="10" height="10" fill="#16a34a" rx="1"/><rect x="40" y="62" width="10" height="8" fill="#dc2626" rx="1"/><line x1="45" y1="70" x2="45" y2="82" stroke="#dc2626" stroke-width="1.5"/><rect x="55" y="56" width="10" height="12" fill="#16a34a" rx="1"/><rect x="70" y="54" width="10" height="10" fill="#16a34a" rx="1"/><rect x="90" y="28" width="12" height="8" fill="#dc2626" rx="1"/><line x1="96" y1="18" x2="96" y2="28" stroke="#dc2626" stroke-width="1.5"/><line x1="96" y1="36" x2="96" y2="40" stroke="#dc2626" stroke-width="1.5"/><rect x="108" y="30" width="12" height="10" fill="#16a34a" rx="1"/><rect x="126" y="32" width="12" height="8" fill="#dc2626" rx="1"/><rect x="144" y="28" width="12" height="14" fill="#dc2626" rx="1"/><rect x="162" y="35" width="12" height="16" fill="#dc2626" rx="1"/><text x="10" y="20" font-size="8" fill="#64748b">吸籌</text><text x="85" y="52" font-size="8" fill="#64748b">出貨</text><line x1="85" y1="10" x2="85" y2="95" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,2"/></svg>',
       question: '根據Wyckoff模型，高位震盪放量後開始連陰下跌，這是哪個階段？',
       options: ['吸籌', '拉升', '出貨', '下跌'],
       correct: 2,
@@ -2591,7 +2583,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><path d="M10,75 Q50,72 80,68 Q100,65 120,60" stroke="#16a34a" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/><text x="125" y="58" font-size="7" fill="#16a34a">BB下軌</text><rect x="40" y="55" width="12" height="20" fill="#dc2626" rx="1"/><line x1="46" y1="50" x2="46" y2="55" stroke="#dc2626" stroke-width="1.5"/><line x1="46" y1="75" x2="46" y2="82" stroke="#dc2626" stroke-width="1.5"/><rect x="60" y="58" width="12" height="16" fill="#dc2626" rx="1"/><line x1="66" y1="54" x2="66" y2="58" stroke="#dc2626" stroke-width="1.5"/><line x1="66" y1="74" x2="66" y2="78" stroke="#dc2626" stroke-width="1.5"/><rect x="82" y="52" width="12" height="18" fill="#16a34a" rx="1"/><line x1="88" y1="48" x2="88" y2="52" stroke="#16a34a" stroke-width="1.5"/><line x1="88" y1="70" x2="88" y2="76" stroke="#16a34a" stroke-width="1.5"/><text x="10" y="20" font-size="8" fill="#2563eb">W底: 第二低高於BB下軌</text><text x="38" y="95" font-size="7" fill="#dc2626">第一低觸BB</text><text x="78" y="95" font-size="7" fill="#16a34a">第二低未觸</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><path d="M10,75 Q50,72 80,68 Q100,65 120,60" stroke="#16a34a" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/><text x="125" y="58" font-size="7" fill="#16a34a">BB下軌</text><rect x="40" y="55" width="12" height="20" fill="#dc2626" rx="1"/><line x1="46" y1="50" x2="46" y2="55" stroke="#dc2626" stroke-width="1.5"/><line x1="46" y1="75" x2="46" y2="82" stroke="#dc2626" stroke-width="1.5"/><rect x="60" y="58" width="12" height="16" fill="#dc2626" rx="1"/><line x1="66" y1="54" x2="66" y2="58" stroke="#dc2626" stroke-width="1.5"/><line x1="66" y1="74" x2="66" y2="78" stroke="#dc2626" stroke-width="1.5"/><rect x="82" y="52" width="12" height="18" fill="#16a34a" rx="1"/><line x1="88" y1="48" x2="88" y2="52" stroke="#16a34a" stroke-width="1.5"/><line x1="88" y1="70" x2="88" y2="76" stroke="#16a34a" stroke-width="1.5"/><text x="10" y="20" font-size="8" fill="#2563eb">W底：第二低高於BB下軌</text><text x="38" y="95" font-size="7" fill="#dc2626">第一低觸BB</text><text x="78" y="95" font-size="7" fill="#16a34a">第二低未觸</text></svg>',
       question: 'W底形態中，第二個低點在布林下軌上方（未觸碰），代表？',
       options: ['雙底確認（做多）', '假突破', '頭肩底', '三角收斂'],
       correct: 0,
@@ -2599,7 +2591,7 @@ h1 {
     },
     {
       difficulty: '高級',
-      svg: '<svg viewBox="0 0 200 100" width="200" height="100"><text x="10" y="15" font-size="7" fill="#dc2626">日線 ST 空頭</text><path d="M10,20 Q60,22 110,25 Q150,27 190,30" stroke="#dc2626" stroke-width="1.5" fill="none"/><text x="10" y="42" font-size="7" fill="#d97706">4H 回調到ST</text><path d="M60,48 Q90,50 120,52 Q145,54 170,56" stroke="#d97706" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/><text x="10" y="68" font-size="7" fill="#16a34a">1H 出現錘子線</text><rect x="130" y="60" width="12" height="8" fill="#16a34a" rx="1"/><line x1="136" y1="68" x2="136" y2="85" stroke="#16a34a" stroke-width="2"/><line x1="136" y1="58" x2="136" y2="60" stroke="#16a34a" stroke-width="1.5"/><text x="148" y="75" font-size="7" fill="#16a34a">Hammer</text></svg>',
+      svg: '<svg role="img" viewBox="0 0 200 100" width="200" height="100"><title>待判讀的K線型態圖</title><text x="10" y="15" font-size="7" fill="#dc2626">日線 ST 空頭</text><path d="M10,20 Q60,22 110,25 Q150,27 190,30" stroke="#dc2626" stroke-width="1.5" fill="none"/><text x="10" y="42" font-size="7" fill="#d97706">4H 回調到ST</text><path d="M60,48 Q90,50 120,52 Q145,54 170,56" stroke="#d97706" stroke-width="1.2" fill="none" stroke-dasharray="3,2"/><text x="10" y="68" font-size="7" fill="#16a34a">1H 出現錘子線</text><rect x="130" y="60" width="12" height="8" fill="#16a34a" rx="1"/><line x1="136" y1="68" x2="136" y2="85" stroke="#16a34a" stroke-width="2"/><line x1="136" y1="58" x2="136" y2="60" stroke="#16a34a" stroke-width="1.5"/><text x="148" y="75" font-size="7" fill="#16a34a">Hammer</text></svg>',
       question: '日線ST空頭 + 4H回調到ST上軌 + 1H出現錘子線，應該？',
       options: ['做多', '做空', '觀望', '加空'],
       correct: 1,
@@ -2652,7 +2644,7 @@ h1 {
   }
 
   function updateScore() {
-    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+    scoreEl.textContent = '得分：' + score + ' / ' + total;
   }
 
   function showQuestion() {
@@ -2761,7 +2753,7 @@ h1 {
   <tbody>
     <!-- Tab 1: 基礎K線 (8) -->
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="5" width="16" height="28" fill="#16a34a" rx="1"/><line x1="30" y1="3" x2="30" y2="5" stroke="#16a34a" stroke-width="1.5"/><line x1="30" y1="33" x2="30" y2="37" stroke="#16a34a" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="5" width="16" height="28" fill="#16a34a" rx="1"/><line x1="30" y1="3" x2="30" y2="5" stroke="#16a34a" stroke-width="1.5"/><line x1="30" y1="33" x2="30" y2="37" stroke="#16a34a" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">大陽線</td>
       <td style="padding:8px 6px; color:var(--text3);">Marubozu Bullish</td>
       <td style="padding:8px 6px; text-align:center;">底部/突破</td>
@@ -2770,7 +2762,7 @@ h1 {
       <td style="padding:8px 6px;">主力大量吃貨拉抬，不給散戶低接機會</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="5" width="16" height="28" fill="#dc2626" rx="1"/><line x1="30" y1="3" x2="30" y2="5" stroke="#dc2626" stroke-width="1.5"/><line x1="30" y1="33" x2="30" y2="37" stroke="#dc2626" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="5" width="16" height="28" fill="#dc2626" rx="1"/><line x1="30" y1="3" x2="30" y2="5" stroke="#dc2626" stroke-width="1.5"/><line x1="30" y1="33" x2="30" y2="37" stroke="#dc2626" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">大陰線</td>
       <td style="padding:8px 6px; color:var(--text3);">Marubozu Bearish</td>
       <td style="padding:8px 6px; text-align:center;">頂部/跌破</td>
@@ -2779,7 +2771,7 @@ h1 {
       <td style="padding:8px 6px;">主力大量出貨不惜打壓，清倉意圖明確</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="5" x2="30" y2="18" stroke="#334155" stroke-width="1.5"/><rect x="22" y="18" width="16" height="3" fill="#334155" rx="1"/><line x1="30" y1="21" x2="30" y2="35" stroke="#334155" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="5" x2="30" y2="18" stroke="#334155" stroke-width="1.5"/><rect x="22" y="18" width="16" height="3" fill="#334155" rx="1"/><line x1="30" y1="21" x2="30" y2="35" stroke="#334155" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">十字線</td>
       <td style="padding:8px 6px; color:var(--text3);">Doji</td>
       <td style="padding:8px 6px; text-align:center;">任何</td>
@@ -2788,7 +2780,7 @@ h1 {
       <td style="padding:8px 6px;">主力試探市場反應，多空暫時均衡</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="3" x2="30" y2="18" stroke="#dc2626" stroke-width="1.5"/><rect x="22" y="18" width="16" height="10" fill="#dc2626" rx="1"/><line x1="30" y1="28" x2="30" y2="33" stroke="#dc2626" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="3" x2="30" y2="18" stroke="#dc2626" stroke-width="1.5"/><rect x="22" y="18" width="16" height="10" fill="#dc2626" rx="1"/><line x1="30" y1="28" x2="30" y2="33" stroke="#dc2626" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">射擊之星</td>
       <td style="padding:8px 6px; color:var(--text3);">Shooting Star</td>
       <td style="padding:8px 6px; text-align:center;">頂部</td>
@@ -2797,7 +2789,7 @@ h1 {
       <td style="padding:8px 6px;">主力拉高出貨，散戶追高被套</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="6" x2="30" y2="10" stroke="#16a34a" stroke-width="1.5"/><rect x="22" y="10" width="16" height="8" fill="#16a34a" rx="1"/><line x1="30" y1="18" x2="30" y2="36" stroke="#16a34a" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="6" x2="30" y2="10" stroke="#16a34a" stroke-width="1.5"/><rect x="22" y="10" width="16" height="8" fill="#16a34a" rx="1"/><line x1="30" y1="18" x2="30" y2="36" stroke="#16a34a" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">錘子線</td>
       <td style="padding:8px 6px; color:var(--text3);">Hammer</td>
       <td style="padding:8px 6px; text-align:center;">底部</td>
@@ -2806,7 +2798,7 @@ h1 {
       <td style="padding:8px 6px;">主力急跌洗盤後大量吸籌拉回</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="8" x2="30" y2="15" stroke="#334155" stroke-width="1.5"/><rect x="24" y="15" width="12" height="10" fill="#334155" rx="1"/><line x1="30" y1="25" x2="30" y2="33" stroke="#334155" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="8" x2="30" y2="15" stroke="#334155" stroke-width="1.5"/><rect x="24" y="15" width="12" height="10" fill="#334155" rx="1"/><line x1="30" y1="25" x2="30" y2="33" stroke="#334155" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">紡錘線</td>
       <td style="padding:8px 6px; color:var(--text3);">Spinning Top</td>
       <td style="padding:8px 6px; text-align:center;">任何</td>
@@ -2815,7 +2807,7 @@ h1 {
       <td style="padding:8px 6px;">主力按兵不動，連續出現代表動能衰竭</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="5" x2="30" y2="28" stroke="#dc2626" stroke-width="1.5"/><rect x="22" y="28" width="16" height="3" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><line x1="30" y1="5" x2="30" y2="28" stroke="#dc2626" stroke-width="1.5"/><rect x="22" y="28" width="16" height="3" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">墓碑十字</td>
       <td style="padding:8px 6px; color:var(--text3);">Gravestone Doji</td>
       <td style="padding:8px 6px; text-align:center;">頂部</td>
@@ -2824,7 +2816,7 @@ h1 {
       <td style="padding:8px 6px;">主力拉高倒貨後撤退，最危險出貨訊號</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="8" width="16" height="3" fill="#16a34a" rx="1"/><line x1="30" y1="11" x2="30" y2="36" stroke="#16a34a" stroke-width="1.5"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="22" y="8" width="16" height="3" fill="#16a34a" rx="1"/><line x1="30" y1="11" x2="30" y2="36" stroke="#16a34a" stroke-width="1.5"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">蜻蜓十字</td>
       <td style="padding:8px 6px; color:var(--text3);">Dragonfly Doji</td>
       <td style="padding:8px 6px; text-align:center;">底部</td>
@@ -2837,7 +2829,7 @@ h1 {
       <td colspan="7" style="padding:8px 6px; font-weight:700; color:var(--blue); font-size:12px;">雙 K 組合型態</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="12" width="10" height="14" fill="#dc2626" rx="1"/><rect x="26" y="8" width="14" height="24" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="12" width="10" height="14" fill="#dc2626" rx="1"/><rect x="26" y="8" width="14" height="24" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">多頭吞噬</td>
       <td style="padding:8px 6px; color:var(--text3);">Bullish Engulfing</td>
       <td style="padding:8px 6px; text-align:center;">底部</td>
@@ -2846,7 +2838,7 @@ h1 {
       <td style="padding:8px 6px;">主力完成洗盤後大舉買入，不計成本掃貨</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="14" width="10" height="14" fill="#16a34a" rx="1"/><rect x="26" y="8" width="14" height="26" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="14" width="10" height="14" fill="#16a34a" rx="1"/><rect x="26" y="8" width="14" height="26" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">空頭吞噬</td>
       <td style="padding:8px 6px; color:var(--text3);">Bearish Engulfing</td>
       <td style="padding:8px 6px; text-align:center;">頂部</td>
@@ -2855,7 +2847,7 @@ h1 {
       <td style="padding:8px 6px;">主力製造假象後高開低走大量出貨</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="10" width="10" height="22" fill="#16a34a" rx="1"/><rect x="28" y="6" width="12" height="18" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="10" width="10" height="22" fill="#16a34a" rx="1"/><rect x="28" y="6" width="12" height="18" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">烏雲蓋頂</td>
       <td style="padding:8px 6px; color:var(--text3);">Dark Cloud Cover</td>
       <td style="padding:8px 6px; text-align:center;">頂部</td>
@@ -2864,7 +2856,7 @@ h1 {
       <td style="padding:8px 6px;">主力高開誘多後反手做空出貨</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="8" width="10" height="22" fill="#dc2626" rx="1"/><rect x="28" y="12" width="12" height="18" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="8" width="10" height="22" fill="#dc2626" rx="1"/><rect x="28" y="12" width="12" height="18" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">刺穿線</td>
       <td style="padding:8px 6px; color:var(--text3);">Piercing Pattern</td>
       <td style="padding:8px 6px; text-align:center;">底部</td>
@@ -2873,7 +2865,7 @@ h1 {
       <td style="padding:8px 6px;">主力低開製造恐慌後大量吃貨拉回</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="8" y="6" width="14" height="28" fill="#dc2626" rx="1"/><rect x="28" y="14" width="10" height="12" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="8" y="6" width="14" height="28" fill="#dc2626" rx="1"/><rect x="28" y="14" width="10" height="12" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">孕線</td>
       <td style="padding:8px 6px; color:var(--text3);">Harami</td>
       <td style="padding:8px 6px; text-align:center;">任何</td>
@@ -2882,7 +2874,7 @@ h1 {
       <td style="padding:8px 6px;">主力開始收手觀望，波動縮小浮籌清洗中</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="8" width="10" height="18" fill="#16a34a" rx="1"/><line x1="15" y1="5" x2="15" y2="8" stroke="#16a34a" stroke-width="1"/><rect x="30" y="8" width="10" height="18" fill="#dc2626" rx="1"/><line x1="35" y1="5" x2="35" y2="8" stroke="#dc2626" stroke-width="1"/><line x1="5" y1="5" x2="50" y2="5" stroke="#64748b" stroke-width="0.8" stroke-dasharray="2,1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="10" y="8" width="10" height="18" fill="#16a34a" rx="1"/><line x1="15" y1="5" x2="15" y2="8" stroke="#16a34a" stroke-width="1"/><rect x="30" y="8" width="10" height="18" fill="#dc2626" rx="1"/><line x1="35" y1="5" x2="35" y2="8" stroke="#dc2626" stroke-width="1"/><line x1="5" y1="5" x2="50" y2="5" stroke="#64748b" stroke-width="0.8" stroke-dasharray="2,1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">平頭頂/底</td>
       <td style="padding:8px 6px; color:var(--text3);">Tweezer Top/Bottom</td>
       <td style="padding:8px 6px; text-align:center;">頂部/底部</td>
@@ -2895,7 +2887,7 @@ h1 {
       <td colspan="7" style="padding:8px 6px; font-weight:700; color:var(--blue); font-size:12px;">三 K 及多 K 組合型態</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="8" width="8" height="18" fill="#dc2626" rx="1"/><rect x="17" y="22" width="6" height="5" fill="#334155" rx="1"/><rect x="28" y="8" width="8" height="18" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="8" width="8" height="18" fill="#dc2626" rx="1"/><rect x="17" y="22" width="6" height="5" fill="#334155" rx="1"/><rect x="28" y="8" width="8" height="18" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">晨星</td>
       <td style="padding:8px 6px; color:var(--text3);">Morning Star</td>
       <td style="padding:8px 6px; text-align:center;">底部</td>
@@ -2904,7 +2896,7 @@ h1 {
       <td style="padding:8px 6px;">打壓洗盤→悄悄建倉→公開亮牌做多</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="14" width="8" height="18" fill="#16a34a" rx="1"/><rect x="17" y="8" width="6" height="5" fill="#334155" rx="1"/><rect x="28" y="14" width="8" height="18" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="14" width="8" height="18" fill="#16a34a" rx="1"/><rect x="17" y="8" width="6" height="5" fill="#334155" rx="1"/><rect x="28" y="14" width="8" height="18" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">暮星</td>
       <td style="padding:8px 6px; color:var(--text3);">Evening Star</td>
       <td style="padding:8px 6px; text-align:center;">頂部</td>
@@ -2913,7 +2905,7 @@ h1 {
       <td style="padding:8px 6px;">最後拉抬→分批出貨→加速清倉</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="22" width="8" height="12" fill="#16a34a" rx="1"/><rect x="17" y="14" width="8" height="12" fill="#16a34a" rx="1"/><rect x="30" y="6" width="8" height="12" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="22" width="8" height="12" fill="#16a34a" rx="1"/><rect x="17" y="14" width="8" height="12" fill="#16a34a" rx="1"/><rect x="30" y="6" width="8" height="12" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">三白兵</td>
       <td style="padding:8px 6px; color:var(--text3);">Three White Soldiers</td>
       <td style="padding:8px 6px; text-align:center;">底部/突破</td>
@@ -2922,7 +2914,7 @@ h1 {
       <td style="padding:8px 6px;">主力有紀律分批拉升，穩步推升建倉中</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="6" width="8" height="12" fill="#dc2626" rx="1"/><rect x="17" y="14" width="8" height="12" fill="#dc2626" rx="1"/><rect x="30" y="22" width="8" height="12" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="6" width="8" height="12" fill="#dc2626" rx="1"/><rect x="17" y="14" width="8" height="12" fill="#dc2626" rx="1"/><rect x="30" y="22" width="8" height="12" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">三黑鴉</td>
       <td style="padding:8px 6px; color:var(--text3);">Three Black Crows</td>
       <td style="padding:8px 6px; text-align:center;">頂部/跌破</td>
@@ -2931,7 +2923,7 @@ h1 {
       <td style="padding:8px 6px;">主力有計劃分批出貨，每天穩定降低股價</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="3" y="10" width="8" height="22" fill="#16a34a" rx="1"/><rect x="14" y="14" width="5" height="8" fill="#dc2626" rx="1"/><rect x="22" y="16" width="5" height="7" fill="#dc2626" rx="1"/><rect x="30" y="4" width="8" height="24" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="3" y="10" width="8" height="22" fill="#16a34a" rx="1"/><rect x="14" y="14" width="5" height="8" fill="#dc2626" rx="1"/><rect x="22" y="16" width="5" height="7" fill="#dc2626" rx="1"/><rect x="30" y="4" width="8" height="24" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">上升三法</td>
       <td style="padding:8px 6px; color:var(--text3);">Rising Three Methods</td>
       <td style="padding:8px 6px; text-align:center;">上升中途</td>
@@ -2940,7 +2932,7 @@ h1 {
       <td style="padding:8px 6px;">拉升後洗浮籌，完畢再拉</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="3" y="8" width="8" height="22" fill="#dc2626" rx="1"/><rect x="14" y="14" width="5" height="8" fill="#16a34a" rx="1"/><rect x="22" y="12" width="5" height="7" fill="#16a34a" rx="1"/><rect x="30" y="14" width="8" height="24" fill="#dc2626" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="3" y="8" width="8" height="22" fill="#dc2626" rx="1"/><rect x="14" y="14" width="5" height="8" fill="#16a34a" rx="1"/><rect x="22" y="12" width="5" height="7" fill="#16a34a" rx="1"/><rect x="30" y="14" width="8" height="24" fill="#dc2626" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">下降三法</td>
       <td style="padding:8px 6px; color:var(--text3);">Falling Three Methods</td>
       <td style="padding:8px 6px; text-align:center;">下降中途</td>
@@ -2949,7 +2941,7 @@ h1 {
       <td style="padding:8px 6px;">假反彈讓散戶抱希望，再繼續打壓</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
-      <td style="padding:8px 6px; text-align:center;"><svg viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="6" width="10" height="24" fill="#dc2626" rx="1"/><rect x="18" y="12" width="7" height="10" fill="#16a34a" rx="1"/><rect x="30" y="4" width="8" height="16" fill="#16a34a" rx="1"/></svg></td>
+      <td style="padding:8px 6px; text-align:center;"><svg aria-hidden="true" viewBox="0 0 60 40" width="50" height="34"><rect x="4" y="6" width="10" height="24" fill="#dc2626" rx="1"/><rect x="18" y="12" width="7" height="10" fill="#16a34a" rx="1"/><rect x="30" y="4" width="8" height="16" fill="#16a34a" rx="1"/></svg></td>
       <td style="padding:8px 6px; font-weight:600;">三內上漲/下跌</td>
       <td style="padding:8px 6px; color:var(--text3);">Three Inside Up/Down</td>
       <td style="padding:8px 6px; text-align:center;">趨勢末端</td>
@@ -3001,7 +2993,7 @@ h1 {
       <td style="padding:10px 6px;">SuperTrend 由空翻多/由多翻空</td>
       <td style="padding:10px 6px;">多頭吞噬/空頭吞噬 + 翻轉同步出現</td>
       <td style="padding:10px 6px; text-align:center;">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
-      <td style="padding:10px 6px; font-weight:500;">最強信號！ST翻多+吞噬=積極做多；翻空+吞噬=積極做空</td>
+      <td style="padding:10px 6px; font-weight:500;">偏強信號：ST翻多+吞噬傾向做多；翻空+吞噬傾向做空（須量能配合、先設止損，無保證）</td>
     </tr>
     <tr style="border-bottom:1px solid var(--border);">
       <td style="padding:10px 6px; font-weight:600;">ST Band 支撐</td>
@@ -3022,7 +3014,7 @@ h1 {
       <td style="padding:10px 6px;">識別方法：影線突破收盤回、ST未翻、縮量</td>
       <td style="padding:10px 6px;">長上影線/長下影線（僅影線越過關鍵位）</td>
       <td style="padding:10px 6px; text-align:center;">&#9733;&#9733;&#9733;&#9733;&#9733;</td>
-      <td style="padding:10px 6px; font-weight:500;">確認假突破後反向操作是高勝率交易；不追盤中突破</td>
+      <td style="padding:10px 6px; font-weight:500;">確認假突破後反向操作勝算相對較高（非必勝，先設止損）；不追盤中突破</td>
     </tr>
   </tbody>
 </table>

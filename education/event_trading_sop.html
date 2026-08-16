@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>事件交易 SOP — CPI/NFP/FOMC 前中後操作流程</title>
 <link rel="stylesheet" href="common.css">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 .subtitle{font-size:14px;color:var(--text3);margin-bottom:24px}
 .section-title{font-size:20px;font-weight:700;color:var(--blue);margin:24px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>事件交易 SOP</h1>
 <p class="subtitle">CPI / NFP / FOMC 前中後的標準操作流程 — 不要再因為持倉過事件而爆倉</p>
@@ -321,9 +321,9 @@
 
 <!-- ==================== TAB 6 ==================== -->
 <div class="tab-content" id="tab6">
-<h2 class="section-title">互動測驗 — 50 題事件交易情境</h2>
+<h2 class="section-title">互動測驗 — 51 題事件交易情境</h2>
 
-<div id="quiz-score-bar">正確：<span id="score-display">0</span> / 50</div>
+<div id="quiz-score-bar">正確：<span id="score-display">0</span> / <span id="total-display">51</span></div>
 <div id="quiz-container"></div>
 <div id="quiz-final">
   <h2 id="quiz-final-text"></h2>
@@ -408,6 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let score = 0;
   let answered = 0;
   const container = document.getElementById('quiz-container');
+  document.getElementById('total-display').textContent = quizData.length;
 
   quizData.forEach((q, idx) => {
     const div = document.createElement('div');

@@ -4,98 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>永續合約籌碼分析完全教學 — OI / CVD / Funding / 清算圖</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --yellow: #d97706;
-  --yellow-l: #fef3c7;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.7;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 8px;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin-right: 20px;
-}
-.back-link:hover { text-decoration: underline; }
-
-h1 {
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-.subtitle {
-  font-size: 14px;
-  color: var(--text3);
-  margin-bottom: 24px;
-}
-
-.tab-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 6px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-sm);
-}
-.tab-btn {
-  padding: 10px 16px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .15s;
-  font-family: inherit;
-}
-.tab-btn:hover { background: var(--bg3); }
-.tab-btn.active {
-  background: var(--blue);
-  color: #fff;
-  font-weight: 600;
-}
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* Page-specific styles only; base tokens/body/tabs/cards/boxes/tables inherit from common.css */
 
 .section-title {
   font-size: 22px;
@@ -103,16 +15,6 @@ h1 {
   margin-bottom: 20px;
   color: var(--text);
 }
-
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
-}
-.card:hover { box-shadow: var(--shadow); }
 
 .card h3 {
   font-size: 17px;
@@ -132,7 +34,7 @@ h1 {
 .card p, .card li {
   font-size: 14px;
   color: var(--text2);
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .card ul, .card ol {
@@ -142,28 +44,7 @@ h1 {
 
 .card li { margin-bottom: 6px; }
 
-.highlight-box {
-  background: var(--blue-l);
-  border-left: 3px solid var(--blue);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
 .highlight-box strong { color: var(--blue); }
-
-.warning-box {
-  background: var(--red-l);
-  border-left: 3px solid var(--red);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
 .warning-box strong { color: var(--red); }
 
 .green-box {
@@ -215,24 +96,6 @@ h1 {
 
 .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  margin-top: 12px;
-}
-table th, table td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-}
-table th {
-  background: var(--bg3);
-  font-weight: 700;
-  font-size: 12px;
-}
-table tr:hover { background: var(--bg3); }
-
 .step-num {
   display: inline-flex;
   align-items: center;
@@ -260,8 +123,7 @@ table tr:hover { background: var(--bg3); }
 <body>
 
 <div>
-  <a href="trade_home.html" class="back-link">&larr; 回首頁</a>
-  <a href="candlestick_patterns.html" class="back-link">&larr; K線型態教學</a>
+  <a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 </div>
 
 <h1>永續合約籌碼分析完全教學</h1>
@@ -279,6 +141,7 @@ table tr:hover { background: var(--bg3); }
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
 <h3 style="color:#ea580c;">⚠️ 使用限制</h3>
 <p>OI/CVD/Funding 等衍生品指標提供<strong>概率傾向</strong>而非確定方向。OI↑+Price↑ 代表新多頭可能性高，但也可能是空頭加碼做對沖。CVD 不可單獨使用 — 必須配合 OI 和價格方向。所有框架都有失效時期，特別是在極端事件或流動性危機中。</p>
+<p style="margin-top:8px;"><strong style="color:#9a3412;">適用範圍界線：</strong>本頁 OI/CVD/Funding/清算僅適用<strong>加密永續合約</strong>；黃金、白銀等商品籌碼請看 COMEX COT 與 LBMA 本場數據，切勿以幣安等永續資費推論商品多空（永續資費是價格影子，影響不了商品本體）。</p>
 </div>
 
 <!-- ==================== TAB 1: OI 研判 ==================== -->
@@ -297,7 +160,8 @@ table tr:hover { background: var(--bg3); }
   <strong>核心概念：</strong>OI 反映的是市場中「未結算的槓桿」有多少。OI 越高，代表場上的賭注越大，一旦方向明確，波動也越劇烈。
 </div>
 <div class="svg-container">
-  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleOiMech">
+    <title id="svgTitleOiMech">OI 變化機制示意圖</title>
     <text x="250" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">OI 變化機制</text>
     <!-- OI Increase -->
     <rect x="20" y="40" width="140" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
@@ -328,7 +192,8 @@ table tr:hover { background: var(--bg3); }
 <p>這是 OI 分析中最重要的框架。透過 OI 變化方向 + 價格變化方向的組合，判斷市場中「誰在做什麼」。</p>
 
 <div class="svg-container">
-  <svg viewBox="0 0 520 320" width="100%" style="max-width:520px">
+  <svg viewBox="0 0 520 320" width="100%" style="max-width:520px" role="img" aria-labelledby="svgTitleQuadrant">
+    <title id="svgTitleQuadrant">OI + Price 四象限分析圖</title>
     <text x="260" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">OI + Price 四象限分析</text>
     <!-- Axes -->
     <line x1="260" y1="40" x2="260" y2="300" stroke="#cbd5e1" stroke-width="2"/>
@@ -409,7 +274,8 @@ table tr:hover { background: var(--bg3); }
   <li>OI 緩慢上升 = 市場參與度增加，醞釀大波動</li>
 </ul>
 <div class="svg-container">
-  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px" role="img" aria-labelledby="svgTitleOiVol">
+    <title id="svgTitleOiVol">OI 水位與波動關係圖</title>
     <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">OI 水位與波動關係</text>
     <!-- OI line (rising) -->
     <path d="M40,160 Q80,155 120,145 Q160,135 200,120 Q240,100 280,85 Q320,70 360,60 Q400,55 440,50" stroke="#2563eb" stroke-width="2.5" fill="none"/>
@@ -441,7 +307,8 @@ table tr:hover { background: var(--bg3); }
   <li>Binance BTC 永續的清算引擎是最大的「鯨魚」</li>
 </ul>
 <div class="svg-container">
-  <svg viewBox="0 0 460 160" width="100%" style="max-width:460px">
+  <svg viewBox="0 0 460 160" width="100%" style="max-width:460px" role="img" aria-labelledby="svgTitleCascade1">
+    <title id="svgTitleCascade1">清算級聯反應流程圖</title>
     <text x="230" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算級聯反應</text>
     <!-- Step boxes -->
     <rect x="10" y="40" width="100" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
@@ -508,7 +375,8 @@ table tr:hover { background: var(--bg3); }
   <strong>CVD vs 單純成交量：</strong>成交量只告訴你「交易活躍度」，CVD 告訴你「誰更急著交易」。一個急著買的人比 10 個掛單等待的人更能推動價格。
 </div>
 <div class="svg-container">
-  <svg viewBox="0 0 480 180" width="100%" style="max-width:480px">
+  <svg viewBox="0 0 480 180" width="100%" style="max-width:480px" role="img" aria-labelledby="svgTitleCvdCalc">
+    <title id="svgTitleCvdCalc">CVD 累計原理示意圖</title>
     <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 累計原理</text>
     <!-- Order book visualization -->
     <rect x="30" y="35" width="180" height="130" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
@@ -529,7 +397,7 @@ table tr:hover { background: var(--bg3); }
     <!-- Result -->
     <rect x="260" y="50" width="190" height="100" rx="8" fill="#dbeafe" stroke="#2563eb"/>
     <text x="355" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">CVD 計算</text>
-    <text x="275" y="92" font-size="10" fill="#334155">每根 K 線:</text>
+    <text x="275" y="92" font-size="10" fill="#334155">每根 K 線：</text>
     <text x="275" y="110" font-size="10" font-family="JetBrains Mono" fill="#334155">delta = TakerBuy - TakerSell</text>
     <text x="275" y="130" font-size="10" fill="#334155">CVD = &Sigma; delta (累加)</text>
     <text x="275" y="146" font-size="9" fill="#64748b">CVD 是趨勢型指標</text>
@@ -546,7 +414,8 @@ table tr:hover { background: var(--bg3); }
   <li><strong>CVD 走平</strong> = 買賣平衡，市場進入觀望</li>
 </ul>
 <div class="svg-container">
-  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px">
+  <svg viewBox="0 0 480 200" width="100%" style="max-width:480px" role="img" aria-labelledby="svgTitleCvdTrend">
+    <title id="svgTitleCvdTrend">CVD 趨勢方向圖</title>
     <text x="240" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 趨勢方向</text>
     <!-- Axes -->
     <line x1="40" y1="30" x2="40" y2="180" stroke="#cbd5e1" stroke-width="1"/>
@@ -567,7 +436,8 @@ table tr:hover { background: var(--bg3); }
 <p>CVD 背離是判斷假突破和趨勢反轉最有力的工具之一。</p>
 
 <div class="svg-container">
-  <svg viewBox="0 0 500 240" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 240" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleCvdDiv">
+    <title id="svgTitleCvdDiv">CVD 頂背離示意圖</title>
     <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">CVD 頂背離（Bearish Divergence）</text>
     <!-- Price chart -->
     <text x="50" y="40" font-size="9" fill="#334155">Price</text>
@@ -692,7 +562,8 @@ table tr:hover { background: var(--bg3); }
   <li><strong>結算頻率：</strong>每 8 小時結算一次（00:00 / 08:00 / 16:00 UTC）</li>
 </ul>
 <div class="svg-container">
-  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 180" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleFundMech">
+    <title id="svgTitleFundMech">Funding Rate 機制示意圖</title>
     <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 機制</text>
     <!-- Positive funding -->
     <rect x="30" y="35" width="200" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
@@ -715,7 +586,8 @@ table tr:hover { background: var(--bg3); }
 <div class="card">
 <h3>2. Funding 極端值的意義</h3>
 <div class="svg-container">
-  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleFundRange">
+    <title id="svgTitleFundRange">Funding Rate 區間與含義圖</title>
     <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 區間與含義</text>
     <!-- Horizontal bar chart representation -->
     <line x1="250" y1="40" x2="250" y2="180" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -815,11 +687,12 @@ table tr:hover { background: var(--bg3); }
 <h3>4. Funding Rate 套利</h3>
 <p>當 Funding 持續為正且較高時，可以進行「資金費率套利」：</p>
 <div class="green-box">
-  <strong>策略：</strong>永續合約做空 + 現貨做多 = Delta Neutral（市場漲跌都無風險）+ 收取 Funding 費<br><br>
-  <strong>年化收益計算：</strong><br>
+  <strong>策略：</strong>永續合約做空 + 現貨做多 = <strong>方向中性</strong>（Delta 近零，不受單純漲跌影響）+ 收取 Funding 費。<strong>但並非無風險</strong>：仍有清算、資費反轉（由收錢變付錢）、基差滑點與交易所對手方（跑路/凍結）風險。<br><br>
+  <strong>年化收益計算（理想上限，示意）：</strong><br>
   <span class="mono">假設平均 Funding = 0.03% / 8H</span><br>
   <span class="mono">日收益 = 0.03% x 3 = 0.09%</span><br>
-  <span class="mono">年化 = 0.09% x 365 = 32.85%</span>
+  <span class="mono">年化 = 0.09% x 365 = 32.85%</span><br>
+  <span style="font-size:12px;">※ 未計交易手續費與兩腿資金占用，且假設 Funding 全程維持高位；實際收益通常遠低於此，須自行回測驗證。</span>
 </div>
 <h4>風險注意</h4>
 <ul>
@@ -894,7 +767,8 @@ table tr:hover { background: var(--bg3); }
 <h3>1. 清算熱力圖 (Liquidation Heatmap)</h3>
 <p>清算熱力圖顯示在不同價位上，有多少槓桿部位會被清算。顏色越深 = 清算量越大 = 價格磁鐵越強。</p>
 <div class="svg-container">
-  <svg viewBox="0 0 500 260" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 260" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleHeatmap">
+    <title id="svgTitleHeatmap">清算熱力圖示意</title>
     <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算熱力圖示意</text>
     <!-- Y axis (Price) -->
     <line x1="50" y1="30" x2="50" y2="240" stroke="#cbd5e1" stroke-width="1"/>
@@ -965,7 +839,8 @@ table tr:hover { background: var(--bg3); }
 <h3>2. Long/Short Ratio</h3>
 <p>Long/Short Ratio 顯示散戶帳戶中做多 vs 做空的比例。注意：這是「帳戶數量」比，不是「金額」比。</p>
 <div class="svg-container">
-  <svg viewBox="0 0 460 150" width="100%" style="max-width:460px">
+  <svg viewBox="0 0 460 150" width="100%" style="max-width:460px" role="img" aria-labelledby="svgTitleLsRatio">
+    <title id="svgTitleLsRatio">Long/Short Ratio 解讀圖</title>
     <text x="230" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Long/Short Ratio 解讀</text>
     <!-- L/S > 1 -->
     <rect x="20" y="35" width="200" height="50" rx="8" fill="#fee2e2" stroke="#dc2626"/>
@@ -989,7 +864,8 @@ table tr:hover { background: var(--bg3); }
 <h3>3. 清算級聯 (Cascade)</h3>
 <p>加密貨幣市場的波動比傳統市場大的核心原因之一就是清算級聯機制。</p>
 <div class="svg-container">
-  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+  <svg viewBox="0 0 500 200" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleCascade2">
+    <title id="svgTitleCascade2">清算級聯正反饋循環圖</title>
     <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">清算級聯正反饋循環</text>
     <!-- Central cycle -->
     <circle cx="250" cy="110" r="70" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
@@ -1079,7 +955,8 @@ table tr:hover { background: var(--bg3); }
 <div class="card">
 <h3>1. 五步驟判讀流程</h3>
 <div class="svg-container">
-  <svg viewBox="0 0 520 100" width="100%" style="max-width:520px">
+  <svg viewBox="0 0 520 100" width="100%" style="max-width:520px" role="img" aria-labelledby="svgTitleSop">
+    <title id="svgTitleSop">五步驟籌碼判讀流程圖：OI 方向、四象限、CVD 確認、Funding、清算圖到交易決策</title>
     <!-- Step circles and labels -->
     <circle cx="50" cy="40" r="22" fill="#2563eb" stroke="none"/>
     <text x="50" y="45" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">1</text>
@@ -1305,16 +1182,16 @@ table tr:hover { background: var(--bg3); }
 <div class="tab-content" id="tab6">
 <h2 class="section-title">互動測驗</h2>
 
-<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分：0 / 0</div>
 
-<div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
+<div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.04); margin-bottom:20px;">
   <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
   <div id="quiz-question-text" style="font-size:16px; font-weight:600; margin-bottom:16px; color:var(--text); text-align:center;"></div>
   <div id="quiz-context" style="font-size:13px; color:var(--text2); margin-bottom:16px; background:var(--bg3); padding:14px; border-radius:8px; line-height:1.8;"></div>
   <div id="quiz-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
 </div>
 
-<div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
+<div id="quiz-result" style="display:none; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
   <div id="quiz-result-icon" style="font-size:28px; text-align:center; margin-bottom:8px;"></div>
   <div id="quiz-result-answer" style="font-size:14px; font-weight:600; text-align:center; margin-bottom:12px;"></div>
   <div id="quiz-result-explanation" style="font-size:13px; line-height:1.8; color:var(--text2); background:var(--bg3); padding:14px; border-radius:8px;"></div>
@@ -1441,9 +1318,9 @@ table tr:hover { background: var(--bg3); }
     {
       question: 'Funding 套利的原理是什麼？',
       context: 'Funding 持續為正 0.05%/8H。',
-      options: ['做多永續 + 做空現貨', '做空永續 + 做多現貨（Delta Neutral + 收 Funding）', '兩邊都做多', '只做空永續'],
+      options: ['做多永續 + 做空現貨', '做空永續 + 做多現貨（方向中性 + 收 Funding）', '兩邊都做多', '只做空永續'],
       correct: 1,
-      explanation: '<strong>做空永續 + 做多現貨 = Funding 套利。</strong>現貨做多和永續做空對沖，Delta 為零（不受漲跌影響）。Funding 為正時空方收錢，所以永續做空可以每 8 小時收取 Funding 費。年化計算：0.05% x 3 x 365 = 54.75%。風險在於 Funding 可能轉負。'
+      explanation: '<strong>做空永續 + 做多現貨 = Funding 套利。</strong>現貨做多和永續做空對沖，Delta 近零（不受單純漲跌影響，但非無風險）。Funding 為正時空方收錢，永續做空可每 8 小時收取 Funding 費。理想年化上限（示意）：0.05% x 3 x 365 = 54.75%，惟未計手續費與兩腿資金占用，實際遠低於此。風險在於 Funding 可能轉負，以及清算與交易所對手方風險，須自行回測。'
     },
     {
       question: '什麼情況下 Short Squeeze 最容易發生？',
@@ -1505,7 +1382,7 @@ table tr:hover { background: var(--bg3); }
   }
 
   function updateScore() {
-    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+    scoreEl.textContent = '得分：' + score + ' / ' + total;
   }
 
   function showQuestion() {
@@ -1591,6 +1468,7 @@ table tr:hover { background: var(--bg3); }
 <footer style="margin-top:32px; padding:20px 0; border-top:1px solid var(--border); text-align:center; color:var(--text3); font-size:12px;">
   <p>永續合約籌碼分析完全教學 | 內容僅供學習參考，不構成投資建議</p>
   <p style="margin-top:4px;">所有指標需綜合判斷，單一指標不足以做出交易決策</p>
+  <p style="margin-top:8px;">延伸閱讀：<a href="candlestick_patterns.html">K線型態教學</a></p>
 </footer>
 
 <!-- ==================== JAVASCRIPT ==================== -->

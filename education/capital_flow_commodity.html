@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>跨資產資金流與商品供需分析 — 判斷錢流去哪裡、商品在囤積嗎？</title>
 <link rel="stylesheet" href="common.css">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* Supplemental styles for this page */
 .subtitle { font-size: 15px; color: var(--text3); margin-bottom: 24px; }
@@ -15,13 +15,13 @@
 .example { background: var(--green-l); border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 var(--r) var(--r) 0; margin: 16px 0; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
-.tag-bull { background: var(--green-l); color: var(--green); }
-.tag-bear { background: var(--red-l); color: var(--red); }
+.tag-bull { background: var(--green-l); color: #166534; }
+.tag-bear { background: var(--red-l); color: #991b1b; }
 </style>
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>跨資產資金流與商品供需分析</h1>
 <p class="subtitle">判斷錢流去哪裡？商品在囤積嗎？市場泡沫有多大？— 從資金流、情緒指標到實物供需的完整框架</p>
@@ -40,7 +40,7 @@
 <h2 class="section-title">資金輪動 — 錢在哪裡？</h2>
 
 <h3>資金輪動的四大池子</h3>
-<p>全球資金永遠在四個主要池子之間輪動。判斷「錢在流向哪裡」是所有交易決策的起點。</p>
+<p>全球資金長期在四個主要池子之間輪動。判斷「錢在流向哪裡」是所有交易決策的起點。</p>
 
 <table>
 <tr><th>池子</th><th>代表資產</th><th>什麼時候資金流入</th><th>追蹤指標</th></tr>
@@ -129,8 +129,8 @@
 &bull; 2000年（.com泡沫峰值）：~52%<br>
 &bull; 2007年（金融海嘯前）：~42%<br>
 &bull; 2021年（疫情牛市峰值）：~51%<br>
-&bull; 若 > 45% → 警戒區<br>
-&bull; 若 > 50% → 極度泡沫區
+&bull; 35–45% → 警戒區<br>
+&bull; &gt; 45% → 泡沫區（2000、2021 峰值曾達約 50%+，屬歷史極端）
 </div>
 
 <div class="data-source">
@@ -153,7 +153,7 @@
 <tr><th>指標</th><th>極端值</th><th>含義</th><th>歷史勝率</th></tr>
 <tr><td>Bullish > 50%</td><td>極度樂觀</td><td>逆向信號：散戶 All-in → 頂部接近</td><td>後6個月平均報酬低於歷史</td></tr>
 <tr><td>Bearish > 50%</td><td>極度悲觀</td><td>逆向信號：散戶恐慌 → 底部接近</td><td>後6個月平均報酬高於歷史</td></tr>
-<tr><td>Bull-Bear Spread < -20%</td><td>極端恐慌</td><td>強烈買入信號</td><td>歷史上12個月勝率 > 80%</td></tr>
+<tr><td>Bull-Bear Spread < -20%</td><td>極端恐慌</td><td>偏多信號（需趨勢與量能配合）</td><td>歷史多數情況後續 12 個月報酬偏正（示意，須自行驗證）</td></tr>
 <tr><td>Bull-Bear Spread > +30%</td><td>極端樂觀</td><td>減倉/警戒信號</td><td>歷史上6個月勝率較低</td></tr>
 </table>
 
@@ -312,7 +312,7 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
 <table>
 <tr><th>斷裂類型</th><th>案例</th><th>影響時間</th><th>判斷信號</th></tr>
 <tr><td><strong>關稅搶購</strong></td><td>假設情境：某國宣布對進口銅加徵關稅</td><td>預期期：1-3月搶購<br>實施後：需求真空</td><td>COMEX庫存暴增（搶進口）+ 國內溢價 vs 國際折價</td></tr>
-<tr><td><strong>地緣供應中斷</strong></td><td>中東衝突→硫酸短缺→銅冶煉受阻</td><td>持續至衝突解除</td><td>冶煉加工費(TC/RC)暴跌 + 產量下修公告</td></tr>
+<tr><td><strong>地緣供應中斷</strong></td><td>祕魯社會動亂封路→銅精礦運輸中斷</td><td>持續至衝突解除</td><td>冶煉加工費(TC/RC)暴跌 + 產量下修公告</td></tr>
 <tr><td><strong>天災/罷工</strong></td><td>智利銅礦罷工、澳洲洪水</td><td>通常1-3月</td><td>礦商產量指引下修 + 庫存加速消耗</td></tr>
 <tr><td><strong>政策限制</strong></td><td>印尼禁止鎳礦出口</td><td>長期結構性</td><td>出口數據斷崖 + 國際價格飆升</td></tr>
 <tr><td><strong>能源成本飆升</strong></td><td>油$90+→電解鋁/煉銅成本飆</td><td>與油價同步</td><td>冶煉廠減產公告 + 邊際成本線上移</td></tr>
@@ -322,13 +322,13 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
 <h3>銅的供需分析框架（假設情境教學）</h3>
 
 <div class="card">
-<h3>假設情境：銅關稅 + 硫酸短缺 雙重衝擊（用來練習推演，非現況預測）</h3>
+<h3>假設情境：銅關稅 + 精礦供應中斷 雙重衝擊（用來練習推演，非現況預測）</h3>
 
 <p><strong>情境推演：</strong></p>
 <ol>
 <li><strong>關稅預期（搶購期）：</strong>假設某國威脅對進口銅加徵關稅 → 進口商提前搶購 → COMEX 銅庫存暴增（但這是「搶進來」不是「需求增加」）→ 短期推升價格</li>
-<li><strong>中東 → 硫酸短缺：</strong>硫酸是銅冶煉的關鍵原料。伊朗衝突 → 中東硫磺出口中斷 → 全球硫酸供應緊張 → 冶煉廠被迫減產 → 精煉銅產量下降</li>
-<li><strong>雙重效應：</strong>需求端搶購（關稅前囤貨）+ 供給端收縮（硫酸短缺）= 價格飆升壓力</li>
+<li><strong>供給端 → 精礦供應中斷：</strong>假設智利/祕魯銅礦因罷工或社會動亂減產、運輸受阻 → 銅精礦供應緊張 → 冶煉廠加工費(TC/RC)被壓縮到無利可圖 → 部分冶煉廠減產 → 精煉銅產量下降<br><span style="font-size:12px;color:var(--text3);">（註：硫酸並非火法冶煉的投入原料，反而是火法冶煉的<strong>副產品</strong>；硫酸主要用於濕法 SX-EW 銅與磷肥。因此「硫酸短缺卡住火法煉銅」是常見的因果誤植，實際卡點在精礦與能源成本。）</span></li>
+<li><strong>雙重效應：</strong>需求端搶購（關稅前囤貨）+ 供給端收縮（精礦短缺 / 冶煉減產）= 價格飆升壓力</li>
 </ol>
 
 <p><strong>如何追蹤：</strong></p>
@@ -375,10 +375,10 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
 
 <table>
 <tr><th>物資</th><th>用途</th><th>供應壟斷</th><th>地緣風險</th><th>相關標的（觀察用，非推薦）</th></tr>
-<tr><td><strong>稀土（17種）</strong></td><td>EV馬達、軍工、風電、電子</td><td>中國佔加工 60-70%</td><td>中國出口管制（2023年已實施鎵/鍺禁令）</td><td>MP Materials、Lynas(LYC)、REMX ETF、USAR(流動性差)</td></tr>
+<tr><td><strong>稀土（17種，不含鎵/鍺）</strong></td><td>EV馬達、軍工、風電、電子</td><td>中國佔加工/精煉約 85–90%、採礦約 60%</td><td>中國主導加工，2023 起收緊稀土相關出口與磁材技術管制、2024–2025 擴大許可制</td><td>MP Materials、Lynas(LYC)、REMX ETF、USAR(流動性差)</td></tr>
 <tr><td><strong>鋰</strong></td><td>電池（EV、儲能）</td><td>澳洲/智利/中國三角</td><td>智利國有化風險、中國鋰精煉壟斷</td><td>ALB、SQM、LTHM、LIT ETF</td></tr>
 <tr><td><strong>鈷</strong></td><td>電池正極材料</td><td>剛果(DRC)佔採礦 70%</td><td>政治不穩+童工爭議+中國控制供應鏈</td><td>GLEN(Glencore)、VALE</td></tr>
-<tr><td><strong>鎵/鍺</strong></td><td>半導體、軍用雷達</td><td>中國佔 80%+</td><td>2023年已禁出口，直接影響晶片</td><td>無直接標的，間接看 INTC/GFS</td></tr>
+<tr><td><strong>鎵/鍺（非稀土）</strong></td><td>半導體、軍用雷達</td><td>中國佔 80%+</td><td>2023/8 起出口管制（許可制），2024/12 對美升級為近乎全面禁止，直接影響晶片</td><td>無直接標的，間接看 INTC/GFS</td></tr>
 <tr><td><strong>鈾</strong></td><td>核電（AI數據中心供電）</td><td>哈薩克/加拿大/澳洲</td><td>俄羅斯濃縮鈾制裁</td><td>CCJ(Cameco)、URNM ETF、URA ETF</td></tr>
 </table>
 
@@ -447,7 +447,7 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
       question: 'AAII Bearish 達到 55%，同時 VIX 25，MMF AUM 創新高。應該怎麼做？',
       options: ['繼續觀望不操作', '三重底部信號，逆向建立小倉位多頭', '做空追跌', '全倉做多'],
       correct: 1,
-      explanation: 'AAII極度悲觀 + VIX升高 + MMF AUM新高（大量場外資金）= 三重底部信號。歷史上這種組合後12個月勝率超過80%。但不應重倉，而是開始小倉位逆向建倉，等待確認信號（如VIX回落）再加碼。'
+      explanation: 'AAII極度悲觀 + VIX升高 + MMF AUM新高（大量場外資金）= 三重底部信號。歷史上這種組合後續 12 個月報酬多半偏正（示意，須自行驗證，無保證）。但不應重倉，而是開始小倉位逆向建倉，等待確認信號（如VIX回落）再加碼。'
     },
     {
       question: '白銀 COT 顯示 Commercial 大幅增加淨多，同時 COMEX 庫存加速下降，期貨曲線出現 Backwardation。這是什麼信號？',
@@ -487,7 +487,7 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
     },
     {
       question: 'Household Equity Allocation 達到 50%，同時 Margin Debt YoY +35%。處於什麼狀態？',
-      options: ['健康牛市中期', '極度泡沫區，應降低倉位', '市場低估區', '中性，可以繼續持有'],
+      options: ['健康牛市中期', '泡沫區（接近歷史極端），應降低倉位', '市場低估區', '中性，可以繼續持有'],
       correct: 1,
       explanation: '家庭配置50%（接近2000年和2021年峰值）+ 保證金借款暴增 = 散戶All-in + 借錢買股。歷史上這種組合後都是大修正。不代表明天就崩，但環境極度危險，應該主動降低倉位。'
     },
@@ -513,7 +513,7 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
       question: '銅冶煉加工費(TC/RC)暴跌至接近零，這代表什麼？',
       options: ['銅礦供給充足', '冶煉廠利潤壓縮，可能減產，精煉銅供應將下降', '銅需求崩潰', '冶煉產能過剩'],
       correct: 1,
-      explanation: 'TC/RC是冶煉廠從礦商處收取的加工費。暴跌代表：礦商議價力強（礦供應緊張）或冶煉成本上升（如硫酸短缺）。冶煉廠無利可圖→減產→精煉銅供應下降→最終推升銅價。'
+      explanation: 'TC/RC是冶煉廠從礦商處收取的加工費。暴跌代表：礦商議價力強（精礦供應緊張）或冶煉成本上升（如能源價格飆升）。冶煉廠無利可圖→減產→精煉銅供應下降→最終推升銅價。'
     },
     {
       question: '深度 Contango + 庫存持續累積。應該怎麼操作商品？',
@@ -758,7 +758,7 @@ Backwardation 出現 = 有人在搶實物 → 價格通常會漲
   <h3 style="font-size:15px; font-weight:700; margin-bottom:10px; color:var(--purple);">使用速查表的正確方式</h3>
   <ul style="font-size:13px; color:var(--text2); line-height:2; padding-left:20px;">
     <li>速查表用於<strong>快速回憶</strong>各項指標的閾值和含義，不能替代對底層邏輯的深入理解</li>
-    <li>永遠使用<strong>多重確認</strong> — 單一指標可能誤判，至少2-3個指標同向才構成有效信號</li>
+    <li>務必使用<strong>多重確認</strong> — 單一指標可能誤判，至少2-3個指標同向才構成有效信號</li>
     <li>指標有<strong>滯後性</strong> — 特別是週報和月報數據，不要用於短線進出場</li>
     <li>資金流數據適合判斷<strong>中長期方向</strong>，不適合日內交易的精確時機選擇</li>
     <li>搶貨信號是<strong>持續性過程</strong>，不是一次性事件。確認後應持有直到結束信號出現</li>

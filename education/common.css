@@ -27,7 +27,7 @@
 html, body { overscroll-behavior: none; }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
   background: var(--bg);
   color: var(--text);
   font-size: 15px;
@@ -35,7 +35,27 @@ body {
   padding: 24px;
   max-width: 1100px;
   margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Comfortable reading measure for long prose; wide elements (tables/SVG/quiz) can opt out with .wide */
+.reading, .prose { max-width: 760px; }
+.reading .wide, .prose .wide, .wide { max-width: none; }
+
+/* Unified page subtitle (one-line lesson summary under h1) */
+.subtitle { font-size: 14px; color: var(--text3); margin: -2px 0 18px; line-height: 1.6; }
+
+/* Unified "chapter takeaway" card */
+.summary-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin: 20px 0;
+}
+.summary-card h4 { margin-top: 0; color: var(--blue); }
+.summary-card ul { margin-bottom: 0; }
 
 h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
 h2 { font-size: 20px; font-weight: 700; margin: 24px 0 12px; color: var(--blue); }
@@ -101,12 +121,13 @@ th, td { padding: 8px 12px; text-align: left; border: 1px solid var(--border); }
 th { background: var(--bg3); font-weight: 600; color: var(--text); }
 
 /* Tags */
-.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-.tag-green { background: var(--green-l); color: var(--green); }
-.tag-blue { background: var(--blue-l); color: var(--blue); }
-.tag-red { background: var(--red-l); color: var(--red); }
-.tag-purple { background: var(--purple-l); color: var(--purple); }
-.tag-orange { background: var(--orange-l); color: var(--orange); }
+.tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+/* Darker foregrounds for WCAG AA (≥4.5:1) against the light -l backgrounds */
+.tag-green { background: var(--green-l); color: #166534; }
+.tag-blue { background: var(--blue-l); color: #1e40af; }
+.tag-red { background: var(--red-l); color: #991b1b; }
+.tag-purple { background: var(--purple-l); color: #5b21b6; }
+.tag-orange { background: var(--orange-l); color: #9a3412; }
 
 /* Info boxes */
 .highlight-box { background: var(--blue-l); border-left: 4px solid var(--blue); padding: 14px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; }
@@ -162,11 +183,24 @@ th { background: var(--bg3); font-weight: 600; color: var(--text); }
 .calc-container button:hover { opacity: 0.9; }
 .calc-result { margin-top: 12px; padding: 12px; background: var(--bg2); border-radius: 8px; font-weight: 600; }
 
+/* Keyboard accessibility: visible focus ring on all interactive elements */
+a:focus-visible,
+button:focus-visible,
+.tab-btn:focus-visible,
+.back-link:focus-visible,
+.quiz-options li:focus-visible,
+[role="button"]:focus-visible,
+.site-lesson-nav a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   body { padding: 16px; font-size: 14px; }
   .tab-nav { gap: 4px; }
-  .tab-btn { padding: 6px 10px; font-size: 11px; }
-  table { font-size: 11px; }
+  .tab-btn { padding: 6px 10px; font-size: 12px; }
+  table { font-size: 12px; }
   th, td { padding: 6px 8px; }
 }

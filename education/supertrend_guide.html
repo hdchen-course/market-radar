@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SuperTrend(300,3) 實戰指南 — 多時框方向判斷與交易 SOP</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="common.css">
 <style>
 .st-formula {
@@ -135,10 +135,10 @@
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>SuperTrend(300,3) 實戰指南</h1>
-<p style="color:var(--text3); margin-bottom:24px;">多時框方向判斷 &times; 進出場 SOP &times; 失靈辨識 &times; 50 題情境測驗</p>
+<p style="color:var(--text3); margin-bottom:24px;">多時框方向判斷 &times; 進出場 SOP &times; 失靈辨識 &times; 53 題情境測驗</p>
 
 <div style="padding:16px 20px; background:var(--blue-l); border-radius:var(--r); border:1px solid var(--border); margin-bottom:24px;">
   <h3 style="color:var(--blue); margin-top:0;">本指南定位：美股 / ETF / 黃金白銀的日線・週線波段趨勢跟隨</h3>
@@ -246,7 +246,7 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
     <li>ST 不預測未來，它描述「現在的趨勢方向」</li>
     <li>翻轉是低頻事件 — 日線上一年可能只翻 2-4 次</li>
     <li>ST 線本身就是動態支撐/壓力位</li>
-    <li>價格離 ST 線越遠，回踔到 ST 線的機率越高（均值回歸）</li>
+    <li>價格離 ST 線越遠，回踩到 ST 線的機率越高（均值回歸）</li>
     <li>ST 翻轉後的第一次回測 ST 線，通常是最好的進場點</li>
   </ul>
 </div>
@@ -255,6 +255,10 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <!-- ==================== TAB 2: 三時框共振 ==================== -->
 <div class="tab-content" id="tab2">
 <h2>三時框共振分析</h2>
+
+<div style="padding:14px 18px; background:var(--yellow-l); border:1px solid var(--border); border-radius:var(--r); margin-bottom:16px; font-size:13px; line-height:1.9;">
+  <strong>情境時框說明：</strong>本節「三時框」以下表的 日線 / 4H / 1H 為例做通用示範。<strong>若你交易的是美股 / ETF / 金銀（本指南主軸），請把三時框讀成「週線 / 日線 / 4H」</strong>——因為 ST(300,3) 在 1H 圖上只涵蓋 ≈12.5 天，對每天只看一次盤的波段策略太短，1H 這一層主要適用於 24 小時運作的加密永續市場。下方情境的邏輯（高時框定方向、低時框找進場）在兩組時框上通用，只要把「日線」當戰略層、往下各降一級即可。
+</div>
 
 <div class="card">
 <h3>時框層級定義</h3>
@@ -275,7 +279,7 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
     <strong>日多 + 4H多 + 1H多</strong>
   </div>
   <p><strong>含義：</strong>所有時框一致看多，趨勢極度明確。</p>
-  <p><strong>操作：</strong>只做多，不做空。回踔到 1H ST 線附近 = 進場機會。可以用較大倉位。</p>
+  <p><strong>操作：</strong>只做多，不做空。回踩到 1H ST 線附近 = 進場機會。可以用較大倉位。</p>
   <p><strong>心態：</strong>這是最舒服的狀態，順勢持有即可。不要因為短期獲利就急著平倉。</p>
 </div>
 
@@ -291,7 +295,7 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 
 <div class="scenario-card">
   <div class="scenario-header">
-    <span class="scenario-badge badge-bull">強多回踔</span>
+    <span class="scenario-badge badge-bull">強多回踩</span>
     <strong>日多 + 4H多 + 1H空</strong>
   </div>
   <p><strong>含義：</strong>大趨勢多頭，但短期回調中。1H 翻空 = 短期修正。</p>
@@ -352,13 +356,14 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 
 <div class="card" style="border-left:4px solid var(--purple);">
 <h3 style="color:var(--purple);">共振強度評分</h3>
+<p style="font-size:13px; color:var(--text3); margin-bottom:12px;">共振分 = 依層級權重（日線 50 / 4H 30 / 1H 20）對各時框方向加總（多 +、空 −）。此為<strong>經驗權重、方向示意</strong>，非線性精確概率；鏡像情境已對稱（例：日多+4H空+1H多 = +40 對應 日空+4H多+1H空 = −40）。倉位與方向仍須配合趨勢量能與個人風控，分數只是相對強弱參考。</p>
 <table>
   <tr><th>組合</th><th>共振分</th><th>建議倉位</th><th>操作方向</th></tr>
   <tr><td>日多+4H多+1H多</td><td style="color:var(--green);font-weight:700;">+100</td><td>80-100%</td><td>只做多</td></tr>
   <tr><td>日多+4H多+1H空</td><td style="color:var(--green);">+60</td><td>50-70%</td><td>等 1H 翻多再做多</td></tr>
-  <tr><td>日多+4H空+1H多</td><td style="color:var(--yellow);">+20</td><td>20-30%</td><td>觀望/輕倉試多</td></tr>
-  <tr><td>日多+4H空+1H空</td><td style="color:var(--yellow);">-10</td><td>0-10%</td><td>觀望/準備反向</td></tr>
-  <tr><td>日空+4H多+1H多</td><td style="color:var(--yellow);">-20</td><td>20-30%</td><td>輕倉試多/觀望</td></tr>
+  <tr><td>日多+4H空+1H多</td><td style="color:var(--yellow);">+40</td><td>20-30%</td><td>觀望/輕倉試多</td></tr>
+  <tr><td>日多+4H空+1H空</td><td style="color:var(--yellow);">0</td><td>0-10%</td><td>觀望/準備反向</td></tr>
+  <tr><td>日空+4H多+1H多</td><td style="color:var(--yellow);">0</td><td>20-30%</td><td>輕倉試多/觀望</td></tr>
   <tr><td>日空+4H多+1H空</td><td style="color:var(--orange);">-40</td><td>0-20%</td><td>觀望偏空</td></tr>
   <tr><td>日空+4H空+1H多</td><td style="color:var(--red);">-60</td><td>50-70%空</td><td>等 1H 翻空再做空</td></tr>
   <tr><td>日空+4H空+1H空</td><td style="color:var(--red);font-weight:700;">-100</td><td>80-100%空</td><td>只做空</td></tr>
@@ -612,6 +617,10 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <div class="tab-content" id="tab5">
 <h2>多時框衝突處理</h2>
 
+<div style="padding:14px 18px; background:var(--yellow-l); border:1px solid var(--border); border-radius:var(--r); margin-bottom:16px; font-size:13px; line-height:1.9;">
+  <strong>情境時框說明：</strong>下列衝突情境以 日線 / 4H / 1H 為通用示範。<strong>交易美股 / ETF / 金銀時，請把時框讀成「週線 / 日線 / 4H」</strong>——ST(300,3) 在 1H 上僅涵蓋 ≈12.5 天，對每日收盤決策的波段太短，1H 這層主要用於 24 小時的加密永續。衝突處理原則（永遠以高時框方向為大方向、低時框找時機）在兩組時框皆通用。
+</div>
+
 <div class="card">
 <h3>核心原則：時框優先級</h3>
 <div class="highlight-box">
@@ -727,11 +736,11 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 
 <!-- ==================== TAB 6: 互動測驗 ==================== -->
 <div class="tab-content" id="tab6">
-<h2>互動情境測驗（50 題）</h2>
+<h2>互動情境測驗（53 題）</h2>
 <p style="margin-bottom:16px; color:var(--text3);">測試你對 SuperTrend(300,3) 多時框實戰的理解。每題選擇後會顯示解析。</p>
 
 <div class="quiz-progress">
-  <span id="quiz-progress-text">0 / 50</span>
+  <span id="quiz-progress-text">0 / 53</span>
   <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
   <span id="quiz-score-text">正確：0</span>
 </div>
@@ -773,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initQuiz();
 });
 
-// Quiz data - 50 questions
+// Quiz data - 53 questions
 const quizData = [
   {
     q: "週線多、日線多，價格剛回踩到日線 ST 附近 — 你應該怎麼做？",
@@ -975,9 +984,9 @@ const quizData = [
   },
   {
     q: "日線 ST 翻多已經 2 個月了。你一直觀望沒進場。現在還能進嗎？",
-    opts: ["太晚了，錯過就算了", "可以，在 4H ST 回踔時進場仍然有效", "要等日線 ST 翻空再翻多才能進", "只能用最小倉位"],
+    opts: ["太晚了，錯過就算了", "可以，在 4H ST 回踩時進場仍然有效", "要等日線 ST 翻空再翻多才能進", "只能用最小倉位"],
     ans: 1,
-    explain: "只要日線 ST 仍多，做多就是順勢。不存在「太晚」的問題。趨勢可以持續很久（半年甚至更長）。在 4H ST 回踔時進場是任何時候都適用的策略。不要因為錯過開頭就不敢中途上車。"
+    explain: "只要日線 ST 仍多，做多就是順勢。不存在「太晚」的問題。趨勢可以持續很久（半年甚至更長）。在 4H ST 回踩時進場是任何時候都適用的策略。不要因為錯過開頭就不敢中途上車。"
   },
   {
     q: "你同時持有 SPY 和 GLD。SPY 的日線 ST 翻空了，但 GLD 的日線 ST 仍多。你的 GLD 倉位需要調整嗎？",

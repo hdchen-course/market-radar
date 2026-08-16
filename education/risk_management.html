@@ -4,43 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>風險管理與部位大小 — 交易教育</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --green: #16a34a;
-  --red: #dc2626;
-  --purple: #7c3aed;
-  --orange: #ea580c;
-  --r: 12px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding: 32px 20px;
-  line-height: 1.7;
-}
-.container { max-width: 1000px; margin: 0 auto; }
-.back-link {
-  display: inline-block;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  transition: opacity .2s;
-}
-.back-link:hover { opacity: 0.7; }
+.container { max-width: 1100px; margin: 0 auto; }
 header { margin-bottom: 28px; }
 header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
 header p { color: var(--text3); font-size: 14px; }
@@ -59,38 +26,6 @@ header p { color: var(--text3); font-size: 14px; }
 .disclaimer .icon { font-size: 22px; flex-shrink: 0; }
 .disclaimer p { font-size: 13px; color: #92400e; line-height: 1.6; }
 .disclaimer strong { color: #78350f; }
-
-/* Tabs */
-.tab-nav {
-  display: flex;
-  gap: 4px;
-  border-bottom: 2px solid var(--border);
-  margin-bottom: 28px;
-  overflow-x: auto;
-  padding-bottom: 0;
-}
-.tab-btn {
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  border: none;
-  background: none;
-  color: var(--text3);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  white-space: nowrap;
-  transition: all .2s;
-  font-family: inherit;
-}
-.tab-btn:hover { color: var(--text); }
-.tab-btn.active {
-  color: var(--blue);
-  border-bottom-color: var(--blue);
-}
-.tab-content { display: none; animation: fadeIn .3s ease; }
-.tab-content.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Content styling */
 .section { margin-bottom: 32px; }
@@ -126,7 +61,7 @@ header p { color: var(--text3); font-size: 14px; }
 .highlight.green { border-left-color: var(--green); }
 .highlight.red { border-left-color: var(--red); background: #fef2f2; }
 .highlight.purple { border-left-color: var(--purple); background: #faf5ff; }
-.highlight.orange { border-left-color: var(--orange); background: #fff7ed; }
+.highlight.orange { border-left-color: var(--orange); background: var(--orange-l); }
 .highlight p { margin: 0; font-size: 13px; }
 .highlight strong { display: block; margin-bottom: 4px; font-size: 14px; }
 
@@ -314,19 +249,19 @@ header p { color: var(--text3); font-size: 14px; }
 </head>
 <body>
 <div class="container">
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <header>
   <h1>風險管理與部位大小</h1>
   <p>Risk Management &amp; Position Sizing — 存活是獲利的前提</p>
 </header>
 
-<!-- Disclaimer -->
+<!-- Course-specific risk note (distinct from the site-wide footer disclaimer) -->
 <div class="disclaimer">
   <span class="icon">&#9888;</span>
   <div>
-    <p><strong>免責聲明</strong></p>
-    <p>本頁面內容僅供教育參考，不構成任何投資建議。風險管理是指導原則而非保證——市場可能出現超越歷史極端的波動（黑天鵝事件）。交易涉及重大資金損失風險，請務必只用可承受損失的資金進行交易。過往績效不代表未來結果。</p>
+    <p><strong>本課特別風險提示</strong></p>
+    <p>風險管理是<strong>指導原則而非保證</strong>：即使嚴格執行部位控制與止損，市場仍可能出現超越歷史極端的波動（黑天鵝事件）、跳空與滑點，使實際虧損遠大於你規劃的 -1R。本課所有公式、比例與蒙特卡羅模擬數字皆為教學示意，請自行驗證後再套用到真實部位。（完整免責聲明見頁尾）</p>
   </div>
 </div>
 
@@ -369,10 +304,15 @@ header p { color: var(--text3); font-size: 14px; }
   <div class="formula">
     Risk of Ruin ≈ ((1 - Edge) / (1 + Edge)) ^ (Capital Units)
   </div>
-  <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:-8px;">其中 Edge = Win% × Avg_Win / Avg_Loss - Loss%</p>
+  <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:-8px;">其中 Edge = Win% × Avg_Win / Avg_Loss - Loss%（此為近似式）</p>
+  <div class="highlight orange">
+    <strong>注意：此 Edge 定義只是近似，且偏樂觀</strong>
+    <p>上式 Win% × Avg_Win/Avg_Loss − Loss% 其實算的是「每筆期望 R（期望值）」，並非嚴謹的破產風險輸入。當盈虧比大於 1 時，它會系統性地<strong>低估</strong>真實破產風險（把系統看得比實際安全）。此公式與圖表僅供直覺理解方向，<strong>精確的 Risk of Ruin 需要用蒙特卡羅模擬</strong>（考慮實際 R 分布、連虧序列、部位變化）才能估算，數字請自行驗證。</p>
+  </div>
 
   <div class="svg-container">
-    <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-ror-title">
+      <title id="svg-ror-title">破產風險(Risk of Ruin)曲線示意：不同勝率下每筆交易風險百分比越高、破產機率越高</title>
       <!-- Background grid -->
       <defs>
         <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -408,24 +348,24 @@ header p { color: var(--text3); font-size: 14px; }
       <!-- Axis titles -->
       <text x="320" y="342" font-size="12" fill="#334155" text-anchor="middle" font-weight="600">每筆交易風險 %</text>
       <text x="16" y="160" font-size="12" fill="#334155" text-anchor="middle" font-weight="600" transform="rotate(-90,16,160)">破產機率</text>
-      <!-- Curve: 40% win rate (worst) -->
-      <polyline points="60,58 112,62 164,78 216,108 268,155 320,198 372,236 424,258 476,272 528,280 580,284" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Curve: 40% win rate (worst) — lowest edge, ruin rises fastest & highest -->
+      <polyline points="60,286 112,244 164,188 216,126 268,70 320,42 372,28 424,23 476,20 528,20 580,20" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
       <!-- Curve: 50% win rate -->
-      <polyline points="60,160 112,175 164,210 216,240 268,258 320,270 372,278 424,283 476,287 528,292 580,295" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
+      <polyline points="60,294 112,278 164,244 216,194 268,132 320,90 372,59 424,42 476,31 528,26 580,23" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/>
       <!-- Curve: 55% win rate -->
-      <polyline points="60,230 112,255 164,272 216,282 268,288 320,292 372,295 424,296 476,297 528,298 580,299" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Curve: 60% win rate (best) -->
-      <polyline points="60,272 112,284 164,292 216,295 268,297 320,298 372,299 424,299 476,300 528,300 580,300" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Legend -->
-      <rect x="380" y="30" width="190" height="90" fill="white" stroke="#e2e8f0" rx="6"/>
-      <line x1="390" y1="48" x2="415" y2="48" stroke="#dc2626" stroke-width="2.5"/>
-      <text x="420" y="52" font-size="11" fill="#334155">40% 勝率 (1:1.2 盈虧比)</text>
-      <line x1="390" y1="68" x2="415" y2="68" stroke="#ea580c" stroke-width="2.5"/>
-      <text x="420" y="72" font-size="11" fill="#334155">50% 勝率 (1:1.2 盈虧比)</text>
-      <line x1="390" y1="88" x2="415" y2="88" stroke="#2563eb" stroke-width="2.5"/>
-      <text x="420" y="92" font-size="11" fill="#334155">55% 勝率 (1:1.5 盈虧比)</text>
-      <line x1="390" y1="108" x2="415" y2="108" stroke="#16a34a" stroke-width="2.5"/>
-      <text x="420" y="112" font-size="11" fill="#334155">60% 勝率 (1:1.5 盈虧比)</text>
+      <polyline points="60,297 112,292 164,278 216,250 268,208 320,160 372,118 424,84 476,62 528,48 580,40" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Curve: 60% win rate (best) — highest edge, ruin stays lowest & rises latest -->
+      <polyline points="60,299 112,297 164,292 216,280 268,258 320,224 372,182 424,146 476,115 528,93 580,76" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Legend (top-left, clear of the rising curves) -->
+      <rect x="72" y="30" width="200" height="90" fill="white" stroke="#e2e8f0" rx="6"/>
+      <line x1="82" y1="48" x2="107" y2="48" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="112" y="52" font-size="11" fill="#334155">40% 勝率 (1:1.2 盈虧比)</text>
+      <line x1="82" y1="68" x2="107" y2="68" stroke="#ea580c" stroke-width="2.5"/>
+      <text x="112" y="72" font-size="11" fill="#334155">50% 勝率 (1:1.2 盈虧比)</text>
+      <line x1="82" y1="88" x2="107" y2="88" stroke="#2563eb" stroke-width="2.5"/>
+      <text x="112" y="92" font-size="11" fill="#334155">55% 勝率 (1:1.5 盈虧比)</text>
+      <line x1="82" y1="108" x2="107" y2="108" stroke="#16a34a" stroke-width="2.5"/>
+      <text x="112" y="112" font-size="11" fill="#334155">60% 勝率 (1:1.5 盈虧比)</text>
     </svg>
   </div>
   <p style="font-size:12px;color:var(--text3);text-align:center;">每筆交易風險越大，破產機率越高。即使勝率 60%，風險超過 10% 仍有顯著破產可能。</p>
@@ -538,7 +478,7 @@ header p { color: var(--text3); font-size: 14px; }
 
 <div class="section">
   <h2>為什麼正期望值系統仍會連虧？</h2>
-  <p>許多交易者在連虧 5-8 筆後就放棄策略——但數學告訴我們，<strong>即使期望值為正，連虧是必然發生的事件</strong>。</p>
+  <p>許多交易者在連虧 5-8 筆後就放棄策略——但數學告訴我們，<strong>即使期望值為正，連虧仍是高機率、遲早會遇到的正常現象</strong>。</p>
 
   <div class="card-box">
     <h4>蒙特卡羅模擬結論（50% 勝率、2:1 盈虧比、1000 次模擬）</h4>
@@ -548,11 +488,12 @@ header p { color: var(--text3); font-size: 14px; }
       <li>連虧 10 筆的機率：<strong>≈ 18%</strong></li>
       <li>連虧 12 筆的機率：<strong>≈ 6%</strong></li>
     </ul>
-    <p style="margin-top:10px;">如果你一年交易 200 次，連虧 8 筆<strong>幾乎是確定</strong>會發生的事。</p>
+    <p style="margin-top:10px;">如果你一年交易 200 次，連虧 8 筆<strong>幾乎必定會遇到</strong>，這是正常現象而非策略失效。（上述機率為示意模擬，實際依你的勝率與盈虧比而異，須自行驗證）</p>
   </div>
 
   <div class="svg-container">
-    <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-rdist-title">
+      <title id="svg-rdist-title">R-Multiple 分布圖：100 筆交易的損益 R 值直方圖，平均約 +1.05R</title>
       <text x="300" y="20" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">R-Multiple 分布圖（100 筆交易）</text>
       <!-- Background -->
       <rect x="60" y="30" width="520" height="230" fill="#f8fafc" rx="4"/>
@@ -645,7 +586,7 @@ header p { color: var(--text3); font-size: 14px; }
 
   <div class="warning-box">
     <strong>&#9888; 最常見、也最致命的誤用：把 Kelly 比例當成「每筆停損風險」。</strong>
-    <p style="margin-top:6px;">f* 算出來的是「一次該投入多少資金／曝險比例」的理論上限，<strong>不是</strong>你每筆交易該冒的停損風險。舉例：勝率 55%、盈虧比 2:1 時 f* = 32.5%、Half-Kelly = 16.25%——如果你把 16% 當成每筆停損風險，正常一段連虧就會 -70~90% 直接重傷。真實世界你無法精確知道勝率，Kelly 對勝率高估又極度敏感。<strong>散戶鐵律：每筆交易停損風險固定 1–2%</strong>，Kelly 只拿來回答「這個系統值不值得做、要不要整體放大部位」，永遠不是單筆下注比例。</p>
+    <p style="margin-top:6px;">f* 算出來的是「一次該投入多少資金／曝險比例」的理論上限，<strong>不是</strong>你每筆交易該冒的停損風險。舉例：勝率 55%、盈虧比 2:1 時 f* = 32.5%、Half-Kelly = 16.25%——如果你把 16% 當成每筆停損風險，正常一段連虧就會 -70~90% 直接重傷。真實世界你無法精確知道勝率，Kelly 對勝率高估又極度敏感。<strong>散戶鐵律：每筆交易停損風險固定 1–2%</strong>，Kelly 只拿來回答「這個系統值不值得做、要不要整體放大部位」，而不是單筆下注比例。</p>
   </div>
 
   <div class="highlight orange">
@@ -654,7 +595,8 @@ header p { color: var(--text3); font-size: 14px; }
   </div>
 
   <div class="svg-container">
-    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-kelly-title">
+      <title id="svg-kelly-title">凱利公式示意：下注比例與資金成長率的拋物線關係，超過 f* 後成長率反而下降</title>
       <text x="300" y="18" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">凱利公式：下注比例 vs 資金成長率</text>
       <rect x="70" y="28" width="510" height="250" fill="#f8fafc" rx="4"/>
       <!-- Grid -->
@@ -803,7 +745,8 @@ header p { color: var(--text3); font-size: 14px; }
   <p>這是風控最重要的數學事實之一：<strong>虧損和回本不是對稱的</strong>。</p>
 
   <div class="svg-container">
-    <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-recovery-title">
+      <title id="svg-recovery-title">虧損與回本非對稱示意：虧損幅度越大、回本所需漲幅呈非線性倍增（虧 50% 需漲 100%）</title>
       <text x="300" y="20" font-size="13" fill="#334155" text-anchor="middle" font-weight="600">虧損 vs 回本所需報酬率</text>
       <!-- Background bars -->
       <g>
@@ -850,7 +793,7 @@ header p { color: var(--text3); font-size: 14px; }
 
   <div class="highlight red">
     <strong>關鍵洞察</strong>
-    <p>虧損 50% 後需要 100% 的報酬才能回本。虧損 70% 後需要 233%。這就是為什麼「防守比進攻重要」——永遠不要讓回撤超過 20-25%。</p>
+    <p>虧損 50% 後需要 100% 的報酬才能回本。虧損 70% 後需要 233%。這就是為什麼「防守比進攻重要」——盡量把回撤控制在 20-25% 以內。</p>
   </div>
 </div>
 
@@ -903,7 +846,8 @@ header p { color: var(--text3); font-size: 14px; }
   </ul>
 
   <div class="svg-container">
-    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-equity-title">
+      <title id="svg-equity-title">權益曲線與 20 日移動平均線管理示意：跌破 20MA 的區間應降低倉位</title>
       <text x="300" y="18" font-size="12" fill="#334155" text-anchor="middle" font-weight="600">Equity Curve + 20MA 管理示意圖</text>
       <rect x="50" y="28" width="530" height="195" fill="#f8fafc" rx="4"/>
       <!-- Equity curve (jagged up-trend) -->
@@ -1044,14 +988,14 @@ header p { color: var(--text3); font-size: 14px; }
 
   <div class="highlight red">
     <strong>UST 崩盤教訓</strong>
-    <p>2022 年 5 月 UST 從 $1 歸零，LUNA 從 $80+ 歸零。教訓：永遠不要把所有資金放在單一穩定幣中，尤其是算法穩定幣。分散到 2-3 種不同類型的穩定幣。</p>
+    <p>2022 年 5 月 UST 從 $1 歸零，LUNA 從 $80+ 歸零。教訓：不要把所有資金放在單一穩定幣中，尤其是算法穩定幣。分散到 2-3 種不同類型的穩定幣。</p>
   </div>
 </div>
 
 <div class="section">
   <h2>黑天鵝防護</h2>
   <div class="highlight green">
-    <strong>永遠持有部分穩定幣（現金倉位）</strong>
+    <strong>持續保留部分穩定幣（現金倉位）</strong>
     <p>建議至少保持 20-30% 的穩定幣現金部位。好處：<br>
     1. 黑天鵝事件時有資金可以低價加碼<br>
     2. 心理安全感——知道最壞情況下仍有資金<br>
@@ -1099,7 +1043,7 @@ header p { color: var(--text3); font-size: 14px; }
         <li>同一板塊（如科技股）：最多帳戶 30%</li>
         <li>同方向相關資產（SPY+QQQ+科技股）：最多帳戶 40%</li>
         <li>貴金屬（GLD/SLV/GDX）總曝險：最多帳戶 20-30%</li>
-        <li>永遠保留現金部位：至少 20-30%</li>
+        <li>務必保留現金部位：至少 20-30%</li>
       </ul>
     </div>
     <div class="card-box">
@@ -1569,7 +1513,7 @@ function scoreQuiz() {
 
   const explanations = {
     q1: '$50,000 × 2% = $1,000 風險 / ($100 - $96) = $4 止損距離 = 250 股',
-    q2: '虧損 40% 後剩 60%。回本需要: 40/60 = 66.7% ≈ 67%',
+    q2: '虧損 40% 後剩 60%。回本需要：40/60 = 66.7% ≈ 67%',
     q3: 'f* = (b×p - q) / b = (2×0.6 - 0.4) / 2 = (1.2 - 0.4) / 2 = 0.4 = 40%',
     q4: 'Half-Kelly 保留約 75% 的最大成長率，同時大幅減少波動和最大回撤',
     q5: '(2 - 1 + 3 - 1 - 1 + 1.5 - 1 + 4 - 1 + 2) / 10 = 7.5 / 10 = +0.75R',
@@ -1583,7 +1527,7 @@ function scoreQuiz() {
     q13: 'UST 是算法穩定幣，存在死亡螺旋風險。應分散到多種不同類型的穩定幣',
     q14: '50% 勝率連虧 5 筆的單次機率是 3.125%，但 200 筆中出現至少一次的機率約 97%',
     q15: 'Equity Curve 管理：跌破 20MA 時降低風險至 50%，回到上方時恢復正常',
-    q16: 'BTC 風險: 0.5 × ($65,000-$63,000) = $1,000。ETH 風險: 10 × ($3,500-$3,400) = $1,000。總計 $2,000/$100,000 = 2%'
+    q16: 'BTC 風險：0.5 × ($65,000-$63,000) = $1,000。ETH 風險：10 × ($3,500-$3,400) = $1,000。總計 $2,000/$100,000 = 2%'
   };
 
   quizBoxes.forEach((box, i) => {

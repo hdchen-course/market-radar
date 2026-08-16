@@ -4,65 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>鏈上數據分析 — 加密貨幣完整學習指南</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --orange: #ea580c;
-  --orange-l: #ffedd5;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.8;
-}
+/* page-specific shadow token (not in common.css) */
+:root { --shadow: 0 4px 20px rgba(0,0,0,0.06); }
 
-/* Layout */
-.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+/* Layout (page-specific wrapper + centered header) */
+.container { max-width: 1100px; margin: 0 auto; padding: 16px 0 40px; }
 header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
 header h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
 header .sub { color: var(--text3); font-size: 14px; }
-.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-weight: 500; font-size: 14px; }
-.back-link:hover { text-decoration: underline; }
 
-/* Navigation */
+/* Navigation (centered; visuals aligned to shared .tab-btn) */
 .nav { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
-.nav-btn {
-  padding: 10px 18px; border-radius: 8px; border: 1px solid var(--border);
-  background: var(--bg2); color: var(--text2); cursor: pointer;
-  font-size: 13px; font-weight: 600; transition: all .2s;
-}
-.nav-btn:hover { background: var(--bg3); color: var(--text); }
-.nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
 
-/* Sections */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Cards */
+/* Accordion card (page-specific; padding:0 overrides common.css .card) */
 .card {
   background: var(--bg2); border: 1px solid var(--border);
   border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow); padding: 0;
 }
 .card-header {
   padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
@@ -75,17 +36,7 @@ header .sub { color: var(--text3); font-size: 14px; }
 .card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
 .card-body.open { display: block; }
 
-/* Typography */
-h2 { font-size: 22px; font-weight: 700; margin: 32px 0 16px; color: var(--blue); }
-h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
-p { margin-bottom: 12px; color: var(--text2); }
-ul, ol { margin: 12px 0 12px 24px; color: var(--text2); }
-li { margin-bottom: 6px; }
-code {
-  font-family: 'JetBrains Mono', monospace;
-  background: var(--bg3); padding: 2px 6px; border-radius: 4px;
-  font-size: 13px; color: var(--purple);
-}
+/* Highlight boxes (page-specific class names: .highlight + colour modifiers) */
 .highlight {
   background: var(--blue-l); border-left: 4px solid var(--blue);
   padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0;
@@ -95,11 +46,7 @@ code {
 .highlight.purple { background: var(--purple-l); border-color: var(--purple); }
 .highlight.orange { background: var(--orange-l); border-color: var(--orange); }
 
-/* Tables */
-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
-th { background: var(--bg3); font-weight: 600; color: var(--text); }
-td { color: var(--text2); }
+/* Table zebra striping (page-specific enhancement over common.css) */
 tr:nth-child(even) { background: var(--bg3); }
 
 /* SVG Container */
@@ -140,15 +87,15 @@ tr:nth-child(even) { background: var(--bg3); }
   display: inline-block; padding: 2px 8px; border-radius: 4px;
   font-size: 12px; font-weight: 600; margin-right: 6px;
 }
-.tag.bullish { background: var(--green-l); color: var(--green); }
-.tag.bearish { background: var(--red-l); color: var(--red); }
-.tag.neutral { background: var(--orange-l); color: var(--orange); }
+.tag.bullish { background: var(--green-l); color: #166534; }
+.tag.bearish { background: var(--red-l); color: #991b1b; }
+.tag.neutral { background: var(--orange-l); color: #9a3412; }
 </style>
 </head>
 <body>
 <div class="container">
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <header>
   <h1>鏈上數據分析</h1>
@@ -156,12 +103,12 @@ tr:nth-child(even) { background: var(--bg3); }
 </header>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="showTab(0)">鏈上基礎</button>
-  <button class="nav-btn" onclick="showTab(1)">BTC 鏈上指標</button>
-  <button class="nav-btn" onclick="showTab(2)">ETH + DeFi</button>
-  <button class="nav-btn" onclick="showTab(3)">Stablecoin 流動性</button>
-  <button class="nav-btn" onclick="showTab(4)">綜合鏈上框架</button>
-  <button class="nav-btn" onclick="showTab(5)">互動測驗</button>
+  <button class="tab-btn active" onclick="showTab(0)">鏈上基礎</button>
+  <button class="tab-btn" onclick="showTab(1)">BTC 鏈上指標</button>
+  <button class="tab-btn" onclick="showTab(2)">ETH + DeFi</button>
+  <button class="tab-btn" onclick="showTab(3)">Stablecoin 流動性</button>
+  <button class="tab-btn" onclick="showTab(4)">綜合鏈上框架</button>
+  <button class="tab-btn" onclick="showTab(5)">互動測驗</button>
 </div>
 
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
@@ -187,12 +134,22 @@ tr:nth-child(even) { background: var(--bg3); }
     <p>鏈上數據 (On-Chain Data) 是直接從區塊鏈上提取的交易和活動資訊。由於區塊鏈是公開帳本，所有交易都是透明且不可篡改的 — 這讓我們可以追蹤「大戶行為」。</p>
 
     <div class="highlight green">
-      <strong>為什麼鏈上數據有效？</strong>
+      <strong>為什麼鏈上數據有參考價值？</strong>
       <ul>
         <li><strong>透明性</strong>：每筆交易永久記錄在區塊鏈上，任何人都可以驗證</li>
-        <li><strong>不可偽造</strong>：不像社交媒體情緒可以被操縱，鏈上行為需要真金白銀</li>
-        <li><strong>先行指標</strong>：大戶的鏈上行為（轉帳、質押、提幣）往往先於價格變動</li>
+        <li><strong>相對難偽造，但非不可操縱</strong>：鏈上行為需要真金白銀，比社交媒體情緒更難憑空造假；但「難偽造」不等於「不可操縱」——實務上仍有多種失真手法（見下方警語）</li>
+        <li><strong>先行指標（傾向而非保證）</strong>：大戶的鏈上行為（轉帳、質押、提幣）常先於價格變動，但並非每次都領先</li>
         <li><strong>全面性</strong>：涵蓋所有參與者 — 從散戶到鯨魚到礦工</li>
+      </ul>
+    </div>
+
+    <div class="highlight orange">
+      <strong>鏈上數據的操縱與失真風險（務必交叉驗證）</strong>
+      <ul>
+        <li><strong>Wash trade／自轉灌水</strong>：同一實體用多個地址互相轉帳，可以把 Active Addresses、交易筆數、交易量灌大，製造「活躍度上升」的假象</li>
+        <li><strong>交易所／ETF custodian 內部轉帳</strong>：託管方在自家地址間調度，會讓 Exchange Flow、餘額變化失真，看起來像「大額流入／流出」其實只是內部搬倉</li>
+        <li><strong>鏈上敘事最易被帶風向</strong>：單一「鯨魚異動」「巨鯨買入」截圖最容易被 KOL 斷章取義帶節奏，情緒面放大失真</li>
+        <li><strong>因應原則</strong>：任何單一鏈上指標都可能被操縱或誤讀，須以「多指標 + 多來源（Glassnode／CryptoQuant／實體標籤資料）交叉驗證」，並結合價格與宏觀一起判讀，切勿單點下重注</li>
       </ul>
     </div>
 
@@ -231,7 +188,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <div class="highlight purple">
       <strong>分析原則</strong>：
       <ul>
-        <li>單一指標永遠不足以做決策 — 至少看 3-4 個不同維度的指標</li>
+        <li>單一指標往往不足以做決策 — 至少看 3-4 個不同維度的指標</li>
         <li>鏈上指標是「方向指南針」而非「精確計時器」— 適合判斷週期位置，不適合抓精確頂底</li>
         <li>結合宏觀環境（利率、DXY）使用效果更好</li>
       </ul>
@@ -299,7 +256,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <p>衡量整個市場參與者的「帳面盈虧」狀態。Realized Cap 是每個 UTXO 最後一次移動時的價格加總。</p>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260" role="img" aria-labelledby="svgTitleNupl">
+        <title id="svgTitleNupl">NUPL 各分區帶與市場週期階段對應示意</title>
         <rect width="580" height="260" fill="#f8fafc" rx="8"/>
         <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">NUPL Bands 與市場週期</text>
         <rect x="60" y="35" width="480" height="30" fill="#dc262640" rx="4"/>
@@ -435,7 +393,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:560px" viewBox="0 0 560 220">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 220" role="img" aria-labelledby="svgTitleSopr">
+        <title id="svgTitleSopr">SOPR 在牛市與熊市中回測 1.0 的不同行為模式對比</title>
         <rect width="560" height="220" fill="#f8fafc" rx="8"/>
         <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">SOPR 行為模式：牛市 vs 熊市</text>
         <rect x="20" y="35" width="250" height="170" rx="6" fill="#dcfce740" stroke="#16a34a" stroke-width="1"/>
@@ -516,7 +475,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <ul>
       <li><strong>減半前 6 個月</strong>：市場開始 price in，通常溫和上漲</li>
       <li><strong>減半後 3-6 個月</strong>：供給衝擊開始顯現，加速上漲</li>
-      <li><strong>減半後 12-18 個月</strong>：歷史上每次都達到新 ATH</li>
+      <li><strong>減半後 12-18 個月</strong>：過往幾輪多曾達到新 ATH（歷史規律，無保證重演，須自行驗證）</li>
       <li><strong>注意</strong>：每次減半效應遞減（區塊獎勵佔比越來越小）</li>
     </ul>
 
@@ -564,7 +523,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:560px" viewBox="0 0 560 240">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 240" role="img" aria-labelledby="svgTitleEthSupply">
+        <title id="svgTitleEthSupply">ETH 供給變化示意:銷毀量與發行量隨時間的消長</title>
         <rect width="560" height="240" fill="#f8fafc" rx="8"/>
         <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">ETH Supply Change: Burn vs Issuance</text>
         <line x1="60" y1="120" x2="520" y2="120" stroke="#cbd5e1" stroke-width="1"/>
@@ -941,7 +901,8 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
   <div class="card-body">
     <div class="svg-container">
-      <svg width="100%" style="max-width:580px" viewBox="0 0 580 300">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 300" role="img" aria-labelledby="svgTitleWyckoff">
+        <title id="svgTitleWyckoff">Wyckoff 市場週期各階段與對應鏈上指標的映射示意</title>
         <rect width="580" height="300" fill="#f8fafc" rx="8"/>
         <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Wyckoff 市場週期 + 鏈上指標對應</text>
         <path d="M 40,200 Q 80,200 100,180 Q 130,140 160,120 Q 200,90 240,80 Q 280,75 300,90 Q 330,110 340,130 Q 360,160 380,180 Q 400,200 420,210 Q 450,220 470,210 Q 490,195 510,170 Q 530,140 550,120" fill="none" stroke="#0f172a" stroke-width="2.5"/>
@@ -1003,7 +964,7 @@ tr:nth-child(even) { background: var(--bg3); }
         <tr><td>Funding Rate</td><td>0.08%+</td><td><span class="tag bearish">Overheated</span></td></tr>
       </table>
       <p><strong>結果</strong>：BTC 從 $69,000 跌至 $15,500（-77%）<br>
-      <strong>教訓</strong>：LTH 開始分發 + Stablecoin 停止流入 = 頂部最可靠信號</p>
+      <strong>教訓</strong>：LTH 開始分發 + Stablecoin 停止流入 = 頂部較可靠的信號組合之一（仍須其他指標與價格確認）</p>
     </div>
 
     <h4>案例 3: 2022 年 6-11 月 — FTX 前的混合信號</h4>
@@ -1178,7 +1139,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q1" value="c"> C. Euphoria（歷史頂部區域）</label>
     <label><input type="radio" name="q1" value="d"> D. Fear（恐懼）</label>
   </div>
-  <div class="explanation">NUPL > 0.75 = Euphoria。歷史上每次進入此區間都是牛市頂部，應該開始分批減倉。2017 和 2021 的頂部都出現在此區間。</div>
+  <div class="explanation">NUPL > 0.75 = Euphoria。歷史上進入此區間多對應牛市頂部區域，宜開始分批減倉、提高警覺。2017 和 2021 的頂部都出現在此區間（歷史規律，無保證重演）。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
@@ -1348,9 +1309,9 @@ tr:nth-child(even) { background: var(--bg3); }
 // Tab navigation
 function showTab(index) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab' + index).classList.add('active');
-  document.querySelectorAll('.nav-btn')[index].classList.add('active');
+  document.querySelectorAll('.tab-btn')[index].classList.add('active');
 }
 
 // Accordion cards

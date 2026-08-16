@@ -52,12 +52,13 @@ class QuizEngine {
       <div class="quiz-question">${this.current + 1}. ${q.question}</div>
       <ul class="quiz-options">
     `;
+    // bracket notation so container ids containing '-' don't produce invalid JS in onclick
     q.options.forEach((opt, i) => {
-      html += `<li onclick="window._quiz_${this.container.id}.select(${i})">${opt}</li>`;
+      html += `<li onclick="window['_quiz_${this.container.id}'].select(${i})">${opt}</li>`;
     });
     html += `</ul>
       <div class="quiz-explanation" id="${this.container.id}-explanation">${q.explanation || ''}</div>
-      <button onclick="window._quiz_${this.container.id}.next()" style="display:none;margin-top:12px;padding:8px 16px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer;" id="${this.container.id}-next">下一題 →</button>
+      <button onclick="window['_quiz_${this.container.id}'].next()" style="display:none;margin-top:12px;padding:8px 16px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer;" id="${this.container.id}-next">下一題 →</button>
     `;
     this.container.innerHTML = html;
     this.answered = false;
@@ -92,7 +93,7 @@ class QuizEngine {
           <h3>測驗完成！</h3>
           <p style="font-size:24px;font-weight:800;color:var(--blue);margin:12px 0;">${this.score} / ${this.questions.length}</p>
           <p>正確率: ${Math.round(this.score / this.questions.length * 100)}%</p>
-          <button onclick="window._quiz_${this.container.id} = new QuizEngine('${this.container.id}', window._quiz_data_${this.container.id})" style="margin-top:16px;padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;">重新測驗</button>
+          <button onclick="window['_quiz_${this.container.id}'] = new QuizEngine('${this.container.id}', window['_quiz_data_${this.container.id}'])" style="margin-top:16px;padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;">重新測驗</button>
         </div>
       `;
     } else {
@@ -129,6 +130,9 @@ function calcKelly(winRate, avgWin, avgLoss) {
 }
 
 // Leverage Liquidation Calculator
+// NOTE: returns the *bankruptcy* price (where margin = 0). A real exchange liquidates
+// slightly earlier once price crosses the maintenance-margin threshold, so actual
+// liquidation happens a bit before this level. Treat this as a conservative estimate.
 function calcLiquidation(entry, leverage, direction) {
   // direction: 'long' or 'short'
   const liqDistance = 1 / leverage;

@@ -4,43 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>回測與績效分析 — Backtesting & Performance Analytics</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --green: #16a34a;
-  --red: #dc2626;
-  --purple: #7c3aed;
-  --orange: #ea580c;
-  --r: 12px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding: 32px 20px;
-  line-height: 1.7;
-}
-.container { max-width: 1000px; margin: 0 auto; }
-.back-link {
-  display: inline-block;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 24px;
-  transition: opacity .2s;
-}
-.back-link:hover { opacity: 0.7; }
+/* Base tokens, body, back-link, cards, tables inherited from common.css */
+.container { max-width: 1100px; margin: 0 auto; }
 header { margin-bottom: 32px; }
 header h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
 header p { color: var(--text2); font-size: 14px; }
@@ -78,13 +46,7 @@ h2 { font-size: 20px; font-weight: 700; margin: 28px 0 14px; color: var(--text);
 h2:first-child { margin-top: 0; }
 h3 { font-size: 16px; font-weight: 600; margin: 20px 0 10px; color: var(--text); }
 p { margin-bottom: 12px; color: var(--text2); font-size: 14px; }
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-  margin-bottom: 20px;
-}
+/* base .card inherited from common.css; page-specific colour variants below */
 .card-blue { border-left: 4px solid var(--blue); }
 .card-green { border-left: 4px solid var(--green); }
 .card-red { border-left: 4px solid var(--red); }
@@ -104,7 +66,6 @@ p { margin-bottom: 12px; color: var(--text2); font-size: 14px; }
 }
 ul, ol { margin: 10px 0 16px 24px; color: var(--text2); font-size: 14px; }
 li { margin-bottom: 6px; }
-strong { color: var(--text); font-weight: 600; }
 .highlight { background: #fef3c7; padding: 2px 6px; border-radius: 4px; }
 .svg-container {
   background: var(--bg2);
@@ -115,23 +76,7 @@ strong { color: var(--text); font-weight: 600; }
   text-align: center;
   overflow-x: auto;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 14px 0;
-  font-size: 13px;
-}
-th, td {
-  border: 1px solid var(--border);
-  padding: 10px 12px;
-  text-align: left;
-}
-th {
-  background: var(--bg3);
-  font-weight: 600;
-  color: var(--text);
-}
-td { color: var(--text2); }
+/* table/th/td inherited from common.css */
 .comparison-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -322,7 +267,7 @@ button.calc-btn:hover { opacity: 0.85; }
 </head>
 <body>
 <div class="container">
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 <header>
   <h1>回測與績效分析</h1>
   <p>Backtesting & Performance Analytics — 用數據驗證你的交易策略</p>
@@ -393,7 +338,8 @@ button.calc-btn:hover { opacity: 0.85; }
 </div>
 
 <div class="svg-container">
-  <svg viewBox="0 0 700 320" width="100%" style="max-width:700px">
+  <svg viewBox="0 0 700 320" width="100%" style="max-width:700px" role="img" aria-labelledby="svg-overfit-title">
+    <title id="svg-overfit-title">Overfitting 示意圖：策略在訓練期與驗證期的績效對比</title>
     <defs>
       <linearGradient id="gradGreen" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" style="stop-color:#16a34a;stop-opacity:0.2"/>
@@ -457,7 +403,8 @@ button.calc-btn:hover { opacity: 0.85; }
   <p>勝率衡量你在所有交易中獲利的比例。<strong>高勝率不等於盈利</strong> — 如果每次贏小輸大，高勝率照樣虧錢。</p>
   <div class="formula">Win Rate = 獲利交易次數 / 總交易次數 × 100%</div>
   <div class="svg-container" style="border:none; padding:10px;">
-    <svg viewBox="0 0 400 100" width="100%" style="max-width:400px">
+    <svg viewBox="0 0 400 100" width="100%" style="max-width:400px" role="img" aria-labelledby="svg-winrate-title">
+      <title id="svg-winrate-title">勝率示意：100 筆交易中 60 筆獲利、40 筆虧損</title>
       <rect x="10" y="30" width="240" height="40" fill="#dcfce7" rx="6"/>
       <rect x="250" y="30" width="140" height="40" fill="#fee2e2" rx="6"/>
       <text x="130" y="55" text-anchor="middle" font-size="13" font-weight="600" fill="#16a34a">60% Wins</text>
@@ -489,7 +436,8 @@ button.calc-btn:hover { opacity: 0.85; }
   Rp = 策略報酬率, Rf = 無風險利率, σp = 報酬率標準差</div>
   <p><strong>參考基準：</strong>< 1.0 = 不理想 | 1.0-2.0 = 可接受 | 2.0-3.0 = 很好 | > 3.0 = 傑出（或 overfitted）</p>
   <div class="svg-container" style="border:none; padding:10px;">
-    <svg viewBox="0 0 500 200" width="100%" style="max-width:500px">
+    <svg viewBox="0 0 500 200" width="100%" style="max-width:500px" role="img" aria-labelledby="svg-sharpe-title">
+      <title id="svg-sharpe-title">Sharpe Ratio 示意：報酬常態分布、標準差與超額報酬</title>
       <!-- Normal distribution curve -->
       <path d="M 50,170 Q 100,168 130,160 Q 160,145 190,120 Q 220,80 250,50 Q 280,80 310,120 Q 340,145 370,160 Q 400,168 450,170" fill="none" stroke="#2563eb" stroke-width="2.5"/>
       <path d="M 50,170 Q 100,168 130,160 Q 160,145 190,120 Q 220,80 250,50 Q 280,80 310,120 Q 340,145 370,160 Q 400,168 450,170 Z" fill="url(#gradBlue2)" opacity="0.3"/>
@@ -531,7 +479,8 @@ button.calc-btn:hover { opacity: 0.85; }
   <p>最大回撤是資金從峰值跌到谷底的最大幅度。它衡量<strong>你最痛苦的時期有多痛苦</strong>。</p>
   <div class="formula">Max Drawdown = (Peak - Trough) / Peak × 100%</div>
   <div class="svg-container" style="border:none; padding:10px;">
-    <svg viewBox="0 0 500 180" width="100%" style="max-width:500px">
+    <svg viewBox="0 0 500 180" width="100%" style="max-width:500px" role="img" aria-labelledby="svg-maxdd-title">
+      <title id="svg-maxdd-title">最大回撤示意：資金曲線從峰值跌到谷底的最大幅度</title>
       <!-- Equity curve -->
       <polyline points="30,140 60,120 90,100 120,80 150,70 180,55 210,60 240,90 270,120 300,130 330,110 360,85 390,70 420,55 450,45 470,40"
                 fill="none" stroke="#2563eb" stroke-width="2"/>
@@ -829,7 +778,8 @@ if ta.crossunder(fast, slow)
 </div>
 
 <div class="svg-container">
-  <svg viewBox="0 0 700 220" width="100%" style="max-width:700px">
+  <svg viewBox="0 0 700 220" width="100%" style="max-width:700px" role="img" aria-labelledby="svg-wfa-title">
+    <title id="svg-wfa-title">Walk-Forward Analysis 分段圖：滾動的訓練期與驗證期</title>
     <rect x="0" y="0" width="700" height="220" fill="#f8fafc" rx="8"/>
     <text x="350" y="25" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Walk-Forward Analysis 分段圖</text>
     <!-- Window 1 -->
@@ -886,7 +836,8 @@ if ta.crossunder(fast, slow)
 <div class="card">
   <p>Monte Carlo 模擬產生 1000+ 條可能的 equity curve。你需要關注：</p>
   <div class="svg-container" style="border:none; padding:10px;">
-    <svg viewBox="0 0 500 160" width="100%" style="max-width:500px">
+    <svg viewBox="0 0 500 160" width="100%" style="max-width:500px" role="img" aria-labelledby="svg-mc-title">
+      <title id="svg-mc-title">Monte Carlo 模擬示意：多條可能的 equity curve 分布</title>
       <rect x="0" y="0" width="500" height="160" fill="#f8fafc" rx="8"/>
       <!-- Multiple equity curves (simulated) -->
       <polyline points="30,80 70,75 110,68 150,72 190,60 230,55 270,50 310,48 350,42 390,38 430,35 460,30" fill="none" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
@@ -1007,7 +958,8 @@ if ta.crossunder(fast, slow)
 <div class="card card-purple">
   <h3>放大原則</h3>
   <div class="svg-container" style="border:none; padding:10px;">
-    <svg viewBox="0 0 600 180" width="100%" style="max-width:600px">
+    <svg viewBox="0 0 600 180" width="100%" style="max-width:600px" role="img" aria-labelledby="svg-scale-title">
+      <title id="svg-scale-title">漸進放大倉位示意：從 1/10 倉位逐級升到正常倉位</title>
       <rect x="0" y="0" width="600" height="180" fill="#f8fafc" rx="8"/>
       <!-- Steps -->
       <rect x="30" y="120" width="90" height="40" fill="#dbeafe" stroke="#2563eb" rx="6"/>
@@ -1249,7 +1201,7 @@ if ta.crossunder(fast, slow)
 
 <div class="quiz-question" data-correct="2">
   <h4>Q13. 給你以下交易日誌數據，最大的問題是什麼？<br>
-  勝率: 70% | 平均獲利: $50 | 平均虧損: $200 | 規則遵守率: 45%</h4>
+  勝率：70% | 平均獲利：$50 | 平均虧損：$200 | 規則遵守率：45%</h4>
   <div class="quiz-options">
     <div class="quiz-option" data-idx="0">A. 勝率太低</div>
     <div class="quiz-option" data-idx="1">B. 交易次數不夠</div>
@@ -1320,7 +1272,7 @@ if ta.crossunder(fast, slow)
 
 <!-- ==================== Disclaimer ==================== -->
 <div class="disclaimer">
-  <strong>免責聲明：</strong>本頁面內容僅供教育目的。回測結果不代表未來表現的保證。歷史數據無法完全反映真實市場的滑點、流動性限制和心理壓力。任何交易策略都有虧損風險，請在充分了解風險後才投入真實資金。過去的績效不是未來結果的可靠指標。
+  <strong>本課特別風險提示：</strong>回測結果不代表未來表現的保證。歷史數據無法完全反映真實市場的滑點、流動性限制與心理壓力，且過度擬合（overfitting）會讓漂亮的歷史績效在實盤失效。請在充分了解這些回測侷限後，才將策略投入真實資金。（全站通用免責聲明見頁尾）
 </div>
 
 </div><!-- container -->
@@ -1372,7 +1324,7 @@ function calculateMetrics() {
       <div><strong>盈虧比：</strong>${(avgWin / avgLoss).toFixed(2)} : 1</div>
     </div>
     <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:12px; color:var(--text3);">
-      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數，且期望值的信賴區間下界仍為正）' : '✗ 負期望值系統 — 長期必定虧損，需要調整策略'}
+      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數，且期望值的信賴區間下界仍為正）' : '✗ 負期望值系統 — 長期預期會虧損，需要調整策略（須自行回測驗證）'}
       ${sharpe >= 2 ? ' | Sharpe 很好' : sharpe >= 1 ? ' | Sharpe 可接受' : ' | Sharpe 偏低，風險調整報酬需改善'}
       ${sortinoIsExact ? '' : '<br>⚠ Sortino 為粗略近似（用總 Std 的 0.7 倍佔位）。請在「下行 Std」欄填入實際下行離差以精確計算。'}
       <br>無風險利率採用 ${rf}%（可調假設值）。
@@ -1516,7 +1468,7 @@ function drawEquityCurve() {
   // Zero line
   const zeroY = padY + chartH - ((0 - minR) / range) * chartH;
 
-  let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px">`;
+  let svg = `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px" role="img" aria-label="交易日誌 Equity Curve：累積 R 值曲線"><title>交易日誌 Equity Curve：累積 R 值曲線</title>`;
   svg += `<rect x="0" y="0" width="${w}" height="${h}" fill="#f8fafc" rx="6"/>`;
   // Grid lines
   svg += `<line x1="${padX}" y1="${zeroY}" x2="${w - padX}" y2="${zeroY}" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="3,3"/>`;

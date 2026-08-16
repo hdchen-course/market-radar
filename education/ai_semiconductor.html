@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 半導體供應鏈投資分析 — Capex 循環、泡沫判斷與風險規避</title>
 <link rel="stylesheet" href="common.css">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 .subtitle { font-size: 14px; color: var(--text3); margin-bottom: 24px; }
 .formula { background: var(--purple-l); border: 1px solid #c4b5fd; border-radius: var(--r); padding: 16px 20px; margin: 16px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.8; }
-.tag-bull { background: var(--green-l); color: var(--green); }
-.tag-bear { background: var(--red-l); color: var(--red); }
-.tag-warn { background: var(--yellow-l); color: var(--yellow); }
+.tag-bull { background: var(--green-l); color: #166534; }
+.tag-bear { background: var(--red-l); color: #991b1b; }
+.tag-warn { background: var(--yellow-l); color: #854d0e; }
 .section-title { font-size: 20px; font-weight: 700; color: var(--blue); margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
 .quiz-option-btn {
   display: block;
@@ -40,7 +40,7 @@
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>AI 半導體供應鏈投資分析</h1>
 <p class="subtitle">Capex 循環判斷、泡沫辨識、歷史對照、風險規避 &mdash; 如何在 AI 牛市中獲利而不被泡沫埋葬</p>
@@ -120,7 +120,7 @@ Hyperscaler $$ &rarr; NVIDIA(GPU) &rarr; TSMC(代工) &rarr; ASML(光刻機) &ra
 <code>Hyperscaler AI Revenue Growth Rate</code> vs <code>Hyperscaler Capex Growth Rate</code><br><br>
 如果 Capex YoY +60% 但 AI Revenue YoY 只有 +20% &rarr; GAP 在擴大 &rarr; 泡沫在膨脹。<br>
 如果 Capex 持平但 AI Revenue 加速 &rarr; 投資開始回收 &rarr; 牛市可持續。<br><br>
-<strong>目前（2026 Q1）：Capex +50-60% 但 AI Revenue 驗證仍不明確 &rarr; 在危險區。</strong>
+<strong>目前（2026 Q1）：Capex +50-60% 但 AI Revenue 驗證仍不明確 &rarr; GAP 有擴大跡象，風險偏高（示意判斷、非預測，須以最新財報數據自行驗證；高風險不等於必然崩盤，也可能久盤或輪動消化）。</strong>
 </div>
 </div>
 </div><!-- tab1 -->
@@ -143,8 +143,8 @@ Hyperscaler $$ &rarr; NVIDIA(GPU) &rarr; TSMC(代工) &rarr; ASML(光刻機) &ra
 </table>
 
 <div class="warning-box">
-<strong>泡沫爆破的順序（由外向內）：</strong><br>
-L6 伺服器（最先爆 — SMCI -28%已開始）&rarr; L5 封裝 &rarr; L4 記憶體 &rarr; L2/L3 設備 &rarr; L1 GPU（最後爆）<br><br>
+<strong>泡沫若破裂，可能的爆破順序（由外向內，屬歷史規律推演、非必然，實際順序與時點無法保證）：</strong><br>
+L6 伺服器（傾向最先鬆動 — SMCI -28%可視為早期跡象）&rarr; L5 封裝 &rarr; L4 記憶體 &rarr; L2/L3 設備 &rarr; L1 GPU（傾向最後）<br><br>
 <strong>規律：</strong>離終端客戶最遠+利潤率最低+護城河最淺的 = 最先崩。NVIDIA 會是最後一個崩的（如果崩的話），因為它的護城河（CUDA）最深。
 </div>
 </div>
@@ -379,7 +379,7 @@ AI 龍頭（NVDA）有 <strong>真實的、巨大的、增長中的營收</stron
 <h2 class="section-title">互動測驗</h2>
 
 <div style="max-width:720px; margin:0 auto;">
-  <div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+  <div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分：0 / 0</div>
 
   <div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; margin-bottom:20px;">
     <div id="quiz-question-num" style="font-size:12px; color:var(--text3); margin-bottom:8px;"></div>
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateScore() {
-    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+    scoreEl.textContent = '得分：' + score + ' / ' + total;
   }
 
   function showQuestion() {

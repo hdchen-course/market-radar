@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>市場 Regime 識別與操作 — 60 秒判定當前環境</title>
 <link rel="stylesheet" href="common.css">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* Supplemental styles for this page */
 .regime-card {
@@ -226,7 +226,7 @@
 </head>
 <body>
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>市場 Regime 識別與操作指南</h1>
 <p style="color:var(--text3); margin-bottom:24px;">60 秒判定當前市場環境 &times; 六大 Regime 對應策略 &times; 轉換信號捕捉 &times; 40 題實戰測驗</p>
@@ -661,7 +661,7 @@
   </tr>
   <tr>
     <td><strong style="color:var(--red);">Risk-Off</strong></td>
-    <td>TLT, GLD, SLV, VIX calls, 現金, 日圓 long</td>
+    <td>TLT, GLD, VIX calls, 現金, 日圓 long<br><span style="font-size:11px; color:var(--text3);">※ 白銀（SLV）在純衰退恐慌中通常弱於黃金（工業需求受壓），僅在 Reflation／去美元化這類偏工業需求或弱美元的環境才適合做多</span></td>
     <td>SPY, QQQ, HYG, EEM, 銅</td>
     <td>中等部位（50-70%）<br>避險部位加大</td>
     <td>Daily / Weekly SuperTrend<br>趨勢追蹤為主</td>
@@ -683,7 +683,7 @@
   <tr>
     <td><strong>流動性危機</strong></td>
     <td>現金（T-Bills）、極短期國庫券<br>危機末期抄底用 call options</td>
-    <td>一切風險資產<br>（但不要做空 — 流動性不足會被軋空）</td>
+    <td>一切風險資產<br><span style="font-size:11px; color:var(--text3);">（散戶不建議放空：危機末段央行常暴力介入造成 V 型反轉、戀空易被軋，加上流動性差、放空成本高、借券可能被召回，風險報酬不佳）</span></td>
     <td>最小化（20-30%）<br>90% 現金</td>
     <td>不看 SuperTrend<br>技術指標全部失效</td>
   </tr>
@@ -776,12 +776,13 @@
       <td>所有技術指標在恐慌中失效，只靠基本面判斷</td>
     </tr>
   </table>
+  <p style="font-size:12px; color:var(--text3); margin-top:12px;"><strong>參數說明（與旗艦儀表板頁交叉）：</strong>本頁 Regime 判定用的是常規 SuperTrend 參數 ST(10,3) 與 ST(10,2)（ATR 週期 10、乘數 3 或 2），搭配日線／週線來判斷「波段級別」的趨勢方向，適合較長線的部位管理。旗艦儀表板頁使用的 ST(300,3) 是「超長 ATR 週期」設定，跑在 2h／4h 等短時間框架上，目的是過濾極短線雜訊、只保留大級別趨勢的即時訊號，屬於盯盤／短波段用途。兩者服務不同時間框架與情境，數字不可直接互換：判 Regime 用 (10,x) 週線／日線，短線盯盤才用旗艦頁的 (300,3)；實際採用前皆須自行回測驗證。</p>
 </div>
 
 <div class="insight-box" style="margin-top:16px;">
   <strong>跨 Regime 通用規則：</strong>
   <ol style="margin-top:8px; font-size:13px; line-height:2;">
-    <li>永遠先判定 Regime，再選擇策略 — 順序不可顛倒</li>
+    <li>務必先判定 Regime，再選擇策略 — 順序不可顛倒</li>
     <li>Regime 不明確時，預設為保守模式（減少部位、提高現金）</li>
     <li>同一個 Regime 內不要逆勢操作（不在 Risk-On 中做空、不在 Risk-Off 中抄底）</li>
     <li>Regime 轉換初期往往是風險報酬較佳的區段 — 越早辨識轉換，越有機會在較好的位置調整部位；但「能提前幾天」「能多賺多少」沒有保證，任何具體數字都需自行回測驗證</li>
@@ -1307,12 +1308,12 @@
 <div class="quiz-q" data-answer="0">
   <h4>Q22. 殖利率曲線（2Y-10Y）從 -50bps 突然回正至 +10bps。這代表什麼？</h4>
   <ul class="options">
-    <li data-idx="0">衰退即將到來（曲線回正歷史上領先衰退 6-12 個月）</li>
+    <li data-idx="0">衰退接近的較晚期信號（曲線回正後歷史上約 3-6 個月內衰退）</li>
     <li data-idx="1">經濟復甦確認</li>
     <li data-idx="2">Reflation 啟動</li>
     <li data-idx="3">無特別意義</li>
   </ul>
-  <div class="explanation">殖利率曲線倒掛後「回正」（un-inversion）歷史上是衰退的更近期信號。倒掛本身領先衰退12-18個月，但回正通常意味衰退就在3-6個月內。原因：短端殖利率因 Fed 降息預期而快速下降=市場預期經濟要出問題了。</div>
+  <div class="explanation">殖利率曲線倒掛後「回正」（un-inversion）歷史上是衰退更接近的信號：回正後約 3-6 個月內容易出現衰退（相對於倒掛本身領先衰退的時間更長）。原因：短端殖利率因 Fed 降息預期而快速下降=市場預期經濟要出問題了。此為歷史統計傾向、樣本有限，非精確定律，須自行驗證。</div>
 </div>
 
 <!-- Q23 -->
@@ -1535,10 +1536,9 @@
 </div><!-- tab5 -->
 
 <!-- ==================== FOOTER ==================== -->
-<footer style="margin-top:40px; padding:20px; text-align:center; color:var(--text3); font-size:12px; border-top:1px solid var(--border);">
-  <p><strong>免責聲明：</strong>本頁面僅供教育參考，不構成投資建議。市場 Regime 判定具有主觀性，請結合個人風險承受度做出決策。</p>
-  <p style="margin-top:8px;">所有歷史案例基於事後回顧分析，過去表現不代表未來結果。交易有風險，請謹慎操作。</p>
-</footer>
+<div style="margin-top:40px; padding:14px 18px; background:var(--yellow-l); border-left:4px solid var(--yellow); border-radius:0 var(--r) var(--r) 0; font-size:12.5px; line-height:1.7; color:#854d0e;">
+  <strong style="color:#78350f;">本課特別風險提示：</strong>市場 Regime 判定具有主觀性，不同指標可能給出衝突信號；本課所有歷史案例均為事後回顧分析，存在後見之明偏誤，實盤中即時辨識 Regime 轉換遠比事後回看困難。請結合多重確認與個人風險承受度分批決策。（全站通用免責聲明見頁尾）
+</div>
 
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>

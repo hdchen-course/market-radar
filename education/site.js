@@ -9,22 +9,22 @@
     { file: 'tw_reality.html',            title: '台灣散戶實戰基建' },
     { file: 'cognitive_traps.html',       title: '交易認知陷阱' },
     { file: 'trading_psychology.html',    title: '交易心理學' },
+    { file: 'market_psychology.html',     title: '市場心理與主力動向' },
     { file: 'risk_management.html',       title: '資金管理與風險控制' },
+    { file: 'backtesting.html',           title: '回測與績效統計' },
     { file: 'trading_strategy.html',      title: '波段與日內策略' },
     { file: 'us_equity_etf.html',         title: '美股與 ETF 核心持倉' },
     { file: 'precious_metals.html',       title: '貴金屬交易（黃金/白銀/礦股）' },
     { file: 'regime_identification.html', title: 'Regime 快速判定' },
     { file: 'event_trading_sop.html',     title: '事件交易 SOP' },
-    { file: 'backtesting.html',           title: '回測與績效統計' },
     { file: 'macro_liquidity.html',       title: '宏觀流動性與經濟數據' },
     { file: 'forex_analysis.html',        title: '外匯與宏觀傳導' },
     { file: 'capital_flow_commodity.html',title: '跨資產資金流與商品供需' },
     { file: 'ai_semiconductor.html',      title: 'AI 半導體供應鏈分析' },
-    { file: 'market_psychology.html',     title: '市場心理與主力動向' },
     { file: 'supertrend_guide.html',      title: 'SuperTrend 實戰手冊' },
     { file: 'candlestick_patterns.html',  title: '裸 K 線型態' },
+    { file: 'liquidity_grid.html',        title: '流動性結構與網格交易' },
     { file: 'options_volatility.html',    title: '期權與波動率（進階）' },
-    { file: 'liquidity_grid.html',        title: '流動性結構與網格（加密選修）' },
     { file: 'futures_analytics.html',     title: '永續合約籌碼（加密選修）' },
     { file: 'onchain_crypto.html',        title: '鏈上數據分析（加密選修）' }
   ];
@@ -83,9 +83,9 @@
       '.site-lesson-nav .ln-home{flex:0 0 auto;justify-content:center;background:var(--bg3,#f1f5f9);}' +
       '.site-lesson-nav .ln-spacer{flex:1;min-width:120px;}' +
       '.site-disclaimer{margin:20px 0 8px;padding:14px 16px;border:1px solid var(--border,#cbd5e1);' +
-        'border-radius:10px;background:var(--bg3,#f1f5f9);color:var(--text3,#64748b);font-size:11.5px;line-height:1.7;}' +
-      '.site-disclaimer strong{color:var(--text2,#334155);}' +
-      '.site-disclaimer .sd-brand{display:block;margin-top:8px;font-size:11px;color:var(--text3,#64748b);opacity:.8;}' +
+        'border-radius:10px;background:var(--bg3,#f1f5f9);color:var(--text2,#334155);font-size:12.5px;line-height:1.7;}' +
+      '.site-disclaimer strong{color:var(--text,#0f172a);}' +
+      '.site-disclaimer .sd-brand{display:block;margin-top:8px;font-size:12px;color:var(--text3,#64748b);}' +
       '@media (max-width:480px){.site-lesson-nav a,.site-lesson-nav .ln-spacer{min-width:100%;}}';
     document.head.appendChild(css);
   }

@@ -4,65 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>期權與波動率交易 — 完整學習指南</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --orange: #ea580c;
-  --orange-l: #ffedd5;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.8;
-}
+/* Page-specific token: soft shadow used by accordion cards / quiz / positioning */
+:root { --shadow: 0 4px 20px rgba(0,0,0,0.06); }
 
-/* Layout */
+/* Layout (page-specific) */
 .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
 header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
 header h1 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
 header .sub { color: var(--text3); font-size: 14px; }
-.back-link { display: inline-block; margin-bottom: 24px; color: var(--blue); text-decoration: none; font-weight: 500; font-size: 14px; }
-.back-link:hover { text-decoration: underline; }
 
-/* Navigation */
-.nav { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
-.nav-btn {
-  padding: 10px 18px; border-radius: 8px; border: 1px solid var(--border);
-  background: var(--bg2); color: var(--text2); cursor: pointer;
-  font-size: 13px; font-weight: 600; transition: all .2s;
-}
-.nav-btn:hover { background: var(--bg3); color: var(--text); }
-.nav-btn.active { background: var(--blue-l); color: var(--blue); border-color: var(--blue); }
-
-/* Sections */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Cards */
+/* Cards — collapsible accordion wrapper (page-specific; overrides common .card padding) */
 .card {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--r); margin-bottom: 20px; overflow: hidden;
-  box-shadow: var(--shadow);
+  border-radius: var(--r); margin-bottom: 20px; overflow: hidden; padding: 0;
 }
 .card-header {
   padding: 16px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
@@ -75,17 +32,7 @@ header .sub { color: var(--text3); font-size: 14px; }
 .card-body { padding: 20px 24px; display: none; border-top: 1px solid var(--border); }
 .card-body.open { display: block; }
 
-/* Typography */
-h2 { font-size: 22px; font-weight: 700; margin: 32px 0 16px; color: var(--blue); }
-h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
-p { margin-bottom: 12px; color: var(--text2); }
-ul, ol { margin: 12px 0 12px 24px; color: var(--text2); }
-li { margin-bottom: 6px; }
-code {
-  font-family: 'JetBrains Mono', monospace;
-  background: var(--bg3); padding: 2px 6px; border-radius: 4px;
-  font-size: 13px; color: var(--purple);
-}
+/* Highlight callouts (page-specific naming: .highlight + colour modifiers) */
 .highlight {
   background: var(--blue-l); border-left: 4px solid var(--blue);
   padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0;
@@ -95,18 +42,10 @@ code {
 .highlight.purple { background: var(--purple-l); border-color: var(--purple); }
 .highlight.orange { background: var(--orange-l); border-color: var(--orange); }
 
-/* Tables */
-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
-th, td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
-th { background: var(--bg3); font-weight: 600; color: var(--text); }
-td { color: var(--text2); }
+/* Table zebra striping (page-specific addition; base table styling from common.css) */
 tr:nth-child(even) { background: var(--bg3); }
 
-/* SVG Container */
-.svg-container { margin: 20px 0; text-align: center; }
-.svg-container svg { max-width: 100%; height: auto; }
-
-/* Quiz */
+/* Quiz (page-specific radio-based layout; distinct from common .quiz-question/.quiz-options) */
 .quiz-section { margin-top: 24px; }
 .quiz-q {
   background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
@@ -135,25 +74,16 @@ tr:nth-child(even) { background: var(--bg3); }
   border-radius: var(--r); text-align: center; display: none;
 }
 
-/* Tag */
+/* Tag (page-specific semantic variants; WCAG AA dark foregrounds like common .tag-*) */
 .tag {
   display: inline-block; padding: 2px 8px; border-radius: 4px;
   font-size: 12px; font-weight: 600; margin-right: 6px;
 }
-.tag.bullish { background: var(--green-l); color: var(--green); }
-.tag.bearish { background: var(--red-l); color: var(--red); }
-.tag.neutral { background: var(--orange-l); color: var(--orange); }
-.tag.core { background: var(--blue-l); color: var(--blue); }
-.tag.advanced { background: var(--purple-l); color: var(--purple); }
-
-/* Warning box */
-.warning-box {
-  background: var(--red-l); border: 1px solid var(--red);
-  border-left: 4px solid var(--red); border-radius: 0 8px 8px 0;
-  padding: 14px 18px; margin: 16px 0; color: #991b1b;
-}
-.warning-box strong { color: var(--red); }
-.warning-box ul { color: #991b1b; }
+.tag.bullish { background: var(--green-l); color: #166534; }
+.tag.bearish { background: var(--red-l); color: #991b1b; }
+.tag.neutral { background: var(--orange-l); color: #9a3412; }
+.tag.core { background: var(--blue-l); color: #1e40af; }
+.tag.advanced { background: var(--purple-l); color: #5b21b6; }
 
 /* Positioning note */
 .positioning {
@@ -173,7 +103,7 @@ tr:nth-child(even) { background: var(--bg3); }
 <body>
 <div class="container">
 
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <header>
   <h1>期權與波動率交易</h1>
@@ -206,13 +136,13 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
 </div>
 
-<div class="nav">
-  <button class="nav-btn active" onclick="showTab(0)">期權基礎</button>
-  <button class="nav-btn" onclick="showTab(1)">Options Flow 解讀</button>
-  <button class="nav-btn" onclick="showTab(2)">Max Pain + IV Skew + GEX（進階選修）</button>
-  <button class="nav-btn" onclick="showTab(3)">波動率交易</button>
-  <button class="nav-btn" onclick="showTab(4)">期權策略實戰</button>
-  <button class="nav-btn" onclick="showTab(5)">互動測驗</button>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab(0)">期權基礎</button>
+  <button class="tab-btn" onclick="showTab(1)">Options Flow 解讀</button>
+  <button class="tab-btn" onclick="showTab(2)">Max Pain + IV Skew + GEX（進階選修）</button>
+  <button class="tab-btn" onclick="showTab(3)">波動率交易</button>
+  <button class="tab-btn" onclick="showTab(4)">期權策略實戰</button>
+  <button class="tab-btn" onclick="showTab(5)">互動測驗</button>
 </div>
 
 <!-- ==================== TAB 1: 期權基礎 ==================== -->
@@ -230,7 +160,7 @@ tr:nth-child(even) { background: var(--bg3); }
       <tr><td>Buy Call</td><td>買入買權</td><td><span class="tag bullish">看漲</span></td><td>權利金</td><td>理論無限</td></tr>
       <tr><td>Sell Call</td><td>賣出買權</td><td><span class="tag bearish">看跌/收租</span></td><td>理論無限</td><td>權利金</td></tr>
       <tr><td>Buy Put</td><td>買入賣權</td><td><span class="tag bearish">看跌/避險</span></td><td>權利金</td><td>Strike - Premium</td></tr>
-      <tr><td>Sell Put</td><td>賣出賣權</td><td><span class="tag bullish">看漲/接貨</span></td><td>Strike x 100</td><td>權利金</td></tr>
+      <tr><td>Sell Put</td><td>賣出賣權</td><td><span class="tag bullish">看漲/接貨</span></td><td>(Strike − Premium) × 100（標的歸零時）</td><td>權利金</td></tr>
     </table>
 
     <h4>核心術語</h4>
@@ -254,7 +184,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:600px" viewBox="0 0 600 320">
+      <svg width="100%" style="max-width:600px" viewBox="0 0 600 320" role="img">
+        <title>Call / Put 損益圖：Buy Call 與 Buy Put 到期損益曲線與損益平衡點</title>
         <rect width="600" height="320" fill="#f8fafc" rx="8"/>
         <text x="300" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Call / Put Payoff Diagram</text>
         <!-- Axes for Call -->
@@ -344,7 +275,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </ul>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:600px" viewBox="0 0 600 280">
+      <svg width="100%" style="max-width:600px" viewBox="0 0 600 280" role="img">
+        <title>Greeks 隨 Moneyness 變化：Delta、Gamma、Theta 隨標的價位變化的曲線</title>
         <rect width="600" height="280" fill="#f8fafc" rx="8"/>
         <text x="300" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Greeks 隨 Moneyness 變化</text>
         <!-- X-axis -->
@@ -479,7 +411,7 @@ tr:nth-child(even) { background: var(--bg3); }
     </ul>
 
     <div class="highlight red">
-      <strong>常見陷阱</strong>：Sell Call 也會產生高 volume，但方向完全相反！永遠要確認是 Buy to Open 還是 Sell to Open。
+      <strong>常見陷阱</strong>：Sell Call 也會產生高 volume，但方向完全相反，務必先確認是 Buy to Open 還是 Sell to Open。
     </div>
   </div>
 </div>
@@ -538,7 +470,7 @@ tr:nth-child(even) { background: var(--bg3); }
       <ul>
         <li><strong>Equity PCR</strong>：個股期權 — 反映散戶情緒，適合逆向操作</li>
         <li><strong>Index PCR</strong>：指數期權 — 包含大量機構避險（買 SPX Put），不適合逆向解讀</li>
-        <li>永遠看 <strong>Equity PCR</strong> 做情緒判斷！</li>
+        <li>做情緒判斷時應以 <strong>Equity PCR</strong> 為主</li>
       </ul>
     </div>
 
@@ -587,7 +519,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:560px" viewBox="0 0 560 280">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 280" role="img">
+        <title>Max Pain 圖：Call 與 Put 買方虧損隨行使價變化，合計最小處即最大痛點</title>
         <rect width="560" height="280" fill="#f8fafc" rx="8"/>
         <text x="280" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Max Pain Diagram</text>
         <line x1="60" y1="240" x2="520" y2="240" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -650,7 +583,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </ul>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:560px" viewBox="0 0 560 260">
+      <svg width="100%" style="max-width:560px" viewBox="0 0 560 260" role="img">
+        <title>IV Skew：波動率微笑／偏斜，比較正常 Put Skew、Call Skew 反轉與平坦 Skew</title>
         <rect width="560" height="260" fill="#f8fafc" rx="8"/>
         <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">IV Skew — Volatility Smile / Smirk</text>
         <line x1="60" y1="210" x2="520" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -704,7 +638,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <p><strong>GEX = Dealer 的淨 Gamma 暴露</strong>。Dealer（做市商）通常是期權的對手方，他們需要 delta hedge 來保持中性。Gamma 決定了他們 hedge 的方向。</p>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:580px" viewBox="0 0 580 320">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 320" role="img">
+        <title>GEX 機制：正 Gamma 抑制波動、負 Gamma 放大波動，GEX 翻負為爆發點</title>
         <rect width="580" height="320" fill="#f8fafc" rx="8"/>
         <text x="290" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">GEX 機制：Dealer Hedging 行為</text>
         <rect x="30" y="50" width="240" height="120" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
@@ -818,7 +753,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <p>財報、FOMC、重大事件前，IV 膨脹（因為不確定性增加）。事件過後，不確定性消除，IV 急劇下降 = <strong>IV Crush</strong>。</p>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260">
+      <svg width="100%" style="max-width:580px" viewBox="0 0 580 260" role="img">
+        <title>IV Crush：財報前 IV 膨脹、財報後 IV 急速坍塌回到正常水位</title>
         <rect width="580" height="260" fill="#f8fafc" rx="8"/>
         <text x="290" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">IV Crush: 財報前後 IV 變化</text>
         <!-- Axes -->
@@ -949,7 +885,7 @@ tr:nth-child(even) { background: var(--bg3); }
       <li><strong>機構避險需求</strong>：大型基金持有股票部位，需要買 OTM Put 保護 → 推高 Put IV</li>
       <li><strong>槓桿效應</strong>：股價下跌 → 公司槓桿增加 → 真實波動率上升 → 合理高估下行 IV</li>
       <li><strong>跳躍風險</strong>：市場「跳水」的概率 > 「跳漲」的概率 → Put IV 有合理溢價</li>
-      <li><strong>供需失衡</strong>：OTM Put 是保險，需求永遠存在；OTM Call 是投機，需求波動大</li>
+      <li><strong>供需失衡</strong>：OTM Put 是保險，需求長期存在；OTM Call 是投機，需求波動大</li>
     </ul>
 
     <h4>Skew 的交易應用</h4>
@@ -988,7 +924,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220" role="img">
+        <title>Covered Call 損益圖：獲利在行使價處封頂，與單純持股曲線對比</title>
         <rect width="500" height="220" fill="#f8fafc" rx="8"/>
         <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Covered Call Payoff</text>
         <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
@@ -1034,7 +971,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220" role="img">
+        <title>Protective Put 損益圖：下行虧損在 Put 行使價處封頂，上行仍隨股價獲利</title>
         <rect width="500" height="220" fill="#f8fafc" rx="8"/>
         <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Protective Put Payoff</text>
         <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
@@ -1085,7 +1023,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220" role="img">
+        <title>Long Straddle 損益圖：V 形曲線，任一方向大幅移動皆獲利，最大虧損為總權利金</title>
         <rect width="500" height="220" fill="#f8fafc" rx="8"/>
         <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Long Straddle Payoff</text>
         <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
@@ -1143,7 +1082,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220" role="img">
+        <title>Bull Call Spread 損益圖：最大虧損為淨權利金、最大獲利為價差寬度減淨權利金</title>
         <rect width="500" height="220" fill="#f8fafc" rx="8"/>
         <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Bull Call Spread Payoff</text>
         <line x1="50" y1="130" x2="450" y2="130" stroke="#cbd5e1" stroke-width="1"/>
@@ -1193,7 +1133,8 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="svg-container">
-      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220">
+      <svg width="100%" style="max-width:500px" viewBox="0 0 500 220" role="img">
+        <title>Iron Condor 損益圖：中段區間收取淨權利金為最大獲利，兩側超出翼距為最大虧損</title>
         <rect width="500" height="220" fill="#f8fafc" rx="8"/>
         <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Iron Condor Payoff</text>
         <line x1="50" y1="110" x2="450" y2="110" stroke="#cbd5e1" stroke-width="1"/>
@@ -1289,7 +1230,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>常見錯誤</h4>
     <div class="highlight red">
       <ul>
-        <li><strong>Sell Naked Options 無限風險</strong>：永遠用 Spread 限制最大虧損</li>
+        <li><strong>Sell Naked Options 無限風險</strong>：應以 Spread 限制最大虧損</li>
         <li><strong>忽略 Assignment 風險</strong>：ITM Short Options 可能被提前行使</li>
         <li><strong>Over-leveraging</strong>：期權自帶槓桿，不要再加倉位槓桿</li>
         <li><strong>不設停損</strong>：Short Gamma 部位必須有停損，一次 tail event 可以毀掉一年利潤</li>
@@ -1497,9 +1438,9 @@ tr:nth-child(even) { background: var(--bg3); }
 // Tab navigation
 function showTab(index) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab' + index).classList.add('active');
-  document.querySelectorAll('.nav-btn')[index].classList.add('active');
+  document.querySelectorAll('.tab-btn')[index].classList.add('active');
 }
 
 // Accordion cards

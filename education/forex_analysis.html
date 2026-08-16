@@ -4,101 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>外匯分析完全教學 — 貨幣機制 / DXY / Carry Trade / 亞洲貨幣 / 宏觀傳導</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --yellow: #d97706;
-  --yellow-l: #fef3c7;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --orange: #ea580c;
-  --orange-l: #fff7ed;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.7;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 16px;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-.back-link:hover { text-decoration: underline; }
-
-h1 {
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-.subtitle {
-  font-size: 14px;
-  color: var(--text3);
-  margin-bottom: 24px;
-}
-
-/* TAB NAV */
-.tab-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 6px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-sm);
-}
-.tab-btn {
-  padding: 10px 16px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .15s;
-  font-family: inherit;
-}
-.tab-btn:hover { background: var(--bg3); }
-.tab-btn.active {
-  background: var(--blue);
-  color: #fff;
-  font-weight: 600;
-}
-
-/* TAB CONTENT */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* 頁面專屬樣式：共用基礎（token、body、h1~h4、a、code、.card、.tab-*、.highlight/.warning-box、table、.back-link、.quiz-*）已移至 common.css */
 
 .section-title {
   font-size: 22px;
@@ -106,16 +15,6 @@ h1 {
   margin-bottom: 20px;
   color: var(--text);
 }
-
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
-}
-.card:hover { box-shadow: var(--shadow); }
 
 .card h3 {
   font-size: 17px;
@@ -135,7 +34,7 @@ h1 {
 .card p, .card li {
   font-size: 14px;
   color: var(--text2);
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .card ul, .card ol {
@@ -145,28 +44,8 @@ h1 {
 
 .card li { margin-bottom: 6px; }
 
-.highlight-box {
-  background: var(--blue-l);
-  border-left: 3px solid var(--blue);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
+/* 保留 box 內強調色，與下方 green/purple/orange box 一致 */
 .highlight-box strong { color: var(--blue); }
-
-.warning-box {
-  background: var(--red-l);
-  border-left: 3px solid var(--red);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
 .warning-box strong { color: var(--red); }
 
 .green-box {
@@ -249,24 +128,10 @@ h1 {
 .data-table tr:hover td {
   background: var(--bg3);
 }
-
-code {
-  font-family: 'JetBrains Mono', monospace;
-  background: var(--bg3);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-@media (max-width: 768px) {
-  .tab-btn { padding: 8px 10px; font-size: 11px; }
-  .card { padding: 16px; }
-  h1 { font-size: 22px; }
-}
 </style>
 </head>
 <body>
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>外匯分析完全教學</h1>
 <p class="subtitle">貨幣機制 / DXY / Carry Trade / 亞洲貨幣 / 宏觀傳導 — 從零到實戰的完整框架</p>
@@ -335,7 +200,8 @@ code {
 <h3>3. 驅動外匯的五大力量（按影響力排序）</h3>
 
 <div class="svg-container">
-<svg viewBox="0 0 600 320" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 600 320" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleForexDrivers">
+  <title id="svgTitleForexDrivers">外匯五大驅動力示意圖：利差、經濟增長差異、央行政策預期、資金流、風險情緒依影響力由大到小排序</title>
   <defs>
     <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.9"/><stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.6"/></linearGradient>
     <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.8"/><stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.5"/></linearGradient>
@@ -391,7 +257,7 @@ code {
 <h3>5. 外匯市場的基本運作</h3>
 <h4>市場規模與特性</h4>
 <ul>
-<li><strong>日均交易量</strong>：$7.5 兆（2022 BIS 數據）— 是全球股市的 30 倍以上</li>
+<li><strong>日均交易量</strong>：$7.5 兆（2022 BIS 數據，指外匯「日周轉量」）— 約為全球股市日成交量的 15-20 倍（注意兩者口徑不同：外匯是含即期＋換匯的日周轉，股市是日成交金額，屬粗略對比、須自行驗證）</li>
 <li><strong>24 小時交易</strong>：週一紐西蘭開盤到週五紐約收盤，不間斷</li>
 <li><strong>OTC 市場</strong>：沒有中央交易所，銀行間直接交易</li>
 <li><strong>主要參與者</strong>：央行、商業銀行、對沖基金、跨國企業、零售交易者</li>
@@ -427,7 +293,8 @@ code {
 <p>一個國家不可能同時實現以下三個目標（只能選兩個）：</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 480 260" width="100%" style="max-width:460px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 480 260" width="100%" style="max-width:460px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleTrilemma">
+  <title id="svgTitleTrilemma">Mundell-Fleming 不可能三角示意圖：固定匯率、獨立貨幣政策、資本自由流動三者只能同時選其二</title>
   <text x="240" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Mundell-Fleming 不可能三角</text>
   <!-- Triangle -->
   <polygon points="240,50 80,220 400,220" fill="none" stroke="#2563eb" stroke-width="2"/>
@@ -464,10 +331,11 @@ code {
 
 <div class="card">
 <h3>1. DXY 組成</h3>
-<p>DXY 美元指數由 6 種貨幣按固定權重組成（1973 年設立，從未調整）：</p>
+<p>DXY 美元指數由 6 種貨幣按固定權重組成。它 1973 年設立時原本包含 10 種貨幣；1999 年歐元誕生後，把德國馬克、法國法郎等併入歐元，調整為現行的 6 種貨幣，此後權重未再變動：</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 520 340" width="100%" style="max-width:500px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 520 340" width="100%" style="max-width:500px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleDxyWeight">
+  <title id="svgTitleDxyWeight">DXY 美元指數權重組成圓餅圖：EUR 佔 57.6% 為最大成分，其次為 JPY、GBP、CAD、SEK、CHF</title>
   <text x="200" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">DXY 權重組成</text>
   <!-- Pie chart: center(200,180) r=120. Computed with trigonometry. -->
   <!-- EUR 57.6% -->
@@ -508,10 +376,11 @@ code {
 <li><strong>DXY 上升</strong> = 全球美元流動性收縮（借美元的成本上升，美元回流美國）</li>
 <li><strong>DXY 下降</strong> = 全球美元流動性擴張（美元外流到全球市場）</li>
 </ul>
-<p>全球有超過 $12 兆的美元計價債務（非美國企業/政府借的美元債）。DXY 上升 → 這些債務的償還成本增加 → 新興市場壓力 → 被迫賣出資產。</p>
+<p>全球有約 $13 兆的美元計價債務（非美國企業/政府借的美元債，來源 BIS 估計）。DXY 上升 → 這些債務的償還成本增加 → 新興市場壓力 → 被迫賣出資產。</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 580 200" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 580 200" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleDxyCorr">
+  <title id="svgTitleDxyCorr">DXY 與各資產反向相關示意圖：DXY 上升時 BTC、黃金白銀、新興市場股、大宗商品同步承壓</title>
   <text x="290" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">DXY 與各資產的反向相關</text>
   <!-- DXY box -->
   <rect x="230" y="40" width="120" height="40" rx="8" fill="#2563eb" opacity="0.9"/><text x="290" y="65" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">DXY 上升</text>
@@ -536,7 +405,8 @@ code {
 <p>由 Morgan Stanley 的 Stephen Jen 提出，解釋美元在不同經濟環境下的表現：</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 560 260" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 560 260" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleDollarSmile">
+  <title id="svgTitleDollarSmile">美元微笑理論曲線圖：全球衰退避險與美國獨強時 DXY 強，美國經濟普通時 DXY 弱</title>
   <text x="280" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Dollar Smile Theory</text>
   <!-- Smile curve -->
   <path d="M80,100 Q280,220 480,100" fill="none" stroke="#2563eb" stroke-width="3"/>
@@ -585,8 +455,8 @@ code {
 <h3>4. 技術分析 DXY — 關鍵水位</h3>
 <table class="data-table">
 <tr><th>水位</th><th>意義</th><th>突破後影響</th></tr>
-<tr><td><code>100</code></td><td>心理關口</td><td>跌破 = 弱美元確認 → 商品/EM/加密牛市啟動</td></tr>
-<tr><td><code>103-104</code></td><td>前頂區域</td><td>突破 = 強美元確認 → 全球 risk-off</td></tr>
+<tr><td><code>100</code></td><td>心理關口</td><td>跌破 → 傾向偏弱美元 → 多數情況下利多商品/EM/加密</td></tr>
+<tr><td><code>103-104</code></td><td>前頂區域</td><td>突破 → 傾向偏強美元 → 多數情況下全球 risk-off</td></tr>
 <tr><td><code>95-96</code></td><td>前底支撐</td><td>跌破 = 美元崩盤模式 → 黃金/BTC 暴漲</td></tr>
 <tr><td><code>107-108</code></td><td>2022 高點區</td><td>突破 = 極端美元強 → 全球流動性危機</td></tr>
 </table>
@@ -600,7 +470,10 @@ code {
 <tr><td><strong>下降（走弱）</strong></td><td style="color:var(--green)">上漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">上漲</td><td style="color:var(--green)">大漲</td><td style="color:var(--green)">上漲</td></tr>
 </table>
 <div class="green-box">
-<strong>交易含義：</strong>如果你主要做多 BTC 或 EM 股，DXY 趨勢判斷比個股分析更重要。DXY 下降趨勢中做多 → 順風；DXY 上升趨勢中做多 → 逆風。Beta 勝過 Alpha。
+<strong>交易含義：</strong>如果你主要做多 BTC 或 EM 股，DXY 趨勢判斷通常比個股分析更重要。DXY 下降趨勢中做多多數情況下是順風；DXY 上升趨勢中做多多數情況下是逆風。多數時候 Beta 影響大於 Alpha。
+</div>
+<div class="warning-box">
+<strong>相關性不是必然因果（重要但書）：</strong>上表用「反向」是為了方便記憶，但 DXY 與各資產的相關係數並非 −1，而是隨市場 regime 浮動（歷史上多落在約 −0.4 ~ −0.7 區間、有時甚至短暫轉正），會隨時間變動、須自行以近期資料驗證。更關鍵的是「強美元」有兩種截然不同的成因，方向含義相反：<strong>避險型強美元</strong>（恐慌搶美元，同時利多黃金、拖累風險資產）與<strong>利差型強美元</strong>（Fed 相對鷹派、實質利率上升，此時最壓抑黃金）。所以看到 DXY 走強時，要先判斷是哪一種，再推論對其他資產的影響，不能當成單向必然的因果。
 </div>
 <div class="orange-box">
 <strong>黃金不是只有 DXY 一個驅動力：</strong>上表把黃金放在「DXY 反向」的欄位是方便對照，但別把黃金當成 DXY 的單純下游。黃金<strong>最核心的驅動力是實質利率（名目利率 − 通膨預期）</strong>：實質利率下降 → 持有無息黃金的機會成本降低 → 金價上漲，反之亦然。DXY 常常只是實質利率變化的「同向副產品」。因此有時 DXY 走強、金價卻不跌（例如避險或央行購金主導時），根源都要回到實質利率。想完整了解黃金與白銀的驅動框架，請參考 <a href="precious_metals.html">貴金屬分析模組</a>。
@@ -636,7 +509,7 @@ code {
 <p>日圓在全球金融體系中扮演獨一無二的角色：</p>
 <ul>
 <li><strong>全球最大的融資貨幣</strong> — 超過 30 年的低利率/零利率/負利率，全球投資者借入日圓投資高收益資產</li>
-<li><strong>避險貨幣</strong> — 日本是全球最大淨債權國（海外資產遠大於負債），危機時資金回流日本</li>
+<li><strong>避險貨幣</strong> — 日本長年是全球最大淨債權國之一（海外資產遠大於負債；2024 年淨對外資產一度被德國超越），危機時資金回流日本</li>
 <li><strong>矛盾的雙重身分</strong> — Carry Trade 讓日圓持續走弱；避險需求讓日圓在恐慌時急升</li>
 </ul>
 <div class="orange-box">
@@ -661,7 +534,7 @@ code {
 <li>2025-2026：持續正常化，利率可能到 0.5-1.0%</li>
 </ul>
 <div class="warning-box">
-<strong>BOJ 升息的全球影響：</strong>日本利率從 -0.1% 升到 +0.5%，看似微小，但因為全球 Carry Trade 規模估計 $2-4 兆美元，利差收窄意味著 Carry 收益下降 → 部分頭寸被平倉 → 日圓升值 → 更多平倉 → 全球波動放大。
+<strong>BOJ 升息的全球影響：</strong>日本利率從 -0.1% 升到 +0.5%，看似微小，但因為全球 Carry Trade 規模估計約 $3-5 兆美元（BIS 與市場估算，無精確官方統計），利差收窄意味著 Carry 收益下降 → 部分頭寸被平倉 → 日圓升值 → 更多平倉 → 全球波動放大。
 </div>
 </div>
 
@@ -669,7 +542,8 @@ code {
 <h3>3. Carry Trade 深度解析</h3>
 
 <div class="svg-container">
-<svg viewBox="0 0 600 300" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 600 300" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleCarryTrade">
+  <title id="svgTitleCarryTrade">Carry Trade 機制示意圖：建倉順風期與平倉危機期的資金流向與連鎖反饋循環</title>
   <text x="300" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Carry Trade 機制 — 建倉 vs 平倉</text>
   <!-- Build phase -->
   <rect x="20" y="45" width="270" height="110" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
@@ -699,7 +573,7 @@ code {
 <ol>
 <li>BOJ 7/31 意外升息 → USD/JPY 從 153 開始跌</li>
 <li>8/1-2：USD/JPY 跌到 148（-3%），Carry 開始虧損</li>
-<li>8/5（黑色星期一）：USD/JPY 跌到 142 → 日經 -12%（史上最大單日跌幅）</li>
+<li>8/5（黑色星期一）：USD/JPY 跌到 142 → 日經 -12%（史上第二大單日百分比跌幅，僅次於 1987 黑色星期一；但以絕對點數計為史上最大單日跌幅）</li>
 <li>全球連鎖：S&P -3%, Nasdaq -3.4%, VIX 從 16 飆到 65</li>
 <li>8/6-7：BOJ 鴿派安撫 → USD/JPY 反彈 → 市場穩定</li>
 </ol>
@@ -716,7 +590,7 @@ code {
 <tr><td>企業外匯曝險</td><td>難估算</td><td>自然對沖/套利</td><td>會計年度末（3/31）</td></tr>
 </table>
 <div class="purple-box">
-<strong>為什麼 Carry 平倉如此危險：</strong>上表顯示潛在規模達 $4-6 兆。即使只有 10% 在短時間內平倉，也是 $4,000-6,000 億的賣壓同時湧向全球市場。這就是為什麼 Carry Unwind 能讓 VIX 從 16 飆到 65——因為規模太龐大了。
+<strong>為什麼 Carry 平倉如此危險：</strong>上表各項加總的潛在規模與全球估計一致，約落在 $3-5 兆區間（BIS 與市場估算，無精確官方統計）。即使只有 10% 在短時間內平倉，也是數千億美元的賣壓同時湧向全球市場。這就是為什麼 Carry Unwind 能讓 VIX 從 16 飆到 65——因為規模太龐大了。
 </div>
 </div>
 
@@ -771,7 +645,8 @@ code {
 <h3>7. 日圓與全球股市的連動追蹤</h3>
 
 <div class="svg-container">
-<svg viewBox="0 0 560 180" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 560 180" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleJpyGlobal">
+  <title id="svgTitleJpyGlobal">USD/JPY 變動與全球資產即時反應圖：日圓升貶的速度決定對全球股市與 VIX 的衝擊程度</title>
   <text x="280" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">USD/JPY 變動 vs 全球資產即時反應</text>
   <rect x="30" y="40" width="150" height="55" rx="8" fill="#dcfce7" stroke="#16a34a"/>
   <text x="105" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">USD/JPY 上升</text>
@@ -816,7 +691,8 @@ code {
 <h3>2. 台幣與台股的關係</h3>
 
 <div class="svg-container">
-<svg viewBox="0 0 560 220" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 560 220" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleTwdFlow">
+  <title id="svgTitleTwdFlow">外資買賣超到台幣再到台股的傳導鏈示意圖：外資匯入為多頭確認、匯出為空頭警訊</title>
   <text x="280" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">外資買賣超 → 台幣 → 台股 傳導鏈</text>
   <!-- Bullish flow -->
   <rect x="20" y="50" width="120" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="80" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">外資匯入</text><text x="80" y="88" text-anchor="middle" font-size="10" fill="#334155">買 TWD</text>
@@ -1027,7 +903,8 @@ code {
 <h3>5. 外匯相關性快速參考</h3>
 
 <div class="svg-container">
-<svg viewBox="0 0 580 280" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 580 280" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleCorrNetwork">
+  <title id="svgTitleCorrNetwork">主要貨幣對相關性網絡圖：EUR/USD、GBP/USD、AUD/USD、USD/CAD、USD/JPY 之間的關聯</title>
   <text x="290" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">主要貨幣對相關性網絡</text>
   <!-- EUR -->
   <circle cx="290" cy="80" r="35" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><text x="290" y="77" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">EUR/USD</text><text x="290" y="92" text-anchor="middle" font-size="9" fill="#334155">DXY 鏡像</text>
@@ -1238,7 +1115,8 @@ code {
 <p>以 Fed 政策為中心，所有貨幣如何互相影響以及影響其他資產：</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 700 520" width="100%" style="max-width:680px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 700 520" width="100%" style="max-width:680px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleMacroMap">
+  <title id="svgTitleMacroMap">外匯宏觀傳導全圖：以 Fed 政策為中心，各主要貨幣如何相互影響並牽動其他資產</title>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#64748b"/></marker>
     <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2563eb"/></marker>
@@ -1385,7 +1263,8 @@ code {
 <p>當外匯市場出現系統性壓力時，傳染通常遵循以下路徑：</p>
 
 <div class="svg-container">
-<svg viewBox="0 0 600 260" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 600 260" width="100%" style="max-width:580px" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleCrisisPath">
+  <title id="svgTitleCrisisPath">外匯危機傳染路徑示意圖：2024/8/5 模式，從 BOJ 升息到 Carry Trade 平倉再到全球股市連鎖崩跌</title>
   <text x="300" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">外匯危機傳染路徑（2024/8/5 模式）</text>
   <!-- Step 1 -->
   <rect x="20" y="45" width="130" height="45" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
@@ -1485,7 +1364,7 @@ code {
 <div class="tab-content" id="tab7">
 <h2 class="section-title">互動測驗</h2>
 
-<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分：0 / 0</div>
 
 <div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
   <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
@@ -1560,7 +1439,7 @@ code {
       context: 'BTC 與 DXY 高度負相關，同時受全球流動性和風險偏好影響。',
       options: ['EUR/USD 從 1.10 跌到 1.09', 'DXY 連續三週上升，突破 104 阻力位', 'USD/CAD 微幅上升', 'GBP/USD 日內波動 0.5%'],
       correct: 1,
-      explanation: '<strong>DXY 突破 104 阻力位 = BTC 的最大利空。</strong>BTC 與 DXY 高度負相關。DXY 連續三週上升並突破技術阻力位，意味著強美元趨勢確立 → 全球美元流動性收縮 → BTC 承壓。選項 A 的 EUR 跌幅太小（1%），C 和 D 的影響微不足道。DXY 趨勢性突破是 BTC 持倉者必須關注的最重要外匯信號。'
+      explanation: '<strong>DXY 突破 104 阻力位，多數情況下對 BTC 偏空。</strong>BTC 與 DXY 傾向負相關（相關性隨 regime 浮動、非必然）。DXY 連續三週上升並突破技術阻力位，通常意味著強美元趨勢轉強 → 全球美元流動性收縮 → BTC 傾向承壓。選項 A 的 EUR 跌幅太小（1%），C 和 D 的影響微不足道。DXY 趨勢性突破是 BTC 持倉者最該關注的外匯信號之一（仍須搭配風險情緒與自身催化判讀，無保證）。'
     },
     {
       question: 'BOJ 宣布維持利率不變（市場預期升息 25bp），USD/JPY 最可能如何反應？',
@@ -1672,7 +1551,7 @@ code {
       context: '美國財政部定期評估各國是否刻意壓低匯率來獲取出口優勢。被列入名單的國家面臨壓力不能持續干預。',
       options: ['台幣會立即大幅升值', '長期來看台灣央行干預空間縮小，台幣偏升值', '完全沒有影響（美國無法強制）', '台幣會貶值（被制裁）'],
       correct: 1,
-      explanation: '<strong>列入觀察名單 = 長期減少干預空間 → 台幣偏升值方向。</strong>雖然觀察名單不是制裁，但政治壓力使台灣央行在「阻止升值」方面更加克制。歷史上，被列入後台灣央行通常會減少單方向干預（尤其是阻升），讓台幣更自由浮動。這意味著在資金流入時期，台幣升值的幅度可能比過去更大。但這是漸進影響，不是即時衝擊。'
+      explanation: '<strong>列入觀察名單 → 長期干預空間傾向縮小 → 台幣偏升值方向（傾向，非必然）。</strong>要注意：觀察名單本身不是制裁，也<strong>沒有法律強制力</strong>，無法強迫央行升值；它靠的是政治壓力，使台灣央行在「阻止升值」方面較為克制。歷史上被列入後，台灣央行通常會減少單方向干預（尤其是阻升），讓台幣更自由浮動，因此在資金流入時期升值幅度可能比過去大。但「方向偏升」只是傾向而非必然——若同期出現強美元或資金外流，台幣仍可能貶值。這是漸進影響，不是即時衝擊。'
     },
     {
       question: '你注意到 EUR/USD 和 USD/JPY 同時上漲。這代表什麼？',
@@ -1727,7 +1606,7 @@ code {
   }
 
   function updateScore() {
-    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+    scoreEl.textContent = '得分：' + score + ' / ' + total;
   }
 
   function showQuestion() {

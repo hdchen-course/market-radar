@@ -4,101 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>宏觀流動性完全教學 — 淨流動性 / 殖利率曲線 / DXY / 信用壓力</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="common.css">
 <style>
-:root {
-  --bg: #f8fafc;
-  --bg2: #fff;
-  --bg3: #f1f5f9;
-  --border: #cbd5e1;
-  --text: #0f172a;
-  --text2: #334155;
-  --text3: #64748b;
-  --blue: #2563eb;
-  --blue-l: #dbeafe;
-  --green: #16a34a;
-  --green-l: #dcfce7;
-  --red: #dc2626;
-  --red-l: #fee2e2;
-  --yellow: #d97706;
-  --yellow-l: #fef3c7;
-  --purple: #7c3aed;
-  --purple-l: #ede9fe;
-  --orange: #ea580c;
-  --orange-l: #fff7ed;
-  --r: 12px;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-}
+/* === Page-specific styles (base shared rules now come from common.css) === */
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.7;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 16px;
-  color: var(--blue);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-}
-.back-link:hover { text-decoration: underline; }
-
-h1 {
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: var(--text);
-}
-.subtitle {
-  font-size: 14px;
-  color: var(--text3);
-  margin-bottom: 24px;
-}
-
-/* TAB NAV */
-.tab-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 6px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-sm);
-}
-.tab-btn {
-  padding: 10px 16px;
-  border: none;
-  background: transparent;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all .15s;
-  font-family: inherit;
-}
-.tab-btn:hover { background: var(--bg3); }
-.tab-btn.active {
-  background: var(--blue);
-  color: #fff;
-  font-weight: 600;
-}
-
-/* TAB CONTENT */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+/* Page-local shadow token used by inline quiz styles (not defined in common.css) */
+:root { --shadow-sm: 0 2px 8px rgba(0,0,0,0.04); }
 
 .section-title {
   font-size: 22px;
@@ -106,16 +18,6 @@ h1 {
   margin-bottom: 20px;
   color: var(--text);
 }
-
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 20px;
-}
-.card:hover { box-shadow: var(--shadow); }
 
 .card h3 {
   font-size: 17px;
@@ -135,7 +37,7 @@ h1 {
 .card p, .card li {
   font-size: 14px;
   color: var(--text2);
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
 .card ul, .card ol {
@@ -145,28 +47,7 @@ h1 {
 
 .card li { margin-bottom: 6px; }
 
-.highlight-box {
-  background: var(--blue-l);
-  border-left: 3px solid var(--blue);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
 .highlight-box strong { color: var(--blue); }
-
-.warning-box {
-  background: var(--red-l);
-  border-left: 3px solid var(--red);
-  padding: 12px 16px;
-  border-radius: 0 8px 8px 0;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-  line-height: 1.7;
-}
 .warning-box strong { color: var(--red); }
 
 .green-box {
@@ -250,14 +131,6 @@ h1 {
   background: var(--bg3);
 }
 
-code {
-  font-family: 'JetBrains Mono', monospace;
-  background: var(--bg3);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
 @media (max-width: 768px) {
   .tab-btn { padding: 8px 10px; font-size: 11px; }
   .card { padding: 16px; }
@@ -266,7 +139,7 @@ code {
 </style>
 </head>
 <body>
-<a href="trade_home.html" class="back-link">&larr; 回首頁</a>
+<a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 <h1>宏觀流動性完全教學</h1>
 <p class="subtitle">Net Liquidity / Fed 政策傳導 / 殖利率曲線 / DXY / 信用壓力 / 經濟數據判讀</p>
 
@@ -320,7 +193,8 @@ code {
 </ul>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleRRP">
+  <title id="svgTitleRRP">Fed 逆回購 RRP 水箱比喻：吸取與釋放市場流動性示意</title>
   <!-- Water Tank Metaphor -->
   <defs>
     <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -381,7 +255,8 @@ code {
 </div>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleNetLiqBtc">
+  <title id="svgTitleNetLiqBtc">淨流動性與 BTC 走勢對照示意（相關性約 0.85）</title>
   <!-- Axis -->
   <line x1="60" y1="200" x2="560" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
   <line x1="60" y1="30" x2="60" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -482,7 +357,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </table>
 
 <div class="orange-box">
-<strong>進階追蹤：</strong>除了美國 Net Liquidity，全球流動性還需加入 PBOC（中國央行）、ECB、BOJ 的資產負債表變化。全球五大央行合計資產約 $28T，趨勢一致時影響更為顯著。可追蹤 Yardeni Research 的全球央行資產負債表圖表。
+<strong>進階追蹤：</strong>除了美國 Net Liquidity，全球流動性還需加入 PBOC（中國央行）、ECB、BOJ 的資產負債表變化。全球五大央行（Fed／ECB／BOJ／PBOC／BOE）合計資產約 $25T（與後面 DXY 分頁表格加總一致；換算匯率與統計口徑不同時會略有出入），趨勢一致時影響更為顯著。可追蹤 Yardeni Research 的全球央行資產負債表圖表。
 </div>
 </div>
 
@@ -520,7 +395,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <p>Fed 購買國債和 MBS 的完整傳導路徑：</p>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleQE">
+  <title id="svgTitleQE">QE 量化寬鬆傳導路徑示意：Fed 購債如何推高資產價格</title>
   <defs>
     <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
@@ -571,13 +447,13 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>QT 的運作方式</h4>
 <ul>
 <li>到期國債不再續買 → 資金回到 Fed → 銀行準備金減少</li>
-<li>2022-2023 QT 速度：公債贖回<strong>上限</strong>約 $60B/月 + MBS 上限約 $35B/月 = 每月最多縮表約 $95B</li>
-<li>2024 起放慢：公債贖回上限先降到約 $60B/月，之後再降到約 $25B/月（這是「每月縮表<strong>上限</strong>」，不是整張資產負債表只剩 $25B）</li>
+<li>2022/9–2024/5 QT 全速：公債贖回<strong>上限</strong>約 $60B/月 + MBS 上限約 $35B/月 = 每月最多縮表約 $95B</li>
+<li>2024/6 起放慢：公債贖回上限由 $60B/月 下調至 $25B/月（MBS 上限維持 $35B），總縮表上限約 $95B → 約 $60B/月；2025 年再進一步下調並逐步結束 QT（這是「每月縮表<strong>上限</strong>」，不是整張資產負債表只剩該金額；實際級距與時程以 Fed 最新公告為準）</li>
 </ul>
 
 <h4>為什麼 QT 速度很重要</h4>
 <ul>
-<li><strong>$95B/月 vs $25B/月：</strong>速度差 4 倍，對流動性的抽取壓力截然不同</li>
+<li><strong>$95B/月 vs 約 $60B/月：</strong>抽取速度明顯不同，對流動性的壓力截然不同</li>
 <li><strong>非線性效果：</strong>準備金充足時，QT 影響很小（like draining a full pool）</li>
 <li><strong>臨界點：</strong>當準備金接近「充裕」邊界（~$3T），QT 衝擊突然放大</li>
 </ul>
@@ -649,7 +525,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </ul>
 
 <div class="warning-box">
-<strong>投資啟示：</strong>永遠不要只根據「Fed 在 QT」就看空。必須計算 TGA 和 RRP 的變動方向和幅度。Net Liquidity 才是最終決定因素。
+<strong>投資啟示：</strong>不要僅憑「Fed 在 QT」就直接看空。應一併計算 TGA 和 RRP 的變動方向和幅度，Net Liquidity 的淨效果通常才是更關鍵的決定因素（仍需搭配基本面與倉位管理，無保證）。
 </div>
 </div>
 
@@ -693,7 +569,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </table>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleYieldCurve">
+  <title id="svgTitleYieldCurve">殖利率曲線各天期走勢與正常／倒掛型態示意</title>
   <!-- Axis -->
   <line x1="80" y1="250" x2="550" y2="250" stroke="#cbd5e1" stroke-width="1.5"/>
   <line x1="80" y1="30" x2="80" y2="250" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -837,7 +714,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </ul>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleDXY">
+  <title id="svgTitleDXY">DXY 美元指數走勢與全球流動性擴張／收縮關係示意</title>
   <defs>
     <marker id="arrowDark" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#334155"/>
@@ -923,7 +801,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </ol>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleCarry">
+  <title id="svgTitleCarry">日圓套利交易 (carry trade) 資金流動與平倉風險示意</title>
   <defs>
     <marker id="arrowPurp" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
@@ -1043,7 +922,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h3>美元流動性的「微笑曲線」（Dollar Smile Theory）</h3>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:500px" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:500px" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleSmile">
+  <title id="svgTitleSmile">美元微笑曲線 (Dollar Smile Theory) 示意</title>
   <!-- Smile curve -->
   <path d="M60,60 C100,60 150,170 250,170 C350,170 400,60 440,60" fill="none" stroke="#2563eb" stroke-width="3"/>
   <!-- Labels -->
@@ -1079,7 +959,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>五大央行的協同效應</h4>
 <table class="data-table">
 <tr><th>央行</th><th>資產規模(~)</th><th>2024-2025 政策</th><th>對全球流動性影響</th></tr>
-<tr><td>Fed（美聯準會）</td><td>$7.0T</td><td>QT 放慢 → 停止</td><td>中性偏正面</td></tr>
+<tr><td>Fed（美聯準會）</td><td>$6.8T</td><td>QT 放慢 → 停止</td><td>中性偏正面</td></tr>
 <tr><td>ECB（歐洲央行）</td><td>$6.5T</td><td>PEPP 到期不續 + 降息</td><td>收縮中但降息對沖</td></tr>
 <tr><td>BOJ（日本央行）</td><td>$4.8T</td><td>YCC 退出 + 緩慢升息</td><td>最大不確定性來源</td></tr>
 <tr><td>PBOC（中國央行）</td><td>$6.0T</td><td>降準降息 + MLF</td><td>擴張（刺激經濟）</td></tr>
@@ -1144,7 +1024,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </table>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleHYSpread">
+  <title id="svgTitleHYSpread">高收益債利差 (High Yield Spread) 水準與市場壓力區間示意</title>
   <!-- Axis -->
   <line x1="60" y1="210" x2="560" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
   <line x1="60" y1="20" x2="60" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -1239,7 +1120,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h3>信用事件的傳導路徑</h3>
 
 <div class="svg-container">
-<svg width="100%" style="max-width:600px" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" style="max-width:600px" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleCreditEvent">
+  <title id="svgTitleCreditEvent">信用事件傳導路徑示意（含 2019 回購危機案例）</title>
   <defs>
     <marker id="arrowFlow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
@@ -1457,9 +1339,9 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <h4>Sahm Rule — 衰退確認指標</h4>
 <ul>
-<li><strong>定義：</strong>當失業率的 3 個月移動平均值比前 12 個月低點高出 0.5% 以上 → 衰退已開始</li>
-<li><strong>歷史準確率：</strong>自 1970 年以來 100% 準確（11/11）</li>
-<li><strong>即時性：</strong>比 NBER 正式宣布衰退提前 3-6 個月</li>
+<li><strong>定義：</strong>當失業率的 3 個月移動平均值比前 12 個月低點高出 0.5 個百分點（percentage points）以上 → 衰退已開始</li>
+<li><strong>歷史表現：</strong>歷史上多次成功預示衰退，但屬同時／落後指標；2024 年中曾觸發卻未立即接續衰退，並非萬無一失</li>
+<li><strong>即時性：</strong>NBER 常在景氣轉折後 6-12 個月才正式宣布衰退，而 Sahm Rule 幾乎在衰退起點即觸發</li>
 <li><strong>限制：</strong>設計用於確認衰退「已發生」，而非預測。當觸發時通常已經太晚做出防禦性調整</li>
 </ul>
 
@@ -1495,7 +1377,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
 
 <!-- ==================== TAB 7: 估值泡沫指標 ==================== -->
-<div class="tab-content">
+<div class="tab-content" id="tab6">
 <h2 class="section-title">估值泡沫指標 — Household Equity Allocation</h2>
 
 <div class="card">
@@ -1523,7 +1405,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><td style="color:#dc2626">&gt; 50%</td><td>極度泡沫</td><td>0-3%</td><td>降低股票配置，增持現金/債券</td></tr>
 <tr><td style="color:#d97706">40-50%</td><td>偏高</td><td>3-6%</td><td>正常配置但留意風險</td></tr>
 <tr><td>30-40%</td><td>正常/偏低</td><td>6-10%</td><td>積極配置</td></tr>
-<tr><td style="color:#16a34a">&lt; 30%</td><td>極度低估</td><td>10-15%</td><td>全力做多（歷史最佳買點）</td></tr>
+<tr><td style="color:#16a34a">&lt; 30%</td><td>極度低估</td><td>10-15%</td><td>顯著提高股票配置（歷史上多屬偏低估區，無保證、須自行回測）</td></tr>
 </table>
 
 <div class="warning-box">
@@ -1552,10 +1434,10 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
 
 <!-- ==================== TAB 8: 互動測驗 ==================== -->
-<div class="tab-content" id="tab6">
+<div class="tab-content" id="tab7">
 <h2 class="section-title">互動測驗</h2>
 
-<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分: 0 / 0</div>
+<div id="quiz-score" style="text-align:center; font-size:18px; font-weight:700; margin-bottom:16px; color:var(--text);">得分：0 / 0</div>
 
 <div id="quiz-question-area" style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); margin-bottom:20px;">
   <div id="quiz-progress" style="font-size:12px; color:var(--text3); margin-bottom:12px; text-align:right;"></div>
@@ -1804,7 +1686,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
   }
 
   function updateScore() {
-    scoreEl.textContent = '得分: ' + score + ' / ' + total;
+    scoreEl.textContent = '得分：' + score + ' / ' + total;
   }
 
   function showQuestion() {
