@@ -1250,7 +1250,7 @@ const quizData = [
   },
   {
     q: "價格在你的網格上半部和下半部之間來回震盪了一整天，觸發了 12 次格子。你的淨利潤是正還是負？",
-    opts: ["正的 — 每次觸發都是利潤", "負的 — 來回交易有摩擦成本", "零 — 買賣抵消", "取決於最終價格位置"],
+    opts: ["正的 — 區間內來回，完成的買賣循環才實現價差", "負的 — 來回交易有摩擦成本", "零 — 買賣抵消", "取決於最終價格位置"],
     ans: 0,
     explain: "網格的核心優勢：只要價格在區間內波動，每次「低買高賣」的循環都產生一個格子的利潤。12 次觸發 ≈ 6 個完整循環 = 6 格利潤。加上 Maker 費率優勢（零或負手續費），這段時間的淨利潤為正。但要注意：這只在「價格持續留在區間內」時成立，一旦走出趨勢，一側被套的虧損會蓋過這些格子價差。"
   },
@@ -1330,7 +1330,7 @@ function renderQuestion() {
       if (i === q.ans) cls = 'correct';
       else if (i === userAnswers[currentQuestion] && i !== q.ans) cls = 'wrong';
     }
-    optionsHtml += `<li class="${cls}" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</li>`;
+    optionsHtml += `<li class="${cls}" tabindex="0" role="button" onclick="selectAnswer(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">${String.fromCharCode(65+i)}. ${opt}</li>`;
   });
 
   container.innerHTML = `

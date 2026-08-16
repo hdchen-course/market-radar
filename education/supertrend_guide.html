@@ -1124,7 +1124,7 @@ function renderQuestion() {
       if (i === q.ans) cls = 'correct';
       else if (i === userAnswers[currentQuestion] && i !== q.ans) cls = 'wrong';
     }
-    optionsHtml += `<li class="${cls}" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</li>`;
+    optionsHtml += `<li class="${cls}" onclick="selectAnswer(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" tabindex="0" role="button">${String.fromCharCode(65+i)}. ${opt}</li>`;
   });
 
   container.innerHTML = `

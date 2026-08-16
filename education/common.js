@@ -1,4 +1,7 @@
-/* === Trading Education Common JS === */
+/* === Trading Education Common JS ===
+   注意：此檔為「參考工具庫」。目前各內容頁使用自帶的 inline quiz/tab/計算機實作，
+   本檔並未被任何頁面以 <script src="common.js"> 載入。改動此檔不會影響現有頁面；
+   新頁面可選擇引用本檔以共用 QuizEngine / switchTab / 計算機函式。 */
 
 // Tab switching (works with both onclick="switchTab(n)" and data-tab patterns)
 function switchTab(index) {
