@@ -21,7 +21,13 @@
   --yellow: #d97706;
   --yellow-l: #fef3c7;
   --r: 12px;
+  /* 內容容器寬度：手機/iPad 直向自然滿版；≥1280 桌機自動長到近滿版 */
+  --content-max: 1100px;
 }
+/* iPad 橫向 / 小筆電：略放寬 */
+@media (min-width: 1024px) { :root { --content-max: 1180px; } }
+/* MacBook 等大螢幕：跟隨視窗自動長滿（留約 5% 邊距），上限避免行長過長 */
+@media (min-width: 1280px) { :root { --content-max: min(94vw, 1680px); } }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { overscroll-behavior: none; }
@@ -33,7 +39,7 @@ body {
   font-size: 15px;
   line-height: 1.7;
   padding: 24px;
-  max-width: 1100px;
+  max-width: var(--content-max);
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
 }
