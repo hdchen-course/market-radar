@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀雷達 V4.5 | 2026-08-31 週一報</title>
+<style>:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}.container{max-width:1440px;margin:0 auto}header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}header .sub{color:var(--muted);font-size:.85rem}.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:.8rem;margin-top:10px}.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}.card h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:500;font-size:.74rem}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:600}.t-bull{background:rgba(63,185,80,.15);color:var(--green)}.t-bear{background:rgba(248,81,73,.15);color:var(--red)}.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}.mr:last-child{border-bottom:none}.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}.pi .pr{font-size:.95rem;font-weight:700}.pi .ch{font-size:.75rem;margin-top:1px}.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}.risk-bar .f{height:100%;border-radius:3px}.rh .f{background:var(--red);width:90%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}.rmh .f{background:var(--orange);width:75%}.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}.tl-i{position:relative;margin-bottom:13px}.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}.tl-e{font-size:.8rem;margin-top:2px}.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}.tool-box{background:rgba(163,113,247,.06);border:1px dashed rgba(163,113,247,.4);border-radius:8px;padding:12px;margin:10px 0}.tool-box h4{color:var(--purple);font-size:.85rem;margin-bottom:6px}.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}.st-long{background:rgba(63,185,80,.18);color:var(--green)}.st-short{background:rgba(248,81,73,.18);color:var(--red)}.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}.footer{opacity:.6;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}.alert{background:#0a1a0a;border:1px solid #238636;border-radius:6px;padding:12px;margin:8px 0}.alert-warn{background:#1a1000;border:1px solid#db6d28;border-radius:6px;padding:12px;margin:8px 0}</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>終極宏觀流動性 &amp; AI Capex 量化籌碼雷達 V4.5</h1>
+  <p class="sub">2026-08-31（週一）21:41 台灣時間 · V4.5 · 週一報（Warsh鷹派後首個交易日·升息恐懼續發酵）｜黃金連跌4天$4,442/白銀$66.60橫盤偏弱/BTC$78.1K · <strong>COT重大更新:白銀空頭大幅回補(14,728→12,610少2,118口)、減倉36.65%</strong></p>
+  <div class="badge badge-warn">REGIME：Warsh鷹派升息恐懼續發酵(黃金連跌4天/金銀ETF跌3.5%) · COT重大更新:白銀空頭大幅回補(空單14,728→12,610、26週分位96→80、5年分位8.1)=軋空燃料進一步耗損 · 白銀$66.60橫盤偏弱、資費0未轉負 · 去美元化大結構未變(升息利空是週期性逆風)</div>
+</header>
+
+<!-- ===== SECTION 0: 上期預測回顧 ===== -->
+<div class="card full">
+  <h2>0. 上期預測回顧（2026-08-29 週六報 am + 週末精簡追蹤）</h2>
+  <div class="alert-warn">⚠️ <strong>週六「Warsh鷹派risk-off、白銀短期利空非結構轉空」續驗證,週一升息恐懼續發酵:</strong>週六報判「Warsh鷹派引爆risk-off、白銀-4%崩是升息預期短期利空非去美元化結構反轉、別反手加空重壓」。<strong>結果:週末橫盤消化,週一開盤升息恐懼續發酵——黃金連跌4天到$4,442(Rate Hike Fears,Rediff/NDTV查證)、金銀ETF跌3.5%、白銀$66.60橫盤偏弱(盤中低$65.72)。COT重大更新到8/25:投機空單14,728→12,610(少2,118口!)、26週分位96→80、5年分位11.2→8.1=白銀空頭在高檔大幅回補、軋空燃料進一步耗損。使用者減倉36.65%、週末精簡追蹤未追殺,今順風續消化。</strong></div>
+  <table>
+    <tr><th>標的</th><th>週六判斷</th><th>週六值</th><th>現價(週一)</th><th>結果</th></tr>
+    <tr><td>XAG 白銀</td><td>升息短期利空非結構轉空,別重壓加空</td><td>$66.70</td><td class="neg">$66.60 (-0.4%)</td><td>橫盤偏弱 ✅</td></tr>
+    <tr><td>XAU 黃金</td><td>Warsh鷹跌破$4,508</td><td>$4,473</td><td class="neg">$4,442 (-0.78%)</td><td>連跌4天 ✅</td></tr>
+    <tr><td>BTC</td><td>Warsh鷹risk-off</td><td>$77,787</td><td class="neg">$78,127 (-0.7%)</td><td>低檔盤整 ✅</td></tr>
+    <tr><td>XPD 鈀</td><td>+5.93%現代汽車點燃</td><td>$1,421</td><td class="neg">$1,377 (-3.9%)</td><td>暴漲後回吐 ✅</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.82rem;color:var(--muted)"><strong>命中率：</strong>Warsh鷹派升息恐懼續發酵、白銀橫盤偏弱、鈀暴漲後回吐,全對。<strong>教訓：①Warsh鷹派升息恐懼續發酵——黃金連跌4天(Rate Hike Fears查證)、金銀ETF跌3.5%,週六「短期利空」延續但未失控;②本期最重要新料=COT更新到8/25:白銀投機空單14,728→12,610(少2,118口,大幅回補)、三尺度全降(26週96→80、52週41.2、5年11.2→8.1)——白銀空頭在Warsh前高檔大量回補(獲利了結/認輸出場),軋空燃料進一步耗損,這對使用者「白銀逆結構」的長期擔憂是持續緩解的訊號(空頭壓力在減);③但關鍵反向提醒:空頭大幅回補=賣壓減少,價格反而更容易反彈(沒有空頭壓著)——這也是使用者「別反手加空重壓」的另一個理由;④白銀資費仍0未轉負=結構未變;⑤鈀從現代汽車暴漲+5.93%回吐-3.9%=產業事件的短期波動。對使用者:白銀空頭大幅回補、軋空燃料續耗=你逆結構的壓力持續減,減倉36.65%已很輕,順風可續巡航但別重壓加空(空頭少了反而易彈),見持倉紀律段。</strong></p>
+</div>
+
+<!-- ===== SECTION 1: 報價面板 ===== -->
+<div class="card full">
+  <h2>1. 即時報價面板（週一·Warsh鷹派升息恐懼續發酵）</h2>
+  <div class="price-grid">
+    <div class="pi"><div class="tk">BTC</div><div class="pr">$78,127</div><div class="ch neg">-0.70%</div></div>
+    <div class="pi"><div class="tk">ETH</div><div class="pr">$2,451</div><div class="ch neg">-0.66%</div></div>
+    <div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,442</div><div class="ch neg">-0.78% ⚠連跌4天</div></div>
+    <div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$66.60</div><div class="ch neg">-0.40% 橫盤偏弱</div></div>
+    <div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.706</div><div class="ch pos">+0.25%</div></div>
+    <div class="pi"><div class="tk">XPD 鈀</div><div class="pr">$1,377</div><div class="ch neg">-3.90% 暴漲回吐</div></div>
+    <div class="pi"><div class="tk">XPT 鉑</div><div class="pr">$1,803</div><div class="ch neg">-2.03%</div></div>
+    <div class="pi"><div class="tk">INTC</div><div class="pr">$90.55</div><div class="ch pos">+0.16%</div></div>
+    <div class="pi"><div class="tk">NVDA</div><div class="pr">$218.35</div><div class="ch neg">-0.25%</div></div>
+    <div class="pi"><div class="tk">TSM</div><div class="pr">$416</div><div class="ch neu">晶片</div></div>
+    <div class="pi"><div class="tk">MU</div><div class="pr">$941</div><div class="ch pos">+0.61%</div></div>
+    <div class="pi"><div class="tk">AMD</div><div class="pr">$471</div><div class="ch pos">+0.25%</div></div>
+    <div class="pi"><div class="tk">AVGO</div><div class="pr">$367</div><div class="ch neg">-1.19%</div></div>
+    <div class="pi"><div class="tk">QCOM</div><div class="pr">$159</div><div class="ch neu">晶片</div></div>
+    <div class="pi"><div class="tk">MSFT</div><div class="pr">$479</div><div class="ch neg">軟體</div></div>
+    <div class="pi"><div class="tk">GOOGL</div><div class="pr">$343</div><div class="ch neu">平</div></div>
+    <div class="pi"><div class="tk">META</div><div class="pr">$548</div><div class="ch neu">平</div></div>
+    <div class="pi"><div class="tk">AMZN</div><div class="pr">$258</div><div class="ch neu">平</div></div>
+    <div class="pi"><div class="tk">TSLA</div><div class="pr">$354.19</div><div class="ch pos">+0.61%</div></div>
+    <div class="pi"><div class="tk">PLTR</div><div class="pr">$185.05</div><div class="ch neg">-0.92%</div></div>
+    <div class="pi"><div class="tk">MSTR</div><div class="pr">$127.53</div><div class="ch neg">-2.48%</div></div>
+    <div class="pi"><div class="tk">EWY 南韓</div><div class="pr">$181.82</div><div class="ch neg">-0.45%</div></div>
+    <div class="pi"><div class="tk">SPY</div><div class="pr">$766.88</div><div class="ch neg">-0.63%</div></div>
+    <div class="pi"><div class="tk">SPCX</div><div class="pr">$132</div><div class="ch neu">—</div></div>
+  </div>
+  <p style="margin-top:6px;font-size:.72rem;color:var(--muted)">週一,Warsh鷹派後首個交易日、升息恐懼續發酵。<strong>黃金連跌4天$4,442(Rate Hike Fears)、金銀ETF跌3.5%、白銀$66.60橫盤偏弱(盤中低$65.72)、鉑-2%/鈀-3.9%(現代汽車暴漲回吐)。加密低檔盤整(BTC$78.1K/MSTR-2.48%)。晶片分化(MU+0.6%/AVGO-1.2%)。F&amp;G降到62(risk-off續)。</strong></p>
+  <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+    <strong style="font-size:.82rem;color:var(--muted)">宏觀指標(Warsh鷹派後殖利率/DXY走強,Yahoo限流沿用估值):</strong>
+    <div class="price-grid" style="margin-top:6px">
+      <div class="pi"><div class="tk">DXY 美元</div><div class="pr">~99+</div><div class="ch warn">Warsh鷹走強</div></div>
+      <div class="pi"><div class="tk">VIX</div><div class="pr">~16+</div><div class="ch warn">risk-off升</div></div>
+      <div class="pi"><div class="tk">US 10Y</div><div class="pr">~4.8+</div><div class="ch warn">升息預期升</div></div>
+      <div class="pi"><div class="tk">US 30Y</div><div class="pr">5.3+</div><div class="ch warn">高檔</div></div>
+      <div class="pi"><div class="tk">TAIEX 台股</div><div class="pr">44,719</div><div class="ch neu">(前收)</div></div>
+      <div class="pi"><div class="tk">USD/JPY</div><div class="pr">159+</div><div class="ch neu">159</div></div>
+      <div class="pi"><div class="tk">加密 F&amp;G</div><div class="pr">62</div><div class="ch warn">貪婪(降,risk-off)</div></div>
+      <div class="pi"><div class="tk">金銀比 GSR</div><div class="pr">66.7</div><div class="ch warn">67(全金屬齊弱)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: Regime ===== -->
+<div class="card full">
+  <h2>2. 市場主導 Regime</h2>
+  <div class="mr"><span class="mr-l">核心變數</span><span class="mr-v">Warsh鷹派升息恐懼續發酵(黃金連跌4天/金銀ETF跌3.5%);COT重大更新:白銀空頭大幅回補(14,728→12,610少2,118口、三尺度全降)=軋空燃料進一步耗損;白銀$66.60橫盤偏弱、資費0未轉負;去美元化大結構未變</span></div>
+  <div class="mr"><span class="mr-l">短期（本週）</span><span class="mr-v">Warsh鷹派升息恐懼消化(黃金能否止跌);白銀空頭大幅回補後易反彈(賣壓減);使用者巡航續減;本週經濟數據</span></div>
+  <div class="mr"><span class="mr-l">中期（1-3月）</span><span class="mr-v">升息預期壓貴金屬(實質利率升)=週期性逆風 vs 去美元化/財政信譽大結構長多未變(拉鋸);COT空頭大幅回補=軋空腿基本耗損</span></div>
+  <div class="mr"><span class="mr-l">長期</span><span class="mr-v">去美元化+央行購金+財政主導+AI Capex超級週期=長多結構未變,Warsh鷹派升息是週期性逆風非結構反轉</span></div>
+  <div class="mr"><span class="mr-l">Regime 判定</span><span class="mr-v" style="color:var(--orange)">Warsh鷹派升息恐懼續發酵壓貴金屬(黃金連跌4天) · COT白銀空頭大幅回補(軋空燃料進一步耗損) · 白銀橫盤偏弱但空頭大減後易反彈 · 升息週期性逆風、去美元化大結構未變 · 白銀減倉36.65%極輕</span></div>
+</div>
+
+<!-- ===== SECTION 3: 共識 vs Reality ===== -->
+<div class="card full">
+  <h2>3. 市場共識 vs Reality</h2>
+  <table>
+    <tr><th>主題</th><th>市場預期</th><th>實際/查證</th><th>Mispricing</th></tr>
+    <tr><td>黃金連跌4天=去美元化結束?</td><td>「黃金轉空、避險失效」</td><td>Warsh鷹派升息恐懼(Rate Hike Fears,Rediff/NDTV查證)壓貴金屬,是升息週期性逆風;DXY/殖利率走強是主因。去美元化大結構未變,升息利空消化後結構仍在</td><td class="warn">中:升息週期逆風,非結構轉空</td></tr>
+    <tr><td>白銀空頭大幅回補意義</td><td>「空頭認輸=白銀要漲」</td><td>COT(8/25)空單14,728→12,610(少2,118口)、三尺度全降=空頭高檔大量回補。這是軋空燃料進一步耗損(對空單好);但空頭少了=賣壓減,價格反而易反彈(對空單短期風險)</td><td class="warn">中:雙面—燃料耗損但賣壓減易彈</td></tr>
+    <tr><td>白銀跌到$66會續崩?</td><td>「Warsh鷹派續殺」</td><td>白銀$66.60橫盤偏弱(未續崩),資費0未轉負;空頭已大幅回補(賣壓減)+跌多=易反彈非續崩</td><td class="warn">中:橫盤偏弱,空頭減後易彈</td></tr>
+    <tr><td>白銀空單</td><td>「該扛/該砍」</td><td>COT空頭大幅回補=你逆結構壓力持續減、軋空燃料續耗;減倉36.65%極輕、爆倉遠;但空頭少+跌多易反彈,別重壓加空</td><td class="warn">高:逆結構壓力減,別重壓加空</td></tr>
+  </table>
+  <div class="alert">🎯 <strong>最大 Mispricing / 本期關鍵新料：COT更新到8/25,白銀投機空單14,728→12,610(少2,118口)、三尺度全面下降(26週96→80、52週41.2、5年11.2→8.1)——白銀空頭在Warsh前高檔大量回補,軋空燃料進一步耗損。</strong>本期有使用者持倉決策+黃金連跌4天+COT重大更新,跑主線程對抗四問(鏡頭層lenses已跑):①<strong>來源查核</strong>—COT空頭大幅回補是CFTC官方資料(signals工具),黃金連跌4天有查證(Rate Hike Fears,Rediff/NDTV);②<strong>反向檢查</strong>—若「黃金轉空、去美元化結束」則需DXY結構走強+央行停購金,但這波DXY走強是Warsh鷹派短期升息預期、去美元化/央行購金大結構未變=升息週期逆風非結構反轉;若「空頭認輸白銀要漲」則需其他多頭驅動,但白銀橫盤偏弱=空頭回補是燃料耗損不是反轉訊號;③<strong>更簡解釋</strong>—「Warsh鷹派升息恐懼→實質利率升→壓無息貴金屬,黃金連跌4天;COT空頭高檔獲利了結大量回補」直接對應,不需編複雜敘事;④<strong>量級</strong>—COT空單少2,118口(14,728→12,610)是大幅回補、量級顯著,三尺度全降印證。<strong>裁決:「Warsh鷹派升息恐懼壓貴金屬(黃金連跌4天)=週期性逆風非結構轉空」CONFIRMED(去美元化/央行購金大結構未變);「COT白銀空頭大幅回補=軋空燃料進一步耗損」CONFIRMED(CFTC官方三尺度全降);「空頭大減後賣壓減、白銀易反彈」CONFIRMED偏PLAUSIBLE(邏輯推演+橫盤偏弱未續崩)。對使用者白銀空單:①COT空頭大幅回補(少2,118口)=你逆結構的壓力持續在減、軋空燃料進一步耗損,這是你這半個月認錯減倉方向的持續驗證(空頭同伴陸續出場);②但關鍵雙面提醒:空頭大幅回補=賣壓減少,白銀跌多($66橫盤)反而更容易技術反彈——這正是「絕不反手加空重壓」的又一個理由(空頭都跑了、你還去加空接刀,逆勢又接在空頭真空區);③你減倉36.65%極輕、順風,巡航可續但無急迫,升息逆風是週期性、去美元化大結構未變;④白銀資費0未轉負=結構未變。見持倉紀律段。</strong></div>
+</div>
+
+<!-- ===== SECTION 4: 強弱矩陣 ===== -->
+<div class="card full">
+  <h2>4. 跨資產強弱矩陣（週一·Warsh鷹派升息恐懼）</h2>
+  <table>
+    <tr><th>#</th><th>資產</th><th>24h%</th><th>ST方向</th><th>驅動</th></tr>
+    <tr><td>1</td><td>TSLA</td><td class="pos">+0.61%</td><td>中性</td><td>成長股逆勢小穩</td></tr>
+    <tr><td>2</td><td>MU</td><td class="pos">+0.61%</td><td>中性</td><td>記憶體逆勢</td></tr>
+    <tr><td>3</td><td>COPPER 銅</td><td class="pos">+0.25%</td><td>中性</td><td>逆勢小穩 <span class="tag t-neu">工業腿</span></td></tr>
+    <tr><td>4</td><td>AMD</td><td class="pos">+0.25%</td><td>中性</td><td>晶片</td></tr>
+    <tr><td>5</td><td>INTC</td><td class="pos">+0.16%</td><td>中性</td><td>晶片持平</td></tr>
+    <tr><td>6</td><td>NVDA</td><td class="neg">-0.25%</td><td>中性</td><td>AI股小回</td></tr>
+    <tr><td>7</td><td>XAG 白銀</td><td class="neg">-0.40%</td><td>中性偏空</td><td>Warsh鷹橫盤偏弱(空頭大幅回補) <span class="tag t-hold">貨幣腿</span></td></tr>
+    <tr><td>8</td><td>EWY 南韓</td><td class="neg">-0.45%</td><td>中性</td><td>記憶體</td></tr>
+    <tr><td>9</td><td>SPY</td><td class="neg">-0.63%</td><td>中性</td><td>risk-off</td></tr>
+    <tr><td>10</td><td>ETH</td><td class="neg">-0.66%</td><td>中性</td><td>加密低檔盤整</td></tr>
+    <tr><td>11</td><td>BTC</td><td class="neg">-0.70%</td><td>中性</td><td>加密低檔盤整</td></tr>
+    <tr><td>12</td><td>XAU 黃金</td><td class="neg">-0.78% ⚠</td><td>中性偏空</td><td>Warsh鷹升息恐懼連跌4天 <span class="tag t-hold">貨幣腿(領跌)</span></td></tr>
+    <tr><td>13</td><td>PLTR</td><td class="neg">-0.92%</td><td>中性</td><td>AI股</td></tr>
+    <tr><td>14</td><td>AVGO</td><td class="neg">-1.19%</td><td>中性</td><td>晶片</td></tr>
+    <tr><td>15</td><td>XPT 鉑</td><td class="neg">-2.03%</td><td>中性</td><td>貴金屬弱 <span class="tag t-hold">貴金屬</span></td></tr>
+    <tr><td>16</td><td>MSTR</td><td class="neg">-2.48%</td><td>中性</td><td>BTC代理+高beta</td></tr>
+    <tr><td>17</td><td>XPD 鈀</td><td class="neg">-3.90%</td><td>中性</td><td>現代汽車暴漲後回吐 <span class="tag t-neu">工業/貴金屬</span></td></tr>
+    <tr><td>18</td><td>TSM</td><td class="neu">晶片</td><td>中性</td><td>晶片</td></tr>
+    <tr><td>19</td><td>QCOM</td><td class="neu">晶片</td><td>中性</td><td>晶片</td></tr>
+    <tr><td>20</td><td>MSFT</td><td class="neg">軟體</td><td>中性</td><td>大型科技</td></tr>
+    <tr><td>21</td><td>GOOGL</td><td class="neu">平</td><td>中性</td><td>大型科技</td></tr>
+    <tr><td>22</td><td>META</td><td class="neu">平</td><td>中性</td><td>大型科技</td></tr>
+    <tr><td>23</td><td>AMZN</td><td class="neu">平</td><td>中性</td><td>大型科技</td></tr>
+    <tr><td>24</td><td>SPCX</td><td class="neu">—</td><td>—</td><td>驅動待查</td></tr>
+  </table>
+  <p style="margin-top:6px;font-size:.74rem;color:var(--muted)">腿別 tag 僅標貴金屬+銅。<strong>Warsh鷹派升息恐懼續發酵:貴金屬領跌(黃金連跌4天/鉑-2%/鈀-3.9%現代汽車回吐)、加密低檔盤整(MSTR-2.48%)。白銀$66.60橫盤偏弱(空頭COT大幅回補)。晶片分化(MU/AMD小穩vs AVGO弱)。升息週期逆風,去美元化大結構未變。</strong></p>
+</div>
+
+<!-- ===== SECTION 5: 風險雷達 ===== -->
+<div class="card full">
+  <h2>5. 量化風險雷達</h2>
+  <table>
+    <tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+    <tr><td>白銀空頭大幅回補後跌多反彈(空單短期逆風,別重壓加空)</td><td>中高</td><td>賣壓減+跌多易技術反彈</td><td>XAG</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+    <tr><td>Warsh鷹派升息恐懼續發酵→貴金屬續跌(空單順風)</td><td>中</td><td>實質利率升壓無息資產</td><td>XAU/XAG</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>去美元化大結構未變→升息利空消化後貴金屬再起(空單逆風未除)</td><td>中高</td><td>財政信譽受損,買實物對沖法幣</td><td>XAU/XAG</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+    <tr><td>本週經濟數據(升息預期驗證)</td><td>中</td><td>強化/削弱Warsh鷹派</td><td>全市場</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>升息恐懼過度→risk-off擴大成股災</td><td>低中</td><td>流動性擠兌先跌後避險</td><td>全市場</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+  </table>
+  <table style="margin-top:12px">
+    <tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+    <tr><td>XAU 黃金</td><td>$4,442</td><td><span class="tag t-bear">連跌4天</span></td><td>4h上$4,528/下$4,376;1h上$4,488</td></tr>
+    <tr><td>XAG 白銀</td><td>$66.60</td><td><span class="tag t-neu">橫盤偏弱(空頭大減)</span></td><td>$67.96(1h上)/$69.16(4h上);$65.56(1h下)/$64.89(4h下);盤中低$65.72</td></tr>
+    <tr><td>BTC</td><td>$78,127</td><td><span class="tag t-neu">低檔盤整</span></td><td>4h上$80.2K,守$76.0K</td></tr>
+    <tr><td>ETH</td><td>$2,451</td><td><span class="tag t-neu">低檔盤整</span></td><td>守$2,367</td></tr>
+    <tr><td>COPPER 銅</td><td>$6.706</td><td><span class="tag t-neu">逆勢小穩</span></td><td>+0.25%</td></tr>
+    <tr><td>XPD 鈀</td><td>$1,377</td><td><span class="tag t-bear">暴漲回吐-3.9%</span></td><td>現代汽車事件退燒</td></tr>
+    <tr><td>XPT 鉑</td><td>$1,803</td><td><span class="tag t-bear">-2.03%</span></td><td>貴金屬弱</td></tr>
+    <tr><td>NVDA</td><td>$218.35</td><td><span class="tag t-neu">-0.25%</span></td><td>AI股小回</td></tr>
+    <tr><td>MSTR</td><td>$127.53</td><td><span class="tag t-bear">-2.48%</span></td><td>BTC代理+高beta</td></tr>
+    <tr><td>MU</td><td>$941</td><td><span class="tag t-neu">+0.61%逆勢</span></td><td>記憶體</td></tr>
+    <tr><td>EWY</td><td>$181.82</td><td><span class="tag t-neu">-0.45%</span></td><td>使用者持倉,守$178</td></tr>
+  </table>
+</div>
+
+<!-- ===== SECTION 6: 完整戰術分析 ===== -->
+<div class="card full">
+  <h2>6. 完整戰術分析</h2>
+
+  <!-- A. XAU -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">A. XAU 黃金 $4,442（-0.78%，Warsh鷹升息恐懼連跌4天）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(資料不足)</span><span class="st-tag" style="background:rgba(248,81,73,.18);color:var(--red)">4h 偏空</span><span class="st-tag" style="background:rgba(248,81,73,.18);color:var(--red)">1h 偏空</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 資料不足(標中性)；4h 上$4,528.09/下$4,375.95；1h 上$4,488.34/下$4,402.94。<strong>連跌4天$4,442,守4h下軌$4,376,短期偏空。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-fail">DXY Warsh鷹走強 ✗</span>
+      <span class="score-item sc-fail">實質利率升息恐懼 ✗</span>
+      <span class="score-item sc-pass">央行購金+去美元化+信譽 ✓(長多未變)</span>
+      <span class="score-item sc-fail">ST偏空連跌4天 ✗</span>
+      <span class="score-item sc-fail">升息恐懼壓避險 ✗</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：短期偏空受升息恐懼壓（Warsh鷹派升息預期→實質利率升→壓無息黃金,連跌4天;但去美元化大結構未變,升息利空是週期性逆風非結構反轉)</strong>。計分 短期偏空。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h 預估：</strong>$4,442 ± ATR_1H×1.5 ≈ $4,442 ± $20 → <strong>$4,422 – $4,462</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(升息恐懼消化中,勿接刀)</td><td>觀望</td><td>—</td><td>守$4,376</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Bear 升息恐懼續</td><td>Rate Hike Fears續+數據強</td><td>$4,376</td><td>40%</td></tr>
+      <tr><td>Base 跌後整理</td><td>連跌4天後喘息</td><td>$4,376–$4,528</td><td>36%</td></tr>
+      <tr><td>Bull 去美元化再起</td><td>利空消化+買實物</td><td>$4,528</td><td>24%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>黃金→白銀傳導：</strong>金銀比=4441.9/66.60=<strong>66.69</strong>（全金屬齊弱、比值持平）。<strong>Warsh鷹派全金屬齊跌,黃金連跌4天。這波是升息恐懼壓金屬(週期性逆風),去美元化大結構未變=短期利空非結構反轉。白銀COT空頭大幅回補、賣壓減,若黃金止跌白銀易反彈。</strong></p>
+  </div>
+
+  <!-- B. XAG -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">B. XAG 白銀 $66.60（-0.40%，橫盤偏弱·COT空頭大幅回補·減倉36.65%）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(資料不足)</span><span class="st-tag" style="background:rgba(248,81,73,.18);color:var(--red)">4h 偏空</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 資料不足(228根&lt;300,標中性)；4h 上$69.16/下$64.89；1h 上$67.96/下$65.56。<strong>橫盤偏弱$66.60(盤中低$65.72近4h下軌$64.89);上方$67.96(1h上軌)、$69.16(4h上軌);下方$65.56(1h下軌)、$64.89(4h下軌)。使用者區間$68.9-$66,白銀$66.60在區間下緣附近。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-pass">Warsh鷹升息恐懼壓金 ✓(對空順風)</span>
+      <span class="score-item sc-pass">黃金連跌4天 ✓(對空)</span>
+      <span class="score-item sc-pass">COT空單大降14,728→12,610 ✓(對空,軋空燃料進一步耗損)</span>
+      <span class="score-item sc-fail">空頭大幅回補後賣壓減易反彈 ✗(對空短期風險)</span>
+      <span class="score-item sc-fail">去美元化大結構未變 ✗(對空,非結構轉空)</span>
+      <span class="score-item sc-neutral">資費0未轉負 ○</span>
+      <span class="score-item sc-neutral">橫盤偏弱未續崩 ○</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：橫盤偏弱$66.60——Warsh鷹派升息恐懼壓(順風),COT空頭大幅回補(軋空燃料進一步耗損);但空頭大減後賣壓減、跌多易反彈</strong>。<strong>本期關鍵:COT(8/25)空單14,728→12,610(少2,118口)、三尺度全降=白銀空頭高檔大量回補,你逆結構的壓力持續減、軋空燃料續耗(認錯減倉方向的持續驗證)。但雙面提醒:空頭都跑了=賣壓減,白銀$66橫盤+跌多反而易反彈,這是「絕不反手加空重壓」的又一理由(別接在空頭真空區)。使用者減倉36.65%極輕,決策見持倉段。</strong></p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$66.60 ± ATR_1H×1.5 ≈ $66.60 ± $0.55 → <strong>$66.05 – $67.15</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>空單(使用者持倉,減倉36.65%·1%/天巡航):橫盤偏弱順風但空頭大減易反彈,巡航續減無急迫;絕不反手加空重壓(空頭真空區接刀)</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 橫盤偏弱</td><td>升息恐懼消化$65-$68</td><td>$65.56–$67.96</td><td>40%</td></tr>
+      <tr><td>Bull 跌多反彈(空單短期逆風)</td><td>空頭大減賣壓輕+黃金止跌+站$67.96</td><td>$67.96–$69.16</td><td>32%</td></tr>
+      <tr><td>Bear 升息恐懼續壓(順風續減)</td><td>Rate Hike Fears續+失$65.56</td><td>$64.89以下</td><td>28%</td></tr>
+    </table>
+
+    <div class="tool-box">
+      <h4>🔧 signals 工具參考欄（實驗性，僅參考非進場依據）</h4>
+      <p style="font-size:.78rem"><strong>工具傾向：【觀望】｜VIX環境：升(risk-off)｜地緣：🟢中性偏多</strong></p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>⭐ COT 投機空單 12,610 口（8/25持倉,本期大幅更新,較8/18的14,728少2,118口=大幅回補）：</strong><br>26週pct <strong>80.0%</strong>（前值96.0%）/ 52週pct <strong>41.2%</strong> / 5年pct <strong>8.1%</strong>（前值11.2%）；全距 range26=8,475。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>🚩 L1籌碼紅旗:三尺度全面下降(26週96→80、5年11.2→8.1)=白銀空頭高檔大量回補、軋空燃料進一步耗損</strong>。<strong>關鍵演變:空單從8/11的15,629→8/18的14,728→8/25的12,610,連兩期回補、累計少3,019口=空頭持續認輸/獲利了結出場。這對使用者逆結構空單=壓力持續減。但空頭少了=賣壓減、白銀易反彈。</strong></p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>🚩 lenses:L4 Warsh鷹派殖利率升壓金(與空單方向短期一致)</strong>。白銀弱是Warsh鷹派升息恐懼,對空單短期順風。</p>
+      <p style="font-size:.76rem;margin-top:6px;color:var(--muted)"><strong>⚠ 限制：</strong>①三尺度並陳(26週80%仍偏高但5年僅8.1%=帶寬假象仍在);②COT落後約10天(只到8/25)、不得宣稱抓即時軋空頂底;③工具實驗性、非進場訊號;④商品籌碼看COMEX/LBMA本場,幣安永續funding影響不了白銀本體(只適用BTC/ETH,使用者LME交叉驗證正確);⑤工具傾向與我主觀「空頭大幅回補=壓力減但賣壓輕易反彈、別重壓加空」方向一致。</p>
+      <p style="font-size:.78rem;margin-top:6px"><strong>🔬 對抗四問(持倉決策+黃金連跌+COT重大更新,主線程跑):</strong>①「Warsh鷹派升息恐懼壓金=週期逆風非結構轉空」CONFIRMED(去美元化大結構未變);②「COT空頭大幅回補=軋空燃料進一步耗損」CONFIRMED(CFTC三尺度全降);③「空頭大減後賣壓減、白銀易反彈」CONFIRMED偏PLAUSIBLE(邏輯+橫盤未續崩)。工具【觀望】+L1與判斷方向一致。</p>
+    </div>
+
+    <p style="font-size:.8rem;margin:6px 0"><strong>籌碼面：</strong><strong>⭐COT重大更新(8/25):空單14,728→12,610(少2,118口)、三尺度全降(26週96→80、52週41.2、5年11.2→8.1)=白銀空頭高檔大量回補。連兩期(8/11的15,629→12,610)累計少3,019口=空頭持續出場、軋空燃料進一步耗損。</strong>Binance白銀資費0(未轉負;商品看COMEX非幣安,使用者LME交叉驗證正確)。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>屬性判定：</strong>白銀=貨幣腿(Warsh鷹派升息恐懼壓,跟黃金齊跌)。這波升息預期→實質利率升→壓無息貴金屬。COT空頭大幅回補=軋空腿基本耗損。去美元化大結構未變=升息週期逆風非結構轉空。空頭大減=賣壓輕、易反彈。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>風控（依規）：</strong>支撐$60/極端$55/爆倉&lt;$50(不成立,你爆倉遠、本金絕對安全)。上方$67.96(1h上軌)、$69.16(4h上軌);下方$65.56(1h下軌)、$64.89(4h下軌,盤中低$65.72已近)。現貨溢價待查。</p>
+  </div>
+
+  <!-- C. BTC -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">C. BTC $78,127（-0.70%，低檔盤整）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 上$86,311/下$69,814；4h 上$80,151/下$76,029；1h 上$79,670/下$76,388。<strong>低檔盤整$78.1K,守$76.0K(4h下軌)。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-fail">Warsh鷹risk-off ✗</span>
+      <span class="score-item sc-neutral">F&amp;G 62(降) ○</span>
+      <span class="score-item sc-pass">FR多頭付錢 ✓</span>
+      <span class="score-item sc-fail">升息預期升 ✗</span>
+      <span class="score-item sc-fail">殖利率升 ✗</span>
+      <span class="score-item sc-neutral">鏈上待查 ?</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：低檔盤整（Warsh鷹risk-off後$78.1K盤整,守$76.0K)</strong>。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$78,127 ± ATR_1H×1.5 ≈ $78,127 ± $600 → <strong>$77,527 – $78,727</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(回$76.0K再看)</td><td>$76,029–$76,800</td><td>$74,900</td><td>$80,151</td><td>1:2.4</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 低檔盤整</td><td>守$76.0K</td><td>$76.0K–$80.2K</td><td>46%</td></tr>
+      <tr><td>Bull 反彈</td><td>升息恐懼消化</td><td>$80.2K</td><td>27%</td></tr>
+      <tr><td>Bear 續跌</td><td>失$76.0K</td><td>$76.0K</td><td>27%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>衍生品：</strong>FR多頭付錢、F&amp;G降到62。<strong>關鍵洞察：BTC Warsh鷹派後低檔盤整$78.1K,守$76.0K。升息恐懼壓risk資產。</strong></p>
+  </div>
+
+  <!-- D. ETH -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">D. ETH $2,451（-0.66%，低檔盤整）</h3>
+    <div class="st-summary"><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">日 中性(300)</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">4h 中性</span><span class="st-tag" style="background:rgba(210,153,34,.18);color:var(--yellow)">1h 中性</span></div>
+    <p style="font-size:.8rem;margin:6px 0">ST(300,3)：日 上$2,796/下$2,067；4h 上$2,539/下$2,367；1h 上$2,520/下$2,382。<strong>守4h下$2,367。低檔盤整$2,451。</strong></p>
+    <div class="score-card">
+      <span class="score-item sc-neutral">BTC方向 盤整 ○</span>
+      <span class="score-item sc-neutral">ETH/BTC ratio 0.0314 ○</span>
+      <span class="score-item sc-pass">FR未轉空 ✓</span>
+      <span class="score-item sc-fail">Warsh鷹risk-off ✗</span>
+      <span class="score-item sc-neutral">軋空續航有限 ○</span>
+    </div>
+    <p style="font-size:.8rem;margin:6px 0"><strong>方向：低檔盤整（-0.66%跟BTC,守$2,367)</strong>。</p>
+    <p style="font-size:.8rem;margin:6px 0"><strong>24h：</strong>$2,451 ± ATR_1H×1.5 ≈ $2,451 ± $28 → <strong>$2,423 – $2,479</strong></p>
+    <table>
+      <tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr>
+      <tr><td>中性(回$2,367再看)</td><td>$2,367–$2,400</td><td>$2,330</td><td>$2,539</td><td>1:2.4</td></tr>
+    </table>
+    <table style="margin-top:8px">
+      <tr><th>情境</th><th>觸發</th><th>目標</th><th>機率</th></tr>
+      <tr><td>Base 低檔盤整</td><td>守$2,367</td><td>$2,367–$2,520</td><td>46%</td></tr>
+      <tr><td>Bull 反彈</td><td>升息恐懼消化</td><td>$2,539</td><td>27%</td></tr>
+      <tr><td>Bear 續跌</td><td>失$2,367</td><td>$2,367</td><td>27%</td></tr>
+    </table>
+    <p style="font-size:.8rem;margin-top:6px"><strong>ETH/BTC 分析：</strong>ratio≈0.0314,ETH跟BTC低檔盤整。</p>
+  </div>
+
+  <!-- E. 美股 -->
+  <div class="tactical-box">
+    <h3 style="font-size:.92rem;color:var(--accent)">E. 美股（Warsh鷹派後·升息恐懼·晶片分化）</h3>
+    <p style="font-size:.82rem;margin:6px 0;color:var(--green)"><strong>📈 漲幅前3(完整分析)：</strong></p>
+    <table>
+      <tr><th>標的</th><th>漲幅</th><th>驅動(查證)</th><th>ST/方向</th><th>入場/止損/目標</th></tr>
+      <tr><td><strong>TSLA</strong></td><td class="pos">+0.61%</td><td>成長股逆勢小穩</td><td>中性</td><td>觀望</td></tr>
+      <tr><td><strong>MU</strong></td><td class="pos">+0.61%</td><td>記憶體逆勢(AI需求撐)</td><td>中性</td><td>觀望</td></tr>
+      <tr><td colspan="4" style="color:var(--muted)">Warsh鷹派risk-off日,漲幅有限、多為逆勢小穩</td><td></td></tr>
+    </table>
+    <p style="font-size:.82rem;margin:10px 0 6px;color:var(--red)"><strong>📉 跌幅前3(完整分析)：</strong></p>
+    <table>
+      <tr><th>標的</th><th>跌幅</th><th>驅動(查證)</th><th>ST/方向</th><th>入場/止損/目標</th></tr>
+      <tr><td><strong>MSTR</strong></td><td class="neg">-2.48%</td><td>BTC代理+高beta,Warsh鷹risk-off</td><td>中性偏空</td><td>觀望</td></tr>
+      <tr><td><strong>AVGO</strong></td><td class="neg">-1.19%</td><td>晶片risk-off</td><td>中性</td><td>觀望</td></tr>
+      <tr><td><strong>PLTR</strong></td><td class="neg">-0.92%</td><td>AI股risk-off</td><td>中性</td><td>觀望</td></tr>
+    </table>
+    <table style="margin-top:10px">
+      <tr><th>標的</th><th>價格</th><th>24h%</th><th>方向</th><th>關鍵價位</th><th>備註</th></tr>
+      <tr><td>NVDA</td><td>$218.35</td><td class="neg">-0.25%</td><td><span class="tag t-neu">小回</span></td><td>守$210</td><td>財報後高檔</td></tr>
+      <tr><td>EWY</td><td>$181.82</td><td class="neg">-0.45%</td><td><span class="tag t-neu">記憶體</span></td><td>守$178</td><td>使用者持倉</td></tr>
+      <tr><td>SPY</td><td>$766.88</td><td class="neg">-0.63%</td><td><span class="tag t-neu">risk-off</span></td><td>創高後回</td><td>升息恐懼</td></tr>
+      <tr><td>INTC</td><td>$90.55</td><td class="pos">+0.16%</td><td><span class="tag t-neu">持平</span></td><td>守$88</td><td>晶片</td></tr>
+      <tr><td>AMD</td><td>$471</td><td class="pos">+0.25%</td><td><span class="tag t-neu">晶片</span></td><td>—</td><td>逆勢</td></tr>
+    </table>
+    <p style="font-size:.78rem;margin-top:6px;color:var(--muted)"><strong>為何選中:</strong>Warsh鷹派risk-off日,MSTR-2.48%(高beta)/AVGO/PLTR領跌,MU/TSLA逆勢小穩。<strong>升息恐懼壓risk資產,晶片分化。使用者晶片籃EWY-0.45%小回。本週經濟數據驗證升息預期。</strong></p>
+  </div>
+
+  <!-- F. 持倉紀律提醒 -->
+  <div class="tactical-box" style="border-color:rgba(219,109,40,.4);background:rgba(219,109,40,.05)">
+    <h3 style="font-size:.92rem;color:var(--orange)">🎯 F. 持倉紀律提醒（實操收尾——使用者唯一直接下單依據）</h3>
+    <div class="alert" style="font-size:.8rem;margin-bottom:8px">📌 <strong>⭐COT重大更新(8/25):白銀空頭大幅回補(空單14,728→12,610少2,118口、三尺度全降)=你逆結構的壓力持續減、軋空燃料進一步耗損。白銀$66.60橫盤偏弱、資費0未轉負。減倉36.65%極輕、爆倉遠、本金絕對安全。HYPE $82×4/ZEC $860×1歷史新高小倉(別加碼)。</strong></div>
+    <table>
+      <tr><th>標的</th><th>現價</th><th>關鍵價位</th><th>紀律警語</th></tr>
+      <tr><td>白銀 XAG（空單，減倉36.65%·1%/天巡航）</td><td>$66.60</td><td>爆倉遠｜$67.96(1h上軌)｜$69.16(4h上軌)｜$65.56(1h下軌)｜$64.89(4h下軌,盤中低$65.72)｜區間$68.9-$66</td><td><strong>⭐關鍵訊號:COT(8/25)白銀空頭大幅回補(14,728→12,610少2,118口、連兩期累計少3,019口),你逆結構的壓力持續在減、軋空燃料進一步耗損——這是你認錯減倉方向的持續驗證(空頭同伴陸續出場)。續守:①白銀Warsh鷹橫盤偏弱是順風,巡航可續減但無急迫(已極輕);②⚠關鍵雙面:空頭大幅回補=賣壓減少,白銀跌多($66橫盤)反而更容易技術反彈——絕不反手加空重壓(空頭都跑了你去加空=接在真空區逆勢);③升息恐懼是週期逆風、去美元化大結構未變,別當白銀結構轉空;④減倉36.65%極輕、爆倉遠、本金絕對安全,巡航從容;⑤成交就賺到別追不合理低點。目標:溫和續降、別重壓</strong></td></tr>
+      <tr><td>HYPE/ZEC（歷史新高小倉空單）</td><td>—</td><td>HYPE $82×4｜ZEC $860×1</td><td><strong>Warsh鷹派risk-off,加密低檔盤整,小倉空單順風。守住「小倉」別加碼。</strong></td></tr>
+    </table>
+    <p style="font-size:.78rem;margin-top:8px;color:var(--muted)"><strong>共通紀律（白銀順風續巡航+心法）：</strong>①COT白銀空頭大幅回補=你逆結構壓力持續減、軋空燃料進一步耗損(認錯減倉方向持續驗證);②⚠但空頭大減=賣壓輕、白銀跌多易反彈,絕不反手加空重壓(別接空頭真空區);③升息恐懼週期逆風、去美元化大結構未變;④減倉36.65%極輕,巡航續減無急迫、別追不合理低點;⑤HYPE/ZEC歷史高點小倉順風別加碼;⑥心法:多空通吃靠組合、讀動能落袋、贏夠收工、順勢賺養逆勢、危機挑融資健康標的、數據事件前別重押;⑦股價幣安fapi、商品籌碼COMEX非幣安、LME/母體交叉驗證腿別;⑧資費看情緒:白銀0未轉負=結構未變。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: 投行+期權 ===== -->
+<div class="card full">
+  <h2>7. 投行觀點與期權結構異常</h2>
+  <table>
+    <tr><th>來源</th><th>觀點</th><th>影響/時間戳</th></tr>
+    <tr><td>Rediff/NDTV (8/31)</td><td>「Gold Prices Fall for 4th Day Amid Rate Hike Fears;金銀ETF跌3.5%」</td><td>當前:Warsh鷹派升息恐懼續壓貴金屬</td></tr>
+    <tr><td>Moneycontrol (8/31)</td><td>「Gold silver ETFs slide 3.5%: buy the dip or stay cautious?」</td><td>當前:貴金屬回檔,散戶問要否抄底</td></tr>
+    <tr><td>⭐CFTC COT (8/25更新)</td><td>「白銀投機空單14,728→12,610(少2,118口)、26週分位96→80、5年8.1」</td><td>當前:白銀空頭大幅回補、軋空燃料進一步耗損</td></tr>
+    <tr><td>本團隊(對抗四問)</td><td>「升息恐懼壓金=週期逆風非結構轉空;COT空頭大幅回補=燃料耗損但賣壓減易反彈」</td><td>當前:順風但別重壓加空</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:.8rem"><strong>期權結構：</strong>Warsh鷹派後DXY/殖利率走強、VIX升。<strong>本期核心:Warsh鷹派升息恐懼續發酵(黃金連跌4天、金銀ETF跌3.5%,Rediff/NDTV查證);最重要新料=COT更新到8/25,白銀投機空單14,728→12,610(少2,118口)、三尺度全降(26週96→80、52週41.2、5年11.2→8.1)——白銀空頭在高檔大量回補,連兩期(8/11的15,629→12,610)累計少3,019口,軋空燃料進一步耗損。這波是升息預期→實質利率升→壓無息貴金屬的週期性逆風,去美元化/財政信譽/央行購金大結構未變=短期利空非結構反轉。對使用者白銀空單:空頭大幅回補=逆結構壓力持續減(認錯減倉方向持續驗證),但空頭少了賣壓減、白銀跌多易反彈,別重壓加空。白銀資費0未轉負=結構未變。</strong>散戶vs機構:升息恐懼壓貴金屬,但COT顯示投機空頭已大量出場,籌碼轉輕。</p>
+</div>
+
+<!-- ===== SECTION 8: Calendar ===== -->
+<div class="card full">
+  <h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+  <div class="tl">
+    <div class="tl-i"><div class="tl-d">✅ 8/28 Warsh鷹派已引爆,升息恐懼續發酵 ⭐⭐⭐</div><div class="tl-e">黃金連跌4天、金銀ETF跌3.5%,週期性升息逆風壓貴金屬(去美元化大結構未變)</div></div>
+    <div class="tl-i"><div class="tl-d">⭐ COT更新(8/25):白銀空頭大幅回補</div><div class="tl-e">空單14,728→12,610(少2,118口)、三尺度全降=軋空燃料進一步耗損,連兩期累計少3,019口</div></div>
+    <div class="tl-i"><div class="tl-d">📌 白銀1%/天巡航(順風但空頭大減易反彈) ⭐</div><div class="tl-e">減倉36.65%極輕,順風可續減但無急迫,絕不反手加空重壓(空頭真空區)</div></div>
+    <div class="tl-i"><div class="tl-d">本週 美國經濟數據</div><div class="tl-e">驗證/削弱Warsh鷹派升息預期(數據強→升息恐懼續、數據弱→反彈)</div></div>
+    <div class="tl-i"><div class="tl-d">持續追蹤</div><div class="tl-e">升息恐懼續壓vs去美元化大結構;白銀空頭大減後反彈風險;黃金能否止跌守$4,376</div></div>
+  </div>
+  <p style="margin-top:8px;font-size:.82rem"><strong>關鍵排名：</strong>①Warsh鷹派升息恐懼續發酵(黃金連跌4天,regime級)+COT白銀空頭大幅回補 ≫ ②白銀巡航續減(順風但空頭大減易反彈) ＞ ③本週經濟數據驗證升息 ＞ ④去美元化大結構vs升息週期逆風 ＞ ⑤黃金守$4,376。</p>
+</div>
+
+<!-- ===== SECTION 9: 情境劇本 ===== -->
+<div class="card full">
+  <h2>9. 一週情境劇本與機率評估</h2>
+  <table>
+    <tr><th>預測市場/指標</th><th>當前定價</th><th>解讀</th></tr>
+    <tr><td>⭐白銀COT空單</td><td>12,610口@8/25(較8/18少2,118,26週80%/5年8.1%)</td><td>空頭大幅回補、三尺度全降=軋空燃料進一步耗損;但空頭少=賣壓減易反彈</td></tr>
+    <tr><td>Warsh升息預期</td><td>鷹派(升息恐懼,黃金連跌4天)</td><td>週期性逆風壓貴金屬,去美元化大結構未變</td></tr>
+    <tr><td>金銀比 GSR</td><td>66.7（全金屬齊弱持平）</td><td>Warsh鷹派全金屬齊跌</td></tr>
+    <tr><td>資費(情緒)</td><td>白銀0未轉負</td><td>risk-off但商品資費未轉負=結構未變</td></tr>
+    <tr><td>加密 F&amp;G / VIX</td><td>F&amp;G 62(降) / VIX升</td><td>升息恐懼risk-off,情緒降溫</td></tr>
+  </table>
+  <div class="scenario"><strong>Base Case（機率 40%）：</strong>Warsh鷹派升息恐懼消化,白銀$65-$68橫盤偏弱(空頭大減賣壓輕)、黃金連跌後喘息。使用者巡航續減無急迫、別追不合理低點。</div>
+  <div class="scenario" style="border-left-color:var(--red)"><strong>Bull Case（機率 32%，空單短期逆風）：</strong>白銀空頭大幅回補、賣壓減+跌多+黃金止跌→白銀技術反彈站$67.96→$69.16。<strong>使用者空單別追空、絕不反手加空重壓,巡航暫緩。</strong></div>
+  <div class="scenario-bear"><strong>Bear Case（機率 23%，巡航續減良機）：</strong>Warsh鷹派升息恐懼續+數據強→黃金失$4,376、白銀失$65.56跌向$64.89以下。使用者順風巡航續減。</div>
+  <div class="scenario-tail"><strong>Tail Risk（機率 5%）：</strong>升息恐懼失控→risk-off擴大成股災(貴金屬流動性擠兌先跌後避險);或升息證實過度→急反轉貴金屬暴彈(空單逆風)。低機率但本週數據留意。</div>
+</div>
+
+<div class="footer">
+  本報告 2026-08-31（週一）21:41 台灣時間產出,週一報(Warsh鷹派後首個交易日·升息恐懼續發酵)。<strong>本期有使用者持倉決策+黃金連跌4天+COT重大更新,跑主線程對抗四問(鏡頭層lenses已跑):①最重要新料=COT更新到8/25,白銀投機空單14,728→12,610(少2,118口)、三尺度全面下降(26週96→80、52週41.2、5年11.2→8.1)=白銀空頭在Warsh前高檔大量回補、軋空燃料進一步耗損(連兩期8/11的15,629→12,610累計少3,019口);②裁決:「Warsh鷹派升息恐懼壓貴金屬(黃金連跌4天)=週期性逆風非結構轉空」CONFIRMED(去美元化/央行購金大結構未變,Rate Hike Fears查證),「COT白銀空頭大幅回補=軋空燃料進一步耗損」CONFIRMED(CFTC官方三尺度全降),「空頭大減後賣壓減、白銀跌多易反彈」CONFIRMED偏PLAUSIBLE(邏輯+橫盤$66未續崩);③對使用者白銀空單:COT空頭大幅回補=你逆結構的壓力持續在減、軋空燃料進一步耗損(認錯減倉方向的持續驗證,空頭同伴陸續出場);但關鍵雙面提醒——空頭大幅回補=賣壓減少,白銀跌多反而更容易技術反彈,這正是「絕不反手加空重壓」的又一理由(空頭都跑了你去加空=接在真空區逆勢);升息恐懼是週期逆風、去美元化大結構未變,別當白銀結構轉空;你減倉36.65%極輕、爆倉遠、本金絕對安全,巡航續減從容無急迫。HYPE $82×4/ZEC $860×1歷史新高小倉別加碼。ST(300,3)日框因幣安K線資料不足300根標中性(白銀228根),4h偏空。宏觀指標Warsh鷹派後DXY/殖利率走強、Yahoo限流沿用估值。COT落後約10天、不得宣稱抓即時軋空頂底;商品籌碼看COMEX/LBMA非幣安funding(使用者LME交叉驗證正確);工具實驗性、僅參考非投資建議,交易風險自負。</strong>
+</div>
+
+</div>
+</body></html>
