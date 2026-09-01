@@ -5,7 +5,7 @@
 ```
 STEP 1: TZ='Asia/Taipei' date → 確認台灣時間週幾幾點
 STEP 2: 讀上一份報告（from reports.json 最後一筆）→ 提取預測數據
-STEP 3: 抓報價 + Yahoo Finance + 1-2次新聞搜尋。**Binance 報價用一條 bash 迴圈批次抓（省時防漏）**：`for s in BTCUSDT ETHUSDT XAUUSDT XAGUSDT COPPERUSDT XPDUSDT XPTUSDT INTCUSDT NVDAUSDT TSMUSDT MUUSDT AMDUSDT AVGOUSDT QCOMUSDT MSFTUSDT GOOGLUSDT METAUSDT AMZNUSDT TSLAUSDT PLTRUSDT MSTRUSDT EWYUSDT SPYUSDT SPCXUSDT; do echo -n "$s "; curl -s "https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=$s" | python3 -c "import sys,json;d=json.load(sys.stdin);print(d['lastPrice'],d['priceChangePercent']+'%')"; done`（單檔失敗不擋，續抓）。SuperTrend K線與 Yahoo 宏觀另抓。
+STEP 3: 抓報價 + Yahoo Finance + 1-2次新聞搜尋。**Binance 報價用一條 bash 迴圈批次抓（省時防漏）**：`for s in BTCUSDT ETHUSDT XAUUSDT XAGUSDT COPPERUSDT XPDUSDT XPTUSDT INTCUSDT NVDAUSDT TSMUSDT MUUSDT AMDUSDT AVGOUSDT QCOMUSDT MSFTUSDT GOOGLUSDT METAUSDT AMZNUSDT TSLAUSDT PLTRUSDT MSTRUSDT EWYUSDT SPYUSDT SPCXUSDT; do echo -n "$s "; curl -s "https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=$s" | python3 -c "import sys,json;d=json.load(sys.stdin);print(d['lastPrice'],d['priceChangePercent']+'%')"; done`（單檔失敗不擋，續抓）。SuperTrend K線與 Yahoo 宏觀另抓。**★各國公債殖利率必抓（全球流動性風向鏢，債市常領先金銀/股市數小時至數日）**：美10Y(`%5ETNX`)/美30Y(`%5ETYX`)、**日本10Y/30Y JGB、德國10Y Bund**。Yahoo 對日德公債符號常取不到 → 直接 Google News RSS 查最新值(`Japan 10Y JGB yield` / `Germany bund yield` / `global bond rout`)。**重點看「破整數關卡/多年新高/單日大動」**(例：日本10Y破3%=30年新高→全球bond rout→實質利率升壓無息貴金屬+carry trade平倉risk-off)。查到殖利率飆升＝金銀/風險資產可能承壓的領先訊號，寫進 Regime 與風險雷達。
 STEP 3.5: 【對抗式解讀驗證，僅在觸發條件成立時執行 — 見下方專節】對報告的因果宣稱做一輪獨立攻擊，攻破的降級為「待查」或補 caveat。**觸發時先跑對抗鏡頭層工具 `event_classifier/lenses.py` 拿機械式紅旗當彈藥**（見 STEP 3.5 執行方式）
 STEP 3.6: 【白銀 signals 工具，選配】首次或依賴更新時跑 `cd /Volumes/workplace/EnglishTraining/market-radar/signals && ./setup.sh`；**之後直接 `cd .../signals && .venv/bin/python silver_daily.py`（約5秒；勿用 setup.sh 的 timeout，macOS 無此指令）**。讀 signals/last_run.json，把 tilt/score + COT 空頭多尺度分位帶進 Section 6-B 白銀段當「參考欄」。工具掛掉/取值失敗就標「工具本次未取得」跳過，不擋報告。
 STEP 4: 寫 HTML（使用下方 SKELETON TEMPLATE，逐 section 填入）
@@ -117,7 +117,8 @@ $ARGUMENTS
 | 1 | `https://fapi.binance.com/fapi/v1/klines?symbol=XXXUSDT&interval=INTERVAL&limit=320` | SuperTrend K線（XAU/XAG/BTC/ETH 抓 1d+4h+1h） |
 | 1 | `https://fapi.binance.com/fapi/v1/fundingRate?symbol=XXXUSDT&limit=1` | Funding Rate |
 | 1 | `https://fapi.binance.com/fapi/v1/openInterest?symbol=XXXUSDT` | BTC/ETH OI |
-| 2 | Yahoo Finance chart API：`https://query1.finance.yahoo.com/v8/finance/chart/{sym}`（DXY=`DX-Y.NYB`、VIX=`%5EVIX`、10Y=`%5ETNX`）**勿用 fapi.finance.yahoo.com（錯誤網域會失敗）** | DXY, VIX, MOVE, 30Y, TAIEX, 新聞。取不到 fallback：Google News RSS 查數值 → 標「暫缺」不臆測 |
+| 2 | Yahoo Finance chart API：`https://query1.finance.yahoo.com/v8/finance/chart/{sym}`（DXY=`DX-Y.NYB`、VIX=`%5EVIX`、10Y=`%5ETNX`、30Y=`%5ETYX`）**勿用 fapi.finance.yahoo.com（錯誤網域會失敗）** | DXY, VIX, MOVE, 30Y, TAIEX, 新聞。取不到 fallback：Google News RSS 查數值 → 標「暫缺」不臆測 |
+| 2 | **各國公債殖利率（全球流動性風向鏢，必收）**：美10Y/30Y(Yahoo `%5ETNX`/`%5ETYX`)、**日本10Y/30Y JGB、德國10Y Bund**(Yahoo 常取不到→Google News RSS 查 `Japan 10Y JGB yield`/`Germany bund yield`/`global bond rout`) | 判全球債市拋售(bond rout)、carry trade 平倉、實質利率方向。破整數關卡/多年新高=risk-off 領先訊號 |
 | 3 | Alternative.me | 加密 Fear & Greed |
 | 4 | Polymarket / CME FedWatch | 預測市場機率 |
 
@@ -191,7 +192,7 @@ $ARGUMENTS
 <div class="card full">
   <h2>1. 即時報價面板</h2>
   <!-- .price-grid: 全部 25 資產 pi 格子（不可遺漏任何一個） -->
-  <!-- 宏觀指標行: DXY/VIX/MOVE/10Y/30Y/TAIEX/USD-JPY/F&G -->
+  <!-- 宏觀指標行: DXY/VIX/MOVE/美10Y/美30Y/★日本10Y JGB/★德國10Y Bund/TAIEX/USD-JPY/F&G（各國公債殖利率必列，全球流動性風向鏢） -->
 </div>
 
 <!-- ===== SECTION 2: Regime ===== -->
@@ -326,6 +327,12 @@ $ARGUMENTS
 
 ### DXY 分析規則
 不僅報現價，必須含：趨勢方向 / 關鍵價位 / 破位意義 / 對各資產傳導路徑
+
+### ★全球債市 & carry trade 風向鏢（每期必掃，債市常領先金銀/股市）
+- **不只看美國**：美10Y/30Y 是基本，但**日本、德國長債**是更靈敏的全球流動性風向鏢。日本是全球最大債權國，**日本長債殖利率飆升 → 日資回流+carry trade 平倉 → 全球流動性收緊 risk-off**（曾漏看：日本10Y破3%=30年新高引爆 global bond rout，金銀連跌，當期報告只歸因 Fed 主席鷹派、漏了債市這個更根本的驅動）。
+- **看什麼**：破整數關卡（如日10Y破3%）、多年新高、單日大動、殖利率曲線。全球同步 bond rout = 實質利率齊升 → 壓無息貴金屬（金銀）+ 殺高估值 risk 資產（AI/加密）。
+- **傳導鐵則**：金銀無息，實質利率（名目殖利率−通膨預期）是它的最大對手盤之一；殖利率飆升時金銀承壓屬「週期性逆風」，需與「去美元化/財政信譽/央行購金」的結構長多分清——**殖利率逆風是短期、去美元化是長期，別把短期債市逆風誤判成貴金屬結構轉空**。
+- **carry trade**：日圓套利交易（借低息日圓買高息資產）是全球風險胃納的槓桿放大器；日本升息/JGB 殖利率飆 → carry 平倉 → 跨資產去槓桿踩踏，是「跨資產同步暴動」的常見隱形觸發，跨資產同步跌時必查日本債市/日圓。
 
 ### 事件 Calendar 規則
 - 所有時間轉台灣時間(UTC+8)
