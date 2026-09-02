@@ -106,7 +106,7 @@
       fab.target = '_blank'; fab.rel = 'noopener';
       fab.setAttribute('aria-label', 'Buy me a coffee at ko-fi.com');
       fab.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:2147483000;line-height:0;border-radius:10px;box-shadow:0 3px 14px rgba(0,0,0,.22);';
-      fab.innerHTML = '<img src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="40" loading="lazy" style="display:block;height:40px;border-radius:10px;">';
+      fab.innerHTML = '<img src="https://storage.ko-fi.com/cdn/kofi6.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="40" loading="lazy" style="display:block !important;height:40px !important;width:auto !important;max-width:none !important;border-radius:10px;">';
       body.appendChild(fab);
     }
   }
