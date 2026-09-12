@@ -65,7 +65,7 @@
       '交易股票、ETF、貴金屬、期貨、期權與衍生品具有<strong>重大虧損風險，可能損失全部本金</strong>，槓桿會放大虧損。' +
       '過往績效與任何示意數字不代表未來結果。文中案例、比例與情境多為教學示意，並非實際交易紀錄或保證獲利。' +
       '請在自身財務狀況與風險承受度內、只用可承受損失的閒錢決策，必要時諮詢合格的專業顧問。' +
-      '<span class="sd-copyright">© 2026 HD Chen · 保留所有權利 All Rights Reserved · 請勿轉載</span>' +
+      '<span class="sd-copyright">© 2026 <a href="https://www.linkedin.com/in/hongdianchen" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">HD Chen</a> · 保留所有權利 All Rights Reserved · 請勿轉載</span>' +
       '<span class="sd-brand">交易技術分析學習中心 · 學習不等於獲利，活得夠久才有複利</span>';
     return d;
   }
