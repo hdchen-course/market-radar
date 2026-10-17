@@ -20,6 +20,17 @@ python3 cvd_multi.py BTCUSDT      # 只看多尺度 CVD（radar 的子模組，�
 
 `radar.py` 依賴同目錄的 `cvd_multi.py`，分享時兩支一起帶。
 
+## 搭配免費 LLM 交叉判讀（補情境層、免錢）
+
+radar 是 local 客觀規則層，**抓不到當日催化**（財報/指數調整/地緣/新聞）。把輸出丟給免費雲端 LLM 補情境：
+
+```bash
+python3 radar.py BTCUSDT --prompt > req.md
+```
+
+把 `req.md` 貼給 **免費版 ChatGPT / Gemini / Grok**，它會補當日新聞/催化、給偏多/區間/偏空三劇本機率、指出規則初判可能被推翻之處。
+= **local 客觀一致（radar）+ 雲端 LLM 情境（免費）**，兩層都有、不用付費 API。
+
 ## 整合哪些訊號
 
 | 模組 | 看什麼 |

@@ -59,7 +59,7 @@ mid_case = radar.scenario_engine(
 check("verdict 合法", ("偏多" in mid_case["verdict"]) or ("偏空" in mid_case["verdict"])
       or ("區間" in mid_case["verdict"]))
 check("有 macro_note", bool(mid_case["macro_note"]))
-check("VIX 警戒區進中性清單", any("警戒" in n for n in mid_case["neutral"]))
+check("VIX 警戒區進中性清單", any("警戒" in s[4] for s in mid_case["neutral"]))
 
 # --- detect_candles 形態偵測（合成 OHLC fixture: (open,high,low,close)，確定性）---
 def _pat(bars):
@@ -83,7 +83,23 @@ _sc = radar.scenario_engine(
     {"10Y": 4.5, "DXY": 100, "VIX": 16.0, "HY_OAS": 3.1, "HY_OAS_up": False},
     candles=[("錘子線Hammer", "bull", "測試")],
 )
-check("K線形態進多方清單", any("錘子線Hammer" in r for r in _sc["bull"]))
+check("K線形態進多方清單", any("錘子線Hammer" in s[4] for s in _sc["bull"]))
+
+# --- build_prompt 產出給外部 LLM 的請求檔（含關鍵欄位）---
+_prompt = radar.build_prompt(
+    "TESTUSDT", False,
+    {"price": 100.0, "pct": 1.0, "high": 101.0, "low": 99.0},
+    {"poc": 110.0, "vah": 115.0, "val": 105.0},
+    {"1d": {"dir": "中"}, "4h": {"dir": "中"}, "1h": {"dir": "中"}},
+    {"funding_pct": 0.003, "oi": 1, "pctile": 48},
+    {"10Y": 4.5, "DXY": 100, "VIX": 19.0, "HY_OAS": 3.1, "HY_OAS_up": False},
+    [],
+    mid_case,
+)
+check("prompt 含標的", "TESTUSDT" in _prompt)
+check("prompt 含主劇本", "主劇本" in _prompt)
+check("prompt 含情境催化任務", "情境催化" in _prompt)
+check("prompt 含待盯數據", "待盯數據" in _prompt)
 
 print()
 print("ALL PASS" if not _fails else str(len(_fails)) + " FAILED: " + str(_fails))
