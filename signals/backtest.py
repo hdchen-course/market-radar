@@ -24,6 +24,7 @@ funding/宏觀兩個維度。那兩維的權重本回測無法背書。
 
 純標準庫。用法：python3 backtest.py（或 .venv/bin/python backtest.py）。
 """
+import bisect
 import json
 import sys
 import urllib.request
@@ -59,7 +60,9 @@ def _get_json(url):
 
 
 def fetch_klines(symbol, interval, total):
-    """分頁往回抓 klines，回傳時間升冪的 [(open,high,low,close,vol,taker_buy), ...]。"""
+    """分頁往回抓 klines，回傳時間升冪的
+    [(open,high,low,close,vol,taker_buy, openTime_ms), ...]。
+    openTime 放最後一欄（index 6），以利對齊 funding 時間戳、又不動既有 index。"""
     out = []
     end_time = None
     while len(out) < total:
@@ -70,7 +73,7 @@ def fetch_klines(symbol, interval, total):
         if not batch:
             break
         rows = [(float(k[1]), float(k[2]), float(k[3]), float(k[4]),
-                 float(k[5]), float(k[9])) for k in batch]
+                 float(k[5]), float(k[9]), int(k[0])) for k in batch]
         # batch 為升冪；接到既有資料前面
         out = rows + out if end_time is not None else rows
         end_time = int(batch[0][0]) - 1  # 下一頁抓更舊的
@@ -78,6 +81,49 @@ def fetch_klines(symbol, interval, total):
             break
     # 去重＋升冪（分頁接合保險）
     return out[-total:] if len(out) > total else out
+
+
+def fetch_funding_hist(symbol, target=1800):
+    """分頁往回抓歷史 funding，回傳時間升冪的 [(fundingTime_ms, rate_pct), ...]。
+    rate_pct = fundingRate*100（比照 radar.fetch_funding 的百分比單位）。
+    funding 每 8h 一筆，3000 根 4h（~500 天）需 ~1500 筆，故 target 預設 1800。"""
+    out = []
+    end_time = None
+    while len(out) < target:
+        url = f"{_BASE}/fundingRate?symbol={symbol}&limit=1000"
+        if end_time is not None:
+            url += f"&endTime={end_time}"
+        batch = _get_json(url)
+        if not batch:
+            break
+        rows = [(int(x["fundingTime"]), float(x["fundingRate"]) * 100) for x in batch]
+        out = rows + out if end_time is not None else rows
+        prev_end = end_time
+        end_time = int(batch[0]["fundingTime"]) - 1
+        # 注意：fundingRate 端點每頁常只回 ~500 筆（非滿 1000），不可用「不滿頁」當終止條件，
+        # 否則只拿到最近一頁 → 覆蓋率過低。改以「空批 or 時間未再往回推進」為終止。
+        if prev_end is not None and end_time >= prev_end:
+            break
+    out.sort(key=lambda r: r[0])
+    # 去重（分頁接合保險）
+    seen, dedup = set(), []
+    for ts, rate in out:
+        if ts not in seen:
+            seen.add(ts)
+            dedup.append((ts, rate))
+    return dedup
+
+
+def funding_pit(fund_times, fund_rates, bar_open_ms):
+    """Point-in-time funding：取「fundingTime ≤ 該 bar openTime」的最後一筆當 funding_pct，
+    並用「該時點（含）之前近 120 筆」算分位——完全比照 radar.fetch_funding，但只用過去資料，
+    杜絕 look-ahead。無可用資料回 (None, None)。"""
+    idx = bisect.bisect_right(fund_times, bar_open_ms) - 1
+    if idx < 0:
+        return None, None
+    fr = fund_rates[idx]
+    window = fund_rates[max(0, idx - 119):idx + 1]  # 近 120 筆（含當筆）
+    return fr, radar.percentile_rank(window, fr)
 
 
 def cvd_rows(bars):
@@ -127,9 +173,11 @@ _NEUTRAL_FUNDING = {"funding_pct": None, "pctile": None}
 _NEUTRAL_MACRO = {"10Y": None, "DXY": None, "VIX": None, "HY_OAS": None, "HY_OAS_up": None}
 
 
-def build_point(bars_upto):
-    """用到時點 t（含）的歷史重建 scenario_engine 的輸入並跑，回傳
-    (bull_w, bear_w, bull_e, bear_e)：加權與等權的多空分數。"""
+def build_point(bars_upto, funding_real):
+    """用到時點 t（含）的歷史重建 scenario_engine 的輸入並跑兩組對照，回傳 dict：
+      core：funding 中性（技術核心五維，現況）
+      fund：加入 funding 真值維度（macro 仍中性）
+    共用同一批 cvd/vp/st/candles，只換 funding 參數，故成本幾乎不變。"""
     rows = cvd_rows(bars_upto)
     struct = cvd.summarize_scale(rows[-_STRUCT_WIN:])
     short = cvd.summarize_scale(rows[-_SHORT_WIN:])
@@ -138,24 +186,39 @@ def build_point(bars_upto):
     st = {f"f{i}": {"dir": st_dir_from_bars(bars_upto, p)}
           for i, p in enumerate(_ST_PERIODS)}
     candles = radar.detect_candles([(b[0], b[1], b[2], b[3]) for b in bars_upto[-3:]])
-    sc = radar.scenario_engine({"price": bars_upto[-1][3]}, cvd_results, vp, st,
-                               _NEUTRAL_FUNDING, _NEUTRAL_MACRO, candles)
-    # 等權：同一批訊號改用權重 1（訊號 tuple = (dim,dir,strength,weight,reason)）
-    bull_e = sum(s[2] for s in sc["bull"])
-    bear_e = sum(s[2] for s in sc["bear"])
-    return sc["bull_score"], sc["bear_score"], bull_e, bear_e
+    ticker = {"price": bars_upto[-1][3]}
+    sc_core = radar.scenario_engine(ticker, cvd_results, vp, st,
+                                    _NEUTRAL_FUNDING, _NEUTRAL_MACRO, candles)
+    sc_fund = radar.scenario_engine(ticker, cvd_results, vp, st,
+                                    funding_real, _NEUTRAL_MACRO, candles)
+    # 等權（core）：同一批訊號改用權重 1（訊號 tuple = (dim,dir,strength,weight,reason)）
+    bull_e = sum(s[2] for s in sc_core["bull"])
+    bear_e = sum(s[2] for s in sc_core["bear"])
+    return {
+        "diff_w": sc_core["bull_score"] - sc_core["bear_score"],
+        "diff_e": bull_e - bear_e,
+        "diff_wf": sc_fund["bull_score"] - sc_fund["bear_score"],
+    }
 
 
 def run_symbol(symbol):
-    """回傳 per-t 記錄 list：{i, diff_w, diff_e} 及該標的 closes。"""
+    """回傳 per-t 記錄 list：{i, diff_w, diff_e, diff_wf, fund_live} 及該標的 closes。
+    fund_live=該時點有無對齊到 funding（供診斷 funding 覆蓋率）。"""
     bars = fetch_klines(symbol, _INTERVAL, _TOTAL_BARS)
     closes = [b[3] for b in bars]
+    fund = fetch_funding_hist(symbol)
+    fund_times = [f[0] for f in fund]
+    fund_rates = [f[1] for f in fund]
     records = []
     last = len(bars) - 1 - max(_HORIZONS)   # 要留得出前瞻報酬
     for t in range(_MIN_T, last + 1):
-        bw, br, ew, er = build_point(bars[:t + 1])
-        records.append({"i": t, "diff_w": bw - br, "diff_e": ew - er})
-    return records, closes
+        fr, pctile = funding_pit(fund_times, fund_rates, bars[t][6])
+        funding_real = {"funding_pct": fr, "pctile": pctile, "oi": None}
+        rec = build_point(bars[:t + 1], funding_real)
+        rec["i"] = t
+        rec["fund_live"] = fr is not None
+        records.append(rec)
+    return records, closes, len(fund)
 
 
 def fwd_ret(closes, i, h):
@@ -227,10 +290,12 @@ def main():
     all_recs, all_closes = {}, {}
     for sym in _SYMBOLS:
         try:
-            recs, closes = run_symbol(sym)
+            recs, closes, n_fund = run_symbol(sym)
             all_recs[sym] = recs
             all_closes[sym] = closes
-            print(f"[{sym}] 取得 {len(closes)} 根、評估點 {len(recs)} 個")
+            cov = sum(1 for r in recs if r["fund_live"]) / len(recs) if recs else 0.0
+            print(f"[{sym}] 取得 {len(closes)} 根、評估點 {len(recs)} 個、"
+                  f"funding {n_fund} 筆、對齊覆蓋率 {cov:.2f}")
         except Exception as exc:
             print(f"[{sym}] 取得/評估失敗：{exc}")
 
@@ -239,7 +304,8 @@ def main():
         return 1
 
     # 合併所有標的（但 i 對應各自 closes，故 eval 需逐標的做再加總）
-    def pooled_eval(lo, hi, h, idxset):
+    # key：用哪個分數欄位（"diff_w"=技術核心加權、"diff_wf"=加 funding、"diff_e"=等權）
+    def pooled_eval(lo, hi, h, idxset, key="diff_w"):
         tot_calls = tot_hits = tot_hi = tot_hi_hits = 0
         longs, shorts, ups, n_all = [], [], 0, 0
         for sym, recs in all_recs.items():
@@ -252,7 +318,7 @@ def main():
                 n_all += 1
                 if f > 0:
                     ups += 1
-                sign = classify(r["diff_w"], lo)
+                sign = classify(r[key], lo)
                 if sign == 0:
                     continue
                 tot_calls += 1
@@ -262,7 +328,7 @@ def main():
                     longs.append(f)
                 else:
                     shorts.append(f)
-                if abs(r["diff_w"]) >= hi:
+                if abs(r[key]) >= hi:
                     tot_hi += 1
                     tot_hi_hits += hit
         baseline = ups / n_all if n_all else 0.0
@@ -306,6 +372,17 @@ def main():
         e_hit = eh / ec if ec else 0.0
         print(f"h={h:>2}根 | 加權命中 {w['hit']:.3f}({w['calls']}次) | "
               f"等權命中 {e_hit:.3f}({ec}次)")
+
+    # --- 加入 funding 維度 vs 技術核心（point-in-time funding，macro 仍中性）---
+    print("\n--- 技術核心 vs 核心+funding 方向命中率（LO=2.0，全樣本）---")
+    print("（funding 為 point-in-time 對齊，分位用 t 之前近120筆，無 look-ahead）")
+    for h in _HORIZONS:
+        core = pooled_eval(2.0, 4.0, h, None, key="diff_w")
+        fund = pooled_eval(2.0, 4.0, h, None, key="diff_wf")
+        print(f"h={h:>2}根 | 核心命中 {core['hit']:.3f}({core['calls']}次) "
+              f"高信心 {core['hit_hi']:.3f} | +funding 命中 {fund['hit']:.3f}"
+              f"({fund['calls']}次) 高信心 {fund['hit_hi']:.3f} | "
+              f"Δ命中 {fund['hit'] - core['hit']:+.3f}")
 
     # --- 網格搜尋：train 選最佳，test 驗證 ---
     print("\n--- 門檻網格搜尋（train=前70%）目標：命中率 × 樣本足夠 ---")
@@ -354,7 +431,23 @@ def main():
         print(f"→ 有微弱 edge。高信心桶{'確實更準' if hi_better else '並未更準（信心分級存疑）'}。")
         print(f"→ 建議：h={bh} LO={blo} HI={bhi}（但樣本有限、單一資產類別、"
               "且不含 funding/宏觀，請視為軟性校準非保證）。")
-    print("\n★範圍再聲明：本回測只驗證技術核心五維，funding 與宏觀維度未被背書；")
+    # --- funding 維度獨立裁決 ---
+    print("\n--- funding 維度裁決 ---")
+    fund_wins = 0
+    for h in _HORIZONS:
+        core = pooled_eval(2.0, 4.0, h, None, key="diff_w")
+        fund = pooled_eval(2.0, 4.0, h, None, key="diff_wf")
+        # funding 是否讓命中率顯著離開 ~0.50 且優於核心（門檻取 +0.01 當噪音帶）
+        if fund["hit"] - core["hit"] > 0.01 and fund["hit"] > 0.51:
+            fund_wins += 1
+    if fund_wins >= 2:
+        print(f"加入 funding 在 {fund_wins}/{len(_HORIZONS)} 個 horizon 讓命中率顯著改善"
+              "（>核心+0.01 且 >0.51）→ funding 維度可能有獨立邊際貢獻，值得保留並續觀察。")
+    else:
+        print("加入 funding 後命中率仍貼在 ~0.50、未顯著優於技術核心 →")
+        print("funding 維度亦無獨立預測 edge（與技術核心同屬『客觀儀表板』，非方向訊號）。")
+
+    print("\n★範圍再聲明：本回測已驗證技術核心五維 + funding 共六維，僅宏觀維度未被背書；")
     print("  近似重建非 radar 線上版逐欄複刻；結論僅供門檻參考，不改變『需人工補情境』定位。")
     return 0
 
