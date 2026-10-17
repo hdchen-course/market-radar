@@ -116,6 +116,49 @@ def supertrend_dir(symbol, interval, use_spot):
     return {"dir": direction, "close": close, "upper": upper, "lower": lower}
 
 
+# K 線形態參數（定義採公開標準 TA-Lib/Bulkowski；單根形態方向須配合趨勢位置）
+_DOJI_BODY_RATIO = 0.1     # 實體/全距 <= 此值 = 十字星
+_SHADOW_BODY_MULT = 2.0    # 影線 >= 實體×此值 = 長影
+_MARUBOZU_RATIO = 0.9      # 實體/全距 >= 此值 = 大實體（近無影線）
+
+
+def fetch_ohlc(symbol, interval, limit, use_spot=False):
+    """回傳 [(open, high, low, close), ...]。"""
+    base = "https://api.binance.com/api/v3" if use_spot else "https://fapi.binance.com/fapi/v1"
+    k = json.load(_get(f"{base}/klines?symbol={symbol}&interval={interval}&limit={limit}"))
+    return [(float(x[1]), float(x[2]), float(x[3]), float(x[4])) for x in k]
+
+
+def detect_candles(bars):
+    """偵測最後一根(吞沒看最後兩根)的 K 線形態，回傳 [(形態, bias, 說明)]。
+
+    bias: 'bull'/'bear'/'neutral'。定義採公開標準；單根形態的多空意義須配合
+    所在趨勢位置(錘子在底部、射擊之星在頂部才是反轉)，故在引擎中僅作輔助訊號、不單獨主導。
+    """
+    if len(bars) < 2:
+        return []
+    o, h, l, c = bars[-1]
+    po, _ph, _pl, pc = bars[-2]
+    rng = (h - l) or 1e-9
+    body = abs(c - o)
+    upper = h - max(o, c)
+    lower = min(o, c) - l
+    out = []
+    if body <= rng * _DOJI_BODY_RATIO:
+        out.append(("十字星Doji", "neutral", "開收極近=多空猶豫、潛在變盤"))
+    elif lower >= body * _SHADOW_BODY_MULT and upper <= body:
+        out.append(("錘子線Hammer", "bull", "長下影=低檔有承接(需在下跌後才為反轉訊號)"))
+    elif upper >= body * _SHADOW_BODY_MULT and lower <= body:
+        out.append(("射擊之星ShootingStar", "bear", "長上影=高檔遭壓(需在上漲後才為反轉訊號)"))
+    elif body >= rng * _MARUBOZU_RATIO:
+        out.append(("大實體Marubozu", "bull" if c > o else "bear", "幾無影線=單邊強勢"))
+    if c > o and pc < po and c >= po and o <= pc:
+        out.append(("多頭吞沒BullishEngulfing", "bull", "今紅實體包住昨黑實體=買方反攻"))
+    elif c < o and pc > po and o >= pc and c <= po:
+        out.append(("空頭吞沒BearishEngulfing", "bear", "今黑實體包住昨紅實體=賣方反攻"))
+    return out
+
+
 def fetch_funding_oi(symbol):
     """加密永續的 funding/OI；現貨或鏡像取不到則回 None 欄位。"""
     try:
@@ -153,7 +196,7 @@ def fetch_macro():
 
 # ---------- 劇本引擎：把客觀訊號計分成 偏多/區間/偏空 + 理由 + 待盯 ----------
 
-def scenario_engine(ticker, cvd_results, vp, st, funding_oi, macro):
+def scenario_engine(ticker, cvd_results, vp, st, funding_oi, macro, candles=()):
     """回傳 dict：bull/bear 訊號清單（含理由）、主劇本、待盯數據。純函數、可測。"""
     bull, bear, neutral = [], [], []
 
@@ -215,6 +258,16 @@ def scenario_engine(ticker, cvd_results, vp, st, funding_oi, macro):
     else:
         neutral.append(f"宏觀背景中性（{macro_note}）；需人工確認殖利率/美元當日方向")
 
+    # 6. K 線形態（輔助訊號；需配合所在位置，不單獨主導，靠多維度計分收斂）
+    for name, bias, note in candles:
+        line = f"K線形態 {name}：{note}"
+        if bias == "bull":
+            bull.append(line)
+        elif bias == "bear":
+            bear.append(line)
+        else:
+            neutral.append(line)
+
     # 計分 → 主劇本
     bull_n, bear_n = len(bull), len(bear)
     if bull_n - bear_n >= 2:
@@ -261,7 +314,8 @@ def main(argv=None):
     st = {label: supertrend_dir(sym, interval, use_spot) for label, interval in _ST_FRAMES}
     funding_oi = fetch_funding_oi(sym)
     macro = fetch_macro()
-    sc = scenario_engine(ticker, cvd_results, vp, st, funding_oi, macro)
+    candles = detect_candles(fetch_ohlc(sym, "1d", 3, use_spot))
+    sc = scenario_engine(ticker, cvd_results, vp, st, funding_oi, macro, candles)
 
     print(f"===== {sym} 盤面判讀引擎（{'現貨' if use_spot else '永續'}）=====")
     print(f"[報價] {ticker['price']:.2f}  24h {ticker['pct']:+.2f}%  高{ticker['high']:.2f} 低{ticker['low']:.2f}")
@@ -271,6 +325,8 @@ def main(argv=None):
     fr = funding_oi.get("funding_pct")
     print(f"[擁擠度] funding {('%.4f%%' % fr) if fr is not None else 'N/A(現貨/鏡像)'}  OI {funding_oi.get('oi')}")
     print(f"[宏觀背景] {sc['macro_note']}")
+    candle_str = "、".join(f"{n}({b})" for n, b, _ in candles) or "無明顯形態"
+    print(f"[K線形態(日)] {candle_str}")
     if sc["cvd_interp"]:
         print(f"[CVD規則判讀] {' / '.join(sc['cvd_interp'])}")
 
