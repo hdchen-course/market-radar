@@ -37,7 +37,8 @@ YAHOO_TIMEFRAMES = [
     ("當下 15m", "15m", "5d"),
 ]
 # interpret() 取「最短的成功尺度」當當下，優先序由短到長。
-_SHORTEST_FIRST = ["當下 15m", "近期 1h", "中期 4h", "中期 1h", "結構 1d"]
+# 不含「結構 1d」——結構是長尺度基準，若只剩它就無法做長短對比，interpret 應回 None。
+_SHORTEST_FIRST = ["當下 15m", "近期 1h", "中期 4h", "中期 1h"]
 _MIN_BARS = 4
 _UA = {"User-Agent": "Mozilla/5.0"}
 _TIMEOUT = 20
@@ -103,17 +104,17 @@ def classify_turn(cvd_first, cvd_last):
     return "持續流入" if cvd_last > 0 else "持續流出"
 
 
-def interpret(results, is_proxy):
-    """套規則輸出一句可行動結論（本機無 LLM 解讀時用）。
+def interpret(results):
+    """套規則回傳 (nature, timing, combo)；資料不足回 None。純函數、可單元測試。
 
     results: {框架標籤: (price_pct, net_cvd, cvd_first, cvd_last)}
     規則：1d 定「結構性質」(派發/吸籌/健康)，最短尺度定「短線時機」，再合成。
+    注意：這是『規則粗判』非情境判讀，當儀表板/前處理，不取代 LLM 的情境分析。
     """
     structure = results.get("結構 1d")
     shortest = next((results[k] for k in _SHORTEST_FIRST if k in results), None)
     if structure is None or shortest is None:
-        print("\n[自動判讀] 資料不足，無法歸納。")
-        return
+        return None
 
     price_up = structure[0] > 0
     cvd_inflow = structure[1] > 0
@@ -152,8 +153,17 @@ def interpret(results, is_proxy):
     else:
         combo = "長短同向偏空，順勢但注意超賣"
 
+    return nature, timing, combo
+
+
+def print_interpretation(interp, is_proxy):
+    """印出 interpret() 的結果（判讀邏輯留在 interpret 內以利單元測試）。"""
     tag = "（proxy，僅參考）" if is_proxy else ""
-    print(f"\n[自動判讀]{tag}")
+    print(f"\n[自動判讀]{tag}　※規則粗判非情境判讀，當儀表板用")
+    if interp is None:
+        print("  資料不足，無法歸納。")
+        return
+    nature, timing, combo = interp
     print(f"  結構性質：{nature}")
     print(f"  短線時機：{timing}")
     print(f"  綜合：{combo}")
@@ -186,7 +196,7 @@ def run(symbol, source, use_spot):
         except Exception as exc:  # 單一尺度失敗不擋其他尺度
             print(f"{label_tf:<12}  取得失敗：{exc}")
 
-    interpret(results, is_proxy)
+    print_interpretation(interpret(results), is_proxy)
     return bool(results)
 
 
