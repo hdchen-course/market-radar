@@ -101,6 +101,23 @@ check("prompt 含主劇本", "主劇本" in _prompt)
 check("prompt 含情境催化任務", "情境催化" in _prompt)
 check("prompt 含待盯數據", "待盯數據" in _prompt)
 
+# --- build_html 產出貼進報告 6-C/6-D 的底稿欄片段 ---
+_html = radar.build_html(
+    "TESTUSDT", False,
+    {"price": 100.0, "pct": 1.0, "high": 101.0, "low": 99.0},
+    {"poc": 110.0, "vah": 115.0, "val": 105.0},
+    {"1d": {"dir": "中"}, "4h": {"dir": "中"}, "1h": {"dir": "中"}},
+    {"funding_pct": 0.003, "oi": 1, "pctile": 48},
+    {"10Y": 4.5, "DXY": 100, "VIX": 19.0, "HY_OAS": 3.1, "HY_OAS_up": False},
+    [],
+    mid_case,
+)
+check("html 含 radar-draft 容器", 'class="radar-draft"' in _html)
+check("html 含主劇本", "主劇本" in _html)
+check("html 含 Value Area", "Value Area" in _html)
+check("html 含未回測免責", "未回測" in _html)
+check("html 偏多偏空區塊齊全", ("radar-bull" in _html) and ("radar-bear" in _html))
+
 print()
 print("ALL PASS" if not _fails else str(len(_fails)) + " FAILED: " + str(_fails))
 sys.exit(1 if _fails else 0)

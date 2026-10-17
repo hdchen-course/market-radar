@@ -387,6 +387,52 @@ def build_prompt(sym, use_spot, ticker, vp, st, funding, macro, candles, sc):
     )
 
 
+def build_html(sym, use_spot, ticker, vp, st, funding, macro, candles, sc):
+    """產生可直接貼進 /dailyecreport 報告 6-C/6-D『🛰️ radar 客觀底稿欄』的 HTML 片段。
+
+    把 radar 客觀規則層的面板＋主劇本＋多空理由＋待盯，整理成自包含 div，
+    用法：`python3 radar.py BTCUSDT --html`，輸出貼到報告對應資產段，省去手抄。
+    內文用全形標點（與報告一致）。情境催化(財報/MSCI/地緣)仍須人工補、不在此欄。
+    """
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    fr, pct = funding.get("funding_pct"), funding.get("pctile")
+    fund_s = (f"{fr:.4f}%（近120期分位{pct:.0f}%）" if (fr is not None and pct is not None)
+              else "N/A（現貨/鏡像）")
+    st_s = " / ".join(f"{k}:{v['dir']}" for k, v in st.items())
+    cand_s = "、".join(f"{n}（{b}）" for n, b, _ in candles) or "無明顯形態"
+    cvd_s = " / ".join(sc["cvd_interp"]) if sc["cvd_interp"] else "N/A"
+
+    def li(sigs):
+        rows = "".join(
+            f"<li>[強度{s[2]}/3 ×權重{s[3]}] {s[0]}：{s[4]}</li>" for s in sigs)
+        return rows or "<li>（無）</li>"
+
+    watch = "".join(f"<li>{w}</li>" for w in sc["watch"])
+    kind = "現貨" if use_spot else "永續"
+    return (
+        f'<div class="radar-draft">\n'
+        f'  <div class="radar-head">🛰️ radar 客觀底稿（{sym}，{kind}，{now}）'
+        f'｜主劇本：{sc["verdict"]}</div>\n'
+        f'  <table class="radar-panel">\n'
+        f'    <tr><td>報價</td><td>{ticker["price"]:.4f}　24h {ticker["pct"]:+.2f}%</td></tr>\n'
+        f'    <tr><td>Volume Profile</td><td>POC {vp["poc"]:.2f}｜Value Area '
+        f'{vp["val"]:.2f}–{vp["vah"]:.2f}</td></tr>\n'
+        f'    <tr><td>SuperTrend({_ST_PERIOD},{_ST_MULT})</td><td>{st_s}</td></tr>\n'
+        f'    <tr><td>funding/OI</td><td>{fund_s}｜OI {funding.get("oi")}</td></tr>\n'
+        f'    <tr><td>宏觀背景</td><td>{sc["macro_note"]}</td></tr>\n'
+        f'    <tr><td>K線形態(日)</td><td>{cand_s}</td></tr>\n'
+        f'    <tr><td>CVD規則判讀</td><td>{cvd_s}</td></tr>\n'
+        f'  </table>\n'
+        f'  <div class="radar-bull"><b>偏多訊號：</b><ul>{li(sc["bull"])}</ul></div>\n'
+        f'  <div class="radar-bear"><b>偏空訊號：</b><ul>{li(sc["bear"])}</ul></div>\n'
+        f'  <div class="radar-watch"><b>待盯數據：</b><ul>{watch}</ul></div>\n'
+        f'  <div class="radar-note">※ radar 為規則化客觀層，權重/門檻為經驗值未回測；'
+        f'情境催化（財報/MSCI 指數調整/地緣/當日新聞）不在此欄，須人工或 LLM 補，'
+        f'與我的情境判讀衝突時兩者並陳。</div>\n'
+        f'</div>\n'
+    )
+
+
 def _fmt_signal(sig):
     dim, direction, strength, weight, reason = sig
     stars = "★" * strength + "☆" * (3 - strength)
@@ -399,6 +445,8 @@ def main(argv=None):
     parser.add_argument("--spot", action="store_true", help="用幣安現貨（預設永續）")
     parser.add_argument("--prompt", action="store_true",
                         help="輸出給外部免費 LLM(ChatGPT/Gemini/Grok)交叉判讀的請求檔(markdown)")
+    parser.add_argument("--html", action="store_true",
+                        help="輸出可貼進 /dailyecreport 報告 6-C/6-D 的 radar 客觀底稿欄 HTML 片段")
     args = parser.parse_args(argv)
     sym, use_spot = args.symbol, args.spot
 
@@ -413,6 +461,9 @@ def main(argv=None):
 
     if args.prompt:
         print(build_prompt(sym, use_spot, ticker, vp, st, funding, macro, candles, sc))
+        return 0
+    if args.html:
+        print(build_html(sym, use_spot, ticker, vp, st, funding, macro, candles, sc))
         return 0
 
     print(f"===== {sym} 盤面判讀引擎（加權強度版，{'現貨' if use_spot else '永續'}）=====")
