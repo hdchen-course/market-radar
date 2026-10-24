@@ -26,6 +26,7 @@ import sys
 import urllib.request
 
 import cvd_multi as cvd
+import patterns
 
 # SuperTrend 參數（與每日報告一致）。
 _ST_PERIOD = 300
@@ -41,10 +42,7 @@ _VP_INTERVAL = "4h"
 _FUNDING_HIST_N = 120
 _PCTILE_HOT = 80.0   # funding 分位 >= 此值 = 多頭過熱（偏空）
 _PCTILE_COLD = 20.0  # funding 分位 <= 此值 = 多頭冷/偏空傾向；<0 值另判空頭擁擠
-# K 線形態參數（公開標準 TA-Lib/Bulkowski）。
-_DOJI_BODY_RATIO = 0.1
-_SHADOW_BODY_MULT = 2.0
-_MARUBOZU_RATIO = 0.9
+# K 線形態偵測已委派 patterns.py（門檻見 patterns.PARAMS）。
 # 宏觀。
 _MACRO_YF = {"10Y": "%5ETNX", "DXY": "DX-Y.NYB", "VIX": "%5EVIX"}
 _FRED_HY = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A0HYM2"
@@ -174,27 +172,16 @@ def fetch_ohlc(symbol, interval, limit, use_spot=False):
 
 
 def detect_candles(bars):
-    """偵測最後一根(吞沒看兩根)的 K 線形態，回傳 [(形態, bias, 說明)]。公開標準定義。"""
+    """偵測最後一根的 K 線形態，回傳 [(形態, bias, 說明)]。
+    委派 patterns.py（純標準庫 TA-Lib CDL* 替代，66 型態、經紅隊對照 TA-Lib/Nison 稽核）。
+    反轉型態(錘子/星…)需足夠根數(>=~12)判前趨勢；bars 不足 2 根回空。
+    為免灌爆情境引擎：優先保留方向性(bull/bear)型態，中性型態至多 1 個。"""
     if len(bars) < 2:
         return []
-    o, h, l, c = bars[-1]
-    po, _ph, _pl, pc = bars[-2]
-    rng = (h - l) or 1e-9
-    body, upper, lower = abs(c - o), h - max(o, c), min(o, c) - l
-    out = []
-    if body <= rng * _DOJI_BODY_RATIO:
-        out.append(("十字星Doji", "neutral", "開收極近=多空猶豫、潛在變盤"))
-    elif lower >= body * _SHADOW_BODY_MULT and upper <= body:
-        out.append(("錘子線Hammer", "bull", "長下影=低檔有承接(需在下跌後才為反轉訊號)"))
-    elif upper >= body * _SHADOW_BODY_MULT and lower <= body:
-        out.append(("射擊之星ShootingStar", "bear", "長上影=高檔遭壓(需在上漲後才為反轉訊號)"))
-    elif body >= rng * _MARUBOZU_RATIO:
-        out.append(("大實體Marubozu", "bull" if c > o else "bear", "幾無影線=單邊強勢"))
-    if c > o and pc < po and c >= po and o <= pc:
-        out.append(("多頭吞沒BullishEngulfing", "bull", "今紅實體包住昨黑實體=買方反攻"))
-    elif c < o and pc > po and o >= pc and c <= po:
-        out.append(("空頭吞沒BearishEngulfing", "bear", "今黑實體包住昨紅實體=賣方反攻"))
-    return out
+    res = patterns.detect_last(bars)
+    directional = [p for p in res if p[1] in ("bull", "bear")]
+    neutral = [p for p in res if p[1] == "neutral"]
+    return directional + neutral[:1]
 
 
 def build_cvd_results(symbol, use_spot):
@@ -456,7 +443,7 @@ def main(argv=None):
     st = {label: supertrend_dir(sym, interval, use_spot) for label, interval in _ST_FRAMES}
     funding = fetch_funding(sym)
     macro = fetch_macro()
-    candles = detect_candles(fetch_ohlc(sym, "1d", 3, use_spot))
+    candles = detect_candles(fetch_ohlc(sym, "1d", 30, use_spot))  # 30 根供 patterns 判前趨勢
     sc = scenario_engine(ticker, cvd_results, vp, st, funding, macro, candles)
 
     if args.prompt:

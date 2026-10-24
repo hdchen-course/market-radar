@@ -61,16 +61,20 @@ check("verdict 合法", ("偏多" in mid_case["verdict"]) or ("偏空" in mid_ca
 check("有 macro_note", bool(mid_case["macro_note"]))
 check("VIX 警戒區進中性清單", any("警戒" in s[4] for s in mid_case["neutral"]))
 
-# --- detect_candles 形態偵測（合成 OHLC fixture: (open,high,low,close)，確定性）---
+# --- detect_candles 形態偵測（委派 patterns.py；反轉型態需趨勢前綴，合成 OHLC 確定性）---
+_DOWN = [(100 - i, 100 - i + 0.5, 100 - i - 1.5, 100 - i - 1) for i in range(12)]
+_UP = [(100 + i, 100 + i + 1.5, 100 + i - 0.5, 100 + i + 1) for i in range(12)]
+
+
 def _pat(bars):
     return [p[0] for p in radar.detect_candles(bars)]
 
 
-check("Hammer 錘子", "錘子線Hammer" in _pat([(10, 11, 9, 10), (9.7, 10.0, 8.0, 10.0)]))
-check("ShootingStar 射擊之星", "射擊之星ShootingStar" in _pat([(10, 11, 9, 10), (10.0, 11.0, 10.0, 10.3)]))
-check("Doji 十字星", "十字星Doji" in _pat([(10, 11, 9, 10), (10.0, 10.5, 9.5, 10.02)]))
-check("BearishEngulfing 空頭吞沒", "空頭吞沒BearishEngulfing" in _pat([(10, 10.6, 9.9, 10.5), (10.6, 10.7, 9.9, 10.0)]))
-check("BullishEngulfing 多頭吞沒", "多頭吞沒BullishEngulfing" in _pat([(10.5, 10.6, 9.4, 9.5), (9.4, 10.7, 9.3, 10.6)]))
+check("Hammer 錘子（跌勢）", "錘子線" in _pat(_DOWN + [(50, 50.1, 46, 49.3)]))
+check("ShootingStar 射擊之星（漲勢）", "射擊之星" in _pat(_UP + [(112, 116, 111.9, 112.7)]))
+check("Doji 十字星", "十字星" in _pat(_UP + [(50, 51, 49, 50.02)]))
+check("BearishEngulfing 空頭吞沒", "吞沒" in _pat([(10, 10.6, 9.9, 10.5), (10.6, 10.7, 9.9, 10.0)]))
+check("BullishEngulfing 多頭吞沒", "吞沒" in _pat([(10.5, 10.6, 9.4, 9.5), (9.4, 10.7, 9.3, 10.6)]))
 check("不足兩根回空", radar.detect_candles([(10, 11, 9, 10)]) == [])
 
 # candles 進得了 scenario（bias 歸類到 bull/bear/neutral 清單）
