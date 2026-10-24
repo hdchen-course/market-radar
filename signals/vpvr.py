@@ -14,9 +14,13 @@
 API：
   vpvr(highs, lows, closes, volumes, bins=24, va_pct=0.70) -> dict
       {poc, vah, val, bin_width, total_vol, profile:[(lo,hi,vol)], hvn:[price...], lvn:[price...]}
+  suggest_bins(highs, lows) -> int        依 ATR 自動建議 bin 數（bin 寬≈0.5×ATR，夾 20–60）
+  sr_zones(res, price) -> {support:[(price,kind)...], resistance:[...], gaps:[(price,'LVN')...]}
+      相對現價的支撐/壓力分區（kind∈POC/VAH/VAL/HVN，近→遠排序）；成交量密集＝均值回歸磁吸，
+      只在平衡盤穩健、趨勢盤會棄守，須配趨勢閘門（詳見函式 docstring）。
   fetch_binance_ohlcv(symbol, interval="1d", limit=180, use_spot=False) -> (H,L,C,V)
-  summary_text(res) / summary_html(res)  便利輸出
-  CLI: python3 vpvr.py BTCUSDT [--spot] [--interval 1d] [--limit 180] [--bins 24] [--html]
+  summary_text(res, price=None) / summary_html(res, price=None)  便利輸出（給 price 才列 S/R 分區）
+  CLI: python3 vpvr.py BTCUSDT [--spot] [--interval 1d] [--limit 180] [--bins 0=自動] [--html]
 
 記憶體/效能：O(bars × bins)；純 list/float；不修改輸入；空/退化輸入安全回 None 欄位。
 回測未做＝客觀底稿、非進場依據。
@@ -109,25 +113,86 @@ def fetch_binance_ohlcv(symbol, interval="1d", limit=180, use_spot=False):
     return H, L, C, V
 
 
+def suggest_bins(highs, lows, lo_cap=20, hi_cap=60):
+    """依「bin 寬 ≈ 0.5×ATR」自動建議 bin 數（ATR 以均 (high-low) 近似），夾在 [lo_cap, hi_cap]。
+    太多 bin→雜訊、每格都像節點；太少→糊成一團。配上標的波動才「準」。空輸入回 24。"""
+    if not highs or not lows:
+        return 24
+    rng = max(highs) - min(lows)
+    if rng <= 0:
+        return 1
+    atr = sum(h - l for h, l in zip(highs, lows)) / len(highs)
+    if atr <= 0:
+        return 24
+    return max(lo_cap, min(hi_cap, round(rng / (0.5 * atr))))
+
+
+def sr_zones(res, price, max_each=4):
+    """從 VPVR 結果萃取『相對現價』的支撐/壓力區。
+    回 {support:[(price,kind)...], resistance:[(price,kind)...], gaps:[(price,'LVN')...]}
+      - kind ∈ {POC, VAH, VAL, HVN}；POC=最大成交量節點（最強磁吸）。
+      - resistance 由近到遠（現價上方由低到高）；support 由近到遠（現價下方由高到低）。
+      - gaps=LVN 真空帶（快速穿越，不是 S/R）。
+    ★這是『成交量密集＝均值回歸磁吸』的 S/R，只在平衡/區間盤穩健；強趨勢盤會直接棄守，需配趨勢閘門。
+    空/退化輸入或無現價 → 空清單。"""
+    out = {"support": [], "resistance": [], "gaps": []}
+    if res.get("poc") is None or price is None:
+        return out
+    cand = [(res.get("poc"), "POC"), (res.get("vah"), "VAH"), (res.get("val"), "VAL")]
+    cand += [(h, "HVN") for h in (res.get("hvn") or [])]
+    tol = (res.get("bin_width") or 0.0) * 0.5  # 去重容差（同一價帶只留先出現的強標籤）
+    uniq = []
+    for p, k in cand:
+        if p is None:
+            continue
+        if any(abs(p - q) <= tol for q, _ in uniq):
+            continue
+        uniq.append((p, k))
+    for p, k in uniq:
+        if p > price:
+            out["resistance"].append((p, k))
+        elif p < price:
+            out["support"].append((p, k))
+    out["resistance"].sort(key=lambda x: x[0])                 # 近→遠
+    out["support"].sort(key=lambda x: x[0], reverse=True)      # 近→遠
+    out["resistance"] = out["resistance"][:max_each]
+    out["support"] = out["support"][:max_each]
+    out["gaps"] = [(p, "LVN") for p in (res.get("lvn") or [])]
+    return out
+
+
 def _fmt(p):
     if p is None:
         return "NA"
     return f"{p:,.2f}" if p >= 100 else f"{p:.4f}"
 
 
+def _zones_line(res, price):
+    """把 sr_zones 轉成一行『支撐 / 壓力』字串（給 summary 用）。"""
+    z = sr_zones(res, price)
+    sup = "、".join(f"{_fmt(p)}({k})" for p, k in z["support"]) or "—"
+    rst = "、".join(f"{_fmt(p)}({k})" for p, k in z["resistance"]) or "—"
+    out = [f"壓力區（上）：{rst}", f"支撐區（下）：{sup}"]
+    if z["gaps"]:
+        out.append("真空帶 LVN（快穿）：" + "、".join(_fmt(p) for p, _ in z["gaps"][:6]))
+    return out
+
+
 def summary_text(res, price=None):
     if res["poc"] is None:
         return "VPVR：無資料"
     lines = [f"POC {_fmt(res['poc'])} ｜ VA {_fmt(res['val'])}–{_fmt(res['vah'])}（70%）"]
-    if res["hvn"]:
-        lines.append("HVN（高量節點/支撐壓力）：" + "、".join(_fmt(p) for p in res["hvn"][:6]))
-    if res["lvn"]:
-        lines.append("LVN（低量節點/快速穿越）：" + "、".join(_fmt(p) for p in res["lvn"][:6]))
     if price is not None:
+        lines += _zones_line(res, price)
         zone = ("VA 之上（偏多/壓力在 VAH）" if price > res["vah"]
                 else "VA 之下（偏空/支撐在 VAL）" if price < res["val"]
                 else "VA 之內（區間，POC 為多空分界）")
-        lines.append(f"現價 {_fmt(price)} 位於 {zone}")
+        lines.append(f"現價 {_fmt(price)} 位於 {zone}（S/R＝均值回歸磁吸，趨勢盤會棄守，需配趨勢閘門）")
+    else:
+        if res["hvn"]:
+            lines.append("HVN（高量節點/支撐壓力）：" + "、".join(_fmt(p) for p in res["hvn"][:6]))
+        if res["lvn"]:
+            lines.append("LVN（低量節點/快速穿越）：" + "、".join(_fmt(p) for p in res["lvn"][:6]))
     return "\n".join(lines)
 
 
@@ -142,11 +207,12 @@ def _main(argv):
     ap.add_argument("--spot", action="store_true")
     ap.add_argument("--interval", default="1d")
     ap.add_argument("--limit", type=int, default=180)
-    ap.add_argument("--bins", type=int, default=24)
+    ap.add_argument("--bins", type=int, default=0, help="0=依 ATR 自動（建議）；>0 手動覆蓋")
     ap.add_argument("--html", action="store_true")
     a = ap.parse_args(argv)
     H, L, C, V = fetch_binance_ohlcv(a.symbol, a.interval, a.limit, a.spot)
-    res = vpvr(H, L, C, V, bins=a.bins)
+    bins = a.bins if a.bins and a.bins > 0 else suggest_bins(H, L)
+    res = vpvr(H, L, C, V, bins=bins)
     price = C[-1] if C else None
     print(summary_html(res, price) if a.html else f"[{a.symbol} VPVR {a.interval}×{a.limit}]\n" + summary_text(res, price))
 

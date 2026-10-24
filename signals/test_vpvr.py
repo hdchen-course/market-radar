@@ -60,6 +60,25 @@ r = V.vpvr([101, 106, 96], [99, 104, 94], [100, 105, 95], [1000, 10, 10], bins=2
 check("現價>VAH→壓力判讀", "VAH" in V.summary_text(r, r["vah"] + 5))
 check("現價<VAL→支撐判讀", "VAL" in V.summary_text(r, r["val"] - 5))
 
+# 8) sr_zones：上方節點歸壓力、下方歸支撐、近→遠排序
+r = V.vpvr([11, 21, 31, 41], [9, 19, 29, 39], [10, 20, 30, 40], [900, 100, 100, 800], bins=40)
+z = V.sr_zones(r, price=25)
+check("sr_zones: 壓力皆>現價", all(p > 25 for p, _ in z["resistance"]))
+check("sr_zones: 支撐皆<現價", all(p < 25 for p, _ in z["support"]))
+check("sr_zones: 壓力近→遠(遞增)", z["resistance"] == sorted(z["resistance"], key=lambda x: x[0]))
+check("sr_zones: 支撐近→遠(遞減)", z["support"] == sorted(z["support"], key=lambda x: x[0], reverse=True))
+check("sr_zones: 含 POC 標籤", any(k == "POC" for _, k in z["support"] + z["resistance"]))
+z0 = V.sr_zones(V.vpvr([], [], [], []), price=10)
+check("sr_zones: 空輸入安全", z0["support"] == [] and z0["resistance"] == [])
+check("sr_zones: 無現價安全", V.sr_zones(r, None)["support"] == [])
+
+# 9) suggest_bins：隨波動夾在 [20,60]，退化輸入安全
+many = [100 + (i % 7) for i in range(50)]
+b = V.suggest_bins([x + 2 for x in many], [x - 2 for x in many])
+check("suggest_bins 介於 20~60", 20 <= b <= 60)
+check("suggest_bins 空輸入回 24", V.suggest_bins([], []) == 24)
+check("suggest_bins 全平回 1", V.suggest_bins([10, 10], [10, 10]) == 1)
+
 print()
 print("全部通過 ✅" if _fail == 0 else f"{_fail} 項失敗 ❌")
 raise SystemExit(1 if _fail else 0)

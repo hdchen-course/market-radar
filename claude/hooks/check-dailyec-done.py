@@ -129,6 +129,18 @@ def main():
                       " <!--3.8:SYM:na--> 並貼訊息、SOXX 不得僅標暫缺）。偵測到已採標記契約但缺："
                       + "、".join(sorted(miss)) + "。請補滿後再收工。")
                 return
+            # D2. 固化子工具標記：MSTR 選擇權籌碼、BTC URPD（僅在已採 3.8 契約時一併要求）
+            # 標記形如 <!--3.8:MSTR:opt--> / <!--3.8:MSTR:opt:na-->、<!--3.8:BTC:urpd--> / :urpd:na
+            sub_found = re.findall(r"<!--3\.8:(MSTR:opt|BTC:urpd)(:na)?-->", html)
+            sub_present = {name for name, _na in sub_found}
+            sub_miss = [name for name in ("MSTR:opt", "BTC:urpd") if name not in sub_present]
+            if sub_miss:
+                block("【DONE GATE D2】STEP 3.8 固化子工具缺標記："
+                      + "、".join(sub_miss)
+                      + "。MSTR 需跑 options_maxpain.py 輸出 <!--3.8:MSTR:opt-->（Max Pain/OI牆/PCR/Gamma），"
+                      "BTC 需跑 urpd.py 輸出 <!--3.8:BTC:urpd-->（成本分布代理）；"
+                      "工具報錯則用對應 :na 標記並貼錯誤訊息後再收工。")
+                return
     except Exception:
         pass
 

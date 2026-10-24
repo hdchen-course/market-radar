@@ -122,10 +122,10 @@ def summary_text(res, span=None):
         f"⚠ 交易所成交量(USD)成本代理{win}；非鏈上真 URPD，真鏈上請用 Glassnode/CoinGlass",
         f"最大成本簇 POC {f(res['poc'])} ｜ 價值區 VA {f(res['val'])}–{f(res['vah'])}（70%）",
     ]
-    if res["clusters"]:
+    if p is not None:
+        lines += _vpvr._zones_line(res, p)
+    elif res["clusters"]:
         lines.append("成本密集帶（HVN/籌碼簇）：" + "、".join(f(x) for x in res["clusters"][:8]))
-    if res.get("lvn"):
-        lines.append("成本真空帶（LVN/快速穿越）：" + "、".join(f(x) for x in res["lvn"][:6]))
     if res.get("poc_side"):
         side = {"above": "現價在最大成本簇之上（成本簇為支撐，偏多結構）",
                 "below": "現價在最大成本簇之下（成本簇為壓力，偏空結構）",
