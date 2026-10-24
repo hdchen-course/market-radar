@@ -389,3 +389,4 @@ $ARGUMENTS
 - [ ] BTC：同上四件(可取自 radar；radar 報錯改幣安 klines 餵 patterns)＋`<!--3.8:BTC-->`／或 `:na`。**＋⑥ URPD 成本分布（`urpd.py`）＋`<!--3.8:BTC:urpd-->`／或 `:urpd:na`＋錯誤訊息。**
 - [ ] MSTR：同上四件＋`<!--3.8:MSTR-->`／或 `:na`。**＋⑤ 選擇權籌碼(Max Pain/OI牆/PCR/Gamma，`options_maxpain.py`)＋`<!--3.8:MSTR:opt-->`／或 `:opt:na`＋錯誤訊息。**
 - ※ 四件不得降為三件；缺任一標記＝未完成。MSTR 選擇權籌碼⑤、BTC URPD⑥ 亦為固化必跑（唯一例外＝工具報錯貼訊息）。有 Stop hook `check-dailyec-done.py` D 段 deterministic 兜底（五標記 + `MSTR:opt` + `BTC:urpd` 缺任一且無對應 `:na` 揭露＝擋 Stop）。
+- ※ **Gate E 工件背書（反自我證言）**：工具成功跑完會由 `signals/runlog.py` 寫 `signals/.last_run/<tool>.json`（含台北日）。報告聲稱 radar / options / urpd 跑過（radar-draft 無報錯、`<!--3.8:MSTR:opt-->`、`<!--3.8:BTC:urpd-->`）時，當天**必須有對應新鮮工件**，否則 Stop hook E 段擋下——即「貼標記/填數字但沒真跑工具」會被擋。省略標記也不再能關閉 D 閘（Fix 3）。紅隊 12 情境驗證不可繞過（2026-10-25）。

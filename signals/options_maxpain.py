@@ -250,6 +250,12 @@ def _main(argv):
     a = ap.parse_args(argv)
     spot, rows = fetch_cboe(a.symbol)
     res = analyze(spot, rows, a.expiries)
+    try:
+        import runlog
+        runlog.stamp("options", {"symbol": a.symbol.upper(), "spot": spot,
+                                 "front_max_pain": res.get("front_max_pain")})
+    except Exception:
+        pass
     print(summary_html(res) if a.html
           else f"[{a.symbol.upper()} 選擇權籌碼]\n" + summary_text(res))
 

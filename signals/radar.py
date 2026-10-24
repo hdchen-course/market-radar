@@ -446,6 +446,12 @@ def main(argv=None):
     candles = detect_candles(fetch_ohlc(sym, "1d", 30, use_spot))  # 30 根供 patterns 判前趨勢
     sc = scenario_engine(ticker, cvd_results, vp, st, funding, macro, candles)
 
+    try:
+        import runlog
+        runlog.stamp("radar", {"symbol": sym, "price": ticker.get("price"), "verdict": sc.get("verdict")})
+    except Exception:
+        pass
+
     if args.prompt:
         print(build_prompt(sym, use_spot, ticker, vp, st, funding, macro, candles, sc))
         return 0

@@ -218,6 +218,11 @@ def main():
         "geo": ev["geo"], "fired": [f["key"] for f in ev["fired"]],
         "lights": [l["key"] for l in ev["lights"]]}}
     json.dump(snap, open(os.path.join(HERE, "last_run.json"), "w"), ensure_ascii=False, indent=2)
+    try:
+        import runlog
+        runlog.stamp("silver", {"tilt": ev["tilt"], "score": ev["score"]})
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     main()

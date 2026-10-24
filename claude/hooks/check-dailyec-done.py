@@ -21,7 +21,8 @@ import glob
 import subprocess
 from datetime import datetime, timezone, timedelta
 
-REPO = "/Volumes/workplace/EnglishTraining/market-radar"
+# REPO/today 可用 env 覆寫（僅供隔離紅隊測試，比照 enforce-workflow-size 的 CLAUDE_WF_STATE 模式）
+REPO = os.environ.get("CLAUDE_EC_REPO", "/Volumes/workplace/EnglishTraining/market-radar")
 
 
 def block(reason):
@@ -29,9 +30,9 @@ def block(reason):
 
 
 def main():
-    # 台灣時間今天
+    # 台灣時間今天（可用 CLAUDE_EC_TODAY 覆寫供測試）
     tw = timezone(timedelta(hours=8))
-    today = datetime.now(tw).strftime("%Y-%m-%d")
+    today = os.environ.get("CLAUDE_EC_TODAY") or datetime.now(tw).strftime("%Y-%m-%d")
 
     rdir = os.path.join(REPO, "reports")
     todays = sorted(glob.glob(os.path.join(rdir, f"{today}-*.html")))
@@ -120,27 +121,60 @@ def main():
     try:
         found = re.findall(r"<!--3\.8:([A-Z]+)(:na)?-->", html)
         present = {s for s, _na in found}
-        if present:
-            need = {"XAU", "XAG", "SOXX", "BTC", "MSTR"}
-            miss = need - present
-            if miss:
-                block("【DONE GATE D】STEP 3.8 五標的（XAU/XAG/SOXX/BTC/MSTR）需各報"
-                      "『型態+SuperTrend+支撐壓力+多空』並輸出 <!--3.8:SYM--> 標記（工具報錯用"
-                      " <!--3.8:SYM:na--> 並貼訊息、SOXX 不得僅標暫缺）。偵測到已採標記契約但缺："
-                      + "、".join(sorted(miss)) + "。請補滿後再收工。")
-                return
-            # D2. 固化子工具標記：MSTR 選擇權籌碼、BTC URPD（僅在已採 3.8 契約時一併要求）
-            # 標記形如 <!--3.8:MSTR:opt--> / <!--3.8:MSTR:opt:na-->、<!--3.8:BTC:urpd--> / :urpd:na
-            sub_found = re.findall(r"<!--3\.8:(MSTR:opt|BTC:urpd)(:na)?-->", html)
-            sub_present = {name for name, _na in sub_found}
-            sub_miss = [name for name in ("MSTR:opt", "BTC:urpd") if name not in sub_present]
-            if sub_miss:
-                block("【DONE GATE D2】STEP 3.8 固化子工具缺標記："
-                      + "、".join(sub_miss)
-                      + "。MSTR 需跑 options_maxpain.py 輸出 <!--3.8:MSTR:opt-->（Max Pain/OI牆/PCR/Gamma），"
-                      "BTC 需跑 urpd.py 輸出 <!--3.8:BTC:urpd-->（成本分布代理）；"
-                      "工具報錯則用對應 :na 標記並貼錯誤訊息後再收工。")
-                return
+        # Fix 3（省略即關閉已修）：今日既已出報告檔＝一份 dailyecreport，必須有五標記；
+        # 不再「有標記才檢查」——不得靠『整份不打標記』來關閉本閘。
+        need = {"XAU", "XAG", "SOXX", "BTC", "MSTR"}
+        miss = need - present
+        if miss:
+            block("【DONE GATE D】STEP 3.8 五標的（XAU/XAG/SOXX/BTC/MSTR）需各報"
+                  "『型態+SuperTrend+支撐壓力+多空』並輸出 <!--3.8:SYM--> 標記（工具報錯用"
+                  " <!--3.8:SYM:na--> 並貼訊息、SOXX 不得僅標暫缺）。今日報告缺標記："
+                  + "、".join(sorted(miss)) + "。省略標記不算合規，請補滿後再收工。")
+            return
+        # D2. 固化子工具標記：MSTR 選擇權籌碼、BTC URPD
+        sub_found = re.findall(r"<!--3\.8:(MSTR:opt|BTC:urpd)(:na)?-->", html)
+        sub_present = {name for name, _na in sub_found}
+        sub_miss = [name for name in ("MSTR:opt", "BTC:urpd") if name not in sub_present]
+        if sub_miss:
+            block("【DONE GATE D2】STEP 3.8 固化子工具缺標記："
+                  + "、".join(sub_miss)
+                  + "。MSTR 需跑 options_maxpain.py 輸出 <!--3.8:MSTR:opt-->（Max Pain/OI牆/PCR/Gamma），"
+                  "BTC 需跑 urpd.py 輸出 <!--3.8:BTC:urpd-->（成本分布代理）；"
+                  "工具報錯則用對應 :na 標記並貼錯誤訊息後再收工。")
+            return
+    except Exception:
+        pass
+
+    # ---- E. 工件背書：報告聲稱跑過的工具，當天必須有新鮮 run-ledger 工件 ----
+    # 封「貼標記/編數字但沒真跑工具」的自我證言缺口。工具成功跑完會由 runlog.stamp 寫
+    # signals/.last_run/<tool>.json（含台北日 tpe_date）。聲稱成功卻無當天工件 → 擋。
+    try:
+        ledger = os.path.join(REPO, "signals", ".last_run")
+
+        def fresh(tool):
+            try:
+                rec = json.load(open(os.path.join(ledger, tool + ".json"), encoding="utf-8"))
+                return rec.get("tpe_date") == today
+            except Exception:
+                return False
+
+        claimed = []
+        # radar：有 radar-draft 且未標「radar 本次報錯」＝聲稱成功
+        if "radar-draft" in html and "radar 本次報錯" not in html:
+            claimed.append(("radar", "python3 radar.py BTCUSDT/ETHUSDT --html"))
+        # options：成功標記 <!--3.8:MSTR:opt--> 存在（:opt:na 是不同字串、不會誤觸）
+        if "<!--3.8:MSTR:opt-->" in html:
+            claimed.append(("options", "python3 options_maxpain.py MSTR"))
+        # urpd：成功標記 <!--3.8:BTC:urpd--> 存在
+        if "<!--3.8:BTC:urpd-->" in html:
+            claimed.append(("urpd", "python3 urpd.py BTCUSDT"))
+
+        stale = [(t, cmd) for t, cmd in claimed if not fresh(t)]
+        if stale:
+            block("【DONE GATE E】報告聲稱下列工具跑過，但 signals/.last_run 無『當天』工件"
+                  "（＝可能未實跑／數字自填）：" + "、".join(f"{t}（{cmd}）" for t, cmd in stale)
+                  + "。請實際執行該工具（成功會自動寫工件）後再收工；工具確實報錯則改用對應 :na／報錯揭露。")
+            return
     except Exception:
         pass
 

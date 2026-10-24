@@ -155,6 +155,11 @@ def _main(argv):
     a = ap.parse_args(argv)
     H, L, C, QV, span = fetch_binance_history(a.symbol, a.interval, a.limit)
     res = urpd(H, L, C, QV, bins=a.bins, log=a.log)
+    try:
+        import runlog
+        runlog.stamp("urpd", {"symbol": a.symbol, "poc": res.get("poc"), "price": res.get("price")})
+    except Exception:
+        pass
     print(summary_html(res, span) if a.html
           else f"[{a.symbol} URPD 代理 {a.interval}×{len(C)}{' log-bin' if a.log else ''}]\n"
                + summary_text(res, span))
