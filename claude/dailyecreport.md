@@ -136,7 +136,7 @@ $ARGUMENTS
 ## 報告存放規則
 
 - 路徑：`/Volumes/workplace/EnglishTraining/market-radar/reports/YYYY-MM-DD-{am|pm}.html`
-- 更新：`/Volumes/workplace/EnglishTraining/market-radar/reports.json` append entry
+- 更新：`/Volumes/workplace/EnglishTraining/market-radar/reports.json` append entry。**★`file` 欄只寫純檔名 `YYYY-MM-DD-{am|pm}.html`，不得加 `reports/` 前綴**（index.html 的 BASE_URL 已是 `reports/`，加前綴會變 `reports/reports/...` 404；舊 63 筆已修正為純檔名）。
 - Push：`git add → commit → push origin main`
 - Repo：`https://github.com/hdchen-course/market-radar.git`
 

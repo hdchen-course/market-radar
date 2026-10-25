@@ -180,7 +180,7 @@ function showReports(dateStr) {
   dayReports.forEach(r => {
     const label = r.type === 'am' ? '☀️ 早報' : '🌙 晚報';
     const cls = r.type === 'am' ? 'am' : 'pm';
-    links += `<a class="report-link ${cls}" href="${BASE_URL}${r.file}" target="_blank">${label}</a>`;
+    links += `<a class="report-link ${cls}" href="${BASE_URL}${r.file.replace(/^reports\//,'')}" target="_blank">${label}</a>`;
   });
 
   document.getElementById('reportLinks').innerHTML = links;
