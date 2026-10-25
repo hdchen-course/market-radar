@@ -70,8 +70,9 @@ def main():
     # reports.json 是否 append
     try:
         rj = json.load(open(os.path.join(REPO, "reports.json"), encoding="utf-8"))
-        listed = {e.get("file") for e in rj}
-        missing = [rel for rel in rels if rel not in listed]
+        # file 欄可能是純檔名或含 reports/ 前綴 → 一律用 basename 比對（兩種格式皆不誤擋）
+        listed = {os.path.basename(e.get("file") or "") for e in rj}
+        missing = [rel for rel in rels if os.path.basename(rel) not in listed]
         if missing:
             block("【DONE GATE A】報告 " + "、".join(missing) +
                   " 未寫入 reports.json。請 append entry(date/type/file)後再收工。")
