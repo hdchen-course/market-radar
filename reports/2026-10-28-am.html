@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宏觀流動性 & AI Capex 量化籌碼雷達 V4.5 — 2026-10-28 AM</title>
+<style>:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--yellow:#d29922;--orange:#db6d28;--purple:#a371f7;--cyan:#39d5ff}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:20px}.container{max-width:1440px;margin:0 auto}header{text-align:center;padding:28px 0;border-bottom:1px solid var(--border);margin-bottom:28px}header h1{font-size:1.4rem;margin-bottom:6px;letter-spacing:1px}header .sub{color:var(--muted);font-size:.85rem}.badge{display:inline-block;padding:5px 14px;border-radius:20px;font-weight:600;font-size:.8rem;margin-top:10px}.badge-green{background:linear-gradient(135deg,#238636,#3fb950)}.badge-warn{background:linear-gradient(135deg,#db6d28,#f85149)}.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:22px}.card h2{font-size:.98rem;margin-bottom:12px;color:var(--accent)}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:500;font-size:.74rem}.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--yellow)}.warn{color:var(--orange)}.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:600}.t-bull{background:rgba(63,185,80,.15);color:var(--green)}.t-bear{background:rgba(248,81,73,.15);color:var(--red)}.t-neu{background:rgba(210,153,34,.15);color:var(--yellow)}.t-hold{background:rgba(88,166,255,.15);color:var(--accent)}.mr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)}.mr:last-child{border-bottom:none}.mr-l{color:var(--muted);font-size:.8rem}.mr-v{font-weight:600;font-size:.85rem}.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:7px}.pi{background:rgba(255,255,255,.03);border-radius:7px;padding:9px 11px}.pi .tk{font-size:.72rem;color:var(--muted);margin-bottom:1px}.pi .pr{font-size:.95rem;font-weight:700}.pi .ch{font-size:.75rem;margin-top:1px}.risk-bar{height:5px;border-radius:3px;background:var(--border);display:inline-block;width:55px;vertical-align:middle;overflow:hidden}.risk-bar .f{height:100%;border-radius:3px}.rh .f{background:var(--red);width:90%}.rm .f{background:var(--orange);width:60%}.rl .f{background:var(--green);width:30%}.rmh .f{background:var(--orange);width:75%}.tl{position:relative;padding-left:22px}.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}.tl-i{position:relative;margin-bottom:13px}.tl-i::before{content:'';position:absolute;left:-18px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--accent)}.tl-d{font-size:.76rem;color:var(--accent);font-weight:600}.tl-e{font-size:.8rem;margin-top:2px}.scenario{border-left:3px solid var(--green);padding:10px;margin:8px 0}.scenario-bear{border-left:3px solid var(--red);padding:10px;margin:8px 0}.scenario-tail{border-left:3px solid var(--orange);padding:10px;margin:8px 0}.tactical-box{background:rgba(88,166,255,.04);border:1px solid rgba(88,166,255,.2);border-radius:8px;padding:14px;margin:10px 0}.tool-box{background:rgba(163,113,247,.06);border:1px dashed rgba(163,113,247,.4);border-radius:8px;padding:12px;margin:10px 0}.tool-box h4{color:var(--purple);font-size:.85rem;margin-bottom:6px}.radar-draft{background:rgba(57,213,255,.05);border:1px solid rgba(57,213,255,.3);border-radius:8px;padding:12px;margin:10px 0;font-size:.78rem}.radar-head{color:var(--cyan);font-weight:700;margin-bottom:8px}.radar-panel td{font-size:.76rem}.radar-bull{color:var(--green);margin-top:6px}.radar-bear{color:var(--red);margin-top:6px}.radar-watch{color:var(--muted);margin-top:6px}.radar-draft ul{margin:4px 0 4px 18px}.radar-note{color:var(--muted);font-size:.7rem;margin-top:8px;opacity:.8}.score-card{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.score-item{padding:3px 8px;border-radius:4px;font-size:.72rem;font-weight:600}.sc-pass{background:rgba(63,185,80,.12);color:var(--green)}.sc-fail{background:rgba(248,81,73,.12);color:var(--red)}.sc-neutral{background:rgba(210,153,34,.12);color:var(--yellow)}.st-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.st-tag{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:700}.scenario-prob{font-size:.72rem;padding:2px 6px;border-radius:3px;background:rgba(88,166,255,.12);color:var(--accent);font-weight:700}.footer{opacity:.85;font-size:.74rem;color:var(--muted);margin-top:22px;padding:14px;border-top:1px solid var(--border)}.alert{background:#0a1a0a;border:1px solid #238636;border-radius:6px;padding:12px;margin:8px 0}.alert-warn{background:#1a1000;border:1px solid#db6d28;border-radius:6px;padding:12px;margin:8px 0}.opt-box{background:rgba(219,109,40,.06);border:1px solid rgba(219,109,40,.35);border-radius:8px;padding:12px;margin:10px 0;font-size:.78rem}.urpd-box{background:rgba(210,153,34,.06);border:1px solid rgba(210,153,34,.35);border-radius:8px;padding:12px;margin:10px 0;font-size:.78rem}.vpvr-box{background:rgba(88,166,255,.05);border:1px solid rgba(88,166,255,.25);border-radius:8px;padding:10px;margin:8px 0;font-size:.77rem}</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>終極宏觀流動性 & AI Capex 量化籌碼雷達 V4.5</h1>
+  <p class="sub">2026-10-28（週三）AM ｜ 台北 10:10 ｜ 美東 週二 22:10 EDT（美股週二已收盤、盤後）｜ V4.5 ｜ 主題：半導體連三日 melt-up（SOXX 破 511），加密跟上、funding 退燒，FOMC 今晚決議</p>
+  <div class="badge badge-warn">AI Capex Boom｜半導體連三噴（AMD-Meta + broad chip rally）｜加密跟上 BTC funding 90%→58% 退燒｜FOMC（台北 10/29 02:00 週四）今晚</div>
+</header>
+
+<!-- ===== SECTION 0 ===== -->
+<div class="card full">
+  <h2>0. 上期預測回顧（2026-10-27-pm 報告）</h2>
+  <p style="font-size:.82rem;margin-bottom:8px">區間命中 <b>5/5 全 IN ✅</b>；方向 <b>6/6 ✅</b>。半導體「破 500 續強」續兌現、SOXX 再 +3.9% 到 511；加密由「回穩未轉多」轉為「跟上 risk-on」。</p>
+  <table>
+    <tr><th>標的</th><th>上期預估/方向</th><th>實際（am）</th><th>區間</th><th>方向</th></tr>
+    <tr><td>BTC</td><td>78,800–81,800；守 80.4k 偏多</td><td>80,856（+1.10%）</td><td class="pos">IN ✅</td><td class="pos">✅ 站回偏多</td></tr>
+    <tr><td>ETH</td><td>2,270–2,400</td><td>2,354（+1.54%）</td><td class="pos">IN ✅</td><td class="pos">✅ 鑷底兌現</td></tr>
+    <tr><td>XAU</td><td>3,995–4,110</td><td>4,055.69（+0.86%）</td><td class="pos">IN ✅</td><td class="pos">✅ 區間偏多</td></tr>
+    <tr><td>XAG</td><td>53.0–55.6</td><td>54.17（+0.59%）</td><td class="pos">IN ✅</td><td class="pos">✅ 區間</td></tr>
+    <tr><td>SOXX</td><td>試 541/守 500 區間偏多</td><td>511.06（+3.91%）</td><td class="pos">破 500 ✅</td><td class="pos">✅ 逼近 545</td></tr>
+    <tr><td>MSTR</td><td>止跌回 141、VA 內</td><td>141.40（+1.13%）</td><td class="pos">守 141 ✅</td><td class="pos">✅ VA 內偏穩</td></tr>
+  </table>
+  <p style="font-size:.78rem;color:var(--muted);margin-top:8px"><b>教訓：</b>① 半導體判讀連三期命中、melt-up 續行。② <b>昨 pm 點名「BTC funding 90% 偏熱＝FOMC 前最易殺多」——今日 funding 退燒到分位 58%（未殺多、反而小漲），風險暫釋放</b>（學到：偏熱是傾向非必然，funding 可透過時間/小漲自然降溫，當時標「傾向非結論」是對的）。③ 加密跟上 risk-on，分化進一步收斂。</p>
+</div>
+
+<!-- ===== SECTION 1 ===== -->
+<div class="card full">
+  <h2>1. 即時報價面板（幣安永續；美股個股%為 Yahoo 週二收盤 vs 前收）</h2>
+  <div class="price-grid">
+    <div class="pi"><div class="tk">BTC</div><div class="pr">$80,856</div><div class="ch pos">+1.10%</div></div>
+    <div class="pi"><div class="tk">ETH</div><div class="pr">$2,354</div><div class="ch pos">+1.54%</div></div>
+    <div class="pi"><div class="tk">MSTR</div><div class="pr">$141.40</div><div class="ch pos">+1.13%（週二收）</div></div>
+    <div class="pi"><div class="tk">SPCX</div><div class="pr">$149.57</div><div class="ch pos">+1.21%</div></div>
+    <div class="pi"><div class="tk">XAU 黃金</div><div class="pr">$4,055.69</div><div class="ch pos">+0.86%</div></div>
+    <div class="pi"><div class="tk">XAG 白銀</div><div class="pr">$54.17</div><div class="ch pos">+0.59%</div></div>
+    <div class="pi"><div class="tk">COPPER 銅</div><div class="pr">$6.661</div><div class="ch pos">+1.37%</div></div>
+    <div class="pi"><div class="tk">XPD 鈀</div><div class="pr">$1,040</div><div class="ch neg">-0.48%</div></div>
+    <div class="pi"><div class="tk">XPT 鉑</div><div class="pr">$1,543</div><div class="ch pos">+1.19%</div></div>
+    <div class="pi"><div class="tk">NVDA</div><div class="pr">$217.94</div><div class="ch pos">+0.90%</div></div>
+    <div class="pi"><div class="tk">TSM</div><div class="pr">$436.87</div><div class="ch pos">+2.95%</div></div>
+    <div class="pi"><div class="tk">MU</div><div class="pr">$928.76</div><div class="ch pos">+2.77%</div></div>
+    <div class="pi"><div class="tk">AMD</div><div class="pr">$560.26</div><div class="ch pos">+5.45%</div></div>
+    <div class="pi"><div class="tk">AVGO</div><div class="pr">$342.33</div><div class="ch pos">+4.00%</div></div>
+    <div class="pi"><div class="tk">QCOM</div><div class="pr">$184.17</div><div class="ch pos">+2.54%</div></div>
+    <div class="pi"><div class="tk">INTC</div><div class="pr">$93.74</div><div class="ch pos">+3.61%</div></div>
+    <div class="pi"><div class="tk">SOXX</div><div class="pr">$511.06</div><div class="ch pos">+3.91%</div></div>
+    <div class="pi"><div class="tk">MSFT</div><div class="pr">$531.33</div><div class="ch neu">-0.24%</div></div>
+    <div class="pi"><div class="tk">GOOGL</div><div class="pr">$320.58</div><div class="ch pos">+1.19%</div></div>
+    <div class="pi"><div class="tk">META</div><div class="pr">$620.19</div><div class="ch neg">-1.64%</div></div>
+    <div class="pi"><div class="tk">AMZN</div><div class="pr">$253.10</div><div class="ch pos">+1.61%</div></div>
+    <div class="pi"><div class="tk">PLTR</div><div class="pr">$198.73</div><div class="ch neu">-0.06%</div></div>
+    <div class="pi"><div class="tk">TSLA</div><div class="pr">$407.46</div><div class="ch pos">+4.04%</div></div>
+    <div class="pi"><div class="tk">SPY</div><div class="pr">$769.66</div><div class="ch pos">+0.56%</div></div>
+    <div class="pi"><div class="tk">EWY 韓國</div><div class="pr">$162.71</div><div class="ch pos">+4.02%</div></div>
+  </div>
+  <div style="margin-top:12px;border-top:1px dashed var(--border);padding-top:10px">
+  <div class="price-grid">
+    <div class="pi"><div class="tk">DXY 美元</div><div class="pr">102.41</div><div class="ch neu">+0.09%</div></div>
+    <div class="pi"><div class="tk">VIX</div><div class="pr">17.52</div><div class="ch pos">-4.73%</div></div>
+    <div class="pi"><div class="tk">MOVE 債波</div><div class="pr">暫缺</div><div class="ch neu">—</div></div>
+    <div class="pi"><div class="tk">美 10Y</div><div class="pr">4.993%</div><div class="ch pos">回落破5%下</div></div>
+    <div class="pi"><div class="tk">美 30Y</div><div class="pr">5.305%</div><div class="ch neu">+0.08%</div></div>
+    <div class="pi"><div class="tk">日本 10Y JGB</div><div class="pr">三十年高檔</div><div class="ch neu">數值暫缺</div></div>
+    <div class="pi"><div class="tk">德國 10Y Bund</div><div class="pr">暫缺</div><div class="ch neu">—</div></div>
+    <div class="pi"><div class="tk">HY 信用利差</div><div class="pr">3.30%</div><div class="ch pos">↓（10/26，鬆）</div></div>
+    <div class="pi"><div class="tk">IG 信用利差</div><div class="pr">0.90%</div><div class="ch neu">T+1(10/26)</div></div>
+    <div class="pi"><div class="tk">TAIEX 台股</div><div class="pr">46,862</div><div class="ch pos">+1.66%</div></div>
+    <div class="pi"><div class="tk">USD/JPY</div><div class="pr">157.94</div><div class="ch neu">+0.02%</div></div>
+    <div class="pi"><div class="tk">加密 F&amp;G</div><div class="pr">51</div><div class="ch neu">中性</div></div>
+  </div>
+  </div>
+  <p style="font-size:.72rem;color:var(--muted);margin-top:8px">※ HY 利差收 8bp 到 3.30%（從 3.38）＝<b>全盤 risk-on 下利差小幅收斂（非 AI 端專屬訊號）</b>；CRWV +7.94% 是股價動能、隨 AI 股反彈，非信用利差訊號（對抗 C4：勿把 equity 當 credit）。10Y 回落破 5% 下方＝殖利率逆風暫緩。JGB/德債/MOVE Yahoo 取不到→暫缺（JGB 仍列 carry 觀察）。美股為週二收盤%，週三現貨開盤台北 21:30、FOMC 台北 10/29 02:00。</p>
+</div>
+
+<!-- ===== SECTION 2 ===== -->
+<div class="card full">
+  <h2>2. 市場主導 Regime</h2>
+  <div class="mr"><span class="mr-l">核心變數</span><span class="mr-v">半導體 melt-up（AMD-Meta 合作點火 + 落後股補漲輪動，NVDA 最弱）vs FOMC 今晚決議（台北 10/29 02:00 週四）</span></div>
+  <div class="mr"><span class="mr-l">短期（1-3日）</span><span class="mr-v">半導體連三噴（SOXX 511）、加密跟上（BTC funding 90%→58% 退燒）、金銀小漲；全面 risk-on</span></div>
+  <div class="mr"><span class="mr-l">中期（1-4週）</span><span class="mr-v">FOMC 共識 HOLD、鷹派 Warsh 可能指向更多升息；10Y 回 5% 下、HY 利差降＝金融條件邊際轉鬆</span></div>
+  <div class="mr"><span class="mr-l">長期</span><span class="mr-v">AI Capex Boom + 財政主導 + 去美元化長多貴金屬；長端高檔仍為週期逆風</span></div>
+  <div class="mr"><span class="mr-l">Regime 判定</span><span class="mr-v" style="color:var(--orange)">AI Capex Boom（半導體 melt-up）｜全面 risk-on｜FOMC 事件前（鷹派風險未解）</span></div>
+</div>
+
+<!-- ===== SECTION 3 ===== -->
+<div class="card full">
+  <h2>3. 市場共識 vs Reality</h2>
+  <table>
+    <tr><th>主題</th><th>市場預期</th><th>實際觀察</th><th>Mispricing</th></tr>
+    <tr><td>AI 敘事</td><td>估值已高恐回檔</td><td>連三日噴、SOXX 破 511，但 NVDA 連三日最弱（+0.9%）、領漲是 AMD/AVGO/INTC</td><td>偏「落後股補漲+板塊輪動」＝資金非湧向 AI 龍頭 NVDA，而是補漲標的（對抗 C1）</td></tr>
+    <tr><td>利差/信用</td><td>CoreWeave 信用疑慮</td><td>HY 利差收 8bp 到 3.30、CRWV +7.94%</td><td>8bp 是全盤 risk-on 普遍收斂（非 AI 專屬）；CRWV 是股價非信用訊號（對抗 C4 REFUTED）</td></tr>
+    <tr><td>加密</td><td>funding 偏熱恐殺多</td><td>BTC funding 90%→58% 退燒（ETH 仍 94%）</td><td>可量化事實：BTC 殺多燃料釋放；+1.1% 噪訊級、不足論「轉強」（對抗 C3）</td></tr>
+    <tr><td>FOMC 今晚</td><td>HOLD、Warsh 鷹</td><td>VIX 17.5 低、全面 risk-on 進場</td><td>低 VIX + 高檔半導體進事件＝鷹派意外的回吐空間大</td></tr>
+  </table>
+  <div class="alert-warn"><b>最大 Mispricing：</b>市場用「全面 risk-on + VIX 壓到 17.5」的姿態進 FOMC，但 Warsh 鷹派、且 CNBC 明指「可能指向更多升息」。<b>半導體連三噴到高檔、ETH funding 仍 94% 偏熱——若今晚 Warsh 比預期更鷹，低 VIX + 高檔部位＝回吐空間大</b>。緩解面是 BTC funding 已退燒到 58%（可量化、殺多燃料降；惟 ETH 仍 94%）；利差 8bp 收斂屬全盤 risk-on 非 AI 專屬、不宜當「信用轉鬆」結論（對抗 C4）。<b>這是「事件前雙向張力」：上行靠 AI 補漲輪動，下行靠 Warsh 鷹派+高檔獲利了結（ETH funding 94% 最脆）</b>。</div>
+</div>
+
+<!-- ===== SECTION 4 ===== -->
+<div class="card full">
+  <h2>4. 跨資產強弱矩陣（由強到弱）</h2>
+  <table>
+    <tr><th>#</th><th>資產</th><th>24h/收盤%</th><th>ST 方向</th><th>驅動</th></tr>
+    <tr><td>1</td><td>AMD</td><td class="pos">+5.45%</td><td>中</td><td>AMD-Meta AI 基建合作擴大（具名，連二日；對抗 C2）</td></tr>
+    <tr><td>2</td><td>EWY 韓國</td><td class="pos">+4.02%</td><td>中</td><td>三星/SK海力士 HBM＝半導體同源</td></tr>
+    <tr><td>3</td><td>TSLA</td><td class="pos">+4.04%</td><td>—</td><td>連三日強，動能；具名催化仍待查</td></tr>
+    <tr><td>4</td><td>AVGO</td><td class="pos">+4.00%</td><td>中</td><td>broad AI chip rally、新 AI deals</td></tr>
+    <tr><td>5</td><td>INTC</td><td class="pos">+3.61%</td><td>中</td><td>New Street 升評延續 + 板塊</td></tr>
+    <tr><td>6</td><td>SOXX</td><td class="pos">+3.91%</td><td>中</td><td>半導體 ETF 連三跳空、破 511</td></tr>
+    <tr><td>7</td><td>TSM</td><td class="pos">+2.95%</td><td>中</td><td>先進製程</td></tr>
+    <tr><td>8</td><td>MU</td><td class="pos">+2.77%</td><td>中</td><td>記憶體 up-cycle</td></tr>
+    <tr><td>9</td><td>QCOM</td><td class="pos">+2.54%</td><td>中</td><td>隨板塊</td></tr>
+    <tr><td>10</td><td>AMZN</td><td class="pos">+1.61%</td><td>中</td><td>財報前走強</td></tr>
+    <tr><td>11</td><td>ETH</td><td class="pos">+1.54%</td><td>區間</td><td>跟上 risk-on、鑷底兌現；funding 94% 偏熱</td></tr>
+    <tr><td>12</td><td>COPPER 銅</td><td class="pos">+1.37%</td><td>中</td><td>工業 risk-on；<span class="tag t-neu">工業</span></td></tr>
+    <tr><td>13</td><td>GOOGL</td><td class="pos">+1.19%</td><td>中</td><td>mega-cap 回穩</td></tr>
+    <tr><td>14</td><td>XPT 鉑</td><td class="pos">+1.19%</td><td>中</td><td>工業腿反彈；<span class="tag t-neu">工業</span></td></tr>
+    <tr><td>15</td><td>MSTR</td><td class="pos">+1.13%</td><td>偏空</td><td>跟 BTC、VA 內（radar 仍偏空）</td></tr>
+    <tr><td>16</td><td>BTC</td><td class="pos">+1.10%</td><td>偏空</td><td>站回 80.8k、funding 退燒 58%；radar 規則層仍偏空（CVD 派發）</td></tr>
+    <tr><td>17</td><td>NVDA</td><td class="pos">+0.90%</td><td>中</td><td>連三日最弱、領漲交棒 AMD/AVGO</td></tr>
+    <tr><td>18</td><td>XAU 黃金</td><td class="pos">+0.86%</td><td>中</td><td>小級距漲，偏「10Y 回落+美元持平」機械性支撐（驅動不可分辨、非斷定避險；對抗 C5）；<span class="tag t-hold">貨幣</span></td></tr>
+    <tr><td>19</td><td>XAG 白銀</td><td class="pos">+0.59%</td><td>中</td><td>跟金小漲、仍 VA 下緣；<span class="tag t-hold">貨幣為主</span></td></tr>
+    <tr><td>20</td><td>SPY</td><td class="pos">+0.56%</td><td>中</td><td>大盤 risk-on</td></tr>
+    <tr><td>21</td><td>PLTR</td><td class="neu">-0.06%</td><td>中</td><td>AI 軟體持平</td></tr>
+    <tr><td>22</td><td>MSFT</td><td class="neu">-0.24%</td><td>中</td><td>財報前小回</td></tr>
+    <tr><td>23</td><td>XPD 鈀</td><td class="neg">-0.48%</td><td>中</td><td>回吐；<span class="tag t-neu">工業</span></td></tr>
+    <tr><td>24</td><td>META</td><td class="neg">-1.64%</td><td>中</td><td>連三日弱；財報前觀望/capex 疑慮（幅度中、見對抗 C6）</td></tr>
+  </table>
+  <p style="font-size:.76rem;color:var(--muted);margin-top:6px">腿別：銅 +1.4%/鉑 +1.2% 工業腿轉強，金銀小漲（銀仍 VA 下緣、貨幣腿為主）＝偏 risk-on/再通膨。半導體全綠領漲、AMD/AVGO 接棒 NVDA。加密翻正跟上＝分化收斂。META 連三日逆跌＝需留意是否 capex/財報特定因素（非只觀望）。</p>
+</div>
+
+<!-- ===== SECTION 5 ===== -->
+<div class="card full">
+  <h2>5. 量化風險雷達</h2>
+  <table>
+    <tr><th>風險</th><th>機率</th><th>影響</th><th>資產</th><th>嚴重度</th></tr>
+    <tr><td>FOMC 鷹派意外（Warsh 指向更多升息）</td><td>中</td><td>低 VIX + 高檔半導體回吐空間大</td><td>SOXX/AMD/BTC</td><td><span class="risk-bar rmh"><span class="f"></span></span></td></tr>
+    <tr><td>ETH funding 94% 偏熱 → 殺多（BTC 已退燒）</td><td>中</td><td>ETH 回測 VAL 2,302</td><td>ETH/加密</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>半導體連三噴後高檔獲利了結</td><td>中</td><td>SOXX 自 511 回 500/478</td><td>半導體</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>mega-cap 財報/capex 指引差（META 連三弱先兆）</td><td>中</td><td>AI 敘事回檔</td><td>META/半導體</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>JGB 三十年高檔 + 日圓 158 → carry 平倉尾部</td><td>低中</td><td>跨資產去槓桿</td><td>全球 risk</td><td><span class="risk-bar rm"><span class="f"></span></span></td></tr>
+    <tr><td>信用利差回頭走闊（HY 破 3.5%）</td><td>低</td><td>AI 基建信用壓力</td><td>CRWV/AI 端</td><td><span class="risk-bar rl"><span class="f"></span></span></td></tr>
+  </table>
+  <table style="margin-top:12px">
+    <tr><th>資產</th><th>現價</th><th>型態</th><th>依據</th></tr>
+    <tr><td>XAU</td><td>4,056</td><td><span class="tag t-bear">母子（bear）</span></td><td>VA 內、POC 4,146 磁吸、型態轉中性</td></tr>
+    <tr><td>XAG</td><td>54.17</td><td><span class="tag t-neu">無明顯型態</span></td><td>VA 下緣、站回 VAL 56.13 才轉強</td></tr>
+    <tr><td>BTC</td><td>80,856</td><td><span class="tag t-neu">十字星（neu）</span></td><td>貼 VAL 80,395、funding 退 58%</td></tr>
+    <tr><td>ETH</td><td>2,354</td><td><span class="tag t-neu">紡錘線（bull）</span></td><td>VAL 2,302 上、funding 94% 偏熱</td></tr>
+    <tr><td>MSTR</td><td>141.40</td><td><span class="tag t-neu">紡錘線（bull）</span></td><td>VA 內、上緣 144.45 壓力</td></tr>
+    <tr><td>SOXX</td><td>511.06</td><td><span class="tag t-bull">上升窗（bull）</span></td><td>連三跳空、逼近日 ST 545/POC 560</td></tr>
+    <tr><td>NVDA</td><td>217.94</td><td><span class="tag t-neu">落後</span></td><td>連三日最弱、壓力 222</td></tr>
+    <tr><td>AMD</td><td>560.26</td><td><span class="tag t-bull">合作跳漲</span></td><td>AMD-Meta 連二日</td></tr>
+    <tr><td>META</td><td>620.19</td><td><span class="tag t-bear">連三弱</span></td><td>財報前/capex 觀察</td></tr>
+    <tr><td>COPPER</td><td>6.661</td><td><span class="tag t-bull">+1.4%</span></td><td>工業 risk-on</td></tr>
+    <tr><td>XPD</td><td>1,040</td><td><span class="tag t-neu">-0.5%</span></td><td>回吐</td></tr>
+    <tr><td>XPT</td><td>1,543</td><td><span class="tag t-bull">+1.2%</span></td><td>反彈</td></tr>
+  </table>
+</div>
+
+<!-- ===== SECTION 6 ===== -->
+<div class="card full">
+  <h2>6. 完整戰術分析</h2>
+
+  <!-- A. XAU -->
+  <div class="tactical-box">
+    <h3 style="font-size:.9rem;color:var(--yellow)">A. XAU 黃金 $4,055.69（+0.86%）<!--3.8:XAU--></h3>
+    <div class="st-summary"><span class="st-tag sc-neutral">ST 日：中</span><span class="st-tag sc-neutral">4h：中</span><span class="st-tag sc-neutral">1h：中</span></div>
+    <p style="font-size:.8rem"><b>型態：</b>母子（bear）＝昨日大陽後縮小實體、動能略歇。radar 主劇本偏空（高信心 0 vs 5.5，CVD 派發）——規則層與型態都轉中性偏空，今日小漲屬區間內波動。</p>
+    <p style="font-size:.8rem"><b>計分卡（5項）：</b><span class="tag sc-fail">DXY +0.09%（微逆風）</span> <span class="tag sc-neutral">10Y 回 5% 下（逆風緩）</span> <span class="tag sc-pass">央行購金（結構多）</span> <span class="tag sc-neutral">ST 中</span> <span class="tag sc-neutral">FOMC 事件前</span>＝中性區間。</p>
+    <div class="vpvr-box"><b>VPVR（1d×180）：</b>POC 4,146.34｜VA 3,984.21–4,416.55。<b>壓力區（上）：</b>4,146.34(POC)、4,362.51(HVN)、4,416.55(VAH)。<b>支撐區（下）：</b>3,984.21(VAL)。<b>LVN：</b>4,254.42、4,470.59。現價 4,056 位於 VA 內（POC 4,146 為上方磁吸；S/R＝均值回歸磁吸，趨勢盤會棄守，需配趨勢閘門）。</div>
+    <p style="font-size:.8rem"><b>24h 預估（ATR±~60）：</b>3,995–4,115。<b>多空機會（條件式）：</b>站上 4,110→試 POC 4,146；跌破 VAL 3,984→回測 3,950。FOMC 前區間、不追。</p>
+    <table><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr><tr><td>區間（觀望為主）</td><td>4,010 附近</td><td>3,975</td><td>4,115/4,146</td><td>~1:2</td></tr></table>
+    <p style="font-size:.78rem;color:var(--muted)"><b>5日情境：</b>FOMC 鴿→上試 4,146；鷹（長端回升）→回 3,984。<b>金→銀傳導：</b>金銀同步小漲、金銀比未收斂→白銀跟漲動能有限。</p>
+  </div>
+
+  <!-- B. XAG -->
+  <div class="tactical-box">
+    <h3 style="font-size:.9rem;color:var(--muted)">B. XAG 白銀 $54.17（+0.59%）<!--3.8:XAG--></h3>
+    <div class="st-summary"><span class="st-tag sc-neutral">ST 日：中</span><span class="st-tag sc-neutral">4h：中</span><span class="st-tag sc-neutral">1h：中</span></div>
+    <p style="font-size:.8rem"><b>型態：</b>無明顯型態（整理）。radar 主劇本偏空（高信心 0 vs 6.5）。</p>
+    <p style="font-size:.8rem"><b>計分卡（7項）：</b><span class="tag sc-neutral">DXY 微升（弱空）</span> <span class="tag sc-pass">黃金 +0.9%（多）</span> <span class="tag sc-neutral">金銀比未收斂（工業弱）</span> <span class="tag sc-neutral">ST 中</span> <span class="tag sc-neutral">COT 見下</span> <span class="tag sc-neutral">現貨溢價平</span> <span class="tag sc-neutral">FOMC 風險</span>＝中性偏弱。</p>
+    <div class="vpvr-box"><b>VPVR（1d×180）：</b>POC 57.80｜VA 56.13–68.34。<b>壓力區（上）：</b>56.13(VAL)、57.80(POC)、61.13(HVN)、65.57(HVN)。<b>支撐區（下）：</b>—（現價在 VA 下緣下方，支撐看 53-54 整數＋前低）。<b>LVN：</b>72.23、79.99。現價 54.17 位於 <b>VA 之下</b>（站回 VAL 56.13 才轉中性偏多）。</div>
+    <div class="tool-box"><h4>🔧 signals 工具參考欄（實驗性、非進場依據）</h4>
+      <p style="font-size:.76rem">① 工具傾向：本次觸發訊號偏少（不硬找方向）；背景提醒「偏多側訊號較可靠、偏空側結構失效」。② COT 空頭多尺度分位：本次工具輸出未列三尺度數字（需完整 COT 分位另跑 full report）。<br><b>鐵則：</b>工具偏多側較可靠、偏空側結構失效——做空時工具幫助有限，需籌碼/實體證據。COT 落後約 10 天、只反映報告日結構。工具實驗性、樣本外驗證未完成，僅參考。</p></div>
+    <p style="font-size:.8rem"><b>24h 預估（ATR±~1.3）：</b>52.9–55.5。<b>多空機會（條件式）：</b>站回 VAL 56.13→偏多試 POC 57.8；跌破 53→下看 52/50。<b>屬性：</b>金銀比未收斂＝貨幣腿主導、工業腿弱。</p>
+    <table><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr><tr><td>區間偏多試</td><td>53.5 附近</td><td>52.8</td><td>56.1/57.8</td><td>~1:2.5</td></tr></table>
+    <p style="font-size:.78rem;color:var(--muted)"><b>風控：</b>支撐 53→52→$50 極端；FOMC 日插針風險。</p>
+  </div>
+
+  <!-- C. BTC -->
+  <div class="tactical-box">
+    <h3 style="font-size:.9rem;color:var(--orange)">C. BTC $80,856（+1.10%）<!--3.8:BTC--></h3>
+    <div class="st-summary"><span class="st-tag sc-neutral">ST 日：中</span><span class="st-tag sc-neutral">4h：中</span><span class="st-tag sc-neutral">1h：中</span></div>
+    <p style="font-size:.8rem"><b>型態：</b>十字星（neutral）＝變盤猶豫；CVD 結構仍派發頂背離。<b>關鍵進展：funding 近120期分位從昨 90% 洩到 58%＝偏熱釋放、殺多燃料減少</b>（OI 95,524 略降）。</p>
+    <p style="font-size:.8rem"><b>計分卡（6項）：</b><span class="tag sc-neutral">DXY 微升（中性）</span> <span class="tag sc-neutral">F&amp;G 51 中性</span> <span class="tag sc-pass">funding 退 58%（偏熱釋放）</span> <span class="tag sc-fail">OI 高、CVD 派發</span> <span class="tag sc-pass">美股 risk-on（多）</span> <span class="tag sc-neutral">鏈上待查</span>＝回穩偏多但規則層仍空。</p>
+    <div class="radar-draft">
+  <div class="radar-head">🛰️ radar 客觀底稿（BTCUSDT，永續，2026-10-28 10:07）｜主劇本：偏空（高信心，0.0 vs 5.5）</div>
+  <table class="radar-panel">
+    <tr><td>報價</td><td>80844.00　24h +1.08%</td></tr>
+    <tr><td>Volume Profile</td><td>POC 83369.88｜Value Area 80395.31–86067.74</td></tr>
+    <tr><td>SuperTrend(300,3)</td><td>1d：中 / 4h：中 / 1h：中</td></tr>
+    <tr><td>funding/OI</td><td>0.0051%（近120期分位58%）｜OI 95524</td></tr>
+    <tr><td>宏觀背景</td><td>10Y 4.993 / DXY 102.407 / VIX 17.52 / HY 3.3</td></tr>
+    <tr><td>K線形態（日）</td><td>十字星（neutral）</td></tr>
+    <tr><td>CVD判讀</td><td>頂背離：價漲但主動資金流出＝派發，中期偏空；短線持續賣出；反彈到上緣視為出貨/空點</td></tr>
+  </table>
+  <div class="radar-bear"><b>偏空訊號：</b>結構 1d CVD 淨流出-75532=派發頂背離（強度3）；短線 CVD 持續流出（強度1）</div>
+  <div class="radar-bull"><b>偏多訊號：</b>（無）※ 但 funding 已退燒至 58%＝此前「偏熱易殺多」風險緩解</div>
+  <div class="radar-watch"><b>待盯：</b>多方＝短線 CVD 翻正＋站穩 POC 83370；空方＝破 VAL 80395＋CVD 續流出＋VIX 破20/HY 走闊</div>
+  <div class="radar-note">※ radar 規則化客觀層、權重未回測；情境催化須人工補，與情境判讀衝突兩者並陳。</div>
+    </div>
+    <div class="urpd-box"><b>⑥ URPD 成本分布代理（1w×200 quote-vol）<!--3.8:BTC:urpd--></b><br>最大成本簇 POC 22,031｜VA 16,549–86,725。<b>壓力區（上）：</b>81,243(HVN)、85,629(HVN)、86,725(VAH)、94,401(HVN)。<b>支撐區（下）：</b>65,892(HVN)、28,610(HVN)、22,031(POC)。<b>LVN 真空：</b>76,857、87,822。現價在最大成本簇之上（成本簇為支撐、偏多結構）；本視窗約 65% 成交量在下方。<br><span style="color:var(--muted);font-size:.72rem">⚠ 交易所成交量-時間加權代理、非鏈上真 URPD；近 ATH 下方%會機械趨近，不可當『供給在獲利%』、不可與鏈上類比。</span></div>
+    <p style="font-size:.8rem"><b>24h 預估：</b>79,000–82,500。<b>多空機會（條件式）：</b>站穩 VAL 80,395＋CVD 翻正→偏多試 POC 83,370；跌破 78.7k→LVN 下看 76,857。funding 退燒降低殺多風險，但 CVD 仍派發、FOMC 事件前別追。<b>衍生品：</b>funding +0.0051%/分位 58%（退燒）、OI 95,524、CVD 派發。</p>
+    <table><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr><tr><td>區間偏多試</td><td>守 80.4k</td><td>79,500</td><td>83.4k</td><td>~1:2</td></tr></table>
+    <p style="font-size:.78rem;color:var(--muted)"><b>5日情境：</b>FOMC 不鷹＋站回 83k→反彈；鷹或破 78.7k→73.6k。關鍵轉變：funding 退燒＝此前最大易殺多訊號緩解。</p>
+  </div>
+
+  <!-- D. ETH -->
+  <div class="tactical-box">
+    <h3 style="font-size:.9rem;color:var(--accent)">D. ETH $2,354（+1.54%）</h3>
+    <div class="st-summary"><span class="st-tag sc-neutral">ST 日：中</span><span class="st-tag sc-neutral">4h：中</span><span class="st-tag sc-neutral">1h：中</span></div>
+    <p style="font-size:.8rem"><b>計分卡（5項）：</b><span class="tag sc-pass">BTC 方向偏穩</span> <span class="tag sc-neutral">ETH/BTC 比持平</span> <span class="tag sc-fail">funding 分位 94% 偏熱（未退燒，與 BTC 分歧）</span> <span class="tag sc-neutral">OI 高</span> <span class="tag sc-pass">鑷底兌現（多）</span>＝跟漲但 funding 最熱＝ETH 是加密內最易殺多。</p>
+    <div class="radar-draft">
+  <div class="radar-head">🛰️ radar 客觀底稿（ETHUSDT，永續，2026-10-28 10:07）｜主劇本：偏空（高信心，2.0 vs 6.5）</div>
+  <table class="radar-panel">
+    <tr><td>報價</td><td>2354.00　24h +1.53%</td></tr>
+    <tr><td>Volume Profile</td><td>POC 2430.59｜VA 2302.02–2718.75</td></tr>
+    <tr><td>SuperTrend(300,3)</td><td>1d：中 / 4h：中 / 1h：中</td></tr>
+    <tr><td>funding/OI</td><td>0.0100%（近120期分位94%）｜OI 2361392</td></tr>
+    <tr><td>K線形態（日）</td><td>紡錘線（bull）</td></tr>
+  </table>
+  <div class="radar-bear"><b>偏空：</b>結構 1d CVD 淨流出-2006252=派發（強度3）；funding 94% 偏熱易殺多（強度2）</div>
+  <div class="radar-bull"><b>偏多：</b>短線 CVD 持續流入（強度1）；紡錘線動能衰竭（強度2）</div>
+  <div class="radar-watch"><b>待盯：</b>站穩 POC 2430 / 破 VAL 2302；★funding 94% 是加密內最熱</div>
+  <div class="radar-note">※ 規則層；情境催化須人工補。</div>
+    </div>
+    <p style="font-size:.8rem"><b>24h 預估：</b>2,290–2,420。<b>多空機會（條件式）：</b>站穩 VAL 2,302＋鑷底→偏多試 POC 2,430；跌破 2,302→偏空（funding 94% 偏熱、FOMC 鷹派下最易殺）。<b>ETH/BTC：</b>持平、略強。</p>
+    <table><tr><th>方向</th><th>進場</th><th>止損</th><th>目標</th><th>風報比</th></tr><tr><td>區間偏多試</td><td>2,310 附近</td><td>2,290</td><td>2,430</td><td>~1:3（但 funding 熱、控倉）</td></tr></table>
+    <p style="font-size:.78rem;color:var(--muted)"><b>5日情境：</b>隨 BTC；但 funding 94% 最熱＝FOMC 鷹派下 ETH 回吐空間大於 BTC。</p>
+  </div>
+
+  <!-- E. 美股 -->
+  <div class="tactical-box">
+    <h3 style="font-size:.9rem;color:var(--green)">E. 美股（週二收盤 vs 前收）</h3>
+    <p style="font-size:.82rem;font-weight:600;color:var(--green)">▲ 漲幅前三</p>
+    <table>
+      <tr><th>標的</th><th>收盤%</th><th>驅動/ST/方向/入場止損目標/5日</th></tr>
+      <tr><td>AMD</td><td class="pos">+5.45%</td><td>AMD-Meta AI 基建合作擴大（具名 Yahoo，連二日；對抗 C2）；ST 偏多；支撐 540、壓力 575；5日：守 540 續強、看財報。</td></tr>
+      <tr><td>AVGO</td><td class="pos">+4.00%</td><td>broad AI chip rally、新 AI deals；ST 中；支撐 330、壓力 350；5日：隨 SOXX。</td></tr>
+      <tr><td>INTC</td><td class="pos">+3.61%</td><td>New Street 升評延續（伺服器 CPU 缺貨）+板塊；ST 中偏多；支撐 90、壓力 97；5日：守 90。</td></tr>
+    </table>
+    <p style="font-size:.82rem;font-weight:600;color:var(--red);margin-top:8px">▼ 跌幅前三</p>
+    <table>
+      <tr><th>標的</th><th>收盤%</th><th>驅動/ST/方向/入場止損目標/5日</th></tr>
+      <tr><td>META</td><td class="neg">-1.64%</td><td>連三日逆半導體跌；財報前觀望+AI capex 支出疑慮（連三弱已非純噪訊、但具名因素仍待查；對抗 C6）；ST 中；支撐 615、壓力 632；5日：看財報 capex 指引。</td></tr>
+      <tr><td>MSFT</td><td class="neg">-0.24%</td><td>財報前小回；ST 中；支撐 525、壓力 538；5日：看財報。</td></tr>
+      <tr><td>PLTR</td><td class="neg">-0.06%</td><td>AI 軟體持平；ST 中；支撐 193、壓力 202；5日：隨大盤。</td></tr>
+    </table>
+    <p style="font-size:.82rem;font-weight:600;margin-top:8px">其餘快評</p>
+    <table>
+      <tr><th>標的</th><th>價格</th><th>收盤%</th><th>方向</th><th>關鍵價位/備註</th></tr>
+      <tr><td>NVDA</td><td>217.94</td><td class="pos">+0.90%</td><td><span class="tag t-neu">落後</span></td><td>連三日最弱、壓力 222</td></tr>
+      <tr><td>TSLA</td><td>407.46</td><td class="pos">+4.04%</td><td><span class="tag t-bull">連三強</span></td><td>破 405、催化待查</td></tr>
+      <tr><td>TSM</td><td>436.87</td><td class="pos">+2.95%</td><td><span class="tag t-bull">偏多</span></td><td>先進製程</td></tr>
+      <tr><td>MU</td><td>928.76</td><td class="pos">+2.77%</td><td><span class="tag t-bull">偏多</span></td><td>記憶體</td></tr>
+      <tr><td>AMZN</td><td>253.10</td><td class="pos">+1.61%</td><td><span class="tag t-bull">偏多</span></td><td>財報前</td></tr>
+      <tr><td>GOOGL</td><td>320.58</td><td class="pos">+1.19%</td><td><span class="tag t-neu">中</span></td><td>回穩</td></tr>
+      <tr><td>EWY</td><td>162.71</td><td class="pos">+4.02%</td><td><span class="tag t-bull">偏多</span></td><td>韓半導體</td></tr>
+    </table>
+
+    <!-- SOXX 四件 -->
+    <div class="vpvr-box" style="margin-top:10px"><b>SOXX 半導體 ETF $511.06（+3.91%，連三跳空）<!--3.8:SOXX--></b><br>
+    <b>① 型態（Yahoo 日線餵 patterns）：</b>上升窗（bull，向上跳空缺口=支撐續多）＝連續跳空、多方強勢續攻；惟連三日 melt-up、短線過熱風險升。<br>
+    <b>② SuperTrend 三框（Yahoo OHLC 自算）：</b>日線 ST(300,3)=中（ATR 13.1、up 545/dn 466）；週線 ST(100,3)=中（up 579/dn 433）；4h/1h 框 N/A（無永續）。現價 511 逼近日 ST 上軌 545——站上才轉多確認。<br>
+    <b>③ VPVR 支撐壓力（日線 120 根）：</b>POC 560.01｜VAH 655.95｜VAL 464.08。<b>壓力區（上）：</b>545（日 ST 上軌）→560（POC，前期大量區）。<b>支撐區（下）：</b>500（整數/跳空上緣）→478（5/19 低、兩度破回關鍵）→VAL 464.08/466（日 ST 下軌）。現價 511 連三跳空、缺口未補＝強勢。<br>
+    <b>④ 多空機會（條件式）：</b>站上 545（日 ST 上軌）＋帶量→偏多確認、試 560 POC；守 500 跳空缺口→區間偏多（缺口未補＝強）；跌破 478→轉弱。連三跳空＝強但過熱，FOMC 前別追高、留意鷹派下的跳空回補。</div>
+  </div>
+
+  <!-- F. MSTR 選擇權籌碼 -->
+  <div class="opt-box">
+    <h3 style="font-size:.9rem;color:var(--orange)">F. MSTR 選擇權籌碼（⑤ options_maxpain）<!--3.8:MSTR--><!--3.8:MSTR:opt--></h3>
+    <div class="st-summary"><span class="st-tag sc-neutral">ST 日：中</span><span class="st-tag sc-neutral">4h：中</span><span class="st-tag sc-neutral">1h：中</span></div>
+    <p style="font-size:.8rem"><b>① 型態：</b>紡錘線（bull）＝下影止跌、動能衰竭後短彈，呼應止跌回 141。radar 主劇本偏空（高信心 1.0 vs 6.5）——規則層仍空、短線穩，並陳。</p>
+    <div class="vpvr-box"><b>③ VPVR（MSTRUSDT 1d×180）：</b>POC 94.02｜VA 79.90–144.45。<b>壓力區（上）：</b>144.45(VAH)、154.54(HVN)、162.61(HVN)。<b>支撐區（下）：</b>134.37(HVN)、126.30(HVN)、94.02(POC)。<b>LVN：</b>114.19、178.74。現價 141.64 位於 VA 內（上緣 144.45 為壓力、短線支撐 134.37）。</div>
+    <p style="font-size:.8rem"><b>選擇權籌碼（CBOE 延遲、OI T+1＝結構底稿非即時訊號）：</b>現價 141.16。<br>
+    最近到期 2026-10-30 Max Pain（磁吸）<b>144.00</b>；跨 3 到期合算 Max Pain 參考 150.00。<br>
+    Call 牆（壓力）：152.50(OI 39,787)、160.00(OI 37,631)、155.00(OI 27,096)。<br>
+    Put 牆（支撐）：90.00(OI 37,848)、100.00(OI 15,491)、115.00(OI 14,395)。<br>
+    PCR：OI 1.00｜Vol 0.77。Gamma 近似：正γ（壓波動/黏著）；γ 牆 call 152.50 / put 155.00（假設做市商 long call/short put、量級參考、方向無法驗證）。<br>
+    現價低於最近到期 Max Pain 2.0%（若收斂有向上磁吸傾向、僅經驗傾向，非預測）。</p>
+    <p style="font-size:.8rem"><b>④ 多空機會（條件式，對 MSTR 本身的客觀 S/R）：</b>VA 內、站上 144.45 VAH→試 Max Pain 144-147；跌破 134.37→再看 126/Put 牆密集 100-115。催化：10/29（四台北）FOMC 同日或有 MSTR 財報，波動放大。</p>
+    <p style="font-size:.72rem;color:var(--muted)">※ 本段為對 MSTR 標的本身的通用 S/R 與籌碼結構，非任何持倉建議；不預設讀者持倉。</p>
+  </div>
+</div>
+
+<!-- ===== SECTION 7 ===== -->
+<div class="card full">
+  <h2>7. 投行觀點與期權結構異常</h2>
+  <table>
+    <tr><th>來源</th><th>觀點</th><th>影響</th></tr>
+    <tr><td>Yahoo Finance（2026-10-27）</td><td>AMD-Meta AI 基建合作擴大 + broad chip rally</td><td>AMD +5.45%、半導體連三噴</td></tr>
+    <tr><td>媒體彙整（2026-10-27）</td><td>Nasdaq +1.18%、Broadcom/AMD/新 AI deals 帶動晶片</td><td>板塊全面 risk-on</td></tr>
+    <tr><td>CNBC（2026-10-27）</td><td>FOMC 預期 HOLD，但 Warsh 可能指向更多升息</td><td>事件風險：鷹派意外的回吐空間</td></tr>
+  </table>
+  <p style="font-size:.8rem;margin-top:8px"><b>期權結構：</b>VIX 17.52（-4.73%）＝FOMC 前恐慌溢價壓到低位、防禦薄。MSTR 正γ 黏著於 144 Max Pain。加密 funding：BTC 分位退到 58%（退燒）但 ETH 仍 94%（最熱）＝加密內部分歧，ETH 是鷹派下最易殺多。散戶（追半導體/加密）vs 機構（財報前減碼 META/MSFT）分化。</p>
+</div>
+
+<!-- ===== SECTION 8 ===== -->
+<div class="card full">
+  <h2>8. 一週核心事件 Calendar（台灣時間）</h2>
+  <div class="tl">
+    <div class="tl-i"><div class="tl-d">10/28（三）美東（今晚）</div><div class="tl-e">FOMC 決議日。mega-cap tech 財報密集（MSFT/GOOGL/META/AMZN 等盤後，以官方公告為準）。</div></div>
+    <div class="tl-i"><div class="tl-d">10/29（四）台北 02:00</div><div class="tl-e">★FOMC 利率決議（美東 10/28 14:00）＋主席 Warsh 記者會。共識 HOLD；聚焦 12 月指引、是否指向更多升息、縮表、長端措辭。</div></div>
+    <div class="tl-i"><div class="tl-d">10/29（四）台北</div><div class="tl-e">MSTR 可能財報（與 FOMC 同日，雙重波動；以公司公告為準）。</div></div>
+    <div class="tl-i"><div class="tl-d">11/3（一）</div><div class="tl-e">美國期中選舉（midterm）——Fed 本次為選前最後一次決議。</div></div>
+    <div class="tl-i"><div class="tl-d">持續觀察</div><div class="tl-e">日本 JGB 三十年高檔 + 日圓 158＝carry trade；HY 利差 3.30 已降（轉鬆，破 3.5% 才重新示警）。</div></div>
+    <div class="tl-i"><div class="tl-d">11/2 起</div><div class="tl-e">美股轉冬令，收盤台北 05:00、8:30 數據=台北 21:30、FOMC 14:00=台北隔天 03:00。</div></div>
+  </div>
+  <p style="font-size:.8rem;margin-top:6px"><b>關鍵排名：</b>① FOMC 10/29（四 02:00）＝本週定錨 ② mega-cap 財報（Meta capex 指引）③ MSTR 財報 ④ midterm 11/3。</p>
+</div>
+
+<!-- ===== SECTION 9 ===== -->
+<div class="card full">
+  <h2>9. 一週情境劇本與機率評估</h2>
+  <table>
+    <tr><th>預測市場/共識</th><th>隱含</th></tr>
+    <tr><td>FOMC HOLD（CME 共識，未抓即時數字→定性不引用機率）</td><td>市場高度預期不動</td></tr>
+    <tr><td>VIX 17.52、HY 3.30、10Y 回 5% 下</td><td>低波動、信用鬆、殖利率逆風暫緩</td></tr>
+  </table>
+  <div class="scenario"><b>Base Case（~50%）：</b>FOMC HOLD、Warsh 措辭偏鷹但無超預期，半導體高檔震盪（SOXX 守 500/試 545），加密區間（BTC 79k–82.5k），黃金 3,995–4,115。<span class="scenario-prob">50%</span></div>
+  <div class="scenario"><b>Bull Case（~22%）：</b>Warsh 未如預期鷹/信用續鬆，SOXX 站上 545 試 560、BTC 站回 83k、ETH 跟漲。<span class="scenario-prob">22%</span></div>
+  <div class="scenario-bear"><b>Bear Case（~23%）：</b>Warsh 明確指向更多升息，低 VIX + 高檔半導體回吐，SOXX 回 478、ETH（funding 94%）領殺、BTC 破 78.7k→73.6k。<span class="scenario-prob">23%</span></div>
+  <div class="scenario-tail"><b>Tail Risk（~5%）：</b>鷹派疊加 mega-cap 財報/capex 指引差或 JGB/carry 平倉→跨資產去槓桿，半導體與加密同殺。<span class="scenario-prob">5%</span></div>
+</div>
+
+<div class="footer">
+  <p><b>🔴 STEP 3.5 對抗式驗證裁決：</b></p>
+  <p>閘門：(a) AMD +6.09%、INTC perp ≥5%（24h perp）→【是】；(b) FOMC 今晚（10/28 決議、台北 10/29 週四）當日 Calendar 列入 →【是】；(c) 本 session 無新進出場動作詞 →【否】。<b>任一為是＝已開獨立 general-purpose subagent 跑對抗式驗證。</b></p>
+  <p id="adv-verdict"><b>獨立 subagent 逐條裁決（已查證兩具名催化、全部套用）：</b><br>
+  • <b>C1 半導體連三噴＝AMD-Meta+broad rally → CONFIRMED（限當日、加補漲框架）：</b>具名來源齊（Yahoo/BBN，均無金額避免重蹈 Meta「$95B」誤植）；但 NVDA 連三日最弱（+0.90%）、領漲是 AMD/AVGO/INTC/MU＝偏「落後股補漲+板塊輪動」，已改寫「資金非湧向 AI 龍頭而是補漲標的」，不把連三日全歸單一 deal。<br>
+  • <b>C2 AMD +5.45%＝AMD-Meta 合作擴大 → CONFIRMED：</b>Yahoo 標題字面即此因果；證方向不證量級、連二日有一日屬動能。<br>
+  • <b>C3 加密轉強＝risk-on 擴散 → PLAUSIBLE（弱化因果）：</b>+1.1%/+1.5% 噪訊級、相關≠因果；已把重心放在可量化事實「BTC funding 90%→58% 洩壓＝殺多風險降」，並標 +1.1% 不足論「轉強」。<br>
+  • <b>C4 HY 利差降+CRWV＝AI 信用轉鬆 → REFUTED：</b>HY 僅收 8bp 與 VIX 降/股普漲的全盤 risk-on 一致、無 AI 專屬信用訊號；CRWV +7.94% 是股價動能非信用利差（equity/credit 混淆）——已刪「AI 基建信用壓力緩解」結論，改「全盤 risk-on 小幅收斂 8bp、CRWV 隨 AI 股反彈」。<br>
+  • <b>C5 金銀小漲＝risk-on 續熱非避險 → PLAUSIBLE（改機械性）：</b>小級距，已改歸「10Y 回落+美元持平的機械性支撐、驅動不可分辨」，降低「非避險」斷定。<br>
+  • <b>C6 FOMC HOLD、Warsh 鷹 → CONFIRMED：</b>CNBC 具名+多管道一致（本次 HOLD、分歧在 12 月）；補政治維度：本次為 midterm（11/3）前最後決議（Bloomberg）。<br>
+  <b>最該降級前2：C4（8bp 全盤收斂被包裝成 AI 信用轉鬆+equity/credit 混淆，已 REFUTED）、C3（+1.1% 噪訊撐不起「轉強」因果，已留 funding 事實弱化因果）。</b></p>
+  <p style="margin-top:10px"><b>工具狀態：</b>lenses.py ✅（NVDA/半導體 up 紅旗：L7 催化溯源須一手來源+時間戳、領先/跟風待辨）｜silver_daily.py ✅（偏空側結構失效提醒、訊號偏少）｜radar.py BTC+ETH ✅（見 6-C/6-D radar-draft）｜options_maxpain MSTR ✅｜urpd BTC ✅。</p>
+  <p style="margin-top:8px">※ 數據來源：幣安永續（即時）、Yahoo（美股週二收盤%/宏觀）、FRED（HY/IG OAS，T+1 10/26）、alternative.me（F&amp;G）、Google News RSS（催化）。本報告為量化觀察與機率推演，非投資建議；不預設讀者持倉。價格為台北 2026-10-28 10:10 前後快照。</p>
+</div>
+
+</div>
+</body></html>
