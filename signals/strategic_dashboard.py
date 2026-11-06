@@ -23,6 +23,7 @@
   signals/.venv/bin/python strategic_dashboard.py --all              # 一次產 3 主題(挑風格用)
 """
 import sys, os, json, ssl, time, argparse, datetime, urllib.request, urllib.parse
+import concurrent.futures as _cf
 from collections import defaultdict
 
 TPE = datetime.timezone(datetime.timedelta(hours=8))
@@ -146,6 +147,33 @@ def rvol_daily(sym):
     avg = sum(vols[-21:-1])/20
     return (vols[-1]/avg) if avg else None
 
+def binance_equity_movers(n=10):
+    """掃全部幣安美股永續(EQUITY/TradFi)，算 5 日%(最新vs5日前日線收)，回 (漲前n, 跌前n)。
+       免維護清單——市場在炒哪個板塊一眼看出。失敗回 ([],[])。"""
+    try:
+        info = json.loads(_get("https://fapi.binance.com/fapi/v1/exchangeInfo"))
+        syms = [s["symbol"] for s in info["symbols"]
+                if s.get("underlyingType") == "EQUITY" and s.get("status") == "TRADING" and s["symbol"].endswith("USDT")]
+    except Exception as e:
+        sys.stderr.write(f"[warn] movers exchangeInfo: {e}\n"); return [], []
+    def chg5(sym):
+        try:
+            k = json.loads(_get(f"https://fapi.binance.com/fapi/v1/klines?symbol={sym}&interval=1d&limit=6"))
+            if len(k) < 6: return None
+            c0, c1 = float(k[0][4]), float(k[-1][4])
+            return (sym[:-4], (c1/c0 - 1)*100, c1) if c0 else None
+        except Exception:
+            return None
+    res = []
+    try:
+        with _cf.ThreadPoolExecutor(max_workers=16) as ex:
+            for r in ex.map(chg5, syms, timeout=45):
+                if r: res.append(r)
+    except Exception as e:
+        sys.stderr.write(f"[warn] movers klines: {e}\n")
+    res.sort(key=lambda x: x[1], reverse=True)
+    return res[:n], res[-n:][::-1]
+
 # ============================== 計分 ==============================
 def band(v, bands):
     for hi, sc in bands:
@@ -200,6 +228,7 @@ def collect(catalyst):
                          "long_chg": pct(rl["price"], rl["prev"]), "short_chg": pct(rs["price"], rs["prev"]),
                          "rvol": rvol_daily(lng)}
     d["premkt_rvol"] = premarket_rvol(); d["catalyst"] = catalyst
+    d["movers_up"], d["movers_dn"] = binance_equity_movers(10)
     return d
 
 def score_riskoff(d):
@@ -307,6 +336,9 @@ h1{font-size:1.3rem;text-align:center;letter-spacing:.5px}
 .light{background:var(--card);border-left:6px solid var(--mut);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow)}
 .lname{font-size:.8rem;color:var(--mut);font-weight:600} .lsig{font-size:1.02rem;font-weight:800;margin:3px 0} .lwhy{font-size:.76rem;color:var(--mut)}
 .foot{color:var(--mut);font-size:.72rem;margin-top:18px;border-top:1px solid var(--line);padding-top:11px;line-height:1.6}
+.ratebox{margin-top:10px;padding:11px 13px;background:var(--warnbg);border:1px solid var(--line);border-radius:10px}
+.rb-h{font-size:.8rem;font-weight:800;color:var(--accent);margin-bottom:6px}
+.rb-i{font-size:.76rem;color:var(--ink);line-height:1.6;margin:3px 0}
 """
 
 def build_style(th):
@@ -367,6 +399,14 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
                       ('BITO <span class="mut">1x BTC期貨ETF·有轉倉損耗</span>', "bito")]:
         e_rows += f'<tr><td class="g">{name}</td><td class="num">{f(d[key],dp=2) if d[key] else "N/A"}</td><td class="num">{chg_cell(d.get(key+"_chg"))}</td></tr>'
 
+    def mv_rows(lst, pos):
+        if not lst: return '<tr><td class="na" colspan="3">N/A（掃描失敗或無資料）</td></tr>'
+        cls = "up" if pos else "dn"
+        return "".join(f'<tr><td class="g">{s}</td><td class="num {cls}">{p:+.1f}%</td>'
+                       f'<td class="num">{px:g}</td></tr>' for s, p, px in lst)
+    movers_up = mv_rows(d.get("movers_up"), True)
+    movers_dn = mv_rows(d.get("movers_dn"), False)
+
     light_rows = "".join(
         f'<div class="light" style="border-left-color:{C(tok)}"><div class="lname">👉 {n}</div>'
         f'<div class="lsig" style="color:{C(tok)}">{t}</div><div class="lwhy">{w}</div></div>'
@@ -397,6 +437,14 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
     </div>
     {a_rows}
     <div class="mini" style="margin-top:8px">💡 DXY 強+殖利率飆=全球抽資金(Risk-Off)；殖利率「崩跌且股市有壓」=避險共振(仍 Risk-Off)；VXN 骨架決定 TQQQ/SOXL 會不會暴走。</div>
+    <div class="ratebox">
+      <div class="rb-h">📐 利率怎麼看、怎麼用（對槓桿 ETF）</div>
+      <div class="rb-i"><b>誰在動：</b>短端 <b>3M/2Y</b>＝Fed 政策利率（升降息）；長端 <b>10Y/30Y</b>＝市場對通膨+財政赤字+發債供給的定價（Fed 管不太到）。</div>
+      <div class="rb-i"><b>殖利率「升」</b>＝壓高估值科技 → <b>TQQQ/SOXL/NVDL 偏空、TBT 偏多</b>；長端飆(30Y)更兇＝財政/供給警訊，股債雙殺。</div>
+      <div class="rb-i"><b>殖利率「降」要分兩種</b>：① 鴿派預期(股市平靜)＝真 risk-on，科技偏多；② <b>避險崩跌(股市同時殺)＝risk-off，科技照跌、別搶反彈</b>（本表 US10Y 已用「股市壓力旗標」自動區分）。</div>
+      <div class="rb-i"><b>2s10s 曲線：</b>負=<b>倒掛</b>(衰退前兆)；由負轉正(解除倒掛)常是衰退「正要開始」；熊陡(長端升)最傷科技、牛陡(短端降)偏利多。</div>
+      <div class="rb-i"><b>一句話：</b>開盤前先看「殖利率往哪走＋股市有沒有同步壓力」→ 決定今天科技槓桿 ETF 是順勢偏空、還是鴿派可偏多；TBT 是長端利率的直接槓桿代理。</div>
+    </div>
   </div>
   <div class="card">
     <h2>B. 今日日內形態預測（看形態）</h2>
@@ -430,6 +478,17 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
     </div>
   </div>
 </div>
+
+<div class="sec">F. 幣安美股永續 5 日漲跌榜（全 196 檔 EQUITY 自動掃描 → 市場在炒哪個板塊）</div>
+<div class="grid">
+  <div class="card" style="padding:6px 18px">
+    <table class="tbl"><tr><th>📈 5 日漲幅前 10</th><th style="text-align:right">5日%</th><th style="text-align:right">現價</th></tr>{movers_up}</table>
+  </div>
+  <div class="card" style="padding:6px 18px">
+    <table class="tbl"><tr><th>📉 5 日跌幅前 10</th><th style="text-align:right">5日%</th><th style="text-align:right">現價</th></tr>{movers_dn}</table>
+  </div>
+</div>
+<div class="mini" style="margin:6px 2px 0">💡 全幣安美股永續(underlyingType=EQUITY)自動掃描、免維護清單；反向/做空VIX類ETF(SOXS/SQQQ/UVXY)衝上漲榜＝市場在避險/做空該板塊，做多槓桿ETF(SOXL/MUU/KORU)墊底＝該板塊被殺。5日%=最新vs5日前日線收。</div>
 
 <div class="foot">
   ⚠ 啟發式規則層(IF/THEN 門檻集中於程式 CONFIG、經驗權重未回測)，<b>非投資建議、不臆測你的持倉</b>。
