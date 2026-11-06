@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>市場 Regime 識別與操作 — 60 秒判定當前環境</title>
+<title>市場 Regime 識別與操作 — 60 秒初篩當前環境</title>
 <link rel="stylesheet" href="common.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -223,7 +223,7 @@
   .playbook-table { font-size: 11px; }
 }
 </style>
-  <meta name="description" content="60 秒判定當前市場環境 × 六大 Regime 對應策略 × 轉換信號捕捉 × 40 題實戰測驗">
+  <meta name="description" content="60 秒初篩當前市場環境（候選假設，非唯一判定）× 六大 Regime 對應策略 × 轉換信號捕捉 × 40 題實戰測驗">
   <link rel="canonical" href="https://hdchen-course.github.io/market-radar/education/regime_identification.html">
   <meta name="robots" content="index,follow">
 </head>
@@ -232,7 +232,7 @@
 <a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>市場 Regime 識別與操作指南</h1>
-<p class="subtitle">60 秒判定當前市場環境 &times; 六大 Regime 對應策略 &times; 轉換信號捕捉 &times; 40 題實戰測驗</p>
+<p class="subtitle">60 秒初篩當前市場環境（候選假設，非唯一判定）&times; 六大 Regime 對應思路 &times; 轉換信號捕捉 &times; 40 題實戰測驗</p>
 
 <nav class="tab-nav">
   <button class="tab-btn active" data-tab="tab1">Regime 分類</button>
@@ -245,14 +245,25 @@
 <!-- ==================== TAB 1: Regime 分類 ==================== -->
 <div class="tab-content active" id="tab1">
 <h2>六大市場 Regime</h2>
-<p>市場在任何時刻都處於某種「狀態」(Regime)。識別當前 Regime 是交易決策的第一步 — 在錯誤的環境下使用正確的策略，結果仍然是虧損。</p>
+<p>市場在任何時刻都處於某種「狀態」(Regime)。識別當前 Regime 是交易決策的參考起點 — 在錯誤的環境下使用正確的策略，結果仍然可能虧損。</p>
+
+<div class="warning-box">
+  <strong>重要：這六類並非同一層級的分類，不可並列比較。</strong>
+  <ul style="margin-top:8px; font-size:13px; line-height:1.9;">
+    <li><strong>成長軸（景氣循環）：</strong>Risk-On ↔ Risk-Off — 描述經濟成長與風險偏好的擴張／收縮。</li>
+    <li><strong>通膨軸（景氣循環）：</strong>Reflation ↔ Stagflation — 描述通膨方向與成長是否同步。</li>
+    <li><strong>流動性衝擊（事件型）：</strong>流動性危機 — 短天期、由被迫拋售驅動的系統性事件，與上面兩軸正交。</li>
+    <li><strong>長期結構敘事（非循環）：</strong>去美元化 — 這是以「年」為單位演變的國際貨幣體系敘事，<strong>無法由單週、更不可能由單日的價格走勢唯一識別</strong>，也不是可以和前五者「60 秒二選一」的同級選項。把它和前幾類並列只是為了教學對照，實際判讀時它屬於另一個時間維度。</li>
+  </ul>
+  <p style="margin-top:8px; font-size:13px;">以下各卡片列出的「關鍵指標」與數字界線，都是<strong>常見示例、不是普遍適用的分類器</strong>。同一組價格在不同宏觀背景下可能對應完全不同的狀態，務必搭配基本面與多重確認，不可只憑單一門檻下結論。</p>
+</div>
 
 <!-- 1. Risk-On -->
 <div class="regime-card regime-riskon">
   <h3>1. Risk-On / 擴張期</h3>
   <p><strong>定義：</strong>經濟成長加速、信用擴張、市場情緒樂觀。投資者追逐高風險高回報資產，波動率壓縮，融資成本低廉。</p>
   <p><strong>核心驅動：</strong>央行寬鬆政策 + GDP 加速成長 + 企業獲利上修 + 低失業率</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
     <li>VIX &lt; 16，且持續下行</li>
     <li>高收益債利差收窄（HYG/LQD 比率上升）</li>
@@ -280,7 +291,7 @@
   <h3>2. Risk-Off / 衰退恐慌</h3>
   <p><strong>定義：</strong>經濟放緩或衰退預期升溫，投資者拋售風險資產、湧入避險資產。信用利差擴大，波動率飆升。</p>
   <p><strong>核心驅動：</strong>GDP 下修 + 失業率攀升 + 企業獲利下修 + 殖利率曲線倒掛後回正</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
     <li>VIX > 25，且快速攀升</li>
     <li>2Y-10Y 利差回正或急速變化</li>
@@ -308,7 +319,7 @@
   <h3>3. 再通膨 / Reflation</h3>
   <p><strong>定義：</strong>經濟從衰退底部復甦，通膨預期回升但尚未過熱。央行維持寬鬆，名目 GDP 成長加速。這是最「甜蜜」的 Regime。</p>
   <p><strong>核心驅動：</strong>財政刺激 + 貨幣寬鬆 + 庫存回補週期 + 通膨預期從低位回升</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
     <li>TIPS 隱含通膨預期上升（BEI 從低位回升）</li>
     <li>銅價突破上行 + 原油回升</li>
@@ -336,7 +347,7 @@
   <h3>4. 停滯性通膨 / Stagflation</h3>
   <p><strong>定義：</strong>經濟成長停滯但通膨居高不下。央行陷入兩難 — 升息壓通膨會傷經濟，降息救經濟會推高通膨。最惡劣的市場環境。</p>
   <p><strong>核心驅動：</strong>供應端衝擊（能源危機/供應鏈斷裂/關稅戰）+ 需求放緩 + 工資物價螺旋</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
     <li>CPI 居高不下（> 4%）且具黏性</li>
     <li>GDP 放緩或萎縮</li>
@@ -355,7 +366,7 @@
     </div>
   </div>
   <div class="warning-box">
-    <strong>陷阱：</strong>在停滯性通膨中，「黃金漲但白銀跌」是關鍵辨識訊號。白銀有 50% 工業需求，經濟放緩時白銀受壓，但黃金的避險屬性使其上漲。金銀比 > 85 通常暗示 Stagflation。
+    <strong>常見現象（非專屬訊號）：</strong>在停滯性通膨中，常見「黃金相對強、白銀相對弱」。白銀約有一半需求來自工業，經濟放緩時工業需求受壓，而黃金的避險屬性相對有支撐，因此金銀比常走高。<strong>但要注意：金銀比偏高並非 Stagflation 專屬</strong> — 在通縮、純衰退恐慌或流動性危機（白銀被當作高 beta 商品一起拋售）時，金銀比同樣可能升到很高。因此高金銀比只能當作「工業需求相對疲弱」的線索，不能單獨拿來斷定 Stagflation。
   </div>
   <div class="highlight-box">
     <strong>典型時期：</strong>2022 H1（俄烏戰爭+通膨飆升）、1974-1975；2025 Q2-Q3（關稅戰+通膨回升）為<strong>假設情境／示意</strong>，非既定歷史結論
@@ -365,29 +376,29 @@
 <!-- 5. Liquidity Crisis -->
 <div class="regime-card regime-liquidity">
   <h3>5. 流動性危機 / Liquidity Crisis</h3>
-  <p><strong>定義：</strong>金融系統信用收縮、流動性枯竭。所有資產被迫性拋售（forced selling）。相關性趨近 1 — 除了美元現金，一切下跌。</p>
+  <p><strong>定義：</strong>金融系統信用收縮、流動性枯竭，風險資產出現被迫性拋售（forced selling），資產間相關性趨近 1。<strong>但「一切下跌」是過度簡化：</strong>危機中資金往往同時湧向最安全的美元與短天期美國公債（避風港買盤），因此短債常上漲而非下跌；長天期公債則視情況而定 — 2020 年 3 月下旬曾因基差交易去槓桿、搶現金而短暫被拋售，但 2023 年 3 月矽谷銀行（SVB）事件期間，美國公債反而大漲（避險需求壓倒一切）。真正會與股票一起被拋售的，主要是黃金、信用債、新興市場等「次級流動性」資產。</p>
   <p><strong>核心驅動：</strong>銀行/基金暴雷 + 追繳保證金（margin call）+ 贖回潮 + 信用凍結 + 央行反應遲緩</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
-    <li>VIX > 40（可能 > 60）</li>
+    <li>VIX 極端高位（示意：常見 > 40，有時 > 60）</li>
     <li>TED Spread 或 FRA-OIS Spread 急升</li>
-    <li>黃金與股票同時下跌（流動性殺）</li>
+    <li>黃金也與股票同時下跌（流動性殺）</li>
     <li>美元急升（美元荒、搶現金）</li>
     <li>公司債利差爆炸性擴大</li>
-    <li>BTC 與 SPX 相關性急升至 0.8+</li>
+    <li>BTC 與 SPX 相關性急升（示意：可達 0.8 以上）</li>
   </ul>
   <div class="asset-grid">
     <div class="asset-up">
-      <strong>表現好的資產：</strong><br>
-      美元現金、短天期國庫券（T-Bills）、逆回購（RRP）— 幾乎只有現金安全
+      <strong>相對抗跌的資產：</strong><br>
+      美元現金、短天期國庫券（T-Bills）；有時長天期公債也因避險買盤上漲（如 2023 SVB）。<br><span style="font-size:11px; color:var(--text3);">※ 逆回購（RRP）是 Fed 與貨幣市場基金／交易商之間的工具，一般散戶無法直接買賣，請改用貨幣市場基金或 T-Bills ETF 等可及替代品。</span>
     </div>
     <div class="asset-down">
-      <strong>表現差的資產：</strong><br>
-      一切風險資產：股票、債券（含國債）、黃金、加密、商品 — 全部被拋售換取現金
+      <strong>相對易被拋售的資產：</strong><br>
+      股票、信用債（高收益／投資級）、黃金、加密、商品、新興市場 — 被拋售換取現金。<span style="font-size:11px; color:var(--text3);">（國庫券／長債未必同向，見上方定義說明）</span>
     </div>
   </div>
   <div class="warning-box">
-    <strong>關鍵辨識：</strong>當你看到「黃金也在跌」時，這不再是普通的 Risk-Off — 這是流動性危機。正常 Risk-Off 中黃金上漲；流動性危機中黃金被拋售套現。2020/3/12-3/19 是教科書級案例：SPX -12%、黃金 -5%、BTC -40%。
+    <strong>辨識線索（非充分必要條件）：</strong>「黃金也在跌」是從普通 Risk-Off 升級為流動性壓力的<strong>線索之一</strong>，但不是唯一判準 — 黃金下跌也可能只是獲利了結、倉位調整或單純的通縮預期。要判定流動性危機，應同時看到資金搶美元現金、信用利差爆開、短債殖利率與風險資產背離等多重證據。2020/3 中旬曾出現 SPX、黃金、BTC 同步重挫的典型期間，可作為對照案例，但單一資產的方向不足以下定論。
   </div>
   <div class="highlight-box">
     <strong>典型時期：</strong>2020 年 3 月 9-23 日、2008 年 10 月、2023 年 3 月（SVB 危機短暫版）
@@ -397,20 +408,21 @@
 <!-- 6. De-dollarization -->
 <div class="regime-card regime-dedollar">
   <h3>6. 去美元化 / De-dollarization</h3>
-  <p><strong>定義：</strong>美元作為全球儲備貨幣的地位受到挑戰。資金從美元資產流出，轉向替代儲備（黃金、人民幣、加密貨幣）。</p>
-  <p><strong>核心驅動：</strong>地緣政治對抗 + 美國財政赤字惡化 + 外國央行減持美債 + BRICS 結算體系崛起 + 制裁武器化反噬</p>
-  <p><strong>關鍵指標：</strong></p>
+  <p><strong>定義：</strong>美元作為全球儲備貨幣的主導地位，在「多年、結構性」尺度上逐步受到挑戰。官方外匯儲備與跨境結算中美元佔比下降，部分資金轉向其他儲備資產（主要是黃金與其他主權貨幣）。<strong>這是長期敘事，不是可由單週價格確認的循環狀態（見本頁最上方分層說明）。</strong></p>
+  <p><strong>核心驅動：</strong>地緣政治對抗 + 美國財政赤字惡化 + 外國央行減持美債 + 替代結算機制發展 + 制裁武器化的反效果</p>
+  <p style="font-size:12px; color:var(--text3);">※ 黃金確實是各國央行實際增持的官方儲備；但 <strong>BTC／ETH 目前並非主要央行的官方儲備資產</strong>，把加密貨幣稱為「官方美元替代品」並不符合現況，頂多是民間層面的投機性對沖。</p>
+  <p><strong>常見示例指標（非普遍分類器，數字僅為示意門檻）：</strong></p>
   <ul>
-    <li>DXY 持續走弱且無央行政策支撐</li>
-    <li>黃金持續創新高（央行購金）</li>
-    <li>美國國債被外國拋售（TIC 數據）</li>
-    <li>長端殖利率上升但美元同時走弱（非典型）</li>
-    <li>BTC 與黃金同漲但美元下跌</li>
+    <li><strong>官方數據（最關鍵、慢變量）：</strong>IMF COFER 儲備幣別佔比、TIC 外國持有美債趨勢 — 這些才是結構性證據</li>
+    <li>各國央行連續多年、跨多國增持黃金</li>
+    <li>DXY 長期（數季以上）走弱且無法用利差／景氣循環完全解釋</li>
+    <li>長端殖利率上升但美元同時走弱（與一般利差邏輯相反）</li>
   </ul>
+  <p style="font-size:12px; color:var(--text3); margin-top:-4px;">⚠️ 僅憑「DXY 走弱 + 黃金／BTC 上漲」<strong>不能證明去美元化</strong>：這組合同樣可由 Fed 轉鴿、實質利率下行、Reflation 或單純風險偏好回升造成。要從「週期性弱美元」中區分出「結構性去美元化」，必須回到上述官方儲備數據的多年趨勢。</p>
   <div class="asset-grid">
     <div class="asset-up">
-      <strong>表現好的資產：</strong><br>
-      黃金、白銀、BTC/ETH、非美貨幣、大宗商品（以美元計價商品受益於美元走弱）、新興市場
+      <strong>此敘事下常被討論、相對受惠的資產：</strong><br>
+      黃金（央行實際增持，支撐最扎實）、非美主權貨幣、大宗商品（以美元計價者受惠於美元走弱）、新興市場；白銀與 BTC/ETH 常被民間當作對沖，但波動大、且非官方儲備，不應視為同等級的「美元替代品」
     </div>
     <div class="asset-down">
       <strong>表現差的資產：</strong><br>
@@ -430,8 +442,17 @@
 
 <!-- ==================== TAB 2: 快速判定法 ==================== -->
 <div class="tab-content" id="tab2">
-<h2>60 秒 Regime 快速判定法</h2>
-<p>只需要 4 個指標，60 秒內判定當前市場 Regime。</p>
+<h2>60 秒 Regime 快速「初篩」法</h2>
+<p>這套流程用 4 個指標，在 60 秒內產生一個<strong>候選解釋（working hypothesis）</strong>，幫你縮小方向、知道接下來該查什麼 — 它<strong>不是、也不可能是</strong>對當前宏觀狀態的唯一正確判定。</p>
+
+<div class="warning-box">
+  <strong>為什麼不能只用四個價格「唯一識別」Regime？</strong>
+  <ul style="margin-top:8px; font-size:13px; line-height:1.9;">
+    <li>所有流動性好的市場幾乎<strong>同步</strong>反映新資訊，沒有哪個資產能在 60 秒內提供「獨家、唯一」的宏觀答案。</li>
+    <li>同一組價格（例如「股跌、金漲、美元漲」）在不同背景下可對應多種狀態，單日快照無法分辨是雜訊、單一事件，還是真正的狀態轉換。</li>
+    <li>因此下面每一條分支的結果都應讀作「<strong>候選解釋</strong>」，後面都附上「還需檢查的資料」。真正下結論前，請完成那些查核並觀察 3–5 天趨勢。</li>
+  </ul>
+</div>
 
 <div class="cheat-sheet">
   <h3>一分鐘 Regime 判定 — 只看 4 個數據</h3>
@@ -453,7 +474,7 @@
   </div>
 </div>
 
-<h3 style="margin-top:24px;">決策樹流程圖</h3>
+<h3 style="margin-top:24px;">初篩決策樹（產生候選解釋，非最終判定）</h3>
 <div class="flowchart">
   <div class="step" style="background:var(--blue-l); border-color:var(--blue);">
     <strong>Step 1：VIX 在什麼水平？</strong>
@@ -476,20 +497,23 @@
   <div class="arrow">&#x2193;</div>
   <div class="step" style="background:var(--green-l); border-color:var(--green);">
     <strong>Step 2A（VIX &lt; 16）：</strong>DXY 方向？<br>
-    DXY 下行 + 銅漲 → <strong style="color:var(--green);">Risk-On</strong><br>
-    DXY 下行 + 黃金漲 → <strong style="color:var(--yellow);">De-dollarization</strong><br>
-    DXY 上行 + 債券殖利率升 → <strong style="color:var(--orange);">Reflation 晚期</strong>
+    DXY 下行 + 銅漲 → <strong style="color:var(--green);">候選：Risk-On</strong><br>
+    DXY 下行 + 黃金漲 → <strong style="color:var(--yellow);">候選：弱美元／可能牽涉去美元化</strong><br>
+    DXY 上行 + 債券殖利率升 → <strong style="color:var(--orange);">候選：Reflation 晚期</strong><br>
+    <span style="font-size:11px; color:var(--text3);">還需檢查：信用利差方向、3–5 天趨勢是否延續；「金漲」若要連到去美元化，須另查 IMF COFER／TIC 官方數據，單日不算。</span>
   </div>
   <div class="step" style="background:var(--yellow-l); border-color:var(--yellow);">
     <strong>Step 2B（VIX 16-35）：</strong>Gold/Copper 比率方向？<br>
-    金銅比上升 + 殖利率下行 → <strong style="color:var(--red);">Risk-Off</strong><br>
-    金銅比上升 + 殖利率上行 → <strong style="color:var(--purple);">Stagflation</strong><br>
-    金銅比下降 + DXY 弱 → <strong style="color:var(--orange);">Reflation</strong>
+    金銅比上升 + 殖利率下行 → <strong style="color:var(--red);">候選：Risk-Off</strong><br>
+    金銅比上升 + 殖利率上行 → <strong style="color:var(--purple);">候選：Stagflation</strong><br>
+    金銅比下降 + DXY 弱 → <strong style="color:var(--orange);">候選：Reflation</strong><br>
+    <span style="font-size:11px; color:var(--text3);">還需檢查：CPI／通膨預期實際方向、油與銅是否背離；高金銅比也可能來自通縮或流動性壓力，非 Stagflation 專屬。</span>
   </div>
   <div class="step" style="background:var(--red-l); border-color:var(--red);">
     <strong>Step 2C（VIX &gt; 35）：</strong>黃金在漲還是跌？<br>
-    黃金上漲 → <strong style="color:var(--red);">嚴重 Risk-Off</strong>（避險資金湧入）<br>
-    黃金下跌 + DXY 飆升 → <strong style="color:#0f172a;">流動性危機</strong>（一切換現金）
+    黃金上漲 → <strong style="color:var(--red);">候選：嚴重 Risk-Off</strong>（避險資金湧入）<br>
+    黃金下跌 + DXY 飆升 → <strong style="color:#0f172a;">候選：流動性危機</strong><br>
+    <span style="font-size:11px; color:var(--text3);">還需檢查：TED／FRA-OIS 利差、信用債 bid-ask、短債是否反而獲得避險買盤 — 黃金方向只是線索之一，不足單獨定論。</span>
   </div>
 </div>
 
@@ -556,11 +580,11 @@
     <td class="cell-down">&#9660;&#9660;</td>
     <td class="cell-down">&#9660;</td>
     <td class="cell-up">&#9650;&#9650;</td>
-    <td class="cell-up">&#9650;</td>
+    <td class="cell-flat">&#9644;</td>
     <td class="cell-down">&#9660;&#9660;</td>
     <td class="cell-down">&#9660;&#9660;</td>
     <td class="cell-down">&#9660;</td>
-    <td class="cell-down">&#9660;</td>
+    <td class="cell-flat">&#9644;</td>
   </tr>
   <tr>
     <th>去美元化</th>
@@ -575,15 +599,15 @@
   </tr>
 </table>
 </div>
-<p style="font-size:12px; color:var(--text3);">&#9650; = 上漲 / &#9660; = 下跌 / &#9644; = 持平或不確定 / 雙箭頭 = 強烈反應</p>
+<p style="font-size:12px; color:var(--text3);">&#9650; = 上漲 / &#9660; = 下跌 / &#9644; = 持平或不確定 / 雙箭頭 = 強烈反應。<strong>此表為「典型傾向」的教學示意，不是確定規則</strong>：實際走勢常偏離，例如流動性危機中長天期公債（10Y／TLT）可能因避險買盤上漲、也可能因去槓桿被拋售（故標為不確定），須以當下的信用利差與資金流向為準。</p>
 
 <h3 style="margin-top:24px;">組合信號速查</h3>
 <div class="card">
   <table class="playbook-table">
     <tr>
       <th>觀察到的組合</th>
-      <th>判定 Regime</th>
-      <th>把握度（定性）</th>
+      <th>候選 Regime（待確認）</th>
+      <th>訊號一致性（定性）</th>
     </tr>
     <tr>
       <td>SPX 漲 + Gold 跌 + DXY 跌 + Copper 漲</td>
@@ -645,56 +669,52 @@
 <h2>Regime 操作手冊</h2>
 <p>識別 Regime 後的具體交易策略：該買什麼、該賣什麼、部位大小、以及 SuperTrend 週期選擇。</p>
 
-<h3>完整 Regime Playbook</h3>
+<h3>完整 Regime Playbook（教學示意，非投資建議）</h3>
+<div class="warning-box">
+  <strong>此表只列出「各環境下常被討論的資產方向」，不提供任何部位比例或配置建議。</strong>原始版本曾標示「某環境下重押 80–100% 週期股」「黃金 20–30%、BTC 10–15%」等具體配置數字，這類內容屬於高風險的資產配置建議、且缺乏個人風險承受度與回測依據，已全部移除。實際部位大小、現金比重與是否進場，應由你自己依風險承受度、資金狀況與獨立回測決定。
+</div>
 <div style="overflow-x:auto;">
 <table class="playbook-table">
   <tr>
     <th>Regime</th>
-    <th>做多標的</th>
-    <th>做空/迴避</th>
-    <th>部位大小</th>
+    <th>此環境常偏多的方向</th>
+    <th>此環境常偏弱／宜迴避</th>
     <th>SuperTrend 參考</th>
   </tr>
   <tr>
     <td><strong style="color:var(--green);">Risk-On</strong></td>
     <td>QQQ, SPY, SOXX, BTC, ETH, EEM</td>
     <td>TLT, GLD, VIX calls</td>
-    <td>全額部位（80-100%）<br>以未槓桿現貨/ETF 為主</td>
     <td>4H / Daily SuperTrend<br>趨勢明確，跟長線</td>
   </tr>
   <tr>
     <td><strong style="color:var(--red);">Risk-Off</strong></td>
-    <td>TLT, GLD, VIX calls, 現金, 日圓 long<br><span style="font-size:11px; color:var(--text3);">※ 白銀（SLV）在純衰退恐慌中通常弱於黃金（工業需求受壓），僅在 Reflation／去美元化這類偏工業需求或弱美元的環境才適合做多</span></td>
+    <td>TLT, GLD, VIX calls, 現金, 日圓 long<br><span style="font-size:11px; color:var(--text3);">※ 白銀（SLV）在純衰退恐慌中通常弱於黃金（工業需求受壓），偏向在 Reflation／弱美元環境才相對有利</span></td>
     <td>SPY, QQQ, HYG, EEM, 銅</td>
-    <td>中等部位（50-70%）<br>避險部位加大</td>
     <td>Daily / Weekly SuperTrend<br>趨勢追蹤為主</td>
   </tr>
   <tr>
     <td><strong style="color:var(--orange);">Reflation</strong></td>
     <td>XLE, XLF, COPX, SLV, IWM, EEM, BTC, Oil futures</td>
     <td>TLT, 美元多頭, 科技超大型股</td>
-    <td>全額（80-100%）<br>週期股重倉</td>
     <td>Daily SuperTrend<br>均值回歸+趨勢混合</td>
   </tr>
   <tr>
     <td><strong style="color:var(--purple);">Stagflation</strong></td>
     <td>GLD, XLE, 能源股, TIPS, 農產品, 現金</td>
     <td>QQQ, TLT, SLV, 非必需消費, 小型成長股</td>
-    <td>保守（40-60%）<br>現金比重高</td>
     <td>Weekly SuperTrend only<br>短線雜訊多，只信長線</td>
   </tr>
   <tr>
     <td><strong>流動性危機</strong></td>
-    <td>現金（T-Bills）、極短期國庫券<br>危機末期抄底用 call options</td>
+    <td>現金（T-Bills）、極短期國庫券</td>
     <td>一切風險資產<br><span style="font-size:11px; color:var(--text3);">（散戶不建議放空：危機末段央行常暴力介入造成 V 型反轉、戀空易被軋，加上流動性差、放空成本高、借券可能被召回，風險報酬不佳）</span></td>
-    <td>最小化（20-30%）<br>90% 現金</td>
     <td>不看 SuperTrend<br>技術指標全部失效</td>
   </tr>
   <tr>
     <td><strong style="color:var(--yellow);">去美元化</strong></td>
-    <td>GLD, SLV, BTC, 商品（CRB index）, 非美貨幣 long, EEM</td>
+    <td>GLD, 非美貨幣 long, 商品（CRB index）, EEM<br><span style="font-size:11px; color:var(--text3);">（SLV／BTC 常被民間當對沖，但波動大且非官方儲備）</span></td>
     <td>UUP（美元多頭ETF）, 長天期美國國債</td>
-    <td>中偏高（60-80%）<br>分散於黃金+加密+商品</td>
     <td>Weekly SuperTrend<br>結構性趨勢，看週線</td>
   </tr>
 </table>
@@ -709,7 +729,7 @@
     <li><strong>能源股 > 能源商品</strong> — 能源股有股息保護，且公司可轉嫁成本</li>
     <li><strong>避開科技股</strong> — 高估值+利率上升+需求放緩 = 三殺</li>
     <li><strong>TIPS 優於名目國債</strong> — 實質利率下行對 TIPS 有利</li>
-    <li><strong>現金為王</strong> — 保留 30-40% 現金等待 Regime 轉換</li>
+    <li><strong>現金的角色提升</strong> — 此環境報酬機會少、波動大，提高現金與短債比重以保留彈性是常見做法（比例由個人風險承受度決定，本頁不給具體數字）</li>
     <li><strong>農產品值得關注</strong> — 食品通膨是 Stagflation 的重要組成</li>
   </ul>
 </div>
@@ -717,12 +737,12 @@
 <div class="regime-card regime-liquidity">
   <h3>流動性危機操作要點</h3>
   <ul style="font-size:14px; line-height:2;">
-    <li><strong>一切都在跌，包括避險資產</strong> — 唯一安全的是現金</li>
+    <li><strong>連避險資產都可能被拋售</strong> — 黃金、信用債常一起跌；現金與短債相對抗跌（長債未必，視避險買盤 vs 去槓桿而定）</li>
     <li><strong>不要做空</strong> — 流動性危機中做空看似正確但會被暴力軋空（short squeeze）</li>
-    <li><strong>不要抄底</strong> — 等 VIX 從高峰回落 20% 以上再考慮</li>
-    <li><strong>觀察 Fed 反應</strong> — 一旦 Fed 啟動緊急工具（如 2020 無限 QE），是結束信號</li>
-    <li><strong>危機末期：用 OTM call options 抄底</strong> — 有限風險、無限收益</li>
-    <li><strong>關注信用市場</strong> — HYG-LQD spread 開始收窄 = 危機見頂</li>
+    <li><strong>不要急著抄底</strong> — 等 VIX 從高峰明顯回落、信用利差停止擴大再考慮（「回落 20%」只是經驗參考，非固定門檻）</li>
+    <li><strong>觀察 Fed 反應</strong> — 央行啟動緊急工具（如 2020 無限 QE）常伴隨市場落底，但這是「事後看到的一次巧合級案例」，不是每次危機都會在央行出手當下見底的普遍規則（見 tab4 更正說明）</li>
+    <li><strong>關於「危機末期用選擇權抄底」的提醒</strong> — 坊間常說買 OTM call「最大損失有限、上漲無限」。最大損失（權利金）確實有限，<strong>但這不等於期望值好</strong>：危機末段隱含波動率（IV）極高，選擇權很貴，又有時間價值流失與到期歸零風險，買太遠價外的 call 很可能全額虧光。這是高風險工具，不應被當成「穩賺的抄底法」，散戶尤其需謹慎或避免。</li>
+    <li><strong>關注信用市場</strong> — HYG／LQD 利差開始收窄，常是壓力緩解的線索之一</li>
   </ul>
 </div>
 
@@ -731,7 +751,7 @@
   <ul style="font-size:14px; line-height:2;">
     <li><strong>成長股 > 價值股</strong> — Risk-On 環境下市場獎勵增長速度</li>
     <li><strong>不要做空</strong> — 趨勢清晰時做空是自殺行為</li>
-    <li><strong>回調買入（要有紀律）</strong> — 每次 5-8% 回調可視為加倉點，但<strong>必須先設好失效價（invalidation）與總曝險上限</strong>：例如以 SuperTrend（Daily/Weekly）翻空、或指數跌破前一波段低點/關鍵均線（如 200MA）作為「Regime 已失效、停止加倉並減碼」的客觀依據；同時設定股票總曝險上限（例如不超過淨值的 80-100%，不加槓桿），避免在假突破中越攤越大</li>
+    <li><strong>回調買入（要有紀律）</strong> — 把回調視為加倉點前，<strong>必須先設好失效價（invalidation）與自訂的總曝險上限</strong>：例如以 SuperTrend（Daily/Weekly）翻空、或指數跌破前一波段低點/關鍵均線（如 200MA）作為「Regime 已失效、停止加倉並減碼」的客觀依據；總曝險上限多少由個人風險承受度決定（本頁不給具體百分比），重點是不加槓桿、避免在假突破中越攤越大</li>
     <li><strong>用 SuperTrend 4H 追蹤</strong> — 在明確上升趨勢中，4H SuperTrend 給出良好的入場時機</li>
     <li><strong>不建議用槓桿放大部位</strong> — 對上班族散戶而言，資本保全優先。與其借錢或用槓桿 ETF 放大，不如控制單一部位大小、保留現金；即使趨勢明確，槓桿也會在任何一次假突破中放大虧損</li>
     <li><strong>監控 VIX 曲線</strong> — 當 VIX 期貨從 contango 轉為 backwardation，Risk-On 可能結束</li>
@@ -741,9 +761,9 @@
 <div class="regime-card regime-dedollar">
   <h3>去美元化操作要點</h3>
   <ul style="font-size:14px; line-height:2;">
-    <li><strong>黃金是核心持倉</strong> — 央行購金提供結構性支撐，20-30% 配置</li>
-    <li><strong>BTC 作為「數位黃金」</strong> — 在此 Regime 中 BTC 與黃金正相關，10-15% 配置</li>
-    <li><strong>做空美元（UUP put / 做多 EUR/GBP）</strong> — 結構性美元弱勢</li>
+    <li><strong>黃金的角色較核心</strong> — 央行實際增持提供結構性支撐，是此敘事下證據最扎實的受惠資產（配置比例由個人決定，本頁不給數字）</li>
+    <li><strong>BTC 常被當作「數位對沖」</strong> — 民間敘事會把 BTC 連到黃金，但 BTC 並非官方儲備、波動極大，不應視為同等級的美元替代品，更不建議重押</li>
+    <li><strong>做空美元（UUP put / 做多 EUR/GBP）</strong> — 須先確認是結構性（官方儲備數據）而非僅週期性弱美元</li>
     <li><strong>大宗商品受益</strong> — 以美元計價的商品在美元走弱時自然升值</li>
     <li><strong>新興市場機會</strong> — 美元走弱解除新興市場壓力</li>
     <li><strong>長線思維</strong> — 去美元化是多年趨勢，不要因短期反彈而放棄部位</li>
@@ -797,60 +817,33 @@
 <!-- ==================== TAB 4: 轉換信號 ==================== -->
 <div class="tab-content" id="tab4">
 <h2>Regime 轉換信號</h2>
-<p>捕捉 Regime 轉換的早期信號是超額利潤的來源。這裡教你哪些指標最先變化、變化的順序、以及如何區分假信號。</p>
+<p>捕捉 Regime 轉換的早期信號，重點在於分辨「即時反映預期的金融市場價格」與「定期、落後發布的經濟數據」這兩類資訊。</p>
 
-<h3>指標反應順序（從快到慢）</h3>
+<h3>市場價格 vs 經濟數據：真正有意義的時間差</h3>
+<div class="warning-box">
+  <strong>更正一個常見迷思：</strong>坊間常說「信用市場領先股市 1–3 天、外匯領先 2–5 天、股市因散戶為主所以反應最慢 5–20 天」。<strong>這種「各市場固定領先幾天」的說法並不正確。</strong>VIX、信用利差、匯率、公債殖利率、商品、股指期貨都是流動性高的市場，會<strong>近乎同步（同一秒到同一分鐘）</strong>反映同一則新資訊；股市也早已由機構與演算法主導，並非「散戶為主、反應最慢」。真正穩定存在的時間差，是在「所有金融市場價格（即時）」與「經濟數據（GDP／就業等，落後數週到數月才公布）」之間。</div>
 <div class="card">
   <table class="playbook-table">
     <tr>
-      <th>反應速度</th>
-      <th>指標</th>
-      <th>領先時間</th>
+      <th>類別</th>
+      <th>代表指標</th>
+      <th>反映速度</th>
       <th>解讀</th>
     </tr>
     <tr>
-      <td><strong>最快</strong></td>
-      <td>VIX / 選擇權隱含波動率</td>
-      <td>即時</td>
-      <td>市場情緒的即時溫度計，第一個轉向</td>
+      <td><strong>即時金融市場價格</strong></td>
+      <td>VIX／選擇權 IV、信用利差、匯率（DXY／JPY）、公債殖利率、黃金／銅／商品、股指（SPX／QQQ）</td>
+      <td>近乎同步（秒～分鐘級）</td>
+      <td>這些市場都即時定價，不存在彼此之間「固定領先幾天」的可靠順序；偶爾看到的先後，多是個別事件下的雜訊，無法事前當作穩定規則。</td>
     </tr>
     <tr>
-      <td><strong>很快</strong></td>
-      <td>高收益債利差 / 信用市場</td>
-      <td>1-3 天</td>
-      <td>聰明錢最先在信用市場反應</td>
-    </tr>
-    <tr>
-      <td><strong>快</strong></td>
-      <td>匯率（DXY / JPY）</td>
-      <td>2-5 天</td>
-      <td>外匯市場流動性最大，快速反映預期</td>
-    </tr>
-    <tr>
-      <td><strong>中等</strong></td>
-      <td>債券殖利率曲線</td>
-      <td>3-10 天</td>
-      <td>利率預期的調整，領先股市</td>
-    </tr>
-    <tr>
-      <td><strong>中等</strong></td>
-      <td>黃金 / 銅 / 商品</td>
-      <td>5-15 天</td>
-      <td>實體經濟預期的反映</td>
-    </tr>
-    <tr>
-      <td><strong>較慢</strong></td>
-      <td>股市（SPX / QQQ）</td>
-      <td>5-20 天</td>
-      <td>散戶為主的市場反應最慢</td>
-    </tr>
-    <tr>
-      <td><strong>最慢</strong></td>
-      <td>經濟數據（GDP / 就業）</td>
-      <td>1-3 個月</td>
-      <td>確認信號，但市場早已 price in</td>
+      <td><strong>落後的經濟數據</strong></td>
+      <td>GDP、非農就業、CPI 等官方統計</td>
+      <td>落後數週至 1–3 個月</td>
+      <td>定期才公布，且發布時市場價格通常早已反映預期；多作為事後「確認」而非領先信號。</td>
     </tr>
   </table>
+  <p style="font-size:12px; color:var(--text3); margin-top:12px;">※ 若真要談差異，比較務實的說法是「不同市場對同一事件的<strong>敏感度／訊噪比</strong>不同」（例如信用利差對系統性風險特別敏感），而不是「誰比誰早幾天反應」。任何關於領先時間的具體數字都需自行以歷史資料驗證。</p>
 </div>
 
 <h3 style="margin-top:24px;">關鍵轉換路徑與信號</h3>
@@ -881,7 +874,7 @@
     <li><strong>第 5 步：</strong>國債也開始被拋售（不再是避風港）→ 流動性危機確認</li>
   </ol>
   <div class="highlight-box">
-    <strong>關鍵判定點：</strong>「黃金從漲轉跌」是 Risk-Off 升級為流動性危機的分界線。只要黃金還在漲，就還在 Risk-Off 範圍內。
+    <strong>判定線索（非充分必要條件）：</strong>「黃金從漲轉跌」常是 Risk-Off 升級為流動性壓力的<strong>線索之一</strong>，但不是嚴格的分界線 — 黃金下跌也可能只是獲利了結或通縮預期，而真正的流動性危機也可能在黃金尚未明顯轉跌前，就先從信用利差爆開、搶美元現金等處顯現。切勿把單一資產方向當成唯一開關，要多重證據交叉確認。
   </div>
 </div>
 
@@ -896,7 +889,7 @@
     <li><strong>第 5 步：</strong>股市觸底反彈，形成 V 型底 → 新一輪 Risk-On 啟動</li>
   </ol>
   <div class="success-box">
-    <strong>交易機會：</strong>從流動性危機轉向 Risk-On 是 10 年一遇的超級買點。2020/3/23 後 SPX 在 12 個月內上漲 80%。關鍵是央行行動的果斷程度。
+    <strong>交易機會與重要但書：</strong>2020 年 3 月下旬 Fed 宣布無限 QE 後，市場確實出現強勁反彈（SPX 自 3/23 低點起算約一年漲約 7–8 成）。但<strong>這是「事後看到的一次成功案例」，不能當成「央行一出手就見底」的普遍規則</strong> — 2008 年 Fed 多次出手後市場仍續跌數月才落底，央行行動的「規模、速度與可信度」以及當時的估值與槓桿狀況都會影響結果。把任何單一歷史巧合當成必然訊號，是後見之明偏誤。
   </div>
 </div>
 
@@ -912,7 +905,7 @@
   </ol>
 </div>
 
-<h3 style="margin-top:24px;">歷史 Regime 時間軸（2020-2026）</h3>
+<h3 style="margin-top:24px;">歷史 Regime 時間軸（2020-2024，教學用簡化標註）</h3>
 <div class="timeline-container">
 <div class="timeline">
   <div class="timeline-block" style="width:6%; background:#0f172a;">
@@ -947,21 +940,13 @@
     SVB
     <span>2023.3</span>
   </div>
-  <div class="timeline-block" style="width:10%; background:var(--green);">
+  <div class="timeline-block" style="width:16%; background:var(--green);">
     Risk-On<br>(AI)
-    <span>2024.1-10</span>
-  </div>
-  <div class="timeline-block" style="width:6%; background:var(--yellow);">
-    去美元化<br>(示意)
-    <span>2025.1-3</span>
-  </div>
-  <div class="timeline-block" style="width:8%; background:var(--purple);">
-    Stagflation<br>(示意)
-    <span>2025.4~</span>
+    <span>2024 全年</span>
   </div>
 </div>
 </div>
-<p style="font-size:11px; color:var(--text3); margin-top:8px;">* 時間軸為簡化版，實際轉換有重疊期。SVB 危機為短暫流動性事件，在 Fed 快速介入後回歸 Risk-On。<strong>標示「示意」的 2025 年區段為假設情境，用於說明 Regime 演變邏輯，並非對該期間市場的既定歷史判定。</strong></p>
+<p style="font-size:11px; color:var(--text3); margin-top:8px;">* 時間軸為教學用簡化標註，Regime 界線屬編輯判斷、實際轉換有重疊期，各時點的分類仍應自行查證。SVB 危機為短暫流動性事件，在 Fed 快速介入後回歸 Risk-On。<strong>本時間軸僅標註至 2024 年；2025 年之後的市場狀態不在此做既定歷史判定（原先以「示意／假設」標註 2025 的區段已移除，以免與實際時序混淆）。</strong></p>
 
 <h3 style="margin-top:24px;">歷史案例深度解析</h3>
 
@@ -969,13 +954,14 @@
   <h4 style="color:var(--red);">案例 1：2020 年 3 月流動性危機</h4>
   <p style="font-size:13px; line-height:1.7;">
     <strong>背景：</strong>COVID-19 全球爆發，各國封城<br>
-    <strong>轉換路徑：</strong>Risk-On (2020.1) → Risk-Off (2020.2) → 流動性危機 (2020.3.9-3.23) → Reflation (2020.3.24起)<br>
+    <strong>轉換路徑：</strong>Risk-On (2020.1) → Risk-Off (2020.2) → 流動性危機 (2020.3.9-3.23) → Reflation （2020.3.24起）<br>
     <strong>關鍵信號：</strong><br>
-    - 3/9：SPX -7.6%（熔斷）— 此時黃金仍在漲 = 還是 Risk-Off<br>
-    - 3/12-3/13：黃金從 $1680 跌至 $1560（-7%）= 流動性危機確認！<br>
-    - 3/15：Fed 緊急降息至 0 + 7000億 QE → 市場持續恐慌<br>
-    - 3/23：Fed 宣布無限 QE + 公司債購買 → VIX 見頂 82.69 → 轉折確認<br>
-    <strong>教訓：</strong>黃金由漲轉跌是流動性危機的最佳確認信號。Fed 行動的「規模」比「時機」更重要。
+    - 3/9：SPX 當日大跌、觸發熔斷 — 此時黃金仍相對有撐 = 偏向 Risk-Off<br>
+    - 3 月中旬：黃金一度與股票同步重挫（現金為王、去槓桿） = 流動性壓力的線索<br>
+    - 3/15：Fed 緊急降息至 0 + 7,000 億美元 QE → 市場仍持續恐慌<br>
+    - 3/16：VIX 收盤見到當輪最高 82.69（盤中更高）<br>
+    - 3/23：Fed 宣布無限 QE + 購買公司債，同日 SPX 收出波段低點 → 事後看為轉折點<br>
+    <strong>教訓：</strong>黃金由漲轉跌是流動性壓力的「線索之一」（非唯一充分條件，須搭配搶美元、信用利差爆開等多重證據）。<strong>另需注意：此例中 Fed 出手「恰好」對上市場底部，是一次成功案例，不代表央行一出手就必然見底（2008 年並非如此）。</strong>VIX 的恐慌高點（3/16 收盤 82.69）與股市最低點（3/23）本就不必在同一天，兩者不應混為一談。
   </p>
 </div>
 
@@ -983,7 +969,7 @@
   <h4 style="color:var(--purple);">案例 2：2022 年通膨 Regime</h4>
   <p style="font-size:13px; line-height:1.7;">
     <strong>背景：</strong>後疫情供應鏈問題 + 俄烏戰爭 + 能源危機<br>
-    <strong>轉換路徑：</strong>Risk-On (2021 全年) → Stagflation (2022.1-6) → Risk-Off (2022.6-10) → 恢復<br>
+    <strong>轉換路徑：</strong>Risk-On （2021 全年） → Stagflation (2022.1-6) → Risk-Off (2022.6-10) → 恢復<br>
     <strong>關鍵信號：</strong><br>
     - 2021.11：CPI 突破 6%，但 SPX 仍創新高 = Stagflation 前兆被忽視<br>
     - 2022.1：Fed 轉鷹，10Y 殖利率快速上升 = 從 Risk-On 直接跳到 Stagflation<br>
@@ -997,15 +983,15 @@
 <div class="card">
   <h4 style="color:var(--yellow);">案例 3（假設情境／示意）：Stagflation + 去美元化疊加</h4>
   <p style="font-size:13px; line-height:1.7;">
-    <strong style="color:var(--yellow);">說明：以下為虛構的假設情境，用來示範「兩種 Regime 疊加」時的辨識與操作邏輯，並非對 2025 年市場的既定歷史陳述；文中數字與時點皆為示意，請勿當成事實。</strong><br>
-    <strong>假想背景：</strong>假設美國發動全面關稅戰 + 各國加速去美元化 + 財政赤字惡化<br>
-    <strong>假想轉換路徑：</strong>Risk-On → 去美元化 → Stagflation<br>
-    <strong>假想關鍵信號：</strong><br>
-    - 大規模關稅宣布，DXY 不漲反跌（異常！）= 去美元化啟動<br>
-    - 黃金突破前高、央行購金加速 = 去美元化確認<br>
-    - 通膨數據回升 + GDP 放緩 = 疊加 Stagflation<br>
-    - 金銀比升至 90+，銅大跌，油因供應擔憂走強 = 典型 Stagflation<br>
-    <strong>教訓：</strong>兩個 Regime 可以同時存在。操作上以「主要 Regime」為主，但用次要 Regime 的邏輯做對沖。
+    <strong style="color:var(--yellow);">說明：以下為不綁定特定年份的虛構教學情境，用來示範「循環型 Regime（Stagflation）與長期結構敘事（去美元化）疊加」時的辨識邏輯；文中數字與時點皆為示意，不是對任何實際年份市場的歷史陳述，請勿當成事實。</strong><br>
+    <strong>假想背景：</strong>假設出現大規模關稅戰 + 各國加速減持美元資產 + 財政赤字惡化<br>
+    <strong>假想演變：</strong>Risk-On →（疑似）弱美元／去美元化 → 疊加 Stagflation<br>
+    <strong>假想觀察到的訊號（仍須多重確認）：</strong><br>
+    - 大規模關稅宣布，DXY 不漲反跌（與一般避險邏輯相反）= <strong>疑似</strong>去美元化線索，須以官方儲備數據確認<br>
+    - 黃金突破前高、央行購金加速 = 去美元化中較扎實的證據<br>
+    - 通膨數據回升 + GDP 放緩 = 疊加 Stagflation 的線索<br>
+    - 金銀比升至 90+、銅大跌、油因供應擔憂走強 = 與 Stagflation 相符（但高金銀比非其專屬，通縮／流動性壓力亦可能）<br>
+    <strong>教訓：</strong>循環狀態與長期敘事可同時存在於不同時間維度。判讀時先認清「哪個是短期循環、哪個是多年結構」，再以主要狀態為操作重心，用次要邏輯做對沖；且任何疊加判斷都需要多重、跨時間尺度的證據，不能靠單日價格。
   </p>
 </div>
 
@@ -1049,7 +1035,16 @@
 <!-- ==================== TAB 5: 互動測驗 ==================== -->
 <div class="tab-content" id="tab5">
 <h2>Regime 識別互動測驗（40 題）</h2>
-<p>測試你對市場 Regime 的判斷能力。每題包含市場情境，你需要判斷 Regime 或最佳操作。</p>
+<p>測試你對市場 Regime 的判斷能力。每題包含市場情境，你需要選出「最符合的候選」判斷或操作。</p>
+
+<div class="warning-box">
+  <strong>作答前必讀 — 這是「簡化教學題」，不是真實市場的判定方式：</strong>
+  <ul style="margin-top:8px; font-size:13px; line-height:1.9;">
+    <li>為了教學，許多題目用「單日、少數幾個價格」要你選一個 Regime。<strong>真實市場中，單日四個價格幾乎不可能唯一確定宏觀狀態</strong> — 常常「資訊不足」或「多種解釋都說得通」才是最誠實的答案。</li>
+    <li>因此這裡的「正確答案」應理解為「在題目給定的簡化線索下，最符合的<strong>候選假設</strong>」，而不是「看到這組價格就一定是這個 Regime」。</li>
+    <li>實盤請務必加上：多日趨勢（3–5 天以上）、跨市場多重確認、以及基本面／官方數據，再下結論。把本測驗的單日判斷直接套用到真實交易是危險的。</li>
+  </ul>
+</div>
 
 <div class="score-display" id="scoreDisplay">得分：0 / 40</div>
 
@@ -1064,7 +1059,7 @@
     <li data-idx="2">流動性危機</li>
     <li data-idx="3">去美元化</li>
   </ul>
-  <div class="explanation">Stagflation 的關鍵特徵是「股跌+金漲+殖利率上升」。在 Risk-Off 中殖利率會下降（資金湧入國債）。殖利率上升代表通膨預期高企或債券被拋售，加上股市下跌=Stagflation。DXY 持平也符合（不是避險也不是去美元化）。</div>
+  <div class="explanation">在本題的簡化線索下，「股跌+金漲+殖利率上升」最符合 Stagflation 的<strong>候選</strong>特徵：Risk-Off 通常殖利率下降（資金湧入國債），而此處殖利率上升代表通膨預期高企或債券被拋售，加上股市下跌，較接近 Stagflation。<strong>但這只是單日快照：</strong>同樣的一天也可能只是財報／數據造成的雜訊，或是供給面一次性事件。實務上需連續數日、並確認 CPI／通膨預期方向後才算數。</div>
 </div>
 
 <!-- Q2 -->
@@ -1100,7 +1095,7 @@
     <li data-idx="2">去美元化</li>
     <li data-idx="3">Risk-Off（美元走強+商品走弱=避險需求）</li>
   </ul>
-  <div class="explanation">美元走強+商品全面走弱（銅和油都跌）= 全球需求放緩預期 = Risk-Off。Gold 持平（而非大漲）代表還沒有極端恐慌。如果是 Stagflation，Oil 應該漲（供應衝擊）。如果是去美元化，DXY 應該跌。</div>
+  <div class="explanation">在本題簡化線索下，美元走強+商品全面走弱（銅和油都跌）最符合「全球需求放緩預期」的 Risk-Off <strong>候選</strong>。Gold 持平（而非大漲）代表尚未極端恐慌；若是 Stagflation，油通常因供應衝擊走強；若是去美元化，DXY 應走弱。<strong>但單一交易日的突破＋商品下跌也可能只是美元技術面或單一消息造成，需多日確認與基本面佐證，不能據此一天斷定。</strong></div>
 </div>
 
 <!-- Q5 -->
@@ -1108,7 +1103,7 @@
   <h4>Q5. 你判定當前是 Stagflation，但你的投資組合有 40% 科技股。你應該怎麼做？</h4>
   <ul class="options">
     <li data-idx="0">加碼科技股攤平</li>
-    <li data-idx="1">立即減持科技至 10-15%，轉入黃金/能源/現金</li>
+    <li data-idx="1">大幅減持科技，轉入黃金/能源/現金（降低比例依個人風險承受度與回測決定）</li>
     <li data-idx="2">全部轉為長天期國債 TLT</li>
     <li data-idx="3">做空 SPX 對沖即可，不動科技倉位</li>
   </ul>
@@ -1124,19 +1119,19 @@
     <li data-idx="2">流動性危機（一切都跌，只有美元漲）</li>
     <li data-idx="3">去美元化失敗的反轉</li>
   </ul>
-  <div class="explanation">關鍵判斷：Gold 在下跌！在正常 Risk-Off 中黃金會上漲。當黃金也被拋售+美元急升+VIX>40+BTC暴跌=流動性危機。所有資產被拋售換取美元現金。</div>
+  <div class="explanation">本題給了「多個同向的極端線索」（Gold 也跌、美元急升、VIX 48、BTC 重挫），一起出現時最符合流動性危機的<strong>候選</strong>特徵 — 因為同時滿足多個條件，比單看一個價格可靠得多。要留意：黃金下跌只是線索之一（也可能是獲利了結或通縮），真正確認仍要看 TED／信用利差、搶美元現金等；且此處短債未必跟跌，往往反而獲得避險買盤。</div>
 </div>
 
 <!-- Q7 -->
 <div class="quiz-q" data-answer="0">
-  <h4>Q7. 你正在流動性危機中。Fed 突然宣布無限 QE 和購買公司債。你應該？</h4>
+  <h4>Q7. 你正在流動性危機中。Fed 突然宣布無限 QE 和購買公司債。相對合理的方向是？</h4>
   <ul class="options">
-    <li data-idx="0">立即用 OTM call options 建立多頭部位</li>
-    <li data-idx="1">繼續持有 100% 現金等待確認</li>
+    <li data-idx="0">視為重要轉機訊號，開始「分批、小額」重建多頭（並嚴設風險上限）</li>
+    <li data-idx="1">繼續死守 100% 現金、完全不動</li>
     <li data-idx="2">做空美元</li>
     <li data-idx="3">做空 VIX</li>
   </ul>
-  <div class="explanation">Fed 無限 QE 是流動性危機結束的最強信號（2020/3/23 教訓）。此時用 OTM call options 入場：最大損失有限（權利金），但上漲空間巨大。等待「完全確認」會錯過最低點 20-30% 的漲幅。做空 VIX 在此時太危險（可能有最後一波恐慌）。</div>
+  <div class="explanation">Fed 大規模介入是流動性壓力可能緩解的重要訊號，開始「分批」重建風險部位是合理方向（本題相對最佳）。<strong>但要破除一個常見迷思：</strong>坊間說「買 OTM call 最大損失有限、上漲無限」只對了一半 — 權利金損失確實有限，<strong>但危機末段 IV 極高、選擇權很貴，加上時間價值流失與到期歸零，期望值可能很差，遠價外 call 很容易全額虧光</strong>，不是穩賺的抄底工具，散戶尤應謹慎。此外，央行出手≠必然見底（2008 年多次出手後仍續跌），所以要分批、設上限，而非一次梭哈。做空 VIX／做空美元在此時都風險過高。</div>
 </div>
 
 <!-- Q8 -->
@@ -1160,7 +1155,7 @@
     <li data-idx="2">Reflation</li>
     <li data-idx="3">去美元化（黃金+BTC漲+美元弱+美債被拋售）</li>
   </ul>
-  <div class="explanation">這是去美元化的完美特徵組合：(1)黃金創新高=央行/投資者尋求美元替代品、(2)BTC 漲=數位黃金需求、(3)DXY 弱=美元地位下降、(4)美國國債被拋售=外國央行減持美元資產。所有箭頭指向同一方向。</div>
+  <div class="explanation">這組價格與去美元化的<strong>敘事相符</strong>（黃金創高、DXY 弱、美債被拋售方向一致，BTC 上漲則是民間對沖情緒），在四個選項中最接近。<strong>但「相符」不等於「證明」：</strong>同樣的價格也可能來自 Fed 轉鴿、實質利率下行或 Reflation。去美元化是多年結構敘事，真正確認必須看 IMF COFER／TIC 等官方儲備數據的長期趨勢；BTC 也並非央行官方儲備，不能當作去美元化的硬證據。本題只是「在給定線索下最符合的候選」。</div>
 </div>
 
 <!-- Q10 -->
@@ -1268,7 +1263,7 @@
     <li data-idx="2">大宗商品（銅/油）</li>
     <li data-idx="3">VIX / 選擇權隱含波動率</li>
   </ul>
-  <div class="explanation">VIX 是市場情緒的「即時溫度計」，在 Regime 轉換時第一個反應。GDP 是最慢的落後指標（1-3個月延遲）。股市反應也比 VIX 和信用市場慢。選擇權市場因為有遠期定價功能，能最快反映預期變化。</div>
+  <div class="explanation">GDP 是落後數據（1-3 個月延遲），最慢。其餘三者都是即時市場價格，會近乎同步反映新資訊；其中 VIX／選擇權因內含隱含波動與遠期定價，常最靈敏地反映「預期」的變化，故在這題中最適合。注意：股市、商品、VIX 之間並沒有固定的領先落後順序（它們都由機構與演算法近乎同時定價），真正顯著的時間差是在「即時市場價格」與「落後公布的經濟數據（GDP）」之間。</div>
 </div>
 
 <!-- Q19 -->
@@ -1285,14 +1280,14 @@
 
 <!-- Q20 -->
 <div class="quiz-q" data-answer="2">
-  <h4>Q20. 在去美元化 Regime 中，以下哪個組合最適合作為核心持倉？</h4>
+  <h4>Q20. 在去美元化 Regime 中，以下哪個組合的資產「方向」最相符？（比例僅為示意，非建議配置）</h4>
   <ul class="options">
-    <li data-idx="0">TLT 60% + SPY 40%</li>
-    <li data-idx="1">QQQ 50% + Cash 50%</li>
-    <li data-idx="2">GLD 30% + BTC 15% + 商品 25% + EEM 20% + Cash 10%</li>
-    <li data-idx="3">美元定存 80% + GLD 20%</li>
+    <li data-idx="0">以長天期美債與美股大盤為主（TLT／SPY）</li>
+    <li data-idx="1">以美股科技與現金為主（QQQ／Cash）</li>
+    <li data-idx="2">以黃金、BTC、大宗商品、新興市場為主，少持美債與美元現金</li>
+    <li data-idx="3">以美元定存為主、少量黃金</li>
   </ul>
-  <div class="explanation">去美元化環境下應持有「非美元替代品」：黃金（央行購金支撐）、BTC（數位替代）、大宗商品（美元弱勢推升）、新興市場（美元弱有利）。TLT（美國國債）和美元現金在此環境表現差。</div>
+  <div class="explanation">去美元化環境下，方向上「傾向」偏好非美元替代品：黃金（央行購金為可能支撐）、BTC（被視為數位替代）、大宗商品、新興市場；美國國債與美元現金方向上較不利。注意：這只是方向性傾向，<strong>具體配置比例屬高風險的個人決策，需依個人風險承受度與回測決定，本教材不提供建議百分比</strong>。</div>
 </div>
 
 <!-- Q21 -->
@@ -1465,26 +1460,26 @@
 
 <!-- Q35 -->
 <div class="quiz-q" data-answer="2">
-  <h4>Q35. 你判定當前為「去美元化+Stagflation」疊加。最佳配置？</h4>
+  <h4>Q35. 你判定當前為「去美元化+Stagflation」疊加。哪個資產「方向」最相符？（比例僅為示意，非建議配置）</h4>
   <ul class="options">
-    <li data-idx="0">QQQ 40% + TLT 30% + Cash 30%</li>
-    <li data-idx="1">SPY 60% + GLD 20% + Cash 20%</li>
-    <li data-idx="2">GLD 35% + XLE 20% + BTC 10% + 農產品 10% + Cash 25%</li>
-    <li data-idx="3">全部現金 100%</li>
+    <li data-idx="0">以美股科技與長債為主（QQQ／TLT）</li>
+    <li data-idx="1">以美股大盤為主、少量黃金（SPY／GLD）</li>
+    <li data-idx="2">以黃金、能源、BTC、農產品為主，搭配適度現金，低配科技與長債</li>
+    <li data-idx="3">全部現金</li>
   </ul>
-  <div class="explanation">去美元化+Stagflation 的交集資產是：黃金（兩者都利好）、能源（Stagflation 利好+美元弱利好）、BTC（去美元化利好）、商品（兩者都利好）。科技股和國債在兩種 Regime 中都表現差。現金比重需要適中（Stagflation需保守但去美元化中持有太多美元有匯率風險）。</div>
+  <div class="explanation">去美元化+Stagflation 的交集方向：黃金（兩者都傾向利好）、能源（Stagflation 與弱美元都傾向利好）、BTC（去美元化傾向利好）、商品；科技股與長債在兩種 Regime 方向上較不利；現金方向上宜適中（Stagflation 需保守，但持有太多美元在去美元化情境有匯率風險）。注意：這只是方向性傾向，<strong>具體比例屬高風險的個人決策，本教材不提供建議百分比</strong>。</div>
 </div>
 
 <!-- Q36 -->
 <div class="quiz-q" data-answer="0">
-  <h4>Q36. 2020/3/23 Fed 宣布無限 QE。之後 12 個月最佳策略是？</h4>
+  <h4>Q36. 事後回顧：2020/3/23 Fed 宣布無限 QE 後 12 個月，哪個方向「事後證明」最有利？</h4>
   <ul class="options">
-    <li data-idx="0">全力做多風險資產（科技股、BTC、小型股）— 超級 Risk-On 啟動</li>
+    <li data-idx="0">偏向風險資產（科技股、BTC、小型股）— 事後確為強勁 Risk-On</li>
     <li data-idx="1">繼續持有防禦部位</li>
     <li data-idx="2">做空美元但不買股票</li>
     <li data-idx="3">全部買入黃金</li>
   </ul>
-  <div class="explanation">Fed 無限 QE = 流動性海嘯。2020/3/23 後開始的是史詩級 Risk-On（Reflation→Risk-On）。SPX 12個月漲80%、BTC 12個月漲10倍、ARK類成長股漲3-5倍。央行提供的流動性壓倒一切，最大膽的風險承擔被最大獎勵。</div>
+  <div class="explanation">純就「事後結果」而言，2020/3/23 之後確實是強勁的 Risk-On 反彈，風險資產大漲（SPX 約一年漲約 7–8 成，部分成長股／BTC 漲幅更大）。<strong>但這是典型的後見之明：</strong>當下沒有人能保證央行一出手就見底（2008 年並非如此），「全力梭哈／加槓桿」在任何一次失敗的介入中都會重傷。本題問的是「事後最有利的方向」，不代表實務上應該不設風險控管地全押。請把它當成「央行大規模介入值得認真看待」的案例，而非「無腦全力做多」的操作建議。</div>
 </div>
 
 <!-- Q37 -->

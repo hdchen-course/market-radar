@@ -128,7 +128,7 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="warning-box">
     <strong>風險警告：裸買／裸賣期權對散戶風險極高</strong>
     <ul>
-      <li><strong>裸買期權（單腿 Long Call/Put）</strong>：時間價值每天流失（Theta decay），方向對了還可能因 IV Crush 虧損，多數部位到期歸零。</li>
+      <li><strong>裸買期權（單腿 Long Call/Put）</strong>：時間價值每天流失（Theta decay），方向對了還可能因 IV Crush 虧損。「大多數期權到期歸零」是常被引用的說法，但須留意 OCC／CBOE 的統計口徑：有相當比例的未平倉合約是在到期前被平倉或行使，而非持有到到期；單純用「到期時 OTM 比例」與「持有到到期虧損」不是同一件事。重點是：裸買單腿方向性部位對散戶勝率與期望值通常不利。</li>
       <li><strong>裸賣期權（Naked Call/Put）</strong>：權利金收入有限、潛在虧損極大甚至無限，一次尾部事件可以毀掉整年獲利。</li>
       <li><strong>先具備現貨紀律</strong>：沒有穩定的波段進出、停損與部位控管之前，不要用期權投機。期權放大的是你的紀律，也放大你的錯誤。</li>
     </ul>
@@ -164,8 +164,8 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>核心術語</h4>
     <ul>
-      <li><strong>Call = 買權（看漲權利）</strong>：持有者有權在到期前以 Strike Price 買入標的</li>
-      <li><strong>Put = 賣權（看跌權利）</strong>：持有者有權在到期前以 Strike Price 賣出標的</li>
+      <li><strong>Call = 買權（看漲權利）</strong>：持有者有權以 Strike Price 買入標的。<strong>美式（American-style）</strong>可在到期日前任何時間行使；<strong>歐式（European-style）</strong>通常只能在到期時行使。多數美股個股期權為美式，多數指數期權（如 SPX）為歐式。</li>
+      <li><strong>Put = 賣權（看跌權利）</strong>：持有者有權以 Strike Price 賣出標的；行使時機同樣分美式／歐式（見上）。</li>
       <li><strong>Premium = 權利金</strong>：買方付出的代價，也是賣方的收入</li>
       <li><strong>Strike = 行使價</strong>：約定的交易價格</li>
       <li><strong>Expiry = 到期日</strong>：期權合約的最後有效日</li>
@@ -231,18 +231,19 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>四大 Greeks 概覽</h4>
     <table>
       <tr><th>Greek</th><th>衡量</th><th>Call</th><th>Put</th><th>直覺理解</th></tr>
-      <tr><td><strong>Delta (&#916;)</strong></td><td>標的價格變動 $1 對 Premium 的影響</td><td>0 ~ +1</td><td>-1 ~ 0</td><td>方向敏感度 / 到期概率近似</td></tr>
+      <tr><td><strong>Delta (&#916;)</strong></td><td>標的價格變動 $1 對 Premium 的影響</td><td>0 ~ +1</td><td>-1 ~ 0</td><td>局部價格敏感度（一階）</td></tr>
       <tr><td><strong>Gamma (&#915;)</strong></td><td>標的價格變動 $1 對 Delta 的影響</td><td>正值</td><td>正值</td><td>加速度 / ATM 最大</td></tr>
-      <tr><td><strong>Theta (&#920;)</strong></td><td>每天時間流逝對 Premium 的影響</td><td>負值(買)</td><td>負值(買)</td><td>時間侵蝕 / 賣方的朋友</td></tr>
-      <tr><td><strong>Vega (V)</strong></td><td>IV 變動 1% 對 Premium 的影響</td><td>正值(買)</td><td>正值(買)</td><td>波動率敏感度</td></tr>
+      <tr><td><strong>Theta (&#920;)</strong></td><td>每天時間流逝對 Premium 的影響</td><td>負值（買）</td><td>負值（買）</td><td>時間侵蝕 / 賣方的朋友</td></tr>
+      <tr><td><strong>Vega (V)</strong></td><td>IV 變動 1% 對 Premium 的影響</td><td>正值（買）</td><td>正值（買）</td><td>波動率敏感度</td></tr>
     </table>
 
     <h4>Delta 深入</h4>
     <div class="highlight green">
       <ul>
-        <li><strong>Delta 0.5</strong> = ATM Call（50% 到期價內機率近似）</li>
-        <li><strong>Delta 0.8</strong> = 深度 ITM，行為接近股票</li>
-        <li><strong>Delta 0.2</strong> = 深度 OTM，便宜但低概率</li>
+        <li><strong>Delta 本質是價格敏感度</strong>：Delta 0.5 表示標的每漲 $1，Call premium 約漲 $0.50（僅一階近似，Gamma 會使其隨價格改變）。</li>
+        <li><strong>Delta ≈ ITM 機率？只是粗略近似</strong>：Call Delta 的絕對值常被當作「到期價內機率」，但這只是在特定模型（如 Black-Scholes 的 risk-neutral measure）下的近似，<strong>不等於真實世界機率，也不是被 assignment 的機率或「安全率」</strong>。真實機率受 skew、股利、利率等影響而偏離。</li>
+        <li><strong>Delta 0.8</strong> = 深度 ITM，價格行為接近股票</li>
+        <li><strong>Delta 0.2</strong> = 深度 OTM，premium 便宜但對小幅波動不敏感</li>
         <li><strong>Position Delta</strong> = 所有持倉 Delta 加總 = 淨方向暴露</li>
       </ul>
     </div>
@@ -320,7 +321,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <h3>期權定價基礎 — Black-Scholes 直覺</h3>
   </div>
   <div class="card-body">
-    <h4>影響期權價格的 5 個因素</h4>
+    <h4>影響期權價格的因素</h4>
     <table>
       <tr><th>因素</th><th>Call 影響</th><th>Put 影響</th><th>對應 Greek</th></tr>
       <tr><td>標的價格 &#8593;</td><td>&#8593;</td><td>&#8595;</td><td>Delta</td></tr>
@@ -328,12 +329,14 @@ tr:nth-child(even) { background: var(--bg3); }
       <tr><td>時間流逝</td><td>&#8595;</td><td>&#8595;</td><td>Theta</td></tr>
       <tr><td>行使價 &#8593;</td><td>&#8595;</td><td>&#8593;</td><td>-</td></tr>
       <tr><td>利率 &#8593;</td><td>&#8593;</td><td>&#8595;</td><td>Rho</td></tr>
+      <tr><td>股利 / 持有成本（dividends／carry）&#8593;</td><td>&#8595;</td><td>&#8593;</td><td>-（透過遠期價格）</td></tr>
     </table>
+    <p style="font-size:13px; color:var(--text3);">註：預期股利（或融券費、持有成本）會壓低標的的遠期價格，故股利愈高，Call 愈便宜、Put 愈貴。Black-Scholes 的 Merton 延伸版（含連續股利率 q）即為處理此因素。</p>
 
     <div class="highlight purple">
       <strong>實戰重點</strong>：不需要記住 Black-Scholes 公式，但要理解：
       <ul>
-        <li>期權價格 = f(標的價格, 波動率, 時間, 行使價, 利率)</li>
+        <li>期權價格 = f（標的價格, 波動率, 時間, 行使價, 利率, 股利／持有成本）</li>
         <li>波動率是唯一無法直接觀察的因素 → 這就是 IV 的由來</li>
         <li>IV 本質是「市場對未來波動的預期」被倒推出來的數字</li>
       </ul>
@@ -355,17 +358,19 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>三種關鍵大單類型</h4>
     <table>
       <tr><th>類型</th><th>定義</th><th>含義</th><th>急迫性</th></tr>
-      <tr><td><strong>大單 (Block)</strong></td><td>單筆 &gt; $1M 的期權成交</td><td>機構場外協商交易</td><td>中</td></tr>
-      <tr><td><strong>Sweep</strong></td><td>跨多個交易所同時買入同一 strike</td><td>急迫性強，不計成本掃貨</td><td>極高</td></tr>
-      <tr><td><strong>Unusual Activity</strong></td><td>成交量 &gt; 5x Open Interest</td><td>新的大額建倉</td><td>高</td></tr>
+      <tr><td><strong>大單 (Block)</strong></td><td>單筆金額較大的期權成交（常見 vendor 門檻如 &gt; $1M premium，門檻因平台而異，非市場統一定義）</td><td>常見於機構，可能是場外協商交易</td><td>中</td></tr>
+      <tr><td><strong>Sweep</strong></td><td>同一訂單被拆分、跨多個交易所同時掃單成交</td><td>急迫性較強，傾向不計較少量價差完成成交</td><td>極高</td></tr>
+      <tr><td><strong>Unusual Activity</strong></td><td>成交量相對 Open Interest 異常偏高（如 Vol &gt; 5× OI）</td><td>可能是新建倉，但也可能是平倉／多腿單的一腿，須配合次日 OI 變化判斷</td><td>高</td></tr>
     </table>
+    <div class="highlight orange">
+      <strong>先釐清「大單」的量級口徑</strong>：期權的 premium（實付權利金）與 <strong>notional</strong> 是兩回事。$1M premium ≠ 控制 $1M 股票；真正對應的股票曝險應看 <strong>delta-equivalent notional</strong>（≈ 合約數 × 100 × 股價 × delta）。報導「$X 大單」時務必確認指的是 premium 還是 notional，兩者差距可達數十倍。</div>
 
     <div class="highlight green">
-      <strong>為什麼期權 flow 比股票 flow 更有資訊量？</strong>
+      <strong>為什麼期權 flow 有時比股票 flow 更有資訊量？（是假說，非定論）</strong>
       <ul>
-        <li><strong>槓桿效應</strong>：$100K 期權 = 控制 $1-5M 股票，所以期權上的 $1M 代表更強的 conviction</li>
-        <li><strong>時間限制</strong>：期權有到期日，代表交易者對 timing 有信心</li>
-        <li><strong>透明度</strong>：大額期權必須在公開市場成交，不像股票可以暗池（Dark Pool）交易</li>
+        <li><strong>槓桿效應</strong>：相同 premium 可換取數倍的 delta-equivalent notional，故同額 premium 的期權動作「可能」反映較強 conviction —— 但也可能只是成本較低的避險。</li>
+        <li><strong>時間限制</strong>：期權有到期日，<em>若</em>是方向性買方，代表對 timing 有想法；但賣方與避險方並不適用此推論。</li>
+        <li><strong>別高估透明度</strong>：交易所上架的期權成交會進入公開 tape，但「大額」不代表方向明確；而且期權本身也可用於對沖股票或既有部位，無法只憑單筆成交斷定意圖。</li>
       </ul>
     </div>
 
@@ -389,28 +394,31 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="card-body">
     <h4>核心原則：看 Premium Paid，不是 Volume</h4>
     <div class="highlight">
-      <p>大量 premium 買入 Call = 真看多<br>
-      大量 premium 買入 Put = 真看空<br>
-      高 volume 但不知道是 buy 還是 sell = 無法判斷方向</p>
+      <p>在<strong>已確認為買方主動</strong>的前提下：大量 premium 買入 Call 偏向看多、買入 Put 偏向看空。<br>
+      但若無法確認是 buy 還是 sell（只看 volume），就無法判斷方向 —— 這也是為什麼要先釐清 Buy/Sell to Open。</p>
     </div>
 
-    <h4>買賣方判斷</h4>
+    <h4>買賣方判斷（只是傾向，非確證）</h4>
     <table>
-      <tr><th>條件</th><th>判定</th><th>方向</th></tr>
-      <tr><td>Trade at Ask (成交在賣價)</td><td>買方主動買入</td><td>Call=看多, Put=看空</td></tr>
-      <tr><td>Trade at Bid (成交在買價)</td><td>賣方主動賣出</td><td>Call=看空, Put=看多</td></tr>
-      <tr><td>Trade between Bid/Ask</td><td>不確定</td><td>需要更多context</td></tr>
+      <tr><th>條件</th><th>傾向判定</th><th>常見解讀（需佐證）</th></tr>
+      <tr><td>Trade at Ask （成交在賣價）</td><td>偏向買方主動</td><td>Call 偏多／Put 偏空</td></tr>
+      <tr><td>Trade at Bid （成交在買價）</td><td>偏向賣方主動</td><td>Call 偏空／Put 偏多</td></tr>
+      <tr><td>Trade between Bid/Ask</td><td>不確定</td><td>需要更多 context</td></tr>
     </table>
+    <div class="highlight red">
+      <strong>重要限制：成交落在 ask／bid 不能可靠判定策略方向。</strong>可能的干擾：報價已 stale（成交時 NBBO 已移動）、多腿組合單的單一腿被拆開顯示、交易者是在對沖股票部位或<strong>平既有倉</strong>（而非新建方向性倉）。把 at-ask 一律當「看多建倉」是常見誤讀。
+    </div>
 
     <h4>Open Interest (OI) 變化判讀</h4>
     <ul>
-      <li><strong>Volume &gt; OI 且次日 OI 增加</strong>：新建倉（新的方向性觀點）</li>
-      <li><strong>Volume &gt; OI 且次日 OI 減少</strong>：平倉（獲利了結或停損）</li>
-      <li><strong>持續 OI 堆積在某 strike</strong>：該 strike 成為磁吸點（magnet）</li>
+      <li><strong>Volume &gt; OI</strong>：代表當日成交量超過既有未平倉量，<strong>本身不能證明是新建倉</strong> —— 平倉、roll、對沖都會貢獻成交量。須看<strong>次日 OI 的實際變化</strong>才能分辨。</li>
+      <li><strong>次日 OI 增加</strong>：淨額上較偏向新開倉（但無法知道是買方還賣方主導）。</li>
+      <li><strong>次日 OI 減少</strong>：淨額上較偏向平倉。</li>
+      <li><strong>持續 OI 堆積在某 strike</strong>：該 strike 常被視為潛在磁吸／參考點，但這是觀察性現象，非保證。</li>
     </ul>
 
     <div class="highlight red">
-      <strong>常見陷阱</strong>：Sell Call 也會產生高 volume，但方向完全相反，務必先確認是 Buy to Open 還是 Sell to Open。
+      <strong>常見陷阱</strong>：Sell Call 也會產生高 volume，方向卻相反。單看 volume 與成交價位無法可靠分辨 Buy to Open／Sell to Open，須配合 OI 變化與其他資訊。
     </div>
   </div>
 </div>
@@ -425,16 +433,20 @@ tr:nth-child(even) { background: var(--bg3); }
     <table>
       <tr><th>情境</th><th>解讀</th><th>信心等級</th></tr>
       <tr><td>NVDA $150 Call Sweep at Ask, $3M, 2 week expiry, Vol > 10x OI</td><td>強烈看多 — Sweep + 新建倉 + 大額 + 短期</td><td><span class="tag bullish">極高</span></td></tr>
-      <tr><td>SPY $400 Put Block, $5M, 3 month expiry</td><td>可能是避險 — Block (場外) + 較長期 = 可能是 portfolio hedge</td><td><span class="tag neutral">中等</span></td></tr>
+      <tr><td>SPY $400 Put Block, $5M, 3 month expiry</td><td>可能是避險 — Block （場外） + 較長期 = 可能是 portfolio hedge</td><td><span class="tag neutral">中等</span></td></tr>
       <tr><td>TSLA $300 Call at Bid, $2M, Vol = OI</td><td>賣出 Call — at Bid = 主動賣出 + Vol=OI = 可能在平倉</td><td><span class="tag bearish">看空</span></td></tr>
-      <tr><td>AAPL $180 Put Sweep at Ask, $4M, weekly expiry</td><td>強烈看空 — Put Sweep + 本週到期 = 預期快速下跌</td><td><span class="tag bearish">極高</span></td></tr>
+      <tr><td>AAPL $180 Put Sweep at Ask, $4M, weekly expiry</td><td>偏向看空 — Put Sweep + 本週到期；但仍可能是持股避險</td><td><span class="tag bearish">高（非確證）</span></td></tr>
     </table>
+    <p style="font-size:13px; color:var(--text3);">註：上表「信心等級」是在把 at-ask／at-bid 當作買賣方向、Vol&gt;OI 當作新建倉的<strong>假設</strong>下的解讀。如前所述，這些假設都可能被 stale quote、多腿單、對沖或平倉推翻，故應視為情境假說而非確定結論。</p>
 
     <h4>Dark Pool Prints 配合期權 Flow</h4>
+    <div class="highlight red">
+      <strong>關鍵限制</strong>：Dark pool／off-exchange print 只顯示「有一筆成交、數量與價格」，<strong>公開資料無法判定是買入還是賣出</strong>（沒有 trade direction 標記），也無法得知是建倉或平倉。把某筆 dark print 說成「機構大額買入／出貨」是推測，不是事實。
+    </div>
     <ul>
-      <li><strong>Dark Pool 大額買入 + Call Sweep</strong>：機構同時在股票和期權市場建多頭 = 極強信號</li>
-      <li><strong>Dark Pool 大額賣出 + Put Sweep</strong>：機構出貨 + 期權避險 = 強看空</li>
-      <li><strong>只有期權 Flow 沒有 Dark Pool 配合</strong>：可能只是單一交易者的觀點，謹慎看待</li>
+      <li><strong>Dark Pool 大額 print + Call Sweep 同向出現</strong>：<em>可能</em>反映同一方向的佈局，但只是情境證據，不是「極強信號」的確證。</li>
+      <li><strong>Dark Pool 大額 print + Put Sweep</strong>：<em>可能</em>是看空佈局，也可能是持股者的避險；無法只憑此斷定。</li>
+      <li><strong>只有期權 Flow 沒有 dark print 配合</strong>：資訊量更有限，更應謹慎看待。</li>
     </ul>
 
     <h4>Options Flow 工具推薦</h4>
@@ -502,20 +514,21 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
   <div class="card-body">
     <h4>定義</h4>
-    <p>Max Pain = 使最多期權合約到期歸零（worthless）的價格。在該價格，期權買方的總虧損最大，也就是期權賣方（主要是 Market Maker）的獲利最大。</p>
+    <p>Max Pain = 依目前各 strike 的<strong>未平倉量（OI）</strong>估算，使到期時<strong>所有期權的 aggregate intrinsic payout（買方可拿回的內在價值總額）最小</strong>的標的價格。它<strong>不是</strong>「使最多合約歸零」的價格 —— 歸零合約「數量」最多與 payout 金額最小並不等價。</p>
 
-    <h4>原理</h4>
+    <h4>原理（爭議性，須謹慎）</h4>
     <div class="highlight purple">
-      <strong>Max Pain 理論</strong>：Market Maker 作為大多數期權的對手方，有經濟動機將價格「釘」在 Max Pain 附近。雖然這是爭議性理論，但統計上確實有效，尤其在到期週。
+      <strong>Max Pain 假說</strong>：有一種說法認為，由於期權賣方（含部分 Market Maker）整體上在該點支付給買方的內在價值最少，市場「傾向」收斂到該價位附近。<strong>但這只是觀察性假說：</strong>沒有證據顯示 market maker 有能力或意願「操縱」價格到該點，也不能說他們「因此獲利最大」（MM 多為 delta-hedged、收 bid-ask 價差，而非靠方向性押注賺錢）。Max Pain 會隨 OI 變動而移動，實務上預測力有限。
     </div>
 
     <h4>有效性排序</h4>
     <table>
       <tr><th>到期時間</th><th>有效性</th><th>原因</th></tr>
-      <tr><td>週到期 (Weekly)</td><td><span class="tag bullish">最高</span></td><td>OI 集中，MM pin 意願最強</td></tr>
+      <tr><td>週到期 (Weekly)</td><td><span class="tag bullish">相對較明顯</span></td><td>OI 較集中，收斂現象較常被觀察到（非保證）</td></tr>
       <tr><td>月到期 (Monthly)</td><td><span class="tag neutral">中等</span></td><td>OI 較分散</td></tr>
-      <tr><td>季到期 (Quarterly)</td><td><span class="tag bearish">較低</span></td><td>距離太遠，變數太多</td></tr>
+      <tr><td>季到期 (Quarterly)</td><td><span class="tag bearish">較不明顯</span></td><td>距離太遠，變數太多</td></tr>
     </table>
+    <p style="font-size:13px; color:var(--text3);">註：上表為經驗觀察傾向，非回測統計結論，不應視為可交易的固定規律。</p>
 
     <div class="svg-container">
       <svg width="100%" style="max-width:560px" viewBox="0 0 560 280" role="img">
@@ -547,10 +560,10 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>實戰應用</h4>
     <ul>
-      <li>到期前 2-3 天開始觀察 Max Pain 位置</li>
-      <li>如果價格偏離 Max Pain 太遠，有向 Max Pain 回歸的傾向</li>
-      <li>重大事件（財報、FOMC）可以打破 Max Pain 引力</li>
-      <li>Max Pain 約 60% 有效 — 不可作為唯一依據</li>
+      <li>到期前 2-3 天開始觀察 Max Pain 位置（它會隨 OI 更新而移動）</li>
+      <li>有一種說法是價格偏離 Max Pain 太遠時「可能」有回歸傾向，但這並非可靠規律</li>
+      <li>重大事件（財報、FOMC）常使價格明顯偏離 Max Pain</li>
+      <li>坊間常引用「約 60% 有效」之類數字，但缺乏公開、可重現的嚴謹回測佐證 —— 請當作參考指標，不可作為交易依據</li>
     </ul>
   </div>
 </div>
@@ -598,11 +611,11 @@ tr:nth-child(even) { background: var(--bg3); }
         <text x="100" y="248" font-size="10" fill="#64748b">Deep OTM Put</text>
         <text x="440" y="248" font-size="10" fill="#64748b">Deep OTM Call</text>
         <rect x="360" y="42" width="20" height="3" fill="#2563eb"/>
-        <text x="385" y="46" font-size="10" fill="#0f172a">Normal Put Skew (正常)</text>
+        <text x="385" y="46" font-size="10" fill="#0f172a">Normal Put Skew （正常）</text>
         <rect x="360" y="58" width="20" height="3" fill="#dc2626"/>
-        <text x="385" y="62" font-size="10" fill="#0f172a">Inverted / Call Skew (狂熱)</text>
+        <text x="385" y="62" font-size="10" fill="#0f172a">Inverted / Call Skew （狂熱）</text>
         <rect x="360" y="74" width="20" height="3" fill="#64748b"/>
-        <text x="385" y="78" font-size="10" fill="#0f172a">Flat Skew (無共識)</text>
+        <text x="385" y="78" font-size="10" fill="#0f172a">Flat Skew （無共識）</text>
       </svg>
     </div>
 
@@ -612,7 +625,7 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
     <table>
       <tr><th>形態</th><th>名稱</th><th>含義</th><th>交易信號</th></tr>
-      <tr><td>前端 IV &gt; 後端 IV</td><td>Backwardation（倒掛）</td><td>市場預期近期波動大 = 事件驅動</td><td>短期期權被高估，可賣 front / 買 back</td></tr>
+      <tr><td>前端 IV &gt; 後端 IV</td><td>Backwardation（倒掛）</td><td>近端 implied vol 相對較高（常見於事件前），表示市場為近期不確定性付出較高 IV</td><td>可考慮賣 front／買 back，但「近端較高 ≠ 一定被高估」，獲利仍取決於實際實現波動</td></tr>
       <tr><td>前端 IV &lt; 後端 IV</td><td>Contango（正常）</td><td>遠期不確定性更高</td><td>正常狀態，非信號</td></tr>
       <tr><td>整體 IV 拉平在高位</td><td>Flat &amp; Elevated</td><td>市場預期持續高波動</td><td>系統性風險，考慮避險</td></tr>
       <tr><td>前端急劇陡峭</td><td>Event Kink</td><td>財報/FOMC 特定事件前</td><td>買跨式或等 IV Crush 後進場</td></tr>
@@ -621,8 +634,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>Term Structure 交易策略</h4>
     <ul>
       <li><strong>Calendar Spread</strong>：利用 front/back IV 差異 — 賣近月高 IV，買遠月低 IV</li>
-      <li><strong>財報前</strong>：近月 IV 膨脹（Backwardation） → 財報後 IV 崩塌 = Calendar Spread 獲利</li>
-      <li><strong>VIX Term Structure</strong>：VIX 現貨 > VIX 期貨 = 市場恐慌（通常是底部信號）</li>
+      <li><strong>財報前的 Calendar 並不保證獲利</strong>：即使近月 IV 事後崩塌，獲利仍受多項因素左右 —— 財報後近月的大幅 gap（近月那腿若變價內，損失可能超過 IV crush 的收益）、<strong>兩腿同時 IV crush</strong>（遠月 IV 也可能下降）、theta、skew 變化、以及美式期權的提前 assignment 風險。方向跳太大時 Calendar 常虧損。</li>
+      <li><strong>VIX Term Structure</strong>：VIX 現貨 &gt; VIX 期貨（backwardation）常伴隨市場恐慌，有時對應階段性底部 —— 是觀察傾向，非必然訊號。</li>
     </ul>
   </div>
 </div>
@@ -634,7 +647,10 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
   <div class="card-body">
     <h4>定義</h4>
-    <p><strong>GEX = Dealer 的淨 Gamma 暴露</strong>。Dealer（做市商）通常是期權的對手方，他們需要 delta hedge 來保持中性。Gamma 決定了他們 hedge 的方向。</p>
+    <p><strong>GEX（Gamma Exposure）是資料供應商對「dealer 淨 Gamma 暴露」的<em>估算</em></strong>，而非可直接觀測的事實。它依據公開 OI、Greeks，再<strong>假設</strong>各 strike 的 dealer 持倉方向（常見假設：Call 由 dealer 賣出、Put 由 dealer 買入，或依成交價位推斷）計算而得。<strong>實際 dealer 淨倉無法由公開 OI 直接得知</strong>，不同供應商（SpotGamma、Unusual Whales 等）因假設不同，GEX 數值與翻負點（flip）也會不同。</p>
+    <div class="highlight orange">
+      正／負 GEX 與波動的關係是一種<strong>條件式機制假說</strong>：若 dealer 確實淨持正 Gamma，其 delta 避險「傾向」逆勢（抑制波動）；若淨持負 Gamma 則「傾向」順勢（放大波動）。這<strong>不是方向保證、也不是波幅保證</strong>，且前提（dealer 持倉符號）本身就是估計值。
+    </div>
 
     <div class="svg-container">
       <svg width="100%" style="max-width:580px" viewBox="0 0 580 320" role="img">
@@ -642,13 +658,13 @@ tr:nth-child(even) { background: var(--bg3); }
         <rect width="580" height="320" fill="#f8fafc" rx="8"/>
         <text x="290" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">GEX 機制：Dealer Hedging 行為</text>
         <rect x="30" y="50" width="240" height="120" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
-        <text x="150" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">Positive GEX (穩定器)</text>
+        <text x="150" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">Positive GEX （穩定器）</text>
         <text x="150" y="95" text-anchor="middle" font-size="11" fill="#334155">Dealer 持有正 Gamma</text>
         <text x="150" y="115" text-anchor="middle" font-size="11" fill="#334155">價格漲 → Dealer 賣出 hedge</text>
         <text x="150" y="135" text-anchor="middle" font-size="11" fill="#334155">價格跌 → Dealer 買入 hedge</text>
         <text x="150" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">= 抑制波動 = 低 Vol 環境</text>
         <rect x="310" y="50" width="240" height="120" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-        <text x="430" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">Negative GEX (放大器)</text>
+        <text x="430" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">Negative GEX （放大器）</text>
         <text x="430" y="95" text-anchor="middle" font-size="11" fill="#334155">Dealer 持有負 Gamma</text>
         <text x="430" y="115" text-anchor="middle" font-size="11" fill="#334155">價格漲 → Dealer 追買 hedge</text>
         <text x="430" y="135" text-anchor="middle" font-size="11" fill="#334155">價格跌 → Dealer 追賣 hedge</text>
@@ -674,8 +690,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>GEX 相關概念：Charm & Vanna & 0DTE</h4>
     <div class="highlight">
       <ul>
-        <li><strong>Charm (Delta Decay)</strong>：時間流逝導致 Delta 改變 → Dealer 被迫調整 hedge。接近到期時 Charm 影響放大。</li>
-        <li><strong>Vanna</strong>：IV 變化對 Delta 的影響。IV 下降 → OTM options Delta 下降 → Dealer 需要 unwind hedge = 賣壓。</li>
+        <li><strong>Charm (Delta Decay)</strong>：時間流逝導致 Delta 改變 → 持倉者可能調整 hedge。接近到期時 Charm 影響放大。<strong>避險的買賣方向取決於 call/put、dealer 持倉符號與 moneyness</strong>，不是固定方向。</li>
+        <li><strong>Vanna</strong>：IV 變化對 Delta 的影響。IV 下降會改變 OTM 期權的 Delta，進而促使避險部位調整。<strong>這會形成買壓還是賣壓，取決於 dealer 到底是淨多還淨空該些期權、以及 call/put 與 moneyness</strong> —— 不能一律說成「賣壓」。（常見敘事假設 dealer 淨空下檔 put，IV 降時買回避險 → 買壓支撐；但符號相反時結論相反。）</li>
         <li><strong>0DTE 效應</strong>：零日到期期權的 Gamma 極高，使 GEX 在到期日劇烈波動，可能造成尾盤大波動。</li>
       </ul>
     </div>
@@ -711,11 +727,12 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="highlight green">
-      <strong>核心交易邏輯</strong>：
+      <strong>核心交易邏輯（須對齊口徑才成立）</strong>：
       <ul>
-        <li><strong>IV &gt; RV</strong>：期權被高估 → 賣出策略有利（Short Vol）</li>
-        <li><strong>IV &lt; RV</strong>：期權被低估 → 買入策略有利（Long Vol）</li>
-        <li><strong>Volatility Risk Premium (VRP)</strong> = IV - RV，長期平均為正值（因為市場傾向高估風險）</li>
+        <li>比較 IV 與 RV 必須用<strong>相同的 horizon、相近的 strike／moneyside，以及一致的方差（annualization）口徑</strong>，否則「IV &gt; RV」的比較無意義。常見做法是比對「當前 IV」與「未來同期間實現的 RV」（事後才知），或用過去實現波動當代理。</li>
+        <li><strong>IV &gt; RV（在對齊口徑下、且事後成立）</strong>：賣方「平均」較有利，但這是<em>傾向</em>非每筆保證。</li>
+        <li><strong>IV &lt; RV</strong>：買方「平均」較有利。</li>
+        <li><strong>Volatility Risk Premium (VRP)</strong> = IV - RV，長期平均為正，代表<strong>承擔波動風險的風險溢酬</strong>。注意：風險溢酬為正<strong>不代表 short vol 是免費或穩賺的優勢</strong> —— 那正是對賣方承擔尾部風險的補償，尾部事件會一次吃掉多月溢酬。</li>
       </ul>
     </div>
 
@@ -732,11 +749,11 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>VRP 策略</h4>
     <div class="highlight purple">
-      <strong>Volatility Risk Premium 策略</strong>：由於 IV 長期高於 RV（平均約 2-4%），系統性地賣出期權可以獲取這個溢價。這是許多對沖基金的核心策略。
+      <strong>Volatility Risk Premium 策略</strong>：由於 IV 長期「平均」高於其後實現的 RV，系統性賣出期權<em>有機會</em>收取這個溢價，是部分基金的策略之一。<strong>此溢價是承擔波動／尾部風險的補償，不是無風險套利。</strong>
       <ul>
-        <li>平均而言，每月約 70% 的時間 IV > RV</li>
-        <li>但 30% 的時間 IV < RV 可能產生巨大虧損（尾部風險）</li>
-        <li>需要嚴格的風控和倉位管理</li>
+        <li>「約 2-4%」「約 70% 時間 IV &gt; RV」等都是依特定標的與期間而異的<strong>示例數字</strong>，非固定統計事實，不同資產與區間差異很大。</li>
+        <li>其餘時間 IV &lt; RV（尤其波動暴衝時）可能產生巨大虧損（尾部風險），足以回吐多月溢酬。</li>
+        <li>必須搭配嚴格風控與倉位管理。</li>
       </ul>
     </div>
   </div>
@@ -767,8 +784,8 @@ tr:nth-child(even) { background: var(--bg3); }
         <line x1="310" y1="40" x2="310" y2="200" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
         <text x="310" y="245" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Earnings</text>
         <!-- Labels -->
-        <text x="200" y="50" font-size="10" fill="#7c3aed">IV 膨脹 (不確定性增加)</text>
-        <text x="420" y="145" font-size="10" fill="#7c3aed">IV Crush (不確定性消除)</text>
+        <text x="200" y="50" font-size="10" fill="#7c3aed">IV 膨脹 （不確定性增加）</text>
+        <text x="420" y="145" font-size="10" fill="#7c3aed">IV Crush （不確定性消除）</text>
         <!-- Arrow showing crush -->
         <path d="M 320,65 L 320,145" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowred)"/>
         <defs><marker id="arrowred" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#dc2626"/></marker></defs>
@@ -780,8 +797,9 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <h4>IV Crush 的數據</h4>
+    <p style="font-size:13px; color:var(--text3);">以下百分比指的是 <strong>IV 水準的相對變化</strong>（例如 IV 由 50% 降到 30%，相對降幅約 −40%），<strong>不是</strong> vol points 的絕對變化（那會是 −20 個 vol points）。兩種口徑意義不同，解讀前務必確認。另外這些是<strong>概略示例區間</strong>，實際因個股與事件差異極大，非固定值。</p>
     <table>
-      <tr><th>事件類型</th><th>典型 IV 膨脹</th><th>典型 IV Crush</th><th>舉例</th></tr>
+      <tr><th>事件類型</th><th>典型 IV 膨脹（相對）</th><th>典型 IV Crush（相對）</th><th>舉例</th></tr>
       <tr><td>大型科技財報</td><td>+30-60% vs normal</td><td>-40-70% overnight</td><td>NVDA, TSLA, META</td></tr>
       <tr><td>FOMC 決議</td><td>+15-25%</td><td>-20-40%</td><td>SPY, QQQ</td></tr>
       <tr><td>CPI 數據</td><td>+10-20%</td><td>-15-30%</td><td>SPY</td></tr>
@@ -802,17 +820,17 @@ tr:nth-child(even) { background: var(--bg3); }
       <ul>
         <li>財報前買 Call/Put，即使方向對了，IV Crush 可能讓你虧錢！</li>
         <li>例如：AAPL 漲 3%，但 IV 從 50% crush 到 25% → 你的 Call 可能不賺甚至虧</li>
-        <li>需要標的移動幅度 > 「Expected Move」才能獲利</li>
+        <li>真正的到期損益平衡取決於<strong>實付權利金</strong>（買方需標的移動幅度超過所付的 premium 才獲利）；Expected Move 只是對移動幅度的概略參考，不等於你的 break-even。</li>
       </ul>
     </div>
 
     <h4>Expected Move 計算</h4>
-    <p><code>Expected Move = ATM Straddle Price x 0.85</code></p>
-    <p>或：<code>Expected Move = Stock Price x IV x sqrt(DTE/365)</code></p>
+    <p><code>Expected Move ≈ ATM Straddle Price x 0.85</code>（交易圈<strong>啟發式</strong>，非定義；0.85 用來粗略扣除雙腿時間價值，數值因人因市而異）</p>
+    <p>或：<code>Expected Move ≈ Stock Price x IV x sqrt(T)</code>（<strong>模型近似</strong>，T 以年計；為 one-sigma 標準差近似）</p>
     <ul>
-      <li>這是市場定價的「期望移動幅度」</li>
-      <li>統計上約 68% 的時間，實際移動在 Expected Move 範圍內</li>
-      <li>超出 Expected Move = 高波動事件 = Straddle 買方獲利</li>
+      <li>這是市場<strong>隱含</strong>的期望移動幅度，不是對未來的保證。</li>
+      <li>「約 68% 落在 ±1 個 Expected Move 內」是<strong>常態／對數常態模型</strong>下 one-sigma 的性質，<strong>不是市場必然實現的比率</strong>；真實分布有肥尾，實際落點比例會偏離。</li>
+      <li><strong>常見錯誤</strong>：以為「標的移動超過 Expected Move ⇒ Straddle 買方必賺」。<strong>錯。</strong>到期損益平衡取決於<strong>實付的權利金總額</strong>：若你用 0.85×straddle 當 Expected Move，但實際付出的 straddle 權利金較高，即使移動超過 Expected Move 仍可能虧損（見下方測驗 Q13）。</li>
     </ul>
   </div>
 </div>
@@ -837,18 +855,19 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>VIX 的特性</h4>
     <ul>
-      <li><strong>Mean Reversion</strong>：VIX 長期平均約 18-20，會回歸均值</li>
+      <li><strong>Mean Reversion</strong>：VIX 有均值回歸傾向，但「長期平均」會因取樣起訖期間不同而異（常被引用約 18-20，僅為概略參考，非固定水位）。</li>
       <li><strong>Skew</strong>：VIX spike（急漲）快，下降慢 — 恐慌來得突然</li>
       <li><strong>與 SPX 負相關</strong>：約 -0.8 相關性，但非完美 — 偶爾同步上漲（2018/2 Volmageddon）</li>
       <li><strong>不可直接交易</strong>：VIX 是指數，需要透過期貨或 ETF（VXX, UVXY, SVXY）</li>
     </ul>
 
-    <h4>VIX 交易策略</h4>
+    <h4>VIX 交易策略（示例思路，非買賣指令）</h4>
     <div class="highlight">
       <ul>
-        <li><strong>VIX &lt; 13 時</strong>：買入 VIX Call（便宜的 tail hedge），或買入 SPX Put Spread</li>
-        <li><strong>VIX &gt; 35 時</strong>：考慮做空 VIX（mean reversion），或買入 SPX Call</li>
-        <li><strong>VIX Term Structure</strong>：Contango = 正常；Backwardation = 恐慌（逆向看多信號）</li>
+        <li><strong>重要：VIX 低 ≠ VIX call 便宜。</strong>VIX 選擇權定價基於 VIX <strong>期貨</strong>（非 VIX 現貨）、再加上自身的 vol-of-vol skew 與 option premium；VIX 現貨在低檔時，期貨可能仍有可觀的 contango 溢價，call 未必「便宜」。不能把「VIX 低」直接當成「買 VIX call」的訊號。</li>
+        <li><strong>VIX 偏低時</strong>：有人會把 tail hedge（VIX call、SPX put spread）視為相對划算 —— 但須實際檢查 VIX 期貨、skew 與權利金後再判斷，<strong>不是看到 VIX&lt;13 就機械式買進</strong>。</li>
+        <li><strong>VIX 偏高時</strong>：均值回歸是傾向而非保證；做空 VIX 在 spike 時可瞬間巨虧（見下方陷阱），<strong>不是看到 VIX&gt;35 就該做空</strong>。</li>
+        <li><strong>VIX Term Structure</strong>：Contango 常見於平靜期；Backwardation 常伴隨恐慌，有時對應階段底部 —— 觀察傾向，非必然訊號。</li>
       </ul>
     </div>
 
@@ -916,7 +935,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <table>
       <tr><th>項目</th><th>說明</th></tr>
       <tr><td>方向</td><td><span class="tag neutral">中性偏多</span> — 認為短期不會大漲</td></tr>
-      <tr><td>最大獲利</td><td>(Strike - 買入成本) + Premium</td></tr>
+      <tr><td>最大獲利</td><td>（Strike - 買入成本） + Premium</td></tr>
       <tr><td>最大虧損</td><td>買入成本 - Premium（股票歸零）</td></tr>
       <tr><td>Break-even</td><td>買入成本 - Premium</td></tr>
       <tr><td>何時使用</td><td>持有股票、看法中性偏多、想增加收入</td></tr>
@@ -946,7 +965,12 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <div class="highlight">
-      <strong>適用情境</strong>：持有 AAPL 長期部位，股價 $180，賣出下週 $185 Call 收 $2 premium。如果股價不超過 $185，白賺 $200/周。如果超過 $185，以 $185 被 call away（但你已鎖利 + 收 premium）。
+      <strong>適用情境</strong>：持有 AAPL 長期部位，股價 $180，賣出下週 $185 Call 收 $2 premium（$200/張）。
+      <ul>
+        <li>若到期時股價在 $185 以下，你保留 premium —— 但這 $200 <strong>並非「白賺」</strong>：它只是一小段下檔緩衝（股價跌破 $178 後整體仍虧），且你放棄了股價大漲超過 $185 的上檔空間。</li>
+        <li>若股價跌到 $150，你的股票仍大虧，premium 只抵銷其中 $2；<strong>Covered Call 不提供真正的下檔保護</strong>（要保護下檔應用 Protective Put）。</li>
+        <li>若股價超過 $185，可能被以 $185 call away，等於以 $185+$2 的上限賣出。</li>
+      </ul>
     </div>
   </div>
 </div>
@@ -964,7 +988,7 @@ tr:nth-child(even) { background: var(--bg3); }
       <tr><th>項目</th><th>說明</th></tr>
       <tr><td>方向</td><td><span class="tag bullish">看多</span> — 但想保護下行</td></tr>
       <tr><td>最大獲利</td><td>無限（股票上漲）</td></tr>
-      <tr><td>最大虧損</td><td>(買入成本 - Strike) + Premium</td></tr>
+      <tr><td>最大虧損</td><td>（買入成本 - Strike） + Premium</td></tr>
       <tr><td>Break-even</td><td>買入成本 + Premium</td></tr>
       <tr><td>何時使用</td><td>持有股票、看多但擔心黑天鵝事件</td></tr>
     </table>
@@ -1104,10 +1128,9 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>Spread 的 Risk/Reward 設計</h4>
     <div class="highlight">
       <ul>
-        <li><strong>窄 Spread（$5 寬）</strong>：便宜，但最大獲利也小 → 高概率小額</li>
-        <li><strong>寬 Spread（$20 寬）</strong>：較貴，但最大獲利大 → 低概率大額</li>
-        <li><strong>最佳 R/R</strong>：通常設定 1:2 到 1:3 的風險回報比</li>
-        <li><strong>Delta 選擇</strong>：Long leg 選 40-50 Delta，Short leg 選 20-30 Delta</li>
+        <li><strong>窄 Spread（如 $5 寬）</strong>：成本較低，最大獲利也較小</li>
+        <li><strong>寬 Spread（如 $20 寬）</strong>：成本較高，最大獲利較大</li>
+        <li><strong>風險回報比</strong>：下列數字（如 1:2～1:3 的 R/R、Long leg 40-50 Delta、Short leg 20-30 Delta）都是<strong>常見示例設定，不是「最佳」或固定準則</strong>；合適的寬度、delta 與目標 R/R 取決於你的看法、IV 環境與風險容忍度。</li>
       </ul>
     </div>
   </div>
@@ -1156,13 +1179,14 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>Iron Condor 管理技巧</h4>
     <div class="highlight green">
+      <p style="margin-top:0; font-size:13px; color:var(--text3);">以下為<strong>常見示例做法</strong>，非固定或最佳規則；實際參數請依標的、IV 與個人風控調整。</p>
       <ul>
-        <li><strong>進場時機</strong>：IV Rank > 50%，GEX 正值，無重大事件</li>
-        <li><strong>Wing 寬度</strong>：通常 $5-$10 寬，取決於標的價格和你的風險容忍度</li>
-        <li><strong>Short Strike 選擇</strong>：15-20 Delta（約 70-80% 勝率）</li>
-        <li><strong>獲利了結</strong>：達到最大獲利 50% 時平倉（不需等到到期）</li>
-        <li><strong>停損</strong>：虧損達到收取 Premium 的 2x 時平倉</li>
-        <li><strong>調整</strong>：若某一邊 threatened，可以 roll（移動）short strike 或平掉該邊</li>
+        <li><strong>進場時機</strong>：常見偏好 IV Rank 偏高、GEX 正值、無重大事件的環境。</li>
+        <li><strong>Wing 寬度</strong>：常見 $5-$10 寬，取決於標的價格與風險容忍度。</li>
+        <li><strong>Short Strike 選擇</strong>：常用約 15-20 Delta。<strong>注意：把 15-20 Delta 說成「70-80% 勝率」只是把 Delta 當到期價內機率的粗略近似</strong>，不是實際勝率保證（Delta≈機率只在特定模型下成立，且未計入提前觸價、調整與尾部）。</li>
+        <li><strong>獲利了結</strong>：常見在達最大獲利約 50% 時平倉。</li>
+        <li><strong>停損</strong>：常見在虧損達收取 Premium 的約 2 倍時平倉。</li>
+        <li><strong>調整</strong>：若某一邊 threatened，可 roll short strike 或平掉該邊。</li>
       </ul>
     </div>
   </div>
@@ -1178,7 +1202,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <table>
       <tr><th>市場環境</th><th>IV 狀態</th><th>推薦策略</th><th>理由</th></tr>
       <tr><td><span class="tag bullish">強烈看多</span></td><td>IV 低</td><td>Long Call / Bull Call Spread</td><td>便宜 + 方向明確</td></tr>
-      <tr><td><span class="tag bullish">溫和看多</span></td><td>IV 高</td><td>Short Put / Bull Put Spread</td><td>收取膨脹的 premium + 向下保護</td></tr>
+      <tr><td><span class="tag bullish">溫和看多</span></td><td>IV 高</td><td>Short Put / Bull Put Spread</td><td>收取膨脹的 premium；Bull Put Spread 僅把最大損失限制在「價差寬度 − 收取 credit」，<strong>並非日常語意的「下行保護」</strong>（股價下跌你仍虧到該上限）</td></tr>
       <tr><td><span class="tag bearish">強烈看空</span></td><td>IV 低</td><td>Long Put / Bear Put Spread</td><td>便宜 + 方向明確</td></tr>
       <tr><td><span class="tag bearish">溫和看空</span></td><td>IV 高</td><td>Short Call / Bear Call Spread</td><td>收取膨脹的 premium</td></tr>
       <tr><td><span class="tag neutral">預期大波動</span></td><td>IV 低</td><td>Long Straddle / Strangle</td><td>做多便宜的 Vol</td></tr>
@@ -1206,12 +1230,13 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
   <div class="card-body">
     <h4>Position Sizing 原則</h4>
+    <p style="font-size:13px; color:var(--text3);">下表的數字（2%、0.5%／天、30%、40%）皆為<strong>示例門檻</strong>，用來示範「設上限」的觀念，<strong>不是通用最佳值</strong>；請依個人資金、策略與風險承受度自訂。</p>
     <table>
-      <tr><th>規則</th><th>說明</th><th>理由</th></tr>
-      <tr><td>單筆最大虧損 &lt; 2% 總資本</td><td>每筆期權交易的最大虧損不超過帳戶 2%</td><td>允許連續 10 次錯誤仍能存活</td></tr>
-      <tr><td>總 Theta 暴露 &lt; 0.5% /天</td><td>所有買方部位每天的 Theta 損耗不超過帳戶 0.5%</td><td>防止時間侵蝕過快消耗資本</td></tr>
-      <tr><td>淨 Delta &lt; 30% 帳戶價值</td><td>方向性暴露不超過帳戶 30%</td><td>防止單方向風險過大</td></tr>
-      <tr><td>同一到期日暴露 &lt; 40%</td><td>不要把所有期權集中在同一到期日</td><td>分散 Gamma risk / pin risk</td></tr>
+      <tr><th>規則（示例）</th><th>說明</th><th>理由</th></tr>
+      <tr><td>單筆最大虧損 &lt; 約 2% 總資本</td><td>每筆期權交易的最大虧損不超過帳戶約 2%</td><td>容許多次連續失誤仍能存活</td></tr>
+      <tr><td>總 Theta 暴露 &lt; 約 0.5% /天</td><td>所有買方部位每天的 Theta 損耗上限</td><td>防止時間侵蝕過快消耗資本</td></tr>
+      <tr><td>淨 Delta &lt; 約 30% 帳戶價值</td><td>方向性暴露上限</td><td>防止單方向風險過大</td></tr>
+      <tr><td>同一到期日暴露 &lt; 約 40%</td><td>不要把所有期權集中在同一到期日</td><td>分散 Gamma risk / pin risk</td></tr>
     </table>
 
     <h4>Greeks 風控面板</h4>
@@ -1300,7 +1325,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q4" value="c"> C. 利率變動</label>
     <label><input type="radio" name="q4" value="d"> D. IV Crush — 波動率坍塌抵消了方向收益</label>
   </div>
-  <div class="explanation">財報後 IV Crush 是經典陷阱。NVDA 漲 4% 讓你的 Delta 賺了，但 IV 從 80% 崩到 35% 讓你的 Vega 虧了更多。只有超出 Expected Move 的移動才能抵消 IV Crush。</div>
+  <div class="explanation">財報後 IV Crush 是經典陷阱。NVDA 漲 4% 讓你的 Delta 賺了，但 IV 從 80% 崩到 35% 讓你的 Vega 虧了更多。能否抵消 IV Crush，最終取決於標的實際移動相對你「實付的權利金」（到期損益平衡在實付權利金附近），Expected Move 只是概略參考而非精確門檻。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
@@ -1337,14 +1362,14 @@ tr:nth-child(even) { background: var(--bg3); }
 </div>
 
 <div class="quiz-q" data-correct="d">
-  <h4>Q8. 你持有 AAPL 300 股，想每週增加收入但不想被 call away。最佳策略？</h4>
+  <h4>Q8. 你持有 AAPL 300 股，想增加收入但<strong>完全不想</strong>被 call away。下列敘述何者最正確？</h4>
   <div class="options">
-    <label><input type="radio" name="q8" value="a"> A. 賣出 ATM Covered Call</label>
-    <label><input type="radio" name="q8" value="b"> B. 買入 OTM Put</label>
-    <label><input type="radio" name="q8" value="c"> C. 賣出 3 張 ATM Put</label>
-    <label><input type="radio" name="q8" value="d"> D. 賣出 3 張遠 OTM Call（20-30 Delta），每週到期</label>
+    <label><input type="radio" name="q8" value="a"> A. 賣出 ATM Covered Call 就不會被 call away</label>
+    <label><input type="radio" name="q8" value="b"> B. 賣 20-30 Delta 的遠 OTM Call 就有「70-80% 安全」，不會被 call away</label>
+    <label><input type="radio" name="q8" value="c"> C. 賣出 3 張 ATM Put 可避免被 call away</label>
+    <label><input type="radio" name="q8" value="d"> D. 任何賣出的 Call 都帶有被 call away 的風險；若真的完全不想被 call away，最可靠的做法是不賣 Covered Call，或在 Call 轉為價內前買回（會降低或抵銷收入）。低 Delta 只降低機率，不等於安全。</label>
   </div>
-  <div class="explanation">Covered Call 選擇遠 OTM（20-30 Delta）= 被 call away 概率低（70-80% 安全）+ 每週收取 premium。ATM 太容易被 call away。選擇 weekly expiry 加速 Theta 收割。3 張 = 300 股的完整覆蓋。</div>
+  <div class="explanation">只要賣出 Call，就存在被行使（assignment）的可能，美式期權甚至可能提前被行使 —— 沒有任何 Delta 能讓它「安全」。20-30 Delta 僅降低機率、並非 70-80% 的保證。若你完全不能接受股票被賣走，正解是不賣 Covered Call，或承諾在 Call 轉價內前買回（代價是收入減少甚至轉為成本）。賣 Put（選項 C）則可能被 assign 而<em>買進</em>更多股票，無法達成目的。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
@@ -1355,7 +1380,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q9" value="c"> C. 做空 VIX（它會繼續下跌）</label>
     <label><input type="radio" name="q9" value="d"> D. 此時波動率策略無效</label>
   </div>
-  <div class="explanation">VIX 11 = 極度自滿。保險（VIX Call / SPX Put）此時極便宜。歷史上 VIX 在 11 附近時，未來 3 個月出現 VIX spike > 25 的概率很高。Risk/Reward 極佳：花小錢買大保險。賣 Straddle 此時 Theta 太低，風險/回報不佳。</div>
+  <div class="explanation">VIX 11 = 市場極度平靜。此時便宜的主要是 SPX Put（IV 低）；但要注意「VIX 低 ≠ VIX Call 便宜」——VIX 選擇權是依 VIX 期貨＋vol-of-vol／skew 定價，低檔期貨常有 contango 溢價，須先檢查期貨結構、skew 與權利金才知貴賤。歷史上低 VIX 之後出現 spike 並不罕見，但沒有固定機率，須自行驗證。相對地，此時賣 Straddle 的 Theta 偏低、尾部風險大，風險／回報不佳。</div>
 </div>
 
 <div class="quiz-q" data-correct="c">

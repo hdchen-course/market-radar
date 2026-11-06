@@ -113,8 +113,9 @@ tr:nth-child(even) { background: var(--bg3); }
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
 <div class="card-body" style="display:block;border-top:none;">
 <h4 style="color:#ea580c;">指標使用限制</h4>
-<p><strong>鏈上指標</strong> 提供長期趨勢判斷，不適合短線進出場 timing。NUPL/MVRV 適合判斷週期位置，不適合日內交易。<br>
-<strong>數據延遲</strong>：鏈上數據通常有 1-24 小時延遲，不是即時交易信號。<br>
+<p><strong>鏈上指標</strong> 提供長期趨勢判斷，不適合短線進出場 timing。NUPL／MVRV 適合判斷週期位置，不適合日內交易。<br>
+<strong>數據延遲</strong>：原始鏈上資料本身可接近即時（區塊確認後即可讀取），不是必然延遲 1-24 小時；你看到的延遲多半來自資料商（vendor）的免費方案等級、指標計算與地址標籤處理，而非區塊鏈本身。<br>
+<strong>涵蓋範圍有限</strong>：鏈上指標只看得到 L1 公開帳本上的移動。交易所內部帳本調撥、ETF／custodian 的託管活動、L2 與跨鏈上的交易都不完整反映在 L1 數據中，因此不能宣稱「涵蓋所有參與者」。<br>
 <strong>生態變化</strong>：ETF、L2、跨鏈橋等新基礎設施會改變傳統鏈上指標的有效性。</p>
 </div>
 </div>
@@ -138,7 +139,7 @@ tr:nth-child(even) { background: var(--bg3); }
         <li><strong>透明性</strong>：每筆交易永久記錄在區塊鏈上，任何人都可以驗證</li>
         <li><strong>相對難偽造，但非不可操縱</strong>：鏈上行為需要真金白銀，比社交媒體情緒更難憑空造假；但「難偽造」不等於「不可操縱」——實務上仍有多種失真手法（見下方警語）</li>
         <li><strong>先行指標（傾向而非保證）</strong>：大戶的鏈上行為（轉帳、質押、提幣）常先於價格變動，但並非每次都領先</li>
-        <li><strong>全面性</strong>：涵蓋所有參與者 — 從散戶到鯨魚到礦工</li>
+        <li><strong>涵蓋面較廣但非全貌</strong>：可觀察 L1 上從散戶到鯨魚到礦工的移動；但交易所內部帳本、ETF／custodian 託管、L2 與跨鏈活動不在 L1 數據中，不等於看見所有參與者</li>
       </ul>
     </div>
 
@@ -155,16 +156,16 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>鏈上 vs 鏈下數據</h4>
     <table>
       <tr><th>類型</th><th>來源</th><th>範例</th><th>特性</th></tr>
-      <tr><td><strong>鏈上 (On-Chain)</strong></td><td>區塊鏈公開帳本</td><td>UTXO 移動、智能合約互動、Gas 費</td><td>透明、不可篡改、有延遲</td></tr>
+      <tr><td><strong>鏈上 (On-Chain)</strong></td><td>區塊鏈公開帳本</td><td>UTXO 移動、智能合約互動、Gas 費</td><td>透明、不可篡改；原始資料近即時（延遲多來自資料商）</td></tr>
       <tr><td><strong>鏈下 (Off-Chain)</strong></td><td>交易所、社交媒體</td><td>Order book、Funding Rate、Twitter 情緒</td><td>即時但可被操縱</td></tr>
       <tr><td><strong>混合型</strong></td><td>交易所 + 鏈上</td><td>Exchange Flow（交易所流入/流出）</td><td>結合兩者優勢</td></tr>
     </table>
 
     <h4>UTXO 模型 vs Account 模型</h4>
     <ul>
-      <li><strong>UTXO (Bitcoin)</strong>：每筆交易消耗舊的輸出、產生新的輸出。可以精確追蹤每個「幣」的歷史，計算持有時間和成本</li>
-      <li><strong>Account (Ethereum)</strong>：類似銀行帳戶模型。追蹤地址餘額變化，但無法像 UTXO 一樣精確追蹤「哪顆幣」</li>
-      <li><strong>影響</strong>：BTC 的鏈上指標（如 SOPR、Coin Days Destroyed）基於 UTXO，比 ETH 更精確</li>
+      <li><strong>UTXO (Bitcoin)</strong>：每筆交易消耗舊的輸出（output）、產生新的輸出。可追蹤 output 的移動軌跡與上次移動價格，但 UTXO 會被合併、拆分並產生找零（change），加上同一實體常用多個地址，所以這是對「成本」的近似估計（依賴 entity heuristics），不等於精確還原每一枚幣的真實買入成本</li>
+      <li><strong>Account (Ethereum)</strong>：類似銀行帳戶模型。追蹤地址餘額變化，沒有 output 層級的移動軌跡</li>
+      <li><strong>影響</strong>：BTC 的鏈上指標（如 SOPR、Coin Days Destroyed）基於 UTXO 的 output 軌跡，在成本／持有時間的推估上通常比 ETH 的帳戶模型更細緻，但仍是模型估計而非精確事實</li>
     </ul>
   </div>
 </div>
@@ -252,7 +253,7 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="card-body">
     <h4>定義</h4>
     <p><code>NUPL = (Market Cap - Realized Cap) / Market Cap</code></p>
-    <p>衡量整個市場參與者的「帳面盈虧」狀態。Realized Cap 是每個 UTXO 最後一次移動時的價格加總。</p>
+    <p>以 realized-cap 模型衡量整個市場的「總體帳面盈虧」比例。Realized Cap 是每個 UTXO 最後一次移動時的價格加總。這是一個 aggregate（總量）指標，反映的是全市場的平均狀態，並非每個個別持有者的真實損益。</p>
 
     <div class="svg-container">
       <svg width="100%" style="max-width:580px" viewBox="0 0 580 260" role="img" aria-labelledby="svgTitleNupl">
@@ -271,12 +272,12 @@ tr:nth-child(even) { background: var(--bg3); }
         <text x="55" y="145" text-anchor="end" font-size="10" fill="#16a34a" font-weight="600">0-0.25</text>
         <text x="55" y="175" text-anchor="end" font-size="10" fill="#2563eb" font-weight="600">-0.25-0</text>
         <text x="55" y="205" text-anchor="end" font-size="10" fill="#7c3aed" font-weight="600">&lt;-0.25</text>
-        <text x="300" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Euphoria (歷史頂部)</text>
-        <text x="300" y="85" text-anchor="middle" font-size="11" font-weight="600" fill="#ea580c">Greed (貪婪)</text>
-        <text x="300" y="115" text-anchor="middle" font-size="11" font-weight="600" fill="#eab308">Optimism (樂觀)</text>
-        <text x="300" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Hope (希望)</text>
-        <text x="300" y="175" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Fear (恐懼)</text>
-        <text x="300" y="205" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Capitulation (投降 / 歷史底部)</text>
+        <text x="300" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">Euphoria （歷史頂部）</text>
+        <text x="300" y="85" text-anchor="middle" font-size="11" font-weight="600" fill="#ea580c">Greed （貪婪）</text>
+        <text x="300" y="115" text-anchor="middle" font-size="11" font-weight="600" fill="#eab308">Optimism （樂觀）</text>
+        <text x="300" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Hope （希望）</text>
+        <text x="300" y="175" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">Fear （恐懼）</text>
+        <text x="300" y="205" text-anchor="middle" font-size="11" font-weight="600" fill="#7c3aed">Capitulation （投降 / 歷史底部）</text>
         <polyline points="80,170 120,130 160,90 200,50 220,45 240,55 260,110 300,160 340,180 370,170 400,120 430,75 460,50 480,48 500,60 520,100" fill="none" stroke="#0f172a" stroke-width="2"/>
         <text x="200" y="240" text-anchor="middle" font-size="10" fill="#64748b">2017 Top</text>
         <text x="320" y="240" text-anchor="middle" font-size="10" fill="#64748b">2018 Bottom</text>
@@ -304,21 +305,21 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="card-body">
     <h4>定義</h4>
     <p><code>MVRV = Market Cap / Realized Cap</code></p>
-    <p>衡量市場目前的定價相對於所有持有者的平均成本（Realized Cap）是高估還是低估。</p>
+    <p>以 realized-cap 模型衡量市場目前的定價相對於「總體平均成本」（Realized Cap）是偏高還是偏低。注意這是 aggregate 比值：MVRV 3.5 代表全市場的市值約為總體成本的 3.5 倍，<strong>不代表每個人都獲利 250%</strong>；MVRV &lt; 1 代表總市值低於總體成本，<strong>不代表「所有人」都在虧損</strong>（高點附近買進者虧損、早期低成本持有者可能仍大幅獲利）。</p>
 
-    <h4>關鍵閾值</h4>
+    <h4>常用歷史區間（band，非永久門檻）</h4>
     <table>
-      <tr><th>MVRV</th><th>含義</th><th>歷史對應</th></tr>
-      <tr><td>&gt; 3.5</td><td>極度過熱，所有人平均獲利 250%+</td><td>2017/12, 2021/4</td></tr>
+      <tr><th>MVRV</th><th>含義（總體比值）</th><th>歷史對應</th></tr>
+      <tr><td>&gt; 3.5</td><td>總市值約為總體成本 3.5 倍以上＝偏極端</td><td>2017/12, 2021/4</td></tr>
       <tr><td>2.0 - 3.5</td><td>偏高但未到極端</td><td>牛市中段</td></tr>
-      <tr><td>1.0 - 2.0</td><td>正常範圍</td><td>大部分時間</td></tr>
-      <tr><td>&lt; 1.0</td><td>所有人平均虧損！</td><td>2018/12, 2020/3, 2022/11</td></tr>
+      <tr><td>1.0 - 2.0</td><td>一般範圍</td><td>大部分時間</td></tr>
+      <tr><td>&lt; 1.0</td><td>總市值低於總體成本（總體帳面虧損，非人人虧損）</td><td>2018/12, 2020/3, 2022/11</td></tr>
     </table>
 
     <h4>MVRV Z-Score</h4>
     <p><code>Z-Score = (Market Cap - Realized Cap) / Std(Market Cap)</code></p>
     <div class="highlight green">
-      <strong>Z-Score 更精確</strong>：消除了 market cap 成長帶來的偏差。Z-Score &gt; 7 = 賣出，Z-Score &lt; 0.1 = 買入。
+      <strong>Z-Score 的用途</strong>：以標準差標準化，降低 market cap 長期成長帶來的偏差，讓不同週期較可比較。過去幾輪週期中，Z-Score 高到約 7 附近常對應頂部區域、低到約 0.1 以下常對應底部區域——這是<strong>歷史統計 band（傾向），不是永久有效的固定買賣門檻</strong>；樣本數少、且隨市場結構（ETF／機構化）改變可能漂移，須搭配其他指標與價格確認。
     </div>
 
     <h4>MVRV 的變體</h4>
@@ -338,9 +339,9 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="card-body">
     <h4>定義</h4>
     <ul>
-      <li><strong>STH (Short-Term Holder)</strong>：持有 &lt; 155 天的地址</li>
-      <li><strong>LTH (Long-Term Holder)</strong>：持有 &gt; 155 天的地址</li>
-      <li><strong>Realized Price</strong>：該群體所有 UTXO 的加權平均成本</li>
+      <li><strong>STH (Short-Term Holder)</strong>：155 天是以 UTXO「上次移動至今的 age cohort」劃分的 heuristic 門檻——UTXO age &lt; 155 天者歸為短期。它衡量的是「幣多久沒動」，不是「某個地址／某個人持有了幾天」</li>
+      <li><strong>LTH (Long-Term Holder)</strong>：UTXO age &gt; 155 天者歸為長期（同為 age cohort heuristic，155 天是慣用但人為選定的切點）</li>
+      <li><strong>Realized Price</strong>：該群體所有 UTXO 以上次移動價格計的加權平均，是成本的模型近似值（受找零、實體多地址等影響），非精確買入成本</li>
     </ul>
 
     <h4>解讀框架</h4>
@@ -352,19 +353,19 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="highlight">
-      <strong>牛市中的支撐</strong>：在牛市中，BTC 價格回測 STH Realized Price 通常是絕佳買點（類似傳統技術分析中的「回測均線」）。
+      <strong>牛市中的參考位</strong>：在過去幾輪牛市中，BTC 價格回測 STH Realized Price 後常獲得支撐並反彈（類似「回測均線」）。但 STH Realized Price <strong>不是可靠保證的支撐</strong>——它只是群體平均成本的模型值，價格多次有效跌破的情形也發生過（例如趨勢轉熊時）。把它當作值得留意的觀察位，不是穩賺的買點。
     </div>
 
     <h4>STH-SOPR 組合</h4>
-    <p>當 STH 的 SOPR &lt; 1（短期持有者在虧損狀態下賣出）+ 價格觸及 STH Realized Price = 高概率反轉點。</p>
+    <p>當 STH 的 SOPR &lt; 1（短期持有者在虧損狀態下賣出）＋ 價格觸及 STH Realized Price，歷史上較常出現反轉，但這是傾向而非保證，仍須價格行為確認。</p>
 
     <h4>LTH/STH Supply Ratio</h4>
     <div class="highlight purple">
       <ul>
-        <li><strong>LTH Supply 佔比上升</strong>：更多 BTC 被長期鎖定 = 流動供給減少 = 長期利好</li>
-        <li><strong>LTH Supply 佔比下降</strong>：長期持有者開始分發 = Distribution 階段開始</li>
-        <li><strong>歷史規律</strong>：每個牛市頂部前 3-6 個月，LTH Supply 開始下降</li>
-        <li><strong>Illiquid Supply</strong>：從不移動或極少移動的 BTC 數量 — 持續上升代表「鑽石手」增加</li>
+        <li><strong>LTH Supply 佔比上升</strong>：較多 BTC 的 UTXO age 跨過門檻被歸為長期＝傾向流動供給減少＝偏長期利好</li>
+        <li><strong>LTH Supply 佔比下降</strong>：常被解讀為長期持有者開始分發；但也可能是 coin aging 的統計效應（大批同期幣集中跨過或未跨過門檻），或資料商的 entity／標籤調整所致，不必然等於真實賣出</li>
+        <li><strong>歷史傾向（非鐵律）</strong>：過去幾輪牛市頂部前數月，LTH Supply 常先走降；樣本少，不保證每輪重演</li>
+        <li><strong>Illiquid Supply</strong>：被歸類為極少移動的 BTC 數量——持續上升常被解讀為「鑽石手」增加，惟其分類同樣依賴 entity heuristics</li>
       </ul>
     </div>
   </div>
@@ -414,14 +415,14 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <h4>aSOPR (Adjusted SOPR)</h4>
-    <p>移除了 coin age &lt; 1 hour 的交易（排除交易所內部轉帳和 change outputs），更能反映真實的獲利/虧損行為。</p>
+    <p>排除 coin age &lt; 1 小時的 output，用意是濾掉部分雜訊。但「age &lt; 1 小時」只是粗略過濾——它<strong>無法排除所有找零（change outputs）或交易所／custodian 的內部搬移</strong>（這些移動的 output age 常大於一小時），因此 aSOPR 仍是對真實獲利／虧損行為的近似，而非乾淨無雜訊的量測。</p>
 
     <h4>SOPR 的進階用法</h4>
     <table>
       <tr><th>SOPR 變體</th><th>定義</th><th>最佳用途</th></tr>
       <tr><td>STH-SOPR</td><td>只看短期持有者的 SOPR</td><td>判斷短期市場情緒和支撐/阻力</td></tr>
       <tr><td>LTH-SOPR</td><td>只看長期持有者的 SOPR</td><td>判斷大週期的分發/積累</td></tr>
-      <tr><td>aSOPR</td><td>去除 noise 的調整版</td><td>最乾淨的通用信號</td></tr>
+      <tr><td>aSOPR</td><td>濾掉部分短時 output 的調整版</td><td>較少雜訊的通用信號（非完全乾淨）</td></tr>
       <tr><td>Entity-Adjusted SOPR</td><td>以實體（非地址）為單位</td><td>消除同一人多地址的干擾</td></tr>
     </table>
 
@@ -446,11 +447,12 @@ tr:nth-child(even) { background: var(--bg3); }
     <p><code>Exchange Netflow = 流入交易所的 BTC - 流出交易所的 BTC</code></p>
 
     <table>
-      <tr><th>情境</th><th>Netflow</th><th>含義</th><th>方向</th></tr>
-      <tr><td>大量流入</td><td>&gt; 0</td><td>準備在交易所賣出</td><td><span class="tag bearish">Bearish</span></td></tr>
-      <tr><td>大量流出</td><td>&lt; 0</td><td>提幣到冷錢包 = 長期持有</td><td><span class="tag bullish">Bullish</span></td></tr>
-      <tr><td>鯨魚單筆大額流入</td><td>&gt; 0</td><td>大戶即將出貨</td><td><span class="tag bearish">Strong Bearish</span></td></tr>
+      <tr><th>情境</th><th>Netflow</th><th>常見解讀（非必然）</th><th>傾向</th></tr>
+      <tr><td>大量流入</td><td>&gt; 0</td><td>幣流向被標記為交易所的地址，<strong>可能</strong>準備賣出；但也可能是入金做市、轉入理財／衍生品保證金或內部調撥</td><td><span class="tag bearish">偏空</span></td></tr>
+      <tr><td>大量流出</td><td>&lt; 0</td><td>提幣離開交易所，<strong>常</strong>被解讀為轉冷錢包長期持有；但提款不必然等於長抱（可能轉去 DeFi、質押、OTC 或其他交易所）</td><td><span class="tag bullish">偏多</span></td></tr>
+      <tr><td>鯨魚單筆大額流入</td><td>&gt; 0</td><td>大戶<strong>可能</strong>準備出貨，但需先確認該地址並非 custodian／內部錢包</td><td><span class="tag bearish">偏空（待確認）</span></td></tr>
     </table>
+    <p style="font-size:13px;color:var(--text3);">提醒：Exchange Flow 只反映「幣是否移進／移出被資料商標記為交易所的地址」，標籤不完整或分類錯誤都會失真；它是意圖的間接線索，不是成交意圖本身。</p>
 
     <div class="highlight orange">
       <strong>注意事項</strong>：
@@ -470,12 +472,14 @@ tr:nth-child(even) { background: var(--bg3); }
       <tr><td>Difficulty Ribbon</td><td>不同 MA 期間的挖礦難度帶</td><td>壓縮 = 礦工投降結束 = 買入</td></tr>
     </table>
 
-    <h4>減半週期效應</h4>
+    <h4>減半週期效應（可供觀察的完整減半後週期僅約 3 個，統計意義有限）</h4>
+    <p style="font-size:13px;color:var(--text3);">截至目前比特幣只經歷過 2012、2016、2020、2024 共四次減半，可供「減半後走勢」觀察的完整週期更少。以下是對過往少數樣本的描述，<strong>不是統計可靠的規律</strong>，切勿當作必然會重演的劇本。</p>
     <ul>
-      <li><strong>減半前 6 個月</strong>：市場開始 price in，通常溫和上漲</li>
-      <li><strong>減半後 3-6 個月</strong>：供給衝擊開始顯現，加速上漲</li>
-      <li><strong>減半後 12-18 個月</strong>：過往幾輪多曾達到新 ATH（歷史規律，無保證重演，須自行驗證）</li>
-      <li><strong>注意</strong>：每次減半效應遞減（區塊獎勵佔比越來越小）</li>
+      <li><strong>減半前數月</strong>：過往部分時候市場提前 price in，走勢溫和——但並非每次如此</li>
+      <li><strong>減半後數月</strong>：有幾輪出現上漲，常被歸因於供給衝擊</li>
+      <li><strong>減半後約 12-18 個月</strong>：過往幾輪曾達到新 ATH（歷史現象，樣本極少、無保證重演）</li>
+      <li><strong>機制澄清</strong>：減半<strong>降低的是「新增發行速度」（new issuance），不是減少既有流通供給</strong>；既有的 BTC 總量不變。供給增速放慢是否推升價格，取決於同期需求——<strong>需求不會因減半自動增加</strong>，也可能被宏觀逆風抵銷</li>
+      <li><strong>效應遞減</strong>：每次減半使新增發行佔既有總量的比例越來越小，邊際供給衝擊理應遞減</li>
     </ul>
 
     <div class="highlight purple">
@@ -498,16 +502,17 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>1. Staking Rate（質押比例）</h4>
     <table>
       <tr><th>指標</th><th>Bullish</th><th>Bearish</th></tr>
-      <tr><td>Staking Ratio 上升</td><td>供給減少 + 長期信心增加</td><td>-</td></tr>
+      <tr><td>Staking Ratio 上升</td><td>常被解讀為長期信心增加；但 liquid staking／restaking（如 stETH、EigenLayer）讓質押的 ETH 仍可在 DeFi 流通抵押，<strong>不必然等於鎖死流動供給</strong></td><td>-</td></tr>
       <tr><td>Staking Ratio 下降</td><td>-</td><td>validators 退出 = 信心動搖</td></tr>
       <tr><td>Staking Queue 增長</td><td>需求旺盛</td><td>-</td></tr>
       <tr><td>Exit Queue 增長</td><td>-</td><td>大規模退出 = 風險</td></tr>
     </table>
 
     <h4>2. Gas Fee（Gas 費用）</h4>
+    <p style="font-size:13px;color:var(--text3);">以下 5／10／50 gwei 只是舊時代的粗略參考區間。<strong>L2（Arbitrum／Optimism／Base）把大量活動搬離 L1、加上 EIP-4844（proto-danksharding，2024 年引入 blob）大幅降低 L2 向 L1 回傳資料的成本後，L1 gas 的絕對數值已結構性下移</strong>——同樣是「低 gwei」，今天更可能代表活動遷移到 L2，而非生態衰退。看 gas 時務必同時看 L2 的使用量。</p>
     <ul>
-      <li><strong>High Gas (&gt; 50 gwei)</strong>：鏈上活躍度高 = 使用需求強 = 生態健康</li>
-      <li><strong>Low Gas (&lt; 10 gwei)</strong>：鏈上沉寂 = 需求疲弱 = 可能見底也可能持續低迷</li>
+      <li><strong>相對偏高</strong>：L1 區塊空間競爭激烈＝某類需求（NFT、DeFi、迷因幣）正熱，不等同整體生態健康</li>
+      <li><strong>相對偏低</strong>：可能是需求疲弱，<strong>也可能只是活動已遷往 L2</strong>——兩者要靠 L2 數據區分</li>
       <li><strong>Gas Spike</strong>：通常由 NFT mint、DeFi 清算、或新協議上線引發</li>
     </ul>
 
@@ -517,8 +522,9 @@ tr:nth-child(even) { background: var(--bg3); }
       <ul>
         <li><strong>High Burn</strong>：大量 ETH 被銷毀 → 供給通縮 → 長期利好價格</li>
         <li><strong>Low Burn</strong>：銷毀量低於 PoS 新發行量 → ETH 供給通膨</li>
-        <li><strong>淨通縮日</strong>：Burn &gt; Issuance = 每天 ETH 總量在減少</li>
+        <li><strong>淨通縮日</strong>：Burn &gt; Issuance = 當日 ETH 總量淨減少</li>
       </ul>
+      <p style="margin:8px 0 0;font-size:13px;">註：PoS 的每日新發行量<strong>不是固定的 1,600 ETH</strong>，它隨「總質押 ETH 數量」按協議公式變動（質押越多、單位發行率越低但總發行量方向上升）；實際日發行量須以當期鏈上數據為準。</p>
     </div>
 
     <div class="svg-container">
@@ -531,7 +537,7 @@ tr:nth-child(even) { background: var(--bg3); }
         <text x="280" y="225" text-anchor="middle" font-size="11" fill="#64748b">Time</text>
         <text x="540" y="115" font-size="10" fill="#64748b">0</text>
         <rect x="80" y="95" width="420" height="25" fill="#dc262630" rx="2"/>
-        <text x="290" y="112" text-anchor="middle" font-size="10" fill="#dc2626">PoS Issuance (~1600 ETH/day)</text>
+        <text x="290" y="112" text-anchor="middle" font-size="10" fill="#dc2626">PoS Issuance （隨質押量變動，非固定）</text>
         <rect x="80" y="120" width="40" height="60" fill="#16a34a80" rx="2"/>
         <rect x="130" y="120" width="40" height="40" fill="#16a34a80" rx="2"/>
         <rect x="180" y="120" width="40" height="80" fill="#16a34a80" rx="2"/>
@@ -555,9 +561,9 @@ tr:nth-child(even) { background: var(--bg3); }
 
     <h4>ETH/BTC Ratio 作為風險偏好指標</h4>
     <ul>
-      <li><strong>ETH/BTC 上升</strong>：市場 risk-on，資金從 BTC 流向更高 beta 資產</li>
-      <li><strong>ETH/BTC 下降</strong>：市場 risk-off，資金回流 BTC 避險</li>
-      <li><strong>歷史規律</strong>：牛市後期 ETH outperform BTC → ALT season 信號</li>
+      <li><strong>ETH/BTC 上升</strong>：市場偏 risk-on，資金傾向從 BTC 流向更高 beta 資產</li>
+      <li><strong>ETH/BTC 下降</strong>：市場偏 risk-off，資金在加密內部相對回流 BTC。注意這是<strong>加密資產「相對強弱」的輪動，不代表 BTC 是避險資產</strong>——系統性下跌時 BTC 常與 ETH 同步重挫，只是跌幅可能較小。真正的避險通常是離開加密、轉入現金／美元／國債</li>
+      <li><strong>歷史傾向</strong>：牛市後期 ETH 時常 outperform BTC，被視為 ALT season 的線索之一（非必然）</li>
     </ul>
   </div>
 </div>
@@ -569,7 +575,10 @@ tr:nth-child(even) { background: var(--bg3); }
   </div>
   <div class="card-body">
     <h4>定義</h4>
-    <p><strong>TVL (Total Value Locked)</strong> = 所有 DeFi 協議中鎖定的資產總值。代表市場願意承擔智能合約風險的資金量。</p>
+    <p><strong>TVL (Total Value Locked)</strong> = 所有 DeFi 協議中鎖定的資產總值，概略代表市場願意承擔智能合約風險的資金量。</p>
+    <div class="highlight orange">
+      <strong>TVL 會被重複計算（double counting）</strong>：同一筆資金在 liquid staking → 再質押（restaking）→ 借貸 → LP 之間層層套疊時，可能被多個協議各自計入一次，使總 TVL 灌水。此外 TVL 以價格×數量計算，會同時受<strong>槓桿疊加、restaking、以及 token 價格本身</strong>影響。解讀時優先看「net deposits（淨存入）」與去重後的口徑，而非單一總數。
+    </div>
 
     <table>
       <tr><th>TVL 變化</th><th>含義</th><th>延伸</th></tr>
@@ -579,7 +588,7 @@ tr:nth-child(even) { background: var(--bg3); }
     </table>
 
     <div class="highlight">
-      <strong>注意 TVL 的幻覺</strong>：TVL 以 USD 計算時，token 價格下跌會自動降低 TVL。需要看「以 ETH 計價」的 TVL 來判斷真實資金流動。
+      <strong>注意 TVL 的計價幻覺</strong>：TVL 以 USD 計算時，token 價格下跌會自動降低 TVL。改以「ETH 計價」可去掉一部分 ETH／USD 匯率波動的影響，但<strong>它仍是「價值」而非「真實資金流」</strong>——ETH 計價的 TVL 同樣受池內其他 token 價格波動影響。要判斷資金真的進出，應看<strong>以 token 單位（units）計的存量變化與 net deposits</strong>，而不是任何以價格換算的總值。
     </div>
 
     <h4>關鍵 DeFi 指標</h4>
@@ -658,29 +667,32 @@ tr:nth-child(even) { background: var(--bg3); }
   <div class="card-body">
     <h4>核心邏輯</h4>
     <div class="highlight">
-      <strong>Stablecoin Market Cap = 加密市場的「彈藥庫」</strong>。更多 stablecoin 被鑄造 = 更多法幣進入加密生態 = 潛在買壓。
+      <strong>Stablecoin Market Cap 概略反映加密市場的「潛在彈藥」</strong>。更多 stablecoin 在外流通，<strong>往往</strong>意味有更多可部署的資金，但<strong>鑄造（mint）不等於同額新法幣入場</strong>——詳見下方 mint 機制的澄清。
     </div>
 
     <table>
-      <tr><th>指標</th><th>Bullish</th><th>Bearish</th></tr>
-      <tr><td>USDT Market Cap 增加</td><td>新錢入場，尤其是亞洲/新興市場</td><td>-</td></tr>
-      <tr><td>USDT Market Cap 減少</td><td>-</td><td>資金離場</td></tr>
-      <tr><td>USDC Market Cap 增加</td><td>美國機構/合規資金入場</td><td>-</td></tr>
-      <tr><td>Stablecoin / Total Crypto MC 比例高</td><td>大量 dry powder 等待部署</td><td>-</td></tr>
+      <tr><th>指標</th><th>偏多解讀（傾向）</th><th>偏空解讀（傾向）</th></tr>
+      <tr><td>USDT Market Cap 增加</td><td>可能有增量資金／需求；但也可能是發行方備足庫存（treasury inventory）、跨鏈 swap 搬移，或只是從其他 stablecoin 轉換</td><td>-</td></tr>
+      <tr><td>USDT Market Cap 減少</td><td>-</td><td>可能資金離場，亦可能僅是贖回庫存或跨鏈調整</td></tr>
+      <tr><td>USDC Market Cap 增加</td><td>常與美國／合規管道需求相關；不等於全是機構新錢</td><td>-</td></tr>
+      <tr><td>Stablecoin / Total Crypto MC 比例高</td><td>場邊資金相對較多；但此比例也會因加密總市值（分母）下跌而被動升高——見下方 Dominance 的澄清</td><td>-</td></tr>
     </table>
 
-    <h4>USDC vs USDT 的差異</h4>
+    <h4>USDC vs USDT 的差異（傾向，非身分標籤）</h4>
     <ul>
-      <li><strong>USDT</strong>：全球性，亞洲主導，零售和場外交易為主</li>
-      <li><strong>USDC</strong>：美國合規，機構偏好，代表「聰明錢」入場</li>
-      <li>當 USDC 供給增長但 USDT 持平 = 機構在建倉</li>
+      <li><strong>USDT</strong>：全球流通、亞洲與場外使用較多；但<strong>不等於「亞洲散戶」</strong>——持有者含做市商、交易所、機構與各地用戶</li>
+      <li><strong>USDC</strong>：美國合規管道占比較高、機構較常用；但<strong>不等於「機構聰明錢」</strong>，也大量用於 DeFi 與一般零售</li>
+      <li>USDC 供給增長而 USDT 持平，<strong>常被解讀</strong>為合規／機構管道較活躍，但仍可能只是兩者之間的轉換，須搭配其他證據</li>
     </ul>
 
     <h4>Stablecoin Dominance</h4>
     <p><code>Stablecoin Dominance = Stablecoin MC / Total Crypto MC</code></p>
+    <div class="highlight orange">
+      <strong>小心分母效應</strong>：Dominance 是比值，分母是加密總市值。<strong>Dominance 上升可能只是因為加密幣價大跌（分母縮小），而非真的有更多穩定幣場邊待命</strong>。只有在 stablecoin 的「絕對供給（units）同時成長」時，才比較能說是「dry powder（待部署資金）增加」。單看 Dominance 升高就宣稱有大量買盤在觀望，會把價格下跌誤讀成資金流入。
+    </div>
     <ul>
-      <li>Dominance 高（&gt; 10%）= 資金在觀望，尚未入場 = 未來有買壓空間</li>
-      <li>Dominance 低（&lt; 5%）= 資金已 fully deployed = 缺乏增量資金</li>
+      <li>Dominance 偏高：<strong>可能</strong>場邊資金較多，<strong>也可能</strong>是幣價下跌造成的被動上升——需對照穩定幣絕對供給</li>
+      <li>Dominance 偏低：<strong>可能</strong>資金多已部署，<strong>也可能</strong>是幣價上漲把分母推高</li>
     </ul>
   </div>
 </div>
@@ -691,18 +703,24 @@ tr:nth-child(even) { background: var(--bg3); }
     <h3>USDT/USDC Mint-Burn 作為先行指標</h3>
   </div>
   <div class="card-body">
-    <h4>Mint (鑄造) = 新供給 = 新資金入場</h4>
+    <h4>Mint （鑄造） — 供給增加，但不必然等於新法幣入場</h4>
     <div class="highlight green">
-      <strong>Mint 邏輯</strong>：Tether/Circle 只會在收到法幣後才鑄造新的 stablecoin。所以每一次大額 mint = 有人存入了等量的美元。
+      <strong>Mint 邏輯的重要澄清</strong>：鏈上看到的 mint <strong>不一定對應等額的新法幣存入</strong>。常見情形包括：
       <ul>
-        <li><strong>$500M+ USDT Mint</strong>：大型場外交易或機構入場</li>
-        <li><strong>連續多日 Mint</strong>：持續性的資金流入 = 強烈看多</li>
-        <li><strong>Mint 到交易所地址</strong>：準備直接買幣</li>
-        <li><strong>Mint 到 DeFi 地址</strong>：準備部署收益策略</li>
+        <li><strong>Treasury inventory（預鑄庫存）</strong>：發行方先鑄一批放在自家金庫（authorized-but-not-issued／尚未真正發行），待需求出現再釋出——這類 mint 當下並無新法幣進場</li>
+        <li><strong>跨鏈 swap／搬移</strong>：在 A 鏈銷毀、在 B 鏈鑄造，只是同一批幣換鏈，總量未增</li>
+        <li><strong>真實申購</strong>：確有機構／用戶存入法幣換取 stablecoin——這才是「新錢入場」</li>
+      </ul>
+      因此，看到大額 mint 時應先分辨是上述哪一種，不能一律當成等額買壓。以下為「若確為真實資金流入」時的常見解讀：
+      <ul>
+        <li><strong>$500M+ USDT Mint</strong>：可能是大型場外交易或機構活動（需確認非預鑄庫存）</li>
+        <li><strong>連續多日淨增 + 流向交易所／DeFi</strong>：較可能是持續性資金流入，偏多</li>
+        <li><strong>Mint 到交易所地址</strong>：較可能準備交易</li>
+        <li><strong>Mint 到 DeFi 地址</strong>：較可能部署收益策略</li>
       </ul>
     </div>
 
-    <h4>Burn (銷毀) = 供給減少 = 資金離場</h4>
+    <h4>Burn （銷毀） = 供給減少 = 資金離場</h4>
     <div class="highlight red">
       <strong>Burn 邏輯</strong>：用戶將 stablecoin 贖回為法幣時，stablecoin 被銷毀。
       <ul>
@@ -715,7 +733,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>歷史 Mint/Burn 與價格對照</h4>
     <table>
       <tr><th>時期</th><th>Stablecoin 行為</th><th>BTC 走勢</th><th>結論</th></tr>
-      <tr><td>2020 Q3-Q4</td><td>USDT 連續大規模 Mint</td><td>$10K → $30K</td><td>Mint 是先行指標 (+3-4 週)</td></tr>
+      <tr><td>2020 Q3-Q4</td><td>USDT 連續大規模 Mint</td><td>$10K → $30K</td><td>Mint 是先行指標 （+3-4 週）</td></tr>
       <tr><td>2021 Q4</td><td>Mint 停滯，USDC 開始 Burn</td><td>$69K → $35K</td><td>流入枯竭預示頂部</td></tr>
       <tr><td>2022 Q2</td><td>USDT 大規模 Burn（Luna 效應）</td><td>$30K → $17K</td><td>Burn 加速下跌</td></tr>
       <tr><td>2023 Q4</td><td>USDT 恢復 Mint + USDC 回穩</td><td>$27K → $45K</td><td>Mint 恢復 = 信心回歸</td></tr>
@@ -776,12 +794,13 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>為什麼 De-Peg 是最嚴重的風險信號</h4>
     <p>穩定幣是加密生態的基礎設施。當穩定幣脫錨，整個生態的信任基礎動搖。</p>
 
+    <p style="font-size:13px;color:var(--text3);">下列百分比只是<strong>粗略的分級參考，不是固定門檻</strong>。不同 stablecoin 的正常波動範圍、流動性深度與抵押品結構差異很大（演算法型 vs 全額法幣抵押 vs 超額抵押），同樣的脫錨幅度嚴重性完全不同；且門檻會隨市場結構變化而過期。請把它當成「提高警覺的梯度」，而非機械式的進出場規則。</p>
     <table>
-      <tr><th>De-Peg 幅度</th><th>嚴重程度</th><th>應對</th></tr>
-      <tr><td>&lt; 0.5%</td><td>正常波動</td><td>觀察，不需反應</td></tr>
-      <tr><td>0.5% - 2%</td><td>值得關注</td><td>減少該 stablecoin 敞口</td></tr>
-      <tr><td>2% - 5%</td><td>嚴重警告</td><td>立即撤出所有相關部位</td></tr>
-      <tr><td>&gt; 5%</td><td>系統性風險</td><td>全面避險，考慮做空</td></tr>
+      <tr><th>De-Peg 幅度（參考）</th><th>傾向判讀</th><th>可考慮的反應</th></tr>
+      <tr><td>&lt; 0.5%</td><td>多數情況屬正常波動</td><td>觀察</td></tr>
+      <tr><td>0.5% - 2%</td><td>值得關注</td><td>評估是否降低該 stablecoin 敞口</td></tr>
+      <tr><td>2% - 5%</td><td>警訊明顯</td><td>審慎評估撤出相關部位，尤其演算法／低流動性幣</td></tr>
+      <tr><td>&gt; 5%</td><td>可能為系統性風險</td><td>優先保護資本、全面避險</td></tr>
     </table>
 
     <h4>歷史 De-Peg 事件</h4>
@@ -812,8 +831,8 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>主要穩定幣對比</h4>
     <table>
       <tr><th>穩定幣</th><th>機制</th><th>市場份額</th><th>鏈上分析價值</th></tr>
-      <tr><td><strong>USDT</strong></td><td>法幣抵押（中心化）</td><td>~65%</td><td>全球零售需求指標，亞洲市場主導</td></tr>
-      <tr><td><strong>USDC</strong></td><td>法幣抵押（合規）</td><td>~20%</td><td>美國機構需求指標</td></tr>
+      <tr><td><strong>USDT</strong></td><td>法幣抵押（中心化）</td><td>約六成多（會變動）</td><td>全球流通與場外使用較多，亞洲占比高（非專屬散戶）</td></tr>
+      <tr><td><strong>USDC</strong></td><td>法幣抵押（合規）</td><td>約兩成（會變動）</td><td>美國／合規管道占比較高（非僅機構）</td></tr>
       <tr><td><strong>DAI/USDS</strong></td><td>超額抵押（去中心化）</td><td>~5%</td><td>DeFi 生態健康指標</td></tr>
       <tr><td><strong>FDUSD</strong></td><td>法幣抵押（Binance 生態）</td><td>~3%</td><td>Binance 交易需求指標</td></tr>
       <tr><td><strong>USDe (Ethena)</strong></td><td>Delta-Neutral 策略</td><td>~2%</td><td>DeFi 創新風險指標</td></tr>
@@ -831,21 +850,25 @@ tr:nth-child(even) { background: var(--bg3); }
     </div>
 
     <h4>Stablecoin Yield 作為市場情緒指標</h4>
+    <p style="font-size:13px;color:var(--text3);">下列百分比是<strong>會隨時間過期的粗略區間</strong>，不是固定門檻——基準利率環境不同，「正常」的 DeFi 收益水準也不同（例如高利率時期 10% 未必算過熱）。此外同樣的名目收益率，風險差距可能極大，不能只看數字高低。</p>
     <table>
-      <tr><th>DeFi Stablecoin Yield</th><th>含義</th><th>市場階段</th></tr>
-      <tr><td>&gt; 10%</td><td>借貸需求極高 = 市場槓桿過度</td><td>牛市後期 / 過熱</td></tr>
-      <tr><td>5% - 10%</td><td>健康的借貸需求</td><td>正常牛市</td></tr>
-      <tr><td>2% - 5%</td><td>借貸需求偏低</td><td>整理期</td></tr>
-      <tr><td>&lt; 2%</td><td>幾乎無借貸需求</td><td>熊市底部 / 極度冷清</td></tr>
+      <tr><th>DeFi Stablecoin Yield（名目）</th><th>傾向含義</th><th>常見對應階段</th></tr>
+      <tr><td>相對很高</td><td>借貸／槓桿需求旺，常伴隨較高風險</td><td>牛市後期 / 過熱（視利率環境）</td></tr>
+      <tr><td>中等</td><td>借貸需求穩健</td><td>一般牛市</td></tr>
+      <tr><td>偏低</td><td>借貸需求弱</td><td>整理期</td></tr>
+      <tr><td>極低</td><td>幾乎無借貸需求</td><td>熊市底部 / 極度冷清</td></tr>
     </table>
 
     <div class="highlight purple">
-      <strong>進階用法</strong>：比較 DeFi Stablecoin Yield vs US Treasury Yield：
+      <strong>進階用法（須做風險調整，不能直接比名目數字）</strong>：比較 DeFi Stablecoin Yield 與 US Treasury Yield 時，國債的收益幾乎無信用／流動性／合約風險，而 DeFi 收益還需扣除：
       <ul>
-        <li>DeFi Yield > Treasury：資金有動機留在鏈上 = bullish for crypto</li>
-        <li>DeFi Yield < Treasury：資金有動機回歸 TradFi = bearish for crypto</li>
-        <li>2022-2023 年 Fed 加息使 Treasury yield 大幅上升，資金從 DeFi 流出</li>
+        <li><strong>信用風險</strong>：借款方違約、協議壞帳</li>
+        <li><strong>流動性風險</strong>：想退出時池子可能枯竭或須折價</li>
+        <li><strong>智能合約風險</strong>：程式漏洞、被駭、預言機操縱</li>
+        <li><strong>託管／對手方風險</strong>：stablecoin 發行方與平台的 custody 風險（含 de-peg）</li>
+        <li><strong>存續期（duration）風險</strong>：固定利率部位在利率變動時的價格波動</li>
       </ul>
+      只有在把上述風險折算進去後的「風險調整後收益」仍高於國債，才較能說資金有動機留在鏈上。2022-2023 年 Fed 加息使國債收益大幅上升，確實觀察到部分資金由 DeFi 回流 TradFi。
     </div>
   </div>
 </div>
@@ -858,38 +881,38 @@ tr:nth-child(even) { background: var(--bg3); }
 <div class="card">
   <div class="card-header" onclick="toggleCard(this)">
     <span class="arrow">&#9654;</span>
-    <h3>多空力量評估模型 — 打分卡</h3>
+    <h3>多空力量研究 worksheet（多維度對照表）</h3>
   </div>
   <div class="card-body">
-    <h4>完整指標打分卡</h4>
+    <div class="highlight red">
+      <strong>為什麼這不是一張可以「加總打分 → 決定倉位」的卡</strong>：下表的指標<strong>彼此高度相關、且多數同受「價格」這一個共同因子驅動</strong>（NUPL、MVRV、SOPR、LTH 損益、Funding 在價格漲時幾乎同向變動）。把這些重複反映同一件事的指標簡單 +1／−1 加總，等於把同一個訊號重複計算好幾次，會製造「很多指標都同意」的假確定感，再據此推導固定倉位更是沒有統計依據。<strong>請把下表當成「逐維度檢視的研究清單」——用來盤點市場在各面向處於什麼狀態、彼此是否矛盾，而不是一個會吐出分數與倉位的模型。</strong>
+    </div>
+    <h4>多維度對照表（研究用，非評分）</h4>
     <table>
-      <tr><th>類別</th><th>指標</th><th>Bullish 條件 (+1)</th><th>Bearish 條件 (-1)</th></tr>
-      <tr><td>估值</td><td>NUPL</td><td>&lt; 0.25 (低估)</td><td>&gt; 0.75 (泡沫)</td></tr>
-      <tr><td>估值</td><td>MVRV</td><td>&lt; 1.0 (低估)</td><td>&gt; 3.5 (過熱)</td></tr>
+      <tr><th>類別</th><th>指標</th><th>偏多的情況</th><th>偏空的情況</th></tr>
+      <tr><td>估值</td><td>NUPL</td><td>&lt; 0.25 （低估）</td><td>&gt; 0.75 （泡沫）</td></tr>
+      <tr><td>估值</td><td>MVRV</td><td>&lt; 1.0 （低估）</td><td>&gt; 3.5 （過熱）</td></tr>
       <tr><td>行為</td><td>SOPR</td><td>&lt; 1 且牛市回測</td><td>&gt; 1 且持續上升</td></tr>
       <tr><td>行為</td><td>Exchange Flow (BTC)</td><td>淨流出</td><td>淨流入</td></tr>
       <tr><td>供給</td><td>LTH Supply</td><td>持續增加（囤幣中）</td><td>開始減少（分發中）</td></tr>
       <tr><td>供給</td><td>Miner Behavior</td><td>Hash Ribbon 買入信號</td><td>大額 Miner Outflow</td></tr>
       <tr><td>流動性</td><td>Stablecoin Supply</td><td>供給增加（新錢入場）</td><td>供給減少（資金離場）</td></tr>
       <tr><td>流動性</td><td>Stablecoin Exchange</td><td>流入交易所（準備買）</td><td>流出交易所</td></tr>
-      <tr><td>衍生品</td><td>Funding Rate</td><td>&lt; 0 (空頭擠壓)</td><td>&gt; 0.05% (過熱)</td></tr>
-      <tr><td>衍生品</td><td>OI + Price</td><td>OI 下降 + Price 下降 (投降)</td><td>OI 上升 + Price 上升 (過熱)</td></tr>
-      <tr><td>DeFi</td><td>TVL (ETH 計價)</td><td>增長中</td><td>急劇下降</td></tr>
+      <tr><td>衍生品</td><td>Funding Rate</td><td>&lt; 0 （空頭擠壓）</td><td>&gt; 0.05% （過熱）</td></tr>
+      <tr><td>衍生品</td><td>OI + Price</td><td>OI 下降 + Price 下降 （投降）</td><td>OI 上升 + Price 上升 （過熱）</td></tr>
+      <tr><td>DeFi</td><td>TVL （ETH 計價）</td><td>增長中</td><td>急劇下降</td></tr>
       <tr><td>ETH</td><td>ETH/BTC Ratio</td><td>上升（risk-on）</td><td>下降（risk-off）</td></tr>
     </table>
 
     <div class="highlight purple">
-      <strong>使用方法</strong>：<br>
-      每個指標給 +1（Bullish）、0（中性）、-1（Bearish）分數。<br>
-      加總 &gt; +6 = 強烈看多 | 加總 &lt; -6 = 強烈看空 | -3 到 +3 = 混合信號，觀望。
+      <strong>怎麼用這張表（不打分、不輸出倉位）</strong>：
+      <ul>
+        <li>逐列檢視各維度目前偏多還偏空，重點放在<strong>「不同維度是否互相矛盾」</strong>——例如估值偏低但資金面在流出，矛盾本身就是重要資訊</li>
+        <li>把高度相關的指標<strong>視為同一個證據群組</strong>（估值群：NUPL／MVRV；行為群：SOPR／Exchange Flow），避免因它們同向就誤以為是多個獨立確認</li>
+        <li>所有結論都要與<strong>價格行為與宏觀環境</strong>交叉對照，鏈上指標是模型／heuristic，不是精確事實</li>
+        <li>本表<strong>不提供分數門檻，也不建議任何倉位比例</strong>；實際部位大小屬個人風險管理，應依自身資金、停損與風險承受度決定</li>
+      </ul>
     </div>
-
-    <h4>權重建議</h4>
-    <ul>
-      <li><strong>核心指標（2x 權重）</strong>：NUPL, MVRV, Stablecoin Supply — 這些歷史上最準確</li>
-      <li><strong>確認指標（1x 權重）</strong>：SOPR, Exchange Flow, Funding — 用於確認方向</li>
-      <li><strong>輔助指標（0.5x 權重）</strong>：TVL, ETH/BTC, Miner — 提供額外 context</li>
-    </ul>
   </div>
 </div>
 
@@ -923,10 +946,10 @@ tr:nth-child(even) { background: var(--bg3); }
     <h4>各階段詳細指標特徵</h4>
     <table>
       <tr><th>Wyckoff 階段</th><th>鏈上特徵</th><th>衍生品特徵</th><th>Stablecoin 特徵</th></tr>
-      <tr><td><strong>Accumulation</strong><br>(底部建倉)</td><td>NUPL &lt; 0, MVRV &lt; 1<br>Exchange Outflow 持續<br>LTH 不賣</td><td>OI 低, Funding 負或零<br>清算已完成</td><td>Supply 停止下降<br>開始微量 Mint</td></tr>
-      <tr><td><strong>Markup</strong><br>(上漲趨勢)</td><td>SOPR &gt; 1 且穩步上升<br>LTH 不賣<br>STH Cost 作為支撐</td><td>OI 緩慢增長<br>Funding 微正</td><td>Supply 穩定增長<br>流入交易所增加</td></tr>
-      <tr><td><strong>Distribution</strong><br>(頂部出貨)</td><td>NUPL &gt; 0.75<br>Exchange Inflow 增加<br>LTH 開始賣出</td><td>OI 極高<br>Funding &gt; 0.05%</td><td>Mint 停滯<br>Supply 增長放緩</td></tr>
-      <tr><td><strong>Markdown</strong><br>(下跌趨勢)</td><td>SOPR &lt; 1<br>STH 全部虧損<br>Exchange Inflow 恐慌</td><td>連續清算<br>OI 崩塌</td><td>大規模 Burn<br>Supply 下降</td></tr>
+      <tr><td><strong>Accumulation</strong><br>（底部建倉）</td><td>NUPL &lt; 0, MVRV &lt; 1<br>Exchange Outflow 持續<br>LTH 不賣</td><td>OI 低, Funding 負或零<br>清算已完成</td><td>Supply 停止下降<br>開始微量 Mint</td></tr>
+      <tr><td><strong>Markup</strong><br>（上漲趨勢）</td><td>SOPR &gt; 1 且穩步上升<br>LTH 不賣<br>STH Cost 作為支撐</td><td>OI 緩慢增長<br>Funding 微正</td><td>Supply 穩定增長<br>流入交易所增加</td></tr>
+      <tr><td><strong>Distribution</strong><br>（頂部出貨）</td><td>NUPL &gt; 0.75<br>Exchange Inflow 增加<br>LTH 開始賣出</td><td>OI 極高<br>Funding &gt; 0.05%</td><td>Mint 停滯<br>Supply 增長放緩</td></tr>
+      <tr><td><strong>Markdown</strong><br>（下跌趨勢）</td><td>SOPR &lt; 1<br>STH 全部虧損<br>Exchange Inflow 恐慌</td><td>連續清算<br>OI 崩塌</td><td>大規模 Burn<br>Supply 下降</td></tr>
     </table>
   </div>
 </div>
@@ -955,7 +978,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <div class="highlight red">
       <table>
         <tr><th>指標</th><th>當時數值</th><th>信號</th></tr>
-        <tr><td>NUPL</td><td>0.74 (接近 Euphoria)</td><td><span class="tag bearish">Extreme Bearish</span></td></tr>
+        <tr><td>NUPL</td><td>0.74 （接近 Euphoria）</td><td><span class="tag bearish">Extreme Bearish</span></td></tr>
         <tr><td>MVRV</td><td>3.2</td><td><span class="tag bearish">Overheated</span></td></tr>
         <tr><td>Exchange Flow</td><td>大額流入</td><td><span class="tag bearish">Bearish</span></td></tr>
         <tr><td>LTH Supply</td><td>開始下降（分發）</td><td><span class="tag bearish">Bearish</span></td></tr>
@@ -1011,16 +1034,15 @@ tr:nth-child(even) { background: var(--bg3); }
       <li><strong>鯨魚追蹤</strong>：Whale Alert 有無大額異動？</li>
     </ul>
 
-    <h4>Step 4: 綜合打分 + 決策（5 分鐘）</h4>
+    <h4>Step 4: 綜合各維度 + 形成觀點（5 分鐘）</h4>
     <div class="highlight">
-      <strong>決策矩陣：</strong>
+      <strong>綜合判讀（定性，不打分、不開倉位配方）：</strong>
       <ul>
-        <li><strong>Score &gt; +6</strong>：加倉多頭，使用 70%+ 倉位</li>
-        <li><strong>Score +3 到 +6</strong>：維持多頭偏向，50% 倉位</li>
-        <li><strong>Score -3 到 +3</strong>：觀望或僅小倉位嘗試</li>
-        <li><strong>Score -3 到 -6</strong>：減倉或小型避險</li>
-        <li><strong>Score &lt; -6</strong>：全面避險或做空，保護資本</li>
+        <li><strong>多數維度一致偏多</strong>：市場偏多傾向較明確——但仍須確認這些指標不是只反映同一個價格漲勢，並以價格行為確認</li>
+        <li><strong>各維度分歧／矛盾</strong>：訊號不一致，代表不確定性高，適合保守、等更清楚的確認</li>
+        <li><strong>多數維度一致偏空</strong>：風險升高，優先考慮<strong>保護資本</strong></li>
       </ul>
+      <strong>倉位大小不在本框架內。</strong>要投入多少、如何分批、停損設在哪，屬個人風險管理，取決於你的資金規模、風險承受度與既有部位，不該由鏈上指標的「分數」直接換算成固定比例。
     </div>
 
     <h4>數據來源推薦</h4>
@@ -1053,14 +1075,18 @@ tr:nth-child(even) { background: var(--bg3); }
       <tr><td>&lt; 0%</td><td>空頭過度擁擠</td><td><span class="tag bullish">Short Squeeze 風險</span></td></tr>
       <tr><td>&lt; -0.03%</td><td>極度看空共識</td><td><span class="tag bullish">逆向看多</span></td></tr>
     </table>
+    <p style="font-size:13px;color:var(--text3);">註：上列百分比是慣用參考區間，<strong>非固定門檻</strong>；Funding 會因交易所、幣種與市場結構不同而有差異，各平台數值也不一致，應看相對變化與多平台一致性，而非死守單一數字。</p>
 
     <h4>Open Interest (OI) + Price 組合判讀</h4>
+    <div class="highlight orange">
+      <strong>先澄清一個常見誤解</strong>：每一口未平倉合約都<strong>同時有一個多方與一個空方</strong>，所以 OI 本身<strong>永遠是多空相等的</strong>，OI 上升只代表「未平倉合約總量增加」，<strong>無法單憑 OI＋價格就斷定是「新多頭」還是「新空頭」在主導</strong>。下表是市場慣用的「誰較可能是主動方（aggressor）」推測，屬 heuristic，不是從數據直接證明的事實；要更可靠地判斷主動方，需另外參考成交方向、Funding、CVD（累積成交量差）等。
+    </div>
     <table>
-      <tr><th>OI 變化</th><th>價格變化</th><th>含義</th></tr>
-      <tr><td>OI 增加</td><td>Price 上漲</td><td>新多頭建倉 → 趨勢健康但注意過熱</td></tr>
-      <tr><td>OI 增加</td><td>Price 下跌</td><td>新空頭建倉 → 看空趨勢加強</td></tr>
-      <tr><td>OI 減少</td><td>Price 上漲</td><td>空頭平倉（Short Squeeze）→ 反彈可能不持久</td></tr>
-      <tr><td>OI 減少</td><td>Price 下跌</td><td>多頭投降平倉 → 去槓桿，接近底部</td></tr>
+      <tr><th>OI 變化</th><th>價格變化</th><th>慣用推測（非事實）</th></tr>
+      <tr><td>OI 增加</td><td>Price 上漲</td><td>可能有新資金在做多主導 → 趨勢伴隨加槓桿，注意過熱</td></tr>
+      <tr><td>OI 增加</td><td>Price 下跌</td><td>可能有新資金在做空主導 → 空方較積極</td></tr>
+      <tr><td>OI 減少</td><td>Price 上漲</td><td>可能是空頭回補平倉（Short Squeeze）→ 反彈未必持久</td></tr>
+      <tr><td>OI 減少</td><td>Price 下跌</td><td>可能是多頭平倉／去槓桿 → 槓桿在退出</td></tr>
     </table>
 
     <h4>清算數據</h4>
@@ -1070,7 +1096,7 @@ tr:nth-child(even) { background: var(--bg3); }
         <li><strong>大量多頭清算</strong>：市場下跌引發連鎖停損 → 可能是瀑布式下跌的加速器</li>
         <li><strong>大量空頭清算</strong>：上漲引發空頭止損 → Short Squeeze 放大漲幅</li>
         <li><strong>清算結束後</strong>：槓桿被清除 = 市場更健康 = 可能是反轉起點</li>
-        <li><strong>$1B+ 清算日</strong>：歷史上通常是極端事件的結束點，可以開始逆向布局</li>
+        <li><strong>單日巨額清算（如 10 億美元級）</strong>：常出現在急跌／急漲的尾聲，<strong>傾向</strong>代表槓桿被大量洗出；但這是事後觀察的傾向，不保證當下就是轉折點（清算也可能連環延續），金額門檻亦隨市場規模變動</li>
       </ul>
     </div>
 
@@ -1104,7 +1130,7 @@ tr:nth-child(even) { background: var(--bg3); }
       <ul>
         <li><strong>ETF Net Flow</strong>：每日 ETF 淨流入/流出（替代部分 Exchange Flow 功能）</li>
         <li><strong>Coinbase Premium</strong>：Coinbase 價格 vs Binance 價格的溢價 = 美國機構需求</li>
-        <li><strong>Grayscale Discount/Premium</strong>：GBTC 折溢價反映機構情緒</li>
+        <li><strong>Coinbase Premium 之外的機構情緒代理</strong>：注意 GBTC 自 2024 年 1 月轉為現貨 ETF 後，具備申購／贖回套利機制，<strong>不再像舊的封閉式信託那樣出現大幅折溢價</strong>，舊的「GBTC 折溢價＝機構情緒」解讀已不適用；若要觀察結構性折溢價，應看仍為封閉式結構的商品，或改用 ETF 淨流入與 CME 期貨基差</li>
         <li><strong>CME Futures Basis</strong>：CME 期貨溢價 = 機構的 carry trade 需求</li>
       </ul>
     </div>
@@ -1138,18 +1164,18 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q1" value="c"> C. Euphoria（歷史頂部區域）</label>
     <label><input type="radio" name="q1" value="d"> D. Fear（恐懼）</label>
   </div>
-  <div class="explanation">NUPL > 0.75 = Euphoria。歷史上進入此區間多對應牛市頂部區域，宜開始分批減倉、提高警覺。2017 和 2021 的頂部都出現在此區間（歷史規律，無保證重演）。</div>
+  <div class="explanation">NUPL > 0.75 = Euphoria。歷史上進入此區間多對應牛市頂部區域，宜開始分批減倉、提高警覺。2017 頂部曾進入此區間；但 2021 情況分歧——4 月一度接近，11 月 ATH 時 NUPL 僅約 0.74 反而未達 0.75（著名的頂部背離）。這是歷史觀察而非固定門檻，無保證重演。</div>
 </div>
 
-<div class="quiz-q" data-correct="b">
-  <h4>Q2. 交易所出現大量 BTC 淨流入（Netflow > 0），這代表什麼？</h4>
+<div class="quiz-q" data-correct="c">
+  <h4>Q2. 交易所出現大量 BTC 淨流入（Netflow > 0），以下哪個解讀最恰當？</h4>
   <div class="options">
-    <label><input type="radio" name="q2" value="a"> A. 機構在增持 BTC</label>
-    <label><input type="radio" name="q2" value="b"> B. 持有者準備在交易所賣出</label>
-    <label><input type="radio" name="q2" value="c"> C. 交易所在做內部調度</label>
-    <label><input type="radio" name="q2" value="d"> D. DeFi 資金回流 CeFi</label>
+    <label><input type="radio" name="q2" value="a"> A. 一定是持有者準備賣出，可直接確認 bearish</label>
+    <label><input type="radio" name="q2" value="b"> B. 一定是機構在增持 BTC</label>
+    <label><input type="radio" name="q2" value="c"> C. 傾向偏空（幣移到可快速掛賣處），但須先排除 ETF custodian／交易所內部調撥，才能下較可靠的判斷</label>
+    <label><input type="radio" name="q2" value="d"> D. 與價格走勢完全無關</label>
   </div>
-  <div class="explanation">BTC 流入交易所的主要原因是準備賣出。BTC 存入交易所後可以快速掛賣單，這是 bearish 信號。但需要排除 ETF custodian 的調度。</div>
+  <div class="explanation">BTC 流入交易所<strong>傾向</strong>偏空（存入後較易掛賣），但 Netflow 只反映幣移進被標記為交易所的地址，可能是 ETF custodian 調度、交易所內部搬倉或入金做保證金，不必然等於準備賣出。正確態度是把它當偏空「線索」，先排除託管／內部移動再結合其他證據判斷，而非單憑一個指標下定論。</div>
 </div>
 
 <div class="quiz-q" data-correct="d">
@@ -1158,9 +1184,9 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q3" value="a"> A. Bearish — 資金在離開加密市場</label>
     <label><input type="radio" name="q3" value="b"> B. 中性 — 信號互相矛盾</label>
     <label><input type="radio" name="q3" value="c"> C. 無法判斷</label>
-    <label><input type="radio" name="q3" value="d"> D. Bullish — 新資金入場，正在買入 BTC 並提幣</label>
+    <label><input type="radio" name="q3" value="d"> D. 方向上偏多（三者一致指向「用穩定幣買 BTC 並提幣」），但須確認穩定幣供給增加是真實申購、而非預鑄庫存／跨鏈搬移</label>
   </div>
-  <div class="explanation">Stablecoin 增加 = 新錢入場。流入交易所 = 準備買幣。BTC 餘額下降 = BTC 被買走並提到冷錢包。三者結合 = 強烈的買入信號，代表「聰明錢」在積累。</div>
+  <div class="explanation">三個指標方向一致（穩定幣增加、流入交易所、BTC 餘額下降）確實<strong>傾向</strong>偏多，常被解讀為資金進場買幣並提走。但這是機率性判斷不是鐵證：穩定幣「供給增加」有可能只是發行方預鑄庫存或跨鏈 swap，而非新法幣入場；交易所地址標籤也可能失真。因此應視為偏多線索並進一步確認，而非「強烈確定」的買入信號。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
@@ -1171,7 +1197,7 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q4" value="c"> C. 牛市初期</label>
     <label><input type="radio" name="q4" value="d"> D. 沒有任何參考價值</label>
   </div>
-  <div class="explanation">MVRV < 1 和 SOPR < 1 都顯示市場在底部區域（所有人虧損）。但大額流入交易所 = 仍有拋壓。結合看 = 投降階段進行中，接近但可能未到最低點。分批建倉合適，不宜一次梭哈。</div>
+  <div class="explanation">MVRV < 1 和 SOPR < 1 都顯示市場總體處於底部區域（總體帳面虧損，非人人虧損）。但大額流入交易所 = 仍有拋壓。結合看 = 投降階段進行中，接近但可能未到最低點。分批建倉合適，不宜一次梭哈。</div>
 </div>
 
 <div class="quiz-q" data-correct="a">
@@ -1186,36 +1212,36 @@ tr:nth-child(even) { background: var(--bg3); }
 </div>
 
 <div class="quiz-q" data-correct="c">
-  <h4>Q6. ETH Gas Fee 持續低迷（< 5 gwei）配合 ETH Burn Rate 低於每日發行量，代表什麼？</h4>
+  <h4>Q6. ETH L1 Gas Fee 持續偏低配合當期 ETH Burn 低於發行量（淨通膨），以下哪個判讀最恰當？</h4>
   <div class="options">
-    <label><input type="radio" name="q6" value="a"> A. ETH 供給在通縮，利好價格</label>
-    <label><input type="radio" name="q6" value="b"> B. 鏈上活躍度高</label>
-    <label><input type="radio" name="q6" value="c"> C. 鏈上需求疲弱 + ETH 供給通膨，雙重利空</label>
-    <label><input type="radio" name="q6" value="d"> D. L2 遷移的正常現象，不影響 ETH 價值</label>
+    <label><input type="radio" name="q6" value="a"> A. 一定是 ETH 供給在通縮，直接利好價格</label>
+    <label><input type="radio" name="q6" value="b"> B. 一定代表鏈上活躍度高</label>
+    <label><input type="radio" name="q6" value="c"> C. 對 ETH L1 的價值捕獲偏不利（需求若弱 + 淨通膨），但「低 L1 gas」也可能是活動遷往 L2（EIP-4844 後 L1 gas 結構性下移），須看 L2 使用量才能分辨是真需求疲弱還是遷移</label>
+    <label><input type="radio" name="q6" value="d"> D. 一定只是 L2 遷移，對 ETH 價值毫無影響</label>
   </div>
-  <div class="explanation">低 Gas = 鏈上需求不足。Burn < Issuance = ETH 淨供給在增加（通膨）。兩者結合 = 對 ETH 的價格有雙重負面影響。雖然 L2 遷移可以解釋部分原因，但對 ETH L1 的價值捕獲確實是利空。</div>
+  <div class="explanation">當期 Burn &lt; Issuance 確實代表 ETH 淨供給在增加（通膨），對 L1 價值捕獲偏不利。但「低 L1 gas」在 L2 普及與 EIP-4844（blob）之後已結構性下移——它可能是需求疲弱，<strong>也可能只是活動搬到 L2</strong>。因此不能單看 L1 gas 就斷定需求崩潰；要對照 L2 的交易量與 TVL 才能區分。A、B 過度武斷，D 則忽略了淨通膨對 L1 的實際影響。</div>
 </div>
 
 <div class="quiz-q" data-correct="d">
-  <h4>Q7. USDC 供給快速增長但 USDT 持平，這代表什麼？</h4>
+  <h4>Q7. USDC 供給快速增長但 USDT 持平，以下哪個解讀最恰當？</h4>
   <div class="options">
-    <label><input type="radio" name="q7" value="a"> A. 監管打壓 USDT，資金轉移</label>
-    <label><input type="radio" name="q7" value="b"> B. 亞洲資金入場</label>
-    <label><input type="radio" name="q7" value="c"> C. 沒有新資金入場，只是互相轉換</label>
-    <label><input type="radio" name="q7" value="d"> D. 美國機構/合規資金入場，是 bullish 信號</label>
+    <label><input type="radio" name="q7" value="a"> A. 一定是監管打壓 USDT，資金被迫轉移</label>
+    <label><input type="radio" name="q7" value="b"> B. 一定是亞洲散戶資金入場</label>
+    <label><input type="radio" name="q7" value="c"> C. 一定只是 USDT 轉成 USDC，沒有任何新資金</label>
+    <label><input type="radio" name="q7" value="d"> D. 美國／合規管道需求相對較活躍的線索（傾向偏多），但 USDC 不等於「機構」、也可能部分來自 stablecoin 之間轉換，須再確認</label>
   </div>
-  <div class="explanation">USDC 代表美國合規資金和機構。USDC 獨立增長 = 機構在主動增加加密市場敞口。這通常預示著更大的資金流入，是 bullish 信號。USDT 代表亞洲/散戶；只有 USDC 漲 = 機構主導。</div>
+  <div class="explanation">USDC 在美國／合規管道占比較高，其獨立增長<strong>傾向</strong>反映該管道需求較活躍，常被視為偏多線索。但要避免把 USDC 直接等同「機構聰明錢」——它也大量用於 DeFi 與零售；而且 USDC 淨增有可能部分來自其他 stablecoin 轉換，未必全是新法幣。A、B、C 都把單一可能性當成唯一確定答案，過度武斷。</div>
 </div>
 
 <div class="quiz-q" data-correct="a">
-  <h4>Q8. DeFi TVL 以 ETH 計價仍在增長，但以 USD 計價在下跌。代表什麼？</h4>
+  <h4>Q8. DeFi TVL 以 ETH 計價仍在增長，但以 USD 計價在下跌。最恰當的解讀是？</h4>
   <div class="options">
-    <label><input type="radio" name="q8" value="a"> A. DeFi 基本面健康，只是 token 價格下跌拉低了 USD 計價 TVL</label>
-    <label><input type="radio" name="q8" value="b"> B. 資金在撤離 DeFi</label>
-    <label><input type="radio" name="q8" value="c"> C. 完全 bearish</label>
-    <label><input type="radio" name="q8" value="d"> D. TVL 數據不可靠</label>
+    <label><input type="radio" name="q8" value="a"> A. USD 計價下跌主要是 ETH 幣價跌所致；ETH 計價仍增長是「相對較正面」的訊號，但仍須以 net deposits／token 單位確認是否真有資金流入（而非重複計算）</label>
+    <label><input type="radio" name="q8" value="b"> B. 一定是資金在撤離 DeFi</label>
+    <label><input type="radio" name="q8" value="c"> C. 完全 bearish，毫無正面成分</label>
+    <label><input type="radio" name="q8" value="d"> D. TVL 數據完全不可靠，不必看</label>
   </div>
-  <div class="explanation">以 ETH 計價 TVL 增長 = 實際上更多 ETH 被部署到 DeFi 中 = 使用需求真實增長。USD 計價下跌只是因為 ETH 價格跌了。這反而可能是好的買入時機 —— 基本面在改善但價格被壓制。</div>
+  <div class="explanation">USD 計價 TVL 下跌，很大一部分只是 ETH 幣價下跌造成的計價效果；改看 ETH 計價可去掉部分匯率影響，相對是較正面的跡象。但 ETH 計價 TVL 仍是「價值」而非純粹資金流，且 liquid staking／restaking 等會造成 double counting。因此正確態度是把它當偏正面線索，再用 net deposits、以 token 單位計的存量去確認，而不是直接斷言「基本面健康」。B、C、D 則過度武斷。</div>
 </div>
 
 <div class="quiz-q" data-correct="d">
@@ -1226,62 +1252,62 @@ tr:nth-child(even) { background: var(--bg3); }
     <label><input type="radio" name="q9" value="c"> C. SOPR < 1, 大量清算, OI 崩塌</label>
     <label><input type="radio" name="q9" value="d"> D. NUPL > 0.7, Exchange Inflow 增加, LTH 開始賣, Funding > 0.05%</label>
   </div>
-  <div class="explanation">Distribution = 頂部出貨。特徵：NUPL 極高（所有人獲利 = 出貨動機強）、Exchange Inflow（準備賣）、LTH 分發、高 Funding（槓桿多頭過熱）。A = Accumulation, B = Markup, C = Markdown。</div>
+  <div class="explanation">Distribution = 頂部出貨。特徵：NUPL 極高（總體多數部位獲利 = 出貨動機強）、Exchange Inflow（準備賣）、LTH 分發、高 Funding（槓桿多頭過熱）。A = Accumulation, B = Markup, C = Markdown。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
   <h4>Q10. BTC 價格跌破 STH Realized Price，但 LTH 未賣出。判斷？</h4>
   <div class="options">
-    <label><input type="radio" name="q10" value="a"> A. 市場已經見底</label>
-    <label><input type="radio" name="q10" value="b"> B. 短期可能加速下跌（STH 恐慌），但 LTH 信心在 = 不是熊市底部</label>
-    <label><input type="radio" name="q10" value="c"> C. 完全 bearish，立即出場</label>
+    <label><input type="radio" name="q10" value="a"> A. 可確定市場已經見底</label>
+    <label><input type="radio" name="q10" value="b"> B. 短期可能加速下跌（STH 恐慌），但 LTH 尚未投降，較可能是修正而非熊市大底（傾向判斷，須續觀察）</label>
+    <label><input type="radio" name="q10" value="c"> C. 完全 bearish，應立即清倉出場</label>
     <label><input type="radio" name="q10" value="d"> D. LTH 不賣出代表流動性枯竭</label>
   </div>
-  <div class="explanation">Price < STH Cost = 短期持有者虧損 → 恐慌拋售可能加速（短期利空）。但 LTH 不賣 = 長期持有者仍有信心 = 不是系統性崩盤。通常是修正而非熊市底部。歷史上真正的底部需要 LTH 也投降（Price < LTH Cost）。</div>
+  <div class="explanation">價格跌破 STH 成本線＝短期持有者普遍虧損，恐慌拋售可能加速（短期偏空）。LTH 尚未明顯分發，<strong>傾向</strong>顯示長期持有者信心仍在，因此<strong>較可能</strong>是修正而非系統性熊市大底。但這是機率性判斷：STH 成本線不是保證支撐，LTH 也可能稍後才投降；歷史上真正的大底常伴隨 LTH 也投降（Price &lt; LTH Cost），仍須持續觀察與價格確認。</div>
 </div>
 
 <div class="quiz-q" data-correct="c">
-  <h4>Q11. Funding Rate 為 -0.03%，同時 Open Interest 在增加，代表什麼？</h4>
+  <h4>Q11. Funding Rate 為 -0.03%，同時 Open Interest 在增加，最恰當的解讀是？</h4>
   <div class="options">
-    <label><input type="radio" name="q11" value="a"> A. 多頭在加倉</label>
-    <label><input type="radio" name="q11" value="b"> B. 市場在去槓桿</label>
-    <label><input type="radio" name="q11" value="c"> C. 空頭在加倉，可能面臨 short squeeze</label>
-    <label><input type="radio" name="q11" value="d"> D. 沒有方向意義</label>
+    <label><input type="radio" name="q11" value="a"> A. 可確定是多頭在加倉</label>
+    <label><input type="radio" name="q11" value="b"> B. 可確定市場在去槓桿</label>
+    <label><input type="radio" name="q11" value="c"> C. 負 Funding 顯示空方較擁擠、OI 增加代表新倉建立，綜合<strong>傾向</strong>是空方較積極，若價格反彈有 short squeeze 風險（非從 OI 單獨證明）</label>
+    <label><input type="radio" name="q11" value="d"> D. 沒有任何方向意義</label>
   </div>
-  <div class="explanation">負 Funding = 空頭佔多數（空頭付錢給多頭）。OI 增加 = 新倉在建立。結合 = 空頭在積極建倉。但這也意味著如果價格上漲，大量空頭被迫平倉 = short squeeze 風險高。</div>
+  <div class="explanation">負 Funding 代表永續多數部位偏空（空頭付錢給多頭），顯示空方較擁擠；OI 增加代表有新倉建立。注意：每口合約都有一多一空，OI 本身無法單獨證明「是空頭在加倉」，這是結合 Funding 方向後的<strong>傾向</strong>推測。此情境下若價格上漲，擁擠的空方可能被迫回補，short squeeze 風險較高。A、B 把單一可能當成確定，D 忽略了 Funding 提供的方向線索。</div>
 </div>
 
-<div class="quiz-q" data-correct="a">
-  <h4>Q12. 大額 USDT Mint ($1B) 出現，但 24 小時內未流入任何交易所。最可能的解讀？</h4>
+<div class="quiz-q" data-correct="d">
+  <h4>Q12. 大額 USDT Mint（約 10 億美元）出現，但 24 小時內未流入任何交易所。最恰當的處理態度是？</h4>
   <div class="options">
-    <label><input type="radio" name="q12" value="a"> A. 場外 OTC 交易或機構正在準備建倉，是前瞻性 bullish 信號</label>
-    <label><input type="radio" name="q12" value="b"> B. Tether 在做帳，不是真實需求</label>
-    <label><input type="radio" name="q12" value="c"> C. Bearish — 資金沒有進入市場</label>
-    <label><input type="radio" name="q12" value="d"> D. 對市場無影響</label>
+    <label><input type="radio" name="q12" value="a"> A. 一定是機構 OTC 建倉，可直接視為確定的 bullish 並據此加倉</label>
+    <label><input type="radio" name="q12" value="b"> B. 一定是 Tether 做帳，必為假需求</label>
+    <label><input type="radio" name="q12" value="c"> C. 一定 bearish，因為資金沒進市場</label>
+    <label><input type="radio" name="q12" value="d"> D. 先分辨這是真實申購（新法幣入場，偏多線索）還是預鑄庫存／跨鏈搬移（authorized-but-not-issued，當下無新錢）；兩者意義不同，不能一律當買壓</label>
   </div>
-  <div class="explanation">大額 Mint 代表有人存入了真實的美元換取 USDT。未立即流入交易所可能是：(1) 場外 OTC 大宗交易，(2) 機構在準備分批建倉。無論哪種，新的 $1B 進入生態 = 長期 bullish。通常 Mint 後 1-3 週會看到市場影響。</div>
+  <div class="explanation">鏈上看到的 mint <strong>不一定</strong>對應等額新法幣。它可能是：(1) 真實申購——若之後流向交易所／DeFi，偏多；(2) 發行方預鑄庫存（authorized-but-not-issued），待需求再釋出，當下並無新資金；(3) 跨鏈 swap，只是換鏈。因此正確做法是先分辨屬於哪一種，再判斷含義，而不是看到大額 mint 就當成確定的買壓。A、B、C 都把單一情形當成唯一答案。</div>
 </div>
 
 <div class="quiz-q" data-correct="b">
-  <h4>Q13. Curve 3pool 中 USDT 比例從 33% 上升到 55%。代表什麼？</h4>
+  <h4>Q13. Curve 3pool 中 USDT 比例從 33% 上升到 55%。最恰當的解讀是？</h4>
   <div class="options">
-    <label><input type="radio" name="q13" value="a"> A. 人們偏好 USDT</label>
-    <label><input type="radio" name="q13" value="b"> B. 市場在拋售 USDT（換成 USDC/DAI），可能有 USDT de-peg 風險</label>
-    <label><input type="radio" name="q13" value="c"> C. 正常的 AMM 重平衡</label>
-    <label><input type="radio" name="q13" value="d"> D. Bullish for USDT</label>
+    <label><input type="radio" name="q13" value="a"> A. 人們更偏好、更想持有 USDT</label>
+    <label><input type="radio" name="q13" value="b"> B. 池子向 USDT 傾斜，<strong>傾向</strong>代表有人在拋 USDT 換 USDC／DAI，屬 USDT 信心／de-peg 的早期警訊，須密切關注並與其他證據確認</label>
+    <label><input type="radio" name="q13" value="c"> C. 這一定只是無意義的正常 AMM 重平衡</label>
+    <label><input type="radio" name="q13" value="d"> D. 明確 Bullish for USDT</label>
   </div>
-  <div class="explanation">Curve 3pool 的平衡反映市場對各 stablecoin 的信心。USDT 比例上升 = 人們在拋售 USDT 換成其他 stablecoin = 市場對 USDT 信心下降。這是 de-peg 風險的早期信號，需要密切關注。2022 年 Luna 崩盤時也出現過類似情況。</div>
+  <div class="explanation">Curve 這類穩定幣池中，某幣「比例升高」代表該幣被換入、其他幣被換出——<strong>傾向</strong>反映市場在拋售 USDT 換成其他穩定幣，是 USDT 信心下降／de-peg 風險的早期警訊（2022 年 Luna 事件期間曾見類似失衡）。但這是警訊而非定論：也可能是單一大戶調整或暫時性流動性事件，應搭配價格、交易所價差與儲備資訊一起確認。A、D 方向相反，C 則忽視警訊。</div>
 </div>
 
 <div class="quiz-q" data-correct="c">
   <h4>Q14. Hash Ribbon 發出買入信號（30D MA 重新超越 60D MA），同時 MVRV < 1。操作建議？</h4>
   <div class="options">
-    <label><input type="radio" name="q14" value="a"> A. 觀望 — 只有兩個指標不夠</label>
-    <label><input type="radio" name="q14" value="b"> B. 做空 — 礦工在投降代表還要跌</label>
-    <label><input type="radio" name="q14" value="c"> C. 開始建倉 — Hash Ribbon 買入 + MVRV 低估 是歷史上最強的底部組合信號之一</label>
+    <label><input type="radio" name="q14" value="a"> A. 完全觀望 — 兩個指標一律不可採信</label>
+    <label><input type="radio" name="q14" value="b"> B. 做空 — 礦工投降代表一定還要大跌</label>
+    <label><input type="radio" name="q14" value="c"> C. 可考慮分批建倉 — Hash Ribbon 買入 + MVRV 偏低，是歷史上<strong>較可靠</strong>的底部組合之一（傾向非保證），須配合風險控管</label>
     <label><input type="radio" name="q14" value="d"> D. 全倉 all-in</label>
   </div>
-  <div class="explanation">Hash Ribbon 買入信號 = 礦工投降結束（最弱的礦工已退出，壓力釋放）。配合 MVRV < 1 = 估值在歷史低位。兩者組合在 2015, 2019, 2020, 2022 底部都出現過，是最可靠的底部信號之一。開始建倉（分批）是正確做法。</div>
+  <div class="explanation">Hash Ribbon 買入信號<strong>傾向</strong>代表礦工投降接近尾聲（較弱礦工退出、賣壓釋放），配合 MVRV 偏低（估值在歷史低檔），兩者組合在 2015、2019、2020、2022 的底部附近都出現過，是相對較可靠的底部線索之一——但樣本少、不保證重演。合理做法是<strong>分批</strong>建倉並設好風險控管，而非 all-in（D）；A 過度否定、B 方向相反。</div>
 </div>
 
 <div class="quiz-q" data-correct="d">

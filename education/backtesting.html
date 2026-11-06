@@ -264,12 +264,12 @@ button.calc-btn:hover { opacity: 0.85; }
 <h2>回測的目的：驗證策略是否有正期望值</h2>
 <div class="card card-blue">
   <p>回測（Backtesting）是將交易策略應用於歷史數據，驗證在過去的市場條件下該策略是否能產生正的期望值。這不是為了「預測未來」，而是為了<strong>過濾掉注定失敗的策略</strong>。</p>
-  <p>一個連歷史數據都無法產生正期望值的策略，在實盤中幾乎不可能盈利。回測是你的第一道防線。</p>
+  <p>一個在具代表性的歷史樣本中都無法證明有正期望值的策略，沒有足夠理由把它部署到實盤。回測是你的第一道防線。</p>
 </div>
 
 <h2>歷史表現 ≠ 未來表現</h2>
 <div class="card card-orange">
-  <p><strong>核心認知：</strong>通過回測不代表策略一定有效，但沒通過回測的策略更不可能在未來有效。</p>
+  <p><strong>核心認知：</strong>通過回測不代表策略一定有效；而在代表性樣本中無法證明正期望的策略，就沒有足夠理由把它投入實盤。</p>
   <ul>
     <li>市場是動態的 — regime 會改變（趨勢市 vs 震盪市）</li>
     <li>流動性條件會變化 — 過去能執行的價格未來未必能拿到</li>
@@ -309,7 +309,7 @@ button.calc-btn:hover { opacity: 0.85; }
   <p>當你不斷調整參數讓回測曲線更漂亮時，你不是在發現市場規律，而是在<span class="highlight">記憶歷史噪音</span>。</p>
   <ul>
     <li><strong>參數越多 = overfitting 風險越高</strong>（每個參數都是一次「偷看答案」的機會）</li>
-    <li>如果策略需要 5+ 個精確參數才能盈利，它幾乎肯定是 overfitted</li>
+    <li>參數越多、而且你在越多組合裡搜尋過，overfitting 風險越高——真正關鍵的是「有效自由度」與「你試過的參數組合次數」，不是名目上的參數個數（5+ 個只是常被引用的警示經驗值，不是硬門檻）</li>
     <li>真正 robust 的策略在參數小幅變動時表現不會劇烈變化</li>
   </ul>
 </div>
@@ -364,7 +364,7 @@ button.calc-btn:hover { opacity: 0.85; }
 <div class="card card-purple">
   <h3>如何避免 Overfitting</h3>
   <ol>
-    <li><strong>Out-of-sample testing：</strong>保留 30% 數據不參與策略開發</li>
+    <li><strong>Out-of-sample testing：</strong>保留一部分數據不參與策略開發（常見示例為 20-30%，但沒有通用比例）。時間序列必須用<strong>按時間先後切分（chronological split）</strong>或 <strong>purged / embargoed 交叉驗證</strong>，不能隨機抽樣；保留比例應依樣本量與策略更新頻率決定</li>
     <li><strong>減少參數：</strong>策略越簡單，overfitting 風險越低</li>
     <li><strong>Walk-forward analysis：</strong>滾動視窗驗證</li>
     <li><strong>多市場驗證：</strong>策略在不同市場/標的上也能運作</li>
@@ -391,11 +391,11 @@ button.calc-btn:hover { opacity: 0.85; }
   </div>
 </div>
 
-<h2>盈虧比 (Profit Factor)</h2>
+<h2>獲利因子 (Profit Factor)</h2>
 <div class="card card-green">
-  <p>盈虧比衡量每 1 元虧損能帶來多少元獲利。PF > 1 表示系統整體盈利。</p>
-  <div class="formula">Profit Factor = 所有獲利交易的利潤總和 / 所有虧損交易的虧損總和</div>
-  <p><strong>參考基準：</strong>PF 1.5 = 還行 | PF 2.0 = 不錯 | PF 3.0+ = 非常好（但可能 overfitted）</p>
+  <p>獲利因子衡量每 1 元虧損能帶來多少元獲利。PF > 1 表示系統整體盈利。（注意：這與「盈虧比」＝平均獲利/平均虧損是不同的指標。）</p>
+  <div class="formula">Profit Factor（獲利因子）= 所有獲利交易的利潤總和 / 所有虧損交易虧損總和的絕對值</div>
+  <p><strong>僅供對照的示例區間（因頻率／資產／槓桿／流動性／測試期間而大不相同，不是固定門檻）：</strong>PF 約 1.5、2.0、3.0+ 常被分別描述為「還行／不錯／很好」，但 PF 偏高也可能是 overfitting 或樣本太小所致。</p>
 </div>
 
 <h2>期望值 (Expectancy)</h2>
@@ -411,7 +411,8 @@ button.calc-btn:hover { opacity: 0.85; }
   <p>Sharpe Ratio 衡量每承受一單位風險能獲得多少超額報酬。越高越好。</p>
   <div class="formula">Sharpe Ratio = (Rp - Rf) / σp
   Rp = 策略報酬率, Rf = 無風險利率, σp = 報酬率標準差</div>
-  <p><strong>參考基準：</strong>< 1.0 = 不理想 | 1.0-2.0 = 可接受 | 2.0-3.0 = 很好 | > 3.0 = 傑出（或 overfitted）</p>
+  <p style="font-size:13px; color:var(--text3);"><strong>頻率一致是關鍵：</strong>Rp、Rf、σp 三者必須先用<strong>相同頻率</strong>（例如都用日報酬或都用月報酬）計算，再一致地年化——日頻年化常用 ×√252、月頻用 ×√12。把「年化報酬」直接除以「未標明頻率、未年化的標準差」會得到沒有意義的數字。</p>
+  <p><strong>僅供對照的示例（因頻率／資產／槓桿／策略類型而異，非固定門檻）：</strong>Sharpe 低於約 1.0 常被視為不理想，約 1.0-2.0 可接受，2.0 以上算很好；但異常高的 Sharpe 也可能是 overfitting、樣本太短或頻率年化錯誤造成。</p>
   <div class="svg-container" style="border:none; padding:10px;">
     <svg viewBox="0 0 500 200" width="100%" style="max-width:500px" role="img" aria-labelledby="svg-sharpe-title">
       <title id="svg-sharpe-title">Sharpe Ratio 示意：報酬常態分布、標準差與超額報酬</title>
@@ -445,9 +446,11 @@ button.calc-btn:hover { opacity: 0.85; }
 
 <h2>Sortino Ratio</h2>
 <div class="card card-green">
-  <p>Sortino 只懲罰<strong>下行波動</strong>（虧損），比 Sharpe 更合理，因為上行波動（賺錢）不應被懲罰。</p>
-  <div class="formula">Sortino Ratio = (Rp - Rf) / σ_downside
-  σ_downside = 只計算負報酬的標準差</div>
+  <p>Sortino 只懲罰<strong>下行波動</strong>（低於目標的報酬），比 Sharpe 更合理，因為上行波動（賺錢）不應被懲罰。</p>
+  <div class="formula">Sortino Ratio = (Rp - MAR) / DD
+  DD（下行離差）= sqrt( mean( min(0, r_t - MAR_t)^2 ) )
+  MAR = 最低可接受報酬 / target（常設為 0 或無風險利率）</div>
+  <p style="font-size:13px; color:var(--text3);"><strong>注意下行離差的正確算法：</strong>不是「只挑出負報酬再算它們的標準差」。常見定義是對<strong>每一筆</strong>報酬取 min(0, r_t − MAR)（高於門檻者計為 0），再對<strong>全部</strong>樣本平方取平均後開根號，並與 Rp、MAR 用相同頻率計算、一致年化。採用的 MAR 與年化頻率要明確標示，否則數值無法比較。</p>
   <p>如果你的策略偶爾有大賺的 outlier，Sortino 會比 Sharpe 好看很多（這是合理的）。</p>
 </div>
 
@@ -479,11 +482,12 @@ button.calc-btn:hover { opacity: 0.85; }
 <h2>Calmar Ratio & Recovery Factor</h2>
 <div class="card card-orange">
   <div class="formula">Calmar Ratio = 年化報酬率 / Max Drawdown</div>
-  <p>Calmar > 1.0 = 報酬大於最大風險；Calmar > 3.0 = 傑出。</p>
+  <p>Calmar 越高代表報酬相對於最大回撤越好（示例：約 >1.0 算不錯、>3.0 相當出色，非固定門檻）。</p>
   <div class="formula">Recovery Factor = 總淨利潤 / Max Drawdown</div>
-  <p>Recovery Factor 越高，策略從最大回撤中恢復的能力越強。> 5 通常是好策略的特徵。</p>
+  <p>Recovery Factor 越高，策略從最大回撤中恢復的能力越強（示例：>5 常被當作好策略的特徵之一，非硬標準）。</p>
+  <p style="font-size:13px; color:var(--text3);"><strong>下表所有數字僅為示例對照</strong>，實際「好/傑出」的界線會因<strong>交易頻率、資產類別、使用槓桿、流動性與測試期間</strong>而大不相同，不可當成固定及格門檻。</p>
   <table>
-    <thead><tr><th>指標</th><th>差</th><th>普通</th><th>好</th><th>傑出</th></tr></thead>
+    <thead><tr><th>指標（示例區間）</th><th>差</th><th>普通</th><th>好</th><th>傑出</th></tr></thead>
     <tbody>
       <tr><td>Calmar Ratio</td><td>&lt; 0.5</td><td>0.5 - 1.0</td><td>1.0 - 3.0</td><td>&gt; 3.0</td></tr>
       <tr><td>Recovery Factor</td><td>&lt; 2</td><td>2 - 5</td><td>5 - 10</td><td>&gt; 10</td></tr>
@@ -531,7 +535,7 @@ button.calc-btn:hover { opacity: 0.85; }
       <input type="number" id="calc-annual" value="25" step="1">
     </div>
     <div class="calc-group">
-      <label>報酬率 Std (%)</label>
+      <label>年化報酬率 Std (%)</label>
       <input type="number" id="calc-std" value="15" min="0.1" step="0.5">
     </div>
     <div class="calc-group">
@@ -539,11 +543,11 @@ button.calc-btn:hover { opacity: 0.85; }
       <input type="number" id="calc-rf" value="4" min="0" step="0.1">
     </div>
     <div class="calc-group">
-      <label>下行 Std (%，可留空)</label>
+      <label>年化下行離差 （%，可留空）</label>
       <input type="number" id="calc-downstd" placeholder="實際下行離差" min="0.1" step="0.5">
     </div>
   </div>
-  <p style="font-size:12px; color:var(--text3); margin:4px 0 0;">無風險利率為<strong>可調假設值</strong>（預設 4%）。「下行 Std」若留空，Sortino 只能用粗略近似估計；填入你實際計算的下行離差（只納入低於門檻的報酬）才會精確。</p>
+  <p style="font-size:12px; color:var(--text3); margin:4px 0 0;">「年化報酬」與「年化報酬率 Std」必須用<strong>相同頻率計算後再一致年化</strong>（例如都由日報酬年化），否則 Sharpe 沒有意義。無風險利率為<strong>可調假設值</strong>（預設 4%）。「年化下行離差」是<strong>只納入低於門檻（MAR）報酬</strong>所算出的下行離差；留空時 Sortino <strong>無法計算</strong>（本計算器不會用任何近似值假造數字）。</p>
   <button class="calc-btn" onclick="calculateMetrics()">計算</button>
   <div class="calc-result" id="calc-output">
     點擊「計算」查看結果...
@@ -714,20 +718,30 @@ button.calc-btn:hover { opacity: 0.85; }
 <div class="card card-green">
   <h3>Python 回測框架（概念）</h3>
   <div class="formula">
-# 基本回測邏輯（偽代碼）
+# 基本回測邏輯（偽代碼）— 注意下方標注的真實世界細節
 for each bar in historical_data:
+    # 用「已收盤」的 bar 產生信號，於「下一根」bar 成交，避免 look-ahead
     if entry_condition(bar):
-        open_position(bar.close, stop_loss, take_profit)
+        queue_entry(next_bar)            # 下一根開盤/限價成交，非當根收盤
     if position_open:
-        if bar.low <= stop_loss:
-            close_position(stop_loss)  # 止損
+        # Intrabar ambiguity：同一根 bar 可能同時觸及停損與停利，
+        # 單看 OHLC 無法得知先後。保守假設「先觸停損」，
+        # 或改用更細時間框架的資料來判定順序。
+        if bar.low <= stop_loss and bar.high >= take_profit:
+            close_position(stop_loss)     # 保守：假設先打到停損
+        elif bar.low <= stop_loss:
+            close_position(stop_loss)
         elif bar.high >= take_profit:
-            close_position(take_profit)  # 止盈
+            close_position(take_profit)
 
-# 計算績效
+# 成交假設需如實建模：
+#  - 市價單：成交價加滑點（slippage），不是理想價
+#  - 限價單：價格要真的「穿過」才算成交，否則視為未成交
+#  - 公司行動：股票分割、股利、合併需調整價格序列
 calculate_metrics(all_trades)
   </div>
-  <p><strong>常用工具：</strong>Backtrader, Zipline, VectorBT (Python) | TradingView PineScript (圖表內建)</p>
+  <p style="font-size:13px; color:var(--text3);">上面的偽代碼刻意點出最常被忽略的陷阱：<strong>同一根 K 線同時觸及停損與停利的先後無法從 OHLC 判定</strong>（intrabar ambiguity，需保守假設或用更細資料）、<strong>信號於下一根成交</strong>、<strong>限價單未成交的情形</strong>、以及<strong>滑點與公司行動（分割／股利）</strong>的調整。框架沒幫你處理這些，回測就會過度樂觀。</p>
+  <p><strong>常用工具：</strong>Backtrader, Zipline, VectorBT (Python) | TradingView PineScript （圖表內建）</p>
 
   <h3>TradingView PineScript（概念）</h3>
   <div class="formula">
@@ -744,7 +758,8 @@ if ta.crossunder(fast, slow)
 
 <h2>Walk-Forward Analysis</h2>
 <div class="card card-purple">
-  <p>Walk-Forward 是最嚴謹的回測方法。將數據分成多段：每段先最佳化（in-sample），再用緊接著的一段驗證（out-of-sample）。</p>
+  <p>Walk-Forward 是較嚴謹、較貼近實務的回測方法：將數據分成多段，每段先最佳化（in-sample），再用緊接著的一段驗證（out-of-sample）。</p>
+  <p style="font-size:13px; color:var(--text3);"><strong>但它不是「最嚴謹」、也不等於完全真實的 OOS。</strong>只要你反覆查看 walk-forward 的結果再回頭修改策略或選參數範圍，資訊就會從「驗證段」洩漏回設計，實質上把 OOS 變成 in-sample。真正的樣本外，是策略定案後才第一次看到的資料。</p>
   <ol>
     <li>將歷史數據分成 N 段（如 5 段）</li>
     <li>用第 1-3 段最佳化參數</li>
@@ -781,9 +796,9 @@ if ta.crossunder(fast, slow)
     <text x="485" y="205" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="600">OOS-4</text>
     <!-- Legend -->
     <rect x="550" y="80" width="12" height="12" fill="#dbeafe" stroke="#2563eb" rx="2"/>
-    <text x="568" y="91" font-size="10" fill="#334155">In-Sample (訓練)</text>
+    <text x="568" y="91" font-size="10" fill="#334155">In-Sample （訓練）</text>
     <rect x="550" y="100" width="12" height="12" fill="#dcfce7" stroke="#16a34a" rx="2"/>
-    <text x="568" y="111" font-size="10" fill="#334155">Out-of-Sample (驗證)</text>
+    <text x="568" y="111" font-size="10" fill="#334155">Out-of-Sample （驗證）</text>
     <!-- Arrow -->
     <text x="600" y="140" font-size="10" fill="#64748b" text-anchor="middle">時間 →</text>
   </svg>
@@ -791,21 +806,24 @@ if ta.crossunder(fast, slow)
 
 <h2>Monte Carlo Simulation</h2>
 <div class="card card-orange">
-  <p>Monte Carlo 模擬打亂你交易的順序（1000+ 次），產生可能的 equity curve 分布。</p>
+  <p>Monte Carlo 模擬用某種<strong>重抽樣模型</strong>重新排列或重抽你的交易（1000+ 次），產生一組可能的 equity curve 分布。</p>
   <h3>為什麼需要？</h3>
   <ul>
     <li>同樣的交易結果，不同順序會產生不同的 drawdown</li>
     <li>你的回測只是「一種」可能的順序 — 也許你很幸運</li>
-    <li>Monte Carlo 告訴你：在最差的情況下，drawdown 可能有多大？</li>
-    <li>95% 信賴區間 = 你有 95% 的信心 drawdown 不會超過這個數字</li>
+    <li>Monte Carlo 讓你看到：在這個重抽樣模型下，drawdown 的分布大致長什麼樣</li>
+    <li><strong>第 95 百分位是「在指定重抽樣模型下的模擬分位數」，不是「未來最大回撤有 95% 不會超過它」的信賴保證。</strong>它的可信度完全取決於模型假設是否成立。</li>
   </ul>
+  <div class="card card-red" style="margin:12px 0;">
+    <p style="margin:0;"><strong>最大陷阱：單純洗牌會破壞序列相關性。</strong>交易報酬常有自相關（連勝／連虧成群出現），把 R 值隨機打散會系統性<strong>低估</strong>真實的連虧與回撤。較合理的做法是 <strong>block bootstrap</strong>（整段連續抽取以保留局部相關）或 <strong>regime bootstrap</strong>（按市場狀態分層重抽）。此外還要記得：模擬無法涵蓋<strong>肥尾（fat tails）</strong>中未出現在樣本裡的極端、<strong>參數不確定性</strong>，以及你在開發期間反覆測試造成的 <strong>multiple testing</strong> 偏誤——這些都會讓真實風險比模擬更大。</p>
+  </div>
   <div class="formula">
-步驟：
+步驟（以 block bootstrap 為例）：
 1. 取得所有交易的 R 值序列：[+2R, -1R, +1.5R, -1R, +3R, ...]
-2. 隨機打亂順序 1000 次
+2. 以「連續區塊」重抽 1000 次（保留局部序列相關，而非完全打散）
 3. 每次計算 max drawdown
 4. 排序所有 max drawdown
-5. 第 950 個值 = 95% 信賴區間的最大回撤
+5. 第 950 個值 = 此重抽樣模型下，max drawdown 的第 95 百分位（模擬分位數，非未來保證）
   </div>
 </div>
 
@@ -832,10 +850,10 @@ if ta.crossunder(fast, slow)
     </svg>
   </div>
   <ul>
-    <li><strong>Median（中位數）curve：</strong>你最可能經歷的路徑</li>
-    <li><strong>95% CI 下界：</strong>有 95% 的信心不會比這更差</li>
-    <li><strong>最大 Drawdown 分布：</strong>準備好承受 95th percentile 的回撤</li>
-    <li><strong>最大連虧分布：</strong>用來設定「何時停止策略」的閾值</li>
+    <li><strong>Median（中位數）curve：</strong>重抽樣模型下的中間路徑（不等於「最可能」的真實未來）</li>
+    <li><strong>第 5 百分位路徑：</strong>在此重抽樣模型下、約 5% 的模擬比它更差——這是模型內的分位數，不是對未來的 95% 信心保證</li>
+    <li><strong>最大 Drawdown 分布：</strong>把心理與資金準備對齊到較差的分位數（如第 95 百分位），並記得真實尾部可能更糟</li>
+    <li><strong>最大連虧分布：</strong>可當作「何時檢視策略」的參考，但分位數被超過只是提示要複查，不是策略失效的證明</li>
   </ul>
 </div>
 
@@ -877,10 +895,10 @@ if ta.crossunder(fast, slow)
 <div class="card card-orange">
   <p>上面的成本假設（單程 0.05-0.2%）對台灣散戶用<strong>複委託</strong>買美股常常太樂觀。回測若不計入真實成本，正期望值可能是假象：</p>
   <ul>
-    <li><strong>複委託手續費：</strong>多數券商每筆有最低收費（常見 US$15-40 或按比例），小額波段會被手續費吃掉一大塊 edge。</li>
+    <li><strong>複委託手續費：</strong>多數券商按比例收費並設有「每筆最低收費」，小額波段會被最低收費吃掉一大塊 edge。<span style="color:var(--text3); font-size:13px;">（具體費率與最低收費各券商不同、且會調整——下單前請以你往來券商當前的公告費率為準，別套用固定數字。）</span></li>
     <li><strong>買賣價差（spread）：</strong>非熱門標的、盤前盤後或黃金白銀 ETF 的價差可能明顯，回測用中間價會高估成交品質。</li>
     <li><strong>稅：</strong>美股股利預扣 30%、國內最低稅負制對海外所得的門檻，都會影響實際到手報酬。</li>
-    <li><strong>PDT 規則：</strong>若改用美國券商且帳戶未達 US$25,000，五個交易日內當沖超過 3 次會被限制，波段策略要留意這條。</li>
+    <li><strong>當沖／日內交易限制：</strong>美國券商過去對「圖樣當沖者（PDT）」有一套限制——帳戶權益未達 US$25,000 時，五個交易日內當沖達 4 次會被標記並受限。<span style="color:var(--text3); font-size:13px;">（注意：FINRA 已於 2025 年核准規則變更 SR-FINRA-2025-017，以「日內保證金標準（intraday margin standards）」取代舊的 PDT 條文，上述固定門檻不一定仍適用；實際規則與門檻請以你往來券商與 FINRA 當前公告為準。）</span></li>
   </ul>
   <p>把這些成本誠實地灌進回測，再看期望值信賴區間是否還站得住。詳細的台灣散戶成本與稅務整理見 <a href="tw_reality.html">台灣散戶落地現實</a>。</p>
 </div>
@@ -898,7 +916,7 @@ if ta.crossunder(fast, slow)
     <li>發現回測沒考慮到的問題（盤中波動、假信號等）</li>
     <li><strong>樣本門檻要分層：</strong>不要迷信「30 筆就夠」。低頻波段策略常要累積<strong>數十到數百筆</strong>才有統計意義；高頻策略則筆數多、但每筆 edge 小。真正的通過標準不是「湊到 N 筆」，而是<strong>期望值的信賴區間下界仍為正</strong>。</li>
   </ul>
-  <p style="font-size:13px; color:var(--text3);">為什麼不能只看 30 筆？交易報酬通常厚尾、偏態且有自相關，中央極限定理的「n≥30」經驗值在這種分布下並不成立。用 <strong>bootstrap 重抽樣</strong>（把已實現交易重抽數千次）估計期望值與最大回撤的 95% 信賴區間，比死守某個筆數可靠得多。</p>
+  <p style="font-size:13px; color:var(--text3);">為什麼不能只看 30 筆？交易報酬通常厚尾、偏態且有自相關，中央極限定理的「n≥30」經驗值在這種分布下並不成立。用 <strong>bootstrap 重抽樣</strong>（把已實現交易重抽數千次）估計期望值與最大回撤的信賴區間，比死守某個筆數可靠。<strong>但要注意：單純的 iid bootstrap（逐筆獨立重抽）會破壞報酬的自相關、低估連虧與回撤；有序列相關時應改用 block bootstrap（整段連續重抽）。</strong>而且 bootstrap 只能反映樣本內看過的分布，無法涵蓋未出現過的尾部風險。</p>
 </div>
 
 <h2>Paper Trading 常見錯誤</h2>
@@ -941,7 +959,7 @@ if ta.crossunder(fast, slow)
       <!-- Steps -->
       <rect x="30" y="120" width="90" height="40" fill="#dbeafe" stroke="#2563eb" rx="6"/>
       <text x="75" y="138" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">1/10 倉位</text>
-      <text x="75" y="152" text-anchor="middle" font-size="8" fill="#64748b">30+ 筆</text>
+      <text x="75" y="152" text-anchor="middle" font-size="8" fill="#64748b">足夠樣本</text>
 
       <text x="135" y="140" font-size="14" fill="#64748b">→</text>
 
@@ -980,10 +998,10 @@ if ta.crossunder(fast, slow)
 <div class="card card-red">
   <h3>停止策略的明確信號</h3>
   <ol>
-    <li><strong>連續虧損超過 Monte Carlo 95% CI</strong><br>
-    如果你的 MC 模擬說「95% 的情況下不會連虧超過 8 筆」，而你連虧了 10 筆 — 策略可能已經失效。</li>
-    <li><strong>月度 Sharpe &lt; 0 持續 3 個月</strong><br>
-    三個月的負 Sharpe 意味著策略的 edge 可能已經消失。</li>
+    <li><strong>連虧超過 Monte Carlo 模擬分位數 → 觸發複查（非失效證明）</strong><br>
+    若模擬顯示「連虧很少超過 8 筆」而你連虧了 10 筆，這是<strong>要停下來重新檢視</strong>的提示，不代表「有 95% 機率策略已失效」。因為你是在持續監控、反覆比對（multiple testing），偶爾越過某個分位數本來就會發生；它是示警燈，不是統計結論。</li>
+    <li><strong>長時間表現不如預期（例如連續數月月度 Sharpe &lt; 0）</strong><br>
+    持續數月的負報酬是<strong>重新評估</strong>的合理觸發，但<strong>本身不構成「edge 已消失」的統計顯著證據</strong>——三個月樣本太小，需結合 regime 變化、樣本量與執行品質一起判斷。</li>
     <li><strong>市場 regime 改變</strong><br>
     你的策略環境消失了：例如趨勢策略在市場轉為震盪時失效。</li>
     <li><strong>Drawdown 接近心理極限</strong><br>
@@ -1015,14 +1033,14 @@ if ta.crossunder(fast, slow)
       <tr><td>低波動期</td><td>極小波幅、壓縮</td><td>突破策略（等待）</td></tr>
     </tbody>
   </table>
-  <h3>簡易 Regime 判斷方法</h3>
+  <h3>簡易 Regime 判斷方法（皆為常見啟發式，非精確門檻）</h3>
   <ul>
-    <li><strong>ADX > 25：</strong>趨勢市 → 用趨勢策略</li>
-    <li><strong>ADX < 20：</strong>震盪市 → 用區間策略</li>
+    <li><strong>ADX > 25：</strong>常被當作「趨勢較強」的 heuristic（25 只是慣用參考值，非客觀門檻）。<strong>ADX 只衡量趨勢強度、不指示方向</strong>（上漲或下跌都可能高 ADX），而且 ADX 高<strong>不保證</strong>趨勢策略一定優於均值回歸——需自行回測驗證。</li>
+    <li><strong>ADX < 20：</strong>常被解讀為趨勢偏弱／偏震盪，同樣只是慣用參考值。</li>
     <li><strong>ATR 排名：</strong>當前 ATR 在過去 100 天的百分位 → 判斷波動高低</li>
     <li><strong>MA 排列：</strong>MA20 > MA50 > MA200 = 多頭排列（趨勢向上）</li>
   </ul>
-  <p><strong>實用建議：</strong>每週花 5 分鐘判斷當前 regime，決定這週使用哪套策略。不要在震盪市強行用趨勢策略，反之亦然。知道「什麼時候不交易」比知道「什麼時候交易」更重要。</p>
+  <p><strong>實用建議：</strong>把這些指標當成輔助判斷而非硬規則，並以自己的回測驗證哪套策略在哪種 regime 真的有效。知道「什麼時候不交易」往往比知道「什麼時候交易」更重要。</p>
 </div>
 
 <h2>實盤進階：策略組合（Portfolio of Strategies）</h2>
@@ -1107,7 +1125,7 @@ if ta.crossunder(fast, slow)
     <div class="quiz-option" data-idx="2">C. Sortino 使用年化數據，Sharpe 使用月數據</div>
     <div class="quiz-option" data-idx="3">D. Sortino 適用於債券，Sharpe 適用於股票</div>
   </div>
-  <div class="quiz-explanation">Sharpe 使用全部報酬的標準差（包含正報酬的波動），而 Sortino 只計算負報酬的標準差。因為上行波動（賺大錢）不應被懲罰，所以 Sortino 更合理。</div>
+  <div class="quiz-explanation">Sharpe 使用全部報酬的標準差（包含正報酬的波動）；而 Sortino 只懲罰「下行」——正確算法是對每一筆報酬取 min(0, r − MAR)（高於門檻者計為 0），再對全部樣本平方取平均後開根號，而不是「只挑出負報酬再算它們的標準差」（見上方內文的更正）。因為上行波動（賺大錢）不應被懲罰，所以 Sortino 在這個意義上更貼近下檔風險。</div>
 </div>
 
 <div class="quiz-question" data-correct="3">
@@ -1124,12 +1142,12 @@ if ta.crossunder(fast, slow)
 <div class="quiz-question" data-correct="0">
   <h4>Q8. Monte Carlo Simulation 的主要目的是什麼？</h4>
   <div class="quiz-options">
-    <div class="quiz-option" data-idx="0">A. 打亂交易順序，了解在最差排列下可能的 drawdown</div>
+    <div class="quiz-option" data-idx="0">A. 重抽交易序列（宜用 block bootstrap 保留序列相關），了解不同排列下可能的 drawdown 分布</div>
     <div class="quiz-option" data-idx="1">B. 找到最佳的參數組合</div>
     <div class="quiz-option" data-idx="2">C. 預測明天的股價</div>
     <div class="quiz-option" data-idx="3">D. 計算 Sharpe Ratio</div>
   </div>
-  <div class="quiz-explanation">Monte Carlo 隨機打亂交易順序數千次，讓你了解：雖然結果相同，不同順序可能產生更大的 drawdown。95% CI 告訴你「大概率不會比這更差」。</div>
+  <div class="quiz-explanation">Monte Carlo／bootstrap 以重抽樣產生許多條可能的權益曲線，讓你了解 drawdown 的分布。注意：單純隨機打亂順序會破壞序列相關、低估連虧，較嚴謹的做法是 block bootstrap。第 95 百分位只是「在該重抽樣模型下的模擬分位數」，提示風險量級，不是「未來最大回撤有 95% 不會超過它」的保證。</div>
 </div>
 
 <div class="quiz-question" data-correct="2">
@@ -1144,14 +1162,14 @@ if ta.crossunder(fast, slow)
 </div>
 
 <div class="quiz-question" data-correct="1">
-  <h4>Q10. 以下哪個是停止策略的合理信號？</h4>
+  <h4>Q10. 以下哪個最適合當作「停下來重新評估策略」的合理觸發？</h4>
   <div class="quiz-options">
     <div class="quiz-option" data-idx="0">A. 本週虧了 2 筆</div>
-    <div class="quiz-option" data-idx="1">B. 月度 Sharpe < 0 持續 3 個月</div>
+    <div class="quiz-option" data-idx="1">B. 持續數月表現不如預期（例如連續 3 個月月度 Sharpe < 0），作為重新評估的觸發</div>
     <div class="quiz-option" data-idx="2">C. 今天的交易沒有觸發</div>
     <div class="quiz-option" data-idx="3">D. 朋友說這個策略不好</div>
   </div>
-  <div class="quiz-explanation">三個月的負 Sharpe 是一個有統計意義的信號，表明策略的 edge 可能已經消失。短期虧損（幾筆或幾天）是正常的，不需要恐慌。</div>
+  <div class="quiz-explanation">相較於單日沒觸發、本週虧兩筆或他人意見，「持續數月表現不如預期」比較適合當作<strong>重新評估</strong>的觸發。但要注意：三個月樣本很小，負 Sharpe <strong>本身不構成「edge 已消失」的統計顯著證據</strong>——它是提醒你複查（regime 是否改變、樣本量、執行品質），不是自動停用的統計結論。短期虧損（幾筆或幾天）則屬正常波動。</div>
 </div>
 
 <div class="quiz-question" data-correct="3">
@@ -1162,7 +1180,7 @@ if ta.crossunder(fast, slow)
     <div class="quiz-option" data-idx="2">C. 勝率可能不夠</div>
     <div class="quiz-option" data-idx="3">D. 極高的 overfitting 風險</div>
   </div>
-  <div class="quiz-explanation">參數越多，overfitting 風險越高。8 個精確參數意味著你有極高的自由度去「擬合」歷史數據，幾乎肯定是在記憶噪音而非發現真正的市場規律。</div>
+  <div class="quiz-explanation">參數越多、搜尋過的組合越多，overfitting 風險越高：需要 8 個精確設定的參數意味著很高的有效自由度，很容易把歷史噪音「擬合」進來而非發現真正規律。真正要看的是<strong>有效自由度與你試過的參數組合次數</strong>，名目參數個數只是粗略訊號；務必用樣本外與 walk-forward 驗證 robust 與否。</div>
 </div>
 
 <div class="quiz-question" data-correct="0">
@@ -1189,14 +1207,14 @@ if ta.crossunder(fast, slow)
 </div>
 
 <div class="quiz-question" data-correct="1">
-  <h4>Q14. ADX 讀數為 35，你應該用哪類策略？</h4>
+  <h4>Q14. 關於 ADX 讀數為 35，下列哪個說法最正確？</h4>
   <div class="quiz-options">
-    <div class="quiz-option" data-idx="0">A. 均值回歸策略</div>
-    <div class="quiz-option" data-idx="1">B. 趨勢跟隨策略</div>
-    <div class="quiz-option" data-idx="2">C. 區間交易策略</div>
-    <div class="quiz-option" data-idx="3">D. 任何策略都可以</div>
+    <div class="quiz-option" data-idx="0">A. ADX 35 明確告訴你市場會上漲，應該做多</div>
+    <div class="quiz-option" data-idx="1">B. ADX 高只表示趨勢強度較大、不指示方向，也不保證趨勢策略一定優於均值回歸，需自行回測驗證</div>
+    <div class="quiz-option" data-idx="2">C. ADX 35 代表市場一定處於震盪，應該用區間策略</div>
+    <div class="quiz-option" data-idx="3">D. ADX 35 保證趨勢跟隨策略必定獲利</div>
   </div>
-  <div class="quiz-explanation">ADX > 25 表示市場處於趨勢狀態。35 是相當強的趨勢。此時應該使用趨勢跟隨/動能策略，而非區間或均值回歸策略。</div>
+  <div class="quiz-explanation">ADX > 25 只是「趨勢較強」的<strong>常見 heuristic</strong>（25、35 都只是慣用參考值）。關鍵是 <strong>ADX 只衡量趨勢強度、不指示方向</strong>（上漲或下跌都可能高 ADX），而且趨勢強不<strong>保證</strong>趨勢跟隨一定優於均值回歸——哪套策略在這種 regime 真的有效，必須用自己的資料回測驗證。</div>
 </div>
 
 <div class="quiz-question" data-correct="3">
@@ -1218,7 +1236,7 @@ if ta.crossunder(fast, slow)
     <div class="quiz-option" data-idx="2">C. 繼續執行，這只是運氣不好</div>
     <div class="quiz-option" data-idx="3">D. 調整參數讓回測看起來能承受 9 連虧</div>
   </div>
-  <div class="quiz-explanation">超過 95% CI 表示有超過 95% 的概率不是「正常波動」。你應該暫停策略並重新評估：市場 regime 是否改變？策略的 edge 是否消失？千萬不要加倍或事後調參。</div>
+  <div class="quiz-explanation">連虧超過模擬的第 95 百分位，是<strong>要停下來重新評估</strong>的示警，<strong>不等於「有 95% 機率策略已失效」</strong>——因為你是在持續監控、反覆比對（multiple testing），偶爾越線本來就會發生，而且該分位數只在重抽樣模型假設下成立。正確反應是暫停並檢視：regime 是否改變？edge 是否消失？樣本是否仍可靠？千萬不要加倍攤平或事後調參硬湊。</div>
 </div>
 
 </div>
@@ -1236,7 +1254,7 @@ if ta.crossunder(fast, slow)
   <ol>
     <li>定義明確的進出場規則（可量化、無模糊空間）</li>
     <li>選擇足夠長的歷史數據（至少包含不同 regime）</li>
-    <li>保留 30% 數據作為 out-of-sample</li>
+    <li>以按時間先後切分（或 purged / embargoed 交叉驗證）保留一部分 out-of-sample（比例依樣本量與更新頻率，不是固定 30%）</li>
     <li>執行回測，記錄所有指標（勝率、期望值、Sharpe、Max DD）</li>
     <li>進行 Walk-Forward 驗證</li>
     <li>執行 Monte Carlo / bootstrap 模擬，確定期望值與回撤的 95% CI</li>
@@ -1282,29 +1300,29 @@ function calculateMetrics() {
   const sharpe = (annual - rf) / std;
   const totalProfit = expectancy * trades;
 
-  // Sortino：正確做法是只用「低於門檻的報酬」計算下行離差。
-  // 若使用者填入實際下行 Std 就精確計算；否則退回粗略近似並明確標示。
-  const sortinoIsExact = !isNaN(downInput) && downInput > 0;
-  const downsideStd = sortinoIsExact ? downInput : std * 0.7; // 0.7 僅為缺乏實際資料時的粗略佔位
-  const sortino = (annual - rf) / downsideStd;
+  // Sortino：下行離差必須由「低於門檻（MAR）的報酬」實際計算，無法從總 Std 推導。
+  // 使用者未填年化下行離差時，不產生任何假數字，直接標示「資料不足，無法計算」。
+  const sortinoCanCompute = !isNaN(downInput) && downInput > 0;
+  const sortino = sortinoCanCompute ? (annual - rf) / downInput : null;
 
   const output = document.getElementById('calc-output');
   const cls = expectancy >= 0 ? 'positive' : 'negative';
 
   output.innerHTML = `
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
-      <div><strong>期望值：</strong><span class="${cls}">$${expectancy.toFixed(2)} / 筆</span></div>
-      <div><strong>Profit Factor：</strong><span class="${profitFactor >= 1 ? 'positive' : 'negative'}">${profitFactor.toFixed(2)}</span></div>
+      <div><strong>期望值（每筆）：</strong><span class="${cls}">$${expectancy.toFixed(2)} / 筆</span></div>
+      <div><strong>獲利因子 (Profit Factor)：</strong><span class="${profitFactor >= 1 ? 'positive' : 'negative'}">${profitFactor.toFixed(2)}</span></div>
       <div><strong>Sharpe Ratio：</strong><span class="${sharpe >= 1 ? 'positive' : 'negative'}">${sharpe.toFixed(2)}</span></div>
-      <div><strong>Sortino Ratio：</strong><span class="${sortino >= 1 ? 'positive' : 'negative'}">${sortino.toFixed(2)}</span>${sortinoIsExact ? '' : ' <span style="color:var(--text3); font-size:11px;">(粗略近似)</span>'}</div>
-      <div><strong>${trades} 筆總利潤：</strong><span class="${cls}">$${totalProfit.toFixed(0)}</span></div>
-      <div><strong>盈虧比：</strong>${(avgWin / avgLoss).toFixed(2)} : 1</div>
+      <div><strong>Sortino Ratio：</strong>${sortinoCanCompute ? `<span class="${sortino >= 1 ? 'positive' : 'negative'}">${sortino.toFixed(2)}</span>` : '<span style="color:var(--text3);">資料不足，無法計算</span>'}</div>
+      <div><strong>期望總值（固定分布假設）：</strong><span class="${cls}">$${totalProfit.toFixed(0)}</span></div>
+      <div><strong>盈虧比（平均獲利/平均虧損）：</strong>${(avgWin / avgLoss).toFixed(2)} : 1</div>
     </div>
     <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:12px; color:var(--text3);">
-      ${expectancy > 0 ? '✓ 正期望值系統 — 長期可盈利（前提是有足夠的交易次數，且期望值的信賴區間下界仍為正）' : '✗ 負期望值系統 — 長期預期會虧損，需要調整策略（須自行回測驗證）'}
+      ${expectancy > 0 ? '✓ 模型期望值為正 — 在這組輸入假設下長期可盈利（前提是有足夠交易次數，且期望值的信賴區間下界仍為正）' : '✗ 模型期望值為負 — 長期預期會虧損，需要調整策略（須自行回測驗證）'}
       ${sharpe >= 2 ? ' | Sharpe 很好' : sharpe >= 1 ? ' | Sharpe 可接受' : ' | Sharpe 偏低，風險調整報酬需改善'}
-      ${sortinoIsExact ? '' : '<br>⚠ Sortino 為粗略近似（用總 Std 的 0.7 倍佔位）。請在「下行 Std」欄填入實際下行離差以精確計算。'}
-      <br>無風險利率採用 ${rf}%（可調假設值）。
+      ${sortinoCanCompute ? '' : '<br>⚠ 未填「年化下行離差」，Sortino 無法計算（下行離差必須由低於門檻的報酬實際算出，不能用總 Std 近似）。'}
+      <br>「期望總值」＝每筆期望值 × 筆數，是<strong>固定分布假設下的理論期望</strong>，不是實際總利潤（實際會受順序、回撤、成本與分布變動影響）。
+      <br>Sharpe 假設「年化報酬」與「年化報酬率 Std」已用相同頻率一致年化。無風險利率採用 ${rf}%（可調假設值）。
     </div>
   `;
 }

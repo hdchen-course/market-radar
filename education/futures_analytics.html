@@ -153,14 +153,14 @@
 
 <div class="card">
 <h3>1. 什麼是 OI（未平倉量）</h3>
-<p>永續合約中所有未平倉合約的總量。每個合約必然有一個多方和一個空方配對。</p>
+<p>永續合約中所有未平倉合約的總量。<strong>每一口未平倉合約同時對應一個多方與一個空方</strong>，因此全市場多單總量恆等於空單總量（參見 CFTC COT 說明）。OI 計算的是「合約口數／名目價值」，不直接等於實際投入的保證金或槓桿倍數。</p>
 <ul>
-  <li><strong>OI 增加</strong> = 新合約被創建（一個新多頭 + 一個新空頭同時進場）</li>
-  <li><strong>OI 減少</strong> = 舊合約被關閉（多頭平倉配對空頭平倉，或者一方被清算）</li>
-  <li><strong>OI 不變</strong> = 一個新進場者接手了一個離場者的部位（如：新多頭接手舊多頭的平倉單）</li>
+  <li><strong>OI 增加</strong> = 淨新增一口合約（買賣雙方都是新開倉：一方新開多、另一方新開空）</li>
+  <li><strong>OI 減少</strong> = 淨關閉一口合約（買賣雙方都是平倉；若一方被清算，須由正在平倉的對手承接，OI 才會減少）</li>
+  <li><strong>OI 不變</strong> = 一方開倉、另一方平倉，部位在不同帳戶間轉移</li>
 </ul>
-<div class="highlight-box">
-  <strong>核心概念：</strong>OI 反映的是市場中「未結算的槓桿」有多少。OI 越高，代表場上的賭注越大，一旦方向明確，波動也越劇烈。
+<div class="warning-box">
+  <strong>重要界線：</strong>OI 只告訴你「有多少合約未結算」，<strong>不能單憑 OI 變化判定進場的是新多還是新空</strong>——開倉的一方可能是投機方向性部位，也可能是避險、現貨/永續套利、跨市場 basis trade，或不同主動方。OI 也不等於槓桿量：部分部位可能是完全保證金（fully collateralized）或已對沖（hedged）。OI 高只代表未結算合約名目大，須配合價格、CVD、Funding 等其他證據才能推測結構。
 </div>
 <div class="svg-container">
   <svg viewBox="0 0 500 180" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleOiMech">
@@ -169,8 +169,8 @@
     <!-- OI Increase -->
     <rect x="20" y="40" width="140" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
     <text x="90" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">OI 增加</text>
-    <text x="90" y="80" text-anchor="middle" font-size="10" fill="#334155">新多 + 新空 進場</text>
-    <text x="90" y="94" text-anchor="middle" font-size="10" fill="#334155">槓桿增加</text>
+    <text x="90" y="80" text-anchor="middle" font-size="10" fill="#334155">淨新增合約</text>
+    <text x="90" y="94" text-anchor="middle" font-size="10" fill="#334155">雙方皆新開倉</text>
     <!-- OI Decrease -->
     <rect x="180" y="40" width="140" height="60" rx="8" fill="#fee2e2" stroke="#dc2626"/>
     <text x="250" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">OI 減少</text>
@@ -209,55 +209,55 @@
     <text x="34" y="162" text-anchor="start" font-size="9" fill="#dc2626">&larr; 下跌</text>
     <!-- Q1: OI up + Price up -->
     <rect x="270" y="48" width="210" height="112" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
-    <text x="375" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">新多頭建倉</text>
+    <text x="375" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a">可能：新多建倉</text>
     <text x="375" y="90" text-anchor="middle" font-size="10" fill="#334155">OI&uarr; + Price&uarr;</text>
-    <text x="375" y="108" text-anchor="middle" font-size="10" fill="#334155">趨勢健康，真漲</text>
-    <text x="375" y="126" text-anchor="middle" font-size="9" fill="#64748b">新資金流入做多</text>
-    <text x="375" y="142" text-anchor="middle" font-size="9" fill="#64748b">上漲有持續動力</text>
+    <text x="375" y="108" text-anchor="middle" font-size="10" fill="#334155">常見解釋：新資金做多</text>
+    <text x="375" y="126" text-anchor="middle" font-size="9" fill="#64748b">亦可能為空方避險/套利</text>
+    <text x="375" y="142" text-anchor="middle" font-size="9" fill="#64748b">須配合 CVD 等確認</text>
     <!-- Q2: OI up + Price down -->
     <rect x="40" y="48" width="210" height="112" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-    <text x="145" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">新空頭建倉</text>
+    <text x="145" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#dc2626">可能：新空建倉</text>
     <text x="145" y="90" text-anchor="middle" font-size="10" fill="#334155">OI&uarr; + Price&darr;</text>
-    <text x="145" y="108" text-anchor="middle" font-size="10" fill="#334155">趨勢健康，真跌</text>
-    <text x="145" y="126" text-anchor="middle" font-size="9" fill="#64748b">新資金流入做空</text>
-    <text x="145" y="142" text-anchor="middle" font-size="9" fill="#64748b">下跌有持續動力</text>
+    <text x="145" y="108" text-anchor="middle" font-size="10" fill="#334155">常見解釋：新資金做空</text>
+    <text x="145" y="126" text-anchor="middle" font-size="9" fill="#64748b">亦可能為多方避險/套利</text>
+    <text x="145" y="142" text-anchor="middle" font-size="9" fill="#64748b">須配合 CVD 等確認</text>
     <!-- Q3: OI down + Price up -->
     <rect x="270" y="180" width="210" height="112" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-    <text x="375" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">空頭平倉 (Squeeze)</text>
+    <text x="375" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#d97706">可能：空頭平倉</text>
     <text x="375" y="222" text-anchor="middle" font-size="10" fill="#334155">OI&darr; + Price&uarr;</text>
-    <text x="375" y="240" text-anchor="middle" font-size="10" fill="#334155">反彈不持久</text>
-    <text x="375" y="258" text-anchor="middle" font-size="9" fill="#64748b">空頭被迫買回平倉</text>
-    <text x="375" y="274" text-anchor="middle" font-size="9" fill="#64748b">squeeze 結束後易回落</text>
+    <text x="375" y="240" text-anchor="middle" font-size="10" fill="#334155">常見解釋：空頭回補</text>
+    <text x="375" y="258" text-anchor="middle" font-size="9" fill="#64748b">亦可能為多方獲利了結</text>
+    <text x="375" y="274" text-anchor="middle" font-size="9" fill="#64748b">非新資金，須再確認</text>
     <!-- Q4: OI down + Price down -->
     <rect x="40" y="180" width="210" height="112" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
-    <text x="145" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">多頭投降 (Capitulation)</text>
+    <text x="145" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed">可能：多頭平倉</text>
     <text x="145" y="222" text-anchor="middle" font-size="10" fill="#334155">OI&darr; + Price&darr;</text>
-    <text x="145" y="240" text-anchor="middle" font-size="10" fill="#334155">接近底部</text>
-    <text x="145" y="258" text-anchor="middle" font-size="9" fill="#64748b">多頭認輸拋售平倉</text>
-    <text x="145" y="274" text-anchor="middle" font-size="9" fill="#64748b">槓桿清除後可能觸底</text>
+    <text x="145" y="240" text-anchor="middle" font-size="10" fill="#334155">常見解釋：多頭認賠/被清算</text>
+    <text x="145" y="258" text-anchor="middle" font-size="9" fill="#64748b">亦可能為空方獲利平倉</text>
+    <text x="145" y="274" text-anchor="middle" font-size="9" fill="#64748b">未必代表觸底，須再確認</text>
   </svg>
 </div>
 
 <div class="quadrant-grid">
   <div class="quadrant-item" style="background:var(--green-l);">
-    <h4 style="color:var(--green); margin-top:0;">OI&uarr; + Price&uarr; = 新多建倉</h4>
-    <p>新資金進場做多，推動價格上漲。這是最健康的上漲結構。</p>
-    <p><strong>實戰案例：</strong>BTC 從 $25k 漲到 $30k，OI 同步增加 20%。表示有大量新多頭在建倉，趨勢有持續動力。可以順勢做多。</p>
+    <h4 style="color:var(--green); margin-top:0;">OI&uarr; + Price&uarr;</h4>
+    <p><strong>最常見解釋：</strong>新資金進場做多推動上漲。但同樣的 OI+價格組合，也可能來自空方建立避險或套利部位，無法只憑此判定。</p>
+    <p><strong>範例：</strong>BTC 由 $25k 漲到 $30k、OI 同步增加 20%，與「新多建倉」一致；是否順勢做多，仍須以 CVD、Funding 等進一步佐證，而非把此象限當成必漲保證。</p>
   </div>
   <div class="quadrant-item" style="background:var(--red-l);">
-    <h4 style="color:var(--red); margin-top:0;">OI&uarr; + Price&darr; = 新空建倉</h4>
-    <p>新資金進場做空，推動價格下跌。健康的下跌結構。</p>
-    <p><strong>實戰案例：</strong>ETH 從 $2000 跌到 $1800，OI 增加 15%。主力新空入場壓制價格，不宜抄底，應順勢做空。</p>
+    <h4 style="color:var(--red); margin-top:0;">OI&uarr; + Price&darr;</h4>
+    <p><strong>最常見解釋：</strong>新資金進場做空壓低價格。但也可能是多方加入避險/套利，不宜一概視為「必跌」。</p>
+    <p><strong>範例：</strong>ETH 由 $2000 跌到 $1800、OI 增加 15%，與「新空建倉」一致；判斷是否順勢做空前，仍應確認 CVD 是否同向，避免誤讀。</p>
   </div>
   <div class="quadrant-item" style="background:var(--yellow-l);">
-    <h4 style="color:var(--yellow); margin-top:0;">OI&darr; + Price&uarr; = 空頭被軋 (Squeeze)</h4>
-    <p>空頭被迫平倉買回，推動短期上漲。但這不是新資金進場，反彈往往不持久。</p>
-    <p><strong>實戰案例：</strong>BTC 快速從 $28k 反彈到 $30k，但 OI 下降 10%。這是 short squeeze，空頭被軋爆。反彈結束後可能回落。</p>
+    <h4 style="color:var(--yellow); margin-top:0;">OI&darr; + Price&uarr;（常稱 Squeeze）</h4>
+    <p><strong>最常見解釋：</strong>空頭回補買回推動短期上漲；因非新資金進場，上漲動能的持續性通常較弱。但 OI 下降也可能是多方獲利了結。</p>
+    <p><strong>範例：</strong>BTC 由 $28k 快速反彈到 $30k、OI 下降 10%，與 short squeeze 一致；是否回落需由後續 OI/CVD 走勢確認，不保證必然回落。</p>
   </div>
   <div class="quadrant-item" style="background:var(--purple-l);">
-    <h4 style="color:var(--purple); margin-top:0;">OI&darr; + Price&darr; = 多頭投降</h4>
-    <p>多頭認輸或被清算，主動/被動平倉。槓桿被清除，接近底部訊號。</p>
-    <p><strong>實戰案例：</strong>BTC 從 $30k 急跌到 $27k，OI 暴跌 25%。多頭大規模投降/被清算。槓桿清除後，底部往往不遠。</p>
+    <h4 style="color:var(--purple); margin-top:0;">OI&darr; + Price&darr;（常稱投降）</h4>
+    <p><strong>最常見解釋：</strong>多頭認賠或被清算而平倉，槓桿被清除；此時「可能」接近階段性底部，但並非觸底保證，也可能是空方獲利平倉。</p>
+    <p><strong>範例：</strong>BTC 由 $30k 急跌到 $27k、OI 暴跌 25%，與多頭投降一致；槓桿清除常與底部同時出現，但仍需等待止跌/反轉訊號，不可只憑此象限抄底。</p>
   </div>
 </div>
 </div>
@@ -266,9 +266,9 @@
 <h3>3. OI 絕對值 vs 變化量</h3>
 <h4>絕對值的意義</h4>
 <ul>
-  <li><strong>OI 絕對值高</strong> = 市場上的槓桿總量大 = 波動加劇的潛力大</li>
-  <li>高 OI 就像「炸藥」：一旦價格朝某方向突破，清算會引發級聯反應</li>
-  <li>歷史 ATH（All Time High）的 OI 水位是特別危險的信號</li>
+  <li><strong>OI 絕對值高</strong> = 未結算合約的名目規模大 = 一旦方向明確、波動加劇的潛力較大（但 OI 高不等於槓桿高，部分部位可能已對沖或足額保證金）</li>
+  <li>高 OI 常被比喻為「炸藥」：若其中有大量高槓桿部位，價格朝某方向突破時較易引發連鎖清算</li>
+  <li>OI 處於歷史高位（接近 ATH）時，市場對反向波動的脆弱度通常較高，值得特別留意</li>
 </ul>
 <h4>變化量才是關鍵</h4>
 <ul>
@@ -301,13 +301,13 @@
 <div class="card">
 <h3>4. OI 的清算含義</h3>
 <div class="warning-box">
-  <strong>核心規則：</strong>OI 高 + 價格快速反向 = 大規模清算即將發生。清算是級聯的：一個被清算 &rarr; 價格惡化 &rarr; 更多被清算 &rarr; 瀑布式崩盤/暴漲。
+  <strong>機制說明：</strong>當 OI 高（且含大量高槓桿部位）又遇價格快速反向時，容易觸發較大規模清算。清算可能是級聯的：一個被清算 &rarr; 價格惡化 &rarr; 更多被清算 &rarr; 形成瀑布式崩盤/暴漲。這是一種機制傾向，並非每次高 OI 都必然引發級聯。
 </div>
 <ul>
-  <li>高 OI 是「燃料」，價格方向是「火柴」</li>
-  <li>100x 槓桿的合約只需 1% 的反向波動就會被清算</li>
-  <li>清算單是市場單（Market Order），會直接衝擊價格</li>
-  <li>Binance BTC 永續的清算引擎是最大的「鯨魚」</li>
+  <li>高 OI 是「燃料」，價格方向是「火柴」（前提是其中確有大量高槓桿部位）</li>
+  <li>100x 槓桿的合約理論上約 1% 反向波動即觸及清算；實務上因維持保證金（maintenance margin）與手續費，常在不到 1% 時就被強平</li>
+  <li>清算的執行方式因交易所而異：可能是市價單衝擊盤口，也可能採分段清算（partial liquidation）、動用保險基金（insurance fund），或在極端時觸發自動減倉（ADL）</li>
+  <li>大型交易所的強平流對盤口衝擊顯著，但清算量只是公開估算的一部分，不應視為市場唯一或最大的主導力量</li>
 </ul>
 <div class="svg-container">
   <svg viewBox="0 0 460 160" width="100%" style="max-width:460px" role="img" aria-labelledby="svgTitleCascade1">
@@ -349,15 +349,14 @@
 <h3>5. Coinglass OI 數據解讀</h3>
 <h4>全市場 OI vs 單交易所 OI</h4>
 <ul>
-  <li><strong>全市場 OI：</strong>反映整體市場的槓桿水位</li>
-  <li><strong>Binance OI：</strong>散戶為主，OI 佔比最大（通常 40-50%）</li>
-  <li><strong>Bybit OI：</strong>專業交易者偏多</li>
-  <li><strong>CME OI：</strong>機構資金，反映華爾街態度</li>
+  <li><strong>全市場 OI：</strong>彙總各交易所，反映整體市場未結算合約規模</li>
+  <li><strong>單一交易所 OI：</strong>各所的參與者結構、保證金制度與合約規格不同，佔比也會隨時間變動；各平台「誰是散戶、誰是機構」並無公開定論，不應以固定標籤或固定百分比概括</li>
+  <li><strong>CME 等受監管交易所 OI：</strong>通常被視為較偏機構資金的參考，但仍須以實際數據為準</li>
 </ul>
 <h4>OI-weighted Funding</h4>
-<p>不同交易所的 Funding Rate 不同，而 OI 佔比最大的交易所的 Funding 對價格影響最大。Coinglass 的 OI-weighted funding 給出加權平均值，更有參考意義。</p>
+<p>不同交易所的 Funding Rate 不同。Coinglass 的 OI-weighted funding 以各所 OI 佔比加權，給出整體加權平均，比單看某一所更能代表全市場的資費水位。</p>
 <div class="highlight-box">
-  <strong>實戰技巧：</strong>如果 Binance（OI 最大）的 Funding 是 0.08%，而 Bybit 是 0.02%，代表散戶過度做多。此時 Binance 的清算風險最高。
+  <strong>實戰技巧：</strong>當某一 OI 佔比較大的交易所 Funding 明顯高於其他所（例如 0.08% vs 0.02%），代表該所多頭較擁擠、資費成本較高；此時該所若遇反向波動，清算壓力通常相對較大。具體數字與交易所排名會隨市況變動，須以當下數據為準。
 </div>
 </div>
 </div><!-- end tab1 -->
@@ -402,7 +401,7 @@
     <text x="355" y="72" text-anchor="middle" font-size="11" font-weight="600" fill="#2563eb">CVD 計算</text>
     <text x="275" y="92" font-size="10" fill="#334155">每根 K 線：</text>
     <text x="275" y="110" font-size="10" font-family="JetBrains Mono" fill="#334155">delta = TakerBuy - TakerSell</text>
-    <text x="275" y="130" font-size="10" fill="#334155">CVD = &Sigma; delta (累加)</text>
+    <text x="275" y="130" font-size="10" fill="#334155">CVD = &Sigma; delta （累加）</text>
     <text x="275" y="146" font-size="9" fill="#64748b">CVD 是趨勢型指標</text>
     <defs><marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#16a34a"/></marker></defs>
   </svg>
@@ -560,9 +559,9 @@
 <h3>1. Funding 機制原理</h3>
 <p>永續合約沒有到期日（不像期貨有交割日），靠 Funding Rate 機制來讓永續價格錨定現貨價。</p>
 <ul>
-  <li><strong>Funding > 0</strong> = 永續價 > 現貨價 = 多方付費給空方 = 做多成本高 = 市場偏多</li>
-  <li><strong>Funding < 0</strong> = 永續價 < 現貨價 = 空方付費給多方 = 做空成本高 = 市場偏空</li>
-  <li><strong>結算頻率：</strong>每 8 小時結算一次（00:00 / 08:00 / 16:00 UTC）</li>
+  <li><strong>Funding > 0</strong> = <strong>多方付費給空方</strong>（付款方向可確定）＝做多持倉成本較高，通常反映市場偏多。多數時候伴隨永續價高於現貨，但 Funding 還含利率項（interest component）且設有上下限（cap/floor），故不必然等同「當下永續價一定高於現貨」。</li>
+  <li><strong>Funding < 0</strong> = <strong>空方付費給多方</strong>＝做空持倉成本較高，通常反映市場偏空（同樣不必然等同當下永續價低於現貨）。</li>
+  <li><strong>結算頻率：</strong>常見為每 8 小時一次（如 00:00 / 08:00 / 16:00 UTC），但結算間隔、利率項與上下限<strong>各交易所、各合約不同</strong>，部分合約採每 4 小時或每 1 小時，須查該合約規則，不是一律固定三次。</li>
 </ul>
 <div class="svg-container">
   <svg viewBox="0 0 500 180" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleFundMech">
@@ -591,13 +590,13 @@
 <div class="svg-container">
   <svg viewBox="0 0 500 200" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleFundRange">
     <title id="svgTitleFundRange">Funding Rate 區間與含義圖</title>
-    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 區間與含義</text>
+    <text x="250" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Funding Rate 區間與含義（示例門檻）</text>
     <!-- Horizontal bar chart representation -->
     <line x1="250" y1="40" x2="250" y2="180" stroke="#cbd5e1" stroke-width="1.5"/>
-    <text x="250" y="192" text-anchor="middle" font-size="9" fill="#64748b">0% (中性)</text>
+    <text x="250" y="192" text-anchor="middle" font-size="9" fill="#64748b">0% （中性）</text>
     <!-- Positive extreme -->
     <rect x="250" y="50" width="180" height="25" rx="4" fill="#dc2626" fill-opacity="0.2"/>
-    <text x="345" y="67" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">> 0.05% 極端做多（過熱）</text>
+    <text x="345" y="67" text-anchor="middle" font-size="9" font-weight="600" fill="#dc2626">> 0.1% 極端做多（過熱）</text>
     <rect x="250" y="80" width="120" height="25" rx="4" fill="#d97706" fill-opacity="0.2"/>
     <text x="315" y="97" text-anchor="middle" font-size="9" fill="#d97706">0.02-0.05% 偏多</text>
     <!-- Neutral -->
@@ -616,51 +615,52 @@
 <table>
   <thead>
     <tr>
-      <th>Funding 範圍</th>
+      <th>Funding 範圍（示例門檻）</th>
       <th>市場狀態</th>
-      <th>歷史統計</th>
-      <th>操作建議</th>
+      <th>傾向（非統計保證）</th>
+      <th>操作參考</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td class="mono" style="color:var(--red);">> 0.1%</td>
-      <td>極度過熱</td>
-      <td>70% 機率 24H 內回調 5%+</td>
-      <td>高風險做多區，考慮獲利了結</td>
+      <td>極度偏多擁擠</td>
+      <td>做多成本很高，回調風險上升</td>
+      <td>高風險做多區，留意獲利了結</td>
     </tr>
     <tr>
       <td class="mono" style="color:var(--red);">0.05% ~ 0.1%</td>
-      <td>過熱</td>
-      <td>60% 機率出現回調</td>
+      <td>偏多擁擠</td>
+      <td>多頭擁擠，較易出現回調</td>
       <td>收緊停損，不追高</td>
     </tr>
     <tr>
       <td class="mono">0.01% ~ 0.05%</td>
       <td>正常偏多</td>
-      <td>趨勢中正常</td>
-      <td>可以持有多倉</td>
+      <td>多方略佔優，屬常見區間</td>
+      <td>可視情況持有多倉</td>
     </tr>
     <tr>
       <td class="mono">-0.01% ~ 0.01%</td>
       <td>中性</td>
-      <td>方向由現貨決定</td>
+      <td>多空成本接近，方向多由現貨/其他訊號決定</td>
       <td>觀察其他指標</td>
     </tr>
     <tr>
       <td class="mono" style="color:var(--green);">-0.05% ~ -0.01%</td>
       <td>偏空</td>
-      <td>空頭佔優但非極端</td>
-      <td>可以持有空倉</td>
+      <td>空方略佔優但未達極端</td>
+      <td>可視情況持有空倉</td>
     </tr>
     <tr>
       <td class="mono" style="color:var(--green);">< -0.05%</td>
-      <td>極度過冷</td>
-      <td>65% 機率出現 squeeze 反彈</td>
-      <td>空頭擁擠，反向做多勝率高</td>
+      <td>極度偏空擁擠</td>
+      <td>空頭擁擠，反彈（squeeze）風險上升</td>
+      <td>空頭擁擠，逆向做多須設好停損</td>
     </tr>
   </tbody>
 </table>
+<p style="font-size:12px; color:var(--text3); margin-top:8px;">※ 上表門檻與狀態描述為<strong>教學示例</strong>，各幣種、各交易所、各市況的合理區間不同；「傾向」為機制上的方向性，非回測得出的固定機率，實際運用須自行以完整樣本驗證。</p>
 </div>
 
 <div class="card">
@@ -668,8 +668,8 @@
 <div class="quadrant-grid">
   <div class="quadrant-item" style="background:var(--red-l);">
     <h4 style="color:var(--red); margin-top:0;">高 Funding + 高 OI = 最危險</h4>
-    <p>多頭結構過度擁擠。大量高槓桿多頭在場上，每 8 小時還要付費。一旦下跌 = 踩踏式崩盤。</p>
-    <p class="mono" style="font-size:12px; color:var(--red);">歷史案例：2021/4/18 BTC $64k &rarr; $51k (一天 -20%)</p>
+    <p>多頭結構過度擁擠。大量高槓桿多頭在場上，每次結算還要付費。一旦下跌，容易演變成踩踏式崩盤。</p>
+    <p class="mono" style="font-size:12px; color:var(--red);">歷史案例：2021/4/14 BTC 觸及當時高點約 $64.8k，至 4/18 數日內跌至約 $51k（約 -20%）；其中 4/18 單日急跌約 -15%</p>
   </div>
   <div class="quadrant-item" style="background:var(--green-l);">
     <h4 style="color:var(--green); margin-top:0;">負 Funding + 高 OI = 空頭擁擠</h4>
@@ -690,24 +690,25 @@
 <h3>4. Funding Rate 套利</h3>
 <p>當 Funding 持續為正且較高時，可以進行「資金費率套利」：</p>
 <div class="green-box">
-  <strong>策略：</strong>永續合約做空 + 現貨做多 = <strong>方向中性</strong>（Delta 近零，不受單純漲跌影響）+ 收取 Funding 費。<strong>但並非無風險</strong>：仍有清算、資費反轉（由收錢變付錢）、基差滑點與交易所對手方（跑路/凍結）風險。<br><br>
-  <strong>年化收益計算（理想上限，示意）：</strong><br>
-  <span class="mono">假設平均 Funding = 0.03% / 8H</span><br>
-  <span class="mono">日收益 = 0.03% x 3 = 0.09%</span><br>
-  <span class="mono">年化 = 0.09% x 365 = 32.85%</span><br>
-  <span style="font-size:12px;">※ 未計交易手續費與兩腿資金占用，且假設 Funding 全程維持高位；實際收益通常遠低於此，須自行回測驗證。</span>
+  <strong>策略：</strong>永續合約做空 + 現貨做多 = <strong>方向中性</strong>（Delta 近零，不受單純漲跌影響）+ 收取 Funding 費。<strong>但絕非無風險、也不是穩賺</strong>：仍有清算、資費反轉（由收錢變付錢）、基差（basis）變動與滑點、借幣利息，以及交易所對手方（跑路/凍結/提領受限）風險。<br><br>
+  <strong>這只是「固定費率情境下的簡單 APR」，不是可實現的 APY：</strong><br>
+  <span class="mono">假設平均 Funding = 0.03% / 8H（且全程維持）</span><br>
+  <span class="mono">簡單日收益 = 0.03% x 3 = 0.09%</span><br>
+  <span class="mono">簡單年化 APR = 0.09% x 365 = 32.85%</span><br>
+  <span style="font-size:12px;">※ 此數字<strong>只是維持固定費率的理想上限</strong>。實際報酬還須扣除：兩腿各自佔用的資本與保證金、借幣利息、開平倉手續費、基差變動與滑點，並承擔清算與對手方風險；Funding 也會浮動甚至轉負。真實可實現報酬通常<strong>遠低於</strong>此，且須以完整歷史資料回測驗證，不可當成保證收益。</span>
 </div>
 <h4>風險注意</h4>
 <ul>
-  <li>Funding 可能突然轉負 = 從收錢變成付錢</li>
-  <li>永續做空的保證金需要足夠，避免被清算</li>
-  <li>現貨要放在同交易所避免出金延遲風險</li>
-  <li>適合 Funding 持續高位的牛市環境</li>
+  <li>Funding 可能突然轉負 = 從收錢變成付錢，甚至侵蝕本金</li>
+  <li>永續做空的保證金需足夠並預留緩衝，避免行情急漲時被清算</li>
+  <li><strong>兩腿放同一交易所的取捨：</strong>可降低跨所轉帳/出金延遲與價差風險，但會把資金集中在單一平台，一旦該所倒閉、凍結或暫停提領，兩腿同時受影響；分散到不同所則相反——各有利弊，須自行權衡。</li>
+  <li>較適合 Funding 持續高位的環境，但費率會變，須持續監控而非一勞永逸</li>
 </ul>
 </div>
 
 <div class="card">
-<h3>5. 歷史 Funding 極端事件統計</h3>
+<h3>5. 歷史 Funding 極端事件（示例）</h3>
+<p style="font-size:13px; color:var(--text2);">以下為幾個常被引用的極端 Funding 事件示意，用來說明「極端資費後常伴隨反向波動」的<strong>機制傾向</strong>。這是少數挑選出的個案，<strong>不足以作為統計樣本</strong>，具體數值請以交易所/數據商當時紀錄為準。</p>
 <table>
   <thead>
     <tr>
@@ -757,7 +758,7 @@
   </tbody>
 </table>
 <div class="highlight-box">
-  <strong>統計結論：</strong>Funding > 0.08% 後 7 天內出現 10%+ 回調的機率約 70%。Funding < -0.08% 後 7 天內出現 10%+ 反彈的機率約 60%。Funding 是最好的逆向指標之一。
+  <strong>如何解讀：</strong>極端正 Funding 往往出現在多頭過度擁擠、容易回調的時點；極端負 Funding 則常見於空頭擁擠、容易 squeeze 的時點，因此 Funding 常被當作<strong>逆向情緒指標</strong>之一。但上述只是機制上的方向性傾向，<strong>並無「某門檻後幾天內必有幾成機率出現幾 % 波動」這類固定統計結論</strong>——任何此類數字都需以完整、可重現的樣本回測才算數，且會隨市況改變。
 </div>
 </div>
 </div><!-- end tab3 -->
@@ -768,7 +769,7 @@
 
 <div class="card">
 <h3>1. 清算熱力圖 (Liquidation Heatmap)</h3>
-<p>清算熱力圖顯示在不同價位上，有多少槓桿部位會被清算。顏色越深 = 清算量越大 = 價格磁鐵越強。</p>
+<p>清算熱力圖是<strong>數據商依公開資料與假設模型推估</strong>的結果：它以成交量、OI 變化與常見槓桿倍數，估計<strong>若價格到達某價位、「可能」有多少部位觸及清算</strong>。顏色越深代表模型估計的潛在清算量越大。<strong>它不是實際會被清算的金額</strong>——供應商無法得知每個帳戶真正的進場價、槓桿、保證金與維持保證金層級，因此只能視為機率性的參考，不能當成確定事實。</p>
 <div class="svg-container">
   <svg viewBox="0 0 500 260" width="100%" style="max-width:500px" role="img" aria-labelledby="svgTitleHeatmap">
     <title id="svgTitleHeatmap">清算熱力圖示意</title>
@@ -827,20 +828,29 @@
   </svg>
 </div>
 <div class="highlight-box">
-  <strong>清算密集區 = 價格磁鐵。</strong>價格傾向被吸引到清算密集區，因為觸發清算會產生更多動能（正反饋），這等於「免費流動性」，主力最喜歡在這裡操作。
+  <strong>清算密集區「可能」吸引價格，但不是必然的磁鐵。</strong>估算的清算密集區代表該處一旦被觸及，可能釋出較多被動流動性，因此價格<strong>有時</strong>會朝這些區域靠近（所謂「流動性獵殺」）。但這是一種傾向與市場敘事，<strong>並非每次都會成真</strong>：估算可能失準，價格也常不照熱圖走。切勿把清算區當成價格必定到達的保證。
 </div>
-<h4>主力的策略</h4>
+<h4>常見的「流動性獵殺」敘事（僅供理解機制，非操作建議）</h4>
 <ol>
-  <li>觀察清算熱力圖，找到清算密集的價格區域</li>
-  <li>推動價格到該區域，觸發大量清算</li>
-  <li>清算產生大量市場單 = 極好的流動性</li>
-  <li>在這個流動性中反向建倉（別人被清算時你進場）</li>
+  <li>市場上存在觀察清算熱圖、尋找估算清算密集區的參與者</li>
+  <li>價格被推向該區域時，可能觸發一批清算</li>
+  <li>清算產生的市場單會釋出流動性</li>
+  <li>有資金傾向在這類流動性中反向進出</li>
 </ol>
+<div class="warning-box">
+  <strong>風險提醒：</strong>上述只是解釋市場為何常出現「插針」的一種機制，<strong>不是叫你在估算清算區下方掛單抄底</strong>。清算圖是推估、會失準，真正的清算位置無人能確知；在估算區盲目掛單接刀，很可能正好接在級聯下跌的半途而被套。任何進場都須有獨立的止損與風險控管。
+</div>
 </div>
 
 <div class="card">
 <h3>2. Long/Short Ratio</h3>
-<p>Long/Short Ratio 顯示散戶帳戶中做多 vs 做空的比例。注意：這是「帳戶數量」比，不是「金額」比。</p>
+<p>Long/Short Ratio 衡量市場多空的相對比例，但<strong>定義依平台而異</strong>，看數據前務必確認是哪一種：</p>
+<ul>
+  <li><strong>全體帳戶多空比（accounts）：</strong>持多單 vs 持空單的帳戶「數量」比，偏向散戶情緒。</li>
+  <li><strong>大戶/頂級交易者比（top traders）：</strong>只統計保證金或持倉較大的帳戶，可看帳戶比，也可看其持倉比。</li>
+  <li><strong>持倉量多空比（positions）：</strong>以多空「部位金額/數量」計，而非帳戶數。</li>
+</ul>
+<p>因此不能一律把它當成「散戶人數比」；用哪一種、在哪個交易所，結論可能不同。</p>
 <div class="svg-container">
   <svg viewBox="0 0 460 150" width="100%" style="max-width:460px" role="img" aria-labelledby="svgTitleLsRatio">
     <title id="svgTitleLsRatio">Long/Short Ratio 解讀圖</title>
@@ -859,7 +869,7 @@
   </svg>
 </div>
 <div class="warning-box">
-  <strong>使用注意：</strong>L/S Ratio 是帳戶數量比，不是資金量比。100 個小散戶做多 vs 1 個鯨魚做空，L/S 顯示多頭佔優但實際空方力量更大。因此這是「反向指標」——散戶大量做多時反而要小心。
+  <strong>使用注意：</strong>若你看的是「全體帳戶數量比」，它只數帳戶、不計資金量。例如 100 個小散戶做多 vs 1 個鯨魚做空，帳戶比會顯示多頭佔優，但實際空方金額可能更大。正因如此，全體帳戶比常被<strong>當作逆向情緒指標</strong>——散戶一面倒做多時反而要留意。但這只是傾向，<strong>不是必然做反</strong>；若看的是大戶比或持倉金額比，解讀方向可能完全不同，務必先確認定義再使用。
 </div>
 </div>
 
@@ -909,7 +919,7 @@
 </div>
 <h4>為什麼加密市場波動比傳統市場大？</h4>
 <ul>
-  <li><strong>100x 槓桿：</strong>1% 波動就清算，傳統市場最高 5-10x</li>
+  <li><strong>極高槓桿普及：</strong>加密永續常見提供到 100x 甚至更高，約 1% 反向波動即可能清算。傳統市場的「現貨融資（股票保證金）」槓桿確實較低（常見數倍），但傳統期貨與選擇權同樣能達到很高的有效槓桿；差別更在於加密零售端普遍、便捷地取得超高槓桿，而非傳統市場一律只有 5-10x。</li>
   <li><strong>24/7 交易：</strong>沒有熔斷機制，半夜也能崩盤</li>
   <li><strong>無漲跌停：</strong>一天跌 30-50% 完全可能</li>
   <li><strong>級聯清算：</strong>正反饋循環加劇波動</li>
@@ -921,31 +931,32 @@
 <h3>4. 實戰應用：用清算圖找交易機會</h3>
 <div class="quadrant-grid">
   <div class="quadrant-item" style="background:var(--purple-l);">
-    <h4 style="color:var(--purple); margin-top:0;">情境 A：下方有大量多頭清算</h4>
-    <p>如果當前價 $30k，而 $28k-$29k 有大量多頭清算密集區：</p>
+    <h4 style="color:var(--purple); margin-top:0;">情境 A：下方有估算的多頭清算密集區</h4>
+    <p>若當前價 $30k，而熱圖估計 $28k-$29k 有較多多頭清算：</p>
     <ul>
-      <li>價格可能被「吸下去」觸發清算</li>
-      <li>清算完成後（OI 暴降），反而是底部</li>
-      <li>策略：在清算區下方設限價買單，等待 V 反</li>
+      <li>價格<strong>有可能</strong>被「吸下去」觸發清算（也可能不會）</li>
+      <li>若清算大量完成（OI 明顯下降），該區域<strong>有時</strong>會成為階段性底部，但不保證</li>
+      <li><strong>風險：</strong>切勿僅憑熱圖就在估算區下方掛買單接刀——估算會失準、級聯下跌可能遠超預期。任何進場都要有獨立止損與反向失效條件。</li>
     </ul>
   </div>
   <div class="quadrant-item" style="background:var(--yellow-l);">
-    <h4 style="color:var(--yellow); margin-top:0;">情境 B：上方有大量空頭清算</h4>
-    <p>如果當前價 $30k，而 $31k-$32k 有大量空頭清算密集區：</p>
+    <h4 style="color:var(--yellow); margin-top:0;">情境 B：上方有估算的空頭清算密集區</h4>
+    <p>若當前價 $30k，而熱圖估計 $31k-$32k 有較多空頭清算：</p>
     <ul>
-      <li>價格可能被「軋上去」觸發 squeeze</li>
-      <li>Squeeze 完成後（空頭被清除），上漲動力消失</li>
-      <li>策略：順勢做多搭車，但在清算區頂部附近獲利了結</li>
+      <li>價格<strong>有可能</strong>被「軋上去」觸發 squeeze</li>
+      <li>若 squeeze 完成（空頭被清除），上漲動力可能消退</li>
+      <li><strong>風險：</strong>追這類行情須留意高波動與假突破，進場前先設好停損與獲利了結計畫，不可因「上方有清算」就無腦追多。</li>
     </ul>
   </div>
 </div>
 <div class="highlight-box">
-  <strong>Coinglass 清算圖使用技巧：</strong>
+  <strong>清算圖使用提醒：</strong>
   <ol style="margin-top:8px; padding-left:16px;">
-    <li>選擇 BTC/USDT 永續合約</li>
-    <li>觀察清算密度最高的價格區域（顏色最深處）</li>
-    <li>距離當前價越近的清算密集區 = 越容易被觸發 = 短期價格方向</li>
-    <li>距離當前價較遠的清算密集區 = 中期目標位</li>
+    <li>先確認看的是哪個合約（如 BTC/USDT 永續）與哪家數據商的模型</li>
+    <li>觀察估算清算密度較高的價格區域（顏色較深處）</li>
+    <li>距離當前價較近的密集區，相對較易被觸及，可作為<strong>可能的</strong>短期關注價位</li>
+    <li>較遠的密集區可視為<strong>參考</strong>目標區，而非必達目標</li>
+    <li>熱圖是推估、會失準，務必搭配價格行為、OI、CVD 等其他證據，並嚴格風控</li>
   </ol>
 </div>
 </div>
@@ -1026,7 +1037,7 @@
   <span class="step-num">4</span>
   <div class="step-content">
     <h4 style="margin-top:0;">看 Funding 判斷市場溫度</h4>
-    <p>Funding 極端正 = 過熱 = 回調風險<br>Funding 極端負 = 過冷 = 反彈動力<br>Funding 中性 = 健康趨勢中</p>
+    <p>Funding 極端正 = 多頭擁擠 = 回調風險上升<br>Funding 極端負 = 空頭擁擠 = 反彈（squeeze）動力<br>Funding 接近中性 = 多空成本相近，方向多由其他訊號決定</p>
   </div>
 </div>
 
@@ -1107,13 +1118,13 @@
     <p><strong>技巧：</strong>Funding 結算前後 OI 變化常產生短線機會（結算前平倉 &rarr; 結算後重建）</p>
   </div>
   <div class="quadrant-item" style="background:var(--green-l);">
-    <h4 style="color:var(--green); margin-top:0;">中線 (日線)</h4>
+    <h4 style="color:var(--green); margin-top:0;">中線 （日線）</h4>
     <p><strong>關注：</strong>OI 趨勢 + CVD 背離</p>
     <p><strong>用途：</strong>Swing Trade 方向判斷</p>
     <p><strong>技巧：</strong>日線 CVD 背離是最可靠的反轉信號之一，配合 OI 四象限做方向判斷</p>
   </div>
   <div class="quadrant-item" style="background:var(--purple-l);">
-    <h4 style="color:var(--purple); margin-top:0;">長線 (週線)</h4>
+    <h4 style="color:var(--purple); margin-top:0;">長線 （週線）</h4>
     <p><strong>關注：</strong>總 OI 水位 + Funding 均值</p>
     <p><strong>用途：</strong>大週期頂底判斷</p>
     <p><strong>技巧：</strong>OI ATH + Funding 長期高位 = 週期頂部。OI 極低 + Funding 長期負值 = 週期底部</p>
@@ -1161,7 +1172,7 @@
   <span class="step-num">4</span>
   <div class="step-content">
     <h4 style="margin-top:0;">Step 4 - Funding 判斷</h4>
-    <p>Funding Rate = 0.08%（極端偏高）。<br><strong style="color:var(--red);">警訊！</strong>做多成本高，市場過熱。多頭需要每 8 小時付 0.08%。</p>
+    <p>Funding Rate = 0.08%（偏高，屬擁擠區）。<br><strong style="color:var(--red);">警訊！</strong>做多持倉成本高，多頭擁擠；多頭每次結算（此合約假設為每 8 小時）須付 0.08%。</p>
   </div>
 </div>
 
@@ -1216,9 +1227,9 @@
     {
       question: 'OI 增加 + 價格上漲，代表什麼？',
       context: 'BTC 從 $28,000 漲到 $30,000，同時 OI 從 $10B 增加到 $12B。',
-      options: ['新多頭建倉（趨勢健康）', '空頭平倉（Short Squeeze）', '多頭投降', '新空頭建倉'],
+      options: ['新多頭建倉（最常見解釋）', '空頭平倉（Short Squeeze）', '多頭投降', '新空頭建倉'],
       correct: 0,
-      explanation: '<strong>OI&uarr; + Price&uarr; = 新多頭建倉。</strong>OI 增加代表有新合約被創建，配合價格上漲，表示新資金流入做多。這是最健康的上漲結構，趨勢有持續動力。'
+      explanation: '<strong>OI&uarr; + Price&uarr; 最常見的解釋是新多頭建倉。</strong>OI 增加代表淨新增合約，配合價格上漲，常表示新資金流入做多，是相對健康的上漲結構。但同樣組合也可能來自空方避險/套利，須配合 CVD、Funding 進一步確認，不能只憑此斷定必漲。'
     },
     {
       question: 'OI 減少 + 價格上漲，代表什麼？',
@@ -1253,14 +1264,14 @@
       context: 'BTC 連漲 3 天後 Funding 飆升到 0.1%/8H。',
       options: ['市場中性，正常波動', '極度做空，即將 squeeze', '極度做多過熱，回調風險高', '底部訊號'],
       correct: 2,
-      explanation: '<strong>Funding 0.1% = 極度做多過熱。</strong>Funding > 0.05% 就算過熱，0.1% 是極端水平。意味著多頭每 8 小時要付 0.1% 的持倉成本。歷史統計，這種極端 Funding 後 24H 內回調 5%+ 的機率約 70%。'
+      explanation: '<strong>Funding 0.1% = 極度偏多擁擠。</strong>以常見示例門檻，Funding 超過約 0.05% 即偏擁擠，0.1% 屬極端水平，意味著多頭每次結算要付 0.1% 的持倉成本。這種極端資費後常伴隨回調風險上升，但沒有「幾成機率、幾天內跌幾 %」這類固定統計保證，實際須以完整樣本驗證。'
     },
     {
       question: '高 Funding + 高 OI 的組合代表什麼風險？',
       context: 'Funding = 0.08%，全市場 OI 處於歷史高位。',
       options: ['安全的做多環境', '最危險的多頭結構', '底部反轉訊號', '空頭過度擁擠'],
       correct: 1,
-      explanation: '<strong>高 Funding + 高 OI = 最危險的多頭結構。</strong>大量高槓桿多頭在場上（高 OI），且每 8 小時付高額費用（高 Funding）。一旦價格下跌觸發清算 = 級聯式崩盤。這是歷史上多次暴跌前的共同特徵。'
+      explanation: '<strong>高 Funding + 高 OI = 最危險的多頭結構。</strong>大量高槓桿多頭在場上（高 OI），且每次結算付高額費用（高 Funding）。一旦價格下跌觸發清算，容易演變成級聯式崩盤。這是過去多次暴跌前常見的共同特徵。'
     },
     {
       question: '負 Funding + 高 OI 的組合，該如何操作？',
@@ -1272,16 +1283,16 @@
     {
       question: '清算熱力圖顯示 $28k-$29k 有大量多頭清算密集區，當前價 $30k，你預期？',
       context: '下方清算密度遠高於上方，當前 OI 偏高。',
-      options: ['價格會被吸引到 $28k-$29k', '價格會往上突破', '價格會保持在 $30k 橫盤', '清算圖無參考意義'],
+      options: ['價格較可能被吸引向 $28k-$29k', '價格必定往上突破', '價格必定橫盤', '清算圖無參考意義'],
       correct: 0,
-      explanation: '<strong>清算密集區 = 價格磁鐵。</strong>下方有大量多頭清算 = 價格容易被「吸下去」。主力策略是推價觸發清算 &rarr; 清算產生市場單 &rarr; 製造流動性 &rarr; 在流動性中反向操作。OI 高位更增加了觸發清算的可能性。'
+      explanation: '<strong>估算的清算密集區「可能」像磁鐵，但非必然。</strong>下方有較多估算的多頭清算，價格<strong>傾向</strong>較易被「吸下去」測試該區（流動性獵殺敘事），OI 高位也增加觸發清算的機會。但清算圖是推估、會失準，價格常不照熱圖走；切勿據此在估算區下方盲目掛單抄底，務必搭配其他證據與止損。'
     },
     {
-      question: 'Long/Short Ratio > 2.0（散戶大量做多），你會如何解讀？',
-      context: 'Binance L/S Ratio = 2.3，代表散戶帳戶中 70% 做多，30% 做空。',
-      options: ['跟著散戶做多', '這是逆向指標，小心回調', '代表趨勢即將加速上漲', '無參考價值'],
+      question: '某交易所「全體帳戶多空比」> 2.0（偏多帳戶居多），你會如何解讀？',
+      context: '某所全體帳戶 L/S Ratio = 2.3（持多單帳戶約為持空單帳戶的 2.3 倍，換算約 70% 帳戶做多）。此處看的是帳戶數量比。',
+      options: ['跟著多數帳戶做多', '常作逆向情緒指標，留意回調', '代表趨勢必定加速上漲', '無參考價值'],
       correct: 1,
-      explanation: '<strong>L/S Ratio 是逆向指標。</strong>散戶大量做多（L/S > 2.0）往往代表市場情緒過於樂觀。主力傾向在散戶一致看多時反向操作（獵殺多頭）。應該收緊停損，不追高。'
+      explanation: '<strong>全體帳戶多空比常被當作逆向情緒指標。</strong>帳戶一面倒做多（比值偏高）往往代表情緒偏樂觀，須留意回調，宜收緊停損、不追高。但這只是傾向而非必然做反；且 L/S 定義依平台不同（全體帳戶比／大戶比／持倉金額比），若看的是大戶或金額比，解讀可能相反——用前務必確認是哪一種。'
     },
     {
       question: 'CVD 下降 + 價格上漲，這代表什麼？',
@@ -1302,7 +1313,7 @@
       context: 'BTC 連漲突破新高，OI 增加，但 CVD 沒同步新高，Funding 偏高。',
       options: ['全確認做多', '趨勢健康繼續持有', '危險！減倉或準備反手', '做空'],
       correct: 2,
-      explanation: '<strong>危險的組合！</strong>雖然 OI&uarr;+Price&uarr; 看起來健康，但 CVD 頂背離說明主動買入力道在減弱（主力可能在出貨），Funding 0.07% 說明市場過熱。當 3/5 個指標亮紅燈時，應該收緊停損或減倉，不要貪心追高。'
+      explanation: '<strong>危險的組合！</strong>雖然 OI&uarr;+Price&uarr; 看起來健康，但 CVD 頂背離說明主動買入力道在減弱（主力可能在出貨），Funding 0.07% 說明市場過熱。當多個指標同時示警時，應該收緊停損或減倉，不要貪心追高。'
     },
     {
       question: 'OI 大幅下降 + Price 急跌 + Funding 由正轉負 + 長下影線 K 線，這是？',
@@ -1323,7 +1334,7 @@
       context: 'Funding 持續為正 0.05%/8H。',
       options: ['做多永續 + 做空現貨', '做空永續 + 做多現貨（方向中性 + 收 Funding）', '兩邊都做多', '只做空永續'],
       correct: 1,
-      explanation: '<strong>做空永續 + 做多現貨 = Funding 套利。</strong>現貨做多和永續做空對沖，Delta 近零（不受單純漲跌影響，但非無風險）。Funding 為正時空方收錢，永續做空可每 8 小時收取 Funding 費。理想年化上限（示意）：0.05% x 3 x 365 = 54.75%，惟未計手續費與兩腿資金占用，實際遠低於此。風險在於 Funding 可能轉負，以及清算與交易所對手方風險，須自行回測。'
+      explanation: '<strong>做空永續 + 做多現貨 = Funding 套利。</strong>現貨做多和永續做空對沖，Delta 近零（不受單純漲跌影響，但非無風險、非穩賺）。Funding 為正時空方收錢，永續做空可於每次結算收取 Funding 費。<strong>0.05% x 3 x 365 = 54.75% 只是「維持固定費率的簡單 APR 上限」，不是可實現的 APY</strong>：還須扣除兩腿資本與保證金佔用、借幣利息、手續費、基差變動與滑點，並承擔清算與交易所對手方（凍結/倒閉）風險，Funding 也會浮動甚至轉負。實際報酬通常遠低於此，須自行以完整資料回測。'
     },
     {
       question: '什麼情況下 Short Squeeze 最容易發生？',

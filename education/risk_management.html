@@ -295,7 +295,7 @@ header { margin-bottom: 28px; }
     <li><strong>心態決定執行</strong>：紀律讓你能夠堅持執行前兩者</li>
   </ul>
 
-  <p>想像兩位交易者：A 有 70% 勝率但每筆賭上 30% 資金；B 只有 45% 勝率但每筆風險 1%。長期而言，B 幾乎確定存活並獲利，A 則幾乎確定破產。</p>
+  <p>想像兩位交易者：A 有 70% 勝率但每筆賭上 30% 資金；B 只有 45% 勝率但每筆風險 1%。A 的巨大單筆風險讓它在一段正常的連虧後就可能重傷甚至被清空；B 的小風險則讓它在相同連虧下輕鬆存活。不過要注意：光憑「勝率＋下注比例」<strong>並不足以斷定</strong>誰必破產、誰必獲利——還要看盈虧比與報酬分布、交易成本、部位間相關性，以及優勢（edge）是否長期穩定。這裡要傳達的是「單筆風險過大會放大破產機率」這個方向，而非精確結論。</p>
 </div>
 
 <div class="section">
@@ -360,16 +360,16 @@ header { margin-bottom: 28px; }
       <!-- Legend (top-left, clear of the rising curves) -->
       <rect x="72" y="30" width="200" height="90" fill="white" stroke="#e2e8f0" rx="6"/>
       <line x1="82" y1="48" x2="107" y2="48" stroke="#dc2626" stroke-width="2.5"/>
-      <text x="112" y="52" font-size="11" fill="#334155">40% 勝率 (1:1.2 盈虧比)</text>
+      <text x="112" y="52" font-size="11" fill="#334155">40% 勝率 （1:1.2 盈虧比）</text>
       <line x1="82" y1="68" x2="107" y2="68" stroke="#ea580c" stroke-width="2.5"/>
-      <text x="112" y="72" font-size="11" fill="#334155">50% 勝率 (1:1.2 盈虧比)</text>
+      <text x="112" y="72" font-size="11" fill="#334155">50% 勝率 （1:1.2 盈虧比）</text>
       <line x1="82" y1="88" x2="107" y2="88" stroke="#2563eb" stroke-width="2.5"/>
-      <text x="112" y="92" font-size="11" fill="#334155">55% 勝率 (1:1.5 盈虧比)</text>
+      <text x="112" y="92" font-size="11" fill="#334155">55% 勝率 （1:1.5 盈虧比）</text>
       <line x1="82" y1="108" x2="107" y2="108" stroke="#16a34a" stroke-width="2.5"/>
-      <text x="112" y="112" font-size="11" fill="#334155">60% 勝率 (1:1.5 盈虧比)</text>
+      <text x="112" y="112" font-size="11" fill="#334155">60% 勝率 （1:1.5 盈虧比）</text>
     </svg>
   </div>
-  <p style="font-size:12px;color:var(--text3);text-align:center;">每筆交易風險越大，破產機率越高。即使勝率 60%，風險超過 10% 仍有顯著破產可能。</p>
+  <p style="font-size:12px;color:var(--text3);text-align:center;">本圖僅為<strong>定性示意</strong>（表達「單筆風險越大、破產機率越高」的方向），曲線形狀是手繪示意、<strong>並非由嚴謹公式逐點計算</strong>。精確數值須以二元等賠率模型或蒙地卡羅模擬在明確假設下估算，請自行驗證。</p>
 </div>
 
 <div class="section">
@@ -379,8 +379,8 @@ header { margin-bottom: 28px; }
     <p>如果任何單一筆交易的結果讓你焦慮到影響睡眠、情緒或日常生活，代表你的倉位過大。正確的倉位大小應該讓你對任何單筆虧損都感到「無所謂」——因為它只是統計上的一個數據點。</p>
   </div>
   <ul>
-    <li>每筆風險 1-2% 意味著連虧 10 次也只損失 10-20%</li>
-    <li>對比：每筆風險 10% 連虧 5 次就損失超過 40%</li>
+    <li>以固定比例（fixed-fractional）下注、每筆風險 1-2% 時，連虧 10 次因複利效果約損失 9.6%（1%）至 18.3%（2%），仍遠低於傷筋動骨的程度</li>
+    <li>對比：每筆風險 10% 連虧 5 次約損失 41%（1 − 0.9⁵，複利計算）</li>
     <li>心理負擔與倉位大小成正比——壓力會導致判斷失誤</li>
   </ul>
 </div>
@@ -391,7 +391,7 @@ header { margin-bottom: 28px; }
     <div class="card-box">
       <h4 style="color:var(--green);">專業交易員</h4>
       <ul style="font-size:13px;">
-        <li>每筆風險 0.5%-2% 帳戶</li>
+        <li>每筆只冒帳戶的小比例（常見 0.5%-2%，但無業界統一標準，依人與策略而異）</li>
         <li>嚴格止損，無例外</li>
         <li>有每日/週/月最大虧損限制</li>
         <li>回撤時主動降倉</li>
@@ -466,13 +466,13 @@ header { margin-bottom: 28px; }
 <div class="section">
   <h2>期望值（Expectancy）</h2>
   <div class="formula">
-    期望值 = Σ(所有 R-Multiples) / 交易總數 = 8.4R / 8 = +1.05R
+    期望值 = Σ（所有 R-Multiples） / 交易總數 = 8.4R / 8 = +1.05R
   </div>
   <p>這代表平均每筆交易賺 1.05R。如果 R = $1,000，則每筆期望獲利 $1,050。</p>
 
   <div class="highlight purple">
     <strong>另一種計算方式</strong>
-    <p>期望值 = (勝率 × 平均獲利R) - (敗率 × 平均虧損R)<br>
+    <p>期望值 = （勝率 × 平均獲利R） - （敗率 × 平均虧損R）<br>
     = (50% × 3.1R) - (50% × 1R) = 1.55R - 0.5R = +1.05R</p>
   </div>
 </div>
@@ -482,14 +482,15 @@ header { margin-bottom: 28px; }
   <p>許多交易者在連虧 5-8 筆後就放棄策略——但數學告訴我們，<strong>即使期望值為正，連虧仍是高機率、遲早會遇到的正常現象</strong>。</p>
 
   <div class="card-box">
-    <h4>蒙特卡羅模擬結論（50% 勝率、2:1 盈虧比、1000 次模擬）</h4>
+    <h4>連續虧損機率（解析計算，非策略保證）</h4>
+    <p style="font-size:13px;">假設：一段 <strong>200 筆、彼此獨立</strong>的交易序列，每筆虧損機率固定 <strong>p(loss)=0.5</strong>（連虧只看「是否虧損」，與盈虧比無關）。用解析公式計算「整段序列中<strong>至少出現一次</strong> k 連虧」的機率：</p>
     <ul style="font-size:13px;">
-      <li>連虧 5 筆的機率：<strong>≈ 97%</strong>（幾乎必然）</li>
-      <li>連虧 8 筆的機率：<strong>≈ 45%</strong></li>
-      <li>連虧 10 筆的機率：<strong>≈ 18%</strong></li>
-      <li>連虧 12 筆的機率：<strong>≈ 6%</strong></li>
+      <li>至少一次連虧 5 筆：<strong>≈ 96.59%</strong>（幾乎必然）</li>
+      <li>至少一次連虧 8 筆：<strong>≈ 31.97%</strong></li>
+      <li>至少一次連虧 10 筆：<strong>≈ 8.99%</strong></li>
+      <li>至少一次連虧 12 筆：<strong>≈ 2.30%</strong></li>
     </ul>
-    <p style="margin-top:10px;">如果你一年交易 200 次，連虧 8 筆<strong>幾乎必定會遇到</strong>，這是正常現象而非策略失效。（上述機率為示意模擬，實際依你的勝率與盈虧比而異，須自行驗證）</p>
+    <p style="margin-top:10px;">如果你一年交易約 200 次，連虧 5 筆在數學上<strong>幾乎必定會遇到</strong>、連虧 8 筆也有約三分之一機會，這是正常現象而非策略失效。<strong>重要：真實交易的勝負並非獨立</strong>——存在序列相關與 regime clustering（壞行情把虧損聚在一起），因此實際連虧分布可能比此表更極端。上述數字僅為「獨立同分布」假設下的理論參考，不是對你實際結果的保證，請自行驗證。</p>
   </div>
 
   <div class="svg-container">
@@ -584,6 +585,10 @@ header { margin-bottom: 28px; }
     f* = (b × p - q) / b
   </div>
   <p>其中：f* = 最佳資金配置比例、b = 盈虧比（Avg Win / Avg Loss）、p = 勝率、q = 1 - p</p>
+  <div class="highlight orange">
+    <strong>這條公式是「二元賭局」模型，不能直接套到交易</strong>
+    <p>f* = (b×p − q)/b 假設的是一個<strong>贏就賺 b、輸就賠掉整筆下注</strong>的二元賭局。真實交易裡，被止損時你只損失「止損距離 × 部位」而非整筆投入資金，報酬也是連續分布而非兩種結果。因此 f* 算出的比例<strong>既不等於你該投入的交易資金，也不等於每筆停損風險</strong>；要嚴謹套用，需改用考慮實際報酬分布的一般化 Kelly（對連續報酬最大化期望對數成長），本頁的簡化公式只用來做量級直覺。</p>
+  </div>
 
   <div class="warning-box">
     <strong>&#9888; 最常見、也最致命的誤用：把 Kelly 比例當成「每筆停損風險」。</strong>
@@ -592,7 +597,7 @@ header { margin-bottom: 28px; }
 
   <div class="highlight orange">
     <strong>為什麼用 Half-Kelly？</strong>
-    <p>Full Kelly 假設你精確知道勝率和盈虧比——但現實中我們只有估計值。Full Kelly 的波動極大（最大回撤可達 50-70%）。使用 Half-Kelly（f*/2）可以獲得 75% 的成長率，但只承受約一半的波動。</p>
+    <p>Full Kelly 假設你精確知道勝率和盈虧比——但現實中我們只有估計值，估錯就會過度下注。常見的說法是「Half-Kelly 保留約 75% 的成長率、只承受約一半的波動」：這來自把對數成長曲線在 f* 附近做<strong>局部二次（拋物線）近似</strong>的結果，是一個理想模型下的經驗法則，<strong>並非普遍定律</strong>。實際成長率、波動與回撤都取決於真實報酬分布；Full Kelly 的最大回撤<strong>沒有固定的 50-70%</strong>，會因策略而大不相同。重點只有一個：因為我們無法精確知道勝率，寧可用<strong>遠低於 f*</strong> 的下注比例換取穩健。</p>
   </div>
 
   <div class="svg-container">
@@ -642,7 +647,7 @@ header { margin-bottom: 28px; }
       <text x="300" y="310" font-size="11" fill="#334155" text-anchor="middle">下注比例 (f)</text>
     </svg>
   </div>
-  <p style="font-size:12px;color:var(--text3);text-align:center;">超過 Kelly 比例 (f*) 的下注不僅不會增加報酬，反而會導致負成長</p>
+  <p style="font-size:12px;color:var(--text3);text-align:center;">超過 Kelly 比例 (f*) 後，預期<strong>對數成長率開始下降</strong>（並非一超過 f* 就立刻變負成長；在簡單二元模型中約到 2×f* 之後才會轉為負成長）。重點是：下注超過 f* 只會換來更大的波動與回撤，卻拿不到更高的長期成長，毫無好處。</p>
 </div>
 
 <div class="section">
@@ -700,6 +705,15 @@ header { margin-bottom: 28px; }
     <p>停損單被觸發後，是以「觸發當下市場能成交的價格」出場。當出現跳空（gap）或流動性瞬間消失，成交價會遠低於你的止損價——這段差距就是<strong>滑點（slippage）</strong>，它不在你的部位公式裡。</p>
   </div>
 
+  <div class="card-box">
+    <h4>停損市價單 vs 停損限價單：各有不同的失效方式</h4>
+    <ul style="font-size:13px;">
+      <li><strong>停損市價單（stop-market）</strong>：觸發後以市價追求成交，<strong>通常會成交</strong>，但在跳空／薄流動性時可能以遠離止損價的價格成交（大滑點）。</li>
+      <li><strong>停損限價單（stop-limit）</strong>：觸發後只在限價或更好價位成交，能<strong>限制成交價</strong>，但一旦價格直接跳過限價，可能<strong>完全不成交</strong>——你會抱著一個仍在擴大的虧損部位，風險反而更大。</li>
+    </ul>
+    <p style="margin-top:8px;">兩者沒有「安全」選項：市價單賭的是滑點、限價單賭的是漏單。理解這個取捨，比盲目相信「我設了止損」更重要。</p>
+  </div>
+
   <h3>哪些情境最容易讓 -1R 變成 -3R？</h3>
   <ul>
     <li><strong>美股個股財報 / 重大新聞 / 盤中停牌</strong>：財報後開盤常見 ±10~20% 跳空；停牌復牌後直接以新價格撮合，止損完全無效。</li>
@@ -722,7 +736,7 @@ header { margin-bottom: 28px; }
 
   <div class="highlight orange">
     <strong>實務鐵律</strong>
-    <p>1. <strong>可能遇到跳空的持倉，用「最壞情境」反推張數</strong>：不要用理想止損距離，而是假設會滑到更遠的價位（例如財報股用 2~3 倍止損距離）去算部位，讓即使跳空也只虧 1R。<br>
+    <p>1. <strong>可能遇到跳空的持倉，用「最壞情境」反推張數</strong>：不要用理想止損距離，而是假設會滑到更遠的價位（例如財報股用 2~3 倍止損距離）去算部位，讓<strong>萬一</strong>跳空時損失仍較接近 1R。注意這只是降低而非消除風險——極端跳空（財報暴雷、停牌復牌）仍可能遠超你預留的倍數，無法保證只虧 1R。<br>
     2. <strong>事件前、週末前不持大倉</strong>：財報、FOMC、CPI 等已知事件前，先減碼或出場；貴金屬部位在週末前降低曝險。<br>
     3. 已知事件的完整處理流程，請參考 <a href="event_trading_sop.html">事件交易 SOP</a>——把「哪些日子不該重倉」變成固定紀律。</p>
   </div>
@@ -837,7 +851,7 @@ header { margin-bottom: 28px; }
 
   <div class="highlight">
     <strong>20 日移動平均線規則</strong>
-    <p>如果你的權益曲線跌破自身的 20 日移動平均線，將風險降低至原來的 50%。當權益曲線回到 20MA 上方，恢復正常倉位。這個簡單規則能大幅減少最大回撤。</p>
+    <p>一種做法：如果你的權益曲線跌破自身的 20 日移動平均線，將風險降低至原來的 50%；當權益曲線回到 20MA 上方，恢復正常倉位。這個規則在<strong>部分</strong>系統的回測中有助於壓低回撤，但<strong>並非保證</strong>——它也可能在震盪期頻繁觸發進出（whipsaw）、延後你回到正常倉位而錯過反彈，甚至在 V 形反轉中幫倒忙。是否對你有效，必須用你自己的策略實際回測驗證。</p>
   </div>
 
   <ul>
@@ -881,20 +895,22 @@ header { margin-bottom: 28px; }
 </div>
 
 <div class="section">
-  <h2>槓桿的真相：只改變保證金，卻放大實際虧損</h2>
-  <p>加密貨幣永續合約提供 2x-125x 槓桿。常見的誤導說法是「高槓桿不等於高風險」——這句話在實務上會害人。正確理解是：</p>
+  <h2>槓桿的真相：看你固定的是「部位」還是「保證金」</h2>
+  <p>加密貨幣永續合約提供 2x-125x 槓桿。常見的誤導說法是「高槓桿不等於高風險」——這句話在實務上會害人。要看清楚，必須先分清楚你固定的是哪一個：</p>
 
   <div class="highlight red">
-    <strong>槓桿只改變保證金需求，但一定會放大實際虧損與爆倉風險</strong>
-    <p>「帳戶風險百分比不變」只在<strong>止損百分之百成交</strong>的理想假設下才成立。一旦遇到跳空、插針、流動性瞬間消失（加密市場 24/7 更常發生），槓桿越高、爆倉線越近，你越可能在止損生效前就被強制平倉、把本金一次歸零。<strong>散戶預設不使用槓桿；最多極保守（如 2 倍以內），並且槓桿越高、部位就要越小。</strong></p>
+    <strong>兩種情境，結論不同</strong>
+    <p>(1) <strong>名目部位（notional）固定</strong>時（例如同樣只買 0.1 顆 BTC）：提高槓桿主要是<strong>降低佔用的保證金、讓爆倉線更靠近現價</strong>，同樣的價格變動帶來的損益金額不變，但你被強制平倉的距離縮短了。<br>
+    (2) <strong>保證金固定</strong>時（例如都投入 $1,000）：提高槓桿會<strong>直接放大名目部位與每一跳的損益</strong>，風險隨槓桿等比例上升。<br>
+    無論哪種情境，「帳戶風險百分比不變」都只在<strong>止損百分之百成交</strong>的理想假設下才成立。一旦遇到跳空、插針、流動性瞬間消失（加密市場 24/7 更常發生），槓桿越高、爆倉線越近，你越可能在止損生效前就被強制平倉、把本金一次歸零。<strong>散戶預設不使用槓桿；最多極保守（如 2 倍以內），並且槓桿越高、部位就要越小。</strong></p>
   </div>
 
   <div class="card-box">
     <h4>範例：$10,000 帳戶，風險 1% ($100)</h4>
     <p>BTC 入場 $60,000，止損 $59,400（1% 距離）。相同止損下，槓桿只改變佔用的保證金：</p>
     <ul style="font-size:13px;margin-top:8px;">
-      <li><strong>1x 無槓桿（散戶預設）</strong>：買 0.167 BTC（需 $10,000 本金）→ 止損若成交虧 $100</li>
-      <li><strong>2x 槓桿（極保守上限）</strong>：同樣 0.167 BTC（需 $5,000 保證金）→ 止損若成交虧 $100</li>
+      <li><strong>1x 無槓桿（散戶預設）</strong>：買 0.1667 BTC（約需 $10,002 本金）→ 止損若成交虧 $100</li>
+      <li><strong>2x 槓桿（極保守上限）</strong>：同樣 0.1667 BTC（約需 $5,001 保證金）→ 止損若成交虧 $100</li>
       <li><strong>10x 槓桿（不建議）</strong>：需 $1,000 保證金，但爆倉線僅在約 -10% 處——一次插針或跳空就直接爆倉，止損根本來不及</li>
     </ul>
     <p style="margin-top:8px;color:var(--red);font-weight:600;">槓桿越高，爆倉線越近；一旦價格跳過止損，實際虧損遠大於帳面規劃。這正是高槓桿真正的風險所在。</p>
@@ -903,23 +919,26 @@ header { margin-bottom: 28px; }
 
 <div class="section">
   <h2>槓桿 vs 爆倉距離</h2>
+  <p>下表只描述一個<strong>機械關係</strong>：在逐倉、不含手續費與維持保證金的粗略估算下，爆倉距離大約是 1/槓桿。它<strong>不代表任何槓桿「適合」或「安全」</strong>，也不是依交易風格或資歷做的推薦。</p>
   <table class="data-table">
     <thead>
-      <tr><th>槓桿倍數</th><th>爆倉距離（約）</th><th>適用場景</th><th>建議止損距離</th></tr>
+      <tr><th>槓桿倍數</th><th>名目部位 ÷ 本金</th><th>爆倉距離（約）</th><th>風險說明</th></tr>
     </thead>
     <tbody>
-      <tr><td>2x</td><td>~50%</td><td>波段交易</td><td>5-15%</td></tr>
-      <tr><td>3x</td><td>~33%</td><td>中長期趨勢</td><td>5-10%</td></tr>
-      <tr><td>5x</td><td>~20%</td><td>短波段</td><td>3-5%</td></tr>
-      <tr><td>10x</td><td>~10%</td><td>日內/短線</td><td>1-3%</td></tr>
-      <tr><td>20x</td><td>~5%</td><td>極短線/Scalp</td><td>0.5-1.5%</td></tr>
-      <tr><td>50x</td><td>~2%</td><td style="color:var(--red);">極度危險</td><td style="color:var(--red);">不建議使用</td></tr>
-      <tr><td>100x</td><td>~1%</td><td style="color:var(--red);">賭博</td><td style="color:var(--red);">不建議使用</td></tr>
+      <tr><td>2x</td><td>2 倍</td><td>~50%</td><td>散戶若真要用，2x 已是極保守上限；仍需留意跳空</td></tr>
+      <tr><td>3x</td><td>3 倍</td><td>~33%</td><td>緩衝已明顯縮小</td></tr>
+      <tr><td>5x</td><td>5 倍</td><td>~20%</td><td>插針／跳空風險顯著</td></tr>
+      <tr><td>10x</td><td>10 倍</td><td>~10%</td><td>一次插針或跳空即可能爆倉，止損常來不及</td></tr>
+      <tr><td>20x</td><td>20 倍</td><td>~5%</td><td style="color:var(--red);">極短線也極危險</td></tr>
+      <tr><td>50x</td><td>50 倍</td><td>~2%</td><td style="color:var(--red);">極度危險，近乎賭博</td></tr>
+      <tr><td>100x</td><td>100 倍</td><td>~1%</td><td style="color:var(--red);">賭博，隨機波動即歸零</td></tr>
     </tbody>
   </table>
+  <p style="font-size:12px;color:var(--text3);">本站對散戶的立場：預設不使用槓桿。此表僅供理解機制，不是鼓勵依「場景」挑選槓桿。</p>
 
   <div class="calc-container">
-    <h4>槓桿爆倉計算機</h4>
+    <h4>槓桿爆倉價格｜粗略示意（非精確、非交易工具）</h4>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">此計算器只用最簡化的<strong>逐倉、線性合約</strong>公式估算，<strong>未納入</strong>手續費、資金費率、階梯式維持保證金、標記價格（mark price）機制、全倉保證金，以及各交易所自己的規則。真實爆倉價請以你所用交易所、你選定合約的官方公式與對帳頁為準，<strong>切勿</strong>拿這裡的數字當作實際下單依據。</p>
     <div class="calc-grid">
       <div class="calc-field">
         <label>入場價格 ($)</label>
@@ -970,7 +989,7 @@ header { margin-bottom: 28px; }
       <li><strong>監管凍結</strong>：某些國家突然禁止提款</li>
       <li><strong>系統宕機</strong>：極端行情時交易所無法登入</li>
     </ul>
-    <p style="margin-top:10px;font-weight:600;">建議：任何單一交易所不超過帳戶總資金的 30-40%</p>
+    <p style="margin-top:10px;font-weight:600;">原則：不要把所有資金集中在單一交易所，並優先把長期不交易的資金移到自保管（self-custody）錢包。至於「單一交易所最多放多少」沒有通用的正確比例（30-40% 只是示意），真正關鍵是衡量各交易所的信譽、儲備證明與提領可靠度，而非湊一個固定數字。</p>
   </div>
 </div>
 
@@ -989,18 +1008,19 @@ header { margin-bottom: 28px; }
 
   <div class="highlight red">
     <strong>UST 崩盤教訓</strong>
-    <p>2022 年 5 月 UST 從 $1 歸零，LUNA 從 $80+ 歸零。教訓：不要把所有資金放在單一穩定幣中，尤其是算法穩定幣。分散到 2-3 種不同類型的穩定幣。</p>
+    <p>2022 年 5 月 UST 從 $1 歸零，LUNA 從 $80+ 歸零。教訓：不要把所有資金放在單一穩定幣，尤其是算法穩定幣。<strong>但要清楚：穩定幣不是現金、更不是無風險資產</strong>——它同時承擔儲備是否足額透明、能否即時 1:1 贖回、發行方所在司法管轄、智能合約漏洞，以及你存放的交易所／錢包本身的風險。單純「分散 2-3 種穩定幣」只分散了脫鉤風險的一部分，<strong>無法取代</strong>對上述每一項逐一審查；真正降低風險的是減少穩定幣曝險、盡量持有法幣或受監管帳戶中的現金。</p>
   </div>
 </div>
 
 <div class="section">
   <h2>黑天鵝防護</h2>
   <div class="highlight green">
-    <strong>持續保留部分穩定幣（現金倉位）</strong>
-    <p>建議至少保持 20-30% 的穩定幣現金部位。好處：<br>
+    <strong>持續保留乾火藥（現金／低風險部位）</strong>
+    <p>保留一部分未投入的資金（比例依個人風險承受度而定，沒有通用的「正確數字」）。好處：<br>
     1. 黑天鵝事件時有資金可以低價加碼<br>
     2. 心理安全感——知道最壞情況下仍有資金<br>
-    3. 保持交易靈活性，隨時可以把握機會</p>
+    3. 保持交易靈活性，隨時可以把握機會<br>
+    <strong>提醒：</strong>這份「乾火藥」若以穩定幣持有，它<strong>不等於現金</strong>（見上方穩定幣風險）；可承受時，優先放在法幣或受監管帳戶的現金，才是真正的避風港。</p>
   </div>
 </div>
 
@@ -1016,7 +1036,7 @@ header { margin-bottom: 28px; }
   <div class="card-box">
     <h4>偽分散的例子</h4>
     <p>同時做多 SPY + QQQ + 一堆大型科技股 = <strong>實質上都是同一個「美股 beta」曝險</strong></p>
-    <p style="margin-top:8px;">這些標的在多頭時相關係數 &gt; 0.85，在崩盤時相關係數 &gt; 0.9（危機時相關性趨近 1）。要真正分散，得加入與股票低相關甚至負相關的資產，例如黃金（GLD）。</p>
+    <p style="margin-top:8px;">這些標的在多頭時往往高度相關，崩盤時相關性還會進一步<strong>上升、有時趨近 1</strong>（但不必然等於 1）。要真正分散，得加入與股票低相關甚至負相關的資產，例如黃金（GLD）。</p>
   </div>
 
   <table class="data-table">
@@ -1029,7 +1049,7 @@ header { margin-bottom: 28px; }
       <tr><td>QQQ / GLD</td><td>0.05</td><td>-0.15</td><td>股票與黃金分散效果佳</td></tr>
     </tbody>
   </table>
-  <p style="font-size:12px;color:var(--text3);">重點：SPY 與 QQQ 疊在一起幾乎沒有分散效果；真正降低組合波動的是「股票 + 黃金（GLD/SLV）」這種低相關甚至崩盤時負相關的搭配。</p>
+  <p style="font-size:12px;color:var(--text3);">表中數字僅為<strong>方向性示意</strong>：相關係數會隨<strong>觀察期間與資料頻率</strong>（日線／週線）大幅變動，沒有固定常數；危機時相關性常上升但<strong>不必然</strong>趨近 1；黃金與公債在不同類型的衝擊（通膨、通縮、流動性危機）中反應也不同，不保證永遠逆股市。重點只在質性結論：SPY 與 QQQ 疊在一起幾乎沒有分散效果；加入與股票低相關的資產（如黃金）才可能降低組合波動。實際數值請以你自己的資料期間重算。</p>
 </div>
 
 <div class="section">
@@ -1038,7 +1058,7 @@ header { margin-bottom: 28px; }
 
   <div class="compare-grid">
     <div class="card-box">
-      <h4 style="color:var(--blue);">曝險限制範例</h4>
+      <h4 style="color:var(--blue);">曝險限制範例（保守示意，非統一標準）</h4>
       <ul style="font-size:13px;">
         <li>單一個股：最多帳戶 10-15%</li>
         <li>同一板塊（如科技股）：最多帳戶 30%</li>
@@ -1070,8 +1090,8 @@ header { margin-bottom: 28px; }
       <thead><tr><th>多頭</th><th>空頭/對沖</th><th>對沖邏輯</th></tr></thead>
       <tbody>
         <tr><td>股票多頭組合 (SPY/QQQ)</td><td>黃金 Long (GLD)</td><td>股市大跌時黃金常逆勢，分散系統性風險</td></tr>
-        <tr><td>科技股 Long</td><td>公債 Long (TLT)</td><td>利率風險對沖</td></tr>
-        <tr><td>GDX Long（金礦商）</td><td>GLD Long（實體金）</td><td>礦商放大金價，GLD 波動較低可平衡</td></tr>
+        <tr><td>科技股 Long</td><td>公債 Long (TLT)</td><td>較可能對沖「成長／通縮」衝擊（risk-off 時資金流入公債）；但<strong>不是利率風險對沖</strong>——當殖利率因通膨或期限溢酬上升而拖累科技股時，TLT 也會同時下跌，兩者一起虧</td></tr>
+        <tr><td>GDX Long（金礦商）</td><td>GLD Long（<strong>同向、非對沖</strong>）</td><td>兩者都是<strong>做多黃金方向</strong>，不是對沖：GLD 的 Beta 較低，只是把同向黃金曝險的波動調低，金價下跌時兩者仍會一起虧</td></tr>
         <tr><td>SPY Long</td><td>SPY Put Options</td><td>尾部風險保護（成本換保險）</td></tr>
       </tbody>
     </table>
@@ -1079,28 +1099,23 @@ header { margin-bottom: 28px; }
 </div>
 
 <div class="section">
-  <h2>Beta 調整</h2>
-  <p>不同資產的波動度不同。$2,000 的 GDX 部位和 $2,000 的 SPY 部位<strong>風險完全不同</strong>。</p>
+  <h2>Beta：衡量對「市場」的系統性敏感度</h2>
+  <p>Beta 衡量的是一檔資產的報酬，對整體市場（通常以 SPY 代表）報酬的<strong>系統性敏感度</strong>，數學定義為：</p>
 
   <div class="formula">
-    Beta 調整倉位 = 名目倉位 × Beta
+    Beta = Cov（資產報酬, 市場報酬） / Var（市場報酬）
   </div>
 
-  <table class="data-table">
-    <thead><tr><th>資產</th><th>約略 Beta (vs SPY)</th><th>$2K 名目的等效 SPY 風險</th></tr></thead>
-    <tbody>
-      <tr><td>SPY</td><td>1.0x</td><td>$2,000</td></tr>
-      <tr><td>QQQ</td><td>1.2-1.3x</td><td>$2,400-2,600</td></tr>
-      <tr><td>GLD（黃金）</td><td>0.1-0.3x（低相關）</td><td>≈ $200-600 等效股市風險</td></tr>
-      <tr><td>SLV（白銀）</td><td>0.4-0.7x（波動大於黃金）</td><td>$800-1,400</td></tr>
-      <tr><td>GDX（金礦商）</td><td>0.8-1.2x（放大金價）</td><td>$1,600-2,400</td></tr>
-    </tbody>
-  </table>
-  <p style="font-size:12px;color:var(--text3);">註：GLD/SLV 的 Beta 是「相對 SPY」的敏感度，數值低代表與股市相關性低，並不代表本身波動小——白銀與金礦股本身波動其實不小，只是走勢常與大盤脫鉤。</p>
+  <p>直覺上，Beta ≈ 1.2 表示「當市場上漲 1%，這檔資產<strong>平均而言</strong>隨之上漲約 1.2%」。但使用 Beta 前，必須先釐清三個常見誤解：</p>
+  <ul>
+    <li><strong>Beta 不是總波動度。</strong>它只捕捉「能被市場解釋的那部分」共同波動；一檔資產還有與市場無關的<strong>個別（idiosyncratic）風險</strong>疊加其上。低 Beta 不代表低波動——白銀、金礦股本身波動都不小，只是走勢常與大盤脫鉤，所以對 SPY 的 Beta 偏低。</li>
+    <li><strong>Beta 不能換算成精確的「等效 SPY 金額」。</strong>把「$2,000 × Beta」當成某個確定的股市曝險金額是錯的：Beta 只是迴歸的平均斜率，解釋力（R²）往往遠低於 1，剩下的變動不受市場驅動。</li>
+    <li><strong>Beta 是估計值，會隨時間與市場 regime 漂移。</strong>它取決於你用的觀察期間與資料頻率，在崩盤時還可能跳動，沒有固定常數。</li>
+  </ul>
 
   <div class="highlight purple">
     <strong>實際意義（散戶尺度）</strong>
-    <p>假設帳戶 $10,000，持有 $3,000 QQQ（Beta ≈ 1.3x）→ 等效股市曝險約 $3,900。再加 $2,000 GDX（Beta ≈ 1x，但與金價高度連動）。表面上只用了 50% 資金，但 QQQ 這段的實際股市風險已被放大；而 GLD/GDX 那段因為與股市低相關，反而在股市大跌時可能提供部分緩衝。用 Beta 與相關性一起看，才知道自己「真正」押了多少同方向風險。</p>
+    <p>Beta 的正確用法，是提醒你「不同資產對大盤的敏感度不同」這個<strong>方向性</strong>事實：同樣 $2,000，押在高 Beta 的成長股，對大盤漲跌的敏感度，會明顯高於押在對股市低相關的黃金。但不要把它當成可以精確加總的「等效股市金額」——要衡量自己真正押了多少同方向風險，應同時看各部位間的相關性與個別風險，而不是把每檔資產乘上一個固定 Beta 再相加。</p>
   </div>
 </div>
 
@@ -1160,7 +1175,7 @@ header { margin-bottom: 28px; }
     <div class="q-text">為什麼專業交易員建議使用 Half-Kelly 而非 Full Kelly？</div>
     <div class="options">
       <label><input type="radio" name="q4" value="a"> Half-Kelly 的報酬率是 Full Kelly 的一半</label>
-      <label><input type="radio" name="q4" value="b"> 估計值有誤差，Half-Kelly 大幅降低波動但保留 75% 成長率</label>
+      <label><input type="radio" name="q4" value="b"> 勝率／盈虧比只是估計值，Half-Kelly 以較低波動換取較穩健的成長（理論近似約保留 75% 成長率）</label>
       <label><input type="radio" name="q4" value="c"> Full Kelly 是違法的</label>
       <label><input type="radio" name="q4" value="d"> Half-Kelly 只適用於加密貨幣</label>
     </div>
@@ -1235,12 +1250,12 @@ header { margin-bottom: 28px; }
   <!-- Q10 -->
   <div class="quiz-box" data-answer="b">
     <div class="q-num">問題 10 / 16</div>
-    <div class="q-text">BTC 的 Beta 約為 2x（vs SPY）。持有 $20,000 BTC 的等效 SPY 風險是？</div>
+    <div class="q-text">關於 Beta，下列哪個敘述正確？</div>
     <div class="options">
-      <label><input type="radio" name="q10" value="a"> $20,000</label>
-      <label><input type="radio" name="q10" value="b"> $40,000</label>
-      <label><input type="radio" name="q10" value="c"> $10,000</label>
-      <label><input type="radio" name="q10" value="d"> $60,000</label>
+      <label><input type="radio" name="q10" value="a"> Beta 衡量一檔資產的總波動度</label>
+      <label><input type="radio" name="q10" value="b"> Beta = Cov（資產,市場）/Var（市場），衡量對市場的系統性敏感度，不是總波動</label>
+      <label><input type="radio" name="q10" value="c"> 低 Beta 一定代表該資產本身波動小</label>
+      <label><input type="radio" name="q10" value="d"> 用 Beta 可把任意資產精確換算成「等效 SPY 金額」</label>
     </div>
     <div class="feedback"></div>
   </div>
@@ -1253,7 +1268,7 @@ header { margin-bottom: 28px; }
       <label><input type="radio" name="q11" value="a"> Long BTC + Long ETH（分散）</label>
       <label><input type="radio" name="q11" value="b"> Long BTC + Long MSTR（對沖）</label>
       <label><input type="radio" name="q11" value="c"> Long BTC + Long SOL（降低風險）</label>
-      <label><input type="radio" name="q11" value="d"> Long BTC + Long Gold（部分對沖 DXY 風險）</label>
+      <label><input type="radio" name="q11" value="d"> Long BTC + Long Gold（相對「全押加密」較分散，非互相對沖）</label>
     </div>
     <div class="feedback"></div>
   </div>
@@ -1287,7 +1302,7 @@ header { margin-bottom: 28px; }
   <!-- Q14 -->
   <div class="quiz-box" data-answer="c">
     <div class="q-num">問題 14 / 16</div>
-    <div class="q-text">50% 勝率、2:1 盈虧比的系統，模擬 200 筆交易時連虧 5 筆的機率大約是？</div>
+    <div class="q-text">每筆虧損機率固定 50% 的系統，一段 200 筆獨立交易中「至少出現一次連虧 5 筆」的機率大約是？</div>
     <div class="options">
       <label><input type="radio" name="q14" value="a"> 10%</label>
       <label><input type="radio" name="q14" value="b"> 50%</label>
@@ -1373,7 +1388,8 @@ header { margin-bottom: 28px; }
 </div>
 
 <div class="calc-container">
-  <h4>槓桿清算價格計算機（選修：加密衍生品，非核心）</h4>
+  <h4>槓桿清算價格計算機｜粗略示意（選修：加密衍生品，非核心）</h4>
+  <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">僅用最簡化的逐倉、線性合約公式估算，未納入手續費、資金費率、階梯維持保證金、標記價格與全倉規則。真實爆倉價請以你所用交易所、選定合約的官方公式為準，勿當下單依據。</p>
   <div class="calc-grid">
     <div class="calc-field">
       <label>入場價格 ($)</label>
@@ -1418,8 +1434,12 @@ function calcPositionSize() {
   const entry = parseFloat(document.getElementById('ps-entry').value);
   const stop = parseFloat(document.getElementById('ps-stop').value);
 
-  if (!account || !risk || !entry || !stop || entry === stop) {
-    alert('請填入所有欄位且入場價與止損價不可相同');
+  if (!(account > 0) || !(risk > 0) || !(entry > 0) || !(stop > 0)) {
+    alert('帳戶、風險%、入場價與止損價都必須為大於 0 的數值');
+    return;
+  }
+  if (entry === stop) {
+    alert('入場價與止損價不可相同（止損距離為 0）');
     return;
   }
 
@@ -1435,8 +1455,12 @@ function calcPositionSize() {
     `止損距離：$${stopDistance.toLocaleString()}<br>` +
     `建議倉位大小：${positionSize.toFixed(4)} 單位<br>` +
     `倉位價值：$${positionValue.toLocaleString(undefined, {maximumFractionDigits:2})}<br>` +
-    `最大虧損金額：$${riskAmount.toLocaleString()}<br>` +
-    `實際槓桿：${leverage.toFixed(2)}x`;
+    `計畫虧損（若止損恰在 $${stop.toLocaleString()} 成交）：$${riskAmount.toLocaleString()}<br>` +
+    `實際槓桿：${leverage.toFixed(2)}x` +
+    (leverage > 1
+      ? `<br><span style="color:var(--orange);">&#9888; 倉位價值已超過帳戶現金，需動用保證金／槓桿才能建立此部位。</span>`
+      : ``) +
+    `<br><span style="font-size:11px;color:var(--text3);">* 這是「止損照價成交」下的計畫虧損，不是最大虧損；跳空與滑點可能讓實際虧損超過此值。</span>`;
   el.classList.add('show');
 }
 
@@ -1502,7 +1526,7 @@ function calcLiquidation() {
     `槓桿倍數：${leverage}x<br>` +
     `預估爆倉價格：<strong style="color:var(--red);">$${liqPrice.toLocaleString(undefined, {maximumFractionDigits:2})}</strong><br>` +
     `距爆倉：${liqDistance.toFixed(2)}%<br>` +
-    `<span style="font-size:11px;color:var(--text3);">* 實際爆倉價格因交易所計算方式略有不同</span>`;
+    `<span style="font-size:11px;color:var(--text3);">* 粗略示意：僅逐倉、線性合約，未計手續費、資金費率、階梯維持保證金、標記價格與全倉規則。真實爆倉價請以你所用交易所官方公式為準，勿當下單依據。</span>`;
   el.classList.add('show');
 }
 
@@ -1516,17 +1540,17 @@ function scoreQuiz() {
     q1: '$50,000 × 2% = $1,000 風險 / ($100 - $96) = $4 止損距離 = 250 股',
     q2: '虧損 40% 後剩 60%。回本需要：40/60 = 66.7% ≈ 67%',
     q3: 'f* = (b×p - q) / b = (2×0.6 - 0.4) / 2 = (1.2 - 0.4) / 2 = 0.4 = 40%',
-    q4: 'Half-Kelly 保留約 75% 的最大成長率，同時大幅減少波動和最大回撤',
+    q4: '在 f* 附近的局部二次近似下，Half-Kelly 約保留 Full Kelly 成長率的 3/4（常引用的「約 75%」為此近似值，非普遍定律），同時明顯降低波動；因為勝率／盈虧比都是估計值，用較低下注比例換穩健才是重點',
     q5: '(2 - 1 + 3 - 1 - 1 + 1.5 - 1 + 4 - 1 + 2) / 10 = 7.5 / 10 = +0.75R',
     q6: '10x 槓桿的爆倉距離約為 1/10 = 10%（不計維持保證金）',
-    q7: 'BTC、ETH、SOL 在崩盤時相關性 > 0.9，三個 20% 部位幾乎等於 60% 單一方向曝險',
+    q7: 'BTC、ETH、SOL 在崩盤時相關性通常很高（常趨近但不必然等於 1），三個各 20% 的部位實質上接近 60% 的同一方向曝險，分散效果有限',
     q8: '存活（風控）是前提，有優勢（策略）是核心，紀律（心態）是執行保障',
     q9: '回撤 5-10% 區間 → 降至 50% 倉位（動態降倉規則）',
-    q10: 'Beta 調整：$20,000 × 2.0 = $40,000 等效 SPY 風險',
-    q11: 'Gold 與 BTC 相關性低，且與 DXY 負相關，形成部分對沖',
+    q10: 'Beta = Cov(資產,市場)/Var(市場)，只衡量與市場共同變動的系統性敏感度；它不是總波動，低 Beta 也不代表本身波動小，更不能精確換算成「等效 SPY 金額」（迴歸解釋力 R² 通常遠小於 1）',
+    q11: 'Gold 與 BTC 相較於「全部押加密」多了一條不同的曝險，但兩者對美元多為同向（美元走強時常一起跌），屬分散而非互相對沖；四個選項中這是相對較不集中的組合',
     q12: '$200,000 × 1% / (2 × $2,000) = $2,000 / $4,000 = 0.5 BTC',
     q13: 'UST 是算法穩定幣，存在死亡螺旋風險。應分散到多種不同類型的穩定幣',
-    q14: '50% 勝率連虧 5 筆的單次機率是 3.125%，但 200 筆中出現至少一次的機率約 97%',
+    q14: '單一位置連虧 5 筆的機率是 0.5⁵ = 3.125%；但在 200 筆獨立交易序列中「至少出現一次」5 連虧的機率約 96.59%（≈97%，幾乎必然）',
     q15: 'Equity Curve 管理：跌破 20MA 時降低風險至 50%，回到上方時恢復正常',
     q16: 'BTC 風險：0.5 × ($65,000-$63,000) = $1,000。ETH 風險：10 × ($3,500-$3,400) = $1,000。總計 $2,000/$100,000 = 2%'
   };
@@ -1570,8 +1594,12 @@ function calcPositionSizeQ() {
   const entry = parseFloat(document.getElementById('q-ps-entry').value);
   const stop = parseFloat(document.getElementById('q-ps-stop').value);
 
-  if (!account || !risk || !entry || !stop || entry === stop) {
-    alert('請填入所有欄位');
+  if (!(account > 0) || !(risk > 0) || !(entry > 0) || !(stop > 0)) {
+    alert('帳戶、風險%、入場價與止損價都必須為大於 0 的數值');
+    return;
+  }
+  if (entry === stop) {
+    alert('入場價與止損價不可相同（止損距離為 0）');
     return;
   }
 
@@ -1582,7 +1610,9 @@ function calcPositionSizeQ() {
   const leverage = positionValue / account;
 
   const el = document.getElementById('q-ps-result');
-  el.innerHTML = `<strong>結果：</strong> 倉位 = ${positionSize.toFixed(4)} 單位 | 風險 = $${riskAmount.toLocaleString()} | 倉位價值 = $${positionValue.toLocaleString(undefined,{maximumFractionDigits:2})} | 槓桿 = ${leverage.toFixed(2)}x`;
+  el.innerHTML = `<strong>結果：</strong> 倉位 = ${positionSize.toFixed(4)} 單位 | 計畫虧損（止損照價成交）= $${riskAmount.toLocaleString()} | 倉位價值 = $${positionValue.toLocaleString(undefined,{maximumFractionDigits:2})} | 槓桿 = ${leverage.toFixed(2)}x` +
+    (leverage > 1 ? ` | <span style="color:var(--orange);">&#9888; 需動用保證金／槓桿</span>` : ``) +
+    `<br><span style="font-size:11px;color:var(--text3);">* 計畫虧損非最大虧損；跳空／滑點可能使實際虧損更大。</span>`;
   el.classList.add('show');
 }
 
@@ -1629,7 +1659,8 @@ function calcLiquidationQ() {
   const liqDist = Math.abs(liqPrice - entry) / entry * 100;
 
   const el = document.getElementById('q-lev-result');
-  el.innerHTML = `<strong>結果：</strong> 爆倉價 = <span style="color:var(--red);">$${liqPrice.toLocaleString(undefined,{maximumFractionDigits:2})}</span> | 距爆倉 = ${liqDist.toFixed(2)}% | 方向 = ${direction === 'long' || direction === 'l' ? 'Long' : 'Short'}`;
+  el.innerHTML = `<strong>結果：</strong> 爆倉價 = <span style="color:var(--red);">$${liqPrice.toLocaleString(undefined,{maximumFractionDigits:2})}</span> | 距爆倉 = ${liqDist.toFixed(2)}% | 方向 = ${direction === 'long' || direction === 'l' ? 'Long' : 'Short'}` +
+    `<br><span style="font-size:11px;color:var(--text3);">* 粗略示意（逐倉、線性合約，未計手續費／資金費率／階梯保證金／標記價格）；真實爆倉價以交易所官方公式為準，勿當下單依據。</span>`;
   el.classList.add('show');
 }
 </script>

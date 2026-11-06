@@ -407,7 +407,7 @@
   body { padding: 12px; }
 }
 </style>
-  <meta name="description" content="技術分析只佔 20%，心理紀律佔 80%。90% 散戶虧損不是因為不懂技術，而是因為無法控制情緒。 （此為業界常引數據，來源包括 eToro 2020 年報告及各券商風險揭露，實際比例因市場/時期而異）">
+  <meta name="description" content="在許多交易者的經驗裡，心理紀律與風險管理往往比再多的技術指標更能決定長期成敗。散戶的虧損也常源於情緒與執行問題，而非分析能力不足。">
   <link rel="canonical" href="https://hdchen-course.github.io/market-radar/education/trading_psychology.html">
   <meta name="robots" content="index,follow">
 </head>
@@ -416,7 +416,7 @@
 <a href="trade_home.html" class="back-link">&larr; 回學習中心</a>
 
 <h1>交易心理學 — 你的大腦才是最大的敵人</h1>
-<p class="subtitle">技術分析只佔 20%，心理紀律佔 80%。90% 散戶虧損不是因為不懂技術，而是因為無法控制情緒。<span style="font-size:11px;color:#64748b;">（此為業界常引數據，來源包括 eToro 2020 年報告及各券商風險揭露，實際比例因市場/時期而異）</span></p>
+<p class="subtitle">在許多交易者的經驗裡，心理紀律與風險管理往往比再多的技術指標更能決定長期成敗。散戶的虧損也常源於情緒與執行問題，而非分析能力不足。<span style="font-size:11px;color:#64748b;">（「技術 vs 心理孰重」沒有公認的量化比例，此處僅為強調重點的說法，非統計數據。）</span></p>
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab(0)">為什麼交易者會輸錢</button>
@@ -430,31 +430,23 @@
 
 <!-- ===================== TAB 0: 為什麼交易者會輸錢 ===================== -->
 <div class="tab-content active" id="tab0">
-  <h2 class="section-title">統計事實：殘酷的真相</h2>
+  <h2 class="section-title">殘酷的現實（定性觀察，非精確統計）</h2>
 
-  <div class="stat-grid">
-    <div class="stat-item">
-      <div class="stat-number" style="color:var(--red)">90%</div>
-      <div class="stat-label">散戶長期虧損比例</div>
+  <div class="card" style="margin-bottom:16px;">
+    <div style="font-size:14px;color:var(--text2);line-height:1.8;">
+      網路上常流傳「九成散戶虧損」「新手平均只撐半年」「八成虧損來自心理」「只有百分之幾能穩定獲利」這類數字。這些說法方向上有參考價值，但<strong>彼此來自不同的樣本、時期與定義（例如「虧損」是指某一季、某一年，還是長期；「散戶」怎麼界定），並非同一份可互相比較的研究</strong>，因此本頁不把它們當成精確統計，只保留一個方向性的提醒：
     </div>
-    <div class="stat-item">
-      <div class="stat-number" style="color:var(--orange)">6 個月</div>
-      <div class="stat-label">新手帳戶平均存活時間</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" style="color:var(--purple)">80%</div>
-      <div class="stat-label">虧損原因來自心理因素</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" style="color:var(--blue)">3%</div>
-      <div class="stat-label">能穩定月獲利的交易者</div>
-    </div>
+    <ul style="font-size:14px;color:var(--text2);line-height:1.9;margin:12px 0 0;padding-left:20px;">
+      <li>短線投機中，長期穩定獲利的人是少數，多數人會虧損或半途退出。</li>
+      <li>多數虧損的直接導火線，往往是情緒與執行問題（追高、不停損、過度交易），而非「指標學得不夠」。</li>
+      <li>存活時間長短差異極大，取決於資金、槓桿、紀律與是否使用停損。</li>
+    </ul>
   </div>
 
   <div class="card">
     <div class="card-title">虧損原因：常見程度排序（示意）</div>
     <div class="svg-container">
-      <svg viewBox="0 0 500 320" width="100%" style="max-width:500px" role="img"><title>交易虧損常見原因佔比圓餅圖：過度交易30%、不停損25%、報復性交易20%、倉位過大15%、缺乏計劃10%</title>
+      <svg viewBox="0 0 500 320" width="100%" style="max-width:500px" role="img"><title>交易虧損常見原因由高到低排序（示意，非實證比例）：過度交易、不停損、報復性交易、倉位過大、缺乏計劃</title>
         <!-- Pie Chart -->
         <g transform="translate(160,160)">
           <!-- 過度交易 30% = 108deg -->
@@ -496,7 +488,7 @@
   <div class="card">
     <div class="bias-item">
       <div><span class="bias-name">損失厭惡</span><span class="bias-en">Loss Aversion</span></div>
-      <div class="bias-desc">研究普遍認為：虧損帶來的痛苦約是等額獲利帶來快樂的 <strong>約 2 倍</strong>（常引用約 2.25 倍，不同研究區間約 1.5～2.5 倍，須自行參酌）。這容易導致兩個常見行為：(1) 不願意停損，因為「確認虧損」太痛苦；(2) 過早獲利了結，因為害怕利潤消失。</div>
+      <div class="bias-desc">在行為經濟學的展望理論（Prospect Theory）中，人對「損失」的主觀份量通常被賦予比「等額獲利」更高的權重——Tversky 與 Kahneman 估計的損失趨避係數常被引用為約 <strong>2.25</strong>（這是特定實驗資料下對「決策權重函數」的參數估計，不同研究差異很大，<strong>並非「痛苦是快樂的 2.25 倍」這種生理度量</strong>）。實務上這容易導致兩個常見行為：(1) 不願意停損，因為「確認虧損」令人抗拒；(2) 過早獲利了結，因為害怕利潤消失。</div>
       <div class="bias-scenario">場景：你做多 ETH 賺了 $200，開始害怕回吐而平倉。但你做空 BTC 虧了 $500，卻死扛著說「會回來的」。贏小虧大，長期期望值容易為負、難以獲利。</div>
     </div>
     <div class="bias-item">
@@ -521,20 +513,20 @@
     </div>
     <div class="bias-item">
       <div><span class="bias-name">過度自信</span><span class="bias-en">Overconfidence Bias</span></div>
-      <div class="bias-desc">連勝的亢奮感與<strong>多巴胺／不確定性獎勵系統</strong>有關，容易產生<strong>「我已經看透市場」</strong>的錯覺。這時你可能會加大倉位、放寬止損、忽略風險管理。爆倉往往發生在連勝之後，而非連虧之後。</div>
+      <div class="bias-desc">連勝帶來的亢奮感，容易讓人產生<strong>「我已經看透市場」</strong>的錯覺（一般認為與大腦的獎勵與期待機制有關，但具體神經機轉不必深究）。這時你可能會加大倉位、放寬止損、忽略風險管理。許多交易者的經驗是：重大爆倉常發生在連勝、信心最高之後，而不是連虧之後。</div>
       <div class="bias-scenario">場景：連贏 5 筆後，你決定把平常 1% 風險的倉位加到 5%。「反正最近手感很好」。結果這筆虧了，一次虧掉之前五筆利潤的兩倍。帳戶回到原點以下。</div>
     </div>
     <div class="bias-item">
       <div><span class="bias-name">從眾效應</span><span class="bias-en">Herd Mentality</span></div>
-      <div class="bias-desc">看到 KOL 或群組裡所有人都在做多，你會覺得「這麼多人不可能都錯」。但散戶共識通常是<strong>完美的反指標</strong> — 當所有人都看多時，已經沒有新的買盤了。</div>
+      <div class="bias-desc">看到 KOL 或群組裡所有人都在做多，你會覺得「這麼多人不可能都錯」。但當一面倒的情緒達到極端時，<strong>往往已經沒有新的買盤能把價格推更高</strong>，這時群眾共識容易成為反向訊號之一。注意：這只是「容易」而非「必然」——群眾有時會對很久，所謂「聰明錢」也會看錯，別把「大家看多」直接當成做空理由。</div>
       <div class="bias-scenario">場景：你的交易群組裡所有人都在曬做多獲利，KOL 說「BTC 下一站 $100K」。你跟著入場。結果你就是最後一棒，聰明錢正在把貨出給你。</div>
     </div>
   </div>
 
-  <h2 class="section-title">情緒循環：散戶的完美反指標</h2>
+  <h2 class="section-title">情緒循環：群眾情緒常見的運作方式</h2>
 
   <div class="svg-container">
-    <svg viewBox="0 0 700 420" width="100%" style="max-width:700px" role="img"><title>散戶情緒循環示意圖：從樂觀、興奮、貪婪到恐慌、絕望的完美反指標循環</title>
+    <svg viewBox="0 0 700 420" width="100%" style="max-width:700px" role="img"><title>散戶情緒循環示意圖：從樂觀、興奮、貪婪到恐慌、絕望的群眾情緒循環</title>
       <!-- Circle Path -->
       <ellipse cx="350" cy="210" rx="240" ry="160" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="8,4"/>
 
@@ -589,14 +581,14 @@
       </g>
 
       <!-- Center label -->
-      <text x="350" y="205" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">散戶在「興奮」入場</text>
-      <text x="350" y="222" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">在「投降」離場</text>
-      <text x="350" y="239" text-anchor="middle" font-family="Inter" font-size="11" fill="#dc2626" font-weight="700">= 完美反指標</text>
+      <text x="350" y="205" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">情緒常在「興奮」時入場</text>
+      <text x="350" y="222" text-anchor="middle" font-family="Inter" font-size="11" fill="#64748b">在「投降」時離場</text>
+      <text x="350" y="239" text-anchor="middle" font-family="Inter" font-size="11" fill="#dc2626" font-weight="700">＝常買在高、賣在低</text>
     </svg>
   </div>
 
   <div class="highlight-box">
-    <strong>關鍵認知：</strong>市場的頂部不是由「壞消息」製造的 — 而是由「所有好消息都已被定價」的共識製造的。當你覺得最興奮時，通常就是最危險的時候。聰明錢在你恐懼時買入，在你貪婪時賣出。
+    <strong>關鍵認知：</strong>頭部與底部往往不是由消息本身決定，而是由「情緒與持倉是否已經過度一面倒」決定。當你覺得最興奮、最確定時，風險通常也偏高；最恐慌時，反而可能接近機會。但這是一種傾向而非鐵律——市場可以在極端情緒中續漲或續跌很久，所謂「聰明錢」也會判斷錯誤，所以仍要等自己的訊號，而不是純粹跟情緒逆勢。
   </div>
 </div>
 
@@ -608,7 +600,7 @@
     <div class="card-title" style="color:var(--red)">1. 報復性交易<span class="card-title-en">Revenge Trading</span></div>
     <div class="pattern-section">
       <div class="pattern-label">心理機制</div>
-      <div class="pattern-content">虧損觸發「戰鬥或逃跑」反應，大腦進入原始模式。杏仁核接管決策，前額葉皮質（理性思考）被抑制。你不是在交易，你是在和市場「打架」。</div>
+      <div class="pattern-content">虧損會觸發類似「戰鬥或逃跑」的壓力反應，情緒與衝動暫時壓過冷靜的分析與自我控制（這是壓力下常見的心理狀態，不必簡化成「某個腦區關掉、另一個腦區接管」）。此時你往往不是在交易，而是在和市場「賭氣打架」。</div>
     </div>
     <div class="pattern-section">
       <div class="pattern-label">典型場景</div>
@@ -726,7 +718,7 @@
       <strong>解決方案：</strong><br>
       1. 鐵律：每筆風險永遠不超過帳戶的 1-2%<br>
       2. 「確定性」是幻覺 — 任何交易都可能虧損<br>
-      3. 計算倉位大小公式：倉位 = (帳戶 × 風險%) / (入場價 - 止損價)<br>
+      3. 計算倉位大小公式：倉位 = （帳戶 × 風險%） / （入場價 - 止損價）<br>
       4. 用小帳戶練習紀律，等穩定獲利再加大本金
     </div>
     <div class="purple-box">
@@ -781,6 +773,9 @@
     </ul>
     <div class="warning-box">
       <strong>重要：</strong>規則的價值在於你「想違反時依然遵守」。任何人都能在心情好時守規則。真正的紀律是在痛苦中、在虧損後、在 FOMO 中依然遵守。
+    </div>
+    <div class="highlight-box" style="margin-top:12px;">
+      <strong>關於上面的數字：</strong>1-2%、連虧 3 筆、日虧 3%、每日 5 筆、15／30 分鐘這類門檻都是<strong>常見的示例參數</strong>，用來把「保護自己」變成可執行的硬規則，<strong>並沒有一個經研究驗證、對所有人都正確的數值</strong>。請依你的資金、策略、波動度與回測結果自行設定，重點是「事先寫死、事中不改」，而不是這些數字本身。
     </div>
   </div>
 
@@ -893,7 +888,7 @@
           </div>
         </div>
         <div style="flex:1;min-width:250px;padding:16px;background:var(--purple-l);border-radius:8px;">
-          <div style="font-weight:700;font-size:14px;color:var(--purple);margin-bottom:8px;">盤後 (收盤後 10 分鐘)</div>
+          <div style="font-weight:700;font-size:14px;color:var(--purple);margin-bottom:8px;">盤後 （收盤後 10 分鐘）</div>
           <div style="font-size:13px;color:var(--text2);line-height:1.7;">
             1. 記錄所有交易到日記<br>
             2. 標記：計劃內 vs 衝動<br>
@@ -925,13 +920,16 @@
     <div style="margin-top:16px;padding:16px;background:var(--bg3);border-radius:8px;">
       <div style="font-weight:700;font-size:14px;margin-bottom:8px;">類比：賭場莊家的思維</div>
       <div style="font-size:13px;color:var(--text2);line-height:1.7;">
-        賭場莊家不在乎單手勝負。他知道他有邊際優勢（如 2%），他只需要讓遊戲重複足夠多次，利潤就是確定的。<br><br>
-        你也是一樣：<br>
-        - 你的策略 = 你的「邊際優勢」<br>
-        - 每筆交易 = 一手牌<br>
-        - 紀律執行 = 讓遊戲不斷重複<br>
-        - 長期(100+筆) = 邊際優勢較有機會顯現（前提是嚴守紀律、樣本夠大）<br><br>
-        <strong>你輸不起的不是一筆交易，而是你的紀律。</strong>
+        賭場莊家不在乎單手勝負。他之所以能靠大數法則穩定獲利，是因為他的優勢<strong>經過精算、真實存在且長期穩定</strong>（規則寫死、賠率固定），而且每一手牌彼此獨立。他只需要讓遊戲重複足夠多次，長期結果就會向期望值靠攏。<br><br>
+        交易可以借用這個思維，但有兩個關鍵差異，不能照搬：<br>
+        - 你的「優勢」必須是<strong>真實、可重現、且在扣掉手續費與滑點後仍為正</strong>的——很多人以為自己有優勢，其實沒有，這時交易越多、虧越多。<br>
+        - 交易結果<strong>不像賭桌那樣彼此獨立</strong>（行情會延續、會群聚），市場條件也會改變，因此大數法則收斂得更慢、也更不乾淨。<br><br>
+        所以：<br>
+        - 你的策略 = 你「<em>假設</em>存在、且需用回測與實盤持續驗證」的優勢<br>
+        - 每筆交易 = 一次下注<br>
+        - 紀律執行 = 讓這個優勢（若真的存在）有機會被重複<br>
+        - 100 筆<strong>不保證</strong>優勢一定顯現——樣本要夠大、且優勢要真的存在，才有意義<br><br>
+        <strong>你輸不起的不是一筆交易，而是你的紀律；而紀律要用在一個真的有優勢的策略上才划算。</strong>
       </div>
     </div>
   </div>
@@ -973,7 +971,8 @@
         <div style="font-weight:700;font-size:14px;color:var(--blue);margin-bottom:8px;">深呼吸 4-7-8 法</div>
         <div style="font-size:13px;color:var(--text2);line-height:1.7;">
           吸氣 4 秒 → 憋住 7 秒 → 吐氣 8 秒<br><br>
-          原理：延長吐氣有助活化副交感神經，降低生理激發（心率、緊繃感），讓情緒較容易緩和下來。<br><br>
+          原理：放慢、延長吐氣的呼吸，<strong>許多人用來自我安定</strong>，一般認為有助於讓身體從緊繃狀態緩和下來（效果因人而異，不是治療）。<br><br>
+          <strong>注意：</strong>若過程中頭暈、不適，或你有呼吸道／心血管疾病，請停止憋氣，改成自然、平緩的慢呼吸即可。<br><br>
           <strong>使用時機：</strong>止損被觸發後 / 想報復性交易時 / FOMO 升起時
         </div>
       </div>
@@ -989,7 +988,7 @@
         <div style="font-weight:700;font-size:14px;color:var(--purple);margin-bottom:8px;">書寫釋放</div>
         <div style="font-size:13px;color:var(--text2);line-height:1.7;">
           寫下你現在的感受（手寫或打字）<br><br>
-          原理：把情緒從潛意識帶到意識層面。當你能命名一個情緒時，它對你的控制力就減弱了。<br><br>
+          原理：把模糊的情緒用文字說清楚、拉開一點距離，許多人因此比較不容易被情緒牽著走、也更容易看清自己當下想做什麼。<br><br>
           <strong>格式：</strong>「我現在感覺___，因為___，我想做___，但正確做法是___」
         </div>
       </div>
@@ -997,7 +996,7 @@
         <div style="font-weight:700;font-size:14px;color:var(--orange);margin-bottom:8px;">運動</div>
         <div style="font-size:13px;color:var(--text2);line-height:1.7;">
           任何身體活動：伏地挺身、快走、拉筋<br><br>
-          原理：消耗壓力激素皮質醇和腎上腺素。身體需要「完成」戰鬥或逃跑的循環，否則壓力會卡在體內。<br><br>
+          原理：適度的身體活動常被用來紓解壓力與緊繃感，也能把注意力從盤面暫時移開、打斷衝動（視為一種轉移與放鬆，不必當成「把某種激素消耗掉」的精確生理機制）。<br><br>
           <strong>使用時機：</strong>日結後感覺緊繃 / 連虧後無法放鬆
         </div>
       </div>
@@ -1035,7 +1034,7 @@
         P = Proceed（選擇：我要按計劃行動，或不行動）
       </div>
       <div style="padding:12px 16px;background:var(--bg3);border-radius:8px;font-size:13px;line-height:1.7;">
-        <strong>情緒標記練習：</strong>當衝動升起時，大聲說出或寫下：「這是 FOMO」/「這是報復心態」/「這是過度自信」。命名它就削弱了它的力量。
+        <strong>情緒標記練習：</strong>當衝動升起時，大聲說出或寫下：「這是 FOMO」/「這是報復心態」/「這是過度自信」。替情緒命名，有助於你和它拉開距離、看清它，比較不會下意識被它推著行動。
       </div>
     </div>
   </div>
@@ -1070,7 +1069,7 @@
   <div class="card">
     <div class="card-title">熬夜盯美股 → 睡眠剝奪 → 自控力生理性崩潰<span class="card-title-en">Sleep Deprivation</span></div>
     <div style="font-size:14px;color:var(--text2);line-height:1.7;margin:12px 0;">
-      美股台灣時間深夜開盤，白天要上班的你若熬夜盯盤，等於長期處在睡眠剝奪狀態。這不是「意志力」問題——睡眠不足會<strong>生理性地削弱前額葉皮質</strong>（負責理性與衝動控制），同時放大杏仁核的情緒反應。結果是：本頁講的每一種認知偏誤與虧損模式，在你睡不夠時全部被放大。你不是變笨了，是大腦的煞車系統暫時失靈了。
+      美股台灣時間深夜開盤，白天要上班的你若熬夜盯盤，等於長期處在睡眠剝奪狀態。這不只是「意志力」問題——睡眠不足普遍會<strong>降低專注力、自我控制與情緒調節能力</strong>，也更容易衝動、煩躁（這是睡眠研究中相當一致的觀察）。結果是：本頁講的每一種認知偏誤與虧損模式，在你睡不夠時都更容易出現。你不是變笨了，而是負責「踩煞車」的自我控制在疲勞下變弱了。
     </div>
     <div class="highlight-box">
       台灣時區與交易節奏的細節（開盤時間、盤前盤後、值不值得熬夜），請見 <a href="tw_reality.html">台灣散戶的現實條件</a> 一頁。核心結論：<strong>用制度取代熬夜，而不是靠意志力硬撐</strong>。
@@ -1106,29 +1105,20 @@
   <h2 class="section-title">設定合理期望</h2>
 
   <div class="card">
-    <div class="stat-grid">
-      <div class="stat-item" style="border-left:3px solid var(--green);">
-        <div class="stat-number" style="color:var(--green);font-size:22px;">月 5-10%</div>
-        <div class="stat-label">頂尖交易者長期水準</div>
-      </div>
-      <div class="stat-item" style="border-left:3px solid var(--blue);">
-        <div class="stat-number" style="color:var(--blue);font-size:22px;">月 2-3%</div>
-        <div class="stat-label">穩定者（複利年約 40%）</div>
-      </div>
-      <div class="stat-item" style="border-left:3px solid var(--orange);">
-        <div class="stat-number" style="color:var(--orange);font-size:22px;">月翻倍</div>
-        <div class="stat-label">= 遲早爆倉的節奏</div>
-      </div>
-      <div class="stat-item" style="border-left:3px solid var(--purple);">
-        <div class="stat-number" style="color:var(--purple);font-size:22px;">不虧 = 贏</div>
-        <div class="stat-label">保護本金活到機會來</div>
-      </div>
+    <div class="warning-box">
+      <strong>先破除一個迷思：別替自己設「固定月報酬目標」。</strong>網路上常見「頂尖交易者月賺 5-10%」「穩定月 2-3%」之類數字，聽起來溫和，<strong>但用複利放大後其實高得驚人</strong>：月 2-3% 複利約為年化 <strong>27%～43%</strong>，月 5% 約年化 <strong>80%</strong>，月 10% 約年化 <strong>214%</strong>——長期能穩定做到年化 20～30% 的專業機構已是鳳毛麟角。把這些當成「應該達到的月目標」，只會逼你在沒機會時硬做、在虧損時冒更大的險。
     </div>
-    <div class="highlight-box">
-      <strong>務實期望：</strong>頂尖交易者長期月報酬約 <strong>5-10%</strong>，能穩定的人做到月 <strong>2-3%</strong>（複利年約 40%）就已經非常優秀，打敗絕大多數基金經理。副業交易靠的是<strong>多年複利，不是快速致富</strong>；用週／月的節奏衡量自己，而不是盯著每日盈虧。急躁是散戶的墳墓。
+    <div style="font-size:14px;color:var(--text2);line-height:1.8;margin:14px 0;">
+      比較健康的評估方式，是<strong>不盯固定的月報酬數字</strong>，而是看：
+      <ul style="margin:10px 0 0;padding-left:20px;line-height:1.9;">
+        <li><strong>風險調整後</strong>的績效（同樣的報酬，承擔的波動與最大回落越小越好），而不是只看絕對報酬率。</li>
+        <li><strong>扣掉手續費、滑點與稅費之後</strong>的淨結果。</li>
+        <li>相對於一個<strong>合適的參考基準</strong>（例如同期大盤或你原本的被動投資）是否真的更好——若長期贏不過單純買進持有，主動交易就未必值得。</li>
+        <li>你的<strong>最大回落（drawdown）</strong>是否在可承受範圍、以及是否「活得夠久」能撐過逆風期。</li>
+      </ul>
     </div>
     <div class="success-box">
-      <strong>沒有交易的日子，也可以是成功的一天。</strong>沒有 A+ 設定就不進場、守住本金、按時睡覺——這些都是勝利。你的績效用月來結算，不是用「今天有沒有賺到」來評分。
+      <strong>沒有交易的日子，也可以是成功的一天。</strong>沒有 A+ 設定就不進場、守住本金、控制回落、按時睡覺——這些都是勝利。用較長的週期（季／年）、以風險調整後與淨值角度衡量自己，而不是用「今天／這個月賺了幾 %」來評分。急躁是散戶的墳墓。
     </div>
   </div>
 </div>
@@ -1147,7 +1137,7 @@
       <svg viewBox="0 0 600 200" width="100%" style="max-width:600px" role="img"><title>期望值(EV)公式示意：EV等於勝率乘平均盈利減敗率乘平均虧損，範例算出每筆正期望值52.5美元</title>
         <rect x="20" y="20" width="560" height="160" rx="12" fill="var(--bg3)" stroke="var(--border)"/>
         <text x="300" y="55" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="var(--text)">期望值 (EV) 公式</text>
-        <text x="300" y="95" text-anchor="middle" font-family="JetBrains Mono" font-size="18" font-weight="600" fill="var(--blue)">EV = (勝率 x 平均盈利) - (敗率 x 平均虧損)</text>
+        <text x="300" y="95" text-anchor="middle" font-family="JetBrains Mono" font-size="18" font-weight="600" fill="var(--blue)">EV = （勝率 x 平均盈利） - （敗率 x 平均虧損）</text>
         <text x="300" y="130" text-anchor="middle" font-family="Inter" font-size="13" fill="var(--text2)">範例：勝率 45%, 平均盈利 $300, 平均虧損 $150</text>
         <text x="300" y="155" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="600" fill="var(--green)">EV = (0.45 x 300) - (0.55 x 150) = 135 - 82.5 = +$52.5 / 筆</text>
         <text x="300" y="175" text-anchor="middle" font-family="Inter" font-size="11" fill="var(--text3)">即使不到 50% 勝率，只要 R:R 夠好，長期有機會獲利（須自行驗證）</text>
@@ -1221,12 +1211,12 @@
   <div class="card">
     <div class="card-title">不追求暴利，追求穩定小贏</div>
     <div class="formula-box">
-      穩定月 +2~3% × 長期複利 = 年約 +40%<br>
-      <span style="font-size:12px;color:var(--text3);">用週／月節奏衡量，不盯每日盈虧；前提是控制 drawdown、永不爆倉</span>
+      穩定的正期望值 × 時間 × 複利<br>
+      <span style="font-size:12px;color:var(--text3);">重點是「長期為正、回落可控、不爆倉」，而不是任何固定的每月百分比目標</span>
     </div>
     <div style="font-size:14px;color:var(--text2);line-height:1.7;margin:12px 0;">
-      別替自己訂「每日 +X%」的日報酬目標——那會逼你在沒機會的日子硬做。用<strong>週／月的節奏</strong>來看成績：<strong>沒有交易的日子也可以是成功的一天</strong>。<br><br>
-      最大的敵人不是虧損，是<strong>「不一致」</strong>。一週嚴守紀律賺 2%，下一週衝動交易虧 3%，結果一個月下來不但沒賺還虧了。<br><br>
+      別替自己訂「每日 +X%」或「每月一定要 +X%」的報酬目標——那會逼你在沒機會的日子硬做。用<strong>較長的節奏（季／年）、以風險調整後的淨值</strong>來看成績：<strong>沒有交易的日子也可以是成功的一天</strong>。<br><br>
+      最大的敵人往往不是單筆虧損，而是<strong>「不一致」</strong>：一段時間嚴守紀律小有獲利，下一段又衝動交易把成果吐回去，長期下來原本的優勢被自己抵銷。<br><br>
       一致性意味著：
     </div>
     <ul class="rule-list">
@@ -1269,7 +1259,7 @@
 <!-- ===================== TAB 5: 情境模擬訓練 ===================== -->
 <div class="tab-content" id="tab5">
   <h2 class="section-title">情境模擬訓練 — 測試你的即時反應</h2>
-  <p style="font-size:14px;color:var(--text2);margin-bottom:20px;">每個場景只有一個正確答案。選擇後會顯示每個選項的後果分析。訓練你在壓力下做出正確決策的肌肉記憶。</p>
+  <p style="font-size:14px;color:var(--text2);margin-bottom:20px;">每個場景都標出一個「在已明示的策略規則與假設下較合適的答案」——真實交易往往沒有唯一正解，這裡的目的是訓練你在壓力下，依既定紀律做出較合理的選擇。選擇後會顯示每個選項的後果分析。</p>
 
   <!-- Scenario 1 -->
   <div class="scenario-card" id="scenario1">
@@ -1367,7 +1357,7 @@
   <div class="scenario-card" id="scenario5">
     <div><span class="scenario-num">5</span><strong>連勝的陷阱</strong></div>
     <div class="scenario-situation">
-      你連贏 5 筆，帳戶創新高。你感覺自己「看透了市場」，每個信號都清晰無比。你平常每筆風險 1% ($200)。現在你看到一個設定，感覺「超級確定」，想用 3 倍平常的倉位 ($600 風險) 入場。
+      你連贏 5 筆，帳戶創新高。你感覺自己「看透了市場」，每個信號都清晰無比。你平常每筆風險 1% ($200)。現在你看到一個設定，感覺「超級確定」，想用 3 倍平常的倉位 （$600 風險） 入場。
     </div>
     <ul class="scenario-choices" data-correct="1">
       <li onclick="selectScenario(5,0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" tabindex="0" role="button">A. 用 3 倍倉位入場，趁手感好多賺一點</li>
@@ -1382,7 +1372,7 @@
         <strong>C 的後果：</strong>任何偏離標準倉位的行為都是紀律的破口。一旦你允許「稍微加大」，下次可能是「再大一點」。<br>
         <strong>D 的後果：</strong>休息不是壞選擇，但如果設定確實是 A+ 且你感覺平靜（不是亢奮），按標準倉位交易是正確的。
       </div>
-      <div class="purple-box"><strong>心理學原理：</strong>過度自信 + 近因偏誤。連勝的亢奮感與多巴胺／獎勵系統有關，容易讓你覺得自己「無敵」。爆倉常發生在連勝之後。</div>
+      <div class="purple-box"><strong>心理學原理：</strong>過度自信 + 近因偏誤。連勝帶來的亢奮感容易讓你覺得自己「無敵」（一般認為與大腦的獎勵與期待機制有關）。許多人的經驗是：重大爆倉常發生在連勝、信心最高之後。</div>
     </div>
   </div>
 
@@ -1451,7 +1441,7 @@
         <strong>B 的後果：</strong>降低標準 = 降低勝率。你在用 B 級設定消耗 A 級的紀律。<br>
         <strong>C 的後果：</strong>如果其他品種在你的觀察清單內且有 A+ 設定，可以考慮。但如果是「為了交易而找東西做」，就是過度交易。
       </div>
-      <div class="purple-box"><strong>心理學原理：</strong>行動偏誤 + 多巴胺渴望。大腦把「行動」等同於「生產力」，把「等待」等同於「浪費時間」。但在交易中，等待才是最有生產力的行為。</div>
+      <div class="purple-box"><strong>心理學原理：</strong>行動偏誤 + 對「做點什麼」的渴望。我們很容易把「行動」等同於「生產力」，把「等待」等同於「浪費時間」。但在交易中，等待往往才是最有生產力的行為。</div>
     </div>
   </div>
 
@@ -1495,7 +1485,7 @@
       <div class="warning-box" style="margin-top:8px;">
         <strong>A 的後果：</strong>經典的「贏了還想贏」心態。你接下來的交易動機不是「好設定」而是「興奮感」。極可能把今天的利潤還回去。<br>
         <strong>B 的後果：</strong>「小倉位」不能解決你情緒過度興奮的問題。你的判斷力此刻是受損的。<br>
-        <strong>D 的後果：</strong>休息 30 分鐘可能不夠讓腎上腺素完全消退。而且 30 分鐘後你可能找到理由繼續交易。
+        <strong>D 的後果：</strong>休息 30 分鐘後亢奮感不一定退得夠，而且 30 分鐘後你可能又找到理由繼續交易。
       </div>
       <div class="purple-box"><strong>心理學原理：</strong>過度自信 + 獎勵系統驅動的風險尋求行為。大腦在獲勝後容易渴望「更多」，機制與賭博類似。</div>
     </div>
@@ -1537,9 +1527,9 @@
       <li onclick="selectScenario(12,3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" tabindex="0" role="button">D. 下次類似情況再試試看</li>
     </ul>
     <div class="scenario-reveal" id="reveal12">
-      <div class="success-box"><strong>正確答案：A</strong><br>這是最危險的情況：違反紀律但獲利。這會讓大腦建立「違規 = 有獎勵」的神經連結，下次更容易違規。正確認知：好交易 = 遵守過程的交易（不管盈虧）。壞交易 = 違反過程的交易（即使賺錢）。</div>
+      <div class="success-box"><strong>正確答案：A</strong><br>這是最危險的情況：違反紀律但獲利。偶然的獎勵會強化「違規也沒事」的印象，讓你下次更容易再違規。正確認知：好交易 = 遵守過程的交易（不管盈虧）。壞交易 = 違反過程的交易（即使賺錢）。</div>
       <div class="warning-box" style="margin-top:8px;">
-        <strong>B 的後果：</strong>「結果好就好」= 典型的結果思維。這次賺了是運氣，下次同樣做法 90% 是虧。但你已經被「正強化」了。<br>
+        <strong>B 的後果：</strong>「結果好就好」= 典型的結果思維。這次賺到比較像是運氣，長期這樣衝動交易的期望值很可能是負的。但你已經被這次的「正強化」誤導了。<br>
         <strong>C 的後果：</strong>一次違規的成功不應該改變經過深思的規則。你的規則是在冷靜理性時制定的，比情緒中的判斷更可靠。<br>
         <strong>D 的後果：</strong>= 確認了「跟著感覺走」。下次「類似情況」你會虧得更慘，因為你會用更大的信心（和倉位）去做。
       </div>
@@ -1550,8 +1540,8 @@
 
 <!-- ===================== TAB 6: 心理測驗與評估 ===================== -->
 <div class="tab-content" id="tab6">
-  <h2 class="section-title">Part A: 交易者心理健康自我評估</h2>
-  <p style="font-size:14px;color:var(--text2);margin-bottom:16px;">誠實回答以下 20 個問題。勾選「是」代表你有這個行為。目的不是批判你，而是讓你認清現狀。<br><span style="font-size:12px;color:var(--text3);">本表僅供<strong>自我覺察</strong>，並非心理或醫療診斷工具；評分結果不能取代專業評估。標示 🚩 的為關鍵題，只要勾選任一項，無論總分高低都建議優先處理（不會被總分稀釋）。</span></p>
+  <h2 class="section-title">Part A: 交易行為自我覺察清單</h2>
+  <p style="font-size:14px;color:var(--text2);margin-bottom:16px;">誠實回答以下 20 個問題。勾選「是」代表你最近有這個行為。目的不是替你打分數或貼標籤，而是幫你看見自己的模式。<br><span style="font-size:12px;color:var(--text3);">這<strong>只是一份自我覺察清單，不是經過驗證的心理量表，也不是醫療或心理診斷工具</strong>；勾選的多寡不代表任何「分數」或「診斷」，不能取代專業評估。標示 🚩 的項目較值得留意，只要勾選任一項，不論你勾了幾項，都建議優先回頭看對應的章節與工具。</span></p>
 
   <div class="card">
     <div class="card-title">過去一個月內，你是否有以下行為？</div>
@@ -1578,11 +1568,11 @@
       <div class="assessment-item"><input type="checkbox" class="assessment-checkbox" id="a20"><label class="assessment-label" for="a20">20. 沒有記錄交易日記或復盤的習慣</label></div>
     </div>
     <div style="margin-top:20px;text-align:center;">
-      <button class="btn btn-primary" onclick="calculateAssessment()">計算我的分數</button>
+      <button class="btn btn-primary" onclick="calculateAssessment()">看我勾選的模式</button>
     </div>
     <div class="assessment-result" id="assessmentResult">
       <div class="assessment-score-num" id="assessmentScore">0</div>
-      <div style="font-size:14px;color:var(--text3);margin:4px 0;">/ 20</div>
+      <div style="font-size:14px;color:var(--text3);margin:4px 0;">／ 20 項（勾選項目數，非評分、非診斷）</div>
       <div class="quiz-grade" id="assessmentGrade"></div>
       <div class="quiz-feedback" id="assessmentFeedback"></div>
     </div>
@@ -1672,9 +1662,15 @@ function calculateAssessment() {
 
   let flagsHTML = '';
   if (keyFlags.length) {
-    flagsHTML += '<div class="warning-box" style="margin-top:16px;text-align:left;"><strong>🚩 關鍵題提醒（不受總分影響）：</strong>你在下列關鍵行為勾選了「是」——<br>・' +
+    flagsHTML += '<div class="warning-box" style="margin-top:16px;text-align:left;"><strong>🚩 值得優先留意的項目：</strong>你在下列較重要的行為勾選了「是」——<br>・' +
       keyFlags.join('<br>・') +
-      '<br><br>無論你的總分落在哪一區間，這些都是需要<strong>優先處理</strong>的訊號。建議先縮小或暫停部位，回頭檢視本頁的紀律系統與情緒工具包，並持續記錄交易日記。</div>';
+      '<br><br>不論你總共勾了幾項，這些都是值得<strong>優先處理</strong>的訊號。建議先縮小或暫停部位，回頭檢視本頁的紀律系統與情緒工具包，並持續記錄交易日記。</div>';
+  }
+  // 身體症狀：不應只歸因於交易心理，提醒就醫評估
+  if (chk('a4')) {
+    flagsHTML += '<div class="warning-box" style="margin-top:16px;text-align:left;">' +
+      '<strong>關於身體症狀的提醒：</strong>胸悶、呼吸困難、明顯心悸、頭暈等症狀<strong>不應直接假設一定是「交易緊張」造成的</strong>，它們也可能是心臟、呼吸或其他內科／焦慮相關狀況的表現。<br><br>' +
+      '若這些症狀<strong>嚴重、是第一次出現、持續不退或反覆發作</strong>，請儘快尋求<strong>醫療評估</strong>（家醫科 / 心臟內科 / 身心科）；若出現劇烈胸痛、呼吸極度困難、意識改變等緊急情況，請立即撥打 <strong>119</strong> 或前往急診。交易可以等，身體不行。</div>';
   }
   if (showAddiction) {
     flagsHTML += '<div class="warning-box" style="margin-top:16px;text-align:left;">' +
@@ -1688,29 +1684,30 @@ function calculateAssessment() {
   }
   flagsEl.innerHTML = flagsHTML;
 
+  // 以下為「自我覺察」導向的回饋，不是分數評級，也不是診斷標籤
   if (score <= 5) {
     scoreEl.style.color = 'var(--green)';
-    gradeEl.textContent = '心理健康';
+    gradeEl.textContent = '目前勾選到的模式較少';
     gradeEl.style.color = 'var(--green)';
-    feedbackEl.textContent = '你的交易心理狀態良好。繼續保持紀律，定期復盤，持續精進。';
+    feedbackEl.textContent = '你目前勾選到的高風險行為不多，這是個好跡象。繼續保持紀律、定期復盤、記錄交易日記，並留意上面標示的任何關鍵項目。';
     result.style.borderColor = 'var(--green)';
   } else if (score <= 10) {
     scoreEl.style.color = 'var(--orange)';
-    gradeEl.textContent = '需要警惕';
+    gradeEl.textContent = '有一些值得留意的模式';
     gradeEl.style.color = 'var(--orange)';
-    feedbackEl.textContent = '你有一些心理陷阱需要處理。重新閱讀本頁的紀律系統，開始記錄交易日記，特別關注你勾選的項目。';
+    feedbackEl.textContent = '你勾選到幾個值得留意的行為。可以重新閱讀本頁的紀律系統，開始記錄交易日記，並針對勾選的項目各設計一條具體的 IF-THEN 規則。';
     result.style.borderColor = 'var(--orange)';
   } else if (score <= 15) {
     scoreEl.style.color = 'var(--red)';
-    gradeEl.textContent = '嚴重問題';
+    gradeEl.textContent = '勾選到不少值得留意的模式';
     gradeEl.style.color = 'var(--red)';
-    feedbackEl.textContent = '你的交易行為受到嚴重的心理因素干擾。建議：縮小倉位到最小、嚴格執行 IF-THEN 規則、考慮暫停實盤改用模擬盤練習紀律。';
+    feedbackEl.textContent = '你勾選到的高風險行為偏多。可以考慮先縮小部位或改用模擬盤，把本頁的紀律系統與情緒工具落實到每天的流程裡。若這些行為已開始影響你的生活或情緒，請同時尋求專業協助。';
     result.style.borderColor = 'var(--red)';
   } else {
     scoreEl.style.color = 'var(--red)';
-    gradeEl.textContent = '建議暫停交易';
+    gradeEl.textContent = '勾選到很多值得留意的模式';
     gradeEl.style.color = 'var(--red)';
-    feedbackEl.textContent = '你目前的心理狀態不適合進行實盤交易。強烈建議：停止實盤至少兩週、閱讀《Trading in the Zone》、建立完整的交易系統後用模擬盤驗證、直到連續一個月紀律分數 > 90% 再回實盤。';
+    feedbackEl.textContent = '你勾選到大量高風險行為。這不是一個「分數」或「診斷」，但很值得認真看待：建議先暫停或大幅縮小實盤部位、回到模擬盤重建紀律；如果你覺得自己難以停手、或交易已影響到睡眠、工作與家庭關係，請尋求精神科醫師或臨床心理師等專業協助（見下方資源）。';
     result.style.borderColor = 'var(--red)';
   }
 }
@@ -1814,10 +1811,10 @@ const quizData = [
     explanation: '不一致讓你的策略優勢無法在統計上顯現。一天遵守紀律賺1%，下一天衝動虧3%，邊際優勢被不一致的行為完全抵銷。'
   },
   {
-    q: '以下哪個月報酬率期望是合理的？',
-    options: ['月翻倍 (100%)', '月 30-50%', '月 3-10%', '月 0.5%'],
+    q: '關於「每月該賺多少」，以下哪個想法最健康？',
+    options: ['月翻倍 (100%)', '固定要求每月至少 +30%', '不設固定月報酬目標，改看風險調整後、扣成本的長期績效', '每個月都一定要賺、不能有虧損月'],
     correct: 2,
-    explanation: '頂尖交易者月收益約5-10%、穩定獲利者約2-3%（業界經驗量級，因策略與槓桿差異極大，僅供參考、非保證）。月3-10%已經非常優秀。期望月翻倍的人最終幾乎都爆倉。'
+    explanation: '把報酬寫成「每月一定要 +X%」會逼你在沒機會時硬做。連看似溫和的月 5-10%，複利後都是年化約 80%～200% 的極高水準，長期極難持續；連專業機構能穩定年化 20～30% 都已少見。較健康的做法是不盯固定月數字，改看風險調整後、扣掉手續費與稅費、相對合適基準的長期表現，並把回落控制在可承受範圍。'
   },
   {
     q: '「不虧錢比賺錢更重要」的核心邏輯是？',
@@ -1882,9 +1879,9 @@ const quizData = [
   },
   {
     q: '你虧損後想報復交易的衝動非常強烈。以下哪個生理干預最有效？',
-    options: ['喝咖啡提神再戰', '做 20 個伏地挺身消耗腎上腺素', '繼續盯盤但告訴自己「只看不做」', '和朋友聊天討論你的虧損'],
+    options: ['喝咖啡提神再戰', '離開座位做 20 個伏地挺身或快走，轉移注意力並紓解緊繃', '繼續盯盤但告訴自己「只看不做」', '和朋友聊天討論你的虧損'],
     correct: 1,
-    explanation: '身體運動能有效消耗壓力激素（皮質醇和腎上腺素），完成「戰鬥或逃跑」循環。盯盤不做只會增加誘惑，咖啡會加劇焦慮。'
+    explanation: '適度的身體活動常被用來紓解壓力與緊繃、並把注意力從盤面移開、打斷衝動。盯盤不做只會增加誘惑，咖啡則可能讓焦慮更明顯。'
   },
   {
     q: '你今天的交易目標是 +$500。你已經賺了 $480，差一點就到。你看到一個 B 級設定。你應該？',
@@ -2076,7 +2073,7 @@ const quizData = [
     q: '你的月目標是 +5%，但今天一筆做多就賺了 +6%。你想繼續做。為什麼這很危險？',
     options: ['因為已經超標了不應該交易', '因為超額利潤帶來的亢奮會讓你覺得「無所不能」，大幅降低風險意識。下一筆很可能倉位過大', '因為市場不會一直漲', '因為應該留到明天再做'],
     correct: 1,
-    explanation: '超額利潤的多巴胺讓大腦進入「風險尋求」模式。你會覺得即使虧一點也沒關係（「反正今天還是賺」），導致紀律鬆懈和倉位失控。'
+    explanation: '大賺後的亢奮容易讓人變得更願意冒險（「反正今天還是賺」），因而放鬆紀律、放大倉位。這是獲利後常見的心理狀態，不必簡化成某種單一神經傳導物質的作用。'
   },
   {
     q: '你看到一個很強的做空信號，但上一筆做空剛被止損。你猶豫了。正確思考是？',
@@ -2133,10 +2130,10 @@ const quizData = [
     explanation: '追求更多指標是一種逃避心理：學習感覺很「積極」但不需要面對執行紀律的痛苦。大部分散戶的問題不是分析不夠好，而是做不到知行合一。'
   },
   {
-    q: '你的朋友用一個你不了解的策略在一個月內賺了 40%。你開始質疑自己月賺 3% 的方法。正確思考是？',
-    options: ['跟他學那個策略', '一個月的表現說明不了什麼。高回報必然對應高風險。你的穩定 3% 長期複利遠勝於暴賺暴虧', '你應該更激進', '3% 太保守了'],
+    q: '你的朋友用一個你不了解的策略在一個月內賺了 40%。你開始懷疑自己比較保守的做法。正確思考是？',
+    options: ['跟他學那個策略', '一個月的表現說明不了什麼，且高回報通常伴隨高風險。與其追逐暴賺暴虧，不如看長期、扣成本、風險調整後的穩定表現', '你應該更激進', '你太保守了'],
     correct: 1,
-    explanation: '月賺40%通常意味著承受巨大風險或使用高槓桿。這種收益率不可持續，很可能在未來幾個月回吐甚至爆倉。穩定3%（年42%複利）已經碾壓絕大多數專業基金。'
+    explanation: '單月 40% 往往意味著承受了巨大風險或使用高槓桿，這種報酬很難長期持續，可能在後續月份大幅回吐甚至爆倉。別用別人的單月成績否定自己——該比較的是長期、扣掉成本與稅費、風險調整後的結果，以及最大回落是否可承受。'
   },
   {
     q: '你午餐時看到一則新聞說「BTC 可能跌到 $40K」。你當前做多 BTC 浮盈 3%。你的反應應該是？',
@@ -2154,7 +2151,7 @@ const quizData = [
     q: '你的止損被觸發，你很沮喪。5 分鐘後你注意到另一個品種有做多信號。你應該？',
     options: ['立刻入場，好機會不等人', '等至少 15 分鐘讓情緒平復，然後冷靜評估那個信號是否真的是 A+ 設定', '今天不做了', '入場但用半倉'],
     correct: 1,
-    explanation: '止損觸發後的5分鐘內你的情緒必然受影響，判斷力下降。等15分鐘讓杏仁核活動降低後再評估。如果那個信號真的好，15分鐘後它還會在那裡。'
+    explanation: '止損觸發後的幾分鐘內，情緒通常還沒平復、判斷力偏低。給自己約 15 分鐘讓情緒緩和再評估。如果那個信號真的好，15 分鐘後它還會在那裡。'
   },
   {
     q: '你發現自己在虧損日特別想要看交易社群的討論。這反映什麼需求？',

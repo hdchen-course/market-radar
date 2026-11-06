@@ -184,23 +184,32 @@
 <div class="card">
 <h3>核心公式</h3>
 <div class="st-formula">
-<strong>// 基本帶計算</strong><br>
-Upper Band = (High + Low) / 2 + Multiplier * ATR(Period)<br>
-Lower Band = (High + Low) / 2 - Multiplier * ATR(Period)<br>
+<strong>// 第一步：基本帶（basic bands）</strong><br>
+hl2 = (High + Low) / 2<br>
+basicUpper = hl2 + Multiplier &times; ATR(Period)<br>
+basicLower = hl2 - Multiplier &times; ATR(Period)<br>
 <br>
 <strong>// 我們的參數</strong><br>
 Period = 300（計算 ATR 的回顧期間）<br>
 Multiplier = 3（ATR 的倍數）<br>
 <br>
-<strong>// ATR 使用 RMA（遞迴移動平均）平滑</strong><br>
-RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
+<strong>// 第二步：最終帶（final bands）— 沿用前一根的值，帶會「卡住」</strong><br>
+finalUpper = (basicUpper &lt; prevFinalUpper OR prevClose &gt; prevFinalUpper)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? basicUpper : prevFinalUpper<br>
+finalLower = (basicLower &gt; prevFinalLower OR prevClose &lt; prevFinalLower)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? basicLower : prevFinalLower<br>
 <br>
-<strong>// 翻轉邏輯</strong><br>
-若 Close &gt; Upper Band → 翻多（ST = Lower Band）<br>
-若 Close &lt; Lower Band → 翻空（ST = Upper Band）<br>
+<strong>// 第三步：依「前一根 ST 在哪條帶」決定翻轉</strong><br>
+若上一根 ST 在 upper band（空頭）：Close &gt; finalUpper 才翻多；否則維持空<br>
+若上一根 ST 在 lower band（多頭）：Close &lt; finalLower 才翻空；否則維持多<br>
 </div>
 <div class="highlight-box">
-<strong>為什麼用 RMA 而不是 SMA？</strong> RMA（也叫 Wilder's Smoothing）對新數據的反應比 EMA 更慢、比 SMA 更平滑。這讓 SuperTrend 不會因為單根大K線就劇烈跳動，減少假翻轉。
+<strong>關鍵：SuperTrend 是「遞迴」指標，不是用當根 Close 比基本帶就翻轉。</strong>
+正確算法要先把基本帶轉成會「卡住」的最終帶（final bands）—— 最終帶只在價格實際突破時才放行更新，否則沿用前一根的值 —— 再依<strong>前一根 ST 的狀態</strong>（在 upper 或 lower band）決定要不要翻轉。只用當根 Close &gt; Upper／Close &lt; Lower 來翻轉是常見但錯誤的簡化。<br><br>
+<strong>平台差異：</strong>不同平台在 ATR 的初始值、平滑方式（RMA／EMA／SMA）與相等條件（&gt; 或 &ge;）可能略有差異，實際翻轉點以你所用平台的計算結果為準。
+</div>
+<div class="highlight-box">
+<strong>為什麼多半用 RMA（Wilder's Smoothing）平滑 ATR？</strong> RMA 公式為 <code>RMA(n) = (prevRMA &times; (n-1) + currentTR) / n</code>，對新資料的反應比同期 EMA 慢，因此 ATR 數列較不會因單根大 K 線而劇烈跳動。這裡的「慢／穩」指的是<strong>數值反應速度</strong>，不等於更準確或更能預測方向；平滑只是降低 ATR 的抖動，是否減少假翻轉仍須以實際平台回測驗證。
 </div>
 </div>
 
@@ -212,21 +221,22 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
   <tr><td><code>Multiplier = 3</code></td><td>ST 線距離中軸的 ATR 倍數</td><td>翻轉門檻高，不會被小波動觸發。需要實質性的趨勢改變才會 flip</td></tr>
 </table>
 <div class="insight-box">
-<strong>參數設計哲學：</strong>300/3 組合刻意犧牲靈敏度換取可靠度。它不適合抓短線波段的頂底，而是告訴你「大方向是什麼」。當 ST(300,3) 翻轉時，這代表市場結構已經發生根本性改變，而非只是短期回調。
+<strong>參數設計哲學：</strong>300/3 這類長期間、大乘數的組合，是刻意用<strong>較低的靈敏度</strong>換取<strong>較少的翻轉次數</strong>。設計意圖是過濾短期噪音、描述較長期的方向，而非抓短線頂底。<br><br>
+<strong>須知（待驗證假設，非統計事實）：</strong>「ST 翻轉＝市場結構根本性改變」是這類參數的<strong>設計意圖與經驗說法</strong>，不是經回測證明的結論；翻轉後仍可能是回調而非反轉。實際門檻、翻轉頻率與可靠度，應在你交易的標的與期間上以樣本外回測驗證，不要當成固定事實套用。
 </div>
 </div>
 
 <div class="card">
-<h3>翻轉信號的物理意義</h3>
-<p>SuperTrend 翻轉不是隨意發生的。以多翻空為例：</p>
+<h3>翻轉信號代表什麼</h3>
+<p>SuperTrend 以多翻空為例，翻轉的意義是：</p>
 <ol>
-  <li>價格必須從 ST 線上方跌到 ST 線下方</li>
-  <li>由於 ST 線在多頭時 = Lower Band = 中軸 - 3*ATR(300)</li>
-  <li>這代表價格從均值位置<strong>下跌了超過 3 倍的長期波動幅度</strong></li>
-  <li>這是一個統計上極不尋常的事件，暗示趨勢已改變</li>
+  <li>價格收盤由 ST 線上方跌到下方（且依前述遞迴規則、突破了會「卡住」的最終下帶）</li>
+  <li>由於帶寬 = Multiplier &times; ATR(300)，較大的乘數與較長的 ATR 期間會把翻轉門檻拉高</li>
+  <li>因此一次翻轉需要「相對於近期波動幅度而言較大」的價格移動才會發生，不會被小幅震盪輕易觸發</li>
 </ol>
 <div class="warning-box">
-<strong>翻轉延遲：</strong>正因為 300/3 參數很鈍，翻轉時通常已經走了一段行情。不要期望買在最低、賣在最高。ST 的價值在於方向正確性，而非精確的轉折點。
+<strong>注意：</strong>ST 的最終帶是<strong>遞迴的追蹤帶（trailing band）</strong>，會隨每根 K 線上移／下移，<strong>不是</strong>固定均值 ± 3 個標準差，翻轉也<strong>不等於</strong>「跌破均值 3 倍標準差」這種固定統計事件。把它當成常態分布的尾端事件是常見誤解。<br><br>
+<strong>翻轉延遲：</strong>300/3 這類鈍參數在翻轉時通常已走了一段行情，不要期望買在最低、賣在最高。ST 的用途是描述當下方向，而非精確抓轉折點。
 </div>
 </div>
 
@@ -246,11 +256,11 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <div style="padding:16px 20px; background:var(--green-l); border-radius:var(--r); border:1px solid #bbf7d0; margin-top:20px;">
   <h3 style="color:var(--green); margin-top:0;">ST(300,3) 核心認知</h3>
   <ul style="font-size:14px; line-height:2;">
-    <li>ST 不預測未來，它描述「現在的趨勢方向」</li>
-    <li>翻轉是低頻事件 — 日線上一年可能只翻 2-4 次</li>
-    <li>ST 線本身就是動態支撐/壓力位</li>
-    <li>價格離 ST 線越遠，回踩到 ST 線的機率越高（均值回歸）</li>
-    <li>ST 翻轉後的第一次回測 ST 線，通常是最好的進場點</li>
+    <li>ST 不預測未來，它描述「依規則定義的當下趨勢方向」（這是指標的定義，可確定）</li>
+    <li>長期間、大乘數的設計意圖是讓翻轉成為低頻事件；<strong>實際每年翻幾次因標的與期間而異，需自行回測統計，無固定次數</strong></li>
+    <li>很多交易者<strong>把</strong>上移／下移的 ST 線<strong>當作</strong>動態支撐／壓力參考；這是常見用法與假設，非該線必然構成有效支撐的保證</li>
+    <li>「價格離 ST 線越遠越容易回踩」是均值回歸的<strong>假說</strong>，單看一張圖無法證明，需期間統計驗證</li>
+    <li>「翻轉後第一次回測是最好的進場點」是<strong>待驗證的經驗規則</strong>，無保證勝率，須樣本外回測；優點僅在於止損位置相對明確（ST 線另一側）</li>
   </ul>
 </div>
 </div><!-- tab1 -->
@@ -266,11 +276,14 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <div class="card">
 <h3>時框層級定義</h3>
 <table>
-  <tr><th>層級</th><th>時框</th><th>角色</th><th>權重</th></tr>
-  <tr><td>戰略層</td><td>日線 (D)</td><td>決定大方向，不輕易逆勢</td><td>50%</td></tr>
-  <tr><td>戰術層</td><td>4 小時 (4H)</td><td>確認波段趨勢，決定是否入場</td><td>30%</td></tr>
-  <tr><td>執行層</td><td>1 小時 (1H)</td><td>精確入場時機，設定止損位</td><td>20%</td></tr>
+  <tr><th>層級</th><th>時框</th><th>角色</th></tr>
+  <tr><td>戰略層</td><td>日線 (D)</td><td>決定大方向，不輕易逆勢</td></tr>
+  <tr><td>戰術層</td><td>4 小時 (4H)</td><td>確認波段趨勢，決定是否入場</td></tr>
+  <tr><td>執行層</td><td>1 小時 (1H)</td><td>精確入場時機，設定止損位</td></tr>
 </table>
+<div class="warning-box" style="margin-top:12px;">
+<strong>為什麼不給固定權重？</strong>先前版本曾用「日線 50 / 4H 30 / 1H 20」這類固定百分比加權。這種數字是<strong>任意的、未經回測</strong>，而且三個時框用的是<strong>同一段價格序列</strong>、彼此高度重疊，<strong>不是三個獨立證據</strong>，不能像獨立投票那樣加權相加。這裡保留的只是<strong>層級順序</strong>（高時框定方向、低時框找時機）這個常青原則，不給可量化的權重分數。
+</div>
 </div>
 
 <h3>八種組合情境</h3>
@@ -358,18 +371,18 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 </div>
 
 <div class="card" style="border-left:4px solid var(--purple);">
-<h3 style="color:var(--purple);">共振強度評分</h3>
-<p style="font-size:13px; color:var(--text3); margin-bottom:12px;">共振分 = 依層級權重（日線 50 / 4H 30 / 1H 20）對各時框方向加總（多 +、空 −）。此為<strong>經驗權重、方向示意</strong>，非線性精確概率；鏡像情境已對稱（例：日多+4H空+1H多 = +40 對應 日空+4H多+1H空 = −40）。倉位與方向仍須配合趨勢量能與個人風控，分數只是相對強弱參考。</p>
+<h3 style="color:var(--purple);">共振狀態與操作傾向（定性，非評分）</h3>
+<p style="font-size:13px; color:var(--text3); margin-bottom:12px;">下表只列<strong>方向傾向</strong>，刻意<strong>不給</strong>「共振分」或「建議倉位百分比」。原因：各時框共用同一段價格、彼此高度重疊，不是可加權相加的獨立證據；而固定倉位百分比（如 80-100%）是任意數字，實際倉位<strong>必須</strong>依你的帳戶風險上限與止損距離計算（見「實戰 SOP」分頁），不能照抄表格。這張表用途是幫你判讀「現在是否共振、方向偏哪邊」，不是下單指令。</p>
 <table>
-  <tr><th>組合</th><th>共振分</th><th>建議倉位</th><th>操作方向</th></tr>
-  <tr><td>日多+4H多+1H多</td><td style="color:var(--green);font-weight:700;">+100</td><td>80-100%</td><td>只做多</td></tr>
-  <tr><td>日多+4H多+1H空</td><td style="color:var(--green);">+60</td><td>50-70%</td><td>等 1H 翻多再做多</td></tr>
-  <tr><td>日多+4H空+1H多</td><td style="color:var(--yellow);">+40</td><td>20-30%</td><td>觀望/輕倉試多</td></tr>
-  <tr><td>日多+4H空+1H空</td><td style="color:var(--yellow);">0</td><td>0-10%</td><td>觀望/準備反向</td></tr>
-  <tr><td>日空+4H多+1H多</td><td style="color:var(--yellow);">0</td><td>20-30%</td><td>輕倉試多/觀望</td></tr>
-  <tr><td>日空+4H多+1H空</td><td style="color:var(--orange);">-40</td><td>0-20%</td><td>觀望偏空</td></tr>
-  <tr><td>日空+4H空+1H多</td><td style="color:var(--red);">-60</td><td>50-70%空</td><td>等 1H 翻空再做空</td></tr>
-  <tr><td>日空+4H空+1H空</td><td style="color:var(--red);font-weight:700;">-100</td><td>80-100%空</td><td>只做空</td></tr>
+  <tr><th>組合</th><th>共振狀態</th><th>操作傾向</th></tr>
+  <tr><td>日多+4H多+1H多</td><td style="color:var(--green);font-weight:700;">完全共振（多）</td><td>只偏多；回踩再進，倉位依風控計算</td></tr>
+  <tr><td>日多+4H多+1H空</td><td style="color:var(--green);">大致共振（多）</td><td>等 1H 翻多再做多</td></tr>
+  <tr><td>日多+4H空+1H多</td><td style="color:var(--yellow);">中層斷裂</td><td>觀望／輕倉試多</td></tr>
+  <tr><td>日多+4H空+1H空</td><td style="color:var(--yellow);">多轉折疑慮</td><td>觀望／準備反向</td></tr>
+  <tr><td>日空+4H多+1H多</td><td style="color:var(--yellow);">空轉折疑慮</td><td>輕倉試多／觀望</td></tr>
+  <tr><td>日空+4H多+1H空</td><td style="color:var(--orange);">中層反彈轉弱</td><td>觀望偏空</td></tr>
+  <tr><td>日空+4H空+1H多</td><td style="color:var(--red);">大致共振（空）</td><td>等 1H 翻空再做空</td></tr>
+  <tr><td>日空+4H空+1H空</td><td style="color:var(--red);font-weight:700;">完全共振（空）</td><td>只偏空；對美股／ETF 多為空手觀望</td></tr>
 </table>
 </div>
 </div><!-- tab2 -->
@@ -419,8 +432,8 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
   <ul>
     <li>價格在一個範圍內來回波動</li>
     <li>沒有明確的方向性</li>
-    <li>ST 會頻繁翻轉（一週翻 2-3 次）</li>
-    <li><strong>辨識：</strong>看 ST 翻轉頻率。若一個月翻 > 4 次 = 盤整</li>
+    <li>盤整時 ST 容易頻繁翻轉又翻回</li>
+    <li><strong>辨識：</strong>相對平常明顯變密的翻轉頻率，是盤整的提示訊號（<strong>具體次數門檻因標的／時框而異，無固定數字，須自行觀察該標的的常態</strong>）</li>
   </ul>
 </div>
 <div class="tf-card" style="border-left:4px solid var(--red);">
@@ -428,8 +441,8 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
   <ul>
     <li>CPI、FOMC、非農等數據公布</li>
     <li>事件導致的瞬間巨幅波動可能觸發假翻轉</li>
-    <li>事件後 4-6 小時的走勢才是真實方向</li>
-    <li><strong>規則：</strong>事件前 2h 內的翻轉不跟單</li>
+    <li>事件剛公布時的瞬間穿越常是雜訊，宜等市場消化、以收盤方向為準（<strong>「幾小時後才是真方向」無固定時數，不要套用特定數字</strong>）</li>
+    <li><strong>原則：</strong>重大事件附近出現的翻轉可信度較低，傾向等事件過後、收盤確認再行動</li>
   </ul>
 </div>
 <div class="tf-card" style="border-left:4px solid var(--red);">
@@ -438,7 +451,7 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
     <li>波動率極低，價格幾乎不動</li>
     <li>ST 線非常靠近價格</li>
     <li>微小波動就可能觸發翻轉</li>
-    <li><strong>辨識：</strong>ATR(14) 低於過去 60 日 ATR 的 50%</li>
+    <li><strong>辨識：</strong>當前 ATR 明顯低於自身近期常態（例如用 ATR(14) 對照其過去數十日區間，落到區間低端時提高警覺；<strong>「低於 50%」只是示意門檻，非驗證過的固定界線</strong>）</li>
   </ul>
 </div>
 <div class="tf-card" style="border-left:4px solid var(--red);">
@@ -454,31 +467,33 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 </div>
 
 <div class="card">
-<h3>辨識假翻轉的實戰技巧</h3>
+<h3>辨識假翻轉的實戰線索</h3>
+<p style="font-size:13px; color:var(--text3); margin-bottom:8px;">以下是<strong>定性的傾向對照</strong>，用來培養盤感，不是驗證過的量化門檻。表中任何百分比／次數都是<strong>示意</strong>，真正的界線因標的與時框而異，須自行回測。</p>
 <table>
-  <tr><th>假翻轉特徵</th><th>真翻轉特徵</th></tr>
-  <tr><td>翻轉後價格立即回到 ST 線附近（距離 < 0.3%）</td><td>翻轉後價格快速遠離 ST 線（距離 > 1%）</td></tr>
+  <tr><th>較像假翻轉</th><th>較像真翻轉</th></tr>
+  <tr><td>翻轉後價格很快又貼回 ST 線、沒有拉開距離</td><td>翻轉後價格明顯且持續地遠離 ST 線</td></tr>
   <tr><td>翻轉發生在重大事件公布的瞬間</td><td>翻轉發生在正常交易時段，有量能配合</td></tr>
   <tr><td>僅 1H 翻轉，4H 和日線方向不變</td><td>多個時框在短時間內陸續翻轉</td></tr>
-  <tr><td>最近一週已翻轉 > 2 次（來回打臉）</td><td>翻轉前已有 2 週以上未翻轉</td></tr>
+  <tr><td>近期已來回翻轉多次（打臉頻繁）</td><td>翻轉前已有相當長一段時間未翻轉</td></tr>
   <tr><td>翻轉 K 線有極長影線（長釘）</td><td>翻轉 K 線實體大、影線短</td></tr>
-  <tr><td>ATR(14) 處於歷史低位</td><td>ATR(14) 處於正常或偏高水準</td></tr>
+  <tr><td>ATR 處於自身近期低位（波動壓縮）</td><td>ATR 處於正常或偏高水準</td></tr>
 </table>
 </div>
 
 <div class="card" style="border-left:4px solid var(--orange);">
 <h3 style="color:var(--orange);">假翻轉應對 SOP</h3>
+<p style="font-size:13px; color:var(--text3); margin-bottom:10px;">以下是<strong>紀律流程</strong>（常青），其中的「等幾根 K 線／拉開多少距離」屬<strong>待回測參數</strong>，數字僅為示意，請用自己的回測結果取代。</p>
 <ol style="line-height:2.2;">
-  <li>ST 翻轉後，<strong>不立即入場</strong>。等待 2-4 根 K 線確認。</li>
-  <li>確認標準：價格收盤在 ST 線正確一側 + 距離 > 0.5%。</li>
-  <li>若翻轉 2 根 K 線內即翻回 = 假翻轉，此次不交易。</li>
-  <li>假翻轉後的真翻轉通常更有力 — 記錄方向，等下次。</li>
-  <li>連續假翻轉 3 次以上 = 市場在盤整，暫停使用 ST 做決策。</li>
+  <li>ST 翻轉後，<strong>不立即入場</strong>。先等收盤確認，不用盤中瞬間穿越做決策。</li>
+  <li>確認方向：價格收盤在 ST 線正確一側，並拉開一段距離（距離門檻須自行回測，勿套固定百分比）。</li>
+  <li>若翻轉後很快又翻回 = 當次視為假翻轉，不交易。</li>
+  <li>假翻轉後若出現方向一致的再次翻轉，可記錄方向、等更明確的進場。</li>
+  <li>短時間內連續被來回翻轉打臉 = 市場可能在盤整，暫停使用 ST 做決策。</li>
 </ol>
 </div>
 
 <div class="highlight-box">
-<strong>個人經驗法則：</strong>如果你發現自己一週內被 ST 翻轉打臉超過 2 次，這不是你的問題，是市場不適合 ST。正確做法是暫停交易 2-3 天，等市場重新出現方向性。記住：不交易也是一種交易決策。
+<strong>個人經驗法則（未回測，僅供紀律參考）：</strong>如果你發現自己短期內連續被 ST 翻轉打臉，與其檢討自己，不如先假設是市場環境不適合 ST（盤整）。一個合理的自我規則是暫停交易幾天、等市場重新出現方向性。記住：不交易也是一種交易決策。這是個人紀律建議，不是驗證過的最佳門檻。
 </div>
 </div><!-- tab3 -->
 
@@ -549,23 +564,23 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
   <tr><th>交易類型</th><th>依據時框</th><th>倉位大小</th><th>持倉時間</th><th>出場依據</th></tr>
   <tr><td>大盤 ETF（SPY / QQQ）波段</td><td>日線 ST（週線確認）</td><td>核心部位，分批建</td><td>數週至數月</td><td>日線 ST 翻空</td></tr>
   <tr><td>黃金白銀 ETF（GLD / SLV）</td><td>日線 ST（週線確認）</td><td>分散配置的一部分</td><td>數週至數月</td><td>日線 ST 翻空</td></tr>
-  <tr><td>個股（如 NVDA）小倉試單</td><td>日線 ST 方向</td><td>固定小股數（如 5 股）</td><td>數週至數月</td><td>日線 ST 翻空</td></tr>
-  <tr><td>「磨手感」小單</td><td>日線 ST 方向</td><td>極小倉位（帳戶 5-10%）</td><td>數週</td><td>日線 ST 翻空 / 固定止損</td></tr>
+  <tr><td>個股（如 NVDA）小倉試單</td><td>日線 ST 方向</td><td>依每筆風險上限＋止損距離計算股數（非固定股數）</td><td>數週至數月</td><td>日線 ST 翻空＋止損</td></tr>
+  <tr><td>「磨手感」小單</td><td>日線 ST 方向</td><td>把每筆風險上限壓到更低（例如帳戶 ≤0.5%），再按止損距離算量</td><td>數週</td><td>日線 ST 翻空 / 止損</td></tr>
 </table>
 <div class="insight-box">
-<strong>「磨手感」模式：</strong>當你已經靠一波趨勢賺到不錯的利潤，接下來若手癢想交易，就用<strong>極小倉位（帳戶 5-10%）</strong>、嚴格跟日線 ST 方向，目的是保持紀律與手感而非追求高報酬。虧了不心疼，賺了是紅利。<strong>資本保全永遠優先於多做幾筆。</strong>
+<strong>「磨手感」模式：</strong>當你已經靠一波趨勢賺到不錯的利潤，接下來若手癢想交易，就把<strong>每筆最大可虧金額壓到更低</strong>（例如帳戶的 ≤0.5%，再按止損距離換算股數）、嚴格跟日線 ST 方向，目的是保持紀律與手感而非追求高報酬。虧了不心疼，賺了是紅利，而且每筆一樣要設止損。<strong>資本保全永遠優先於多做幾筆。</strong>
 </div>
 </div>
 
 <div class="card">
-<h3>個股小倉策略（如 NVDA 5 股）+ 日線 ST 方向</h3>
+<h3>個股小倉策略（如 NVDA）+ 日線 ST 方向</h3>
 <p>對於個股波段（如 NVDA），使用日線 ST(300,3) 作為方向判斷：</p>
 <ul style="line-height:2.2;">
   <li><strong>日線 ST 多</strong> → 持有。回踩到日線 ST 附近可加碼（但維持小倉位紀律）</li>
   <li><strong>日線 ST 翻空</strong> → 賣出全部。不留倉位「等反彈」</li>
-  <li><strong>為什麼用固定小股數（如 5 股）？</strong>小倉位讓你能承受波動而不焦慮。5 股 NVDA 的帳面波動，是你睡得著覺的金額</li>
-  <li><strong>不設止損單？</strong>因為小倉位虧損有限，可用日線 ST 翻空作為出場，每日收盤後檢查一次即可。若倉位放大或遇財報，仍建議設止損</li>
-  <li><strong>目標：</strong>跟隨趨勢吃大波段。一年可能只做 2-3 次交易，每次跟著日線 ST 方向持有數月</li>
+  <li><strong>倉位怎麼算？（不要用固定股數）</strong>正確做法是<strong>先定每筆最大可虧金額</strong>（例如帳戶的 0.5%～1%），再用<strong>進場價與止損價的距離</strong>回推股數：<code>股數 = 可虧金額 ÷ （進場價 − 止損價）</code>。止損離得遠就買少一點、離得近才買多一點。寫死「5 股」會讓不同價格、不同止損距離的風險完全不一致，是錯誤做法。</li>
+  <li><strong>一定要設止損。</strong>「倉位小就不設止損」與本站風控鐵律相牴觸：個股有跳空、財報、單一公司風險，缺口可能遠超你預期的「小虧」。每一筆都要有止損（掛單或機械式的日線 ST 翻空出場二擇一，並對跳空保留心理預期），不因倉位小而省略。</li>
+  <li><strong>目標：</strong>跟隨趨勢吃大波段。交易次數可能不多，每次跟著日線 ST 方向持有數週到數月。</li>
 </ul>
 </div>
 
@@ -604,9 +619,9 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
   <div class="sop-body">
     <strong>重大事件隔夜風險</strong><br>
     - 若睡眠時段有重大數據公布（如美國 CPI 在台灣時間 20:30）<br>
-    - 選項 A：事件前平倉，醒來再重新評估<br>
-    - 選項 B：將止損收窄到 ST 線 + 極小 buffer，接受可能被掃<br>
-    - <strong>絕對禁止：</strong>不設止損就睡覺
+    - 選項 A（較穩）：事件前<strong>平倉或大幅減碼</strong>，醒來再重新評估<br>
+    - 不建議的做法：把止損「收窄」想撐過事件 —— 這只會讓你更容易被事件前的<strong>正常波動</strong>掃出場，而且一旦真的跳空（gap），價格會直接跳過止損價以更差的價位成交，<strong>收窄的止損並不能保護跳空</strong>。要降低事件風險請用減碼／平倉，而不是把止損拉近。<br>
+    - <strong>絕對禁止：</strong>帶著未設止損的槓桿倉位就睡覺
   </div>
 </div>
 <div class="warning-box">
@@ -627,33 +642,35 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <div class="card">
 <h3>核心原則：時框優先級</h3>
 <div class="highlight-box">
-<strong>金字塔法則：</strong>高時框 > 低時框。當衝突發生時，永遠以最高時框的方向為「大方向」，低時框提供進場時機。<br><br>
-<strong>唯一例外：</strong>當所有低時框都已翻轉且持續超過一週，高時框可能即將翻轉。此時應減倉而非加倉。
+<strong>金字塔法則（常青原則）：</strong>把高時框當「大方向」、低時框當「進場時機」。這是一種<strong>風險排序慣例</strong>（高時框趨勢通常影響較大、較持久），而非「高時框一定對、低時框一定錯」的定律；高時框同樣會出錯，只是改變時影響更大，所以逆它的代價較高。<br><br>
+<strong>常見的轉折提醒：</strong>當低時框全部翻向同一邊並持續一段時間，有時是高時框即將翻轉的前兆，此時傾向減倉而非加倉。這是<strong>經驗提醒、非必然</strong>（低時框翻完又翻回、高時框不動的情況也很常見），「持續多久才算數」須自行回測，不要套固定天數。
 </div>
 </div>
 
 <div class="card">
 <h3>衝突情境 1：日多 + 4H空</h3>
 <p><strong>情境：</strong>日線 ST 看多，但 4H ST 剛翻空。</p>
+<p style="font-size:13px; color:var(--text3); margin-bottom:8px;">下表為<strong>定性線索</strong>，幫你分辨「回調」還是「反轉預兆」；其中的百分比與天數僅為<strong>示意</strong>，實際界線因標的／時框而異，須自行回測，勿照抄。</p>
 <table>
-  <tr><th>判斷因素</th><th>4H 翻空是「回調」</th><th>4H 翻空是「反轉預兆」</th></tr>
+  <tr><th>判斷因素</th><th>較像「回調」</th><th>較像「反轉預兆」</th></tr>
   <tr><td>4H 翻空後走勢</td><td>小幅下跌後止穩，不破前低</td><td>快速大幅下跌，破前低</td></tr>
   <tr><td>成交量</td><td>翻空後量能萎縮（賣壓不大）</td><td>翻空時量能放大（恐慌賣壓）</td></tr>
-  <tr><td>距離日線 ST</td><td>價格仍遠高於日線 ST（> 3%）</td><td>價格已接近日線 ST（< 1.5%）</td></tr>
-  <tr><td>翻空持續時間</td><td>< 3 天</td><td>> 5 天且未翻回</td></tr>
-  <tr><td>對應操作</td><td>等 4H 翻回多 → 加碼做多</td><td>減碼 50%，設緊止損</td></tr>
+  <tr><td>距離日線 ST</td><td>價格仍明顯高於日線 ST</td><td>價格已貼近日線 ST</td></tr>
+  <tr><td>翻空持續時間</td><td>很快止穩或翻回</td><td>持續偏空、遲遲不翻回</td></tr>
+  <tr><td>對應操作</td><td>等 4H 翻回多 → 順勢加碼（倉位依風控計算）</td><td>減碼，收緊風險</td></tr>
 </table>
 </div>
 
 <div class="card">
 <h3>衝突情境 2：日空 + 4H多</h3>
 <p><strong>情境：</strong>日線 ST 看空，但 4H ST 翻多（熊市反彈）。</p>
+<p style="font-size:13px; color:var(--text3); margin-bottom:8px;">下表為<strong>定性線索</strong>；回撤比例、百分比與天數僅為<strong>示意</strong>，不是驗證過的門檻，須自行回測。</p>
 <table>
-  <tr><th>判斷因素</th><th>4H 翻多是「反彈」（短命）</th><th>4H 翻多是「觸底」（持久）</th></tr>
-  <tr><td>反彈幅度</td><td>未突破前一波下跌的 38.2% 回撤</td><td>突破 50% 回撤甚至 61.8%</td></tr>
+  <tr><th>判斷因素</th><th>較像「反彈」（短命）</th><th>較像「觸底」（持久）</th></tr>
+  <tr><td>反彈幅度</td><td>只收復前一波跌幅的一小部分</td><td>收復前一波跌幅的相當比例（接近或過半）</td></tr>
   <tr><td>反彈結構</td><td>V 型快速拉升，沒有回測</td><td>有回測 4H ST 並守住</td></tr>
-  <tr><td>日線 ST 距離</td><td>價格離日線 ST 仍很遠（> 5%）</td><td>價格已接近日線 ST（< 2%）</td></tr>
-  <tr><td>持續天數</td><td>< 5 天</td><td>> 7 天且 ST 未翻回空</td></tr>
+  <tr><td>日線 ST 距離</td><td>價格離日線 ST 仍很遠</td><td>價格已貼近日線 ST</td></tr>
+  <tr><td>持續時間</td><td>很快熄火</td><td>持續偏多、ST 遲遲未翻回空</td></tr>
   <tr><td>對應操作</td><td>不追多，等翻回空再做空</td><td>輕倉試多，止損在 4H ST 下</td></tr>
 </table>
 <div class="warning-box">
@@ -666,25 +683,26 @@ RMA(n) = (prev_RMA * (n-1) + current_TR) / n<br>
 <p>當 1H ST 翻轉但 4H/日線未動：</p>
 <div class="tf-grid">
 <div class="tf-card" style="border-left:4px solid var(--green);">
-  <h4>是早期預警的條件</h4>
+  <h4>較像早期預警</h4>
   <ul style="font-size:13px; line-height:2;">
-    <li>1H 翻轉後持續 > 24 小時未翻回</li>
+    <li>1H 翻轉後維持一段時間、遲遲不翻回</li>
     <li>翻轉方向與某個重大技術位突破一致</li>
     <li>伴隨成交量明顯變化</li>
-    <li>之前 1H 已經嘗試翻轉 2-3 次（蓄力突破）</li>
+    <li>之前 1H 已多次嘗試同向翻轉（像在蓄力突破）</li>
     <li>4H ST 線也正在接近價格（即將翻轉）</li>
   </ul>
 </div>
 <div class="tf-card" style="border-left:4px solid var(--red);">
-  <h4>只是噪音的條件</h4>
+  <h4>較像噪音</h4>
   <ul style="font-size:13px; line-height:2;">
-    <li>1H 翻轉 < 4 小時就翻回</li>
+    <li>1H 翻轉後很快又翻回</li>
     <li>翻轉發生在低流動性時段（亞洲清晨）</li>
     <li>無量配合，只是長針觸發</li>
-    <li>最近一週 1H 已翻轉 > 3 次（盤整期）</li>
-    <li>4H ST 線離價格仍很遠（> 2%）</li>
+    <li>近期 1H 已來回翻轉多次（盤整期）</li>
+    <li>4H ST 線離價格仍很遠</li>
   </ul>
 </div>
+<p style="font-size:12px; color:var(--text3); grid-column:1/-1; margin-top:4px;">上列為定性傾向；「幾小時／幾次／百分之幾」皆為示意，非驗證門檻，須自行回測。</p>
 </div>
 </div>
 
@@ -789,10 +807,10 @@ const quizData = [
     explain: "週線與日線共振看多是最強的做多環境。價格回踩到日線 ST 附近正是理想進場點：順勢做多、止損放在 ST 線下方即可，不需要等更深的回調。"
   },
   {
-    q: "ST 剛翻多，但 2 小時後有 CPI 數據公布 — 你跟單嗎？",
-    opts: ["立即跟單，ST 翻了就是信號", "不跟單，等 CPI 公布後 4-6 小時觀察", "反向做空，因為事件前通常會翻回", "跟單但減半倉位"],
+    q: "ST 剛翻多，但很快有 CPI 數據公布 — 你跟單嗎？",
+    opts: ["立即跟單，ST 翻了就是信號", "不跟單，等事件過後、以收盤方向為準再評估", "反向做空，因為事件前通常會翻回", "跟單但減半倉位"],
     ans: 1,
-    explain: "重大事件前 2 小時內的翻轉不可信。CPI 等數據可能造成瞬間巨幅波動觸發假翻轉。正確做法是等事件後 4-6 小時，看市場消化完數據後 ST 的真實方向。"
+    explain: "重大事件前後的翻轉可信度較低：CPI 等數據可能造成瞬間巨幅波動觸發假翻轉。合理做法是先不跟，等事件過後、市場消化完，以收盤確認的 ST 方向再評估。（「要等幾小時」沒有固定數字，別套特定時數。）"
   },
   {
     q: "價格在日線 ST 線上方 0.5% — 這是好的做多進場點嗎？",
@@ -804,7 +822,7 @@ const quizData = [
     q: "ST 在一週內翻多了 3 次又翻回空 — 這代表什麼？",
     opts: ["多頭力量很強，快突破了", "市場在盤整，ST 失靈中", "空頭陷阱，下次翻多會是真的", "需要換更大的時框看"],
     ans: 1,
-    explain: "一週翻轉 3 次以上 = 經典的盤整期特徵。此時 ST 會頻繁產生假信號。正確做法是暫停使用 ST 做交易決策，等市場重新出現方向性（翻轉後能持續 > 1 週）。"
+    explain: "短時間內來回翻轉又翻回，是盤整期的典型特徵，此時 ST 容易頻繁產生假信號。合理做法是暫停使用 ST 做交易決策，等市場重新出現方向性（翻轉後能維持一段時間）。具體幾次／維持多久算數沒有固定門檻，須觀察該標的常態。"
   },
   {
     q: "你持有 SPY 多單，日線 ST 快要翻空但週線仍然多。你該怎麼辦？",
@@ -897,10 +915,10 @@ const quizData = [
     explain: "低 ATR 壓縮期 ST 線非常靠近價格，微小波動就可能觸發翻轉。此時翻轉信號的可信度降低。應等 ATR 恢復正常水準後的翻轉才更有意義。或暫時切換到更高時框避免噪音。"
   },
   {
-    q: "一個月內日線 ST 只翻轉了 1 次（從空翻多）。這次翻轉的可信度？",
-    opts: ["低，可能是假信號", "高，低頻翻轉通常是真實的趨勢改變", "需要等月線確認", "跟頻率無關"],
+    q: "一個月內日線 ST 只翻轉了 1 次（從空翻多）。相較於頻繁翻轉，這次翻轉的可信度傾向？",
+    opts: ["低，可能是假信號", "相對較高，低頻翻轉較不像盤整噪音", "需要等月線確認", "跟頻率無關"],
     ans: 1,
-    explain: "日線 ST(300,3) 翻轉是低頻事件（一年可能只 2-4 次）。低頻 = 門檻高 = 真正結構性改變才會觸發。一個月只翻 1 次代表這次翻轉是經過長期蓄力的，可信度高。"
+    explain: "長期間、大乘數的設計意圖就是讓翻轉成為低頻事件；低頻翻轉相較於一週翻好幾次，較不像盤整噪音、較可能對應較大的方向變化。這是傾向性判讀，不是保證（仍可能是回調），且翻轉頻率因標的／期間而異，沒有固定「一年幾次」的數字。"
   },
   {
     q: "NVDA 日線 ST 翻多已經 3 個月了。你一直持有 5 股。最近獲利 25%。你該？",
@@ -963,10 +981,10 @@ const quizData = [
     explain: "重大事件前應降低曝險。FOMC 結果可能讓市場劇烈跳動、方向不可預測。正確做法是先減碼或落袋部分利潤、保留核心部位。事件後看市場反應與 ST 收盤方向再決定是否加回。"
   },
   {
-    q: "你的策略本月勝率是 40%（10 筆中 4 筆盈利）。但本月整體盈利。為什麼？",
-    opts: ["運氣好", "因為風報比 > 2:1，贏的時候賺得比虧的多", "計算錯誤", "因為倉位管理好"],
+    q: "你的策略本月勝率是 40%（10 筆中 4 筆盈利）。但本月整體盈利。最可能的原因？",
+    opts: ["運氣好", "因為每筆的盈虧比夠高：贏的時候賺得比輸的時候虧得多", "計算錯誤", "因為倉位管理好"],
     ans: 1,
-    explain: "ST 趨勢策略的特性就是勝率不高（40-50%）但盈虧比高（2:1 甚至更高）。虧的時候嚴格止損（虧小），贏的時候跟著趨勢走（賺大）。4 筆盈利 * 風報比 2 > 6 筆虧損 * 1 = 整體盈利。"
+    explain: "趨勢跟隨策略常見的設計邏輯是：勝率不一定高，但靠「虧的時候嚴格止損（虧小）、贏的時候讓利潤奔跑（賺大）」維持正期望值。本例若每筆贏的平均獲利 > 輸的平均虧損的 1.5 倍，4 勝也能蓋過 6 敗。注意：單月 10 筆樣本很小，實際勝率與盈虧比須長期回測，別把特定數字當成固定特性。"
   },
   {
     q: "SPY 在 $500 整數大關附近。日線 ST 多，但價格一直在 $497-$503 之間來回、站不上去。你怎麼看？",
@@ -978,7 +996,7 @@ const quizData = [
     q: "你用 5 股策略買了 NVDA。買入後第二天就跌了 5%。日線 ST 仍然多。你該？",
     opts: ["止損出場，明天再看", "持有不動，日線 ST 多就不賣", "加碼到 10 股攤平", "看 4H ST 是否翻空決定"],
     ans: 1,
-    explain: "5 股策略的規則：日線 ST 多就持有，日線 ST 翻空就賣。一天跌 5% 很正常（特別是 NVDA 這種高波動股）。只要日線 ST 未翻空就繼續持有。不加碼、不減碼，機械執行。這就是小倉位的好處 — 5 股虧 5% = 幾十美金，你不會焦慮。"
+    explain: "此處「5 股」只是極小倉的示意（倉位仍應以「可虧金額 ÷ 進場價與止損價的距離」回推，而非固定股數）。紀律是：日線 ST 多就持有、翻空就賣。一天跌 5% 很正常（特別是 NVDA 這種高波動股）。只要日線 ST 未翻空就繼續持有，不加碼、不減碼，機械執行。極小倉的好處是單筆金額小、情緒壓力低，但仍須設止損。"
   },
   {
     q: "日線 ST 翻多已經 2 個月了。你一直觀望沒進場。現在還能進嗎？",
@@ -1005,10 +1023,10 @@ const quizData = [
     explain: "ATR 增加 = ST 線的帶寬增加 = ST 線離中軸更遠 = 需要更大的價格移動才會觸發翻轉。在高 ATR 環境下 ST 更不容易翻轉，但一旦翻轉就代表真正的大趨勢改變。這是 ST 在趨勢市場中更可靠的原因。"
   },
   {
-    q: "你的交易日誌顯示：最近 20 筆 ST 交易中，跟日線方向同向的 12 筆盈利 9 筆，逆日線方向的 8 筆盈利 2 筆。結論？",
-    opts: ["需要更多樣本才能判斷", "證實「永遠跟日線方向」的重要性", "逆日線方向也有 25% 勝率，可以嘗試", "ST 整體表現不好"],
-    ans: 1,
-    explain: "數據清楚說明：順日線方向勝率 75%，逆日線方向勝率 25%。這強烈支持「日線不翻，大方向不變」的核心原則。逆日線操作的 25% 勝率扣掉手續費後可能趨近零或負。結論：嚴格遵守高時框方向。"
+    q: "你的交易日誌顯示：最近 20 筆 ST 交易中，跟日線方向同向的 12 筆盈利 9 筆，逆日線方向的 8 筆盈利 2 筆。較妥當的結論？",
+    opts: ["順日線的結果明顯較好，與「跟高時框方向」原則一致，但 20 筆樣本偏小、仍須累積更多紀錄驗證", "已證實順日線穩賺不賠", "逆日線方向也有 25% 勝率，可以放心嘗試", "ST 整體表現不好"],
+    ans: 0,
+    explain: "日誌呈現的傾向（順日線較好）與「跟高時框方向」的原則一致，可當作支持該紀律的線索。但 20 筆（尤其逆向只有 8 筆）樣本太小，不足以當成「勝率 75% vs 25%」這種統計定論，別據此對勝率下精確結論。正確態度：維持順勢紀律，同時持續累積紀錄、定期回測檢驗。"
   },
   {
     q: "SPY 日線 ST 翻多已一週，期間一路上漲、都沒回踩過日線 ST 線。你想進場卻找不到回踩機會，怎麼辦？",
@@ -1065,10 +1083,10 @@ const quizData = [
     explain: "ST(10,1) 回顧只有 10 根 K 線，乘數只有 1 倍 ATR = 極度靈敏 = 頻繁翻轉。在盤整中會被反覆打臉。300/3 犧牲靈敏度換可靠度：翻轉少但每次翻轉都代表真正的趨勢改變。對於方向判斷和中長期持有，300/3 遠優於 10/1。"
   },
   {
-    q: "週五下午 4:00 PM，美股收盤。你持有 NVDA 5 股（日線多）。需要做任何特別的事嗎？",
-    opts: ["需要，設止損因為週末有風險", "不需要，5 股美股沒有週末風險需要擔心", "賣掉，週一再買回", "需要看下週有無重大事件"],
+    q: "週五下午 4:00 PM，美股收盤。你持有一筆極小的 NVDA 現貨部位（日線多）。需要做任何特別的事嗎？",
+    opts: ["每週五都必須額外掛緊止損", "部位極小時，週末跳空的絕對虧損有限，用日線 ST 翻空當機械式出場即可；但若下週有財報／重大事件仍應減碼", "賣掉，週一再買回", "完全不用管，週末風險不存在"],
     ans: 1,
-    explain: "5 股策略的小倉位設計就是為了不用擔心週末 gap risk。5 股 NVDA 即使週一 gap down 10% 也只虧 $60-70。日線 ST 週一開盤後檢查即可。不需要每週五特別處理。這就是小倉位帶來的心理自由。"
+    explain: "週末跳空風險永遠存在，但在非槓桿、極小的現貨部位上，絕對虧損金額有限（例如跳空 10% 只虧數十美元），用「日線 ST 翻空出場」當作機械式出場機制即可，不必每週五另外操作。唯一例外：下週有財報 / FOMC / CPI 等重大事件時，仍應事前減碼。重點是仍有明確出場機制，且別宣稱「沒有週末風險」。"
   },
   {
     q: "SPY 從一波低點一路漲了 20%+，日線 ST 一直是多。你從相對低檔就開始持有，帳面獲利讓你很興奮。你該？",
@@ -1098,7 +1116,7 @@ const quizData = [
     q: "你在看 NVDA。日線 ST 三天前翻多。但同期 SPY 日線 ST 仍空。NVDA 的做多信號可信嗎？",
     opts: ["不可信，大盤空不宜做多個股", "可信，個股有自己的趨勢", "半信半疑，減半倉位", "等 SPY 也翻多再做"],
     ans: 1,
-    explain: "NVDA 這種龍頭股經常領先大盤。如果 NVDA 日線 ST 翻多而 SPY 仍空，可能是 NVDA 在引領市場。用 5 股策略操作 NVDA 本身就是小倉位，風險可控。每個資產獨立判斷 ST。但如果你擔心，降到 3 股也是合理的保守做法。"
+    explain: "NVDA 這種龍頭股經常領先大盤。如果 NVDA 日線 ST 翻多而 SPY 仍空，可能是 NVDA 在引領市場。以極小倉（本例示意 5 股，實際股數仍依風控回推）操作 NVDA，單筆風險可控。每個資產獨立判斷 ST。但如果你擔心，降到 3 股也是合理的保守做法。"
   }
 ];
 

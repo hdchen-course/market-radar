@@ -159,7 +159,7 @@
 
 <div class="card" style="border-left:4px solid #ea580c;margin-bottom:20px;">
 <h3 style="color:#ea580c;">⚠️ Correlation ≠ Causation</h3>
-<p>淨流動性與資產價格的相關性在 2020-2024 約為 0.7-0.85，但<strong>相關不等於因果</strong>。流動性是重要的狀態變數(State Variable)，但資產定價同時受 Earnings、估值、利率、市場定位等多因素影響。<br><br><strong>失效案例：</strong>2022 年 Q3 淨流動性微升但 BTC 續跌 — 因為利率衝擊主導了那個 regime。流動性框架在利率急速變化期間預測力下降。</p>
+<p>坊間常說淨流動性與資產價格「高度相關」，並引用 0.7–0.85 這類係數；但這些數字多半是把兩條長期走高的<strong>非平穩序列（level series）</strong>直接相關算出來的，容易產生<strong>假相關(spurious correlation)</strong>。要有意義，必須先取變化量/差分、對齊落後期(lag)，並公開資料與程式；本頁不提供可驗證的計算，故不列具體係數。無論係數高低，<strong>相關不等於因果</strong>。流動性是重要的狀態變數(State Variable)，但資產定價同時受 Earnings、估值、利率、市場定位等多因素影響。<br><br><strong>失效案例：</strong>2022 年淨流動性一度回升但 BTC 續跌 — 因為利率衝擊主導了那個 regime。流動性框架在利率急速變化期間預測力下降。</p>
 </div>
 
 <!-- ==================== TAB 1: 全球淨流動性 ==================== -->
@@ -168,8 +168,8 @@
 
 <div class="card">
 <h3>核心公式</h3>
-<div class="formula-box">Net Liquidity = Fed Balance Sheet - TGA - RRP</div>
-<p>這是衡量金融體系中「可用流動性」的最重要公式。三個組件代表了資金的來源與去處。</p>
+<div class="formula-box">Net Liquidity ≈ Fed Balance Sheet - TGA - ON RRP</div>
+<p>這是<strong>市場常用來估算</strong>金融體系「可用流動性」的 proxy（代理指標），<strong>不是官方對「全球淨流動性」的正式定義</strong>。三個組件代表了資金的來源與去處，用來觀察趨勢方向很有用，但數值本身是近似。</p>
 
 <h4>Fed Balance Sheet（聯準會資產負債表）</h4>
 <ul>
@@ -244,22 +244,23 @@
 </div>
 
 <div class="card">
-<h3>為什麼這個公式有效 — 相關性數據</h3>
-<p>淨流動性與風險資產的相關性在 2020-2024 年間極為顯著（以美股為主要觀察對象）：</p>
+<h3>為什麼很多人用這個框架 — 以及如何正確驗證相關性</h3>
+<p>淨流動性框架之所以流行，是因為它把 Fed、財政部與貨幣市場的動作整合成一個可追蹤的狀態變數。但要「證明」它與風險資產相關，不能直接把兩條長期走高的 level 序列相關（會得到虛高的假相關）。正確做法是：</p>
 <ul>
-<li><strong>Net Liquidity vs S&P 500 (SPX)：</strong>相關性 ~0.70（上班族做波段的主戰場）</li>
-<li><strong>Net Liquidity vs NASDAQ 100 (NDX)：</strong>相關性 ~0.75（成長股對流動性更敏感）</li>
-<li><strong>Net Liquidity vs 黃金：</strong>中長期同向，但黃金另有「實質利率」這條更關鍵的主線（見 DXY 分頁）</li>
-<li><strong>Net Liquidity vs BTC（僅供對照）：</strong>相關性 ~0.85，波動最大、最不適合資本保全優先的散戶重壓</li>
+<li><strong>先轉換為變化量：</strong>用週變化/月變化（差分）而非水位，避免共同趨勢造成的 spurious correlation。</li>
+<li><strong>對齊落後期(lag)：</strong>流動性對資產的影響可能有數日到數週落後，需逐一檢定。</li>
+<li><strong>分 regime 檢視：</strong>利率急變、信用事件期間關係會明顯改變，全樣本單一係數會誤導。</li>
+<li><strong>公開資料與程式：</strong>任何「相關 0.X」的宣稱，都應附上資料區間、轉換方式與可重現程式；否則只能當作定性觀察。</li>
 </ul>
+<p>定性上，成長股/加密對流動性變化通常比大型價值股更敏感；黃金中長期雖常同向，但其第一驅動是「實質利率」（見 DXY 分頁），不宜只用流動性解釋。</p>
 
 <div class="highlight-box">
-<strong>核心邏輯：</strong>當淨流動性增加，多餘的資金無處可去，被迫追逐風險資產（portfolio balance effect）。這不是因果關係（Fed 不是故意推高股市），而是機制性結果。
+<strong>核心邏輯（可能的傳導管道，非因果保證）：</strong>當淨流動性增加，部分資金可能透過投組再平衡效應（portfolio balance effect）流向風險資產，對估值形成支撐。這是一條<strong>可能</strong>的管道，不是每一美元都被迫追股，也不代表 Fed 刻意推高股市。
 </div>
 
 <div class="svg-container">
 <svg width="100%" style="max-width:600px" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svgTitleNetLiqBtc">
-  <title id="svgTitleNetLiqBtc">淨流動性與 BTC 走勢對照示意（相關性約 0.85）</title>
+  <title id="svgTitleNetLiqBtc">淨流動性與風險資產走勢對照示意（概念示意，非實測數據）</title>
   <!-- Axis -->
   <line x1="60" y1="200" x2="560" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
   <line x1="60" y1="30" x2="60" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
@@ -278,7 +279,7 @@
   <line x1="455" y1="22" x2="485" y2="22" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,3"/>
   <text x="490" y="26" font-size="11" fill="#ea580c">S&P 500</text>
   <!-- Correlation label -->
-  <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">相關性 r ≈ 0.70（S&P 500, 2020-2024；BTC 同期 ~0.85 但波動更大）</text>
+  <text x="300" y="240" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">概念示意：中長期常同向，但相關強度隨 regime 變動（非實測係數）</text>
 </svg>
 </div>
 </div>
@@ -289,8 +290,8 @@
 <h4>Fed Balance Sheet 增加的觸發</h4>
 <ul>
 <li><strong>QE 啟動：</strong>經濟衰退/金融危機時大規模購債</li>
-<li><strong>緊急放貸：</strong>SVB 事件(2023/3) → BTFP 放貸 $300B+</li>
-<li><strong>購買國債：</strong>配合財政部融資需求</li>
+<li><strong>緊急放貸：</strong>SVB 事件(2023/3) → Fed 透過 BTFP、貼現窗口(discount window)與過橋貸款，單週合計擴表約 $300B+；其中 <strong>BTFP 本身的使用峰值約 $165B</strong>（2024 年初）。不要把更廣義的貼現窗口放貸混記成 BTFP。</li>
+<li><strong>公開市場操作：</strong>Fed 依貨幣政策授權在二級市場買賣公債以調節準備金/利率，<strong>並非為配合財政部的融資需求</strong>而購債。</li>
 </ul>
 
 <h4>Fed Balance Sheet 減少的觸發</h4>
@@ -302,7 +303,7 @@
 <h4>TGA 增加的觸發（抽走流動性）</h4>
 <ul>
 <li><strong>國庫券/長債拍賣：</strong>財政部大量發債籌錢</li>
-<li><strong>稅收季：</strong>4月(報稅)、6月(企業)、9月(企業) → TGA 急升</li>
+<li><strong>稅收季：</strong>4月（報稅）、6月（企業）、9月（企業） → TGA 急升</li>
 <li><strong>債務上限解決後：</strong>財政部需重建 TGA 餘額</li>
 </ul>
 
@@ -315,7 +316,7 @@
 
 <h4>RRP 增加的觸發（吸走流動性）</h4>
 <ul>
-<li><strong>短期利率低於 IORB：</strong>貨幣市場基金沒有更好的投資標的</li>
+<li><strong>其他短期工具報酬低於 ON RRP offering rate：</strong>貨幣市場基金(MMF)<strong>不能領取 IORB</strong>（IORB 是銀行準備金的利率），MMF 會在 ON RRP、T-bill、repo 等可投資工具間比較報酬；當這些工具報酬都低於 ON RRP 利率時，閒錢傾向停泊於 RRP</li>
 <li><strong>短債供給不足：</strong>T-bill 發行量低，資金只能停泊 RRP</li>
 </ul>
 
@@ -326,7 +327,7 @@
 </ul>
 
 <div class="green-box">
-<strong>2023 關鍵案例：</strong>債務上限解決後，財政部大量發行 T-bill → 吸引 RRP 資金流出購買 T-bill → RRP 從 $2.5T 降至接近 $0 → 相當於釋放 $2.5T 流動性到市場 → 風險資產暴漲。
+<strong>2023 關鍵案例：</strong>債務上限解決後，財政部大量發行 T-bill → 吸引貨幣市場基金把資金從 ON RRP 轉去買 T-bill → RRP 自 2023 年起從約 $2.4T 的高位持續下滑（至 2024 年才接近耗盡）。<strong>要注意：RRP 下降不等於等額資金直接流入風險資產。</strong>它主要是 Fed 負債組成由「RRP」轉為「銀行準備金」的變化，實際對市場的效果還取決於 T-bill 的買方是誰、以及結算路徑；因此這是支持 risk-on 的「背景條件」，不是 1:1 的資金注入。
 </div>
 </div>
 
@@ -348,7 +349,7 @@
 <div class="formula-box">
 Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
-<p>與上週比較：如果 Fed BS 不變，TGA -$100B，RRP 不變 → Net Liq +$100B → 利多風險資產</p>
+<p>與上週比較：如果 Fed BS 不變，TGA -$100B，RRP 不變 → Net Liq proxy +$100B → 屬偏多的背景環境（非保證上漲；仍需搭配基本面與倉位管理）</p>
 
 <h4>每週追蹤模板</h4>
 <table class="data-table">
@@ -408,7 +409,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
   <!-- Step boxes -->
   <rect x="20" y="70" width="100" height="60" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" rx="8"/>
   <text x="70" y="95" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Fed 買國債</text>
-  <text x="70" y="112" text-anchor="middle" font-size="9" fill="#334155">印錢購買</text>
+  <text x="70" y="112" text-anchor="middle" font-size="9" fill="#334155">創造準備金</text>
 
   <line x1="120" y1="100" x2="148" y2="100" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
 
@@ -430,16 +431,16 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
   <!-- Sub explanation -->
   <text x="300" y="165" text-anchor="middle" font-size="11" fill="#334155">投組再平衡效應（Portfolio Balance Effect）：</text>
-  <text x="300" y="183" text-anchor="middle" font-size="11" fill="#334155">國債被買走 → 持有者被迫買入風險更高的資產 → 推升價格</text>
+  <text x="300" y="183" text-anchor="middle" font-size="11" fill="#334155">國債被買走 → 部分賣方可能轉配其他資產 → 對價格形成支撐（非每一美元都追股）</text>
 </svg>
 </div>
 
 <h4>為什麼 QE 推高資產價格</h4>
 <ul>
-<li><strong>直接效果：</strong>Fed 買入國債 → 國債價格上升 → 殖利率下降 → 折現率降低 → 所有資產估值上升</li>
-<li><strong>投組再平衡：</strong>賣國債給 Fed 的機構拿到現金 → 需重新配置 → 買入公司債/股票</li>
+<li><strong>直接效果：</strong>Fed 買入國債 → 國債價格上升 → 殖利率下降 → 折現率降低 → 資產估值傾向上升</li>
+<li><strong>投組再平衡（可能的管道）：</strong>賣國債給 Fed 的機構拿到準備金/現金 → 部分可能重新配置到公司債/股票。這是一條可能的傳導管道，<strong>並非每一美元都被迫流入股市</strong>；實證上效果大小隨環境而異。</li>
 <li><strong>信心效果：</strong>市場知道 Fed 在背後支撐（"Don't fight the Fed"）</li>
-<li><strong>財富效果：</strong>資產價格上升 → 消費者更富有 → 消費增加 → 經濟改善</li>
+<li><strong>財富效果：</strong>資產價格上升 → 部分持有者感覺更富有 → 可能增加消費</li>
 </ul>
 </div>
 
@@ -462,7 +463,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </ul>
 
 <div class="warning-box">
-<strong>QT 的非線性危險：</strong>2019/9 Repo 市場危機就是 QT 進行太久、準備金跌破臨界點的結果。隔夜 Repo 利率一度飆到 10%。Fed 被迫緊急注入流動性。這就是為什麼 Fed 要密切監控準備金水位。
+<strong>QT 的非線性危險：</strong>2019/9 的 Repo 利率飆升是<strong>多重因素疊加</strong>：9/16 適逢企業季繳稅、大額公債交割同步抽走現金，加上 QT 已使準備金降到偏低水位、交易商資產負債表(dealer balance sheet)承作 repo 的能力與準備金在體系內的分布都受限。隔夜 Repo 利率一度飆到約 10%，Fed 隨後重啟附買回操作並擴表。這說明準備金並非「越低越好」，其<strong>水位、分布與結構性摩擦</strong>同樣關鍵，不能只歸因於「QT 進行太久」單一因素。
 </div>
 </div>
 
@@ -498,10 +499,10 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <h4>Dot Plot（點陣圖）</h4>
 <ul>
-<li>每季（3/6/9/12月）公布</li>
-<li>每位 Fed 委員對未來利率的預期</li>
-<li>中位數 = 市場解讀的「官方指引」</li>
-<li>分散度 = 共識程度（分散大 → 不確定性高）</li>
+<li>每季（3/6/9/12月）隨 SEP 公布</li>
+<li>每個點是一位 FOMC 與會者(participant) <strong>在各自認為適當的政策假設下</strong>對未來利率的個別預測(projection)</li>
+<li>中位數常被市場拿來解讀政策傾向，但<strong>它不是 Committee 的承諾，也不是官方前瞻指引</strong>；點陣圖不代表集體決議</li>
+<li>分散度 = 與會者預測的離散程度（分散大 → 不確定性高）</li>
 </ul>
 
 <h4>為什麼 "Higher for Longer" 比實際利率更重要</h4>
@@ -516,19 +517,13 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h3>矛盾情境：QT 但流動性增加</h3>
 
 <div class="purple-box">
-<strong>2023 案例：</strong>Fed 持續 QT（Fed BS 每月縮 $95B），但同時：TGA 從 $800B drain 到 $100B（債務上限）+ RRP 從 $2.3T 降到 $0.8T（T-bill 大量發行吸走）。結果：Net Liquidity 反而大幅增加！S&P 500 全年漲 24%。
+<strong>2023 案例：</strong>Fed 全年持續 QT（縮表上限約 $95B/月），但同期 RRP 從約 $2.4T 的高位大幅下滑，<strong>抵銷甚至蓋過</strong>了 QT 對準備金的抽取；因此以 proxy 計算的淨流動性不降反升。S&P 500 該年上漲約 24%（<em>這是流動性友善的背景之一，但不應歸因為單一因果</em>）。
 </div>
 
-<p>這個案例完美說明了為什麼只看「QE/QT」不夠：</p>
-<ul>
-<li>QT 每月抽走 $95B → 全年約 -$1.1T</li>
-<li>TGA drain 釋放：+$700B</li>
-<li>RRP drain 釋放：+$1.5T</li>
-<li><strong>淨效果：+$1.1T 流動性增加</strong></li>
-</ul>
+<p>這個案例說明為什麼只看「QE/QT」不夠。<strong>但要特別小心 TGA 的計算陷阱</strong>：2023 年 TGA 並非單純「一路 drain」——它<strong>先在債務上限僵局期間下降</strong>（提供流動性），債限解決後財政部又<strong>大量發債重建 TGA</strong>（回收流動性）。因此不能把期初、期末兩個端點相減（例如寫成「TGA 全年淨 drain $700B」），那會忽略中間的重建，得出誤導的加總。正確做法是逐期追蹤三個組件的實際變化，而不是端點相減後硬湊一個「淨 +$1.1T」的數字。</p>
 
 <div class="warning-box">
-<strong>投資啟示：</strong>不要僅憑「Fed 在 QT」就直接看空。應一併計算 TGA 和 RRP 的變動方向和幅度，Net Liquidity 的淨效果通常才是更關鍵的決定因素（仍需搭配基本面與倉位管理，無保證）。
+<strong>投資啟示：</strong>不要僅憑「Fed 在 QT」就直接看空，也不要用端點相減硬算一個漂亮的淨額。應逐期追蹤 TGA 與 RRP 的方向和幅度，淨流動性 proxy 的變化只是更關鍵的「背景環境」判讀，仍需搭配基本面與倉位管理，無保證。
 </div>
 </div>
 
@@ -545,13 +540,13 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <h4>FOMC 日的典型交易陷阱</h4>
 <ul>
-<li><strong>2:00-2:15PM 假突破：</strong>聲明公布後的第一個方向有 50% 機率在記者會中被反轉</li>
+<li><strong>2:00–2:30PM 初步方向可能反轉：</strong>聲明公布後的第一個反應，常在主席記者會(2:30PM)對前瞻指引的說明後被修正，方向未必延續</li>
 <li><strong>"Sell the news" 效應：</strong>如果市場已充分定價某決定，公布後常見反向波動</li>
 <li><strong>記者會隱藏信號：</strong>主席的用詞微妙變化（如 "data dependent" vs "confident"）可以改變整個利率預期路徑</li>
 </ul>
 
 <div class="highlight-box">
-<strong>最佳策略：</strong>FOMC 日不建新倉（除非有明確系統信號）。等到隔天確認方向後再行動。歷史數據顯示 FOMC 後第 2-5 天的趨勢比 FOMC 日本身更可靠。
+<strong>最佳策略：</strong>FOMC 日的波動與雜訊都大，不建新倉（除非有明確系統信號）通常較穩健，可等隔日方向較明朗後再行動。這是<strong>風險控管原則</strong>，而非基於「第幾天更準」這類未經來源佐證的統計宣稱。
 </div>
 </div>
 </div>
@@ -610,11 +605,11 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <div class="card">
 <h3>倒掛（Inversion）：2Y > 10Y</h3>
 
-<h4>歷史紀錄</h4>
+<h4>歷史紀錄（先講清楚用哪一個利差）</h4>
 <ul>
-<li>過去 8 次殖利率曲線倒掛中，有 7 次 → 隨後出現衰退</li>
-<li>但滯後時間長：12-24 個月（這就是為什麼很多人嘲笑「狼來了」）</li>
-<li>2022/7 開始倒掛 → 2024 年底仍未衰退 → 打破歷史最長紀錄</li>
+<li><strong>2s10s（2Y vs 10Y）與 3m10y（3M vs 10Y）是不同的指標</strong>，倒掛時點、次數與領先時間都不同，不能混為一談。常被引用的「倒掛後多半接著衰退」紀錄，其<strong>倒掛次數與領先時間取決於採用哪一個 spread 定義</strong>（且不同研究的統計區間、衰退認定也不同）。</li>
+<li>領先時間長且變異大：約 12–24 個月，這也是常被戲稱「狼來了」的原因。</li>
+<li>2022 年起 2s10s 與 3m10y 皆曾深度且長期倒掛，但衰退遲未到來，顯示領先時間並不固定。</li>
 </ul>
 
 <h4>為什麼會倒掛</h4>
@@ -637,27 +632,25 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
 
 <div class="card">
-<h3>解除倒掛（Un-inversion）更危險</h3>
+<h3>解除倒掛（Un-inversion）要先分辨成因</h3>
 
-<p>殖利率曲線從倒掛回到正常 = 衰退正在逼近的最強信號。</p>
+<p>曲線從倒掛回正(un-inversion)在歷史上<strong>常出現在衰退前</strong>，但它本身<strong>不是 Fed「判定衰退」，也不是自動做空點</strong>。關鍵是要先分辨「回正」是怎麼來的。</p>
 
-<h4>解除倒掛的機制</h4>
+<h4>回正的兩種路徑，意義完全不同</h4>
 <ul>
-<li>Fed 開始降息 → 2Y 殖利率急速下跌</li>
-<li>10Y 也下跌，但幅度較小（長期展望）</li>
-<li>結果：2Y 跌得比 10Y 快 → 曲線重新變正（un-invert）</li>
+<li><strong>短端下跌（bull steepening）：</strong>Fed 因經濟轉弱而降息 → 2Y 快速下跌 → 曲線回正。這種情形才與「寬鬆/衰退預期」連結，較值得警覺。</li>
+<li><strong>長端上升（bear steepening）：</strong>因 Term Premium、財政供給或通膨擔憂使 10Y 上升 → 曲線也可能回正，但成因與衰退不同，不應一律解讀為衰退訊號。</li>
 </ul>
 
-<h4>為什麼 Un-inversion 才是真正的衰退信號</h4>
+<h4>為什麼由短端急跌帶動的回正值得警惕（但非萬無一失）</h4>
 <ul>
-<li>Un-inversion = Fed 認為經濟已經弱到必須降息</li>
-<li>歷史上衰退通常在 un-inversion 後 0-6 個月開始</li>
-<li>2007: Un-inversion → 2008 衰退</li>
-<li>2019: Un-inversion → 2020 衰退（疫情加速）</li>
+<li>由降息帶動的回正，常意味 Fed 認為經濟已弱到需要行動</li>
+<li>歷史上數次衰退出現在這類回正之後數個月內，但樣本少、時間差不固定</li>
+<li>2007 與 2019 可作為參考案例，惟每次背景不同（2020 另有疫情外生衝擊）</li>
 </ul>
 
 <div class="warning-box">
-<strong>做空時機：</strong>不是倒掛開始時做空，而是 un-inversion 開始時做空。曲線從倒掛急速回正 = 最危險的時刻。
+<strong>重點：倒掛或回正都不是機械式進出場點。</strong>由短端急跌帶動的回正，往往伴隨 Fed 轉向寬鬆與景氣轉弱，值得提高警覺並控管風險；但回正也可能來自長端上升。務必先分辨成因、搭配其他證據，不要把任一時點當成自動做空訊號。
 </div>
 </div>
 
@@ -697,8 +690,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><td>上升</td><td>美元(DXY)</td><td style="color:#16a34a">走強</td><td>利差擴大 → 吸引資金流入美國</td></tr>
 <tr><td>上升</td><td>商品/EM</td><td style="color:#dc2626">承壓</td><td>美元升 + 融資成本升</td></tr>
 <tr><td>上升</td><td>BTC</td><td style="color:#dc2626">承壓</td><td>作為零息長久期資產，對利率極度敏感</td></tr>
-<tr><td>上升</td><td>銀行股(KBE)</td><td style="color:#16a34a">受益</td><td>淨利差(NIM)擴大</td></tr>
-<tr><td>下降</td><td>全面</td><td style="color:#16a34a">Risk-On</td><td>折現率降 + 融資成本降 + 美元弱</td></tr>
+<tr><td>上升</td><td>銀行股(KBE)</td><td style="color:#d97706">視情況</td><td>短端升、曲線陡化時 NIM 可望擴大；但若存款成本(deposit beta)上升快、持有長債產生 duration 損失、或信用轉差，未必受益</td></tr>
+<tr><td>下降</td><td>全面</td><td style="color:#d97706">視成因而定</td><td>折現率與融資成本下降通常利多；但若殖利率下跌反映的是衰退衝擊，股票可能與債券同向下跌，未必 risk-on</td></tr>
 </table>
 </div>
 </div>
@@ -708,8 +701,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h2 class="section-title">DXY 與全球資金流</h2>
 
 <div class="card">
-<h3>DXY 為什麼是 Master Variable</h3>
-<p>美元是全球融資貨幣（global funding currency），全球約 $13T 的美元計價債務在美國以外。</p>
+<h3>DXY 為什麼重要（但不是唯一的「主宰變數」）</h3>
+<p>美元是重要的全球融資貨幣（global funding currency）：據 BIS 估計，美國以外的非銀行部門持有的美元計價信用約達 $13T 量級。這讓美元走勢對全球流動性有重要影響。<strong>但 DXY 並非決定一切的 master variable</strong>——它只涵蓋六種已開發貨幣（且逾半權重是歐元），無法代表人民幣等新興市場貨幣；資產價格同時受利率、獲利、風險偏好等多因素驅動。</p>
 
 <ul>
 <li><strong>DXY 走弱 = 全球流動性擴張：</strong>新興市場美元債壓力減輕，出口國獲利增加，資金流向高收益資產</li>
@@ -732,28 +725,28 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
   <text x="300" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#dc2626">DXY 走強</text>
   <!-- Connected assets - left side (inverse) -->
   <rect x="40" y="60" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
-  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">商品 (下跌)</text>
+  <text x="90" y="82" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">商品 （下跌）</text>
   <line x1="140" y1="77" x2="258" y2="120" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <rect x="40" y="110" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
-  <text x="90" y="132" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">新興市場 (下跌)</text>
+  <text x="90" y="132" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">新興市場 （下跌）</text>
   <line x1="140" y1="127" x2="255" y2="137" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <rect x="40" y="160" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
-  <text x="90" y="182" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">BTC/加密 (下跌)</text>
+  <text x="90" y="182" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">BTC/加密 （下跌）</text>
   <line x1="140" y1="177" x2="258" y2="157" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <rect x="40" y="210" width="100" height="35" fill="#fee2e2" stroke="#dc2626" rx="6"/>
-  <text x="90" y="232" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">黃金 (承壓)</text>
+  <text x="90" y="232" text-anchor="middle" font-size="11" font-weight="500" fill="#dc2626">黃金 （承壓）</text>
   <line x1="140" y1="227" x2="265" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <!-- Right side (positive or complex) -->
   <rect x="460" y="80" width="110" height="35" fill="#dcfce7" stroke="#16a34a" rx="6"/>
-  <text x="515" y="102" text-anchor="middle" font-size="11" font-weight="500" fill="#16a34a">美國國債 (資金流入)</text>
+  <text x="515" y="102" text-anchor="middle" font-size="11" font-weight="500" fill="#16a34a">美國國債 （資金流入）</text>
   <line x1="345" y1="125" x2="460" y2="97" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <rect x="460" y="140" width="110" height="35" fill="#fef3c7" stroke="#d97706" rx="6"/>
-  <text x="515" y="162" text-anchor="middle" font-size="11" font-weight="500" fill="#d97706">美股 (複雜)</text>
+  <text x="515" y="162" text-anchor="middle" font-size="11" font-weight="500" fill="#d97706">美股 （複雜）</text>
   <line x1="345" y1="140" x2="460" y2="155" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <rect x="460" y="200" width="110" height="35" fill="#dcfce7" stroke="#16a34a" rx="6"/>
@@ -761,7 +754,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
   <line x1="340" y1="165" x2="460" y2="215" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
 
   <!-- Note -->
-  <text x="300" y="272" text-anchor="middle" font-size="10" fill="#64748b">DXY 與多數風險資產呈反向相關（r = -0.6 to -0.8）</text>
+  <text x="300" y="272" text-anchor="middle" font-size="10" fill="#64748b">DXY 常與多數風險資產呈反向關係，但強度隨 regime 變動（非固定係數）</text>
 </svg>
 </div>
 </div>
@@ -774,7 +767,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><th>貨幣</th><th>權重</th><th>備註</th></tr>
 <tr><td>EUR（歐元）</td><td>57.6%</td><td>DXY 基本上是美元對歐元的代理</td></tr>
 <tr><td>JPY（日圓）</td><td>13.6%</td><td>避險貨幣，BOJ 政策敏感</td></tr>
-<tr><td>GBP（英鎊）</td><td>11.9%</td><td>跟隨 ECB 趨勢</td></tr>
+<tr><td>GBP（英鎊）</td><td>11.9%</td><td>主要受英國經濟與 BOE 政策及相對基本面影響（非跟隨 ECB）</td></tr>
 <tr><td>CAD（加元）</td><td>9.1%</td><td>商品貨幣，油價相關</td></tr>
 <tr><td>SEK（瑞典克朗）</td><td>4.2%</td><td>歐洲經濟代理</td></tr>
 <tr><td>CHF（瑞士法郎）</td><td>3.6%</td><td>避險貨幣</td></tr>
@@ -881,7 +874,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <table class="data-table">
 <tr><th>美元週期</th><th>年份</th><th>DXY方向</th><th>表現最好的資產</th></tr>
-<tr><td>弱美元</td><td>2002-2008</td><td>DXY 120→70</td><td>商品(金+300%)、EM、房地產</td></tr>
+<tr><td>弱美元</td><td>2002-2008</td><td>DXY 120→70</td><td>商品（金+300%）、EM、房地產</td></tr>
 <tr><td>強美元</td><td>2014-2016</td><td>DXY 80→103</td><td>美元現金、美國大型股</td></tr>
 <tr><td>弱美元</td><td>2017-2018</td><td>DXY 103→89</td><td>EM、歐股、加密(BTC 2→20K)</td></tr>
 <tr><td>弱美元</td><td>2020-2021</td><td>DXY 103→90</td><td>所有風險資產暴漲</td></tr>
@@ -932,12 +925,12 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
   <!-- Labels -->
   <text x="60" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">美元強</text>
   <text x="60" y="85" text-anchor="middle" font-size="9" fill="#334155">避險需求</text>
-  <text x="60" y="98" text-anchor="middle" font-size="9" fill="#334155">(全球恐慌)</text>
+  <text x="60" y="98" text-anchor="middle" font-size="9" fill="#334155">（全球恐慌）</text>
   <text x="250" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">美元弱</text>
   <text x="250" y="210" text-anchor="middle" font-size="9" fill="#334155">全球經濟穩定成長 (Goldilocks)</text>
   <text x="440" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#dc2626">美元強</text>
   <text x="440" y="85" text-anchor="middle" font-size="9" fill="#334155">美國經濟</text>
-  <text x="440" y="98" text-anchor="middle" font-size="9" fill="#334155">獨強 (利差)</text>
+  <text x="440" y="98" text-anchor="middle" font-size="9" fill="#334155">獨強 （利差）</text>
   <!-- Axis labels -->
   <text x="250" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a">Dollar Smile Theory</text>
   <line x1="40" y1="120" x2="460" y2="120" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
@@ -1013,7 +1006,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <div class="card">
 <h3>High Yield Spread（高收益利差）</h3>
 
-<div class="formula-box">HY Spread = 高收益(垃圾)債殖利率 - 同天期國債殖利率</div>
+<div class="formula-box">HY Spread = 高收益（垃圾）債殖利率 - 同天期國債殖利率</div>
 
 <p>HY Spread 是市場對企業違約風險的即時定價。</p>
 
@@ -1063,7 +1056,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </div>
 
 <div class="warning-box">
-<strong>HY Spread 極低（&lt;300bp）不是安全信號，而是危險信號：</strong>代表市場極度 complacent，沒有人在對沖風險。歷史上 HY Spread 壓縮到極低後，往往是暴風雨前的寧靜。
+<strong>HY Spread 極低（&lt;300bp）不等於絕對安全，但也不是即時賣出訊號：</strong>它反映市場風險偏好高、違約補償薄，<strong>這種低檔可以維持相當長一段時間</strong>（低利差本身可長期存在，不必然是暴風雨前兆）。把它當成「安全邊際變薄」的背景狀態即可，而非擇時工具；真正該盯的是利差是否<strong>開始由低檔向上走寬</strong>這個轉折訊號。
 </div>
 </div>
 
@@ -1079,8 +1072,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>正常關係 vs 背離</h4>
 <ul>
 <li><strong>正常：</strong>MOVE 和 VIX 同方向移動（都升 = 全面恐慌）</li>
-<li><strong>危險背離：</strong>MOVE 飆升但 VIX 平靜 → 債市壓力大但股市沒反映</li>
-<li>這種背離通常 1-2 週後 VIX 會「追上來」→ 股市補跌</li>
+<li><strong>值得警覺的背離：</strong>MOVE 飆升但 VIX 平靜 → 債市壓力大但股市尚未反映</li>
+<li>有時債市壓力會領先股市，之後 VIX 才上升、股市補跌；但<strong>時間差並不固定，也不是每次都會傳導</strong>（有時債市壓力自行緩解）</li>
 </ul>
 
 <h4>歷史案例</h4>
@@ -1090,7 +1083,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 </ul>
 
 <div class="purple-box">
-<strong>交易策略：</strong>當 MOVE > 120 且 VIX < 20 → 這是買入 VIX 看漲期權的好時機。債市壓力最終一定會傳導到股市。
+<strong>觀察重點（非機械式交易規則）：</strong>當 MOVE 明顯高於 VIX（債市壓力大於股市定價）時，值得提高警覺、檢視是否出現系統性流動性壓力。但這種背離<strong>不保證一定傳導</strong>到股市，也<strong>沒有固定的領先天數</strong>；不要把它簡化成「MOVE&gt;120 且 VIX&lt;20 就買 VIX call」這類有效性未經證實的機械式訊號。
 </div>
 </div>
 
@@ -1106,9 +1099,8 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <h4>Fed 緊急放貸窗口</h4>
 <ul>
-<li><strong>BTFP（Bank Term Funding Program）：</strong>2023年為 SVB 危機創設</li>
-<li>使用量飆升 = 銀行業壓力嚴重（銀行需要緊急流動性）</li>
-<li>正常時期使用量接近 $0</li>
+<li><strong>貼現窗口(Discount Window) 與常備附買回(SRF)：</strong>這是目前判讀銀行/流動性壓力的<strong>現行</strong>管道——貼現窗口使用量上升、或 SRF 被動用，代表機構需要緊急流動性。</li>
+<li><strong>（歷史工具）BTFP（Bank Term Funding Program）：</strong>2023/3 為 SVB 危機創設，<strong>已於 2024-03-11 停止承作新貸款</strong>，為歷史性工具，<strong>不再是現行即時壓力監測管道</strong>；其使用量峰值約 $165B（2024 年初）。</li>
 </ul>
 
 <h4>Repo 市場壓力</h4>
@@ -1171,17 +1163,18 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <p>不要等到危機爆發才反應。以下是按時間順序出現的早期預警信號：</p>
 
-<h4>第一階段：早期警告（提前 2-4 週）</h4>
+<h4>第一階段：早期警告（背景壓力浮現）</h4>
 <ul>
-<li>FRA-OIS Spread 擴大（銀行間借貸風險上升）</li>
-<li>商業本票(CP) 利差擴大</li>
+<li>SOFR–OIS 利差擴大（LIBOR 已於 2023 年退場，現以 SOFR 為基準觀察貨幣市場融資壓力；取代舊的 FRA-OIS）</li>
+<li>商業本票(CP–OIS) 利差擴大</li>
+<li>跨貨幣基差(cross-currency basis) 走寬（美元離岸融資轉緊）</li>
 <li>MOVE 指數悄悄上升到 100+</li>
 <li>Investment Grade CDX 開始走寬</li>
 </ul>
 
-<h4>第二階段：壓力浮現（提前 1-2 週）</h4>
+<h4>第二階段：壓力浮現</h4>
 <ul>
-<li>HY CDX (高收益信用違約交換) 快速擴大</li>
+<li>HY CDX （高收益信用違約交換） 快速擴大</li>
 <li>KRE（區域銀行ETF）開始下跌</li>
 <li>SOFR-FFR 利差異常</li>
 <li>VIX 期限結構倒掛（近月 > 遠月）</li>
@@ -1209,7 +1202,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><td>VIX</td><td>CBOE / Yahoo Finance</td><td>> 25 警戒, > 35 恐慌</td><td>2020: 82, 2008: 80</td></tr>
 <tr><td>MOVE</td><td>ICE BofA MOVE</td><td>> 120 警戒</td><td>2023/3: 190, 2008: 260</td></tr>
 <tr><td>KRE</td><td>Yahoo Finance</td><td>跌破 200MA</td><td>2023/3: 一週 -30%</td></tr>
-<tr><td>FRA-OIS</td><td>Bloomberg</td><td>> 30bp 警戒</td><td>2020/3: 75bp</td></tr>
+<tr><td>SOFR–OIS / 跨貨幣基差</td><td>Fed H.15 / 交易商報價</td><td>明顯走寬即警戒</td><td>2020/3 當時以 FRA-OIS 計約 75bp（屬 LIBOR 架構，現已退場，改以 SOFR 為基準）</td></tr>
 <tr><td>IG CDX</td><td>Bloomberg / IHS Markit</td><td>> 80bp 警戒</td><td>2020/3: 150bp</td></tr>
 </table>
 </div>
@@ -1226,7 +1219,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <tr><th>數據</th><th>公布時間</th><th>影響</th><th>關鍵指標</th></tr>
 <tr><td>NFP（非農就業）</td><td>每月第一個週五</td><td>就業 → Fed 決策</td><td>新增就業數、失業率、時薪YoY</td></tr>
 <tr><td>CPI / Core CPI</td><td>每月中旬</td><td>通膨 → 利率路徑</td><td>Core CPI MoM（最重要）</td></tr>
-<tr><td>PCE / Core PCE</td><td>每月底</td><td>Fed 最看重的通膨</td><td>Core PCE YoY vs Fed 2%目標</td></tr>
+<tr><td>PCE / Core PCE</td><td>每月底</td><td>Fed 最看重的通膨</td><td>Core PCE YoY（Fed 密切關注的核心訊號）；惟 Fed 的 2% 長期目標是對 <strong>headline PCE</strong> 而言，Core 是重要指引而非目標本身</td></tr>
 <tr><td>ISM Manufacturing</td><td>每月第一個工作日</td><td>經濟擴張/收縮</td><td>>50 擴張，<50 收縮</td></tr>
 <tr><td>ISM Services</td><td>每月第三個工作日</td><td>服務業（GDP 70%）</td><td>>50 擴張，Prices Paid 看通膨</td></tr>
 </table>
@@ -1263,7 +1256,7 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>絕對不要做的事</h4>
 <ul>
 <li><strong>不要在數據公布前 5 分鐘建新倉：</strong>spread 擴大 + 滑點嚴重 + 結果隨機</li>
-<li><strong>不要追第一根 K 線：</strong>公布後前 1-5 分鐘的反應有 40% 機率是「假動作」</li>
+<li><strong>不要追第一根 K 線：</strong>數據公布後前 1–5 分鐘常是演算法的膝跳反應，方向未必延續，容易是假動作</li>
 <li><strong>不要用大槓桿在數據前持倉：</strong>NFP/CPI 可以讓 ES 瞬間走 50 點</li>
 </ul>
 
@@ -1271,12 +1264,12 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <ol>
 <li>數據公布後等 15 分鐘 → 看 market settle 到哪裡</li>
 <li>確認方向和第一反應一致 → 順勢交易</li>
-<li>如果 15 分鐘後完全回吐第一反應 → 做反向（更可靠的信號）</li>
-<li>重點看「修正值」而非「初值」→ 初值常被大幅修正</li>
+<li>如果 15 分鐘後完全回吐第一反應 → 可視為反向線索（仍需其他確認，非必然更準）</li>
+<li>初值常被後續修正，但<strong>初值相對預期的 surprise 仍會即時牽動市場</strong>；兩者都要看</li>
 </ol>
 
 <div class="orange-box">
-<strong>NFP 修正值的重要性：</strong>2023-2024 年的 NFP 初值平均被下修 5-8 萬人。市場在初值公布時大幅反應，但真相在一個月後的修正值中。養成看修正值的習慣，能避免被誤導。
+<strong>NFP 修正值的重要性：</strong>近年 NFP 初值屢次在後續月份被明顯下修（各月幅度不一，請以 BLS 實際公布為準），顯示初值雜訊大。但要注意：<strong>當期 surprise（相對市場預期）仍會即時牽動市場，不能只看修正值而忽略初值反應</strong>。養成「初值＋修正值一起追蹤」的習慣，能避免被單一數字誤導。
 </div>
 </div>
 
@@ -1302,16 +1295,16 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>JOLTS（Job Openings and Labor Turnover Survey）</h4>
 <ul>
 <li><strong>職位空缺數：</strong>勞動市場供需的領先指標</li>
-<li>空缺/失業人數比（V/U ratio）：>1.5 = 極緊 → Fed 不會降息</li>
+<li>空缺/失業人數比（V/U ratio）：>1.5 代表勞動市場偏緊，是 Fed 觀察的指標之一；但<strong>單一讀數不等於 Fed「不會降息」</strong>（決策須綜合通膨、成長與金融穩定）</li>
 <li>Quits Rate（自願離職率）：高 = 勞工有信心（經濟好）→ 下降 = 擔心找不到工作</li>
 <li><strong>JOLTS 是滯後數據（延遲1個月），但 Fed 非常關注</strong></li>
 </ul>
 
 <h4>ISM 子項判讀</h4>
 <ul>
-<li><strong>ISM New Orders：</strong>經濟動能的最強領先指標（領先 GDP 3-6 個月）</li>
-<li><strong>ISM Prices Paid：</strong>製造業通膨的前瞻指標（領先 CPI 1-2 個月）</li>
-<li><strong>ISM Employment：</strong>就業的領先指標（領先 NFP 1 個月）</li>
+<li><strong>ISM New Orders：</strong>常被視為經濟動能的領先指標（概略領先 GDP 約 3-6 個月，因景氣循環而異、須自行驗證）</li>
+<li><strong>ISM Prices Paid：</strong>製造業通膨的前瞻指標（概略領先 CPI 約 1-2 個月，非固定）</li>
+<li><strong>ISM Employment：</strong>就業的領先指標（概略領先 NFP 約 1 個月，非固定）</li>
 <li><strong>ISM Supplier Deliveries：</strong>供應鏈壓力（越高=越慢=瓶頸）</li>
 </ul>
 
@@ -1332,11 +1325,11 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <table class="data-table">
 <tr><th>週別</th><th>常見數據</th><th>重要性</th><th>公布時間(ET)</th></tr>
-<tr><td>每月第1週</td><td>ISM Manufacturing (週一) / NFP (週五)</td><td style="color:#dc2626">極高</td><td>10:00AM / 8:30AM</td></tr>
-<tr><td>每月第1週</td><td>JOLTS (週二)</td><td style="color:#d97706">高</td><td>10:00AM</td></tr>
-<tr><td>每月第2週</td><td>CPI (通常週三或週四)</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
+<tr><td>每月第1週</td><td>ISM Manufacturing （週一） / NFP （週五）</td><td style="color:#dc2626">極高</td><td>10:00AM / 8:30AM</td></tr>
+<tr><td>每月第1週</td><td>JOLTS （週二）</td><td style="color:#d97706">高</td><td>10:00AM</td></tr>
+<tr><td>每月第2週</td><td>CPI （通常週三或週四）</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
 <tr><td>每月第3週</td><td>Retail Sales / Industrial Production</td><td style="color:#d97706">高</td><td>8:30AM</td></tr>
-<tr><td>每月最後週</td><td>PCE / GDP(季度)</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
+<tr><td>每月最後週</td><td>PCE / GDP（季度）</td><td style="color:#dc2626">極高</td><td>8:30AM</td></tr>
 <tr><td>每6週</td><td>FOMC 決議 + 記者會</td><td style="color:#dc2626">最高</td><td>2:00PM / 2:30PM</td></tr>
 </table>
 
@@ -1359,18 +1352,18 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h4>CPI 的結構組成</h4>
 <ul>
 <li><strong>Shelter（住房）：</strong>佔 CPI 約 36% → 最大單一組件，具有滯後性（12-18個月）</li>
-<li><strong>Core Services ex-Housing（超級核心通膨）：</strong>Fed 最關注的指標，反映薪資驅動的通膨</li>
-<li><strong>Core Goods：</strong>受供應鏈和中國出口價格影響，已回到通縮</li>
+<li><strong>Core Services ex-Housing（俗稱 supercore「超級核心」）：</strong>這是<strong>分析上常用的切法，並非法定或官方通膨目標</strong>；Fed 官員會參考，因它反映薪資驅動的服務業通膨</li>
+<li><strong>Core Goods：</strong>受供應鏈與進口價格影響，可能呈通縮或溫和通膨（視時期而定）</li>
 <li><strong>Food & Energy：</strong>波動大，所以被排除在 Core 之外</li>
 </ul>
 
 <h4>為什麼需要分解看</h4>
 <table class="data-table">
-<tr><th>組件</th><th>驅動因子</th><th>趨勢(2024-2025)</th><th>Fed 態度</th></tr>
-<tr><td>Shelter</td><td>租金、房價(滯後)</td><td>緩慢下降中</td><td>有耐心，知道會降</td></tr>
-<tr><td>Core Services ex-Housing</td><td>薪資、保險、醫療</td><td>黏性高，下降慢</td><td>最擔心，決定是否降息</td></tr>
-<tr><td>Core Goods</td><td>中國出口價、供應鏈</td><td>通縮/持平</td><td>不擔心</td></tr>
-<tr><td>Energy</td><td>油價（OPEC+地緣）</td><td>波動</td><td>視為暫時性</td></tr>
+<tr><th>組件</th><th>驅動因子</th><th>典型行為特性</th><th>Fed 態度</th></tr>
+<tr><td>Shelter</td><td>租金、房價（滯後）</td><td>具 12–18 個月滯後，轉折慢</td><td>較有耐心，知道滯後會反映</td></tr>
+<tr><td>Core Services ex-Housing</td><td>薪資、保險、醫療</td><td>黏性高、下降慢</td><td>最關注，影響是否降息的判斷</td></tr>
+<tr><td>Core Goods</td><td>進口價、供應鏈</td><td>波動可正可負，近年偏弱</td><td>相對不擔心</td></tr>
+<tr><td>Energy</td><td>油價（OPEC+地緣）</td><td>波動大</td><td>多視為暫時性</td></tr>
 </table>
 
 <div class="green-box">
@@ -1384,31 +1377,36 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 <h2 class="section-title">估值泡沫指標 — Household Equity Allocation</h2>
 
 <div class="card">
-<h3>美國家庭股票配置比例（Buffett 指標之一）</h3>
-<p>美國家庭金融資產中股票佔比，是判斷長期（3-5年）市場泡沫程度的核心指標。數據來源：Fed Z.1 Financial Accounts（每季公布）。</p>
+<h3>美國家庭股票配置比例（Household Equity Allocation）</h3>
+<p>美國家庭金融資產中股票佔比，常被用來判斷長期（3-5 年）市場的相對估值/情緒溫度。數據來源：Fed Z.1 Financial Accounts（每季公布）；因分母採「金融資產」或「總資產」等口徑不同，實際數值會有差異。</p>
+<div class="warning-box">
+<strong>名詞澄清：這不是「Buffett 指標」。</strong>Buffett 指標(Buffett Indicator)指的是<strong>股市總市值 ÷ GDP</strong>，是另一個不同的估值指標。本節的「家庭股票配置比例」是家庭資產配置的角度；兩者可互相參照，但<strong>不是同一件事</strong>，請勿混用名稱。
+</div>
 
 <div class="highlight-box">
 <strong>原理：</strong>家庭是最後進場、最後離場的群體。當「連鄰居都在買股票」時 = 頂部。當「所有人都發誓永遠不碰股票」時 = 底部。
 </div>
 
-<h4>歷史對照表</h4>
+<h4>歷史對照表（概略，數值依口徑而異）</h4>
+<p style="font-size:13px;color:var(--text3);margin-bottom:8px;">下表僅列出各時點家庭股票配置「相對偏高或偏低」的定性位置。<strong>刻意不列「之後 N 年報酬」</strong>，因為坊間常見的這類欄位往往把「3 年遠期報酬」「1 年內最大回撤」「高點到低點(peak-to-trough)跌幅」混在同一欄比較，口徑不一致會嚴重誤導。要看遠期報酬，請自行用一致口徑回測。</p>
 <table class="data-table">
-<tr><th>時期</th><th>股票佔比</th><th>之後 3 年報酬</th><th>含義</th></tr>
-<tr><td>2000 網路泡沫頂</td><td style="color:#dc2626;font-weight:700">53%</td><td>S&P -40%</td><td>極度泡沫</td></tr>
-<tr><td>2002 底部</td><td style="color:#16a34a;font-weight:700">32%</td><td>S&P +80%</td><td>極度低估</td></tr>
-<tr><td>2007 金融危機前</td><td style="color:#d97706">47%</td><td>S&P -50%</td><td>偏高</td></tr>
-<tr><td>2009 底部</td><td style="color:#16a34a;font-weight:700">29%</td><td>S&P +100%</td><td>歷史底部</td></tr>
-<tr><td>2021 高點</td><td style="color:#dc2626;font-weight:700">51%</td><td>S&P -25%(2022)</td><td>泡沫區</td></tr>
-<tr><td>2024-2025 估計</td><td style="color:#d97706">48-52%</td><td>???</td><td>偏高，類似 2007</td></tr>
+<tr><th>時期</th><th>股票佔比（概略）</th><th>相對位置</th></tr>
+<tr><td>2000 網路泡沫頂</td><td style="color:#dc2626;font-weight:700">~高檔</td><td>極度偏高</td></tr>
+<tr><td>2002–2003 底部</td><td style="color:#16a34a;font-weight:700">~低檔</td><td>相對偏低</td></tr>
+<tr><td>2007 金融危機前</td><td style="color:#d97706">偏高</td><td>偏高</td></tr>
+<tr><td>2009 底部</td><td style="color:#16a34a;font-weight:700">~近歷史低</td><td>相對偏低</td></tr>
+<tr><td>2021 高點</td><td style="color:#dc2626;font-weight:700">~高檔</td><td>偏高</td></tr>
 </table>
+<p style="font-size:12px;color:var(--text3);">（精確百分比取決於採用 Fed Z.1 的哪一個欄位/口徑，請以原始資料為準，本表只標定性高低。）</p>
 
-<h4>判讀規則</h4>
+<h4>判讀規則（相對溫度，不預測報酬）</h4>
+<p style="font-size:13px;color:var(--text3);margin-bottom:8px;">本頁<strong>不提供「對應年化報酬」的數字</strong>：那需要一個經過驗證的回歸模型與資料，本頁並未提供，硬給區間等於假裝有模型。以下只作為相對估值溫度與配置傾向的參考。</p>
 <table class="data-table">
-<tr><th>區間</th><th>含義</th><th>長期預期報酬（年化）</th><th>操作建議</th></tr>
-<tr><td style="color:#dc2626">&gt; 50%</td><td>極度泡沫</td><td>0-3%</td><td>降低股票配置，增持現金/債券</td></tr>
-<tr><td style="color:#d97706">40-50%</td><td>偏高</td><td>3-6%</td><td>正常配置但留意風險</td></tr>
-<tr><td>30-40%</td><td>正常/偏低</td><td>6-10%</td><td>積極配置</td></tr>
-<tr><td style="color:#16a34a">&lt; 30%</td><td>極度低估</td><td>10-15%</td><td>顯著提高股票配置（歷史上多屬偏低估區，無保證、須自行回測）</td></tr>
+<tr><th>區間（概略）</th><th>相對估值溫度</th><th>配置傾向（參考，非保證）</th></tr>
+<tr><td style="color:#dc2626">偏高檔</td><td>長期而言估值偏貴、安全邊際薄</td><td>傾向降低股票配置、增持現金/債券</td></tr>
+<tr><td style="color:#d97706">中高</td><td>略偏貴</td><td>正常配置但留意風險</td></tr>
+<tr><td>中性</td><td>中性</td><td>可正常配置</td></tr>
+<tr><td style="color:#16a34a">偏低檔</td><td>長期而言估值相對便宜</td><td>歷史上多屬相對有利的長期布局區，但無保證、須自行回測</td></tr>
 </table>
 
 <div class="warning-box">
@@ -1423,12 +1421,13 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
 
 <h4>與其他指標搭配</h4>
 <table class="data-table">
-<tr><th>指標</th><th>當前暗示</th><th>搭配使用</th></tr>
-<tr><td>Household Equity Allocation ~50%</td><td>長期報酬偏低</td><td>確認方向</td></tr>
-<tr><td>Buffett Indicator (市值/GDP)</td><td>偏高</td><td>交叉驗證</td></tr>
-<tr><td>Shiller CAPE P/E</td><td>~33x (偏高)</td><td>估值確認</td></tr>
-<tr><td>VIX < 15</td><td>短線自滿</td><td>時機信號</td></tr>
+<tr><th>指標</th><th>性質</th><th>搭配使用</th></tr>
+<tr><td>Household Equity Allocation（家庭股票配置比例）</td><td>家庭資產配置角度的估值/情緒溫度</td><td>確認長期方向</td></tr>
+<tr><td>Buffett Indicator（股市總市值 ÷ GDP）</td><td>另一個獨立的估值指標（非前者）</td><td>交叉驗證</td></tr>
+<tr><td>Shiller CAPE P/E（週期調整本益比）</td><td>長期估值；實際數值每日變動，請查最新</td><td>估值確認</td></tr>
+<tr><td>VIX 偏低</td><td>短線情緒偏自滿</td><td>時機信號</td></tr>
 </table>
+<p style="font-size:12px;color:var(--text3);">（以上數值均為時效快照，會隨市場變動；此表只說明各指標的用途與相互關係，不代表當前讀數。）</p>
 
 <div class="warning-box">
 <strong>實戰應用（假設情境）：</strong>當 Household Equity Allocation > 50% + VIX < 15 + 30Y 殖利率突破關鍵位「同時」出現時 = 長期泡沫 + 短線自滿 + 利率衝擊三者疊加，這就是「暴跌的完美條件」。這個指標不會告訴你「哪一天」跌，但會告訴你「一旦跌起來會很慘」。務必把它當成長期風險溫度計，而不是精準的擇時工具。
@@ -1490,11 +1489,11 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
       explanation: '<strong>RRP 下降 = 流動性釋放到市場。</strong>$2.5T 的資金從 Fed 的「停車場」(RRP) 釋放出來，流入市場購買 T-bill 和其他資產。這就是 2023 年 S&P 暴漲 24% 的核心流動性驅動因素——即使 Fed 同時在進行 QT。'
     },
     {
-      question: '殖利率曲線倒掛（2Y > 10Y）後，最佳做空時機是什麼時候？',
-      context: '歷史上殖利率曲線倒掛是衰退的領先指標，但時間滯後可長達 12-24 個月。',
-      options: ['倒掛開始的第一天', '倒掛持續超過 6 個月時', '解除倒掛（Un-inversion）開始時', '10Y 殖利率創新高時'],
+      question: '關於殖利率曲線倒掛（2Y > 10Y）與其解除（un-inversion），下列敘述何者最正確？',
+      context: '倒掛與回正都是常被討論的衰退訊號，但容易被過度簡化成機械式進出場點。',
+      options: ['倒掛的第一天就是明確的做空點', '倒掛與回正都是機械式的進出場訊號', '由短端急跌帶動的回正常伴隨 Fed 轉向寬鬆與景氣轉弱，值得警覺，但非自動做空點', '曲線一旦回正就代表 Fed 已正式判定衰退'],
       correct: 2,
-      explanation: '<strong>Un-inversion 才是真正的衰退/做空信號。</strong>倒掛開始做空常被軋（市場可以繼續漲 6-18 個月）。但 un-inversion = Fed 開始降息 = 認為經濟已經弱到必須行動。歷史上衰退通常在 un-inversion 後 0-6 個月開始。'
+      explanation: '<strong>回正要先分辨成因，且它不是自動做空點。</strong>回正有兩種路徑：短端下跌（bull steepening，常因 Fed 降息、景氣轉弱，較值得警覺）與長端上升（bear steepening，因 Term Premium/供給/通膨，成因與衰退不同）。倒掛本身也不是做空點（市場可續漲 6–18 個月）。此外倒掛的紀錄與領先時間還取決於用 2s10s 或 3m10y 哪一個定義。'
     },
     {
       question: 'DXY 走強時，以下哪類資產最可能受益？',
@@ -1515,14 +1514,14 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
       context: 'High Yield Spread = 垃圾債殖利率 - 國債殖利率，反映市場對違約風險的定價。',
       options: ['市場極度安全，不用擔心', '市場極度樂觀/Complacent，可能是危險信號', '信用市場正常運作', 'Fed 政策非常寬鬆'],
       correct: 1,
-      explanation: '<strong>HY Spread 極低 = 市場 Complacent = 危險信號。</strong>這代表沒有人在定價違約風險，所有人都在追逐收益（reaching for yield）。歷史上 HY Spread 壓縮到極低後，往往是暴風雨前的寧靜。不代表明天就會崩盤，但代表市場已沒有安全邊際。'
+      explanation: '<strong>HY Spread 極低 = 市場 Complacent = 安全邊際變薄的背景狀態。</strong>這代表違約補償被壓得很低、大家都在追逐收益（reaching for yield）。但要注意：<strong>低利差本身可以維持相當長一段時間</strong>，它不是即時賣出訊號，也不保證「暴風雨」會到來。真正的轉折訊號是利差<strong>由低檔開始向上走寬</strong>，要搭配那個來看。'
     },
     {
       question: 'MOVE 飆升到 150 但 VIX 只有 18，這種背離代表什麼？',
       context: 'MOVE 是債市波動率指標，VIX 是股市波動率指標。正常情況下兩者同方向移動。',
       options: ['債市無風險，股市即將暴漲', '債市壓力大但股市尚未反映，後續股市可能補跌', '兩個市場各自獨立，沒有關聯', '代表流動性非常充裕'],
       correct: 1,
-      explanation: '<strong>MOVE > VIX 背離 = 股市尚未反映債市壓力。</strong>歷史上這種背離通常在 1-2 週後，VIX 會「追上來」→ 股市補跌。2023/3 SVB 事件就是這個模式：MOVE 先飆到 190，VIX 才從 20 慢慢升到 26。這是買 VIX 看漲期權的好時機。'
+      explanation: '<strong>MOVE > VIX 背離 = 股市尚未反映債市壓力，值得提高警覺。</strong>有時債市壓力會領先股市，之後 VIX 才上升、股市補跌（2023/3 SVB 事件即是：MOVE 先衝高，VIX 才跟上）；<strong>但時間差不固定，也不是每次都會傳導</strong>，有時債市壓力自行緩解。所以它是風險警示，不是「MOVE&gt;120 且 VIX&lt;20 就買 VIX call」這類有效性未經證實的機械式訊號。'
     },
     {
       question: 'Core CPI MoM 公布為 0.5%（預期 0.3%），目前處於「通膨擔憂期」，股市最可能如何反應？',
@@ -1583,9 +1582,9 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
     {
       question: '2019/9 Repo 市場危機的根本原因是什麼？',
       context: 'Repo 市場是金融機構獲取短期融資的關鍵管道。隔夜利率正常應接近 Fed Funds Rate。',
-      options: ['通膨突然飆升', 'QT 進行太久導致準備金跌破臨界點', '中美貿易戰升級', '油價暴跌'],
+      options: ['通膨突然飆升', '準備金偏低之際，又同時遇到企業繳稅與大額公債交割抽走現金等多重因素', '中美貿易戰升級', '油價暴跌'],
       correct: 1,
-      explanation: '<strong>QT 進行太久，準備金跌破「充裕」邊界。</strong>Fed 的 QT 持續縮減準備金，當準備金從「充裕」跌到「僅足夠」的臨界點時，隔夜融資市場突然凍結。Repo 利率飆到 10%（正常 2%）。這證明了 QT 的非線性：大部分時間無感，但接近臨界點時會突然爆發。Fed 被迫緊急注入流動性。'
+      explanation: '<strong>是多重因素疊加，不是單一「QT 太久」。</strong>2019/9/16 適逢企業季繳稅與大額公債交割同步抽走現金，而 QT 已使準備金降到偏低水位，加上交易商資產負債表承作 repo 的能力與準備金分布受限，隔夜 Repo 利率一度飆到約 10%（正常約 2%）。這說明準備金的水位、分布與結構性摩擦同樣關鍵。Fed 隨後重啟附買回操作並擴表。'
     },
     {
       question: '以下哪個組合最代表「滯脹」風險？',
@@ -1597,9 +1596,9 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
     {
       question: '數據公布後，第一根 5 分鐘 K 線大漲 1%，15 分鐘後完全回吐。你應該怎麼做？',
       context: '數據公布後的交易策略中，第一反應常常是「假動作」。',
-      options: ['追多（趨勢已確認）', '做空（反轉確認 = 更可靠的信號）', '觀望等待更多確認', '加大槓桿做多'],
-      correct: 1,
-      explanation: '<strong>15 分鐘後完全回吐第一反應 = 做反向是更可靠的信號。</strong>第一根 K 線往往是演算法交易的膝跳反應。如果 15 分鐘後完全回吐，代表「聰明錢」不認同第一反應的方向。這種反轉的勝率通常高於追隨第一反應。但仍需等待確認（如跌破支撐），不要盲目衝進去。'
+      options: ['追多（趨勢已確認）', '立刻反向做空（反轉已確認）', '觀望、等待更多確認', '加大槓桿做多'],
+      correct: 2,
+      explanation: '15 分鐘後完全回吐第一反應，可視為反向線索（第一根 K 線常是演算法的膝跳反應），但非必然更準。穩健做法是觀望、等待更多確認（如跌破支撐）再決定，而不是立刻反向做空；沒有證據顯示反轉的勝率一定高於第一反應。'
     },
     {
       question: '以下哪個情境代表「Fed 政策已經在起作用」的最早信號？',
@@ -1611,9 +1610,9 @@ Fed BS: $7.4T - TGA: $0.7T - RRP: $0.1T = Net Liq: $6.6T
     {
       question: 'Fed Balance Sheet 每週四公布，本週從 $7.4T 增加到 $7.55T（+$150B），但沒有宣布 QE。最可能的原因是？',
       context: 'Fed Balance Sheet 可以因為多種原因增加，不只是 QE。',
-      options: ['數據錯誤', '緊急放貸（如 BTFP/Discount Window）', 'TGA 自動轉入', '外國央行操作'],
+      options: ['數據錯誤', '緊急放貸（貼現窗口/SRF；2023 年當時為 BTFP）', 'TGA 自動轉入', '外國央行操作'],
       correct: 1,
-      explanation: '<strong>非 QE 時期 Fed BS 突然增加 = 緊急放貸。</strong>2023/3 SVB 事件後，Fed BS 一週增加 $300B+，全部來自 BTFP 和 Discount Window 放貸。這代表銀行體系出現壓力，需要緊急流動性支持。這是重要的警告信號：Fed 被迫「悄悄」注入流動性 = 有人在出問題。'
+      explanation: '<strong>非 QE 時期 Fed BS 突然增加 = 緊急放貸。</strong>2023/3 SVB 事件後，Fed BS 一週增加約 $300B+，來自當時的 BTFP、貼現窗口與過橋貸款（注意：BTFP 已於 2024-03-11 停止承作新貸款，屬歷史工具；現行緊急管道看貼現窗口與 SRF）。這代表銀行體系出現壓力、需要緊急流動性支持，是重要的警告信號。'
     },
     {
       question: 'CNH 突破 7.35 心理關口持續貶值，以下哪個資產最可能受到負面影響？',
