@@ -43,13 +43,13 @@ function renderDashboard(x){
   O.push(`<div class="dash-sub" style="margin:8px 0 2px">D. 各商品操作燈號（IF/THEN + 硬煞車）</div><div class="dash-lights">`);
   x.lights.forEach(l=>O.push(`<div class="dash-light" style="border-left-color:${TOKCOL[l.tok]||'var(--border)'}"><div class="ln">👉 ${E(l.name)}</div><div class="ls" style="color:${TOKCOL[l.tok]||'var(--text)'}">${E(l.signal)}</div><div class="lw">${E(l.why)}</div></div>`));
   O.push(`</div>`);
-  // E 幣安 + F movers
-  O.push(`<div class="dash-two" style="margin-top:8px">`);
-  O.push(`<div><div class="dash-sub">E. 幣安即時報價（標的 underlying + 貴金屬 + 利率/金礦/BTC腿）</div><table><tr><th>標的</th><th>價格</th><th>24h</th></tr>`+x.binance.map(b=>`<tr><td>${E(b.name)}</td><td>${E(b.price)}</td><td class="${signcls(b.chg)}">${E(b.chg)}</td></tr>`).join('')+`</table></div>`);
+  // E 幣安（整寬一列）
+  O.push(`<div class="dash-sub" style="margin-top:8px">E. 幣安即時報價（標的 underlying + 貴金屬 + 利率/金礦/BTC腿）</div>`);
+  O.push(`<table><tr><th>標的</th><th>價格</th><th>24h</th></tr>`+x.binance.map(b=>`<tr><td>${E(b.name)}</td><td>${E(b.price)}</td><td class="${signcls(b.chg)}">${E(b.chg)}</td></tr>`).join('')+`</table>`);
+  // F movers：漲幅／跌幅對稱兩欄
   const mvtab=(lst,pos)=>`<table><tr><th>${pos?'📈 5日漲幅前10':'📉 5日跌幅前10'}</th><th>5日%</th><th>現價</th></tr>`+(lst.length?lst.map(m=>`<tr><td>${E(m.sym)}</td><td class="${pos?'pos':'neg'}">${E(m.pct)}</td><td>${E(m.px)}</td></tr>`).join(''):`<tr><td colspan="3" class="mr-l">N/A</td></tr>`)+`</table>`;
-  O.push(`<div><div class="dash-sub">F. 幣安美股永續 5 日漲跌榜（196 檔 EQUITY 自動掃描）</div>${mvtab(x.movers_up,true)}</div>`);
-  O.push(`</div>`);
-  O.push(`<div class="dash-sub" style="margin-top:8px">${mvtab(x.movers_dn,false)}</div>`);
+  O.push(`<div class="dash-sub" style="margin-top:8px">F. 幣安美股永續 5 日漲跌榜（196 檔 EQUITY 自動掃描）</div>`);
+  O.push(`<div class="dash-two"><div>${mvtab(x.movers_up,true)}</div><div>${mvtab(x.movers_dn,false)}</div></div>`);
   O.push(`<div class="dash-sub" style="margin-top:8px">⚠ 啟發式規則層(門檻經驗值未回測)、非投資建議、不臆測持倉；🟢綠燈非進場令、🔴紅燈非抄底/反手令。資料源：Yahoo/Deribit/Alternative.me/Binance 永續。生成 ${E(x.generated)}。</div>`);
   O.push(`</div>`);
   return O.join('\n');
