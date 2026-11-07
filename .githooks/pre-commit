@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# dailyecreport JSON 報告的 pre-commit 保證（HD 2026-11-07）：
+#   1. 對每個 staged 的 data/*.json 跑 schema validator → 缺欄位/型別錯 = 擋 commit。
+#   2. validator 過 → 用固定 template 產生 reports/<id>.html 並 append reports.json，
+#      再把產出的 HTML + reports.json 一起 git add 進本次 commit。
+#   => 作者只需編輯/commit data/<id>.json，HTML 由本 hook 自動產生，欄位必齊、格式必一致。
+# 失敗一律非零退出擋 commit；任何意外都傾向擋下（fail-closed），不放行半成品報告。
+set -euo pipefail
+
+REPO="$(git rev-parse --show-toplevel)"
+cd "$REPO"
+
+PY="$REPO/signals/.venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3)"
+
+# 取出本次 staged（A/C/M）的 data/*.json
+mapfile -t JSONS < <(git diff --cached --name-only --diff-filter=ACM -- 'data/*.json' || true)
+
+if [ "${#JSONS[@]}" -eq 0 ]; then
+  exit 0   # 這次沒動報告 JSON → 放行
+fi
+
+echo "[pre-commit] 驗證 ${#JSONS[@]} 個報告 JSON …"
+if ! "$PY" tools/validate_report.py "${JSONS[@]}"; then
+  echo "[pre-commit] ✗ 報告 JSON 未通過 schema，commit 已擋下。請補齊缺少的欄位後再 commit。" >&2
+  exit 1
+fi
+
+# validator 過 → 逐檔產生 HTML + append reports.json，並 git add 回本次 commit
+for j in "${JSONS[@]}"; do
+  echo "[pre-commit] 產生 HTML ← $j"
+  "$PY" tools/gen_report.py "$j" --append
+done
+git add reports.json reports/*.html
+
+echo "[pre-commit] ✓ 報告 JSON 合規、HTML 已產生並加入本次 commit。"
+exit 0
