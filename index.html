@@ -180,7 +180,12 @@ function showReports(dateStr) {
   dayReports.forEach(r => {
     const label = r.type === 'am' ? '☀️ 早報' : '🌙 晚報';
     const cls = r.type === 'am' ? 'am' : 'pm';
-    links += `<a class="report-link ${cls}" href="${BASE_URL}${r.file.replace(/^reports\//,'')}" target="_blank">${label}</a>`;
+    // fmt:"json" 的報告（2026-11-07 起）走單一前端 viewer report.html?id=<date>-<type>，
+    // 載入 data/<id>.json 前端 render；舊報告（無 fmt）維持原靜態 reports/*.html。
+    const href = (r.fmt === 'json')
+      ? `report.html?id=${r.date}-${r.type}`
+      : `${BASE_URL}${r.file.replace(/^reports\//,'')}`;
+    links += `<a class="report-link ${cls}" href="${href}" target="_blank">${label}</a>`;
   });
 
   document.getElementById('reportLinks').innerHTML = links;

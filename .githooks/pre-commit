@@ -1,37 +1,63 @@
 #!/usr/bin/env bash
-# dailyecreport JSON 報告的 pre-commit 保證（HD 2026-11-07）：
-#   1. 對每個 staged 的 data/*.json 跑 schema validator → 缺欄位/型別錯 = 擋 commit。
-#   2. validator 過 → 用固定 template 產生 reports/<id>.html 並 append reports.json，
-#      再把產出的 HTML + reports.json 一起 git add 進本次 commit。
-#   => 作者只需編輯/commit data/<id>.json，HTML 由本 hook 自動產生，欄位必齊、格式必一致。
-# 失敗一律非零退出擋 commit；任何意外都傾向擋下（fail-closed），不放行半成品報告。
+# dailyecreport JSON 報告的 pre-commit 閘門（HD 2026-11-07，純前端 viewer 架構）：
+#   報告內容只維護在 data/<id>.json；網頁端用單一 report.html?id=<id> 前端 render，
+#   不再逐日產 reports/*.html。作者只 commit data/<id>.json。
+#
+#   本 hook 對每個 staged 的 data/*.json：
+#     1. schema validator（tools/validate_report.py）— 缺欄位/型別錯 = 擋 commit。
+#     2. Gate E 工件新鮮度（tools/freshness_gate.py）— 聲稱跑過的 radar/urpd/options
+#        必須有報告日期當天的 signals/.last_run 工件（反造假；把全域 Stop hook 的保護
+#        搬進 repo-local，不動共用的 ~/.claude hook、不影響 peer session）。
+#     3. 兩關都過 → 確保 reports.json 有該報告（type/date/file/fmt:"json"）並 git add。
+#   任一關不過一律非零退出擋 commit（fail-closed）。
 set -euo pipefail
 
 REPO="$(git rev-parse --show-toplevel)"
 cd "$REPO"
-
 PY="$REPO/signals/.venv/bin/python"
 [ -x "$PY" ] || PY="$(command -v python3)"
 
-# 取出本次 staged（A/C/M）的 data/*.json
 mapfile -t JSONS < <(git diff --cached --name-only --diff-filter=ACM -- 'data/*.json' || true)
-
 if [ "${#JSONS[@]}" -eq 0 ]; then
   exit 0   # 這次沒動報告 JSON → 放行
 fi
 
-echo "[pre-commit] 驗證 ${#JSONS[@]} 個報告 JSON …"
+echo "[pre-commit] (1/3) schema 驗證 ${#JSONS[@]} 個報告 JSON …"
 if ! "$PY" tools/validate_report.py "${JSONS[@]}"; then
-  echo "[pre-commit] ✗ 報告 JSON 未通過 schema，commit 已擋下。請補齊缺少的欄位後再 commit。" >&2
+  echo "[pre-commit] ✗ 報告 JSON 未通過 schema，commit 已擋下。請補齊缺少的欄位。" >&2
   exit 1
 fi
 
-# validator 過 → 逐檔產生 HTML + append reports.json，並 git add 回本次 commit
-for j in "${JSONS[@]}"; do
-  echo "[pre-commit] 產生 HTML ← $j"
-  "$PY" tools/gen_report.py "$j" --append
-done
-git add reports.json reports/*.html
+echo "[pre-commit] (2/3) Gate E 工件新鮮度 …"
+if ! "$PY" tools/freshness_gate.py "${JSONS[@]}"; then
+  echo "[pre-commit] ✗ Gate E 未過：報告聲稱跑過的工具無當天工件。請實跑 radar/urpd/options 後再 commit。" >&2
+  exit 1
+fi
 
-echo "[pre-commit] ✓ 報告 JSON 合規、HTML 已產生並加入本次 commit。"
+echo "[pre-commit] (3/3) 確保 reports.json 收錄 …"
+"$PY" - "${JSONS[@]}" <<'PYEOF'
+import json, os, sys
+repo = os.getcwd()
+rjp = os.path.join(repo, "reports.json")
+rj = json.load(open(rjp, encoding="utf-8"))
+changed = False
+for p in sys.argv[1:]:
+    d = json.load(open(p, encoding="utf-8"))["meta"]
+    date, typ = d["date"], d["type"]
+    rid = f"{date}-{typ}"
+    ent = next((e for e in rj if e.get("date") == date and e.get("type") == typ), None)
+    if ent is None:
+        rj.append({"date": date, "type": typ, "file": rid + ".html", "fmt": "json"})
+        changed = True
+        print(f"  + reports.json 新增 {rid}（fmt=json）")
+    elif ent.get("fmt") != "json":
+        ent["fmt"] = "json"; ent["file"] = rid + ".html"
+        changed = True
+        print(f"  ~ reports.json 標記 {rid} fmt=json")
+if changed:
+    json.dump(rj, open(rjp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+PYEOF
+git add reports.json
+
+echo "[pre-commit] ✓ 報告 JSON 合規＋工件新鮮＋已收錄 reports.json。"
 exit 0
