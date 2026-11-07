@@ -1086,5 +1086,340 @@
    }
   ]
  },
- "footer": "本報告為 2026-11-07（週六）週末 recap，涵蓋美股週五 11/06 收盤；美股週末休市，加密為即時。資料來源：Binance 永續（即時/週末）、Yahoo（美股逐日對齊收盤、宏觀）、FRED（信用利差 T+1）、Alternative.me（F&G）、Google News RSS 多管道查證（非農/台灣限空/黃金）。所有因果經 STEP 3.5 獨立對抗 subagent 驗證並標註裁決。本報告為量化研判，非投資建議；不構成任何持倉推薦。架構：本份為首份 JSON 驅動報告（固定 template × data/2026-11-07-am.json），欄位經 pre-commit schema validator 把關。"
+ "footer": "本報告為 2026-11-07（週六）週末 recap，涵蓋美股週五 11/06 收盤；美股週末休市，加密為即時。資料來源：Binance 永續（即時/週末）、Yahoo（美股逐日對齊收盤、宏觀）、FRED（信用利差 T+1）、Alternative.me（F&G）、Google News RSS 多管道查證（非農/台灣限空/黃金）。所有因果經 STEP 3.5 獨立對抗 subagent 驗證並標註裁決。本報告為量化研判，非投資建議；不構成任何持倉推薦。架構：本份為首份 JSON 驅動報告（固定 template × data/2026-11-07-am.json），欄位經 pre-commit schema validator 把關。",
+ "dashboard": {
+  "summary": "Risk-Off 68/100（🔴 Risk-Off（手收起來/偏防守））｜日內大單邊 61%（🚀 大單邊行情（順勢但必掛保本+開盤後確認））｜📉 全面下殺（多頭 ETF 普跌）",
+  "generated": "2026-11-07 17:30:45",
+  "riskoff": {
+   "score": "68",
+   "label": "🔴 Risk-Off（手收起來/偏防守）",
+   "stress": true,
+   "data_bad": false
+  },
+  "intraday": {
+   "single": "61",
+   "chop": "39",
+   "label": "🚀 大單邊行情（順勢但必掛保本+開盤後確認）"
+  },
+  "breadth": {
+   "text": "📉 全面下殺（多頭 ETF 普跌）",
+   "up": 0,
+   "dn": 5,
+   "nn": 5
+  },
+  "risk_rows": [
+   {
+    "lbl": "美元 DXY",
+    "val": "102.28",
+    "chg": "+0.30%"
+   },
+   {
+    "lbl": "10Y 殖利率",
+    "val": "4.86%",
+    "chg": "-3.5bp"
+   },
+   {
+    "lbl": "2Y / 10Y 利差",
+    "val": "4.75%",
+    "chg": "+0.11"
+   },
+   {
+    "lbl": "3M / 30Y",
+    "val": "4.00%",
+    "chg": "5.26%"
+   },
+   {
+    "lbl": "納指恐慌 VXN",
+    "val": "34.0",
+    "chg": "+19.4%"
+   },
+   {
+    "lbl": "標普恐慌 VIX",
+    "val": "25.6",
+    "chg": "+21.2%"
+   },
+   {
+    "lbl": "BTC 隱波 DVOL",
+    "val": "39.1",
+    "chg": "-3.3%"
+   },
+   {
+    "lbl": "加密 F&G",
+    "val": "25",
+    "chg": "Extreme Fear"
+   }
+  ],
+  "trend_rows": [
+   {
+    "lbl": "ES 標普期貨跳空",
+    "val": "",
+    "chg": "-2.28%"
+   },
+   {
+    "lbl": "NQ 納指期貨跳空",
+    "val": "昨 +1.2%",
+    "chg": "-3.71%"
+   },
+   {
+    "lbl": "盤前期貨量能 RVOL",
+    "val": "",
+    "chg": "0.4×"
+   },
+   {
+    "lbl": "DVOL ~24h 變動",
+    "val": "",
+    "chg": "-3.3%"
+   },
+   {
+    "lbl": "當日重大事件",
+    "val": "無/未設",
+    "chg": ""
+   },
+   {
+    "lbl": "原油 WTI / Brent",
+    "val": "90.8",
+    "chg": "98.3"
+   }
+  ],
+  "etf": [
+   {
+    "grp": "QQQ",
+    "long": "TQQQ",
+    "mult": "3x",
+    "long_chg": "-16.05%",
+    "short": "SQQQ",
+    "short_chg": "+14.77%",
+    "rvol": "1.3×"
+   },
+   {
+    "grp": "半導體",
+    "long": "SOXL",
+    "mult": "3x",
+    "long_chg": "-31.06%",
+    "short": "SOXS",
+    "short_chg": "+21.61%",
+    "rvol": "2.1×"
+   },
+   {
+    "grp": "MSTR",
+    "long": "MSTU",
+    "mult": "2x",
+    "long_chg": "-19.42%",
+    "short": "MSTZ",
+    "short_chg": "+18.61%",
+    "rvol": "0.9×"
+   },
+   {
+    "grp": "NVDA",
+    "long": "NVDL",
+    "mult": "2x",
+    "long_chg": "-14.22%",
+    "short": "NVD",
+    "short_chg": "+12.15%",
+    "rvol": "1.8×"
+   },
+   {
+    "grp": "SK Hynix",
+    "long": "SKUU",
+    "mult": "2x",
+    "long_chg": "-22.87%",
+    "short": "SKDD",
+    "short_chg": "+20.02%",
+    "rvol": "1.2×"
+   }
+  ],
+  "lights": [
+   {
+    "name": "TQQQ / SQQQ",
+    "signal": "🔴 空手不碰：高波動禁網格",
+    "tok": "danger",
+    "why": "VXN 34≥28，震盪對槓桿 ETF 最貴"
+   },
+   {
+    "name": "SOXL / SOXS",
+    "signal": "🔴 空手不碰：高波動禁網格",
+    "tok": "danger",
+    "why": "VXN 34≥28，震盪對槓桿 ETF 最貴"
+   },
+   {
+    "name": "NVDL / NVD",
+    "signal": "🔴 空手不碰：高波動禁網格",
+    "tok": "danger",
+    "why": "VXN 34≥28，震盪對槓桿 ETF 最貴"
+   },
+   {
+    "name": "SKUU / SKDD",
+    "signal": "🔴 空手不碰：高波動禁網格",
+    "tok": "danger",
+    "why": "VXN 34≥28，震盪對槓桿 ETF 最貴"
+   },
+   {
+    "name": "MSTU / MSTZ",
+    "signal": "🔴 風險極高，空手觀望",
+    "tok": "danger",
+    "why": "Risk-Off 68"
+   }
+  ],
+  "binance": [
+   {
+    "name": "BTC",
+    "price": "76071.60",
+    "chg": "-0.07%"
+   },
+   {
+    "name": "ETH",
+    "price": "2246.41",
+    "chg": "+0.23%"
+   },
+   {
+    "name": "MSTR",
+    "price": "129.55",
+    "chg": "-1.58%"
+   },
+   {
+    "name": "NVDA",
+    "price": "188.39",
+    "chg": "-0.79%"
+   },
+   {
+    "name": "黃金 XAU",
+    "price": "4079.01",
+    "chg": "-0.14%"
+   },
+   {
+    "name": "白銀 XAG",
+    "price": "52.18",
+    "chg": "-0.02%"
+   },
+   {
+    "name": "鉑 XPT",
+    "price": "1540.18",
+    "chg": "+0.26%"
+   },
+   {
+    "name": "鈀 XPD",
+    "price": "1025.52",
+    "chg": "-1.00%"
+   },
+   {
+    "name": "TBT 2x空長債",
+    "price": "37.80",
+    "chg": "-0.34%"
+   },
+   {
+    "name": "GDX 金礦股",
+    "price": "87.56",
+    "chg": "+2.30%"
+   },
+   {
+    "name": "BITO 1xBTC期貨",
+    "price": "10.09",
+    "chg": "-0.10%"
+   }
+  ],
+  "movers_up": [
+   {
+    "sym": "APP",
+    "pct": "+67.6%",
+    "px": "384.57"
+   },
+   {
+    "sym": "SKDD",
+    "pct": "+25.2%",
+    "px": "11.316"
+   },
+   {
+    "sym": "SOXS",
+    "pct": "+24.1%",
+    "px": "70.16"
+   },
+   {
+    "sym": "CYPH",
+    "pct": "+19.3%",
+    "px": "2.837"
+   },
+   {
+    "sym": "QNTX",
+    "pct": "+18.6%",
+    "px": "37.34"
+   },
+   {
+    "sym": "ZCSH",
+    "pct": "+16.4%",
+    "px": "35.19"
+   },
+   {
+    "sym": "UVXY",
+    "pct": "+16.3%",
+    "px": "22.59"
+   },
+   {
+    "sym": "MRNA",
+    "pct": "+16.1%",
+    "px": "256.79"
+   },
+   {
+    "sym": "IONQ",
+    "pct": "+12.5%",
+    "px": "32.15"
+   },
+   {
+    "sym": "WEN",
+    "pct": "+12.1%",
+    "px": "8.134"
+   }
+  ],
+  "movers_dn": [
+   {
+    "sym": "SNXX",
+    "pct": "-46.2%",
+    "px": "3.29"
+   },
+   {
+    "sym": "MVLL",
+    "pct": "-36.3%",
+    "px": "8.87"
+   },
+   {
+    "sym": "MUU",
+    "pct": "-36.1%",
+    "px": "13.92"
+   },
+   {
+    "sym": "KORU",
+    "pct": "-34.3%",
+    "px": "7.05"
+   },
+   {
+    "sym": "RAM",
+    "pct": "-33.8%",
+    "px": "5.21"
+   },
+   {
+    "sym": "SOXL",
+    "pct": "-33.5%",
+    "px": "46.67"
+   },
+   {
+    "sym": "DJT",
+    "pct": "-29.3%",
+    "px": "4.033"
+   },
+   {
+    "sym": "SKUU",
+    "pct": "-27.3%",
+    "px": "12.52"
+   },
+   {
+    "sym": "BWET",
+    "pct": "-25.4%",
+    "px": "683.15"
+   },
+   {
+    "sym": "SNDK",
+    "pct": "-23.4%",
+    "px": "839.03"
+   }
+  ]
+ }
 }

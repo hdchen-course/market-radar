@@ -155,6 +155,23 @@ SPEC = {
         }),
     },
 
+    # 開盤前戰略定調儀表板（資料由 signals/strategic_dashboard.py 的 dashboard_payload() 共用函式產生）
+    "dashboard": {
+        "summary": "str",
+        "generated": "str",
+        "riskoff": {"score": "str", "label": "str", "stress": "bool", "data_bad": "bool"},
+        "intraday": {"single": "str", "chop": "str", "label": "str"},
+        "breadth": {"text": "str", "up": "num", "dn": "num", "nn": "num"},
+        "risk_rows": ("list", 1, {"lbl": "str", "val": "str0", "chg": "str0"}),
+        "trend_rows": ("list", 1, {"lbl": "str", "val": "str0", "chg": "str0"}),
+        "etf": ("list", 1, {"grp": "str", "long": "str", "mult": "str", "long_chg": "str0",
+                            "short": "str", "short_chg": "str0", "rvol": "str0"}),
+        "lights": ("list", 1, {"name": "str", "signal": "str", "tok": "str", "why": "str0"}),
+        "binance": ("list", 1, {"name": "str", "price": "str0", "chg": "str0"}),
+        "movers_up": ("list", 0, {"sym": "str", "pct": "str", "px": "str"}),
+        "movers_dn": ("list", 0, {"sym": "str", "pct": "str", "px": "str"}),
+    },
+
     "footer": "str",
 }
 
@@ -209,6 +226,9 @@ def _check(value, spec, path, errs):
     if spec == "str":
         if not isinstance(value, str) or not value.strip():
             errs.append(f"{path}: 需為非空字串")
+    elif spec == "str0":   # 允許空字串（如儀表板某些 val/chg 欄可為空）
+        if not isinstance(value, str):
+            errs.append(f"{path}: 需為字串")
     elif spec == "num":
         if not isinstance(value, (int, float)) or isinstance(value, bool):
             errs.append(f"{path}: 需為數字")

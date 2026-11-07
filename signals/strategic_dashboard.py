@@ -498,6 +498,63 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
 </div>
 </div></body></html>"""
 
+def dashboard_payload(catalyst=""):
+    """抓資料＋計分＋結構化＝可共用的「儀表板資料單元」。
+    /dailyecreport 報告流程直接 import 本函式取得 dashboard 區塊資料（同一份抓資料程式碼，不重複）；
+    本檔 --embed-json 與（未來）JSON 版 viewer 也都用它。回傳純 dict（值皆為顯示字串，供前端暗色 render）。"""
+    d = collect((catalyst or "").strip())
+    riskoff, rsub, coverage, stress = score_riskoff(d)
+    trend, tsub, gap = score_trend(d)
+    lts, data_bad, deadcat = lights(riskoff, trend, coverage, d)
+    fmtc = lambda v, suf="%", dp=2: f(v, suf, dp, plus=True)
+    r_txt = (pick(riskoff, RISK_LABELS)[0] if (riskoff is not None and not data_bad) else "資料不全＝視同不可交易")
+    t_txt = pick(trend, TREND_LABELS)[0] if trend is not None else "N/A"
+    br_txt, br_tok, up, dn, nn = breadth(d)
+    ro = f"{riskoff:.0f}" if riskoff is not None else "—"
+    single = f"{trend:.0f}" if trend is not None else "—"
+    chop = f"{100 - trend:.0f}" if trend is not None else "—"
+    risk_rows = [
+        {"lbl": "美元 DXY", "val": f(d['dxy']), "chg": fmtc(d['dxy_dev'])},
+        {"lbl": "10Y 殖利率", "val": f(d['us10y'], '%'), "chg": fmtc(d['us10y_bps'], 'bp', 1)},
+        {"lbl": "2Y / 10Y 利差", "val": f(d['us2y'], '%'), "chg": fmtc(d['spread_2s10s'], '', 2)},
+        {"lbl": "3M / 30Y", "val": f(d['us3m'], '%'), "chg": f(d['us30y'], '%')},
+        {"lbl": "納指恐慌 VXN", "val": f(d['vxn'], '', 1), "chg": fmtc(d['vxn_chg'], '%', 1)},
+        {"lbl": "標普恐慌 VIX", "val": f(d['vix'], '', 1), "chg": fmtc(d['vix_chg'], '%', 1)},
+        {"lbl": "BTC 隱波 DVOL", "val": f(d['dvol'], '', 1), "chg": fmtc(d['dvol_chg'], '%', 1)},
+        {"lbl": "加密 F&G", "val": (str(d['fng']) if d['fng'] is not None else 'N/A'), "chg": (d['fng_cls'] or '')},
+    ]
+    trend_rows = [
+        {"lbl": "ES 標普期貨跳空", "val": "", "chg": fmtc(d['es_gap'])},
+        {"lbl": "NQ 納指期貨跳空", "val": f"昨 {fmtc(d['nq_yday'], '%', 1)}", "chg": fmtc(d['nq_gap'])},
+        {"lbl": "盤前期貨量能 RVOL", "val": "", "chg": (f"{d['premkt_rvol']:.1f}×" if d['premkt_rvol'] else "N/A")},
+        {"lbl": "DVOL ~24h 變動", "val": "", "chg": fmtc(d['dvol_chg'], '%', 1)},
+        {"lbl": "當日重大事件", "val": (d['catalyst'] or "無/未設"), "chg": ""},
+        {"lbl": "原油 WTI / Brent", "val": f(d['wti'], '', 1), "chg": f(d['brent'], '', 1)},
+    ]
+    etf = [{"grp": g[0], "long": d['etf'][g[0]]['long'], "mult": d['etf'][g[0]]['mult'],
+            "long_chg": fmtc(d['etf'][g[0]]['long_chg']), "short": d['etf'][g[0]]['short'],
+            "short_chg": fmtc(d['etf'][g[0]]['short_chg']),
+            "rvol": (f"{d['etf'][g[0]]['rvol']:.1f}×" if d['etf'][g[0]]['rvol'] else "N/A")} for g in ETF_PAIRS]
+    binance = [{"name": n, "price": (f(p, '', 2) if p else "N/A"), "chg": fmtc(c)} for n, (p, c) in d['binance'].items()]
+    for nm, key in [("黃金 XAU", "xau"), ("白銀 XAG", "xag"), ("鉑 XPT", "xpt"), ("鈀 XPD", "xpd"),
+                    ("TBT 2x空長債", "tbt"), ("GDX 金礦股", "gdx"), ("BITO 1xBTC期貨", "bito")]:
+        binance.append({"name": nm, "price": (f(d[key], '', 2) if d[key] else "N/A"), "chg": fmtc(d.get(key + "_chg"))})
+    lights_out = [{"name": n, "signal": t, "tok": tok, "why": w} for n, t, tok, w in lts]
+    mv = lambda lst: [{"sym": s, "pct": f"{p:+.1f}%", "px": f"{px:g}"} for s, p, px in (lst or [])]
+    summary = (f"Risk-Off {ro}/100（{r_txt}）｜日內大單邊 {single}%（{t_txt}）｜{br_txt}"
+               + ("｜⚠資料不全(週末/盤前空窗)視同不可交易" if data_bad else ""))
+    now = datetime.datetime.now(TPE).strftime("%Y-%m-%d %H:%M:%S")
+    return {
+        "summary": summary, "generated": now,
+        "riskoff": {"score": ro, "label": r_txt, "stress": bool(stress), "data_bad": bool(data_bad)},
+        "intraday": {"single": single, "chop": chop, "label": t_txt},
+        "breadth": {"text": br_txt, "up": up, "dn": dn, "nn": nn},
+        "risk_rows": risk_rows, "trend_rows": trend_rows, "etf": etf,
+        "lights": lights_out, "binance": binance,
+        "movers_up": mv(d.get("movers_up")), "movers_dn": mv(d.get("movers_dn")),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--open", action="store_true")
@@ -505,7 +562,13 @@ def main():
     ap.add_argument("--all", action="store_true", help="一次產出 3 種主題檔(挑風格用)")
     ap.add_argument("--catalyst", default="")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--embed-json", action="store_true",
+                    help="輸出 {summary,html,generated} JSON 供 dailyecreport 報告嵌入(不寫檔)")
     a = ap.parse_args()
+    if getattr(a, "embed_json", False):
+        # /dailyecreport 嵌入用：呼叫共用 function 取結構化資料並印出（報告流程亦可直接 import 本 function）。
+        print(json.dumps(dashboard_payload(a.catalyst.strip()), ensure_ascii=False))
+        return
     print("抓取資料中…", file=sys.stderr)
     d = collect(a.catalyst.strip())
     riskoff, rsub, coverage, stress = score_riskoff(d)
