@@ -23,7 +23,9 @@
   signals/.venv/bin/python strategic_dashboard.py --all              # 一次產 3 主題(挑風格用)
 """
 import sys, os, json, ssl, time, argparse, datetime, urllib.request, urllib.parse
+import re
 import concurrent.futures as _cf
+from email.utils import parsedate_to_datetime
 from collections import defaultdict
 
 TPE = datetime.timezone(datetime.timedelta(hours=8))
@@ -54,6 +56,18 @@ RVOL_HOT = 1.5
 ETF_PAIRS = [("QQQ", "TQQQ", "SQQQ", "3x"), ("半導體", "SOXL", "SOXS", "3x"),
              ("MSTR", "MSTU", "MSTZ", "2x"), ("NVDA", "NVDL", "NVD", "2x"),
              ("SK Hynix", "SKUU", "SKDD", "2x")]
+
+# ── Fed 24h 放話掃描(資訊監控·非訊號;方向不可測、秒級被定價,勿因單則放話追單) ──
+FED_PEOPLE = ["Powell", "Jefferson", "Bowman", "Waller", "Barr", "Cook", "Kugler", "Miran",
+              "Barkin", "Bostic", "Daly", "Logan", "Goolsbee", "Musalem", "Schmid",
+              "Hammack", "Collins", "Williams", "Harker", "Kashkari"]
+FED_HAWK = ["hawkish", "higher for longer", "restrictive", "patient", "no rush", "inflation risk",
+            "too soon", "caution", "premature", "rate hike", "hike"]
+FED_DOVE = ["dovish", "rate cut", "cut rates", "easing", "soften", "weakening labor", "downside risk"]
+FED_RSS = [("官方演講", "https://www.federalreserve.gov/feeds/speeches.xml", True),
+           ("官方新聞稿", "https://www.federalreserve.gov/feeds/press_all.xml", False)]
+FED_NEWS_Q = "(Fed OR Federal Reserve) (hawkish OR dovish OR rate cut OR rate hike OR inflation OR speech)"
+FED_HOURS = 24
 
 # ============================== 主題（美術設計 + 視覺醫生） ==============================
 # 每個主題給一組 CSS 變數。color_for() 把語意 token(ok/warn/danger/info/mut) 對應到主題色。
@@ -173,6 +187,57 @@ def binance_equity_movers(n=10):
         sys.stderr.write(f"[warn] movers klines: {e}\n")
     res.sort(key=lambda x: x[1], reverse=True)
     return res[:n], res[-n:][::-1]
+
+_FED_CACHE = {}
+def _fed_items(xml):
+    blocks = re.findall(r"<item>(.*?)</item>", xml, re.S) or re.findall(r"<entry>(.*?)</entry>", xml, re.S)
+    out = []
+    for it in blocks:
+        tm = re.search(r"<title>(.*?)</title>", it, re.S)
+        dm = re.search(r"<(?:pubDate|updated|published)>(.*?)</", it, re.S)
+        title = re.sub(r"<!\[CDATA\[|\]\]>", "", tm.group(1)).strip() if tm else ""
+        dt = None
+        if dm:
+            try:
+                dt = parsedate_to_datetime(dm.group(1).strip())
+                dt = dt.replace(tzinfo=datetime.timezone.utc) if dt.tzinfo is None else dt
+            except Exception:
+                dt = None
+        out.append((dt, title))
+    return out
+
+def fed_scan(hours=FED_HOURS):
+    """Fed 過去 N 小時放話掃描:官方演講/新聞稿 RSS + Google News RSS。純標準庫、抓不到回 ok=False 顯示 N/A 不編。
+       回傳 {"ok":bool, "items":[{dt,time,who,tone,title,src}]}(最新在前)。鷹/鴿為關鍵字粗判,非語氣判讀。"""
+    if hours in _FED_CACHE:
+        return _FED_CACHE[hours]
+    cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=hours)
+    tpe = datetime.timezone(datetime.timedelta(hours=8))
+    srcs = list(FED_RSS) + [("新聞", f"https://news.google.com/rss/search?q={urllib.parse.quote(FED_NEWS_Q)}"
+                             f"+when:{max(1, hours // 24)}d&hl=en-US&gl=US&ceid=US:en", True)]
+    items, ok_any = [], False
+    for label, url, show_tone in srcs:
+        try:
+            xml = _get(url, timeout=15)
+            ok_any = True
+        except Exception as e:
+            sys.stderr.write(f"[warn] fed {label}: {e}\n")
+            continue
+        for dt, title in _fed_items(xml):
+            if not dt or dt < cutoff or not title:
+                continue
+            tl = title.lower()
+            h, dv = sum(k in tl for k in FED_HAWK), sum(k in tl for k in FED_DOVE)
+            tone = "hawk" if h > dv else ("dove" if dv > h else "")
+            who = "/".join(p for p in FED_PEOPLE if re.search(rf"\b{p}\b", title))
+            items.append({"dt": dt, "time": dt.astimezone(tpe).strftime("%m/%d %H:%M"),
+                          "who": who, "tone": (tone if show_tone else ""), "title": title, "src": label})
+    items.sort(key=lambda x: x["dt"], reverse=True)
+    for it in items:
+        del it["dt"]
+    res = {"ok": ok_any, "items": items}
+    _FED_CACHE[hours] = res
+    return res
 
 # ============================== 計分 ==============================
 def band(v, bands):
@@ -416,6 +481,28 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
     deadcat_note = '<div class="warnline">⚠ 偵測到「昨日大跌＋今日跳空上漲」＝反轉風險(gap-and-fade)，綠燈禁用、需開盤後確認</div>' if deadcat else ''
     stress_tag = "　｜股市壓力旗標 ON(避險共振)" if stress else ""
 
+    # G. Fed 24h 放話掃描(資訊監控·非訊號)
+    fed = fed_scan(FED_HOURS)
+    if not fed["ok"]:
+        fed_body = '<tr><td class="na" colspan="4">N/A（RSS 來源本次抓取失敗）</td></tr>'
+    elif not fed["items"]:
+        fed_body = f'<tr><td class="na" colspan="4">過去 {FED_HOURS} 小時無相符條目</td></tr>'
+    else:
+        _tone_tag = {"hawk": '<span class="dn">🦅鷹</span>', "dove": '<span class="up">🕊鴿</span>', "": ""}
+        fed_body = "".join(
+            f'<tr><td class="mut">{it["time"]}</td>'
+            f'<td class="g">{it["who"] or ""}</td>'
+            f'<td>{it["title"][:90]}</td>'
+            f'<td class="num">{_tone_tag[it["tone"]]}</td></tr>'
+            for it in fed["items"][:14])
+    fed_section = (f'<div class="sec">G. Fed 過去 {FED_HOURS} 小時放話掃描'
+                   f'<span class="mut" style="margin-left:8px">資訊監控·非訊號·鷹/鴿為關鍵字粗判</span></div>'
+                   f'<div class="card" style="padding:6px 18px">'
+                   f'<table class="tbl"><tr><th>時間(台北)</th><th>講者</th><th>標題</th>'
+                   f'<th style="text-align:right">傾向</th></tr>{fed_body}</table>'
+                   f'<div class="mini" style="padding:8px 0">💡 Fed 官員放話會動盤但方向不可測、秒級被定價；'
+                   f'當盤前背景資訊,勿因單則放話追單。來源:聯準會官方 RSS + Google News RSS(免費)。</div></div>')
+
     return f"""<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0"><title>開盤前戰略定調儀表板</title>
 {build_style(th)}</head><body><div class="wrap">
@@ -490,6 +577,8 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
 </div>
 <div class="mini" style="margin:6px 2px 0">💡 全幣安美股永續(underlyingType=EQUITY)自動掃描、免維護清單；反向/做空VIX類ETF(SOXS/SQQQ/UVXY)衝上漲榜＝市場在避險/做空該板塊，做多槓桿ETF(SOXL/MUU/KORU)墊底＝該板塊被殺。5日%=最新vs5日前日線收。</div>
 
+{fed_section}
+
 <div class="foot">
   ⚠ 啟發式規則層(IF/THEN 門檻集中於程式 CONFIG、經驗權重未回測)，<b>非投資建議、不臆測你的持倉</b>。
   資料源：Yahoo chart(VIX/VXN/DXY/US2Y/10Y/30Y/3M/ES/NQ/ETF 日線)、Deribit(BTC DVOL)、Alternative.me(加密 F&amp;G)、Binance 永續(標的+貴金屬)。
@@ -552,6 +641,7 @@ def dashboard_payload(catalyst=""):
         "risk_rows": risk_rows, "trend_rows": trend_rows, "etf": etf,
         "lights": lights_out, "binance": binance,
         "movers_up": mv(d.get("movers_up")), "movers_dn": mv(d.get("movers_dn")),
+        "fed": fed_scan(FED_HOURS),  # /dailyecreport 嵌入用:{ok, items:[{time,who,tone,title,src}]}
     }
 
 
