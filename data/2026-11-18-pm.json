@@ -1,0 +1,352 @@
+{
+  "meta": {
+    "date": "2026-11-18",
+    "type": "pm",
+    "version": "V4.5",
+    "theme": "鷹派前夕的去槓桿：貴金屬＋工業金屬複合體暴殺（金一年低 $3,776/-2.3%、銀 -5.0%、銅 -5.4%、鉑 -4.7%），但唯『金』一腿有新聞佐證（Reuters 11/18：hawkish Fed signals 推升美元→金跌破一年低、Fed 會議紀要 11/19 前賣壓加深）；銀/銅/鉑的超額跌幅 DXY 僅 +0.22% 撐不起＝更像高波動日『全面去 grossing／商品連動清算』，具體催化待查（對抗 subagent 已將『銅＝成長憂慮＋強美元』降級）。股市這邊訊號相反：NVDA 盤後 beat 後常規盤開盤 AI 鏈相對守住（SOXX +0.72%、AVGO +2.69%、AMD +2.12%、NVDA 僅 -0.14%），大盤 SPY 僅 -0.62%——金屬的暴殺與股市的『溫和消化』分屬兩個戰場。MSTR -7.5% 破 100（續創低）＝股票高 beta／mNAV 溢價壓縮（BTC 僅 -1.9% 撐不起，此歸因 CONFIRMED）。12 月升息機率市場讀 ~95%（24/7 Wall St 11/18）、10Y 連站 5%+、F&G 11 極度恐懼、VIX 25.7 偏高。信用面仍局部：HY OAS 3.34%（截至 11/16，+11bp）、IG 0.90 未動＝尚未系統性（『鎖在 AI 端』無 sector 分解數據、不寫死）。",
+    "regime": {
+      "label": "鷹派升息循環（12月 ~95%、10Y 破 5%、美元 19 月高）為中期天花板 × 當日主戲＝貴金屬／工業金屬複合體去槓桿暴殺（唯金一腿有 Fed 新聞佐證，銀/銅/鉑超額跌幅＝高波動日全面去 grossing、催化待查）｜股市 AI 鏈相對守住（NVDA beat 後 SOXX +0.72%）＝兩個戰場分化｜VIX 25.7、F&G 11｜信用局部（HY 3.34% 走闊/IG 未動，尚未系統性）",
+      "color": "yellow"
+    },
+    "generated_tpe": "2026-11-18 23:10 台北（週三夜，美股週三 11/18 常規盤開盤約 40 分，NVDA beat 後首個常規盤）",
+    "us_session": "美股週三 11/18 盤中（開盤 10:00 EST 後）＋加密/貴金屬即時"
+  },
+
+  "s0_backtest": {
+    "prev": "2026-11-18-am",
+    "hit_summary": "方向大致對、但『貴金屬低檔整理』嚴重低估跌幅——am 的 Base(44%) 給『beat 後震盪消化：SOXX 139–148、BTC 守 POC 63.8k–68k、金 3,780–3,900、VIX 回落 22–24』。至週三盤中：**SOXX 142.5（+0.72%）於 139–148 內 ✅**、**BTC 63.7k 守 POC 63,794 一帶 ✅（偏下緣）**、**金 3,776 跌破 3,780 下緣 ❌（殺超預期、一年低）**、**VIX 25.7 未回落到 22–24 ❌（仍偏高）**；最大失誤＝**白銀 am 給 45.3–47.8 偏空、實際 -5.0% 殺到 45.4 下緣且盤中見 45.1，XAG/銅/鉑整組金屬去槓桿暴殺的『量級』被低估**。Bull(30%) relief 只在 SOXX 半導體兌現、未擴散到貴金屬。",
+    "rows": [
+      {"sym": "SOXX", "pred_range": "139–148（Base）", "pred_dir": "beat 站穩但大盤不敢追", "actual": "142.5（+0.72%，守區間）", "result": "✅ 區間內，半導體相對守住"},
+      {"sym": "BTC", "pred_range": "62,500–66,500 守 POC 63,794", "pred_dir": "區間守支撐", "actual": "63,719（-1.94%，貼 POC）", "result": "✅ 守 POC 下緣"},
+      {"sym": "XAU 黃金", "pred_range": "3,760–3,880", "pred_dir": "偏空整理", "actual": "3,776（-2.32%，一年低）", "result": "△ 區間內但貼下緣、續殺"},
+      {"sym": "XAG 白銀", "pred_range": "45.3–47.8", "pred_dir": "偏空、跌破 46 看 45.3", "actual": "45.42（-5.02%，盤中見 45.1）", "result": "❌ 跌幅量級嚴重低估"},
+      {"sym": "VIX", "pred_range": "回落 22–24（Base）", "pred_dir": "超賣修復", "actual": "25.72（仍偏高）", "result": "❌ 未回落"}
+    ],
+    "lesson": "教訓：①**『低檔整理』不等於『跌不動』**——am 把貴金屬定調低檔整理，實際金屬複合體（金/銀/銅/鉑）在 Fed 會議紀要前集體去槓桿暴殺，白銀 -5%、銅 -5.4%，量級遠超 ATR 預估區間。高波動＋鷹派前夕，無息＋工業金屬是『全面去 grossing』的第一順位犧牲品，預估區間要放寬。②**對抗驗證（本期）直接推翻一條歸因**：把銅/銀的暴跌掛『強美元』是量級跳級——DXY 當日僅 +0.22%，撐得起金 -2.3% 的貨幣腿、撐不起銀 -5%／銅 -5.4%；真正吻合數據的是『高波動日去槓桿／商品連動清算』，只有金有 Reuters 新聞佐證可保留為乾淨 Fed 因果，銅降級為『催化待查』。③**兩個戰場分化**：金屬暴殺 vs 股市 NVDA beat 後相對守住（SOXX +0.72%）——別把金屬的 risk-off 直接套到股市，當日股市沒在喊 growth scare（AVGO/AMD 逆漲）。"
+  },
+
+  "s1_quotes": {
+    "assets": [
+      {"sym": "BTC", "name": "比特幣(幣安24h)", "price": "63,719", "chg": "-1.94%", "dir": "down"},
+      {"sym": "ETH", "name": "以太坊(幣安24h)", "price": "1,778.70", "chg": "-1.96%", "dir": "down"},
+      {"sym": "XAU", "name": "黃金(幣安24h)", "price": "3,776", "chg": "-2.32%", "dir": "down"},
+      {"sym": "XAG", "name": "白銀(幣安24h)", "price": "45.42", "chg": "-5.02%", "dir": "down"},
+      {"sym": "COPPER", "name": "銅(幣安24h)", "price": "5.767", "chg": "-5.40%", "dir": "down"},
+      {"sym": "XPD", "name": "鈀(幣安24h)", "price": "956.24", "chg": "-2.87%", "dir": "down"},
+      {"sym": "XPT", "name": "鉑(幣安24h)", "price": "1,377", "chg": "-4.73%", "dir": "down"},
+      {"sym": "NVDA", "name": "輝達(週三盤中)", "price": "155.84", "chg": "-0.14%", "dir": "down"},
+      {"sym": "TSM", "name": "台積電ADR(盤中)", "price": "365.65", "chg": "-0.86%", "dir": "down"},
+      {"sym": "MU", "name": "美光(盤中)", "price": "715.99", "chg": "-0.05%", "dir": "down"},
+      {"sym": "QCOM", "name": "高通(盤中)", "price": "166.15", "chg": "-1.27%", "dir": "down"},
+      {"sym": "AVGO", "name": "博通(盤中)", "price": "350.73", "chg": "+2.69%", "dir": "up"},
+      {"sym": "AMD", "name": "超微(盤中)", "price": "517.96", "chg": "+2.12%", "dir": "up"},
+      {"sym": "INTC", "name": "英特爾(盤中)", "price": "55.35", "chg": "+0.91%", "dir": "up"},
+      {"sym": "MSFT", "name": "微軟(盤中)", "price": "506.76", "chg": "-1.12%", "dir": "down"},
+      {"sym": "GOOGL", "name": "Alphabet(盤中)", "price": "284.49", "chg": "+0.36%", "dir": "up"},
+      {"sym": "META", "name": "Meta(盤中)", "price": "621.01", "chg": "-0.65%", "dir": "down"},
+      {"sym": "AMZN", "name": "亞馬遜(盤中)", "price": "264.49", "chg": "+1.88%", "dir": "up"},
+      {"sym": "TSLA", "name": "特斯拉(盤中)", "price": "386.59", "chg": "+1.24%", "dir": "up"},
+      {"sym": "PLTR", "name": "Palantir(盤中)", "price": "157.75", "chg": "-1.81%", "dir": "down"},
+      {"sym": "MSTR", "name": "MicroStrategy(盤中)", "price": "95.24", "chg": "-7.51%", "dir": "down"},
+      {"sym": "EWY", "name": "南韓ETF(盤中)", "price": "138.08", "chg": "+1.60%", "dir": "up"},
+      {"sym": "SPY", "name": "標普500 ETF(盤中)", "price": "736.03", "chg": "-0.62%", "dir": "down"},
+      {"sym": "SPCX", "name": "SpaceX proxy(幣安24h)", "price": "143.86", "chg": "+1.89%", "dir": "up"},
+      {"sym": "SOXX", "name": "費半ETF(盤中)", "price": "142.48", "chg": "+0.72%", "dir": "up"}
+    ],
+    "macro": {
+      "dxy": "103.72 (+0.22%，19 月高一帶)",
+      "vix": "25.72 (偏高、未回落)",
+      "us10y": "5.06% (連站 5%+)",
+      "us30y": "5.42%",
+      "hy_oas": "3.34%（截至 11/16，+11bp／週）",
+      "ig_oas": "0.90%（截至 11/16，未動）",
+      "taiex": "40,195 (-2.06%，亞股 risk-off)",
+      "usdjpy": "159.21 (日圓弱、carry 未平倉)",
+      "fng": "11 極度恐懼",
+      "move": "97.9 (-3.9%)",
+      "jp10y": "暫缺（Yahoo 取不到，RSS 未見破關卡快訊）",
+      "de10y": "暫缺"
+    }
+  },
+
+  "s2_regime": {
+    "rows": [
+      {"dim": "核心變數", "content": "① 當日主戲＝貴金屬＋工業金屬複合體去槓桿暴殺（金 -2.3% 一年低、銀 -5.0%、銅 -5.4%、鉑 -4.7%）；唯『金』一腿有 Reuters 11/18 新聞佐證（hawkish Fed→美元→金一年低），銀/銅/鉑的超額跌幅 DXY 僅 +0.22% 量級撐不起＝高波動日全面去 grossing、具體催化待查。② 鷹派升息循環（12 月 ~95%、10Y 連站 5%、美元 19 月高、Fed 會議紀要 11/19）＝中期天花板與無息資產逆風。"},
+      {"dim": "短期（1–3 日）", "content": "金屬賣壓在 Fed 會議紀要（11/19）前加深（FXEmpire 11/18『selloff deepens before Fed minutes』）；股市則 NVDA beat 後相對守住（SOXX +0.72%、AVGO/AMD 逆漲），兩個戰場分化。超賣（F&G 11）具 relief 反彈燃料，但鷹派天花板＋金屬去槓桿動能限制高度。"},
+      {"dim": "中期（1–4 週）", "content": "12 月 FOMC（市場讀 ~95% 升息、Williams 排除 jumbo＝收斂至 25bp）定調；若如 Musalem 所言進入連續升息，高估值股與無息金銀續承壓。金的結構長多（去美元化／央行購金，Goldman 2028 看 $5,600）與短期鷹派＋去槓桿逆風須分清——別把短期暴殺誤判成結構轉空。"},
+      {"dim": "長期（季度）", "content": "AI capex boom 結構未變（NVDA $130B 財測印證、AI 鏈股價相對守住）；利率週期逆風拉長。貴金屬長多邏輯未破，當前是週期性逆風＋流動性擠壓的疊加，非結構反轉。"},
+      {"dim": "Regime 判定", "content": "鷹派升息循環（中期天花板）× 當日金屬複合體去槓桿暴殺（唯金有新聞、銀/銅/鉑催化待查）；股市 AI 鏈相對守住＝分化。信用面仍局部（HY 3.34% 走闊、IG 0.90 未動，尚未系統性 risk-off）。看 11/19 Fed 會議紀要與金屬能否止血。"}
+    ]
+  },
+
+  "s3_consensus": {
+    "rows": [
+      {"theme": "貴金屬齊跌歸因", "expect": "直覺：『強美元殺金銀』一句帶過", "actual": "DXY 當日僅 +0.22%、金 -2.3%/銀 -5.0%/銅 -5.4%/鉑 -4.7%", "mispricing": "量級跳級：DXY +0.22% 撐得起金的貨幣腿、撐不起銀/銅/鉑的超額跌幅。真正吻合數據＝高波動日全面去 grossing／商品連動清算；只有金有 Reuters 新聞佐證可保留為乾淨 Fed/實質利率因果，銅/銀超額部分催化待查（對抗 subagent 已將『銅＝成長憂慮+強美元』降級為 REFUTED）"},
+      {"theme": "金屬 risk-off vs 股市", "expect": "金屬暴殺＝全面 risk-off、股市應同崩", "actual": "SPY -0.62%、SOXX +0.72%、AVGO +2.69%、AMD +2.12%、NVDA -0.14%", "mispricing": "兩個戰場分化：股市沒在喊 growth scare（AI 鏈逆漲），若銅真是成長恐慌股應同跌但沒有——別把金屬的去槓桿暴殺直接套到股市定價"},
+      {"theme": "12 月 Fed", "expect": "少數仍賭 hold（白宮施壓）", "actual": "市場讀升息 ~95%（24/7 Wall St 11/18）、10Y 連站 5%、官員集體鷹派", "mispricing": "賭 hold 者對抗數據與官員放話；Williams 排除 jumbo＝升幅收斂 25bp。11/19 會議紀要是下一個鷹鴿檢查點"},
+      {"theme": "信用面", "expect": "金屬崩可能引爆系統性信用事件", "actual": "HY 3.34%（截至 11/16，+11bp）走闊但 IG 0.90 未動、HYG/JNK 幾乎持平", "mispricing": "壓力尚未系統性外溢——但 HY 是 11/16 落後值（非今日盤中）、且無 sector 分解數據，不可寫死『鎖在 AI 端』，僅能說總體信用尚未齊飆"}
+    ],
+    "alert": "最大 Mispricing：市場（與直覺）把整個貴金屬＋工業金屬複合體的暴殺掛在『強美元』上——但 DXY 當日僅 +0.22%，量級完全撐不起銀 -5%／銅 -5.4%。對抗驗證的結論是：真正吻合數據的讀法是『鷹派前夕（Fed 會議紀要 11/19）的高波動去槓桿／商品連動清算』，其中只有黃金一腿有 Reuters/CNBC 新聞佐證可保留為乾淨的 Fed/實質利率因果；銀、銅、鉑的超額跌幅具體催化待查，不得用『強美元』或『成長憂慮』這種未達量級/無來源的敘事填滿。股市這邊 AI 鏈相對守住（NVDA beat 後 SOXX +0.72%）進一步證明這不是一場乾淨的全面宏觀 risk-off。"
+  },
+
+  "s4_matrix": {
+    "rows": [
+      {"rank": "1", "asset": "AVGO 博通", "chg": "+2.69%", "st": "偏多(逆勢)", "driver": "AI ASIC/客製晶片需求能見度、NVDA beat 後 AI 鏈分化最強"},
+      {"rank": "2", "asset": "AMD 超微", "chg": "+2.12%", "st": "偏多(逆勢)", "driver": "晶片板塊逆金屬暴殺翻紅、MI 系列 AI 需求"},
+      {"rank": "3", "asset": "SPCX (SpaceX proxy)", "chg": "+1.89%", "st": "中", "driver": "一級市場 proxy、與大盤低相關（幣安 24h）"},
+      {"rank": "4", "asset": "AMZN 亞馬遜", "chg": "+1.88%", "st": "中", "driver": "防禦性相對抗跌、AWS AI 需求"},
+      {"rank": "5", "asset": "EWY 南韓ETF", "chg": "+1.60%", "st": "中", "driver": "記憶體/半導體權值撐、南韓科技相對強"},
+      {"rank": "6", "asset": "TSLA 特斯拉", "chg": "+1.24%", "st": "中", "driver": "大盤殺中逆勢翻紅、驅動待查"},
+      {"rank": "7", "asset": "INTC 英特爾", "chg": "+0.91%", "st": "中", "driver": "晶片板塊相對抗跌"},
+      {"rank": "8", "asset": "GOOGL Alphabet", "chg": "+0.36%", "st": "中", "driver": "大型科技相對穩、AI 需求支撐"},
+      {"rank": "9", "asset": "MU 美光", "chg": "-0.05%", "st": "中", "driver": "記憶體相對抗跌、幾近持平"},
+      {"rank": "10", "asset": "NVDA 輝達", "chg": "-0.14%", "st": "中", "driver": "beat 後常規盤小幅回吐、相對守住"},
+      {"rank": "11", "asset": "SPY 標普500", "chg": "-0.62%", "st": "中", "driver": "大盤溫和消化、未隨金屬暴殺"},
+      {"rank": "12", "asset": "META", "chg": "-0.65%", "st": "中", "driver": "大型科技小跌"},
+      {"rank": "13", "asset": "TSM 台積電", "chg": "-0.86%", "st": "中", "driver": "晶片鏈小跌、相對守住"},
+      {"rank": "14", "asset": "MSFT 微軟", "chg": "-1.12%", "st": "中", "driver": "軟體/雲端小跌"},
+      {"rank": "15", "asset": "QCOM 高通", "chg": "-1.27%", "st": "中", "driver": "手機晶片相對弱"},
+      {"rank": "16", "asset": "PLTR Palantir", "chg": "-1.81%", "st": "偏空", "driver": "高估值軟體高 beta、鷹派殺估值"},
+      {"rank": "17", "asset": "BTC 比特幣", "chg": "-1.94%", "st": "偏空", "driver": "風險情緒偏弱連動、貼 POC 63,794；相對銀/MSTR 今日抗跌"},
+      {"rank": "18", "asset": "ETH 以太坊", "chg": "-1.96%", "st": "偏空", "driver": "隨 BTC、funding 偏空擁擠"},
+      {"rank": "19", "asset": "XAU 黃金", "chg": "-2.32%", "st": "偏空", "driver": "hawkish Fed→美元→一年低（Reuters 11/18 佐證）；實質利率逆風", "leg_tag": "貨幣/避險"},
+      {"rank": "20", "asset": "XPD 鈀", "chg": "-2.87%", "st": "偏空", "driver": "工業金屬複合體去槓桿波及", "leg_tag": "工業"},
+      {"rank": "21", "asset": "XPT 鉑", "chg": "-4.73%", "st": "偏空", "driver": "工業金屬去槓桿暴殺、超額跌幅催化待查", "leg_tag": "工業"},
+      {"rank": "22", "asset": "XAG 白銀", "chg": "-5.02%", "st": "偏空", "driver": "貨幣腿隨金殺＋工業腿放大（高 beta 清算）；超額部分催化待查", "leg_tag": "貨幣+工業雙殺"},
+      {"rank": "23", "asset": "COPPER 銅", "chg": "-5.40%", "st": "偏空", "driver": "【對抗降級】成長/強美元敘事量級撐不起，疑高波動日商品連動清算、具體催化待查", "leg_tag": "工業(待查)"},
+      {"rank": "24", "asset": "MSTR MicroStrategy", "chg": "-7.51%", "st": "偏空", "driver": "股票高 beta／mNAV 溢價壓縮（BTC 僅 -1.9% 撐不起，CONFIRMED）；破 100 續創低"}
+    ]
+  },
+
+  "s5_risk": {
+    "risks": [
+      {"risk": "金屬去槓桿螺旋外溢——白銀/銅續殺拖累礦股（GDX 今 -7%）、情緒感染股市", "prob": "中", "impact": "貴金屬複合體再探低、礦股/相關 ETF 高 beta 殺", "assets": "XAG/XAU/COPPER/GDX", "severity": 3},
+      {"risk": "12 月 Fed 升息確認＋Fed 會議紀要(11/19)偏鷹／暗示連續升息", "prob": "高", "impact": "高估值股+無息金銀續殺、美元再走高、10Y 續站 5%+", "assets": "金/銀/BTC/高估值科技", "severity": 4},
+      {"risk": "HY+IG 齊飆升級成系統性 risk-off（目前 IG 0.90 未動＝未觸發）", "prob": "低", "impact": "全面去槓桿、金/加密從承接變被拖下水", "assets": "全資產", "severity": 5},
+      {"risk": "NVDA beat relief 夭折：常規盤『賣利多』、鷹派壓過財報", "prob": "中", "impact": "AI 鏈 relief 收斂、SOXX 回落 141 下緣", "assets": "SOXX/NVDA/AVGO/AMD", "severity": 3},
+      {"risk": "MSTR 破 Put 牆 90／mNAV 溢價續壓→加密去槓桿加深", "prob": "中", "impact": "MSTR 奔 VAL 83.8、連動 BTC 情緒", "assets": "MSTR/BTC/ETH", "severity": 3},
+      {"risk": "BTC 跌破 POC 63,794 奔 VAL 57,759（Wintermute $50,000s 劇本）", "prob": "中", "impact": "加密去槓桿加深、MSTR 連動殺", "assets": "BTC/ETH/MSTR", "severity": 3}
+    ],
+    "setups": [
+      {"asset": "XAU 黃金", "price": "3,776", "pattern": "跌破 VA 偏空／Hikkake(bull)低檔反轉混雜", "basis": "跌破 VAL 3,969（日線 VPVR）、價於 VA 之下；radar 偏空 2 vs 9"},
+      {"asset": "XAG 白銀", "price": "45.42", "pattern": "光頭光腳+吞沒(bear)、深度跌破 VA", "basis": "跌破 VAL 46.01、LVN 47.70 轉上壓；radar 偏空 3 vs 8"},
+      {"asset": "COPPER 銅", "price": "5.767", "pattern": "單日 -5.4% 暴殺(待查)", "basis": "工業金屬複合體去槓桿、具體催化待查"},
+      {"asset": "XPT 鉑", "price": "1,377", "pattern": "工業腿暴殺 -4.7%", "basis": "隨金屬複合體去槓桿"},
+      {"asset": "XPD 鈀", "price": "956", "pattern": "工業腿殺 -2.9%", "basis": "相對抗跌於鉑/銀"},
+      {"asset": "SOXX 費半", "price": "142.5", "pattern": "錘子線(bull)低檔承接", "basis": "ST 日線上軌 160/下軌 123.3、價夾中間盤整；守 141 下緣"},
+      {"asset": "BTC 比特幣", "price": "63,719", "pattern": "吞沒(bear)、貼 POC", "basis": "VA 內、POC 63,794 多空分界；跌破 VAL 57,759 轉空"},
+      {"asset": "ETH 以太坊", "price": "1,779", "pattern": "吞沒(bear)+鑷底(bull)混雜", "basis": "貼 VAL 1,768；funding -0.003% 空頭擁擠"},
+      {"asset": "MSTR", "price": "95.24", "pattern": "捉腰帶+三外部(bear)、破 VA 下緣", "basis": "跌破 VA 下緣 98.67、破 100；POC 97.4 轉上壓、Put 牆 90 支撐"},
+      {"asset": "NVDA 輝達", "price": "155.84", "pattern": "beat 後常規盤小幅回吐", "basis": "相對守住、看能否站穩盤後缺口"},
+      {"asset": "PLTR", "price": "157.75", "pattern": "高估值高 beta 回落", "basis": "鷹派殺估值、軟體相對弱"},
+      {"asset": "AVGO 博通", "price": "350.73", "pattern": "逆勢紅 K", "basis": "AI ASIC 需求、殺盤中逆漲＝資金認可基本面"}
+    ]
+  },
+
+  "s6": {
+    "xau": {
+      "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；radar 偏空 2 vs 9。價 3,770 跌破 Value Area 下緣 3,770.67＝離開籌碼區下行、無息資產逢鷹派＋去槓桿雙逆風。1d CVD 淨流出 -393,659＝派發。",
+      "scorecard": [
+        {"factor": "DXY 美元", "read": "103.72 +0.22%、19 月高一帶（但當日量級只撐得起貨幣腿）", "score": "-1 利空"},
+        {"factor": "實質利率/10Y", "read": "10Y 5.06% 連站 5%、Oct CPI 3.7%＝實質利率升壓無息資產", "score": "-2 強利空"},
+        {"factor": "央行購金", "read": "結構長多未變（Goldman 2028 看 $5,600）", "score": "+1 利多(長線)"},
+        {"factor": "SuperTrend", "read": "三框中、跌破 VA 下緣、radar 偏空", "score": "-2 偏空"},
+        {"factor": "地緣", "read": "無活躍地緣 bid（油價自己也跌 -1.9%）", "score": "0 中性"}
+      ],
+      "bias_24h": "24h 區間預估（ATR ±約 $55）：3,720–3,830。偏空整理，守 3,760 心理關；跌破 3,760 看 3,720；站回 VAL 3,861(幣安)／3,969(日線) 才轉中性。鷹派實質利率是最大對手盤，但量級上今日銀/銅的暴殺非金可解釋。",
+      "ops": [
+        {"scenario": "偏空續跌", "entry": "反彈至 3,861(VAL) 遇壓", "stop": "3,900 上方", "target": "3,760→3,720", "rr": "1:2"},
+        {"scenario": "超跌反彈(需鷹派退潮/會議紀要偏鴿)", "entry": "站回 3,861", "stop": "3,740", "target": "3,969→4,000", "rr": "1:2.5"}
+      ],
+      "scenarios_5d": [
+        {"name": "鷹派續壓", "prob": "45%", "desc": "12 月升息確認、會議紀要偏鷹、10Y 守 5%+、金於 3,720–3,830 低檔整理"},
+        {"name": "超跌反彈", "prob": "35%", "desc": "會議紀要偏鴿/美元回落→金止穩彈回 3,900–3,969"},
+        {"name": "破位加速", "prob": "20%", "desc": "官員暗示連續升息/美元再飆→金破 3,720 奔 3,680"}
+      ],
+      "extra": "黃金→白銀傳導：金跌破 VA、金銀比 GSR ~83.5（5 日 +6.4）＝金銀比擴大。但今日銀 -5.0% 遠大於金 -2.3%＝銀的超額跌幅非『金的貨幣腿』可解釋——是去槓桿時銀（流動性薄）被放大清算＋工業腿（鉑 -4.7%/銅 -5.4%）同向拖累的疊加，工業腿是『貢獻因子之一』非已證實主因（對抗 subagent：PLAUSIBLE 需 caveat）。金這一腿有 Reuters 11/18 新聞佐證（hawkish Fed→美元→一年低）可保留為乾淨 Fed 因果。"
+    },
+
+    "xag": {
+      "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；radar 偏空 3 vs 8。價 45.25 跌破 Value Area 下緣 46.01＝離開籌碼區下行。1d CVD 淨流出 -11,988,872＝大額派發。日 K 光頭光腳+吞沒(bear) 單邊強勢。",
+      "scorecard": [
+        {"factor": "DXY 美元", "read": "103.72 +0.22%（量級撐不起銀 -5%）", "score": "-1 利空(間接)"},
+        {"factor": "黃金方向", "read": "金 -2.3% 一年低、跌破 VA＝貨幣腿拖累銀", "score": "-2 強利空"},
+        {"factor": "金銀比 GSR", "read": "~83.5、5 日 +6.4 擴大＝銀 relatively 弱於金", "score": "-1 偏空"},
+        {"factor": "SuperTrend", "read": "三框中、跌破 VAL、radar 偏空", "score": "-2 偏空"},
+        {"factor": "COT 空頭", "read": "短空口數 16,787（詳見工具參考欄三尺度）", "score": "-1 偏空(落後)"},
+        {"factor": "工業腿", "read": "銅 -5.4%/鉑 -4.7% 同向、工業需求面弱但催化待查", "score": "-1 偏空(待查)"},
+        {"factor": "風險事件", "read": "Fed 會議紀要 11/19 前去槓桿、高波動", "score": "-1 偏空"}
+      ],
+      "bias_24h": "24h 區間預估（ATR ±約 $1.5）：44.0–46.5。深度偏空，盤中已見 45.1；跌破 45 看 44.3→44；站回 LVN 47.70／VAL 46.01 才轉中性。銀是去槓桿第一順位犧牲品，區間要放寬。",
+      "ops": [
+        {"scenario": "偏空續跌", "entry": "反彈至 46.01(VAL)/47.70(LVN) 遇壓", "stop": "48.0 上方", "target": "44.3→44.0", "rr": "1:2"},
+        {"scenario": "超跌反彈(需金止穩+鷹派退潮)", "entry": "站回 46.01", "stop": "44.8", "target": "48.0→51.74(POC)", "rr": "1:2.5"}
+      ],
+      "scenarios_5d": [
+        {"name": "隨金續殺", "prob": "45%", "desc": "金屬複合體去槓桿未止、銀於 44–46 低檔；跌破 44 看 42"},
+        {"name": "超跌反彈", "prob": "35%", "desc": "金止穩/會議紀要偏鴿→銀彈回 47.7–51.7，但金銀比仍偏高限制反彈"},
+        {"name": "破位加速", "prob": "20%", "desc": "去槓桿螺旋/工業需求再殺→銀破 44 奔 42"}
+      ],
+      "extra": "籌碼/屬性/風控：COT 短空口數 16,787（截至 11/10，詳見工具參考欄三尺度分位）；1d CVD 大額派發 -11,988,872＝賣壓真實非帶寬。屬性判定：金銀比 83.5 擴大＝銀 relatively 弱於金，但今日銀 -5% 的超額跌幅是『貨幣腿隨金殺＋工業腿（銅/鉑同向）＋去槓桿高 beta 放大清算』的疊加，非單一屬性可解釋（工業腿為貢獻因子之一非主因，對抗 subagent PLAUSIBLE）。風控：支撐 45→44.3→44，極端 42；反彈上壓 LVN 47.70／VAL 56.39。銀流動性薄、去槓桿日易 overshoot，區間要放寬、止損從嚴。",
+      "signals_box": "🔧 signals 工具參考欄（STEP 3.6，silver_daily.py，實驗性參考非進場依據）：① 工具綜合傾向【偏多(高信心)】score +8——★注意：此工具明示『偏多側訊號較可靠、偏空側結構性失效』，當前金銀齊跌時其偏多訊號(S3/S3H 金銀比均值回歸)明示失效，不可當作『該抄底做多』；② 觸發訊號 S3/S3H（金銀比 5 日 +2 的均值回歸多單）＝僅輔助/資料窺探，GSR 分層界 81.6 當前 ~83.5 已過界但三年窗口掉到不可用；背景燈 OIL_WEAK_GREEN / GSR_CHEAP_GREEN。③ **COT 空頭多尺度分位（截至 11/10，落後約 10 天）**：短空口數 16,787｜short_pct26 = **100.0%**（26 週最高）｜short_pct52 = **80.4%**（5 年高）｜short_pct260 = **18.5%**（10 年低）｜short_range26 全距 8,123 口。★三尺度並陳＝典型『帶寬假象』：26 週看空單擁擠到頂、260 週(10 年)看其實偏低，只寫單一尺度會誤讀。COT 落後、只反映 11/10 結構、不能抓即時軋空頂底。④ **工具傾向(偏多)與我主觀判斷(偏空)衝突，兩者並陳不強行統一**：工具是均值回歸多單邏輯、在趨勢性去槓桿暴殺中失效；我依 radar 偏空+跌破 VAL+金屬複合體去槓桿判偏空。工具實驗性、樣本外驗證未完成，僅參考。"
+    },
+
+    "btc": {
+      "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；radar 偏空 2.0 vs 6.5。價 63,824 於 VA 內、貼 POC 63,794（多空分界）。funding 0.0034%（近120期分位25%）、OI 93,938。1d CVD 淨流出 -105,259＝派發，但短線 CVD 後半轉流入（可能短彈/止穩）。日 K 吞沒(bear)。",
+      "scorecard": [
+        {"factor": "DXY 美元", "read": "103.72 +0.22%、美元強＝加密逆風", "score": "-1 利空"},
+        {"factor": "加密 F&G", "read": "11 極度恐懼＝超賣、反向具反彈燃料", "score": "+1 利多(反向)"},
+        {"factor": "Funding", "read": "0.0034% 分位 25% 偏低、不過熱", "score": "0 中性"},
+        {"factor": "OI/未平倉", "read": "93,938、去槓桿後水位；CVD 結構派發", "score": "-1 偏空"},
+        {"factor": "美股連動", "read": "SPY -0.62%、風險情緒偏弱但 AI 鏈相對守住", "score": "0 中性偏空"},
+        {"factor": "鏈上/技術", "read": "連日守 POC 63,794；跌破奔 VAL 57,759（Wintermute $50,000s 需破 200 週均）", "score": "-1 偏空"}
+      ],
+      "bias_24h": "24h 區間預估（ATR ±約 $1,800）：61,900–65,500。區間守 POC 63,794；站穩需短線 CVD 持續翻正＋美股 relief；跌破 VAL 57,759 才轉空方確認。今日 BTC -1.9% 相對銀/MSTR 其實抗跌（不宜寫成被恐慌領跌）。",
+      "ops": [
+        {"scenario": "區間守支撐", "entry": "回踩 POC 63,794 守住+短線 CVD 翻正", "stop": "62,000 下方", "target": "66,500→68,183(LVN)", "rr": "1:2"},
+        {"scenario": "跌破轉空", "entry": "跌破 POC 63,794+CVD 續流出", "stop": "65,000", "target": "61,900→57,759(VAL)", "rr": "1:2.5"}
+      ],
+      "scenarios_5d": [
+        {"name": "區間守 POC", "prob": "45%", "desc": "連日守 63.8k、超賣（F&G 11）+短線 CVD 回流撐、區間 61.9–66.5k"},
+        {"name": "relief 反彈", "prob": "30%", "desc": "美股 relief 擴散+美元回落→站回 66.5k→68.2k(LVN)"},
+        {"name": "破位去槓桿", "prob": "25%", "desc": "鷹派確認/MSTR 連動殺→破 POC 奔 VAL 57,759，極端看 200 週均"}
+      ],
+      "extra": "衍生品/ETF：funding 0.0034%（近120期分位25%、不過熱）、OI 93,938（去槓桿後水位）、1d CVD 結構派發 -105,259 但短線後半轉流入（止穩跡象）。清算：下方 VAL 57,759、LVN 68,183 為真空快穿帶。CME Gap 無顯著缺口。ETF：F&G 11 極度恐懼＝散戶投降、反向反彈燃料；BITO 連動 -1.7%。關鍵洞察：BTC 今日 -1.9% 相對銀 -5%/MSTR -7.5% 其實『相對抗跌』，連日守 POC 63,794＝加密未被金屬去槓桿領著跑，多空分界清楚在 POC。",
+      "radar_html": "<div class=\"radar-draft\">\n  <div class=\"radar-head\">🛰️ radar 客觀底稿（BTCUSDT，永續，2026-11-18 23:02）｜主劇本：偏空（高信心，2.0 vs 6.5）</div>\n  <table class=\"radar-panel\">\n    <tr><td>報價</td><td>63824.3000　24h -1.66%</td></tr>\n    <tr><td>Volume Profile</td><td>POC 75982.91｜Value Area 63727.90–82006.56</td></tr>\n    <tr><td>SuperTrend(300,3)</td><td>1d:中 / 4h:中 / 1h:中</td></tr>\n    <tr><td>funding/OI</td><td>0.0034%（近120期分位25%）｜OI 93938.309</td></tr>\n    <tr><td>宏觀背景</td><td>10Y 5.064 / DXY 103.721 / VIX 25.9</td></tr>\n    <tr><td>K線形態(日)</td><td>吞沒（bear）</td></tr>\n    <tr><td>CVD規則判讀</td><td>健康下跌：價跌且資金流出 / 短線賣壓衰竭、買盤回歸（可能短彈或止穩）</td></tr>\n  </table>\n  <div class=\"radar-bull\"><b>偏多訊號：</b><ul><li>[強度2/3 ×權重1.0] CVD短線：短線CVD 後半轉流入↑</li></ul></div>\n  <div class=\"radar-bear\"><b>偏空訊號：</b><ul><li>[強度3/3 ×權重1.5] CVD結構：結構1d CVD淨流出-105259=派發</li><li>[強度2/3 ×權重1.0] 宏觀：VIX 25.9≥20</li><li>[強度0/3 ×權重0.5] K線形態：吞沒（弱化）</li></ul></div>\n  <div class=\"radar-watch\"><b>待盯數據：</b><ul><li>多方確認：短線CVD持續翻正 + 站穩 POC/VAH + SuperTrend 轉多</li><li>空方確認：跌破 VAL 63727.90 + 結構CVD續流出 + funding 轉負</li><li>情境層（規則抓不到）：財報、指數調整、政策/地緣、當日新聞</li></ul></div>\n  <div class=\"radar-note\">※ radar 為規則化客觀層，權重/門檻為經驗值未回測；情境催化須人工補，與我情境判讀衝突時並陳。（註：radar 的 VP 視窗 POC 75,983 為永續較短視窗，與 STEP 3.8 的日線 VPVR POC 63,794 視窗不同，兩者並陳）</div>\n</div>",
+      "urpd_html": "<div class=\"urpd-box\">🪙 BTC 成本分布代理 URPD（STEP 3.8 ⑥，urpd.py，1w×200，固化必跑）<br>⚠ 交易所成交量(USD)成本代理（視窗 2023-01-23→2026-11-16）；非鏈上真 URPD，真鏈上需 Glassnode/CoinGlass。<br>最大成本簇 POC 22,748.61｜價值區 VA 19,549–87,805（70%）。<br>壓力區（上）：65,409(HVN)、80,340(HVN)、87,805(VAH)、93,138(HVN)。<br>支撐區（下）：29,148(HVN)、22,749(POC)、19,549(VAL)。<br>真空帶 LVN：33,414／46,212／54,744／76,074／84,606／88,872。<br>現價 63,799 在最大成本簇之上＝成本簇為支撐、偏多結構。本視窗約 44% 成交量在下方、56% 在上方。<br>⚠ 此為『視窗內成交量-時間加權』非真實持幣成本；近 ATH 時下方%會機械趨近、不可當『供給在獲利%』、不可與鏈上 URPD 類比。<!--3.8:BTC:urpd--></div>"
+    },
+
+    "eth": {
+      "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；radar 偏空 4.0 vs 8.5。價 1,777 於 VA 內、貼 POC 1,820 下方、貼 VAL 1,768。funding -0.0032%（分位12%，空頭付費擁擠＝軋空燃料）、OI 2,412,565。1d CVD 淨流出 -3,464,290＝派發。日 K 吞沒(bear)+鑷底(bull)混雜。",
+      "scorecard": [
+        {"factor": "BTC 方向", "read": "BTC -1.9% 貼 POC、偏空連動", "score": "-1 偏空"},
+        {"factor": "ETH/BTC ratio", "read": "ETH -1.96% 與 BTC 同幅、無相對強弱", "score": "0 中性"},
+        {"factor": "Funding", "read": "-0.0032% 分位 12%＝空頭付費擁擠（反向軋空燃料）", "score": "+1 利多(反向)"},
+        {"factor": "OI/未平倉", "read": "2.41M、CVD 結構派發 -346萬", "score": "-1 偏空"},
+        {"factor": "催化劑", "read": "無 ETH 自身催化、隨宏觀 beta", "score": "0 中性"}
+      ],
+      "bias_24h": "24h 區間預估（ATR ±約 $70）：1,720–1,850。偏空貼 VAL 1,768；funding 偏空擁擠易軋空短彈；跌破 VAL 1,768 轉空方確認、站回 1,850 才中性。",
+      "ops": [
+        {"scenario": "空頭擁擠短彈", "entry": "守 VAL 1,768+funding 極負軋空", "stop": "1,730 下方", "target": "1,850→1,900", "rr": "1:2"},
+        {"scenario": "跌破轉空", "entry": "跌破 VAL 1,768+CVD 續流出", "stop": "1,820", "target": "1,720→1,680", "rr": "1:2"}
+      ],
+      "scenarios_5d": [
+        {"name": "貼 VAL 整理", "prob": "45%", "desc": "隨 BTC 守支撐、funding 偏空擁擠撐、區間 1,720–1,850"},
+        {"name": "軋空短彈", "prob": "30%", "desc": "空頭付費擁擠（分位12%）+BTC relief→彈回 1,900–1,950"},
+        {"name": "破位續殺", "prob": "25%", "desc": "BTC 破 POC/宏觀鷹派→ETH 破 1,768 奔 1,680"}
+      ],
+      "extra": "衍生品/ETH-BTC：funding -0.0032%（分位12%＝空頭付費擁擠、軋空燃料）、OI 2.41M、1d CVD 派發 -3,464,290。ETH/BTC 分析：ETH -1.96% 與 BTC -1.94% 同幅＝無相對強弱、純隨大盤 beta；貼 VAL 1,768 為多空分界。日 K 鑷底(bull)在籌碼區低檔+funding 偏空擁擠＝具軋空短彈條件，但需 BTC 止穩與宏觀 relief 觸發，否則跌破 1,768 加速。",
+      "radar_html": "<div class=\"radar-draft\">\n  <div class=\"radar-head\">🛰️ radar 客觀底稿（ETHUSDT，永續，2026-11-18 23:02）｜主劇本：偏空（高信心，4.0 vs 8.5）</div>\n  <table class=\"radar-panel\">\n    <tr><td>報價</td><td>1777.4200　24h -1.82%</td></tr>\n    <tr><td>Volume Profile</td><td>POC 1820.38｜Value Area 1768.36–2452.05</td></tr>\n    <tr><td>SuperTrend(300,3)</td><td>1d:中 / 4h:中 / 1h:中</td></tr>\n    <tr><td>funding/OI</td><td>-0.0032%（近120期分位12%，空頭付費擁擠）｜OI 2412565.523</td></tr>\n    <tr><td>宏觀背景</td><td>10Y 5.066 / DXY 103.731 / VIX 25.91</td></tr>\n    <tr><td>K線形態(日)</td><td>吞沒（bear）、鑷底（bull）</td></tr>\n    <tr><td>CVD規則判讀</td><td>健康下跌：價跌且資金流出 / 短線賣壓轉強（留意加速下跌）</td></tr>\n  </table>\n  <div class=\"radar-bull\"><b>偏多訊號：</b><ul><li>[強度3/3 ×權重1.0] funding -0.0032%<0=空頭付費擁擠（軋空燃料，分位12%）</li><li>[強度2/3 ×權重0.5] 鑷底：兩根同低+跌勢=見底（籌碼區低檔）</li></ul></div>\n  <div class=\"radar-bear\"><b>偏空訊號：</b><ul><li>[強度3/3 ×權重1.5] CVD結構：1d CVD淨流出-3464290=派發</li><li>[強度2/3 ×權重1.0] CVD短線：後半轉流出↓</li><li>[強度2/3 ×權重1.0] 宏觀：VIX 25.9≥20</li></ul></div>\n  <div class=\"radar-watch\"><b>待盯數據：</b><ul><li>多方確認：短線CVD翻正 + 站穩 POC 1820 + SuperTrend 轉多</li><li>空方確認：跌破 VAL 1768.36 + 結構CVD續流出</li><li>情境層：財報、指數調整、政策/地緣、當日新聞（人工補）</li></ul></div>\n  <div class=\"radar-note\">※ radar 規則化客觀層、未回測；情境催化須人工補，與我情境判讀衝突時並陳。</div>\n</div>"
+    },
+
+    "stocks": {
+      "gainers": [
+        {"sym": "AVGO 博通", "chg": "+2.69%", "analysis": "金屬暴殺日逆勢 +2.69%，全場 AI 鏈最強。NVDA beat 後 AI ASIC/客製晶片需求能見度續強、資金認可基本面。ST 偏多逆勢。入場：守 340 偏多、跌破 335 轉中性。5 日：若 NVDA beat relief 擴散則 AI 鏈共振。為何選中：殺盤中逆勢翻紅＝AI 需求端沒放緩的直接訊號、與金屬 risk-off 形成『兩個戰場』對照。"},
+        {"sym": "AMD 超微", "chg": "+2.12%", "analysis": "逆金屬暴殺 +2.12%，MI 系列 AI 加速器需求、晶片板塊第二強。ST 偏多逆勢。入場：守前低偏多。5 日：跟隨 AI 鏈 relief。為何選中：與 AVGO 共振證明股市沒在喊 growth scare（若銅是成長恐慌、晶片應同跌但逆漲）。"},
+        {"sym": "AMZN 亞馬遜", "chg": "+1.88%", "analysis": "防禦性相對抗跌、AWS AI 需求支撐、大型科技中最穩。ST 中。入場：守 258。為何選中：殺盤中逆漲＝防禦屬性+雲端 AI 需求。"}
+      ],
+      "losers": [
+        {"sym": "MSTR MicroStrategy", "chg": "-7.51%", "analysis": "全場最弱 -7.51% 破 100（續創低、幣安鏡像一度 -7.9%）。主因＝**股票高 beta／mNAV 溢價壓縮**（BTC 當日僅 -1.9%、撐不起 -7.5%，此歸因經對抗 subagent CONFIRMED）＋成長股高 beta 全面殺的成分。2x 多單 ETF MSTU 一度 -17%＝槓桿放大。VPVR 跌破 VA 下緣 98.67、POC 97.4 轉上壓、下方 VAL 83.8；選擇權 Put 牆 90 為心理支撐。ST radar 偏空 0 vs 9（偏多訊號掛零）。入場：跌破 Put 牆 90 奔 VAL 83.8 偏空、站回 98.67 才中性。5 日：繫於 BTC 與 mNAV 溢價修復。"},
+        {"sym": "PLTR Palantir", "chg": "-1.81%", "analysis": "高估值軟體高 beta，鷹派殺本益比下的相對弱勢。ST 偏空。入場：守前低、跌破轉空。為何選中：高估值科技在鷹派天花板下的代表性承壓標的。"},
+        {"sym": "QCOM 高通", "chg": "-1.27%", "analysis": "手機晶片相對弱於 AI 晶片（AVGO/AMD 逆漲），板塊內分化落後者。ST 中偏空。入場：守前低。為何選中：對照 AI 晶片的分化——非 AI 曝險晶片相對弱。"}
+      ],
+      "quick": [
+        {"sym": "NVDA 輝達", "price": "155.84", "chg": "-0.14%", "dir": "中", "levels": "守盤後缺口 155/壓 162", "note": "beat 後常規盤小幅回吐、相對守住，AI 鏈定海神針"},
+        {"sym": "TSM 台積電", "price": "365.65", "chg": "-0.86%", "dir": "中", "levels": "守 360", "note": "晶片鏈小跌、相對守住"},
+        {"sym": "MU 美光", "price": "715.99", "chg": "-0.05%", "dir": "中", "levels": "守 700", "note": "記憶體幾近持平、相對抗跌"},
+        {"sym": "SPY 標普500", "price": "736.03", "chg": "-0.62%", "dir": "中", "levels": "守 730", "note": "大盤溫和消化、未隨金屬暴殺"},
+        {"sym": "TSLA 特斯拉", "price": "386.59", "chg": "+1.24%", "dir": "偏多", "levels": "守 380", "note": "逆勢翻紅、驅動待查"},
+        {"sym": "GDX 金礦股", "price": "74.92", "chg": "-7.00%", "dir": "偏空", "levels": "隨金高 beta", "note": "礦股放大金 -2.3% 成 -7%＝金屬 risk-off 的高 beta 代理"}
+      ]
+    }
+  },
+
+  "s7_banks": {
+    "rows": [
+      {"src": "Reuters (11/18)", "view": "Gold drops 2% to over one-year low as hawkish Fed signals boost dollar", "impact": "金一腿有新聞佐證＝乾淨 Fed/美元/實質利率因果；但不解釋銀/銅超額跌幅"},
+      {"src": "FXEmpire (11/18)", "view": "Gold & Silver selloff deepens before Fed minutes（11/19 會議紀要）", "impact": "鷹派前夕去槓桿、金屬賣壓在會議紀要前加深"},
+      {"src": "24/7 Wall St (11/18)", "view": "交易員現讀 12 月 Fed 升息機率 ~95%", "impact": "鷹派升息循環確立、壓高估值股+無息金銀"},
+      {"src": "Fed Williams (NY)", "view": "12 月仍可能再升、但不需 jumbo 大步", "impact": "升幅預期收斂至 25bp、略緩和極端鷹派恐慌"},
+      {"src": "Goldman Sachs", "view": "黃金 2028 上看 $5,600（降息循環+央行購金）", "impact": "長線利多金、與短期鷹派＋去槓桿逆風分清"},
+      {"src": "Wintermute", "view": "BTC 跌破 200 週均恐奔 $50,000s；『熊市未結束』", "impact": "加密去槓桿尾部風險"}
+    ],
+    "options_structure": "VIX 25.7（偏高未回落）、納指 VXN 偏高、F&G 11 極度恐懼＝散戶極度恐慌、空頭擁擠具反向反彈燃料但需催化。MSTR 選擇權呈負 γ（做市商追漲殺跌、放大波動）、Put 牆 90/Call 牆 120-140（見 6-F）。ETH funding -0.003% 分位 12%＝空頭付費擁擠＝軋空燃料。整體：恐慌極端但去槓桿動能未止，relief 反彈需 Fed 會議紀要(11/19)偏鴿或金屬止血觸發；信用面 HY 走闊 IG 未動＝尚未系統性。"
+  },
+
+  "s8_calendar": {
+    "events": [
+      {"date": "11/18（週三美股盤／台北 11/18 夜–11/19 晨）", "event": "★常規盤對 NVDA beat 的實際定價——AI 鏈 relief 擴散 vs 貴金屬去槓桿暴殺的兩個戰場（進行中：SOXX +0.72%、金/銀/銅暴殺）"},
+      {"date": "11/19（週三美股盤後／台北 11/20 晨 03:00 冬令）", "event": "★FOMC 會議紀要（上次會議鷹鴿語氣）——金屬賣壓加深的直接檢查點（FXEmpire：selloff deepens before Fed minutes）"},
+      {"date": "11/19–20", "event": "多位 Fed 官員續放話（Musalem 連續升息劇本 vs Williams 排除 jumbo）"},
+      {"date": "本週", "event": "Anthropic IPO 定價（~$64B，AI 一級市場情緒溫度計）"},
+      {"date": "12/9–10（台北 12/11 晨 03:00 冬令）", "event": "★★12 月 FOMC 利率決議（市場讀升息 ~95%）——本波鷹派循環的定調事件"}
+    ],
+    "ranking": "關鍵排名：① 11/19 FOMC 會議紀要（金屬去槓桿能否止血的直接檢查點）＞ ② NVDA beat 常規盤定價（AI 鏈 relief 是否擴散）＞ ③ 12/10 FOMC 升息決議（中期天花板定調）＞ ④ 金屬複合體（銀/銅）超額跌幅的具體催化查證（對抗 subagent 列為最該補查項）。"
+  },
+
+  "s9_scenarios": {
+    "prediction_market": [
+      {"item": "12 月 Fed 升息", "prob": "市場讀 ~95%（24/7 Wall St 11/18、BigGo『90%』）", "note": "Williams 排除 jumbo＝25bp；確切 CME FedWatch % 未直抓到＝待核"},
+      {"item": "NVDA beat 常規盤反應", "prob": "AI 鏈相對守住（SOXX +0.72%）", "note": "半導體 relief 兌現、未擴散到貴金屬；賣利多風險仍在"},
+      {"item": "金屬去槓桿止血", "prob": "繫於 11/19 會議紀要", "note": "偏鴿→金屬超跌反彈；偏鷹→續殺"}
+    ],
+    "base": {"prob": "46%", "desc": "鷹派前夕去槓桿延續 vs 股市消化：金屬複合體（金 3,720–3,830、銀 44–46.5）低檔整理續偏空、股市 SOXX 139–148 區間、BTC 守 POC 61.9–66.5k、VIX 守 24–26。等 11/19 會議紀要與金屬止血訊號。"},
+    "bull": {"prob": "27%", "desc": "會議紀要偏鴿/美元回落→金屬超跌反彈（金彈回 3,900–3,969、銀 47.7–51.7）、AI 鏈 relief 擴散（SOXX 站回 146→152）、BTC 站回 66.5–68.2k、VIX 回落 22 下。超賣（F&G 11）彈性大但鷹派仍是上蓋。"},
+    "bear": {"prob": "20%", "desc": "鷹派壓過+去槓桿螺旋：會議紀要偏鷹/官員喊連續升息→金破 3,720 奔 3,680、銀破 44 奔 42、SOXX 破 141 奔 LVN 128、MSTR 破 Put 牆 90 奔 VAL 83.8、BTC 破 POC 63.8k 奔 VAL 57.7k、VIX 破 28。"},
+    "tail": {"prob": "7%", "desc": "HY+IG 信用利差齊飆升級成系統性 risk-off（目前 IG 0.90 未動＝未觸發）→全面去槓桿、金/加密從承接變被拖下水、carry trade 平倉踩踏（USDJPY 159 高位）。觸發線＝IG OAS 跳升+HYG/JNK 破位。"}
+  },
+
+  "targets_38": {
+    "XAU": {
+      "patterns": "radar 日 K：長線(bear)+捉腰帶(bear) 單邊強勢，混 Hikkake 陷阱(bull)/修正 Hikkake(bull) 籌碼區低檔反轉訊號——但被結構派發壓制（1d CVD -393,659）；淨偏空。",
+      "supertrend": "日/4h/1h 三框皆『中』(盤整，radar)；radar 綜合偏空 2.0 vs 9.0。",
+      "sr": "VPVR(日線 1d×180)：POC 4,133.99｜VA 3,969.48–4,408.17。現價 3,769 於 **VA 之下**（偏空、支撐在 VAL）。壓力區（上）：3,969.48(VAL)→4,060.87(HVN)→4,133.99(POC)→4,389.89(HVN)；下方無 VA 結構，看整數 3,760/3,720。真空帶 LVN：3,951.20(上)／4,243.66／4,572.68。",
+      "bias": "條件式：站回 VAL 3,861(幣安)／3,969(日線) 才轉中性偏多；維持 VA 之下＋10Y 守 5% 偏空，跌破 3,760 看 3,720。鷹派實質利率是最大對手盤；今日銀/銅暴殺非金可解釋。<!--3.8:XAU-->"
+    },
+    "XAG": {
+      "patterns": "radar 日 K：光頭光腳(bear)+收盤光頭光腳(bear)+長線(bear)+捉腰帶(bear)+吞沒(bear) 單邊強勢暴殺，混 Hikkake(bull)/修正 Hikkake(bull)——但結構大額派發主導（1d CVD -11,988,872）；淨深度偏空。",
+      "supertrend": "日/4h/1h 三框皆『中』(盤整，radar)；radar 綜合偏空 3.0 vs 8.0。",
+      "sr": "VPVR(日線 1d×180)：POC 57.93｜VA 56.39–69.68。現價 45.26 於 **VA 之下**（深度偏空、支撐在 VAL）。上方壓力：LVN 47.70→VAL 56.39→POC 57.93（遠）；下方看整數 45/44.3/44。真空帶 LVN：47.71／54.86／72.24。",
+      "bias": "條件式：站回 LVN 47.70／VAL 56.39 才轉中性；維持 46 之下偏空，跌破 45 看 44.3→44。金銀比 83.5 擴大＝銀 relatively 弱於金；工具偏多訊號(均值回歸)在金銀齊跌時明示失效。<!--3.8:XAG-->"
+    },
+    "SOXX": {
+      "patterns": "Yahoo 日線 detect_last：**錘子線(bull)**——跌勢末端長下影=低檔承接訊號（與其他金屬標的的 bear 型態形成對照，印證『兩個戰場』）。",
+      "supertrend": "日線 ST(300,3) 自算（Yahoo 1y OHLC）：ATR 6.11、上軌 159.99／下軌 123.31，價 142.14 夾在中間＝無方向共振、盤整。",
+      "sr": "VPVR(Yahoo 1y 日線)：POC 111.53｜VA 86.81–180.20。現價 142.14 於 VA 內偏上、POC 之上。上方壓力：ST 上軌 159.99→HVN 171.96→VAH 180.20；下方支撐：LVN 128.01(快穿)→POC 111.53。真空帶 LVN：128.01／160.97。",
+      "bias": "條件式：站回 146(前整理區)轉中性、站上 ST 上軌 160 才偏多；跌破 141 下緣奔 LVN 128.01 真空帶偏空。錘子線低檔承接+NVDA beat relief 是偏多線索，方向由常規盤對 beat 的持續定價決定。<!--3.8:SOXX-->"
+    },
+    "BTC": {
+      "patterns": "radar 日 K：吞沒(bear)——但 CVD 短線後半轉流入（可能短彈/止穩）；淨偏空但有止穩跡象。",
+      "supertrend": "日/4h/1h 三框皆『中』(盤整，radar)；radar 綜合偏空 2.0 vs 6.5。",
+      "sr": "VPVR(波段 1d×180)：POC 63,793.63｜VA 57,758.60–78,606.88。現價 63,770 於 VA 內、**貼 POC 63,794（多空分界）**。壓力：POC 63,794→HVN 78,058→VAH 78,607→HVN 81,350；支撐：VAL 57,759。真空帶 LVN：68,182.74／83,544.63。連日守 POC。",
+      "bias": "條件式：站穩 POC 63,794＋短線 CVD 翻正＋美股 relief 偏多搶 66.5k→68.2k(LVN)；跌破 POC 63,794＋CVD 續流出奔 VAL 57,759（Wintermute $50,000s 需破 200 週均）。今日相對銀/MSTR 抗跌。<!--3.8:BTC-->",
+      "urpd_html": "<div class=\"urpd-box\">🪙 BTC 成本分布代理 URPD（urpd.py，1w×200）：最大成本簇 POC 22,748.61｜VA 19,549–87,805。現價 63,799 在最大成本簇之上＝成本簇為支撐、偏多結構；本視窗約 44% 在下方/56% 在上方。⚠ 交易所成交量成本代理非鏈上真 URPD，近 ATH 時下方%機械趨近、不可當『供給在獲利%』。<!--3.8:BTC:urpd--></div>"
+    },
+    "MSTR": {
+      "patterns": "radar 日 K：捉腰帶(bear)+三外部(bear，吞沒+順勢確認=反轉確認)——偏空訊號掛零對偏空、結構大額派發（1d CVD -1,444,427）；淨偏空。",
+      "supertrend": "日/4h/1h 三框皆『中』(盤整，radar)；radar 綜合偏空 0.0 vs 9.0（偏多訊號掛零）。",
+      "sr": "VPVR(日線 1d×180)：POC 97.37｜VA 83.78–142.02。現價 94.88 於 **VA 之內、跌破 POC 97.37（多空分界）**、破 100 心理關。壓力區（上）：97.37(POC)→128.43(HVN)→142.02(VAH)；支撐區（下）：83.78(VAL)。真空帶 LVN：112.90／147.84。",
+      "bias": "條件式：站回 POC 97.37／VA 下緣 98.67 才轉中性；維持 POC 之下偏空，跌破選擇權 Put 牆 90 奔 VAL 83.78。股票高 beta／mNAV 溢價壓縮主導（BTC 僅 -1.9% 撐不起 -7.5%，CONFIRMED）。<!--3.8:MSTR-->",
+      "options_html": "<div class=\"opt-box\">🎲 MSTR 選擇權籌碼（STEP 3.8 ⑤，options_maxpain.py，CBOE 延遲、OI T+1 結算＝結構底稿非即時訊號）<br>現價 92.13（CBOE 延遲報價）。最近到期 2026-11-20 **Max Pain（磁吸價）110.00**；跨 3 到期（11/20、11/27、12/04）合算 Max Pain 參考 112.00。<br>**Call 牆（上壓）**：135.00(OI 27,005)、120.00(OI 21,973)、140.00(OI 19,599)。<br>**Put 牆（下撐）**：90.00(OI 33,433)、65.00(OI 29,580)、100.00(OI 26,445)。<br>PCR：OI 0.85／Vol 0.34。<br>**Gamma 近似：負 γ（放大波動/追漲殺跌）**；γ 牆 call 100.00／put 90.00（假設做市商 long call/short put；量級參考、方向無法驗證）。<br>現價低於最近到期 Max Pain 16.2%（若收斂有向上磁吸傾向，僅經驗傾向非預測）。<br>⚠ Max Pain 是機械磁吸傾向非預測；本欄為客觀 S/R+風控底稿，不假設任何持倉。<!--3.8:MSTR:opt--></div>"
+    }
+  },
+
+  "adversarial": {
+    "gate_a": true,
+    "gate_b": true,
+    "gate_c": false,
+    "subagent_opened": true,
+    "verdicts": [
+      {"claim": "貴金屬齊跌主因＝鷹派 Fed→美元升+實質利率升壓無息資產", "verdict": "PLAUSIBLE", "note": "須拆分：僅『金』有 Reuters/CNBC 新聞佐證(hawkish Fed+dollar→金一年低)可保留為乾淨因果；但把同一驅動套到銀 -5%/鉑 -4.7% 是跳級，DXY +0.22% 量級撐不起其超額跌幅。已改寫：金一腿因果保留、銀/鉑超額部分歸因待查。"},
+      {"claim": "銀 -5% > 金 -2.3% ＝工業腿被銅拖累放大、GSR 擴大印證雙殺", "verdict": "PLAUSIBLE", "note": "已加 caveat：工業腿是『貢獻因子之一』非已證實主因；更簡解釋＝銀在任何 risk-off 慣性高 beta（流動性薄、overshoot 1.5–2x），GSR 擴大不一定證明工業腿，可能只是去槓桿放大清算。"},
+      {"claim": "銅 -5.4% ＝全球成長憂慮+強美元", "verdict": "REFUTED", "note": "無查證來源、與股市訊號相反（NVDA 持平、AVGO/AMD 逆漲＝股市沒喊 growth scare）、DXY +0.22% 量級撐不起 -5.4%。已降級為『疑高波動日商品連動清算、具體催化待查』，不掛成長/強美元。"},
+      {"claim": "MSTR -7.5% ＝股票高 beta／mNAV 溢價壓縮（BTC 僅 -1.9% 撐不起）", "verdict": "CONFIRMED", "note": "算術性觀察、兩端數值在手、不需外部催化；BTC 移動<MSTR 移動的差額即溢價壓縮+股票 beta。本期最穩歸因。"},
+      {"claim": "HY OAS +11bp 走闊、IG 不動＝壓力局部鎖在 HY/AI 端、尚未系統性", "verdict": "PLAUSIBLE", "note": "『尚未系統性』有支撐(IG 0.90 不動+HYG/JNK 持平)；但已修兩處：HY 3.34% 是 11/13→11/16 FRED 落後值(非今日盤中、已標時點)，且無 sector 分解數據、已刪『鎖在 AI 端』的精準歸因、改為總體信用尚未齊飆。"},
+      {"claim": "BTC/ETH -2% ＝ VIX 恐慌環境廣泛 risk-off 連動、非自身催化", "verdict": "PLAUSIBLE", "note": "方向可接受(無幣圈自身催化、與宏觀 beta 一致)；已修用詞：VIX 25.7 是『偏高』非『恐慌』(恐慌多 30+)，且 BTC -2% 相對銀 -5%/MSTR -7.5% 今日『相對抗跌』，不寫成被恐慌領跌，改為『風險情緒偏弱』。"}
+    ]
+  },
+
+  "dashboard": {"summary": "Risk-Off 72/100（🔴 Risk-Off（手收起來/偏防守））｜日內大單邊 67%（🚀 大單邊行情（順勢但必掛保本+開盤後確認））｜📉 全面下殺（多頭 ETF 普跌）", "generated": "2026-11-18 23:06:06", "riskoff": {"score": "72", "label": "🔴 Risk-Off（手收起來/偏防守）", "stress": true, "data_bad": false}, "intraday": {"single": "67", "chop": "33", "label": "🚀 大單邊行情（順勢但必掛保本+開盤後確認）"}, "breadth": {"text": "📉 全面下殺（多頭 ETF 普跌）", "up": 1, "dn": 4, "nn": 5}, "risk_rows": [{"lbl": "美元 DXY", "val": "103.75", "chg": "+1.37%"}, {"lbl": "10Y 殖利率", "val": "5.07%", "chg": "-3.5bp"}, {"lbl": "2Y / 10Y 利差", "val": "4.75%", "chg": "+0.32"}, {"lbl": "3M / 30Y", "val": "4.15%", "chg": "5.42%"}, {"lbl": "納指恐慌 VXN", "val": "34.5", "chg": "+29.0%"}, {"lbl": "標普恐慌 VIX", "val": "26.2", "chg": "+40.1%"}, {"lbl": "BTC 隱波 DVOL", "val": "44.9", "chg": "+2.3%"}, {"lbl": "加密 F&G", "val": "11", "chg": "Extreme Fear"}], "trend_rows": [{"lbl": "ES 標普期貨跳空", "val": "", "chg": "-3.16%"}, {"lbl": "NQ 納指期貨跳空", "val": "昨 -0.0%", "chg": "-3.42%"}, {"lbl": "盤前期貨量能 RVOL", "val": "", "chg": "0.2×"}, {"lbl": "DVOL ~24h 變動", "val": "", "chg": "+2.3%"}, {"lbl": "當日重大事件", "val": "鷹派升息循環×強美元殺貴金屬(金一年低/銀-5%/銅-5%)；MSTR破100；NVDA beat後常規盤消化中", "chg": ""}, {"lbl": "原油 WTI / Brent", "val": "83.3", "chg": "89.4"}], "etf": [{"grp": "QQQ", "long": "TQQQ", "mult": "3x", "long_chg": "-0.97%", "short": "SQQQ", "short_chg": "+0.89%", "rvol": "0.3×"}, {"grp": "半導體", "long": "SOXL", "mult": "3x", "long_chg": "+1.05%", "short": "SOXS", "short_chg": "-1.35%", "rvol": "0.4×"}, {"grp": "MSTR", "long": "MSTU", "mult": "2x", "long_chg": "-17.05%", "short": "MSTZ", "short_chg": "+18.04%", "rvol": "0.6×"}, {"grp": "NVDA", "long": "NVDL", "mult": "2x", "long_chg": "-1.41%", "short": "NVD", "short_chg": "+1.61%", "rvol": "0.6×"}, {"grp": "SK Hynix", "long": "SKUU", "mult": "2x", "long_chg": "-0.34%", "short": "SKDD", "short_chg": "-0.34%", "rvol": "0.3×"}], "lights": [{"name": "TQQQ / SQQQ", "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）", "tok": "danger", "why": "Risk-Off 72≥70"}, {"name": "SOXL / SOXS", "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）", "tok": "danger", "why": "Risk-Off 72≥70"}, {"name": "NVDL / NVD", "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）", "tok": "danger", "why": "Risk-Off 72≥70"}, {"name": "SKUU / SKDD", "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）", "tok": "danger", "why": "Risk-Off 72≥70"}, {"name": "MSTU / MSTZ", "signal": "🔴 風險極高，空手觀望", "tok": "danger", "why": "Risk-Off 72"}], "binance": [{"name": "BTC", "price": "63570.80", "chg": "-1.89%"}, {"name": "ETH", "price": "1771.27", "chg": "-2.02%"}, {"name": "MSTR", "price": "94.37", "chg": "-7.92%"}, {"name": "NVDA", "price": "155.31", "chg": "+0.34%"}, {"name": "黃金 XAU", "price": "3766.34", "chg": "-2.53%"}, {"name": "白銀 XAG", "price": "45.23", "chg": "-5.26%"}, {"name": "鉑 XPT", "price": "1375.21", "chg": "-4.43%"}, {"name": "鈀 XPD", "price": "955.81", "chg": "-2.65%"}, {"name": "TBT 2x空長債", "price": "39.99", "chg": "-1.43%"}, {"name": "GDX 金礦股", "price": "74.92", "chg": "-7.00%"}, {"name": "BITO 1xBTC期貨", "price": "8.46", "chg": "-1.74%"}], "movers_up": [{"sym": "BWET", "pct": "+15.9%", "px": "724.26"}, {"sym": "UVXY", "pct": "+14.8%", "px": "21.68"}, {"sym": "SKDD", "pct": "+11.6%", "px": "11.75"}, {"sym": "SOXS", "pct": "+9.6%", "px": "58.04"}, {"sym": "SHAZ", "pct": "+9.3%", "px": "24.34"}, {"sym": "WEN", "pct": "+7.7%", "px": "8.886"}, {"sym": "TWST", "pct": "+6.7%", "px": "117.9"}, {"sym": "SQQQ", "pct": "+6.6%", "px": "46.34"}, {"sym": "BSP", "pct": "+5.9%", "px": "43.28"}, {"sym": "TZA", "pct": "+5.8%", "px": "50.53"}], "movers_dn": [{"sym": "MSTU", "pct": "-26.9%", "px": "13.51"}, {"sym": "SNXX", "pct": "-20.4%", "px": "2.732"}, {"sym": "AAOI", "pct": "-18.6%", "px": "39.64"}, {"sym": "CRML", "pct": "-17.6%", "px": "4.036"}, {"sym": "BNC", "pct": "-17.0%", "px": "3.397"}, {"sym": "USDEX", "pct": "-16.2%", "px": "4.407"}, {"sym": "MUU", "pct": "-15.3%", "px": "14.02"}, {"sym": "RUM", "pct": "-14.5%", "px": "4.884"}, {"sym": "MSTR", "pct": "-14.0%", "px": "94.41"}, {"sym": "ASTS", "pct": "-13.9%", "px": "27.45"}], "fed": {"ok": true, "items": []}},
+
+  "footer": "本報告為量化研判非投資建議、不構成持倉推薦、不臆測使用者持倉。JSON 驅動（固定 template × data/2026-11-18-pm.json），欄位經 pre-commit schema validator 把關。｜對抗式驗證（STEP 3.5）：閘門 (a) 追蹤資產 |24h%|≥5＝【是】(XAG -5.02%／COPPER -5.40%／XPT -4.73%／MSTR -7.51%)、(b) 當日 Fed 鷹派訊號+11/19 會議紀要臨近+升息路徑＝【是】、(c) 無持倉動作詞＝【否】→ 任一為是，已開獨立對抗 subagent。裁決：金→Fed 因果 PLAUSIBLE(保留金腿、拆分銀/鉑)、銀工業腿 PLAUSIBLE(加 caveat)、**銅＝成長/強美元 REFUTED(降級待查)**、MSTR 高beta/mNAV CONFIRMED、HY 鎖AI端 PLAUSIBLE(刪精準歸因+標11/16時點)、BTC/ETH risk-off PLAUSIBLE(VIX偏高非恐慌、相對抗跌)。最該補查＝銀/銅超額跌幅的具體催化。"
+}
