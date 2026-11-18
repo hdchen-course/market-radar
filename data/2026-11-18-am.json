@@ -1,0 +1,2232 @@
+{
+ "meta": {
+  "date": "2026-11-18",
+  "type": "am",
+  "version": "V4.5",
+  "theme": "財報前廣泛去風險→NVDA 盤後 beat 翻轉：美股週二 11/17 下殺由**大盤/景氣腿領跌**（Dow -800+、SPX -1.03%、NASDAQ -0.74% 近七月低），但**半導體當日反而守住**（SOXX +0.17%、AVGO +2.46%、NVDA 僅 -0.44%）——當日跌勢主要是 **NVDA 財報前的廣泛去風險/避險**（VIX 25.46 +11%、F&G 11），不是乾淨的『AI 估值去化領跌』。盤後 NVDA Q3 財報 beat（營收 $115.8B/+103% YoY、Q4 財測 $130B、庫藏股、Vera Rubin 出貨、董事會稱黃仁勳不回任）→ 股價盤後 +約 4%，卸下一個尾部風險、上期 Bull case 催化觸發（但 +103% 只換 +4% AH 偏弱，留意 sell-the-news）。★鷹派升息循環是**中期天花板/背景**（非當日觸發——當日 10Y 實際小跌 -0.35%、DXY 僅 +0.14%）：Oct CPI +0.4%/通膨 3.7%、零售超預期、Fed Musalem 喊『春季前多次升息（可能 +1pp）』、Williams 稱 12 月不需 jumbo 但仍要升、10Y 連 27 日站上 5%、美元 19 月高、12 月升息機率市場讀 ≈88–100%。貴金屬齊跌（金/銀同幅 -1.42%、金創 14 月低）更像**高波動日全面去 grossing 波及**，當日無油價地緣 bid（WTI -0.70%），鷹派是中期上蓋。信用面仍局部：HY OAS 3.23→3.34（+11bp，11/16）、IG 幾乎不動＝壓力鎖在高收益/AI 端尚未系統性（但同日金/BTC 也跌＝『信用不系統性』≠『避險接到 bid』）。MSTR -6.34% 破 100／跌破 VAL：主因**股票高 beta/mNAV 溢價壓縮**（BTC 當日僅 -0.60% 撐不起 -6.34%）。",
+  "regime": {
+   "label": "財報前廣泛去風險（Dow 領跌、半導體反守）→ NVDA 盤後 beat 為轉機 × 鷹派升息循環為中期天花板（Oct CPI 3.7%、Fed 官員喊春季前多次升息、10Y 連 27 日破 5%、美元 19 月高；當日 10Y 反小跌＝背景非當日觸發）｜VIX 破 23 至 25.5、F&G 11｜貴金屬齊跌＝去 grossing 波及｜信用面仍局部（HY 3.34% 走闊、IG 未動）",
+   "color": "yellow"
+  },
+  "generated_tpe": "2026-11-18 10:12 台北（週三晨，美股週二 11/17 已收盤＋NVDA 盤後財報已出）",
+  "us_session": "美股週二 11/17 收盤＋盤後 NVDA 財報＋加密/貴金屬即時"
+ },
+ "s0_backtest": {
+  "prev": "2026-11-17-pm",
+  "hit_summary": "方向偏對、幅度偏弱（殺比 Base 深、VIX 破 23）：11/17-pm Base(48%) 給『財報前整理：SOXX 141–149、BTC 守 POC 63,794–68,183、金 3,800–3,962、VIX 守 23』。週二收盤：**SOXX 141.46 守在區間下緣 ✅但偏弱**、**BTC 64,329 於 63.7–68.1k 內 ✅**、**金 3,816 於 3,800–3,962 內 ✅**、**VIX 25.46 破 23 ❌（殺尾盤 Dow -800、Nasdaq 近七月低）**；盤後 **NVDA Q3 beat → Bull(24%) catalyst 觸發 △（常規盤反應待週三驗）**。整體＝Base 的點位守住但情緒比『整理』更空（偏向淺 Bear），終場由 NVDA 盤後 beat 扭轉氣氛。",
+  "rows": [
+   {
+    "sym": "SOXX",
+    "pred_range": "141–149（Base）",
+    "pred_dir": "整理、站回 VAL 轉中性",
+    "actual": "141.46（+0.17%，守區間下緣）",
+    "result": "✅ 區間內但偏弱"
+   },
+   {
+    "sym": "BTC",
+    "pred_range": "守 POC 63,794–68,183",
+    "pred_dir": "整理守支撐",
+    "actual": "64,329（-0.60%，連五日守 64k）",
+    "result": "✅ 守支撐"
+   },
+   {
+    "sym": "XAU 黃金",
+    "pred_range": "3,800–3,962",
+    "pred_dir": "VA 之下整理",
+    "actual": "3,816（-1.42%，14 月低）",
+    "result": "✅ 區間內（偏下緣）"
+   },
+   {
+    "sym": "VIX",
+    "pred_range": "守 23 一帶",
+    "pred_dir": "信用平靜、不惡化",
+    "actual": "25.46（+11%，破 23）",
+    "result": "❌ 殺尾盤破 23"
+   },
+   {
+    "sym": "NVDA 財報",
+    "pred_range": "beat+財測守才止血（Bull 24%）",
+    "pred_dir": "雙向",
+    "actual": "Q3 beat $115.8B/+103%、Q4 $130B、盤後+4%",
+    "result": "△ Bull catalyst 觸發（常規盤待驗）"
+   }
+  ],
+  "lesson": "教訓：①**pm 把週二定調『觀望整理、信用平靜』，實際殺尾盤 VIX 破 23（Dow -800、Nasdaq 近七月低）**。但對抗驗證修正了歸因：**當日跌勢是 Dow/景氣腿領跌的 NVDA 財報前廣泛去風險，半導體反而守住（SOXX +0.17%、AVGO +2.46%）——不是『AI 估值去化領跌』**；且**當日 10Y 實際小跌 -0.35%、DXY 僅 +0.14%，鷹派利率是中期背景/天花板、不是當日觸發**（Fed 官員整日鷹派放話構成氛圍，但價格面當日非利率驅動）。中期 regime 仍須正名為『升息循環』（Musalem 喊春季前可能 +1pp、10Y 連 27 日破 5%、金 14 月低）。②**NVDA 財報日修正**：pm 標週三 11/18 盤後，實際**週二 11/17 盤後即公布**（多家媒體 Tue 11/17 即時：Q3 beat、Q4 $130B、盤後+4%）——別把財報日當定數，須每期用新聞重核。③點位 Base 全守（SOXX/BTC/金），但 VIX 破 23＝幅度比『整理』更空；F&G 11 極度恐懼＋空頭擁擠下 NVDA beat 的 relief 彈性大，惟 +103% 只換 +4% AH 偏弱、留意 sell-the-news。"
+ },
+ "s1_quotes": {
+  "assets": [
+   {
+    "sym": "BTC",
+    "name": "比特幣(幣安24h)",
+    "price": "64,329",
+    "chg": "-0.60%",
+    "dir": "down"
+   },
+   {
+    "sym": "ETH",
+    "name": "以太坊(幣安24h)",
+    "price": "1,803",
+    "chg": "-0.88%",
+    "dir": "down"
+   },
+   {
+    "sym": "XAU",
+    "name": "黃金(幣安24h)",
+    "price": "3,817",
+    "chg": "-1.42%",
+    "dir": "down"
+   },
+   {
+    "sym": "XAG",
+    "name": "白銀(幣安24h)",
+    "price": "46.65",
+    "chg": "-1.42%",
+    "dir": "down"
+   },
+   {
+    "sym": "COPPER",
+    "name": "銅(幣安24h)",
+    "price": "6.076",
+    "chg": "-0.28%",
+    "dir": "down"
+   },
+   {
+    "sym": "XPD",
+    "name": "鈀(幣安24h)",
+    "price": "964.84",
+    "chg": "-1.92%",
+    "dir": "down"
+   },
+   {
+    "sym": "XPT",
+    "name": "鉑(幣安24h)",
+    "price": "1,426",
+    "chg": "-3.00%",
+    "dir": "down"
+   },
+   {
+    "sym": "NVDA",
+    "name": "輝達(週二收盤/盤後+4%)",
+    "price": "155.46",
+    "chg": "-0.44%",
+    "dir": "down"
+   },
+   {
+    "sym": "TSM",
+    "name": "台積電ADR(週二收盤)",
+    "price": "359.69",
+    "chg": "-3.68%",
+    "dir": "down"
+   },
+   {
+    "sym": "MU",
+    "name": "美光(週二收盤)",
+    "price": "712.42",
+    "chg": "-0.92%",
+    "dir": "down"
+   },
+   {
+    "sym": "QCOM",
+    "name": "高通(週二收盤)",
+    "price": "166.67",
+    "chg": "-1.10%",
+    "dir": "down"
+   },
+   {
+    "sym": "AVGO",
+    "name": "博通(週二收盤)",
+    "price": "341.60",
+    "chg": "+2.46%",
+    "dir": "up"
+   },
+   {
+    "sym": "AMD",
+    "name": "超微(週二收盤)",
+    "price": "503.41",
+    "chg": "-0.17%",
+    "dir": "down"
+   },
+   {
+    "sym": "INTC",
+    "name": "英特爾(週二收盤)",
+    "price": "55.17",
+    "chg": "-0.49%",
+    "dir": "down"
+   },
+   {
+    "sym": "PLTR",
+    "name": "Palantir(週二收盤)",
+    "price": "156.56",
+    "chg": "-2.39%",
+    "dir": "down"
+   },
+   {
+    "sym": "MSFT",
+    "name": "微軟(週二收盤)",
+    "price": "506.24",
+    "chg": "-2.27%",
+    "dir": "down"
+   },
+   {
+    "sym": "GOOGL",
+    "name": "Google(週二收盤)",
+    "price": "280.20",
+    "chg": "-1.24%",
+    "dir": "down"
+   },
+   {
+    "sym": "META",
+    "name": "Meta(週二收盤)",
+    "price": "618.87",
+    "chg": "-1.20%",
+    "dir": "down"
+   },
+   {
+    "sym": "AMZN",
+    "name": "亞馬遜(週二收盤)",
+    "price": "257.89",
+    "chg": "+0.05%",
+    "dir": "up"
+   },
+   {
+    "sym": "TSLA",
+    "name": "特斯拉(週二收盤)",
+    "price": "380.11",
+    "chg": "+0.10%",
+    "dir": "up"
+   },
+   {
+    "sym": "MSTR",
+    "name": "MicroStrategy(週二收盤)",
+    "price": "96.50",
+    "chg": "-6.34%",
+    "dir": "down"
+   },
+   {
+    "sym": "EWY",
+    "name": "南韓ETF(週二收盤)",
+    "price": "135.32",
+    "chg": "-0.90%",
+    "dir": "down"
+   },
+   {
+    "sym": "SPY",
+    "name": "標普ETF(週二收盤)",
+    "price": "734.61",
+    "chg": "-0.95%",
+    "dir": "down"
+   },
+   {
+    "sym": "QQQ",
+    "name": "納指ETF(週二收盤)",
+    "price": "656.95",
+    "chg": "-0.73%",
+    "dir": "down"
+   },
+   {
+    "sym": "SPCX",
+    "name": "SpaceX proxy(幣安24h)",
+    "price": "141.85",
+    "chg": "+2.85%",
+    "dir": "up"
+   }
+  ],
+  "macro": {
+   "dxy": "103.63 (+0.14%，19 月新高一帶)",
+   "vix": "25.46 (+11.13%，破 23)",
+   "us10y": "5.103% (連 27 日站上 5%)",
+   "us30y": "5.458%",
+   "hy_oas": "3.34% (11/16，+11bp，走闊但絕對值仍低)",
+   "ig_oas": "0.90% (幾乎不動＝壓力局部)",
+   "taiex": "39,975 (-0.29%)",
+   "usdjpy": "159.41 (carry 緊盯，近 160)",
+   "fng": "11 極度恐懼 (昨 12)",
+   "jp10y": "暫缺(Yahoo 取不到；關注是否破關)",
+   "de10y": "暫缺"
+  }
+ },
+ "s2_regime": {
+  "rows": [
+   {
+    "dim": "核心變數",
+    "content": "① NVDA 盤後財報 beat（$115.8B/+103%、Q4 $130B、庫藏股、Vera Rubin）＝AI 需求續航的硬證據、估值恐慌轉機；② 鷹派升息循環（Oct CPI 3.7%、Fed 官員集體喊升息、10Y 破 5%）＝估值天花板與無息資產逆風。兩力對撞。"
+   },
+   {
+    "dim": "短期（1–3 日）",
+    "content": "NVDA beat 可能觸發超賣反彈（F&G 11、VIX 25.5、空頭擁擠）；但鷹派放話與美元 19 月高壓制反彈高度。等週三常規盤對 NVDA 的實際定價。"
+   },
+   {
+    "dim": "中期（1–4 週）",
+    "content": "12 月 Fed 決議（市場讀升息 ~90%）定調；若如 Musalem 所言進入『連續升息』週期，高估值股與無息金銀續承壓，AI 鏈靠基本面（NVDA 財測）支撐分化。"
+   },
+   {
+    "dim": "長期（季度）",
+    "content": "AI capex boom 結構未變（NVDA $130B 財測印證），但利率週期逆風拉長；去美元化/央行購金為金的結構長多，與短期鷹派逆風分清。"
+   },
+   {
+    "dim": "Regime 判定",
+    "content": "AI 估值去化（NVDA beat 為轉機）× 鷹派升息循環（硬天花板）雙驅動；信用面仍局部（HY 走闊、IG 未動），尚未系統性 risk-off。屏息看週三常規盤如何消化 NVDA beat vs 鷹派。"
+   }
+  ]
+ },
+ "s3_consensus": {
+  "rows": [
+   {
+    "theme": "NVDA 財報",
+    "expect": "市場屏息、擔心 miss 引爆 AI 鏈再殺",
+    "actual": "Q3 beat +103%、Q4 財測 $130B、盤後+4%",
+    "mispricing": "賣方『AI 狂熱結束』與財報硬數據背離——AI 需求端未見放緩，恐慌殺的是估值不是基本面"
+   },
+   {
+    "theme": "Fed 12 月",
+    "expect": "部分人仍賭 hold（白宮施壓）",
+    "actual": "CPI 3.7%+零售超預期+官員集體喊升息，市場讀 ~90% 升息",
+    "mispricing": "賭 hold 者對抗數據與官員放話；但 Williams 排除 jumbo＝升幅預期收斂至 25bp"
+   },
+   {
+    "theme": "黃金",
+    "expect": "地緣（Iran）避險應撐金",
+    "actual": "金創 14 月低、跌破 VA（金/銀同幅 -1.42%、BTC 同跌）",
+    "mispricing": "當日無活躍地緣 bid 可言（油價自己也跌 -0.70%）；更像高波動日全面去 grossing 波及貴金屬，鷹派升息循環是中期上蓋（當日 10Y 反小跌，非當日利率觸發）"
+   },
+   {
+    "theme": "信用面",
+    "expect": "崩盤恐引爆系統性信用事件",
+    "actual": "HY 3.34% 走闊但 IG 未動、HYG 持平",
+    "mispricing": "壓力鎖在高收益/AI 端、未外溢——尚非 2022 式全面去槓桿"
+   }
+  ],
+  "alert": "最大 Mispricing：市場把『NVDA 財報前恐慌』與『AI 基本面』混為一談。NVDA Q3 +103%、Q4 財測 $130B（Vera Rubin 出貨）證明 AI 需求端沒放緩——這波殺的是**估值（鷹派升息壓縮本益比）**不是**需求**。若週三常規盤認清這點，超賣＋空頭擁擠（F&G 11）具 relief 反彈燃料；但反彈高度受 10Y 破 5%/美元 19 月高的鷹派天花板限制。"
+ },
+ "s4_matrix": {
+  "rows": [
+   {
+    "rank": "1",
+    "asset": "AVGO 博通",
+    "chg": "+2.46%",
+    "st": "偏多(逆勢)",
+    "driver": "AI ASIC 需求逆勢抗跌、客製晶片訂單能見度"
+   },
+   {
+    "rank": "2",
+    "asset": "SPCX (SpaceX proxy)",
+    "chg": "+2.85%",
+    "st": "中",
+    "driver": "一級市場 proxy、與大盤低相關（幣安 24h）"
+   },
+   {
+    "rank": "3",
+    "asset": "TSLA 特斯拉",
+    "chg": "+0.10%",
+    "st": "中",
+    "driver": "大盤殺盤中逆勢翻紅、驅動待查"
+   },
+   {
+    "rank": "4",
+    "asset": "AMZN 亞馬遜",
+    "chg": "+0.05%",
+    "st": "中",
+    "driver": "防禦性相對抗跌、AWS AI 需求"
+   },
+   {
+    "rank": "5",
+    "asset": "AMD 超微",
+    "chg": "-0.17%",
+    "st": "中",
+    "driver": "晶片板塊中相對抗跌"
+   },
+   {
+    "rank": "6",
+    "asset": "COPPER 銅",
+    "chg": "-0.28%",
+    "st": "中",
+    "driver": "工業需求平穩、相對抗跌",
+    "leg_tag": "工業"
+   },
+   {
+    "rank": "7",
+    "asset": "NVDA 輝達",
+    "chg": "-0.44%(盤後+4%)",
+    "st": "中",
+    "driver": "盤中財報前小跌，盤後 Q3 beat 飆+4%"
+   },
+   {
+    "rank": "8",
+    "asset": "INTC 英特爾",
+    "chg": "-0.49%",
+    "st": "中",
+    "driver": "晶片板塊相對抗跌"
+   },
+   {
+    "rank": "9",
+    "asset": "BTC 比特幣",
+    "chg": "-0.60%",
+    "st": "偏空",
+    "driver": "連五日守 64k、鷹派 risk-off 壓制、Wintermute 示警破 200 週均"
+   },
+   {
+    "rank": "10",
+    "asset": "ETH 以太坊",
+    "chg": "-0.88%",
+    "st": "偏空",
+    "driver": "跟隨 BTC、funding 偏熱易殺多"
+   },
+   {
+    "rank": "11",
+    "asset": "EWY 南韓",
+    "chg": "-0.90%",
+    "st": "中",
+    "driver": "跟隨半導體與強美元逆風"
+   },
+   {
+    "rank": "12",
+    "asset": "MU 美光",
+    "chg": "-0.92%",
+    "st": "偏空",
+    "driver": "DRAM 壟斷訴訟雙向張力、AI 記憶體需求 vs 賠付風險"
+   },
+   {
+    "rank": "13",
+    "asset": "SPY 標普",
+    "chg": "-0.95%",
+    "st": "偏空",
+    "driver": "大盤殺尾盤、Dow -800、鷹派+財報前去風險"
+   },
+   {
+    "rank": "14",
+    "asset": "QCOM 高通",
+    "chg": "-1.10%",
+    "st": "偏空",
+    "driver": "手機鏈需求疑慮、跟隨半導體弱勢"
+   },
+   {
+    "rank": "15",
+    "asset": "META",
+    "chg": "-1.20%",
+    "st": "偏空",
+    "driver": "高估值科技股殺估值、capex 疑慮"
+   },
+   {
+    "rank": "16",
+    "asset": "GOOGL",
+    "chg": "-1.24%",
+    "st": "偏空",
+    "driver": "大型科技殺估值"
+   },
+   {
+    "rank": "17",
+    "asset": "XAU 黃金",
+    "chg": "-1.42%",
+    "st": "偏空",
+    "driver": "高波動日全面去 grossing 波及+鷹派中期逆風（當日 10Y 小跌），創 14 月低",
+    "leg_tag": "貨幣(去grossing)"
+   },
+   {
+    "rank": "18",
+    "asset": "XAG 白銀",
+    "chg": "-1.42%",
+    "st": "偏空",
+    "driver": "貨幣腿隨金殺+工業需求疲軟雙殺",
+    "leg_tag": "貨幣+工業"
+   },
+   {
+    "rank": "19",
+    "asset": "XPD 鈀",
+    "chg": "-1.92%",
+    "st": "偏空",
+    "driver": "汽車/工業需求疲軟",
+    "leg_tag": "工業"
+   },
+   {
+    "rank": "20",
+    "asset": "MSFT 微軟",
+    "chg": "-2.27%",
+    "st": "偏空",
+    "driver": "高估值軟體殺估值、AI capex 回收疑慮"
+   },
+   {
+    "rank": "21",
+    "asset": "PLTR Palantir",
+    "chg": "-2.39%",
+    "st": "偏空",
+    "driver": "高本益比 AI 軟體、估值去化重災"
+   },
+   {
+    "rank": "22",
+    "asset": "XPT 鉑",
+    "chg": "-3.00%",
+    "st": "偏空",
+    "driver": "工業需求+貴金屬齊殺",
+    "leg_tag": "工業"
+   },
+   {
+    "rank": "23",
+    "asset": "TSM 台積電ADR",
+    "chg": "-3.68%",
+    "st": "偏空",
+    "driver": "AI 晶片出口限制衝擊（Reuters 11/17）+半導體殺估值"
+   },
+   {
+    "rank": "24",
+    "asset": "MSTR MicroStrategy",
+    "chg": "-6.34%",
+    "st": "偏空",
+    "driver": "股票高 beta/mNAV 溢價壓縮主導（BTC 當日僅 -0.60% 撐不起）、破 100/跌破 VAL",
+    "leg_tag": "加密 proxy"
+   }
+  ]
+ },
+ "s5_risk": {
+  "risks": [
+   {
+    "risk": "NVDA beat 後常規盤『賣利多』：盤後+4%被消化、鷹派壓過財報",
+    "prob": "中",
+    "impact": "AI 鏈 relief 夭折、再探低",
+    "assets": "SOXX/NVDA/MSTR/BTC",
+    "severity": 3
+   },
+   {
+    "risk": "12 月 Fed 升息確認且暗示連續升息（Musalem +1pp 劇本）",
+    "prob": "高",
+    "impact": "高估值股+無息金銀續殺、美元再走高",
+    "assets": "金/銀/BTC/高估值科技",
+    "severity": 4
+   },
+   {
+    "risk": "HY+IG 齊飆升級成系統性 risk-off（目前 IG 未動＝未觸發）",
+    "prob": "低",
+    "impact": "全面去槓桿、金/加密從承接變被拖下水",
+    "assets": "全資產",
+    "severity": 5
+   },
+   {
+    "risk": "AI 晶片出口限制升級（Reuters 11/17 衝擊東南亞資料中心）",
+    "prob": "中",
+    "impact": "TSM/晶片鏈再殺、供應鏈重定價",
+    "assets": "TSM/NVDA/晶片鏈",
+    "severity": 3
+   },
+   {
+    "risk": "Iran/Hormuz 地緣升級→油價重新飆升→通膨+鷹派加碼",
+    "prob": "低中",
+    "impact": "停滯性通膨壓力、Fed 更鷹",
+    "assets": "油/金/股/債",
+    "severity": 3
+   },
+   {
+    "risk": "BTC 跌破 200 週均（Wintermute 示警奔 $50,000s）",
+    "prob": "中",
+    "impact": "加密去槓桿加深、MSTR 連動殺",
+    "assets": "BTC/ETH/MSTR",
+    "severity": 3
+   }
+  ],
+  "setups": [
+   {
+    "asset": "XAU 黃金",
+    "price": "3,817",
+    "pattern": "跌破 VA 偏空",
+    "basis": "跌破 VAL 3,861、14 月低；radar 偏空(2 vs 13.5)"
+   },
+   {
+    "asset": "XAG 白銀",
+    "price": "46.65",
+    "pattern": "跌破 VA 偏空",
+    "basis": "跌破 VAL 47.45、貨幣+工業雙殺；signals tilt 偏多但偏空側失效"
+   },
+   {
+    "asset": "SOXX",
+    "price": "141.46",
+    "pattern": "下降窗(bear)",
+    "basis": "ST 三框中/盤整、守 141 下緣、下降窗壓力"
+   },
+   {
+    "asset": "BTC",
+    "price": "64,329",
+    "pattern": "區間守 POC",
+    "basis": "VA 內、連五日守 64k、radar 偏空"
+   },
+   {
+    "asset": "MSTR",
+    "price": "96.50",
+    "pattern": "三外部(bear)/破 VAL",
+    "basis": "跌破 VAL 99.52、Put 牆 90 下撐"
+   },
+   {
+    "asset": "NVDA",
+    "price": "155.46(盤後+4%)",
+    "pattern": "盤後跳空",
+    "basis": "Q3 beat 盤後+4%，看週三跳空能否站穩"
+   },
+   {
+    "asset": "TSM",
+    "price": "359.69",
+    "pattern": "破位偏空",
+    "basis": "-3.68% 出口限制衝擊、半導體最弱"
+   },
+   {
+    "asset": "ETH",
+    "price": "1,803",
+    "pattern": "區間偏空",
+    "basis": "radar 偏空(0 vs 9.5)、funding 分位 86% 偏熱"
+   },
+   {
+    "asset": "XPD 鈀",
+    "price": "964.84",
+    "pattern": "工業腿偏空",
+    "basis": "-1.92%、汽車需求疲軟"
+   },
+   {
+    "asset": "XPT 鉑",
+    "price": "1,426",
+    "pattern": "工業腿偏空",
+    "basis": "-3.00%、貴金屬齊殺最弱"
+   },
+   {
+    "asset": "COPPER 銅",
+    "price": "6.076",
+    "pattern": "相對抗跌",
+    "basis": "-0.28%、工業腿平穩逆勢（白銀非工業腿反證）"
+   },
+   {
+    "asset": "AVGO 博通",
+    "price": "341.60",
+    "pattern": "逆勢翻紅",
+    "basis": "+2.46%、ASIC 需求、AI 鏈分化最強"
+   },
+   {
+    "asset": "PLTR",
+    "price": "156.56",
+    "pattern": "殺估值",
+    "basis": "-2.39%、高本益比重災"
+   },
+   {
+    "asset": "SPY",
+    "price": "734.61",
+    "pattern": "殺尾盤",
+    "basis": "-0.95%、Dow -800、VIX 破 23"
+   }
+  ]
+ },
+ "s6": {
+  "xau": {
+   "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)，ATR 日線約 $40+；價 3,809 跌破 Value Area 下緣 3,861＝離開籌碼區下行、無息資產逢鷹派逆風。",
+   "scorecard": [
+    {
+     "factor": "DXY 美元",
+     "read": "103.63 +0.14%、19 月新高一帶",
+     "score": "-1 利空"
+    },
+    {
+     "factor": "實質利率/10Y",
+     "read": "10Y 5.10% 連 27 日破 5%、Oct CPI 3.7% 但名目升幅更大＝實質利率升",
+     "score": "-2 強利空"
+    },
+    {
+     "factor": "央行購金",
+     "read": "結構長多未變（Goldman 喊 2028 $5,600）",
+     "score": "+1 利多(長線)"
+    },
+    {
+     "factor": "SuperTrend",
+     "read": "三框中/跌破 VA",
+     "score": "-1 偏空"
+    },
+    {
+     "factor": "地緣",
+     "read": "Iran/Hormuz 緊張但避險 bid 被實質利率壓過",
+     "score": "0 中性"
+    }
+   ],
+   "bias_24h": "24h 區間預估（ATR ±約 $55）：3,760–3,880。偏空整理，跌破 3,800 心理關看 3,760；站回 VAL 3,861 才轉中性。",
+   "ops": [
+    {
+     "scenario": "偏空續跌",
+     "entry": "反彈至 3,861(VAL) 遇壓",
+     "stop": "3,900 上方",
+     "target": "3,760→3,720",
+     "rr": "1:2"
+    },
+    {
+     "scenario": "超跌反彈(需鷹派退潮)",
+     "entry": "站回 3,861",
+     "stop": "3,790",
+     "target": "3,962→4,000",
+     "rr": "1:2.5"
+    }
+   ],
+   "scenarios_5d": [
+    {
+     "name": "鷹派續壓",
+     "prob": "45%",
+     "desc": "12 月升息確認、10Y 守 5%+、金於 3,760–3,880 低檔整理"
+    },
+    {
+     "name": "超跌反彈",
+     "prob": "35%",
+     "desc": "NVDA beat 緩解 risk-off、美元回落→金彈回 3,900–3,962"
+    },
+    {
+     "name": "破位加速",
+     "prob": "20%",
+     "desc": "官員暗示連續升息/美元再飆→金破 3,760 奔 3,700"
+    }
+   ],
+   "extra": "黃金→白銀傳導：金跌破 VA、金銀比 ~81.6(5 日 +2.75)＝金銀比擴大→**貨幣腿主導**（避險/鷹派殺，非工業）。銀的貨幣腿隨金殺、工業腿亦弱（銅僅 -0.28% 相對抗跌＝銀的跌非工業腿拖累，純貨幣腿+跟跌）。實質利率是無息金銀最大對手盤，鷹派逆風屬週期性、與去美元化結構長多分清。"
+  },
+  "xag": {
+   "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；價 46.52 跌破 VAL 47.45＝離開籌碼區下行。funding 分位僅 2%＝無多頭擁擠（不同於金/ETH）。",
+   "scorecard": [
+    {
+     "factor": "DXY 美元",
+     "read": "19 月新高一帶",
+     "score": "-1 利空"
+    },
+    {
+     "factor": "黃金方向",
+     "read": "金 14 月低、跌破 VA",
+     "score": "-2 強利空(80% 方向跟金)"
+    },
+    {
+     "factor": "金銀比",
+     "read": "81.6、5 日 +2.75/z +2.29＝擴大",
+     "score": "-1 貨幣腿主導(避險殺)"
+    },
+    {
+     "factor": "SuperTrend",
+     "read": "三框中/跌破 VAL",
+     "score": "-1 偏空"
+    },
+    {
+     "factor": "COT 空頭",
+     "read": "投機空 16,787 口 (26週pct 100%/52週pct 80.4%/5年pct 18.5%)",
+     "score": "0 燃料池有累積尚不大"
+    },
+    {
+     "factor": "現貨溢價/搶貨",
+     "read": "未見明顯逼倉訊號",
+     "score": "0 中性"
+    },
+    {
+     "factor": "風險事件",
+     "read": "12 月 Fed 升息、Iran 地緣",
+     "score": "-1 偏空(鷹派)"
+    }
+   ],
+   "bias_24h": "24h 區間預估（ATR ±約 $1.2）：45.3–47.8。偏空，跌破 46 看 45.3；站回 VAL 47.45 才轉中性。",
+   "ops": [
+    {
+     "scenario": "偏空續跌",
+     "entry": "反彈至 47.45(VAL) 遇壓",
+     "stop": "48.2",
+     "target": "45.3→44",
+     "rr": "1:2"
+    },
+    {
+     "scenario": "超跌反彈",
+     "entry": "站回 47.45 且金彈",
+     "stop": "46.0",
+     "target": "48.5→50",
+     "rr": "1:2"
+    }
+   ],
+   "scenarios_5d": [
+    {
+     "name": "隨金低檔整理",
+     "prob": "45%",
+     "desc": "金銀同受鷹派壓、銀於 45–48 整理"
+    },
+    {
+     "name": "超跌反彈",
+     "prob": "33%",
+     "desc": "金彈+risk-off 緩解、銀彈回 48–50"
+    },
+    {
+     "name": "破位",
+     "prob": "22%",
+     "desc": "金破 3,760 拖累、銀破 45 奔 44"
+    }
+   ],
+   "extra": "籌碼面：COT 投機空 16,787 口、4 週 +5,024（空單累積中）、26 週全距僅 8,123 口＝近半年相對高但放 5 年仍低（燃料池有累積、尚不算大）；COT 落後約 10 天、為週級結構查證非即時軋空訊號。屬性判定：金銀比擴大至 81.6＝**貨幣腿主導**（避險/鷹派殺），非工業（銅相對抗跌佐證）。風控：支撐 $44、極端 $42；若金止穩+美元回落則貨幣腿先解套。",
+   "signals_box": "🔧 signals 工具參考（silver_daily.py 2026-11-18，實驗性非進場依據）：綜合傾向【偏多(高信心) 分數 +8】；觸發 S3H/S3（金銀比 5 日變動≥+2 偏多，但 S3H 分層界 81.6 當前金銀比~68 遠未達、不適用；S3 母版 edge 僅 +3.9pp、金銀齊跌時失效）；背景燈 OIL_WEAK_GREEN/GSR_CHEAP_GREEN。COT 投機空 16,787 口（26週pct 100.0% / 52週pct 80.4% / 5年pct 18.5%，4週 +5,024；26週全距僅 8,123、空/OI 14.5%）。⚠ 工具偏多側較可靠、偏空側結構性失效；COT 落後約 10 天、原始口數受 OI 時代漂移不可比；樣本外驗證未完成，僅參考。**工具偏多 vs 我主觀偏空（跌破 VAL+鷹派）並陳不強行統一——工具的『偏多』來自金銀比均值回歸訊號，但明示金銀齊跌時失效，當前正是齊跌。**"
+  },
+  "btc": {
+   "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；價 64,329 於 VA 內（POC 63,794 為多空分界）、連五日守 64k。funding 0.0054% 分位 42%＝中性不擁擠。",
+   "scorecard": [
+    {
+     "factor": "DXY 美元",
+     "read": "19 月新高",
+     "score": "-1 利空"
+    },
+    {
+     "factor": "F&G",
+     "read": "11 極度恐懼(昨 12)",
+     "score": "+1 反向利多(超賣)"
+    },
+    {
+     "factor": "Funding",
+     "read": "0.0054% 分位 42% 中性",
+     "score": "0 中性"
+    },
+    {
+     "factor": "OI",
+     "read": "92,572、未見極端擁擠",
+     "score": "0 中性"
+    },
+    {
+     "factor": "美股連動",
+     "read": "鷹派 risk-off、但 NVDA beat 為轉機",
+     "score": "0 雙向"
+    },
+    {
+     "factor": "鏈上/技術",
+     "read": "Wintermute 示警破 200 週均、恐奔 $50,000s；但連五日守 64k/POC",
+     "score": "-1 偏空(結構轉弱)"
+    }
+   ],
+   "bias_24h": "24h 區間預估（ATR ±約 $1,800）：62,500–66,500。區間守 POC 63,794；站穩需短線 CVD 翻正+美股 relief；跌破 VAL 57,759 才轉空方確認。",
+   "ops": [
+    {
+     "scenario": "區間守支撐",
+     "entry": "回測 63,794(POC) 附近",
+     "stop": "62,000",
+     "target": "66,500→68,183(LVN)",
+     "rr": "1:2"
+    },
+    {
+     "scenario": "破位偏空",
+     "entry": "跌破 63,794 且 CVD 續流出",
+     "stop": "65,000",
+     "target": "60,000→57,759(VAL)",
+     "rr": "1:2"
+    }
+   ],
+   "scenarios_5d": [
+    {
+     "name": "區間整理",
+     "prob": "45%",
+     "desc": "守 POC 63.8k、等 NVDA beat 的 risk-on 擴散，63–68k 箱體"
+    },
+    {
+     "name": "relief 反彈",
+     "prob": "30%",
+     "desc": "NVDA beat 緩解 risk-off+超賣，站回 68k 奔 73k"
+    },
+    {
+     "name": "去槓桿破位",
+     "prob": "25%",
+     "desc": "鷹派升息確認+破 200 週均，奔 VAL 57.7k（Wintermute $50,000s 劇本）"
+    }
+   ],
+   "radar_html": "<div class=\"radar-draft\">\n  <div class=\"radar-head\">🛰️ radar 客觀底稿（BTCUSDT，永續，2026-11-18 10:16）｜主劇本：偏空（高信心，2.0 vs 6.5）</div>\n  <table class=\"radar-panel\">\n    <tr><td>報價</td><td>64284.5000　24h -0.47%</td></tr>\n    <tr><td>Volume Profile</td><td>POC 75982.91｜Value Area 63727.90–82837.40</td></tr>\n    <tr><td>SuperTrend(300,3)</td><td>1d:中 / 4h:中 / 1h:中</td></tr>\n    <tr><td>funding/OI</td><td>0.0072%（近120期分位61%）｜OI 92481.007</td></tr>\n    <tr><td>宏觀背景</td><td>10Y 5.103 / DXY 103.609 / VIX 25.46 / HY None</td></tr>\n    <tr><td>K線形態(日)</td><td>短線（bear）、吞沒（bear）</td></tr>\n    <tr><td>CVD規則判讀</td><td>健康下跌：價跌且資金流出 / 短線賣壓衰竭/買盤回歸（可能短彈或止穩） / 長短同向偏多，順勢但注意過熱</td></tr>\n  </table>\n  <div class=\"radar-bull\"><b>偏多訊號：</b><ul><li>[強度2/3 ×權重1.0] CVD短線：短線CVD 後半轉流入↑</li></ul></div>\n  <div class=\"radar-bear\"><b>偏空訊號：</b><ul><li>[強度3/3 ×權重1.5] CVD結構：結構1d CVD淨流出-104895=派發</li><li>[強度2/3 ×權重1.0] 宏觀：宏觀逆風：VIX 25.5≥20 恐慌</li><li>[強度0/3 ×權重0.5] K線形態：K線 短線：短實體短影=盤整（非高檔，弱化）</li><li>[強度0/3 ×權重0.5] K線形態：K線 吞沒：今實體包昨實體=反方反攻（非高檔，弱化）</li></ul></div>\n  <div class=\"radar-watch\"><b>待盯數據：</b><ul><li>多方確認：短線CVD持續翻正 + 價站穩 POC 75982.91 / VAH 82837.40 + SuperTrend 轉多</li><li>空方確認：價跌破 VAL 63727.90 + 結構CVD續流出 + funding 轉負 + 宏觀逆風(VIX破20/HY走闊)</li><li>情境層（規則抓不到、需人工/LLM）：財報、指數調整(如MSCI)、政策/地緣催化、當日新聞</li></ul></div>\n  <div class=\"radar-note\">※ radar 為規則化客觀層，權重/門檻為經驗值未回測；情境催化（財報/MSCI 指數調整/地緣/當日新聞）不在此欄，須人工或 LLM 補，與我的情境判讀衝突時兩者並陳。</div>\n</div>",
+   "urpd_html": "<div class=\"urpd-box\">🪙 BTC 成本分布代理（URPD proxy）<br>⚠ 交易所成交量(USD)成本代理（視窗 2023-01-23→2026-11-16）；非鏈上真 URPD，真鏈上請用 Glassnode/CoinGlass<br>最大成本簇 POC 22,748.61 ｜ 價值區 VA 19,549.09–87,805.44（70%）<br>壓力區（上）：65,408.82(HVN)、80,339.90(HVN)、87,805.44(VAH)、93,137.96(HVN)<br>支撐區（下）：29,147.64(HVN)、22,748.61(POC)、19,549.09(VAL)<br>真空帶 LVN（快穿）：33,413.66、46,211.73、54,743.77、76,073.88、84,605.92、88,871.94<br>現價在最大成本簇之上（成本簇為支撐，偏多結構）<br>現價 64,258.81：本視窗約 44% 成交量在下方、56% 在上方　⚠此為『視窗內成交量-時間加權』非真實持幣成本；近 ATH 時下方%會機械趨近 100%，不可當『供給在獲利%』、不可與鏈上 URPD 類比</div>",
+   "extra": "衍生品：funding 0.0054% 分位 42% 中性、無多頭過熱；Bitwise CIO 稱本波是『2022 來最大利率衝擊』、$2B 清算；BTC 跌破 200 週均（Wintermute 示警）＝大級別轉弱訊號須盯。CME Gap 與 ETF 流待補。關鍵洞察：連五日守 64k/POC＝lenses『殺低有買盤』續驗，但鷹派升息循環是上檔硬壓；NVDA beat 是 risk-on 擴散的潛在催化。"
+  },
+  "eth": {
+   "st": "SuperTrend(300,3) 日/4h/1h 三框皆『中』(radar)；價 1,799 於 VA 內（POC 2,251）、跌破 VAL 1,768 才轉空方確認。funding 0.0085% 分位 86%＝多頭偏熱（易殺多）。",
+   "scorecard": [
+    {
+     "factor": "BTC 方向",
+     "read": "BTC 守 64k 區間",
+     "score": "0 中性"
+    },
+    {
+     "factor": "ETH/BTC ratio",
+     "read": "0.0280（1803/64329），相對弱",
+     "score": "-1 偏空"
+    },
+    {
+     "factor": "Funding",
+     "read": "0.0085% 分位 86% 偏熱",
+     "score": "-1 易殺多"
+    },
+    {
+     "factor": "OI",
+     "read": "235 萬、結構 CVD 淨流出 -348 萬＝派發",
+     "score": "-1 偏空"
+    },
+    {
+     "factor": "催化劑",
+     "read": "跟隨 BTC/鷹派 risk-off",
+     "score": "0 中性"
+    }
+   ],
+   "bias_24h": "24h 區間預估（ATR ±約 $70）：1,740–1,880。偏空，funding 偏熱易殺多；跌破 VAL 1,768 轉空方確認、站回 1,880 才中性。",
+   "ops": [
+    {
+     "scenario": "偏空",
+     "entry": "反彈至 1,880 遇壓",
+     "stop": "1,920",
+     "target": "1,768(VAL)→1,700",
+     "rr": "1:2"
+    },
+    {
+     "scenario": "隨 BTC relief",
+     "entry": "BTC 站回 68k 帶動",
+     "stop": "1,740",
+     "target": "1,920→2,000",
+     "rr": "1:2"
+    }
+   ],
+   "scenarios_5d": [
+    {
+     "name": "隨 BTC 區間偏弱",
+     "prob": "45%",
+     "desc": "ETH/BTC 弱、funding 偏熱，1,740–1,900 箱體偏下"
+    },
+    {
+     "name": "relief 反彈",
+     "prob": "28%",
+     "desc": "BTC relief 帶動、站回 2,000"
+    },
+    {
+     "name": "殺多破位",
+     "prob": "27%",
+     "desc": "funding 高檔殺多+BTC 破位、奔 1,700 下"
+    }
+   ],
+   "radar_html": "<div class=\"radar-draft\">\n  <div class=\"radar-head\">🛰️ radar 客觀底稿（ETHUSDT，永續，2026-11-18 10:17）｜主劇本：偏空（高信心，0.0 vs 8.5）</div>\n  <table class=\"radar-panel\">\n    <tr><td>報價</td><td>1800.7400　24h -0.82%</td></tr>\n    <tr><td>Volume Profile</td><td>POC 2251.40｜Value Area 1768.36–2452.05</td></tr>\n    <tr><td>SuperTrend(300,3)</td><td>1d:中 / 4h:中 / 1h:中</td></tr>\n    <tr><td>funding/OI</td><td>0.0082%（近120期分位84%）｜OI 2357380.702</td></tr>\n    <tr><td>宏觀背景</td><td>10Y 5.103 / DXY 103.608 / VIX 25.46 / HY None</td></tr>\n    <tr><td>K線形態(日)</td><td>短線（bear）、吞沒（bear）</td></tr>\n    <tr><td>CVD規則判讀</td><td>健康下跌：價跌且資金流出 / 短線持續賣出 / 長短同向偏空，順勢但注意超賣</td></tr>\n  </table>\n  <div class=\"radar-bull\"><b>偏多訊號：</b><ul><li>（無）</li></ul></div>\n  <div class=\"radar-bear\"><b>偏空訊號：</b><ul><li>[強度3/3 ×權重1.5] CVD結構：結構1d CVD淨流出-3476275=派發</li><li>[強度1/3 ×權重1.0] CVD短線：短線CVD 持續流出</li><li>[強度1/3 ×權重1.0] funding：funding 0.0082% 近120期分位84%=多頭偏熱（易殺多）</li><li>[強度2/3 ×權重1.0] 宏觀：宏觀逆風：VIX 25.5≥20 恐慌</li><li>[強度0/3 ×權重0.5] K線形態：K線 短線：短實體短影=盤整（非高檔，弱化）</li><li>[強度0/3 ×權重0.5] K線形態：K線 吞沒：今實體包昨實體=反方反攻（非高檔，弱化）</li></ul></div>\n  <div class=\"radar-watch\"><b>待盯數據：</b><ul><li>多方確認：短線CVD持續翻正 + 價站穩 POC 2251.40 / VAH 2452.05 + SuperTrend 轉多</li><li>空方確認：價跌破 VAL 1768.36 + 結構CVD續流出 + funding 轉負 + 宏觀逆風(VIX破20/HY走闊)</li><li>情境層（規則抓不到、需人工/LLM）：財報、指數調整(如MSCI)、政策/地緣催化、當日新聞</li></ul></div>\n  <div class=\"radar-note\">※ radar 為規則化客觀層，權重/門檻為經驗值未回測；情境催化（財報/MSCI 指數調整/地緣/當日新聞）不在此欄，須人工或 LLM 補，與我的情境判讀衝突時兩者並陳。</div>\n</div>",
+   "extra": "衍生品：funding 分位 86% 偏熱＝多頭擁擠易被殺（與 BTC 中性分位不同，ETH 更脆）；結構 1d CVD 淨流出 -348 萬＝派發。ETH/BTC ratio 續弱＝資金相對偏好 BTC。"
+  },
+  "stocks": {
+   "gainers": [
+    {
+     "sym": "NVDA 輝達",
+     "chg": "-0.44% 盤後+約4%",
+     "analysis": "盤中財報前小跌 -0.44% 收 155.46，**盤後 Q3 財報 beat**：營收 $115.8B/+103% YoY、Q4 財測 $130B（超預期）、宣布庫藏股、Vera Rubin 開始出貨、董事會稱黃仁勳不回任（Kress 代理）→ 盤後一度 +4%。驅動＝AI 需求端硬數據證明沒放緩。ST 看週三跳空能否站穩 162（盤後價）。入場：站穩盤後缺口偏多、跌回 155 下填補缺口轉中性。5 日：beat 擴散 relief vs 鷹派壓頂拉鋸。為何選中：全場最大催化、估值恐慌的直接解藥。"
+    },
+    {
+     "sym": "AVGO 博通",
+     "chg": "+2.46%",
+     "analysis": "大盤殺盤中逆勢 +2.46%，AI ASIC/客製晶片需求能見度撐盤、AI 鏈分化最強標的。ST 偏多逆勢。入場：守 335 偏多、跌破 330 轉中性。5 日：若 NVDA beat 擴散則 AI 鏈共振。為何選中：殺盤中逆勢翻紅＝資金認可基本面。"
+    },
+    {
+     "sym": "AMZN 亞馬遜",
+     "chg": "+0.05%",
+     "analysis": "防禦性相對抗跌、AWS AI 需求支撐、大型科技中最穩。ST 中。入場：守 255。為何選中：殺盤中翻平＝防禦屬性。"
+    }
+   ],
+   "losers": [
+    {
+     "sym": "MSTR MicroStrategy",
+     "chg": "-6.34%",
+     "analysis": "全場最弱 -6.34% 破 100 收 96.50。主因**股票高 beta/mNAV 溢價壓縮**——BTC 當日僅 -0.60%（近乎持平），撐不起 -6.34%，故這不是『BTC proxy 去槓桿』而是風險日的股票溢價殺估值（2x 多頭 ETF MSTU -26%）。跌破 VPVR VAL 99.52、三外部型態(bear)。選擇權 Put 牆 90 為下撐、Max Pain 114-115 在上。入場：守 Put 牆 90 偏多搶反彈（高風險）、破 90 續空。5 日：隨 BTC，BTC 破 200 週均則續殺。為何選中：全場最大跌幅、加密去槓桿溫度計。"
+    },
+    {
+     "sym": "TSM 台積電ADR",
+     "chg": "-3.68%",
+     "analysis": "半導體最弱 -3.68% 收 359.69，AI 晶片出口限制（Reuters 11/17 衝擊東南亞資料中心）+殺估值雙殺。ST 偏空。入場：反彈至 370 遇壓偏空、站回 375 中性。5 日：出口限制是否升級+NVDA beat 能否拉抬台積。為何選中：出口限制直接受害+權值領跌。"
+    },
+    {
+     "sym": "PLTR Palantir",
+     "chg": "-2.39%",
+     "analysis": "高本益比 AI 軟體估值去化重災 -2.39%。鷹派升息壓縮高估值股本益比的典型標的。ST 偏空。入場：反彈遇壓偏空。5 日：高 beta，relief 彈性大但天花板低。為何選中：殺估值最直接的高 PE 代表。"
+    }
+   ],
+   "quick": [
+    {
+     "sym": "MU 美光",
+     "price": "712.42",
+     "chg": "-0.92%",
+     "dir": "偏空",
+     "levels": "支撐 700",
+     "note": "DRAM 壟斷訴訟雙向張力（賠付風險 vs 漲價指控利多定價權）"
+    },
+    {
+     "sym": "MSFT 微軟",
+     "price": "506.24",
+     "chg": "-2.27%",
+     "dir": "偏空",
+     "levels": "支撐 500",
+     "note": "高估值軟體殺估值、AI capex 回收疑慮"
+    },
+    {
+     "sym": "GOOGL",
+     "price": "280.20",
+     "chg": "-1.24%",
+     "dir": "偏空",
+     "levels": "支撐 275",
+     "note": "大型科技殺估值"
+    },
+    {
+     "sym": "META",
+     "price": "618.87",
+     "chg": "-1.20%",
+     "dir": "偏空",
+     "levels": "支撐 610",
+     "note": "capex 疑慮+殺估值"
+    },
+    {
+     "sym": "AMD 超微",
+     "price": "503.41",
+     "chg": "-0.17%",
+     "dir": "中",
+     "levels": "500 關卡",
+     "note": "晶片中相對抗跌"
+    },
+    {
+     "sym": "QCOM 高通",
+     "price": "166.67",
+     "chg": "-1.10%",
+     "dir": "偏空",
+     "levels": "支撐 165",
+     "note": "手機鏈需求疑慮"
+    },
+    {
+     "sym": "INTC 英特爾",
+     "price": "55.17",
+     "chg": "-0.49%",
+     "dir": "中",
+     "levels": "55 關卡",
+     "note": "相對抗跌"
+    },
+    {
+     "sym": "TSLA 特斯拉",
+     "price": "380.11",
+     "chg": "+0.10%",
+     "dir": "中",
+     "levels": "380 關卡",
+     "note": "殺盤中逆勢翻平、驅動待查"
+    },
+    {
+     "sym": "EWY 南韓",
+     "price": "135.32",
+     "chg": "-0.90%",
+     "dir": "偏空",
+     "levels": "支撐 133",
+     "note": "跟隨半導體+強美元逆風（持倉籃）"
+    },
+    {
+     "sym": "SPY 標普",
+     "price": "734.61",
+     "chg": "-0.95%",
+     "dir": "偏空",
+     "levels": "支撐 728",
+     "note": "殺尾盤 Dow -800、VIX 破 23"
+    },
+    {
+     "sym": "QQQ 納指",
+     "price": "656.95",
+     "chg": "-0.73%",
+     "dir": "偏空",
+     "levels": "支撐 650",
+     "note": "近七月低、看 NVDA beat 能否翻轉"
+    }
+   ]
+  }
+ },
+ "s7_banks": {
+  "rows": [
+   {
+    "src": "Fed Musalem (St Louis, 11/17)",
+    "view": "春季前可能需多次升息、累計可能 +1pp；通膨風險續存",
+    "impact": "鷹派、壓高估值股+無息金銀"
+   },
+   {
+    "src": "Fed Williams (NY, 11/18)",
+    "view": "12 月仍可能再升、但不需 jumbo『dramatic』大步",
+    "impact": "升幅預期收斂至 25bp、略緩和極端鷹派恐慌"
+   },
+   {
+    "src": "Goldman Sachs",
+    "view": "黃金 2028 上看 $5,600（降息循環+央行購金）",
+    "impact": "長線利多金、與短期鷹派逆風分清"
+   },
+   {
+    "src": "Wintermute",
+    "view": "BTC 跌破 200 週均、恐奔 $50,000s；『熊市未結束』",
+    "impact": "加密偏空、須盯 200 週均"
+   },
+   {
+    "src": "Bitwise CIO",
+    "view": "本波加密拋售＝2022 來最大利率衝擊、$2B 清算",
+    "impact": "利率驅動非基本面、修復看利率預期"
+   }
+  ],
+  "options_structure": "期權結構：VIX 25.46（+11%、破 23）、VXN（納指恐慌）跳升；F&G 11 極度恐懼＝空頭過度擁擠、超賣。MSTR 負 γ（放大波動）、Max Pain 114-115 在現價之上（若收斂有向上磁吸傾向、僅經驗）、Put 牆 90 下撐。整體：恐慌指標極端＋空頭擁擠→NVDA beat 若被認可具 relief squeeze 燃料，但鷹派天花板限制高度。散戶（槓桿 ETF）在 MSTU/SOXL 被血洗（-26%/-16%）＝追高殺低的典型代價。"
+ },
+ "s8_calendar": {
+  "events": [
+   {
+    "date": "11/18（週二美股盤後／台北 11/18 晨已出）",
+    "event": "★NVDA Q3 財報：營收 $115.8B/+103%、Q4 財測 $130B、庫藏股、Vera Rubin 出貨、黃仁勳不回任，盤後 +4%（已公布）"
+   },
+   {
+    "date": "11/18（週三美股盤／台北 11/18 夜–11/19 晨）",
+    "event": "★常規盤對 NVDA beat 的實際定價——AI 鏈 relief 是否擴散的關鍵"
+   },
+   {
+    "date": "11/19（週三美股盤後／台北 11/20 晨）",
+    "event": "FOMC 會議紀要（上次會議，鷹鴿語氣）＋多位 Fed 官員續放話"
+   },
+   {
+    "date": "本週",
+    "event": "Anthropic IPO 定價（~$64B，AI 一級市場情緒）"
+   },
+   {
+    "date": "12/9–10（台北 12/11 晨）",
+    "event": "★12 月 FOMC 利率決議：市場讀升息 ~90%，25bp vs jumbo 之辯（Williams 排除 jumbo）"
+   },
+   {
+    "date": "持續",
+    "event": "10Y 殖利率（連 27 日破 5%、逼近 2007 紀錄）、美元 DXY（19 月高）、HY OAS（3.34% 是否續闊破 3.5%）"
+   }
+  ],
+  "ranking": "關鍵排名：① NVDA beat 常規盤定價（週三，決定 AI 鏈 relief 成敗）② 12 月 FOMC 升息與路徑（Musalem 連續升息劇本 vs Williams 不用 jumbo）③ 10Y 破 5% 持續性+美元 19 月高（無息金銀與高估值股的天花板）④ HY OAS 是否破 3.5%（信用局部→系統性的觸發線）⑤ Iran/Hormuz 油價地緣。"
+ },
+ "s9_scenarios": {
+  "prediction_market": [
+   {
+    "item": "NVDA beat 常規盤反應",
+    "prob": "relief 反彈機率上升（beat 已成事實）",
+    "note": "盤後+4%，看週三常規盤能否守住跳空；守住=AI 鏈 relief 擴散，賣利多=再探低"
+   },
+   {
+    "item": "12 月 Fed 升息",
+    "prob": "市場讀 ~90%（CryptoPotato 11/17『90%』、Motley Fool 11/13『100%』）",
+    "note": "Oct CPI 3.7%+零售超預期+官員集體喊升息；確切 CME FedWatch % 未直抓到＝待核；25bp vs jumbo（Williams 排除 jumbo）"
+   },
+   {
+    "item": "Anthropic IPO 定價",
+    "prob": "本週",
+    "note": "~$64B，AI 一級市場情緒溫度計"
+   }
+  ],
+  "base": {
+   "prob": "44%",
+   "desc": "beat 後震盪消化：NVDA 跳空站穩但大盤不敢追（鷹派壓頂），SOXX 139–148、BTC 守 POC 63.8k–68k、金 3,780–3,900、VIX 回落至 22–24。超賣修復但無趨勢，等 12 月 FOMC。"
+  },
+  "bull": {
+   "prob": "30%",
+   "desc": "beat relief 反彈：NVDA beat 被認可+空頭回補（F&G 11 超賣）→SOXX 站回 146→152、BTC 站回 68k→73k、VIX 回落 20 下、金止穩反彈。鷹派仍是上檔壓但超賣彈性大。"
+  },
+  "bear": {
+   "prob": "21%",
+   "desc": "賣利多+鷹派壓過：NVDA beat 被當利多出盡、Fed 官員續鷹/升息確認→SOXX 破 141 奔 LVN 128、MSTR 破 Put 牆 90、BTC 破 POC 63.8k 奔 VAL 57.7k（Wintermute $50,000s）、金破 3,760、VIX 破 28。"
+  },
+  "tail": {
+   "prob": "5%",
+   "desc": "系統性升級：HY+IG 齊飆（目前 IG 0.90% 未動＝未觸發）或 AI 信用事件（CoreWeave 類）或 Iran 油價飆→全面去槓桿、金/加密從承接變被拖下水、VIX 破 32。機率低但須盯 HY 破 3.5%。"
+  }
+ },
+ "targets_38": {
+  "XAU": {
+   "patterns": "Hikkake 陷阱(bull)/修正 Hikkake(bull)——籌碼區低檔反轉訊號，但被結構派發壓制；淨偏空",
+   "supertrend": "日/4h/1h 三框皆『中』(盤整)，radar 偏空(2 vs 13.5)",
+   "sr": "VPVR(日線)：POC 4,127.99｜VA 3,961.73–4,405.07。現價 3,808.73 於 **VA 之下**（偏空）。壓力：VAL 3,961.73→POC 4,127.99；支撐：下方無 VA 結構、LVN 真空 3,943.26（上）；下方看整數 3,800/3,760。LVN 快穿帶 4,238.82/4,571.32。",
+   "bias": "條件式：站回 VAL 3,861(幣安 VA 下緣 radar 版)／3,962(日線 VPVR) 才轉中性偏多；維持 VA 之下＋10Y 守 5% 偏空，跌破 3,800 看 3,760。鷹派實質利率是最大對手盤。"
+  },
+  "XAG": {
+   "patterns": "吞沒(bear)＋Hikkake 陷阱(bull)/修正 Hikkake(bull) 混合；結構派發主導，淨偏空",
+   "supertrend": "日/4h/1h 三框皆『中』(盤整)，radar 偏空(2 vs 9)",
+   "sr": "VPVR(日線)：POC 57.93｜VA 56.39–69.68。現價 46.51 於 **VA 之下**（深度偏空）。上方壓力：VAL 56.39→POC 57.93（遠）；近壓看 LVN 47.70；下方支撐看整數 45/44。LVN 快穿 54.86/72.24。",
+   "bias": "條件式：站回 47.45(幣安 VAL radar 版) 才轉中性；維持 46 之下偏空，跌破 46 看 45.3→44。金銀比 81.6 擴大＝貨幣腿主導，隨金；工具偏多訊號明示金銀齊跌時失效。"
+  },
+  "SOXX": {
+   "patterns": "下降窗(bear，向下跳空缺口=壓力續空)——Yahoo 日線 detect_last",
+   "supertrend": "日/4h/15m 三框皆『中』(盤整)：日線 ST 上軌 156.57/下軌 128.81、ATR 4.63，價 141.22 夾在中間＝無方向共振（Yahoo OHLC 自算）",
+   "sr": "VPVR(Yahoo 1y 日線)：POC 111.53｜VA 86.81–171.96。現價 141.22 於 VA 內偏上、POC 之上。上方壓力：ST 上軌 156.57→LVN 160.97→HVN 171.96；下方支撐：LVN 128.01（快穿）→POC 111.53。守 141 下緣。",
+   "bias": "條件式：站回 146（VAL/前整理區）轉中性、站上 156.57(ST 上軌) 才偏多；跌破 141 下緣奔 LVN 128.01 真空帶偏空。下降窗壓力+ST 盤整，方向由 NVDA beat 常規盤定價決定。"
+  },
+  "BTC": {
+   "patterns": "短線(bear)+吞沒(bear)——radar 日線；但 CVD 短線後半轉流入（可能短彈/止穩）",
+   "supertrend": "日/4h/1h 三框皆『中』(盤整)，radar 偏空(2 vs 6.5)",
+   "sr": "VPVR(波段)：POC 63,793.63｜VA 57,758.60–78,606.88。現價 64,234 於 VA 內（POC 為多空分界）。壓力：HVN 78,058→VAH 78,607→HVN 81,350；支撐：POC 63,794→VAL 57,759。LVN 快穿 68,182.74/83,544.63。連五日守 64k/POC。",
+   "bias": "條件式：站穩 POC 63,794＋短線 CVD 翻正＋美股 relief 偏多搶 66.5k→68.2k(LVN)；跌破 POC 63,794＋CVD 續流出奔 VAL 57,759（Wintermute $50,000s 劇本需破 200 週均）。",
+   "urpd_html": "<div class=\"urpd-box\">🪙 BTC 成本分布代理（URPD proxy）<br>⚠ 交易所成交量(USD)成本代理（視窗 2023-01-23→2026-11-16）；非鏈上真 URPD，真鏈上請用 Glassnode/CoinGlass<br>最大成本簇 POC 22,748.61 ｜ 價值區 VA 19,549.09–87,805.44（70%）<br>壓力區（上）：65,408.82(HVN)、80,339.90(HVN)、87,805.44(VAH)、93,137.96(HVN)<br>支撐區（下）：29,147.64(HVN)、22,748.61(POC)、19,549.09(VAL)<br>真空帶 LVN（快穿）：33,413.66、46,211.73、54,743.77、76,073.88、84,605.92、88,871.94<br>現價在最大成本簇之上（成本簇為支撐，偏多結構）<br>現價 64,258.81：本視窗約 44% 成交量在下方、56% 在上方　⚠此為『視窗內成交量-時間加權』非真實持幣成本；近 ATH 時下方%會機械趨近 100%，不可當『供給在獲利%』、不可與鏈上 URPD 類比</div>"
+  },
+  "MSTR": {
+   "patterns": "三外部(bear，吞沒+順勢確認=反轉確認)——radar 日線",
+   "supertrend": "日/4h/1h 三框皆『中』(盤整)，radar 偏空(0 vs 9)",
+   "sr": "VPVR(波段)：POC 97.37｜VA 83.78–142.02。現價 98.13 於 VA 內（POC 97.37 為多空分界、剛跌破 VAL 99.52 又收在 POC 上緣拉鋸）。壓力：HVN 128.43→VAH 142.02；支撐：POC 97.37→VAL 83.78。LVN 快穿 112.90/147.84。選擇權 Put 牆 90 為硬下撐。",
+   "bias": "條件式：守 POC 97/選擇權 Put 牆 90 偏多搶反彈（高風險、隨 BTC）；跌破 90 續空奔 VAL 83.78。高 beta BTC proxy，方向跟 BTC+大盤 relief。",
+   "options_html": "<div class=\"opt-box\">🎯 選擇權籌碼（Max Pain / OI 牆 / PCR / Gamma）<br>現價 100.00（CBOE 延遲；OI 為 T+1 結算，結構底稿非進場訊號）<br>最近到期 2026-11-20 Max Pain(磁吸價) 114.00<br>跨 3 個到期合算（2026-11-20, 2026-11-27, 2026-12-04）：<br>  Max Pain(合算參考，非單一到期) 115.00<br>  Call 牆(壓力) 135.00(OI 26,804)、120.00(OI 23,617)、140.00(OI 19,479)<br>  Put 牆(支撐) 90.00(OI 32,503)、65.00(OI 28,515)、100.00(OI 28,359)<br>  PCR  OI 0.82 ｜ Vol 0.77<br>  Gamma 近似 負γ(放大波動/追漲殺跌)；γ 牆 call 112.00 / put 100.00（假設做市商 long call/short put；量級參考、方向無法驗證）<br>  現價 vs 最近到期 Max Pain：低於 12.3%（若收斂有向上磁吸傾向，僅經驗傾向）</div>"
+  }
+ },
+ "adversarial": {
+  "gate_a": true,
+  "gate_b": true,
+  "gate_c": false,
+  "subagent_opened": true,
+  "verdicts": [
+   {
+    "claim": "週二殺尾盤＝AI 估值去化＋鷹派雙驅動",
+    "verdict": "REFUTED",
+    "note": "已降級改寫：當日 10Y 反跌 -0.35%、DXY 僅 +0.14%＝鷹派非當日觸發；且 Dow -800 領跌、Nasdaq -0.74% 跌較少、SOXX +0.17%／AVGO +2.46%＝半導體反守，故非 AI 去化領跌。正確定性＝NVDA 財報前廣泛去風險（Dow/景氣腿領跌），鷹派為中期背景。"
+   },
+   {
+    "claim": "NVDA 盤後 beat → AI 恐慌緩解、Bull case 觸發",
+    "verdict": "PLAUSIBLE",
+    "note": "beat 數字+盤後+4% 為觀察值(CONFIRMED)，但『relief rally』是前瞻預測；+103% YoY 只換 +4% AH 偏弱＝sell-the-news 風險。已加 caveat：卸下尾部風險但未解決大盤利率壓力，勿寫『翻多』。"
+   },
+   {
+    "claim": "12 月 Fed 升息市場高度預期",
+    "verdict": "CONFIRMED",
+    "note": "方向確認（升息、多來源、10Y 5%+ 一致、無跳級）；精度降為區間 ≈88–100%（Investing.com 11/08 僅 88%、Motley Fool 11/13『100%』、CryptoPotato 11/17『90%』，各來源日期/工具不同），不寫單一 ~100%。確切 CME FedWatch % 未直抓到＝待核。"
+   },
+   {
+    "claim": "黃金 14 月低＝鷹派實質利率壓過 Iran 地緣 bid",
+    "verdict": "REFUTED",
+    "note": "已降級改寫：當日殖利率跌、油價自己也跌 -0.70%＝無活躍地緣 bid 需被『壓過』；金/銀同幅 -1.42%＋BTC 同跌＝broad 去 grossing，非乾淨利率故事。鷹派為中期上蓋（context）。"
+   },
+   {
+    "claim": "MSTR -6.34%＝BTC proxy 去槓桿＋高 beta",
+    "verdict": "PLAUSIBLE",
+    "note": "已重新定性主因：BTC 當日僅 -0.60% 撐不起 -6.34%，主因是風險日股票高 beta／mNAV 溢價壓縮，非 BTC proxy 去槓桿；VAL 99.52 破位＝TA context 可留。"
+   },
+   {
+    "claim": "HY 走闊/IG 不動＝局部、故金/加密可承接不被拖下水",
+    "verdict": "REFUTED",
+    "note": "數據本身 CONFIRMED（HY +11bp vs IG +1bp 局部化、OAS 絕對水準仍偏緊＝壓力溫和）；但『可承接』結論 REFUTED——同日金 -1.42%／BTC -0.60% 全跌、金還在 14 月低，實證上沒承接反被一起賣。已改寫：保留『HY 局部、溫和』、刪除『金加密可承接』推論；另 OAS 數據為 11/16 有一日落差。"
+   }
+  ]
+ },
+ "dashboard": {
+  "summary": "Risk-Off 74/100（🔴 Risk-Off（手收起來/偏防守））｜日內大單邊 63%（🚀 大單邊行情（順勢但必掛保本+開盤後確認））｜📉 全面下殺（多頭 ETF 普跌）",
+  "generated": "2026-11-18 10:18:34",
+  "riskoff": {
+   "score": "74",
+   "label": "🔴 Risk-Off（手收起來/偏防守）",
+   "stress": true,
+   "data_bad": false
+  },
+  "intraday": {
+   "single": "63",
+   "chop": "37",
+   "label": "🚀 大單邊行情（順勢但必掛保本+開盤後確認）"
+  },
+  "breadth": {
+   "text": "📉 全面下殺（多頭 ETF 普跌）",
+   "up": 0,
+   "dn": 5,
+   "nn": 5
+  },
+  "risk_rows": [
+   {
+    "lbl": "美元 DXY",
+    "val": "103.61",
+    "chg": "+1.33%"
+   },
+   {
+    "lbl": "10Y 殖利率",
+    "val": "5.10%",
+    "chg": "+10.5bp"
+   },
+   {
+    "lbl": "2Y / 10Y 利差",
+    "val": "4.75%",
+    "chg": "+0.35"
+   },
+   {
+    "lbl": "3M / 30Y",
+    "val": "4.14%",
+    "chg": "5.46%"
+   },
+   {
+    "lbl": "納指恐慌 VXN",
+    "val": "34.4",
+    "chg": "+20.5%"
+   },
+   {
+    "lbl": "標普恐慌 VIX",
+    "val": "25.5",
+    "chg": "+45.6%"
+   },
+   {
+    "lbl": "BTC 隱波 DVOL",
+    "val": "43.6",
+    "chg": "+0.6%"
+   },
+   {
+    "lbl": "加密 F&G",
+    "val": "11",
+    "chg": "Extreme Fear"
+   }
+  ],
+  "trend_rows": [
+   {
+    "lbl": "ES 標普期貨跳空",
+    "val": "",
+    "chg": "-3.13%"
+   },
+   {
+    "lbl": "NQ 納指期貨跳空",
+    "val": "昨 +0.4%",
+    "chg": "-4.20%"
+   },
+   {
+    "lbl": "盤前期貨量能 RVOL",
+    "val": "",
+    "chg": "0.3×"
+   },
+   {
+    "lbl": "DVOL ~24h 變動",
+    "val": "",
+    "chg": "+0.6%"
+   },
+   {
+    "lbl": "當日重大事件",
+    "val": "NVDA 週二盤後 Q3 beat（營收 115.8B/+103%、Q4 財測 130B、庫藏股、Vera Rubin 出貨、黃仁勳不回任）盤後+約4%；等週三常規盤反應",
+    "chg": ""
+   },
+   {
+    "lbl": "原油 WTI / Brent",
+    "val": "85.1",
+    "chg": "92.6"
+   }
+  ],
+  "etf": [
+   {
+    "grp": "QQQ",
+    "long": "TQQQ",
+    "mult": "3x",
+    "long_chg": "-10.18%",
+    "short": "SQQQ",
+    "short_chg": "+10.57%",
+    "rvol": "1.4×"
+   },
+   {
+    "grp": "半導體",
+    "long": "SOXL",
+    "mult": "3x",
+    "long_chg": "-15.86%",
+    "short": "SOXS",
+    "short_chg": "+15.73%",
+    "rvol": "1.3×"
+   },
+   {
+    "grp": "MSTR",
+    "long": "MSTU",
+    "mult": "2x",
+    "long_chg": "-26.11%",
+    "short": "MSTZ",
+    "short_chg": "+29.88%",
+    "rvol": "1.2×"
+   },
+   {
+    "grp": "NVDA",
+    "long": "NVDL",
+    "mult": "2x",
+    "long_chg": "-9.03%",
+    "short": "NVD",
+    "short_chg": "+9.17%",
+    "rvol": "2.1×"
+   },
+   {
+    "grp": "SK Hynix",
+    "long": "SKUU",
+    "mult": "2x",
+    "long_chg": "-14.55%",
+    "short": "SKDD",
+    "short_chg": "+14.26%",
+    "rvol": "0.6×"
+   }
+  ],
+  "lights": [
+   {
+    "name": "TQQQ / SQQQ",
+    "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）",
+    "tok": "danger",
+    "why": "Risk-Off 74≥70"
+   },
+   {
+    "name": "SOXL / SOXS",
+    "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）",
+    "tok": "danger",
+    "why": "Risk-Off 74≥70"
+   },
+   {
+    "name": "NVDL / NVD",
+    "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）",
+    "tok": "danger",
+    "why": "Risk-Off 74≥70"
+   },
+   {
+    "name": "SKUU / SKDD",
+    "signal": "🔴 空手不碰（別做多、也別抄底搶反彈）",
+    "tok": "danger",
+    "why": "Risk-Off 74≥70"
+   },
+   {
+    "name": "MSTU / MSTZ",
+    "signal": "🔴 風險極高，空手觀望",
+    "tok": "danger",
+    "why": "Risk-Off 74"
+   }
+  ],
+  "binance": [
+   {
+    "name": "BTC",
+    "price": "64227.00",
+    "chg": "-0.64%"
+   },
+   {
+    "name": "ETH",
+    "price": "1798.50",
+    "chg": "-1.03%"
+   },
+   {
+    "name": "MSTR",
+    "price": "97.94",
+    "chg": "-4.80%"
+   },
+   {
+    "name": "NVDA",
+    "price": "156.15",
+    "chg": "-0.85%"
+   },
+   {
+    "name": "黃金 XAU",
+    "price": "3804.45",
+    "chg": "-1.86%"
+   },
+   {
+    "name": "白銀 XAG",
+    "price": "46.21",
+    "chg": "-2.49%"
+   },
+   {
+    "name": "鉑 XPT",
+    "price": "1415.75",
+    "chg": "-3.78%"
+   },
+   {
+    "name": "鈀 XPD",
+    "price": "957.57",
+    "chg": "-2.60%"
+   },
+   {
+    "name": "TBT 2x空長債",
+    "price": "40.13",
+    "chg": "-0.69%"
+   },
+   {
+    "name": "GDX 金礦股",
+    "price": "78.30",
+    "chg": "-1.44%"
+   },
+   {
+    "name": "BITO 1xBTC期貨",
+    "price": "8.54",
+    "chg": "-0.47%"
+   }
+  ],
+  "movers_up": [
+   {
+    "sym": "UVXY",
+    "pct": "+17.6%",
+    "px": "22.2"
+   },
+   {
+    "sym": "CYPH",
+    "pct": "+8.9%",
+    "px": "1.945"
+   },
+   {
+    "sym": "SOXS",
+    "pct": "+8.8%",
+    "px": "57.64"
+   },
+   {
+    "sym": "TZA",
+    "pct": "+8.0%",
+    "px": "51.57"
+   },
+   {
+    "sym": "SQQQ",
+    "pct": "+7.4%",
+    "px": "46.69"
+   },
+   {
+    "sym": "BOT",
+    "pct": "+6.9%",
+    "px": "18.71"
+   },
+   {
+    "sym": "SKDD",
+    "pct": "+6.6%",
+    "px": "11.219"
+   },
+   {
+    "sym": "BWET",
+    "pct": "+6.3%",
+    "px": "663.97"
+   },
+   {
+    "sym": "BSP",
+    "pct": "+5.6%",
+    "px": "43.13"
+   },
+   {
+    "sym": "WEN",
+    "pct": "+3.9%",
+    "px": "8.571"
+   }
+  ],
+  "movers_dn": [
+   {
+    "sym": "MSTU",
+    "pct": "-21.4%",
+    "px": "14.52"
+   },
+   {
+    "sym": "CRML",
+    "pct": "-20.5%",
+    "px": "3.892"
+   },
+   {
+    "sym": "AAOI",
+    "pct": "-17.1%",
+    "px": "40.37"
+   },
+   {
+    "sym": "BNC",
+    "pct": "-16.9%",
+    "px": "3.402"
+   },
+   {
+    "sym": "USAR",
+    "pct": "-16.4%",
+    "px": "6.72"
+   },
+   {
+    "sym": "SNXX",
+    "pct": "-14.2%",
+    "px": "2.946"
+   },
+   {
+    "sym": "AGPU",
+    "pct": "-13.0%",
+    "px": "7.12"
+   },
+   {
+    "sym": "ONDS",
+    "pct": "-12.8%",
+    "px": "4.438"
+   },
+   {
+    "sym": "RUM",
+    "pct": "-12.8%",
+    "px": "4.982"
+   },
+   {
+    "sym": "SECZ",
+    "pct": "-12.7%",
+    "px": "6.99"
+   }
+  ],
+  "fed": {
+   "ok": true,
+   "items": [
+    {
+     "time": "11/18 10:00",
+     "who": "",
+     "tone": "hawk",
+     "title": "Economists see no November interest rate hike as fuel prices offer relief - thenational.co.za",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:50",
+     "who": "",
+     "tone": "hawk",
+     "title": "Commodity Corner: Gold hits 14-month low on rate-hike concerns; crude steadies amid Middle East tensions - Moneycontrol.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:34",
+     "who": "",
+     "tone": "hawk",
+     "title": "Dollar holds near 19-month high as data supports case for US rate hikes - Reuters",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:16",
+     "who": "Williams",
+     "tone": "",
+     "title": "John Williams, president of the Federal Reserve Bank of New York, a key figure in the U.S. Federal R.. - 매일경제",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:16",
+     "who": "",
+     "tone": "hawk",
+     "title": "Euro slips as hawkish Fed remarks, strong Retail Sales boost US Dollar - FXStreet",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:14",
+     "who": "",
+     "tone": "",
+     "title": "Gold steadies near lows as peristent inflation worries investors of Fed tightening - CNBC TV18",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 09:14",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold falls toward $3,800 as Fed hawks reinforce rate-hike outlook - Investing.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 08:44",
+     "who": "",
+     "tone": "",
+     "title": "Gold gains slightly to recover from one-year low: what's next? - Invezz",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 07:43",
+     "who": "Hammack",
+     "tone": "hawk",
+     "title": "Fed’s Hammack prefers gradual, steady rate hikes - The Star",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 07:33",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold Steadies Near 14-Month Low as Rate-Hike Pressure Mounts - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 07:30",
+     "who": "",
+     "tone": "",
+     "title": "US 10-year yield set for historic run above 5% on Fed rate cycle - The Edge Malaysia",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 07:10",
+     "who": "",
+     "tone": "hawk",
+     "title": "Fed Official Warns Several Rate Hikes Likely Needed by Spring to Tame Inflation - Hoodline",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 07:07",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "New York Fed’s Williams Says More Rate Hikes May Be Needed, but Big Step Isn’t Necessary - bloomingbit",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 06:57",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "New York Fed’s John Williams Hints Towards More Rate Hikes Amid AI Boom - Stocktwits",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 06:47",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold Weekly Forecast: Strong Dollar and Rate Hike Bets Add Pressure - FXEmpire",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 06:35",
+     "who": "",
+     "tone": "hawk",
+     "title": "St. Louis Fed President Says 1% Rate Hike Needed by Spring; Hawkish Remarks Leave Dollar Volatile - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 06:09",
+     "who": "",
+     "tone": "hawk",
+     "title": "Top Fed official: AI boom could fuel more rate hikes in 2027 - Axios",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 06:08",
+     "who": "",
+     "tone": "",
+     "title": "Want to earn 5% on shorter-term Treasurys again? Watch for this shift. - MarketWatch",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 05:59",
+     "who": "",
+     "tone": "hawk",
+     "title": "October CPI Inflation Rises 0.4%, Boosting Case for December Fed Rate Hike - Barron's",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 05:20",
+     "who": "",
+     "tone": "hawk",
+     "title": "Harmer reiterates the Fed's preference for gradual rate hikes, but says acceleration will be necessary if inflation exp… - 深潮TechFlow",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 05:12",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "NY Fed's Williams: More Rate Hikes Likely Needed, But No Aggressive Shift - News and Statistics - IndexBox",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 05:05",
+     "who": "",
+     "tone": "hawk",
+     "title": "Bitcoin Stalls Near $64,800 After Weekend Slide as Fed Rate-Hike Fears Weigh on Crypto - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 05:04",
+     "who": "Williams",
+     "tone": "",
+     "title": "Fed’s Williams Says No Need for ‘Dramatic’ Rate Move - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:58",
+     "who": "Williams",
+     "tone": "",
+     "title": "NY Fed's Williams sees no need for a 'dramatic' rate move - TradingView",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:56",
+     "who": "Hammack",
+     "tone": "hawk",
+     "title": "Cleveland Fed’s Hammack supports gradual rate hikes, warns of larger increases if needed - Crypto Briefing",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:55",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "New York Fed President Williams Signals Possible Further Rate Hike as Inflation Stays Elevated, Says 'No Dramatic Response' Needed - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:55",
+     "who": "",
+     "tone": "hawk",
+     "title": "U.S. 10-Year Yield Tops 5% for 27th Day, Closing In on 2007 Record as Fed Rate-Hike Bets Prolong Elevated Yields - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:51",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "New York Fed’s Williams rules out jumbo rate hike for December - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:37",
+     "who": "",
+     "tone": "",
+     "title": "Silver is paying for a rate rise that has not happened yet - FXStreet",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:16",
+     "who": "Williams",
+     "tone": "",
+     "title": "Fed's Williams still favors tighter monetary policy, but says now is not the time for 'dramatic action' - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:14",
+     "who": "",
+     "tone": "",
+     "title": "US 10-Year Yield Set for Historic Run Above 5% on Fed Cycle - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:05",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "New York Fed's Williams Says Another Rate Hike Is Likely, but Rejects 'Dramatic' Action - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 04:01",
+     "who": "",
+     "tone": "",
+     "title": "GBP/USD Outlook: Sterling Steady at 1.3180 Ahead of UK Inflation Data - CurrencyNews.co.uk",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:58",
+     "who": "Williams",
+     "tone": "hawk",
+     "title": "Fed’s Williams says more rate hikes likely needed amid inflation - Investing.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:55",
+     "who": "",
+     "tone": "",
+     "title": "Wintermute Warns Bitcoin Could Plunge to $50,000 Range: \"The Bear Market Isn't Over Yet\" - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:29",
+     "who": "",
+     "tone": "hawk",
+     "title": "Fed Rate Hike Pressure, Nvidia CEO Exit Put AI Stocks to the Test - Benzinga",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:26",
+     "who": "",
+     "tone": "",
+     "title": "5 Best Cryptos to Buy in November 2026 After the Crash - 24/7 Wall St.",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:24",
+     "who": "",
+     "tone": "hawk",
+     "title": "Dollar Rises to 19-Month High on Fed Rate-Hike Bets - WSJ",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:22",
+     "who": "",
+     "tone": "",
+     "title": "Dollar lower after mixed US data, stays near April 2025 high - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:10",
+     "who": "",
+     "tone": "",
+     "title": "Bitwise CIO says crypto selloff was driven by biggest rate shock since 2022 - Cryptonews.net",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 03:08",
+     "who": "",
+     "tone": "hawk",
+     "title": "Prospective rate hike puts pressure on silver with restrained demand compounding the impact - Traders Union",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 02:30",
+     "who": "",
+     "tone": "hawk",
+     "title": "Bitcoin declined as Fed rate hike expectations increased, Jeroen Blokland notes - Traders Union",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 02:26",
+     "who": "",
+     "tone": "",
+     "title": "Bitwise CIO Links Crypto Selloff to Rate Repricing and $2 Billion in Liquidations - www.tokenpost.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 02:16",
+     "who": "",
+     "tone": "hawk",
+     "title": "Mexico cenbank's Borja says length of rate pause unclear, flags inflation risks - StreetInsider",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 02:10",
+     "who": "",
+     "tone": "",
+     "title": "Mortgage rates climbed fast last week — here's what moved them - HousingWire",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 02:02",
+     "who": "",
+     "tone": "hawk",
+     "title": "Will Gold Prices Rise After the Fed's Expected December Rate Hike? - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 01:23",
+     "who": "",
+     "tone": "",
+     "title": "Australian Dollar defies USD strength: What's keeping AUD/USD afloat? - FXStreet",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 01:10",
+     "who": "",
+     "tone": "hawk",
+     "title": "US 10-Year Treasury Yield Surpasses 5% Amid Fed Rate Hike Speculation - GuruFocus",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 01:09",
+     "who": "",
+     "tone": "",
+     "title": "FED Expected to Raise Interest Rates in December! But the Rate Move Could Shake Bitcoin! According to Wintermute, the 2022 Scenario is Back on... - Cryptonews.net",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 01:06",
+     "who": "",
+     "tone": "dove",
+     "title": "Gold to hit $5,600/oz by 2028 as Fed rate cuts and central bank buying boost demand, says Goldman Sachs. - Pluang",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 01:04",
+     "who": "",
+     "tone": "",
+     "title": "Former New York Federal Reserve President Dud... - 链捕手ChainCatcher",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 00:43",
+     "who": "",
+     "tone": "",
+     "title": "Gold Steadies Near 14-Month Low as Inflation Pressure Persists - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 00:22",
+     "who": "",
+     "tone": "dove",
+     "title": "Gold will reclaim $5,600/oz in 2028 as rate cuts bring Western investors back to precious metals – Goldman Sachs - Kitco",
+     "src": "新聞"
+    },
+    {
+     "time": "11/18 00:03",
+     "who": "",
+     "tone": "hawk",
+     "title": "BofA warns new Fed rate-hike cycle packs a very nasty twist - TheStreet",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 23:33",
+     "who": "",
+     "tone": "hawk",
+     "title": "Fed Rate Hike Prospects Boost the Dollar - Barchart.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 22:47",
+     "who": "",
+     "tone": "",
+     "title": "Prediction: Dec. 9 Will Mark a Turning Point for the S&amp;P 500 - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 22:12",
+     "who": "Waller",
+     "tone": "",
+     "title": "Fed's Waller says central bank will work with private sector on digital finance - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 22:10",
+     "who": "Waller",
+     "tone": "",
+     "title": "Waller, Considerations at the Intersection of Payments and Tokenized Markets",
+     "src": "官方演講"
+    },
+    {
+     "time": "11/17 22:07",
+     "who": "",
+     "tone": "hawk",
+     "title": "Bitcoin nears $65K as strong US jobs data stirs Fed rate hike concerns - Pluang",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 22:07",
+     "who": "",
+     "tone": "",
+     "title": "Mortgage Rates Forecast For 2026: Experts Predict Whether Interest Rates Will Drop - Forbes",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 22:05",
+     "who": "",
+     "tone": "",
+     "title": "US October Retail Sales Rise 0.2% MoM, Beating Expectations; Core Consumer Momentum Hits Highest Since August - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:35",
+     "who": "",
+     "tone": "hawk",
+     "title": "Fed Rate Hike Odds Hit 90%: What Could Happen to Bitcoin and Crypto in December? - CryptoPotato",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:34",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "St. Louis Fed's Musalem says four more rate hikes may be needed in coming months - CNBC",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:25",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "St Louis Fed’s Musalem calls for interest rate hikes ‘soon,’ says several hikes needed by spring - Yahoo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:17",
+     "who": "Musalem",
+     "tone": "",
+     "title": "The Fed rate may need to rise by 1 percentage point, Musalem says - Seeking Alpha",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:16",
+     "who": "",
+     "tone": "hawk",
+     "title": "Why Gold Loses Appeal When Fed Rate Hikes Lift Treasury Yields - StoneX",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 21:14",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "Fed’s Musalem Says Several Rate Hikes Likely Needed Before Spring 2027 - WSJ",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:54",
+     "who": "",
+     "tone": "",
+     "title": "Wintermute Weekly Market Report: Bitcoin Breaks Below 200-Week Moving Average, Defensive Strategies Amid Macro Rate Hik… - 深潮TechFlow",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:49",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "Fed’s Musalem Calls for Several Rate Hikes by Spring as Inflation Risks Persist - Action Forex",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:42",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "St. Louis Fed's Musalem Says Several Rate Hikes May Be Needed by Next Spring - bloomingbit",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:38",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "St. Louis Fed’s Musalem Says More Rate Hikes May Be Needed - Finimize",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:33",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "Fed's Musalem: US likely needs several rate hikes by spring to control inflation - Reuters",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:30",
+     "who": "Musalem",
+     "tone": "hawk",
+     "title": "Fed’s Musalem Says ‘Several’ Rate Hikes Likely Needed by Spring - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 20:14",
+     "who": "",
+     "tone": "",
+     "title": "Today's Current Mortgage Rates: November 17, 2026 - MONEY",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 19:55",
+     "who": "Hammack",
+     "tone": "hawk",
+     "title": "Fed's Hammack Prefers Gradual Rate Hikes, Warns of Faster Action if Inflation Rises - KuCoin",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 19:17",
+     "who": "",
+     "tone": "hawk",
+     "title": "How the US Fed’s rate hike hits your stocks, bonds, gold and silver investments - The Financial Express",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 19:04",
+     "who": "",
+     "tone": "hawk",
+     "title": "Bitcoin hovers near four-month lows as Fed rate hike bets weigh on prices. - Pluang",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 19:00",
+     "who": "",
+     "tone": "",
+     "title": "The Fed's 'Immaculate Disinflation' Strategy Will Fail - Bloomberg.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 18:46",
+     "who": "",
+     "tone": "",
+     "title": "Inflation Is 3.7%. Here’s the Savings Rate You Need Just to Break Even. - 24/7 Wall St.",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 18:04",
+     "who": "",
+     "tone": "",
+     "title": "Chart of the Day: EURUSD at its Lowest Levels of the Year - XTB.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 16:43",
+     "who": "",
+     "tone": "",
+     "title": "Fed holds interest rates steady as inflation hits 3-year high - ABC News - Breaking News, Latest News and Videos",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 16:37",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold trims intraday recovery gains as Fed hike bets and Iran risks support USD - FXStreet",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 16:30",
+     "who": "",
+     "tone": "",
+     "title": "African economies to end year with high rates as Fed risks loom - Moneyweb",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 15:38",
+     "who": "",
+     "tone": "",
+     "title": "BTC forecast: Prices could slide into the $50,000s, Wintermute warns - CoinDesk",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 15:32",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold lingers near more-than-one-year low on Fed hike bets - BusinessLine",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 15:07",
+     "who": "",
+     "tone": "",
+     "title": "Inflation Is Sending US Bond Yields Higher Again. Here’s Why We’re Not Worried - Morningstar",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 14:50",
+     "who": "",
+     "tone": "",
+     "title": "African economies to end year with high rates as Fed risks loom - Polity.org.za",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 14:48",
+     "who": "",
+     "tone": "hawk",
+     "title": "Gold hovers near 1-year low as dollar rallies, Fed rate hike bets grow - Anadolu Ajansı",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 14:34",
+     "who": "",
+     "tone": "hawk",
+     "title": "US dollar hits 19-month peak on Fed hike bets; Aussie dips - New York Post",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 13:57",
+     "who": "",
+     "tone": "",
+     "title": "Bitcoin drops 12.7% below key average amid stro... - Pluang",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 13:35",
+     "who": "",
+     "tone": "hawk",
+     "title": "Warsh's First Big Test: Stubborn Inflation Pushes Toward a Rate Hike as White House Presses for a Hold - BigGo Finance",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 13:29",
+     "who": "",
+     "tone": "",
+     "title": "US Federal Reserve Meeting: List Of Things To Know Ahead Of The December Interest Rate Decision - Jagran Josh",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 13:25",
+     "who": "",
+     "tone": "",
+     "title": "American Century High Income Fund Q3 2026 Commentary (AHIVX) - Seeking Alpha",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 13:06",
+     "who": "",
+     "tone": "hawk",
+     "title": "Institutional forecast: The Federal Reserve will implement consecutive rate hikes in December and January, followed by a prolonged pause. - Moomoo",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 12:47",
+     "who": "",
+     "tone": "hawk",
+     "title": "Dollar Strength, Rising Treasury Yields and Rate Hike Expectations Push Gold to a One-Year Low as Markets Await Fed Minutes - www.tmgm.com",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 12:30",
+     "who": "",
+     "tone": "hawk",
+     "title": "Will Gold Prices Rise After the Fed's Expected December Rate Hike? - BeInCrypto",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 12:23",
+     "who": "",
+     "tone": "hawk",
+     "title": "Strong Dollar and Rate Hike Bets Keep Gold Near Lows... - www.jordannews.jo",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 12:18",
+     "who": "",
+     "tone": "",
+     "title": "Gold struggles to rebound from one-year low as US dollar, yields advance - CNBC",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 12:11",
+     "who": "",
+     "tone": "",
+     "title": "Gold Price Forecast: Gold Holds Key $3,850 Support, US October Retail Sales May Drive Rebound Toward $4,000 - TradingKey",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 10:56",
+     "who": "",
+     "tone": "hawk",
+     "title": "US October Retail Sales Preview: Will US Consumer Spending Cool? Fed December Rate Hike Expectations Face Another Test - TradingKey",
+     "src": "新聞"
+    },
+    {
+     "time": "11/17 10:54",
+     "who": "",
+     "tone": "",
+     "title": "US Dollar Rallies as Fed Rate Risks Pressure Global Markets - FXEmpire",
+     "src": "新聞"
+    }
+   ]
+  }
+ },
+ "footer": "本報告為量化研判非投資建議、不構成持倉推薦、不臆測使用者持倉。JSON 驅動（固定 template × data/2026-11-18-am.json），欄位經 pre-commit schema validator 把關。｜對抗式驗證（STEP 3.5）：閘門 (a) 追蹤資產 |24h%|≥5＝【是】(MSTR -6.34%)、(b) 當日 Fed 官員集體放話+NVDA 財報+升息路徑＝【是】、(c) 無持倉動作詞＝【否】→ 任一為是，已開獨立對抗 subagent。裁決見下。"
+}
