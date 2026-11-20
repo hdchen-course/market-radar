@@ -29,19 +29,38 @@ def fresh(tool, date):
         return False
 
 
+# 工具「實際報錯」的揭露哨符（SOP：工具回報錯誤時改輸出 :na 標記並貼錯誤訊息）。
+# 若對應 html 含此哨符＝報告並未『聲稱跑成功』、而是誠實揭露工具報錯→不應要求當天工件。
+# 注意：哨符只放行『無工件』，不放行『填了即時數字卻無工件』——因為 :na 路徑依 SOP
+# 不得同時填即時數字。故此例外無法被用來掩護自填數字（紅隊見檔末）。
+_NA_SENTINEL = {
+    "options": "3.8:MSTR:opt:na",
+    "urpd": "3.8:BTC:urpd:na",
+    "radar": "radar 本次報錯",   # radar 無固定註解標記，依 SOP 文字揭露
+}
+
+
+def _disclosed_error(html, tool):
+    return bool(html) and _NA_SENTINEL.get(tool, "\0") in html
+
+
 def check(path):
     data = json.load(open(path, encoding="utf-8"))
     date = (data.get("meta") or {}).get("date")
     problems = []
     # 聲稱跑過的工具（schema 保證這些欄位存在；此處防「有欄位但工件不新鮮＝可能自填」）
+    btc = (data.get("s6") or {}).get("btc") or {}
+    mstr = (data.get("targets_38") or {}).get("MSTR") or {}
     claims = []
-    if ((data.get("s6") or {}).get("btc") or {}).get("radar_html"):
-        claims.append(("radar", "python3 radar.py BTCUSDT/ETHUSDT --html"))
-    if ((data.get("s6") or {}).get("btc") or {}).get("urpd_html"):
-        claims.append(("urpd", "python3 urpd.py BTCUSDT"))
-    if ((data.get("targets_38") or {}).get("MSTR") or {}).get("options_html"):
-        claims.append(("options", "python3 options_maxpain.py MSTR"))
-    for tool, cmd in claims:
+    if btc.get("radar_html"):
+        claims.append(("radar", "python3 radar.py BTCUSDT/ETHUSDT --html", btc.get("radar_html")))
+    if btc.get("urpd_html"):
+        claims.append(("urpd", "python3 urpd.py BTCUSDT", btc.get("urpd_html")))
+    if mstr.get("options_html"):
+        claims.append(("options", "python3 options_maxpain.py MSTR", mstr.get("options_html")))
+    for tool, cmd, html in claims:
+        if _disclosed_error(html, tool):
+            continue  # 誠實揭露工具報錯（:na 哨符）＝不要求當天工件
         if not fresh(tool, date):
             problems.append(f"{tool}（{cmd}）無『{date}』當天 signals/.last_run 工件（＝可能未實跑/數字自填）")
     return problems
