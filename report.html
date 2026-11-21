@@ -30,6 +30,14 @@ function renderDashboard(x){
   const O=[], roCol = x.riskoff.data_bad ? 'var(--red)' : (parseFloat(x.riskoff.score)>=60?'var(--red)':parseFloat(x.riskoff.score)<=40?'var(--green)':'var(--yellow)');
   O.push(`<div class="card full"><h2>🧭 開盤前戰略定調儀表板（啟發式規則層·非買賣建議·不臆測持倉）</h2>`);
   O.push(`<div class="alert-warn" style="font-size:.8rem">${E(x.summary)}</div>`);
+  // 🚦 三訊號綜合狀態（一眼看齊）
+  if(x.signal_strip){ const ss=x.signal_strip;
+    const chip=t=>`<div style="flex:1;min-width:175px;border-left:5px solid ${TOKCOL[t.tok]||'var(--border)'};background:rgba(127,127,127,.08);border-radius:10px;padding:8px 11px"><div style="font-weight:800;color:${TOKCOL[t.tok]||'var(--text)'}">${E(t.label)}</div><div class="mr-l" style="font-size:.76rem">${E(t.detail||'')}</div></div>`;
+    O.push(`<div class="dash-sub" style="margin-top:10px">🚦 三訊號綜合狀態（一眼看齊：賣壓竭了沒）</div>`);
+    O.push(`<div class="alert" style="border-left:4px solid ${TOKCOL[ss.overall.tok]||'var(--border)'};color:${TOKCOL[ss.overall.tok]||'var(--text)'};font-weight:700">${E(ss.overall.text)}</div>`);
+    O.push(`<div style="display:flex;gap:9px;flex-wrap:wrap;margin:6px 0">${chip(ss.vix)}${chip(ss.credit)}${chip(ss.flush)}</div>`);
+    O.push(`<div class="dash-sub" style="margin-bottom:4px">💡 ①VIX 退潮、②信用止穩自動亮燈；③賣壓竭(flush)=intraday 深V+爆量，日線測不出＝人工確認。三者同轉綠才算見底訊號，否則反彈先當逃命波。</div>`);
+  }
   O.push(`<div class="dash-top" style="margin-top:10px">`);
   O.push(`<div class="tactical-box"><div class="dash-sub">A. 當週風險取向（看趨勢）</div><div class="dash-gauge" style="color:${roCol}">${E(x.riskoff.score)}<span style="font-size:.9rem;color:var(--muted)">/100</span></div><div class="dash-gl" style="color:${roCol}">${E(x.riskoff.label)}</div><div class="dash-sub">0=極度 Risk-On　100=極度 Risk-Off${x.riskoff.stress?'｜股市壓力旗標 ON':''}</div>${kvTable(x.risk_rows)}</div>`);
   O.push(`<div class="tactical-box"><div class="dash-sub">B. 今日日內形態（看形態）</div><div class="dash-gauge" style="color:var(--accent)">${E(x.intraday.single)}%<span style="font-size:.9rem;color:var(--muted)"> 大單邊 / ${E(x.intraday.chop)}% 震盪</span></div><div class="dash-gl">${E(x.intraday.label)}</div><div class="dash-sub" style="margin-bottom:4px">廣度：${E(x.breadth.text)}（多頭 ETF ${x.breadth.up}漲/${x.breadth.dn}跌/共${x.breadth.nn}）</div>${kvTable(x.trend_rows)}</div>`);

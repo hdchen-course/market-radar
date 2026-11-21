@@ -318,6 +318,35 @@ def credit_scan():
     _CREDIT_CACHE["r"] = res
     return res
 
+def signal_strip(d, credit):
+    """三訊號綜合狀態(一眼看齊:賣壓竭了沒)。①VIX 退潮? ②信用止穩? 自動亮燈;
+       ③flush(賣壓竭)=intraday 深V+爆量,日線測不出→誠實標『人工確認』不假裝自動判定。
+       門檻為啟發式(未回測),僅把使用者擋在『還在殺就別搶底』那側。"""
+    vix = d.get("vix"); vchg = d.get("vix_chg")
+    vtxt = f"{vchg:+.0f}%" if vchg is not None else "N/A"
+    if vix is None:
+        v = {"tok": "mut", "label": "VIX N/A", "detail": "資料不足"}
+    elif vchg is not None and vchg <= -5 and vix < 28:
+        v = {"tok": "ok", "label": "🟢 VIX 退潮中", "detail": f"VIX {vix:.1f}（{vtxt}）回落，vol-target/risk-parity 減壓趨緩"}
+    elif vix >= 25 and (vchg is None or vchg >= 0):
+        v = {"tok": "danger", "label": "🔴 VIX 高檔未退", "detail": f"VIX {vix:.1f}（{vtxt}），恐慌仍升/未收斂，波動型賣壓續燒"}
+    elif vix < 18:
+        v = {"tok": "ok", "label": "🟢 VIX 平靜", "detail": f"VIX {vix:.1f}，低波動"}
+    else:
+        v = {"tok": "warn", "label": "🟡 VIX 觀察", "detail": f"VIX {vix:.1f}（{vtxt}），未明確退潮"}
+    lp = (credit or {}).get("lamp", {}) or {}
+    c = {"tok": lp.get("tok", "mut"), "label": "信用 " + lp.get("label", "N/A"), "detail": lp.get("why", "")}
+    fl = {"tok": "mut", "label": "⚪ 賣壓竭：需人工確認",
+          "detail": "等開盤後『深 V 急拉收紅＋爆量』或『開盤砸不下去、尾盤收高』——intraday 反轉日線測不出，人工判讀"}
+    toks = [v["tok"], c["tok"]]
+    if "danger" in toks:
+        overall = {"tok": "danger", "text": "賣方仍控場：VIX 未退潮或信用擴散，反彈先當逃命波、別搶底"}
+    elif v["tok"] == "ok" and c["tok"] == "ok":
+        overall = {"tok": "ok", "text": "初步轉穩：VIX 退潮＋信用止穩；惟 flush（賣壓竭）仍須人工確認才算見底"}
+    else:
+        overall = {"tok": "warn", "text": "分歧／觀察：尚未同時滿足 VIX 退潮與信用止穩，續盯"}
+    return {"vix": v, "credit": c, "flush": fl, "overall": overall}
+
 # ============================== 計分 ==============================
 def band(v, bands):
     for hi, sc in bands:
@@ -633,6 +662,21 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
         f'HY+IG 齊飆=系統性去槓桿(金/加密恐被拖下水)。FRED OAS 日頻 T+1(慢一天)，盤中以 HYG/JNK 領先判讀。'
         f'來源:FRED(BAMLH0A0HYM2 / BAMLC0A0CM)+Yahoo(HYG/JNK)。</div></div>')
 
+    # 🚦 三訊號綜合狀態(一眼看齊) — 置頂
+    strip = signal_strip(d, cr)
+    def _schip(x):
+        return (f'<div style="flex:1;min-width:210px;background:var(--card);border-left:6px solid {C(x["tok"])};'
+                f'border-radius:12px;padding:10px 13px;box-shadow:var(--shadow)">'
+                f'<div style="font-weight:800;color:{C(x["tok"])}">{x["label"]}</div>'
+                f'<div class="mini">{x.get("detail","")}</div></div>')
+    strip_html = (f'<div class="sec" style="margin-top:4px">🚦 三訊號綜合狀態（一眼看齊：賣壓竭了沒）</div>'
+                  f'<div style="background:var(--card);border:1px solid var(--line);border-left:6px solid {C(strip["overall"]["tok"])};'
+                  f'border-radius:12px;padding:10px 14px;margin-bottom:9px;font-weight:700;color:{C(strip["overall"]["tok"])}">'
+                  f'{strip["overall"]["text"]}</div>'
+                  f'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:4px">'
+                  f'{_schip(strip["vix"])}{_schip(strip["credit"])}{_schip(strip["flush"])}</div>'
+                  f'<div class="mini" style="margin-bottom:10px">💡 ①VIX 退潮、②信用止穩自動亮燈；③賣壓竭(flush)是 intraday 深V+爆量，日線測不出＝人工確認。三個同時轉綠(flush 需人工)才算見底訊號，否則反彈先當逃命波。</div>')
+
     return f"""<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0"><title>開盤前戰略定調儀表板</title>
 {build_style(th)}</head><body><div class="wrap">
@@ -643,6 +687,7 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
 {deadcat_note}
 <div class="breadth" style="color:{br_col}">{br_txt}　<span class="mini">(多頭 ETF {up}漲 / {dn}跌 / 共{nn})</span></div>
 
+{strip_html}
 <div class="grid">
   <div class="card">
     <h2>A. 當週風險取向風向球（看趨勢）</h2>
@@ -775,6 +820,7 @@ def dashboard_payload(catalyst=""):
         "movers_up": mv(d.get("movers_up")), "movers_dn": mv(d.get("movers_dn")),
         "fed": fed_scan(FED_HOURS),  # /dailyecreport 嵌入用:{ok, items:[{time,who,tone,title,src}]}
         "credit": credit_scan(),     # /dailyecreport 嵌入用:{ok, hy, ig, hyg, jnk, lamp:{tok,label,why}}
+        "signal_strip": signal_strip(d, credit_scan()),  # 三訊號綜合狀態:{vix,credit,flush,overall}
     }
 
 
