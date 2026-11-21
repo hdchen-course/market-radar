@@ -270,8 +270,7 @@ def credit_scan():
         return _CREDIT_CACHE["r"]
     def _etf(sym):
         r = yahoo_chart(sym)
-        p, pv = r.get("price"), r.get("prev")
-        return {"price": p, "chg": ((p / pv - 1) * 100) if (p and pv) else None}
+        return {"price": r.get("price"), "chg": chg_vs_prev_close(r)}  # 昨收基準,非 meta.prev
     # 四個抓取平行跑：總延遲=最慢單一來源(FRED 可能慢)，不累加
     with _cf.ThreadPoolExecutor(max_workers=4) as ex:
         f_hy = ex.submit(_fred_last, "BAMLH0A0HYM2")
@@ -325,6 +324,21 @@ def band(v, bands):
         if v <= hi: return sc
     return bands[-1][1]
 def pct(a, b): return (a/b - 1.0)*100.0 if (a is not None and b not in (None, 0)) else None
+def _base_close(r):
+    """前一交易日收盤基準。避開 Yahoo meta.chartPreviousClose 在多日 range 回傳
+       『視窗起點前錨點』的灌水 bug（VIX 曾因此顯示 +56.7%，真實約 +26%）。
+       規則:有≥2 根日線收盤時——若 closes[-1]≈現價(今日形成中/已收 K)→用 closes[-2](昨收)當基準;
+       若 closes[-1] 與現價明顯不同(最後一根其實是昨日、今日尚無 K)→用 closes[-1](昨收)。
+       closes 不足才 fallback meta.prev。"""
+    c = r.get("closes") or []; price = r.get("price")
+    if price is not None and len(c) >= 2:
+        return c[-2] if abs(c[-1] - price) <= abs(price) * 1e-4 else c[-1]
+    if len(c) >= 2:
+        return c[-2]
+    return r.get("prev")
+def chg_vs_prev_close(r):
+    """現價 vs 前一交易日收盤 %（取代 pct(price, meta.prev) 的基準 bug）。"""
+    return pct(r.get("price"), _base_close(r))
 def ma(xs, n): return sum(xs[-n:])/min(len(xs), n) if xs else None
 def weighted(sub, w):
     num = den = 0.0
@@ -347,15 +361,16 @@ def collect(catalyst):
     d = {}
     vix = yahoo_chart("^VIX"); vxn = yahoo_chart("^VXN")
     d["vix"], d["vxn"] = vix["price"], vxn["price"]
-    d["vix_chg"], d["vxn_chg"] = pct(vix["price"], vix["prev"]), pct(vxn["price"], vxn["prev"])
+    d["vix_chg"], d["vxn_chg"] = chg_vs_prev_close(vix), chg_vs_prev_close(vxn)
     dxy = yahoo_chart("DX-Y.NYB", rng="1mo"); d["dxy"] = dxy["price"]
     d["dxy_ma20"] = ma(dxy["closes"], 20); d["dxy_dev"] = pct(dxy["price"], d["dxy_ma20"])
     t10 = yahoo_chart("^TNX"); d["us10y"] = t10["price"]
-    d["us10y_bps"] = (t10["price"] - t10["prev"])*100 if (t10["price"] and t10["prev"]) else None
+    _t10b = _base_close(t10)
+    d["us10y_bps"] = (t10["price"] - _t10b)*100 if (t10["price"] is not None and _t10b is not None) else None
     d["us30y"] = yahoo_chart("^TYX")["price"]; d["us2y"] = yahoo_chart("2YY=F")["price"]; d["us3m"] = yahoo_chart("^IRX")["price"]
     d["spread_2s10s"] = (d["us10y"] - d["us2y"]) if (d["us10y"] and d["us2y"]) else None
     es = yahoo_chart("ES=F", rng="5d"); nq = yahoo_chart("NQ=F", rng="5d")
-    d["es_gap"], d["nq_gap"] = pct(es["price"], es["prev"]), pct(nq["price"], nq["prev"])
+    d["es_gap"], d["nq_gap"] = chg_vs_prev_close(es), chg_vs_prev_close(nq)
     nqc = nq["closes"]; d["nq_yday"] = pct(nqc[-1], nqc[-2]) if len(nqc) >= 2 else None
     dvol, dvp = deribit_dvol("BTC"); d["dvol"], d["dvol_chg"] = dvol, pct(dvol, dvp)
     d["fng"], d["fng_cls"] = fear_greed()
@@ -368,9 +383,9 @@ def collect(catalyst):
         d["binance"][name] = binance(s)
     d["etf"] = {}
     for grp, lng, shrt, mult in ETF_PAIRS:
-        rl = yahoo_chart(lng, rng="2d"); rs = yahoo_chart(shrt, rng="2d")
+        rl = yahoo_chart(lng, rng="5d"); rs = yahoo_chart(shrt, rng="5d")
         d["etf"][grp] = {"long": lng, "short": shrt, "mult": mult,
-                         "long_chg": pct(rl["price"], rl["prev"]), "short_chg": pct(rs["price"], rs["prev"]),
+                         "long_chg": chg_vs_prev_close(rl), "short_chg": chg_vs_prev_close(rs),
                          "rvol": rvol_daily(lng)}
     d["premkt_rvol"] = premarket_rvol(); d["catalyst"] = catalyst
     d["movers_up"], d["movers_dn"] = binance_equity_movers(10)
