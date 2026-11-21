@@ -50,7 +50,26 @@ function renderDashboard(x){
   const mvtab=(lst,pos)=>`<table><tr><th>${pos?'📈 5日漲幅前10':'📉 5日跌幅前10'}</th><th>5日%</th><th>現價</th></tr>`+(lst.length?lst.map(m=>`<tr><td>${E(m.sym)}</td><td class="${pos?'pos':'neg'}">${E(m.pct)}</td><td>${E(m.px)}</td></tr>`).join(''):`<tr><td colspan="3" class="mr-l">N/A</td></tr>`)+`</table>`;
   O.push(`<div class="dash-sub" style="margin-top:8px">F. 幣安美股永續 5 日漲跌榜（196 檔 EQUITY 自動掃描）</div>`);
   O.push(`<div class="dash-two"><div>${mvtab(x.movers_up,true)}</div><div>${mvtab(x.movers_dn,false)}</div></div>`);
-  O.push(`<div class="dash-sub" style="margin-top:8px">⚠ 啟發式規則層(門檻經驗值未回測)、非投資建議、不臆測持倉；🟢綠燈非進場令、🔴紅燈非抄底/反手令。資料源：Yahoo/Deribit/Alternative.me/Binance 永續。生成 ${E(x.generated)}。</div>`);
+  // H 信用面即時燈號（去槓桿賣壓是否止穩的風向鏢）
+  if(x.credit){
+    const c=x.credit, lp=c.credit_lamp||c.lamp||{};
+    const oas=a=>(a&&a.length)?a.map(p=>(+p[1]).toFixed(2)).join(' → '):'N/A';
+    const dtag=dr=>({up:'↑走闊',down:'↓收斂',flat:'→持平'})[dr]||'—';
+    const sstr=v=>v==null?null:((v>=0?'+':'')+(+v).toFixed(2)+'%');
+    const etfcell=e=>{ if(!e||e.price==null) return 'N/A'; const s=sstr(e.chg); return `${(+e.price).toFixed(2)}（${s==null?'N/A':`<span class="${signcls(s)}">${s}</span>`}）`; };
+    const last=a=>(a&&a.length)?(+a[a.length-1][1]).toFixed(2)+'%':'N/A';
+    O.push(`<div class="dash-sub" style="margin-top:8px">H. 信用面即時燈號（HY/IG 利差 + HYG/JNK；去槓桿賣壓是否止穩）</div>`);
+    O.push(`<div class="dash-gl" style="color:${TOKCOL[lp.tok]||'var(--text)'};font-size:1rem;font-weight:800">${E(lp.label||'N/A')}</div>`);
+    if(lp.why) O.push(`<div class="dash-sub" style="margin:2px 0 4px">${E(lp.why)}</div>`);
+    O.push('<table><tr><th>指標</th><th>最新</th><th>近況／讀法</th></tr>'
+      +`<tr><td>HY OAS <span class="mr-l">高收益·T+1</span></td><td>${c.hy&&c.hy.length?last(c.hy)+' '+dtag(c.hy_dir):'N/A'}</td><td class="mr-l">近${c.hy?c.hy.length:0}筆 ${oas(c.hy)}</td></tr>`
+      +`<tr><td>IG OAS <span class="mr-l">投資級·T+1</span></td><td>${c.ig&&c.ig.length?last(c.ig)+' '+dtag(c.ig_dir):'N/A'}</td><td class="mr-l">近${c.ig?c.ig.length:0}筆 ${oas(c.ig)}</td></tr>`
+      +`<tr><td>HYG <span class="mr-l">高收益債ETF·盤中/領先</span></td><td>${etfcell(c.hyg)}</td><td class="mr-l">盤中止跌回升=信用先穩</td></tr>`
+      +`<tr><td>JNK <span class="mr-l">高收益債ETF·盤中</span></td><td>${etfcell(c.jnk)}</td><td class="mr-l">與 HYG 互相印證</td></tr>`
+      +'</table>');
+    O.push(`<div class="dash-sub" style="margin:4px 0">💡 🟢止穩／🟡觀察／🔴擴散。HY 走闊+IG 不動=壓力鎖在高收益/AI 端(可控)；HY+IG 齊飆=系統性去槓桿(金/加密恐被拖下水)。FRED OAS 日頻 T+1，盤中看 HYG/JNK 領先。</div>`);
+  }
+  O.push(`<div class="dash-sub" style="margin-top:8px">⚠ 啟發式規則層(門檻經驗值未回測)、非投資建議、不臆測持倉；🟢綠燈非進場令、🔴紅燈非抄底/反手令。資料源：Yahoo/Deribit/Alternative.me/Binance 永續＋FRED(HY/IG OAS)。生成 ${E(x.generated)}。</div>`);
   O.push(`</div>`);
   return O.join('\n');
 }

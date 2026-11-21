@@ -239,6 +239,86 @@ def fed_scan(hours=FED_HOURS):
     _FED_CACHE[hours] = res
     return res
 
+# ── 信用面即時燈號(去槓桿賣壓是否止穩的風向鏢) ──
+_CREDIT_CACHE = {}
+def _fred_last(code, n=6):
+    """FRED csv 取最後 n 筆 (date,float)。抓不到或無值回 []。純標準庫。"""
+    try:
+        txt = _get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={code}", timeout=12)
+    except Exception as e:
+        sys.stderr.write(f"[warn] fred {code}: {e}\n"); return []
+    out = []
+    for line in txt.splitlines():
+        parts = line.split(",")
+        if len(parts) != 2:
+            continue
+        dt, val = parts[0].strip(), parts[1].strip()
+        if dt in ("observation_date", "DATE") or val in ("", ".", "value"):
+            continue
+        try:
+            out.append((dt, float(val)))
+        except ValueError:
+            continue
+    return out[-n:]
+
+def credit_scan():
+    """信用面即時燈號：FRED HY/IG OAS(日頻·T+1) + HYG/JNK(盤中即時代理)。
+       抓不到該欄回 None、全失敗 ok=False 顯示 N/A 不編。
+       lamp: 綠=止穩 / 黃=觀察(壓力鎖在HY端) / 紅=擴散(HY+IG齊飆=系統性)。
+       判定鐵則:HY 走闊+IG 不動=局部可控;HY+IG 同步大幅走闊才是系統性去槓桿(金/加密被拖下水的觸發線)。"""
+    if "r" in _CREDIT_CACHE:
+        return _CREDIT_CACHE["r"]
+    def _etf(sym):
+        r = yahoo_chart(sym)
+        p, pv = r.get("price"), r.get("prev")
+        return {"price": p, "chg": ((p / pv - 1) * 100) if (p and pv) else None}
+    # 四個抓取平行跑：總延遲=最慢單一來源(FRED 可能慢)，不累加
+    with _cf.ThreadPoolExecutor(max_workers=4) as ex:
+        f_hy = ex.submit(_fred_last, "BAMLH0A0HYM2")
+        f_ig = ex.submit(_fred_last, "BAMLC0A0CM")
+        f_hyg = ex.submit(_etf, "HYG")
+        f_jnk = ex.submit(_etf, "JNK")
+        hy, ig, hyg, jnk = f_hy.result(), f_ig.result(), f_hyg.result(), f_jnk.result()
+    ok = bool(hy or ig or hyg["price"] or jnk["price"])
+
+    def _dir(series):
+        if len(series) < 2:
+            return None, None
+        vals = [v for _, v in series]
+        last, prev = vals[-1], vals[-2]
+        d = "up" if last - prev > 0.005 else ("down" if prev - last > 0.005 else "flat")
+        newhigh = last >= max(vals) - 1e-9
+        return d, newhigh
+    hy_dir, hy_nh = _dir(hy)
+    ig_dir, ig_nh = _dir(ig)
+    hv = [v for _, v in hy]; iv = [v for _, v in ig]
+    hy_widen = (hv[-1] - hv[0]) if len(hv) >= 2 else None   # 視窗內(約近6筆)累計變動
+    ig_widen = (iv[-1] - iv[0]) if len(iv) >= 2 else None
+    # 系統性需「量級」門檻:HY 視窗內走闊≥50bp 且 IG≥15bp 且仍在走闊(IG微升5bp不算系統性)
+    systemic = (hy_widen is not None and ig_widen is not None
+                and hy_widen >= 0.5 and ig_widen >= 0.15 and ig_dir == "up")
+    hyg_chg = hyg["chg"]
+
+    if not ok or hy_dir is None:
+        tok, label, why = "mut", "N/A", "FRED/Yahoo 來源本次抓取失敗或資料不足"
+    elif systemic or (hy_nh and hy_dir == "up" and hyg_chg is not None and hyg_chg <= -1.0):
+        tok, label = "danger", "🔴 擴散（信用壓力升）"
+        why = ("HY+IG 同步大幅走闊＝系統性去槓桿升級，金/加密恐被一起拖下水"
+               if systemic else "HY 利差續創高且 HYG 盤中重挫(≤-1%)＝信用壓力向外擴散")
+    elif (hy_dir in ("down", "flat") and not hy_nh) and (hyg_chg is None or hyg_chg >= -0.3):
+        tok, label = "ok", "🟢 止穩"
+        why = "HY 利差不再創高、HYG 盤中未重挫＝信用面暫止穩(去槓桿賣壓近尾聲的必要條件之一)"
+    else:
+        tok, label = "warn", "🟡 觀察"
+        why = "HY 利差仍走闊但 IG 大致穩＝壓力鎖在高收益/AI 端、尚未系統性；盯轉綠(止穩)或轉紅(HY+IG 齊飆)"
+
+    res = {"ok": ok, "hy": hy, "ig": ig, "hyg": hyg, "jnk": jnk,
+           "hy_dir": hy_dir, "hy_newhigh": hy_nh, "ig_dir": ig_dir, "ig_newhigh": ig_nh,
+           "hy_widen": hy_widen, "ig_widen": ig_widen,
+           "lamp": {"tok": tok, "label": label, "why": why}}
+    _CREDIT_CACHE["r"] = res
+    return res
+
 # ============================== 計分 ==============================
 def band(v, bands):
     for hi, sc in bands:
@@ -503,6 +583,41 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
                    f'<div class="mini" style="padding:8px 0">💡 Fed 官員放話會動盤但方向不可測、秒級被定價；'
                    f'當盤前背景資訊,勿因單則放話追單。來源:聯準會官方 RSS + Google News RSS(免費)。</div></div>')
 
+    # H. 信用面即時燈號(HY/IG OAS + HYG/JNK)
+    cr = credit_scan()
+    _dirtag = lambda dr: {"up": '<span class="dn">↑走闊</span>', "down": '<span class="up">↓收斂</span>',
+                          "flat": '<span class="mut">→持平</span>'}.get(dr, "—")
+    _series = lambda s: (" → ".join(f"{v:.2f}" for _, v in s) if s else "N/A")
+    def _etf_cell(e):
+        return (f'{e["price"]:.2f}（{chg_cell(e["chg"])}）' if e["price"] else '<span class="na">N/A</span>')
+    if not cr["ok"]:
+        credit_body = '<tr><td class="na" colspan="3">N/A（FRED/Yahoo 來源本次抓取失敗）</td></tr>'
+    else:
+        hy_last = f'{cr["hy"][-1][1]:.2f}%' if cr["hy"] else '<span class="na">N/A</span>'
+        ig_last = f'{cr["ig"][-1][1]:.2f}%' if cr["ig"] else '<span class="na">N/A</span>'
+        credit_body = (
+            f'<tr><td class="g">HY OAS <span class="mut">高收益利差·T+1</span></td>'
+            f'<td class="num">{hy_last} {_dirtag(cr["hy_dir"])}</td>'
+            f'<td class="mut">近{len(cr["hy"])}筆 {_series(cr["hy"])}</td></tr>'
+            f'<tr><td class="g">IG OAS <span class="mut">投資級利差·T+1</span></td>'
+            f'<td class="num">{ig_last} {_dirtag(cr["ig_dir"])}</td>'
+            f'<td class="mut">近{len(cr["ig"])}筆 {_series(cr["ig"])}</td></tr>'
+            f'<tr><td class="g">HYG <span class="mut">高收益債ETF·盤中即時/領先</span></td>'
+            f'<td class="num">{_etf_cell(cr["hyg"])}</td><td class="mut">盤中止跌回升=信用先穩(領先 FRED 一天)</td></tr>'
+            f'<tr><td class="g">JNK <span class="mut">高收益債ETF·盤中即時</span></td>'
+            f'<td class="num">{_etf_cell(cr["jnk"])}</td><td class="mut">與 HYG 互相印證</td></tr>')
+    _lamp = cr["lamp"]
+    credit_section = (
+        f'<div class="sec">H. 信用面即時燈號（HY/IG 利差 + HYG/JNK）'
+        f'<span class="mut" style="margin-left:8px">去槓桿賣壓是否止穩的風向鏢</span></div>'
+        f'<div class="card" style="padding:10px 18px">'
+        f'<div class="glabel" style="color:{C(_lamp["tok"])};font-size:1.1rem;font-weight:800">{_lamp["label"]}</div>'
+        f'<div class="mini" style="margin:2px 0 8px">{_lamp["why"]}</div>'
+        f'<table class="tbl"><tr><th>指標</th><th style="text-align:right">最新</th><th>近況 / 讀法</th></tr>{credit_body}</table>'
+        f'<div class="mini" style="padding:8px 0">💡 🟢止穩 / 🟡觀察 / 🔴擴散。HY 走闊+IG 不動=壓力鎖在高收益/AI 端(可控)；'
+        f'HY+IG 齊飆=系統性去槓桿(金/加密恐被拖下水)。FRED OAS 日頻 T+1(慢一天)，盤中以 HYG/JNK 領先判讀。'
+        f'來源:FRED(BAMLH0A0HYM2 / BAMLC0A0CM)+Yahoo(HYG/JNK)。</div></div>')
+
     return f"""<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0"><title>開盤前戰略定調儀表板</title>
 {build_style(th)}</head><body><div class="wrap">
@@ -577,6 +692,8 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
 </div>
 <div class="mini" style="margin:6px 2px 0">💡 全幣安美股永續(underlyingType=EQUITY)自動掃描、免維護清單；反向/做空VIX類ETF(SOXS/SQQQ/UVXY)衝上漲榜＝市場在避險/做空該板塊，做多槓桿ETF(SOXL/MUU/KORU)墊底＝該板塊被殺。5日%=最新vs5日前日線收。</div>
 
+{credit_section}
+
 {fed_section}
 
 <div class="foot">
@@ -642,6 +759,7 @@ def dashboard_payload(catalyst=""):
         "lights": lights_out, "binance": binance,
         "movers_up": mv(d.get("movers_up")), "movers_dn": mv(d.get("movers_dn")),
         "fed": fed_scan(FED_HOURS),  # /dailyecreport 嵌入用:{ok, items:[{time,who,tone,title,src}]}
+        "credit": credit_scan(),     # /dailyecreport 嵌入用:{ok, hy, ig, hyg, jnk, lamp:{tok,label,why}}
     }
 
 
