@@ -888,7 +888,9 @@ def main():
     for th in themes:
         html = render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat, stress, th)
         out = a.out if (a.out and not a.all) else os.path.join(base, f"strategic_dashboard{'_'+th if a.all else ''}.html")
-        open(out, "w", encoding="utf-8").write(html); first = first or out
+        with open(out, "w", encoding="utf-8") as _fh:
+            _fh.write(html)
+        first = first or out
         print(f"[{th}] → {out}")
     print(f"Risk-Off: {ro if (ro:=(f'{riskoff:.0f}' if riskoff is not None else 'N/A')) else ''} (覆蓋 {coverage*100:.0f}%)" + ("  ⚠資料不全" if data_bad else ""))
     print(f"日內大單邊機率: {trend:.0f}%" if trend is not None else "日內: N/A")
