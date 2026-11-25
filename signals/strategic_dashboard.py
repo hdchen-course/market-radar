@@ -188,6 +188,30 @@ def binance_equity_movers(n=10):
     res.sort(key=lambda x: x[1], reverse=True)
     return res[:n], res[-n:][::-1]
 
+def binance_equity_movers_24h(n=10):
+    """掃全部幣安美股永續(EQUITY)，取 24h priceChangePercent，回 (漲前n, 跌前n)。
+       用單一 /ticker/24hr 批次呼叫(一次回全部標的)省時——非逐檔打 klines。失敗回 ([],[])。
+       註:EQUITY 永續 24h% 為滾動窗(含前一盤別),非當日 session;盤別敏感時以 Yahoo 當盤為準。"""
+    try:
+        info = json.loads(_get("https://fapi.binance.com/fapi/v1/exchangeInfo"))
+        eq = {s["symbol"] for s in info["symbols"]
+              if s.get("underlyingType") == "EQUITY" and s.get("status") == "TRADING" and s["symbol"].endswith("USDT")}
+    except Exception as e:
+        sys.stderr.write(f"[warn] movers24 exchangeInfo: {e}\n"); return [], []
+    try:
+        allt = json.loads(_get("https://fapi.binance.com/fapi/v1/ticker/24hr"))
+    except Exception as e:
+        sys.stderr.write(f"[warn] movers24 ticker: {e}\n"); return [], []
+    res = []
+    for t in (allt if isinstance(allt, list) else []):
+        if t.get("symbol") in eq:
+            try:
+                res.append((t["symbol"][:-4], float(t["priceChangePercent"]), float(t["lastPrice"])))
+            except (KeyError, ValueError, TypeError):
+                continue
+    res.sort(key=lambda x: x[1], reverse=True)
+    return res[:n], res[-n:][::-1]
+
 _FED_CACHE = {}
 def _fed_items(xml):
     blocks = re.findall(r"<item>(.*?)</item>", xml, re.S) or re.findall(r"<entry>(.*?)</entry>", xml, re.S)
@@ -418,6 +442,7 @@ def collect(catalyst):
                          "rvol": rvol_daily(lng)}
     d["premkt_rvol"] = premarket_rvol(); d["catalyst"] = catalyst
     d["movers_up"], d["movers_dn"] = binance_equity_movers(10)
+    d["movers24_up"], d["movers24_dn"] = binance_equity_movers_24h(10)
     return d
 
 def score_riskoff(d):
@@ -595,6 +620,8 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
                        f'<td class="num">{px:g}</td></tr>' for s, p, px in lst)
     movers_up = mv_rows(d.get("movers_up"), True)
     movers_dn = mv_rows(d.get("movers_dn"), False)
+    movers24_up = mv_rows(d.get("movers24_up"), True)
+    movers24_dn = mv_rows(d.get("movers24_dn"), False)
 
     light_rows = "".join(
         f'<div class="light" style="border-left-color:{C(tok)}"><div class="lname">👉 {n}</div>'
@@ -752,6 +779,17 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
 </div>
 <div class="mini" style="margin:6px 2px 0">💡 全幣安美股永續(underlyingType=EQUITY)自動掃描、免維護清單；反向/做空VIX類ETF(SOXS/SQQQ/UVXY)衝上漲榜＝市場在避險/做空該板塊，做多槓桿ETF(SOXL/MUU/KORU)墊底＝該板塊被殺。5日%=最新vs5日前日線收。</div>
 
+<div class="sec" style="margin-top:14px">F2. 幣安美股永續 24 小時漲跌榜（同一批 EQUITY → 最近一天在炒/在殺哪個）</div>
+<div class="grid">
+  <div class="card" style="padding:6px 18px">
+    <table class="tbl"><tr><th>📈 24h 漲幅前 10</th><th style="text-align:right">24h%</th><th style="text-align:right">現價</th></tr>{movers24_up}</table>
+  </div>
+  <div class="card" style="padding:6px 18px">
+    <table class="tbl"><tr><th>📉 24h 跌幅前 10</th><th style="text-align:right">24h%</th><th style="text-align:right">現價</th></tr>{movers24_dn}</table>
+  </div>
+</div>
+<div class="mini" style="margin:6px 2px 0">💡 24h% 取自 /ticker/24hr 滾動窗(含前一盤別、非當日 session)；看「最近一天」板塊輪動與 5 日榜對照——24h 翻紅但 5 日仍墊底＝短線反彈 vs 24h 續殺＝趨勢未止。盤別敏感時當盤漲跌以 Yahoo 為準。</div>
+
 {credit_section}
 
 {fed_section}
@@ -818,6 +856,7 @@ def dashboard_payload(catalyst=""):
         "risk_rows": risk_rows, "trend_rows": trend_rows, "etf": etf,
         "lights": lights_out, "binance": binance,
         "movers_up": mv(d.get("movers_up")), "movers_dn": mv(d.get("movers_dn")),
+        "movers24_up": mv(d.get("movers24_up")), "movers24_dn": mv(d.get("movers24_dn")),
         "fed": fed_scan(FED_HOURS),  # /dailyecreport 嵌入用:{ok, items:[{time,who,tone,title,src}]}
         "credit": credit_scan(),     # /dailyecreport 嵌入用:{ok, hy, ig, hyg, jnk, lamp:{tok,label,why}}
         "signal_strip": signal_strip(d, credit_scan()),  # 三訊號綜合狀態:{vix,credit,flush,overall}

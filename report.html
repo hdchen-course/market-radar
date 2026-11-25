@@ -58,6 +58,11 @@ function renderDashboard(x){
   const mvtab=(lst,pos)=>`<table><tr><th>${pos?'📈 5日漲幅前10':'📉 5日跌幅前10'}</th><th>5日%</th><th>現價</th></tr>`+(lst.length?lst.map(m=>`<tr><td>${E(m.sym)}</td><td class="${pos?'pos':'neg'}">${E(m.pct)}</td><td>${E(m.px)}</td></tr>`).join(''):`<tr><td colspan="3" class="mr-l">N/A</td></tr>`)+`</table>`;
   O.push(`<div class="dash-sub" style="margin-top:8px">F. 幣安美股永續 5 日漲跌榜（196 檔 EQUITY 自動掃描）</div>`);
   O.push(`<div class="dash-two"><div>${mvtab(x.movers_up,true)}</div><div>${mvtab(x.movers_dn,false)}</div></div>`);
+  if(x.movers24_up||x.movers24_dn){
+    const mvtab24=(lst,pos)=>`<table><tr><th>${pos?'📈 24h 漲幅前10':'📉 24h 跌幅前10'}</th><th>24h%</th><th>現價</th></tr>`+((lst&&lst.length)?lst.map(m=>`<tr><td>${E(m.sym)}</td><td class="${pos?'pos':'neg'}">${E(m.pct)}</td><td>${E(m.px)}</td></tr>`).join(''):`<tr><td colspan="3" class="mr-l">N/A</td></tr>`)+`</table>`;
+    O.push(`<div class="dash-sub" style="margin-top:8px">F2. 幣安美股永續 24 小時漲跌榜（最近一天在炒/在殺哪個；24h 滾動窗、非當日 session）</div>`);
+    O.push(`<div class="dash-two"><div>${mvtab24(x.movers24_up,true)}</div><div>${mvtab24(x.movers24_dn,false)}</div></div>`);
+  }
   // H 信用面即時燈號（去槓桿賣壓是否止穩的風向鏢）
   if(x.credit){
     const c=x.credit, lp=c.credit_lamp||c.lamp||{};
