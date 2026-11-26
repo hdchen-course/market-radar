@@ -589,8 +589,8 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
         row('加密 F&amp;G', (str(d['fng']) if d['fng'] is not None else 'N/A'), (d['fng_cls'] or '')))
     # B 形態
     b_rows = (
-        row('ES 標普期貨跳空', '', chg_cell(d['es_gap'])) +
-        row('NQ 納指期貨跳空', f'<span class="mut">昨 {f(d["nq_yday"],"%",dp=1,plus=True)}</span>', chg_cell(d['nq_gap'])) +
+        row('ES 期貨 vs 昨收（盤前高/低開）', '', chg_cell(d['es_gap'])) +
+        row('NQ 期貨 vs 昨收（盤前高/低開）', f'<span class="mut">昨日收盤 {f(d["nq_yday"],"%",dp=1,plus=True)}</span>', chg_cell(d['nq_gap'])) +
         row('盤前期貨量能 RVOL', f'<span class="mut">{prv_tag}</span>', f'<span class="{"hot" if prv_tag=="📊 暴量" else ""}">{prv_main}</span>') +
         row('DVOL ~24h 變動', '', chg_cell(d['dvol_chg'], 1)) +
         row('當日重大事件', (d['catalyst'] or '<span class="na">無/未設</span>'), '') +
@@ -745,7 +745,7 @@ def render(d, riskoff, rsub, coverage, trend, tsub, gap, lts, data_bad, deadcat,
       <div class="glabel" style="color:{C(t_tok)};margin-top:9px">{t_txt}</div>
     </div>
     {b_rows}
-    <div class="mini" style="margin-top:8px">💡 跳空大+盤前暴量+有重大事件=大單邊(順勢、放任奔跑但掛保本)；跳空小+量縮=絞肉震盪(槓桿 ETF 波動耗損最兇，少碰)。盤前 VXN 變動是死值，已改用期貨 RVOL。</div>
+    <div class="mini" style="margin-top:8px">💡「期貨 vs 昨收」＝盤前期貨相對昨日收盤偏離%(正=偏高開/risk-on、負=偏低開)，近似今日高/低開風向(非真正開盤跳空缺口)。偏離大+盤前暴量+重大事件=大單邊(順勢但掛保本)；偏離小+量縮=絞肉震盪(槓桿 ETF 耗損最兇，少碰)。盤前 VXN 變動是死值，已改用期貨 RVOL。</div>
   </div>
 </div>
 
@@ -828,8 +828,8 @@ def dashboard_payload(catalyst=""):
         {"lbl": "加密 F&G", "val": (str(d['fng']) if d['fng'] is not None else 'N/A'), "chg": (d['fng_cls'] or '')},
     ]
     trend_rows = [
-        {"lbl": "ES 標普期貨跳空", "val": "", "chg": fmtc(d['es_gap'])},
-        {"lbl": "NQ 納指期貨跳空", "val": f"昨 {fmtc(d['nq_yday'], '%', 1)}", "chg": fmtc(d['nq_gap'])},
+        {"lbl": "ES 期貨 vs 昨收（盤前高/低開）", "val": "", "chg": fmtc(d['es_gap'])},
+        {"lbl": "NQ 期貨 vs 昨收（盤前高/低開）", "val": f"昨日收盤 {fmtc(d['nq_yday'], '%', 1)}", "chg": fmtc(d['nq_gap'])},
         {"lbl": "盤前期貨量能 RVOL", "val": "", "chg": (f"{d['premkt_rvol']:.1f}×" if d['premkt_rvol'] else "N/A")},
         {"lbl": "DVOL ~24h 變動", "val": "", "chg": fmtc(d['dvol_chg'], '%', 1)},
         {"lbl": "當日重大事件", "val": (d['catalyst'] or "無/未設"), "chg": ""},
